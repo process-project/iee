@@ -1,0 +1,19 @@
+image: ruby:2.3
+
+services:
+  - postgres
+
+variables:
+  POSTGRES_DB: vapor_development
+
+cache:
+  paths:
+  - vendor/
+
+test:
+  script:
+  - apt-get update -qy
+  - apt-get install -y nodejs
+  - bundle install --path vendor
+  - bundle exec rake db:create RAILS_ENV=test
+  - bundle exec rake test
