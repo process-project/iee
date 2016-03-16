@@ -4,7 +4,9 @@ services:
   - postgres
 
 variables:
-  POSTGRES_DB: vapor_development
+  POSTGRES_DB: vapor_test
+  POSTGRES_USER: vapor
+  POSTGRES_PASSWORD: ""
 
 cache:
   paths:
@@ -14,6 +16,7 @@ test:
   script:
   - apt-get update -qy
   - apt-get install -y nodejs
+  - cp config/database.yml.gitlab-ci config/database.yml
   - bundle install --path vendor
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rake test

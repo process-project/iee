@@ -1,0 +1,6 @@
+test:
+  adapter: postgresql
+  database: vapor_test
+  username: vapor
+  password: ""
+  host: postgres
