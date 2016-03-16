@@ -19,4 +19,4 @@ test:
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle install --path vendor
   - bundle exec rake db:create RAILS_ENV=test
-  - bundle exec rake test
+  - bundle exec rspec
