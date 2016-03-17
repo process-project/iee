@@ -12,6 +12,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'haml-rails'
 
+gem 'devise'
+
 group :development, :test do
   gem 'byebug'
 
