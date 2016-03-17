@@ -12,17 +12,18 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'haml-rails'
 
+gem 'bootstrap-sass','~> 3.3'
+gem 'font-awesome-sass','~> 4.5'
+
 gem 'devise'
 
 group :development, :test do
   gem 'byebug'
-
   gem 'rspec-rails', '~> 3.0'
 end
 
 group :development do
   gem 'web-console', '~> 2.0'
-
   gem 'spring'
 end
 
