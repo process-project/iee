@@ -12,3 +12,7 @@
 !/log/.keep
 /tmp
 /.project
+
+# Ignore gemspecs
+.gems
+.rbenv-gemsets
