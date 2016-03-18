@@ -1,2 +1,15 @@
 en:
   title: EurValve Portal
+  rights: ©2016 All Rights Reserved.
+  login_form: Login form
+  email: Email
+  password: Password
+  remember_me: Remember me
+  login: Log in
+  forgot: Forgot your password?
+  new_to_site: New to site?
+  create_account: Create account
+  registration_form_label: Registration form
+  confirmation_password: Password confirmation
+  register: Register
+  already_registered: Already registered?

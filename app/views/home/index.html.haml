@@ -1,4 +1,10 @@
-%h1 Home#index
-%p Find me in app/views/home/index.html.haml
-%p= icon 'heartbeat'
-%p= link_to 'Logout', destroy_user_session_path, method: 'delete'
+.container.body
+  .main_container
+    .col-md-3.left_col
+      .left_col.scroll-view
+        .navbar.nav_title{style: "border: 0;"}
+          %a.site_title{href: url_for(action: "index")}
+            %i.fa.fa-heartbeat{style: "color: red;"}
+            = t("title")
+          %p
+            = link_to 'Logout', destroy_user_session_path, method: 'delete'
