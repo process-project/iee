@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # javascript
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 gem 'turbolinks'
 gem 'haml-rails'
 
