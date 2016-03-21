@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: vapor_production
-  username: vapor
-  password: <%= ENV['VAPOR_DATABASE_PASSWORD'] %>
+  database: <%= ENV['VAPOR_DATABASE'] %>
