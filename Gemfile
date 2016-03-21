@@ -20,6 +20,8 @@ gem 'simple_form'
 gem 'devise'
 gem 'omniauth-openid'
 
+gem 'puma'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
