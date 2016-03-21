@@ -1,9 +1,14 @@
 /*
- *= require_tree .
  *= require_self
+ *= require_tree .
+ *= require_tree ../../../vendor/assets/stylesheets/.
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+.aaa-background {
+  background: #F7F7F7;
+}
