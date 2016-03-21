@@ -17,4 +17,3 @@
 .gems
 .rbenv-gemsets
 /.env
-/Procfile

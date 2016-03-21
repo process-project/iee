@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'rails', '4.2.6'
 gem 'pg', '~> 0.15'
@@ -23,7 +24,6 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
   gem 'quiet_assets'
-  gem 'foreman'
 end
 
 group :development do
