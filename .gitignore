@@ -16,3 +16,5 @@
 # Ignore gemspecs
 .gems
 .rbenv-gemsets
+/.env
+/Procfile

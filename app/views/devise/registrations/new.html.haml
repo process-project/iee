@@ -4,8 +4,7 @@
       %section.login_content
         = simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
           html: {id: "registration_form"}) do |f|
-          %h1
-            = t("registration_form")
+          %h1= t("registration_form")
           = f.error_notification
           %div
             = f.input_field :email, required: true, class: form_input_class(:email),
@@ -30,11 +29,4 @@
             = t("already_registered")
             %a.to_register{href: new_session_path(resource_name)}
               = t("login")
-          %div.clearfix
-          %br
-          %div
-            %h1
-              %i.fa.fa-heartbeat{style: "font-size: 26px; color: red;"}
-              = t("title")
-            %p
-              = t("rights")
+          = render "devise/shared/footer"

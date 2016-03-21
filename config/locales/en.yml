@@ -13,3 +13,6 @@ en:
   confirmation_password: Password confirmation
   register: Register
   already_registered: Already registered?
+  forgot_password_form: Forgot password?
+  submit_forgot_password: Send me reset password instructions
+  go_back: Go back to
