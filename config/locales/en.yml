@@ -13,3 +13,8 @@ en:
   confirmation_password: Password confirmation
   register: Register
   already_registered: Already registered?
+  dice: Dice Team
+  by: by
+
+  logout: Logout
+  profile: Profile
