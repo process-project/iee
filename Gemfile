@@ -18,6 +18,7 @@ gem 'font-awesome-sass','~> 4.5'
 gem 'simple_form'
 
 gem 'devise'
+gem 'omniauth-openid'
 
 group :development, :test do
   gem 'byebug'
@@ -28,5 +29,17 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+
+  # PLG OpenId requires ssh even for development
+  # start app using `thin start --ssl
+  gem 'thin'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner'
+  gem 'faker'
 end
 
