@@ -77,7 +77,7 @@ state_path "#{application_path}/tmp/pids/puma.state"
 # bind 'unix:///var/run/puma.sock'
 # bind 'unix:///var/run/puma.sock?umask=0111'
 # bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'
-bind "unix://#{application_path}/tmp/sockets/plgapp.socket"
+bind "unix://#{application_path}/tmp/sockets/vapor.socket"
 
 # Instead of "bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'" you
 # can also use the "ssl_bind" option.
