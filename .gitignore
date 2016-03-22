@@ -16,6 +16,7 @@
 # Ignore gemspecs
 .gems
 .rbenv-gemsets
+/.env
 
 # Ignore local puma configuration
 /config/puma.rb
