@@ -30,11 +30,4 @@
           %li= link_to('Sub1.3', root_path)
 
 .sidebar-footer.hidden-small
-  %a{ data: { toggle: 'tooltip', placement: 'top', title: 'Settings' } }
-    %span.glyphicon.glyphicon-cog{ 'aria-hidden' => true }
-  %a{ data: { toggle: 'tooltip', placement: 'top', title: 'Settings' } }
-    %span.glyphicon.glyphicon-cog{ 'aria-hidden' => true }
-  %a{ data: { toggle: 'tooltip', placement: 'top', title: t('profile') } }
-    %span.glyphicon.glyphicon-user{ 'aria-hidden' => true }
-  =link_to destroy_user_session_path, method: :delete, data: { toggle: 'tooltip', placement: 'top', title: t('logout') } do
-    %span.glyphicon.glyphicon-off{ 'aria-hidden' => true }
+  = render 'layouts/footer'

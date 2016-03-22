@@ -7,7 +7,7 @@ body.nav-sm .container.body .left_col {
 }
 
 body.nav-sm .container.body .right_col {
-    padding: 10px 20px;
+    padding: 45px 20px;
     margin-left: 70px;
     z-index: 2;
 }
@@ -207,7 +207,7 @@ body .container.body .right_col {
 }
 
 body.nav-md .container.body .right_col {
-    padding: 10px 20px 0;
+    padding: 45px 20px 0;
     margin-left: 230px;
 }
 
@@ -233,7 +233,7 @@ body.nav-md .container.body .right_col {
         padding-right: 0
     }
     .right_col {
-        padding: 10px !important;
+        padding: 45px 20px !important;
     }
 }
 
@@ -878,10 +878,8 @@ li.current-page a {
 .x_content canvas {}
 
 footer {
-    background: #fff;
-    padding: 5px 20px 0;
-    height: 45px;
-    margin: 0 -17px;
+    padding: 5px 10px 0;
+    height: 60px;
 }
 
 .tile-stats.sparkline {
@@ -1909,20 +1907,6 @@ span.right {
     width: 230px;
     z-index: 1000;
     background: #2A3F54;
-}
-
-.sidebar-footer a {
-    padding: 7px 0 3px;
-    text-align: center;
-    width: 25%;
-    font-size: 17px;
-    display: block;
-    float: left;
-    background: #172D44;
-}
-
-.sidebar-footer a:hover {
-    background: #425567;
 }
 
 .tile_count {
