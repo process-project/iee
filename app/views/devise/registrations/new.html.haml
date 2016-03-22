@@ -8,6 +8,14 @@
             = t("registration_form")
           = f.error_notification
           %div
+            = f.input_field :first_name, required: true, class: form_input_class(:first_name),
+              placeholder: t("first_name")
+            - show_field_errors(:first_name)
+          %div
+            = f.input_field :last_name, required: true, class: form_input_class(:last_name),
+              placeholder: t("last_name")
+            - show_field_errors(:last_name)
+          %div
             = f.input_field :email, required: true, class: form_input_class(:email),
               placeholder: t("email")
             - show_field_errors(:email)

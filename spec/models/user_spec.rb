@@ -1,5 +1,26 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe User do
+  context 'plgrid login' do
+    let(:auth) do
+      double(info: double(nickname: 'plguser',
+                          email: 'a@b.c',
+                          name: 'John Do Doe'))
+    end
+
+    it 'creates new user if does not exist' do
+      expect { described_class.from_plgrid_omniauth(auth) }.
+        to change { User.count }.
+        by(1)
+    end
+
+    it 'uses auth info to populate user data' do
+      user = described_class.from_plgrid_omniauth(auth)
+
+      expect(user.plgrid_login).to eq('plguser')
+      expect(user.email).to eq('a@b.c')
+      expect(user.first_name).to eq('John')
+      expect(user.last_name).to eq('Do Doe')
+    end
+  end
 end
