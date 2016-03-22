@@ -16,7 +16,7 @@
               = f.input_field :remember_me, type: "checkbox" if devise_mapping.rememberable?
               = t("remember_me")
           %div
-            %a{href: "#", class: "btn btn-default submit", onclick: "$('#login_form').submit();"}
+            %button.btn.btn-default.submit
               = t("login")
             - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
               = link_to t("forgot"), new_password_path(resource_name),

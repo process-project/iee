@@ -16,3 +16,5 @@ en:
   forgot_password_form: Forgot password?
   submit_forgot_password: Send me reset password instructions
   go_back: Go back to
+  change_password_form: Change password
+  change_password_submit: Change
