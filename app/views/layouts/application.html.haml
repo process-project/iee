@@ -2,5 +2,13 @@
 %html
   = render 'layouts/head'
   %body.nav-md
-    = render 'layouts/flash'
-    = yield
+    .container.body
+      .main_container
+        .col-md-3.left_col
+          .left_col.scroll-view
+            = render 'layouts/left_menu'
+        = render 'layouts/navbar'
+        .right_col{ role: 'main', style: 'min-height: 1139px;' }
+          = render 'layouts/flash'
+          = yield
+          = render 'layouts/footer'
