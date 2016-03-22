@@ -2,6 +2,8 @@ en:
   title: EurValve Portal
   rights: ©2016 All Rights Reserved.
   login_form: Login form
+  first_name: Name
+  last_name: Surname
   email: Email
   password: Password
   remember_me: Remember me
