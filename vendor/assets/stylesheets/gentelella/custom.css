@@ -1,3 +1,15 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+body .container.body {
+    height: 100%;
+}
+
 body.nav-sm .container.body .left_col {
     width: 70px;
     padding: 0;
@@ -204,10 +216,11 @@ body.nav-md .container.body .col-md-3.left_col {
 
 body .container.body .right_col {
     background: #F7F7F7;
+    height: 100%;
 }
 
 body.nav-md .container.body .right_col {
-    padding: 45px 20px 0;
+    padding: 60px 20px 0;
     margin-left: 230px;
 }
 
@@ -233,7 +246,7 @@ body.nav-md .container.body .right_col {
         padding-right: 0
     }
     .right_col {
-        padding: 45px 20px !important;
+        padding: 60px 20px 0 !important;
     }
 }
 
@@ -380,7 +393,9 @@ body {
     margin-left: 230px;
 }
 
-.main_container {}
+.main_container {
+    height: 100%;
+}
 
 .no-padding {
     padding: 0 !important;
