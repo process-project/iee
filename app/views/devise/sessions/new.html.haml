@@ -2,8 +2,7 @@
   %div#wrapper
     %div#login
       %section.login_content
-        = simple_form_for(resource, as: resource_name, url: session_path(resource_name),
-          html: {id: "login_form"}) do |f|
+        = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
           %h1= t("login_form")
           %div
             = f.input_field :email, required: true, autofocus: true, class: "form-control",

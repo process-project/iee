@@ -3,7 +3,7 @@
     %div#login
       %section.login_content
         = simple_form_for(resource, as: resource_name, url: password_path(resource_name),
-          html: {id: "forgot_password_form", method: :post}) do |f|
+          html: { method: :post }) do |f|
           %h1= t("forgot_password_form")
           = f.error_notification
           %div
@@ -12,8 +12,7 @@
               placeholder: t("email")
             - show_field_errors(:email)
           %div
-            %a{href: "#", class: "btn btn-default submit",
-              onclick: "$('#forgot_password_form').submit();"}
+            %button.btn.btn-default.submit
               = t("submit_forgot_password")
           %div.clearfix
           %div.separator

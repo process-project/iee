@@ -9,7 +9,7 @@ en:
   forgot: Forgot your password?
   new_to_site: New to site?
   create_account: Create account
-  registration_form_label: Registration form
+  registration_form: Registration form
   confirmation_password: Password confirmation
   register: Register
   already_registered: Already registered?
@@ -18,3 +18,17 @@ en:
   go_back: Go back to
   change_password_form: Change password
   change_password_submit: Change
+  password_hint: '%{length} characters minimum'
+  token_expired: Change password token has expired. Please request a new one
+  token_expired_link: here.
+  new_password: New password
+  new_password_confirmation: New password confirmation
+  edit_form: Edit %{who}
+  account_confirmation: 'Currently waiting confirmation for: %{email}'
+  password_leave_blank: leave it blank if you don't want to change it
+  current_password: Current password
+  current_password_hint: we need your current password to confirm your changes
+  edit_registration_submit: Update
+  remove_account: Remove account
+  are_you_sure: Are you sure?
+  go_back: Go back
