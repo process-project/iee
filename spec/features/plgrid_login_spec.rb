@@ -9,7 +9,7 @@ RSpec.feature 'PLGrid authentication' do
 
     plgrid_sign_in_as(user)
 
-    expect(page).to have_content(user.email)
+    expect(page).to have_content('Successfully authenticated')
   end
 
   scenario 'connect with existing account' do
