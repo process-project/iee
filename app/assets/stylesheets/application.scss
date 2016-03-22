@@ -12,3 +12,15 @@
 .aaa-background {
   background: #F7F7F7;
 }
+
+.fixed_nav_bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+body.nav-md .container.body .left_col {
+  position: fixed;
+  height: 100%;
+}
