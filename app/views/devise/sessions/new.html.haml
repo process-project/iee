@@ -22,7 +22,7 @@
                 class: "reset_pass"
           .clearfix
           .separator
-          Log in with
+          = t('login_with')
           = link_to(user_omniauth_authorize_path(:open_id)) do
             = image_tag('plgrid.png')
           .separator
