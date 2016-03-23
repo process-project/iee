@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
          :validatable,
          :omniauthable,
          omniauth_providers: [:open_id]
+         
+  has_many :user_groups
+  has_many :groups, through: :user_groups
 
   validates :first_name, presence: true
   validates :last_name, presence: true
