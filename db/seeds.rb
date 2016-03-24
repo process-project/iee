@@ -12,7 +12,7 @@ groups = ["admin", "supervisor"].map do |role_name|
 end
 admin = User.find_by(email: "admin@host.domain")
 admin ||= User.create(first_name: "admin", last_name: "admin", email: "admin@host.domain",
-  password: "admin123", password_confirmation: "admin123")
+  password: "admin123", password_confirmation: "admin123", approved: true)
 admin.groups = groups
 admin.save
 admin.user_groups.each do |user_group|

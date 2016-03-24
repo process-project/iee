@@ -32,6 +32,18 @@ class User < ActiveRecord::Base
   def plgrid_connect(auth)
     tap { update_attribute(:plgrid_login, auth.info.nickname) }
   end
+  
+  def active_for_authentication?
+    super && approved?
+  end
+  
+  def inactive_message
+    if !approved?
+      :not_approved
+    else
+      super # Use whatever other message
+    end
+  end
 
   def name
     "#{first_name} #{last_name}"

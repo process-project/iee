@@ -1,0 +1,12 @@
+%h1= t("not_confirmed_users")
+- if @users[:not_confirmed].exists?
+  - @users[:not_confirmed].each do |user|
+    %p= user.first_name
+- else
+  %p= t("no_users")
+%h1= t("confirmed_users")
+- if @users[:confirmed].exists?
+  - @users[:confirmed].each do |user|
+    %p= user.first_name
+- else
+  %p= t("no_users")

@@ -38,3 +38,8 @@ en:
   by: by
   logout: Logout
   profile: Profile
+  settings: Settings
+  user_confirmation: User confirmation
+  not_confirmed_users: Users to be confirmed
+  confirmed_users: Confirmed users
+  no_users: No users
