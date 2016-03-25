@@ -13,7 +13,7 @@
         %a
           = icon("sliders")
           = t("settings")
-          - if @user_confirmations
+          - if @user_confirmations and supervisor?
             = icon("exclamation-triangle")
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
