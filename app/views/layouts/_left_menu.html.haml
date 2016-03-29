@@ -20,7 +20,7 @@
           %li= link_to(t("profile"), profile_index_path)
           - if supervisor?
             %li
-              %a{href: url_for(account_confirmation_index_path)}
+              %a{href: url_for(account_confirmations_index_path)}
                 = t("user_confirmation")
                 - if @user_confirmations
                   = icon("exclamation-triangle")
