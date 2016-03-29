@@ -5,7 +5,7 @@ RSpec.feature 'PLGrid authentication' do
   include AuthenticationHelper
 
   scenario 'login' do
-    user = build(:plgrid_user)
+    user = create(:plgrid_user)
 
     plgrid_sign_in_as(user)
 
@@ -13,17 +13,17 @@ RSpec.feature 'PLGrid authentication' do
   end
 
   scenario 'connect with existing account' do
-    user = create(:user)
+    user = create(:approved_user)
 
     sign_in_as(user)
-    plgrid_sign_in_as(build(:user, plgrid_login: 'plguser', email: user.email))
+    plgrid_sign_in_as(build(:approved_user, plgrid_login: 'plguser', email: user.email))
     user.reload
 
     expect(user.plgrid_login).to eq('plguser')
   end
 
   scenario 'normal user account can connect to PLGrid no PLGRid section' do
-    user = create(:user)
+    user = create(:approved_user)
 
     sign_in_as(user)
 
@@ -32,7 +32,7 @@ RSpec.feature 'PLGrid authentication' do
   end
 
   scenario 'PLGrid user sees PLGrid section' do
-    user = build(:plgrid_user)
+    user = create(:plgrid_user)
 
     plgrid_sign_in_as(user)
 

@@ -8,26 +8,29 @@
 
 #sidebar-menu.main_menu_side.hidden-print.main_menu
   .menu_section
-    %h3 General
     %ul.nav.side-menu
-      %li.active
-        %a
-          = icon('home')
-          Menu1
-          %span.fa.fa-chevron-down
-        %ul.nav.child_menu
-          %li.active= link_to('Sub1.1', root_path)
-          %li= link_to('Sub1.2', root_path)
-          %li= link_to('Sub1.3', root_path)
       %li
         %a
-          = icon('home')
-          Menu1
+          = icon("sliders")
+          = t("settings")
+          - if @user_confirmations and supervisor?
+            = icon("exclamation-triangle")
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
-          %li= link_to('Sub1.1', root_path)
-          %li= link_to('Sub1.2', root_path)
-          %li= link_to('Sub1.3', root_path)
+          %li= link_to(t("profile"), profile_index_path)
+          - if supervisor?
+            %li
+              %a{href: url_for(account_confirmations_index_path)}
+                = t("user_confirmation")
+                - if @user_confirmations
+                  = icon("exclamation-triangle")
+      %li
+        %a
+          = icon("gears")
+          Another tab
+          %span.fa.fa-chevron-down
+        %ul.nav.child_menu
+          %li= link_to('Sub1.1', "/a")
       - if current_user.plgrid_login
         %li
           %a
@@ -35,9 +38,9 @@
             = t('plgrid')
             %span.fa.fa-chevron-down
           %ul.nav.child_menu
-            %li= link_to('PLGrid action 1', root_path)
-            %li= link_to('PLGrid action 2', root_path)
-            %li= link_to('PLGrid action 3', root_path)
+            %li= link_to('PLGrid action 1', "/b")
+            %li= link_to('PLGrid action 2', "/c")
+            %li= link_to('PLGrid action 3', "/d")
 
 .sidebar-footer.hidden-small
   = render 'layouts/footer'

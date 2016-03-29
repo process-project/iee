@@ -40,4 +40,19 @@ en:
   by: by
   logout: Logout
   profile: Profile
+  settings: Settings
+  user_confirmation: User confirmation
+  not_confirmed_users: Users to be confirmed
+  confirmed_users: Confirmed users
+  no_users: No users
+  approve_all: Approve all
+  approve: Approve
+  block_all: Block all
+  block: Block
+  user_approved: User %{email} has been successfully approved
+  user_blocked: User %{email} has been blocked
+  cannot_block_itself: You cannot block your own account
+  all_approved: All pending users have been approved
+  all_blocked: All non-supervisor and non-admin accounts have been blocked
+  restricted_to_supervisors: Only supervisors can perform this action
   plgrid: PLGrid
