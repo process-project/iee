@@ -2,10 +2,6 @@ class AccountConfirmationController < ApplicationController
   before_filter :user_is_supervisor
   
   def index
-    @users = {}
-    @users[:confirmed] = User.where(approved: true)
-    @users[:not_confirmed] = User.where(approved: false)
-    @user_confirmations = @users[:not_confirmed].exists?
   end
   
   def approve
