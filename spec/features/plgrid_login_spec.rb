@@ -23,7 +23,7 @@ RSpec.feature 'PLGrid authentication' do
   end
 
   scenario 'normal user account can connect to PLGrid no PLGRid section' do
-    user = create(:user)
+    user = create(:approved_user)
 
     sign_in_as(user)
 
@@ -32,7 +32,7 @@ RSpec.feature 'PLGrid authentication' do
   end
 
   scenario 'PLGrid user sees PLGrid section' do
-    user = build(:plgrid_user)
+    user = create(:plgrid_user)
 
     plgrid_sign_in_as(user)
 
