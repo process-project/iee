@@ -13,10 +13,10 @@ RSpec.feature 'PLGrid authentication' do
   end
 
   scenario 'connect with existing account' do
-    user = create(:user)
+    user = create(:approved_user)
 
     sign_in_as(user)
-    plgrid_sign_in_as(build(:user, plgrid_login: 'plguser', email: user.email))
+    plgrid_sign_in_as(build(:approved_user, plgrid_login: 'plguser', email: user.email))
     user.reload
 
     expect(user.plgrid_login).to eq('plguser')
