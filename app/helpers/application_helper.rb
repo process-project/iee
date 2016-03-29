@@ -1,9 +1,9 @@
 module ApplicationHelper
   def supervisor?
     if current_user
-      @is_supervisor = current_user.groups.where(name: "supervisor")
+      current_user.groups.where(name: "supervisor").exists?
     else
-      @is_supervisor = false
+      false
     end
   end
 end

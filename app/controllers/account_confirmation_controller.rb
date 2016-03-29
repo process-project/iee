@@ -1,4 +1,6 @@
 class AccountConfirmationController < ApplicationController
+  before_filter :user_is_supervisor
+  
   def index
     @users = {}
     @users[:confirmed] = User.where(approved: true)
@@ -9,7 +11,7 @@ class AccountConfirmationController < ApplicationController
   def approve
     user = User.find(params[:id])
     
-    if user and view_context.supervisor?
+    if user
       logger.info "Approving #{user.email} by #{current_user.email}"
       user.approved = true
       user.save
@@ -20,16 +22,14 @@ class AccountConfirmationController < ApplicationController
   end
   
   def approve_all
-    if view_context.supervisor?
-      logger.info "Approving all pending users by #{current_user.email}"
-      
-      User.where(approved: false).each do |user|
-        user.approved = true
-        user.save
-      end
-      
-      flash[:notice] = t("all_approved")
+    logger.info "Approving all pending users by #{current_user.email}"
+    
+    User.where(approved: false).each do |user|
+      user.approved = true
+      user.save
     end
+    
+    flash[:notice] = t("all_approved")
     
     redirect_to(action: "index")
   end
@@ -37,7 +37,7 @@ class AccountConfirmationController < ApplicationController
   def block
     user = User.find(params[:id])
     
-    if user and view_context.supervisor?
+    if user
       if user == current_user
         flash[:alert] = t("cannot_block_itself")
       else
@@ -52,18 +52,25 @@ class AccountConfirmationController < ApplicationController
   end
   
   def block_all
-    if view_context.supervisor?
-      logger.info "Blocking all non-supervisor and non-admin accounts by #{current_user.email}"
-      
-      User.eager_load(:groups).where("groups.name NOT IN (?) OR groups.id IS NULL",
-          ["admin", "supervisor"]).each do |user|
-        user.approved = false
-        user.save
-      end
-      
-      flash[:notice] = t("all_blocked")
+    logger.info "Blocking all non-supervisor and non-admin accounts by #{current_user.email}"
+    
+    User.eager_load(:groups).where("groups.name NOT IN (?) OR groups.id IS NULL",
+        ["admin", "supervisor"]).each do |user|
+      user.approved = false
+      user.save
     end
     
+    flash[:notice] = t("all_blocked")
+    
     redirect_to(action: "index")
+  end
+  
+  private
+  
+  def user_is_supervisor
+    if !view_context.supervisor?
+      flash[:alert] = t("restricted_to_supervisors")
+      redirect_to root_path
+    end
   end
 end

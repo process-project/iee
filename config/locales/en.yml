@@ -52,3 +52,4 @@ en:
   cannot_block_itself: You cannot block your own account
   all_approved: All pending users have been approved
   all_blocked: All non-supervisor and non-admin accounts have been blocked
+  restricted_to_supervisors: Only supervisors can perform this action
