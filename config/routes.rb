@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: redirect("profile/index")
+  root to: redirect("users/edit")
 
   get "account_confirmations/index", to: "account_confirmation#index"
   put "account_confirmations", to: "account_confirmation#approve_all"
