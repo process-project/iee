@@ -17,7 +17,7 @@
             = icon("exclamation-triangle")
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
-          %li= link_to(t("profile"), edit_user_registration_path)
+          %li= link_to(t("profile"), edit_user_registration_path, "data-url-alias": user_registration_url)
           - if supervisor?
             %li
               %a{href: url_for(account_confirmations_index_path)}
