@@ -24,10 +24,7 @@ class AccountConfirmationController < ApplicationController
   def approve_all
     logger.info "Approving all pending users by #{current_user.email}"
     
-    User.where(approved: false).each do |user|
-      user.approved = true
-      user.save
-    end
+    User.where(approved: false).update_all(approved: true)
     
     flash[:notice] = t("all_approved")
     
@@ -54,11 +51,11 @@ class AccountConfirmationController < ApplicationController
   def block_all
     logger.info "Blocking all non-supervisor and non-admin accounts by #{current_user.email}"
     
-    User.eager_load(:groups).where("groups.name NOT IN (?) OR groups.id IS NULL",
-        ["admin", "supervisor"]).each do |user|
-      user.approved = false
-      user.save
+    user_ids = User.eager_load(:groups).where("groups.name NOT IN (?) OR groups.id IS NULL",
+        ["admin", "supervisor"]).map do |user|
+      user.id
     end
+    User.where(id: user_ids).update_all(approved: false)
     
     flash[:notice] = t("all_blocked")
     
