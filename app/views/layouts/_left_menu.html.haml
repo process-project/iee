@@ -1,6 +1,6 @@
 .navbar.nav_title{style: "border: 0;"}
   = link_to root_path, class: 'site_title' do
-    %i.fa.fa-heartbeat{style: "color: red;"}
+    %i.fa.fa-heartbeat.logo
     = t("title")
 .clearfix
 
@@ -28,6 +28,16 @@
           %li= link_to('Sub1.1', root_path)
           %li= link_to('Sub1.2', root_path)
           %li= link_to('Sub1.3', root_path)
+      - if current_user.plgrid_login
+        %li
+          %a
+            = icon('cogs')
+            = t('plgrid')
+            %span.fa.fa-chevron-down
+          %ul.nav.child_menu
+            %li= link_to('PLGrid action 1', root_path)
+            %li= link_to('PLGrid action 2', root_path)
+            %li= link_to('PLGrid action 3', root_path)
 
 .sidebar-footer.hidden-small
   = render 'layouts/footer'

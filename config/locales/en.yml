@@ -9,6 +9,8 @@ en:
   remember_me: Remember me
   login: Log in
   forgot: Forgot your password?
+  login_with: Log in with
+  connect_to_plgrid: Connect to PLGrid
   new_to_site: New to site?
   create_account: Create account
   registration_form: Registration form
@@ -38,3 +40,4 @@ en:
   by: by
   logout: Logout
   profile: Profile
+  plgrid: PLGrid
