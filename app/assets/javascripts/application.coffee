@@ -4,6 +4,7 @@
 #= require turbolinks
 #= require bootstrap-sprockets
 #= require icheck
+#= require jquery.nicescroll
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.
 
