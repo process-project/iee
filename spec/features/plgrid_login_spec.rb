@@ -21,5 +21,23 @@ RSpec.feature 'PLGrid authentication' do
 
     expect(user.plgrid_login).to eq('plguser')
   end
+
+  scenario 'normal user account can connect to PLGrid no PLGRid section' do
+    user = create(:user)
+
+    sign_in_as(user)
+
+    expect(page).to have_content('Connect to PLGrid')
+    expect(page).to have_selector('a', text: 'PLGrid', match: :prefer_exact)
+  end
+
+  scenario 'PLGrid user sees PLGrid section' do
+    user = build(:plgrid_user)
+
+    plgrid_sign_in_as(user)
+
+    expect(page).to_not have_content('Connect to PLGrid')
+    expect(page).to have_selector('a', text: 'PLGrid', match: :prefer_exact)
+  end
 end
 

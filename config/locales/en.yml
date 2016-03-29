@@ -9,6 +9,8 @@ en:
   remember_me: Remember me
   login: Log in
   forgot: Forgot your password?
+  login_with: Log in with
+  connect_to_plgrid: Connect to PLGrid
   new_to_site: New to site?
   create_account: Create account
   registration_form: Registration form
@@ -53,3 +55,4 @@ en:
   all_approved: All pending users have been approved
   all_blocked: All non-supervisor and non-admin accounts have been blocked
   restricted_to_supervisors: Only supervisors can perform this action
+  plgrid: PLGrid
