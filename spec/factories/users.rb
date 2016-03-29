@@ -4,6 +4,7 @@ FactoryGirl.define do
     password '12345678'
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
+    approved true
 
     trait :plgrid do
       plgrid_login { Faker::Name.name }

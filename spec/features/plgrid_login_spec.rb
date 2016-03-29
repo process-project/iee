@@ -5,7 +5,7 @@ RSpec.feature 'PLGrid authentication' do
   include AuthenticationHelper
 
   scenario 'login' do
-    user = build(:plgrid_user)
+    user = create(:plgrid_user)
 
     plgrid_sign_in_as(user)
 
