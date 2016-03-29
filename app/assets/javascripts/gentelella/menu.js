@@ -46,8 +46,10 @@ $(function () {
 $(function () {
     var url = window.location;
     $('#sidebar-menu a[href="' + url + '"]').parent('li').addClass('current-page');
-    $('#sidebar-menu a').filter(function () {
-        return this.href == url;
+    $('#sidebar-menu a').filter(function() {
+    	var $a = $(this);
+    	
+        return this.href == url || url.toString().endsWith($a.attr("data-url-alias"));
     }).parent('li').addClass('current-page').parent('ul').slideDown().parent().addClass('active');
 });
 /** ******  /left menu  *********************** **/
