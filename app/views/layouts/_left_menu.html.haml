@@ -13,12 +13,12 @@
         %a
           = icon("sliders")
           = t("settings")
-          - if @user_confirmations and supervisor?
+          - if @user_confirmations && policy(:admin).manage_users?
             = icon("exclamation-triangle")
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
           %li= link_to(t("profile"), edit_user_registration_path, "data-url-alias": user_registration_url)
-          - if supervisor?
+          - if policy(:admin).manage_users?
             %li
               %a{href: url_for(account_confirmations_index_path)}
                 = t("user_confirmation")
@@ -31,7 +31,7 @@
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
           %li= link_to('Sub1.1', "/a")
-      - if current_user.plgrid_login
+      - if policy(:plgrid).show?
         %li
           %a
             = icon('cogs')
