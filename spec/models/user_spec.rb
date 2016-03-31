@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User do
+  it { should have_many(:permissions).dependent(:destroy) }
+
   context 'plgrid login' do
     let(:auth) do
       double(info: double(nickname: 'plguser',
