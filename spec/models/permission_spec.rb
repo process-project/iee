@@ -11,7 +11,7 @@ RSpec.describe Permission do
     it { should validate_presence_of(:group) }
   end
 
-  context 'if no user' do
+  context 'if no group' do
     before { allow(subject).to receive(:group).and_return(nil) }
     it { should validate_presence_of(:user) }
   end
