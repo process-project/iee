@@ -1,0 +1,2 @@
+class PdpController < ApplicationController
+end
