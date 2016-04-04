@@ -20,3 +20,7 @@
 
 # Ignore local puma configuration
 /config/puma.rb
+
+# Ignore Rubymine project files
+/.idea
+
