@@ -10,11 +10,11 @@
           %a.user-profile.dropdown-toggle{ href: 'javascript:;', 'data-toggle' => 'dropdown', 'aria-expanded' => false }
             = current_user.name
             %span.fa.fa-angle-down
-            %ul.dropdown-menu.dropdown-usermenu.fadeInDown.pull-right
-              - unless current_user.plgrid_login
-                %li= link_to(t('connect_to_plgrid'), user_omniauth_authorize_path(:open_id))
-              %li= link_to t('profile'), edit_user_registration_path
-              %li
-                = link_to destroy_user_session_path, method: :delete do
-                  = icon('sign-out', class: 'pull-right')
-                  = t('logout')
+          %ul.dropdown-menu.dropdown-usermenu.fadeInDown.pull-right
+            - unless current_user.plgrid_login
+              %li= link_to(t('connect_to_plgrid'), user_omniauth_authorize_path(:open_id))
+            %li= link_to t('profile'), edit_user_registration_path
+            %li
+              = link_to destroy_user_session_path, method: :delete do
+                = icon('sign-out', class: 'pull-right')
+                = t('logout')
