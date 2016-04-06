@@ -1,0 +1,15 @@
+defaults: &defaults
+  jwt:
+    key: <%= Rails.root.join('config', 'jwt', 'dev.pem') %>
+    key_algorithm: ES256
+
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  jwt_key: <%= Rails.root.join('config', 'jwt', 'prod.pem') %>

@@ -24,6 +24,7 @@ gem 'simple_form'
 gem 'devise'
 gem 'pundit'
 gem 'omniauth-openid'
+gem 'jwt'
 
 gem 'puma'
 
