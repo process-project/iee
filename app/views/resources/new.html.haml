@@ -1,0 +1,17 @@
+%div#wrapper
+  %div#login
+    %section.login_content
+      = simple_form_for(resource) do |f|
+        %h1= t("new_resource_form")
+        = f.error_notification
+        %div
+          = f.input_field :name, required: true, class: form_input_class(:name),
+            placeholder: t("resource_name")
+          - show_field_errors(:name)
+        %div
+          = f.input_field :uri, required: true, class: form_input_class(:uri),
+            placeholder: t("resource_uri")
+          - show_field_errors(:uri)
+        %div
+          %button.btn.btn-default.submit
+            = t("new_resource_submit")

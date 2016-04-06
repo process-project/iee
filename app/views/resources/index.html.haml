@@ -1,0 +1,24 @@
+%h1
+  = t("resources")
+  %a{href: url_for(new_resource_path), title: t("new_resource_title"), class: "new-icon"}
+    = icon("plus")
+- if @resources.exists?
+  %table.table
+    %thead
+      %tr
+        %th= t("resource_name")
+        %th= t("resource_uri")
+        %th
+      - @resources.each do |resource|
+        %tr
+          %td= resource.name
+          %td= resource.uri
+          %td
+            = link_to(new_permission_path(resource_id: resource.id),
+                title: t("edit_permissions_title")) do
+              = icon("edit")
+            = link_to(resource_path(resource), title: t("remove_resource_title"), method: :delete,
+                data: {confirm: t("are_you_sure")}) do
+              = icon("remove")
+- else
+  %p= t("no_resources")
