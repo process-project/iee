@@ -6,26 +6,30 @@
           %h1= t("registration_form")
           = f.error_notification
           %div
-            = f.input_field :first_name, required: true, class: form_input_class(:first_name),
+            = f.input_field :first_name, required: true,
+              class: form_input_class(:first_name, resource),
               placeholder: t("first_name")
-            - show_field_errors(:first_name)
+            - show_field_errors(:first_name, resource)
           %div
-            = f.input_field :last_name, required: true, class: form_input_class(:last_name),
+            = f.input_field :last_name, required: true,
+              class: form_input_class(:last_name, resource),
               placeholder: t("last_name")
-            - show_field_errors(:last_name)
+            - show_field_errors(:last_name, resource)
           %div
-            = f.input_field :email, required: true, class: form_input_class(:email),
+            = f.input_field :email, required: true,
+              class: form_input_class(:email, resource),
               placeholder: t("email")
-            - show_field_errors(:email)
+            - show_field_errors(:email, resource)
           %div
-            = f.input_field :password, required: true, class: form_input_class(:password),
+            = f.input_field :password, required: true,
+              class: form_input_class(:password, resource),
               placeholder: t("password")
-            - show_field_errors(:password)
+            - show_field_errors(:password, resource)
           %div
             = f.input_field :password_confirmation, required: true,
-              class: form_input_class(:password_confirmation),
+              class: form_input_class(:password_confirmation, resource),
               placeholder: t("confirmation_password")
-            - show_field_errors(:password_confirmation)
+            - show_field_errors(:password_confirmation, resource)
           %div
             %button.btn.btn-default.submit
               = t("register")
