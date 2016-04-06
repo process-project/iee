@@ -1,0 +1,35 @@
+%br
+- if @patients.blank?
+  .row
+    .alert.alert-info
+      = t '.nothing'
+
+.row.top_tiles
+
+  - @patients.each do |patient|
+    .col-lg-3.col-md-3.col-sm-6.col-xs-12
+      .tile-stats
+        = link_to patient do
+          .icon
+            %i.fa.fa-heart
+          .count= patient.case_number
+
+          %h3= "#{t '.files'}: #{patient.data_files.count}"
+          .col-md-12.col-sm-12.col-xs-6
+            %div
+              = succeed ':' do
+                = t '.progress'
+              %strong
+                = t "patient.procedure_status.#{patient.procedure_status}"
+              %div
+                .progress.progress_sm
+                  .progress-bar.bg-green(role="progressbar" style="width: #{procedure_progress(patient)}")
+
+  .col-lg-3.col-md-3.col-sm-6.col-xs-12
+    .tile-stats.tile-new-patient.bg-blue
+      = link_to new_patient_path do
+        .icon
+          %i.fa.fa-plus
+        .count= t '.new'
+
+        %h3= t '.add'

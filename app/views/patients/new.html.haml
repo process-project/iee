@@ -1,0 +1,32 @@
+%br
+.row
+  .col-md-12.col-sm-12.col-xs-12
+    .x_panel
+      .x_title
+        %h2
+          = t '.title'
+          %small= t '.subtitle'
+        .clearfix
+
+      .x_content
+        %br
+        = simple_form_for(@patient, html: { class: 'form-horizontal form-label-left' }) do |f|
+
+          .form-group
+            .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
+              = f.error_notification
+
+          .form-group
+            = f.label :case_number, class: 'control-label col-md-3 col-sm-3 col-xs-12'
+
+            .col-md-6.col-sm-6.col-xs-12
+              = f.input_field :case_number, required: true, autofocus: true,
+                              class: "col-md-7 col-xs-12 #{form_input_class(:case_number, @patient)}"
+              - show_field_errors(:case_number, @patient)
+
+          .ln_solid
+
+          .form-group
+            .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
+              = link_to t('cancel'), patients_path, class: 'btn btn-primary'
+              = f.submit t('register'), class: 'btn btn-success'

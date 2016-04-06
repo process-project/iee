@@ -1,0 +1,35 @@
+%br
+.row
+  .col-md-12.col-sm-12.col-xs-12
+    .x_panel
+      .x_title
+        %h2
+          = @patient.case_number
+          %small= t '.subtitle'
+        %span.pull-right
+          = link_to t('.remove'), patient_path(@patient), method: :delete,
+            data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
+          = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
+        .clearfix
+
+      .x_content
+        %section.content
+          %h3= t '.files'
+          .row
+            - if @patient.data_files.blank?
+              .alert.alert-info= t '.nothing'
+
+            - else
+              .col-xs-12.table
+                %table.table.table-striped
+                  %thead
+                    %tr
+                      %th= t 'data_file.name'
+                      %th= t 'data_file.data_type'
+
+                  %tbody
+                    - @patient.data_files.each do |df|
+                      %tr
+                        %td= df.name
+                        %td= df.data_type
+                        %td= t '.download'
