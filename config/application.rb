@@ -34,5 +34,11 @@ module Vapor
     
     # Separate controller helpers to avoid conflicts
     config.action_controller.include_all_helpers = false
+
+    config.constants = config_for(:application)
+
+    config.jwt_key =
+      OpenSSL::PKey::EC.new(File.read(config.constants['jwt']['key']))
+    config.jwt_key_algorithm = config.constants['jwt']['key_algorithm']
   end
 end
