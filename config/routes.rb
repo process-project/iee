@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'permissions/create'
+
+  get 'resources/index'
+
   root to: redirect("users/edit")
 
   get "account_confirmations/index", to: "account_confirmation#index"
@@ -11,4 +15,8 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :pdp, only: :index
+  
+  resources :resources, except: [:show, :update, :edit]
+  
+  resources :permissions, only: [:new, :create, :destroy]
 end

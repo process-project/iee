@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+  
+  scope :approved, -> { where(approved: true) }
 
   def self.from_plgrid_omniauth(auth)
     find_or_initialize_by(plgrid_login: auth.info.nickname).tap do |user|
@@ -52,6 +54,10 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+  
+  def owns_resource?(resource)
+    resource.permissions.where(user_id: id).exists?
   end
 
   def token

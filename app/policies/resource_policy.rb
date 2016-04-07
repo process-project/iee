@@ -1,22 +1,35 @@
-class ResourcePolicy
-  def initialize(user, resource)
-    @user = user
-    @resource = resource
+class ResourcePolicy < ApplicationPolicy
+  class Scope < ApplicationPolicy::ApplicationScope
+    def resolve
+      scope.joins(permissions: [:action, :user])
+        .where(actions: {name: "manage"})
+        .where(users: {id: user.id})
+    end
   end
 
   def permit?(action_name)
     permissions(action_name).count > 0
   end
+  
+  def permitted_attributes
+    if user.owns_resource?(record) || record.new_record?
+      [:name, :uri]
+    else
+      []
+    end
+  end
+  
+  def destroy?
+    user.owns_resource?(record)
+  end
 
   private
-
-  attr_reader :user, :resource
 
   def permissions(action_name)
     Permission.joins(:action).
       includes(group: :user_groups).references(group: :user_groups).
       where("permissions.user_id = :id OR user_groups.user_id = :id", id: user.id).
-      where(resource_id: resource.id).
+      where(resource_id: record.id).
       where("actions.name = :name OR actions.name = 'manage'", name: action_name)
   end
 end

@@ -48,8 +48,19 @@ $(function () {
     $('#sidebar-menu a[href="' + url + '"]').parent('li').addClass('current-page');
     $('#sidebar-menu a').filter(function() {
     	var $a = $(this);
+    	var result = (this.href == url);
     	
-        return this.href == url || url.toString().endsWith($a.attr("data-url-alias"));
+    	if (!result && $a.attr("data-url-alias") != null) {
+    		var urlAliases = $a.attr("data-url-alias").split(",");
+    		
+    		for (var i = 0; i < urlAliases.length; i++) {
+    			if (url.pathname.endsWith(urlAliases[i])) {
+    				result = true;
+    			}
+    		}
+    	}
+    	
+    	return result;
     }).parent('li').addClass('current-page').parent('ul').slideDown().parent().addClass('active');
 });
 /** ******  /left menu  *********************** **/
