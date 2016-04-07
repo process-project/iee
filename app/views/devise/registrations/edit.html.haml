@@ -26,6 +26,8 @@
             placeholder: t("current_password"), hint: t("current_password_hint")
           - show_field_errors(resource, :current_password)
         %div
+          %textarea.form-control{ rows: 7 }= resource.token
+        %div
           %button.btn.btn-default.submit
             = t("edit_registration_submit")
         %div.clearfix
