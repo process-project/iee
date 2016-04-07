@@ -11,14 +11,8 @@ class ResourcesController < ApplicationController
     
     @resource.transaction do
       if @resource.save
-        permission = Permission.new
-        permission.user = current_user
-        permission.resource = @resource
-        permission.action = Action.find_by(name: "manage")
-        permission.save
-        
-        @resource.permissions << permission
-        @resource.save
+        @resource.permissions.create!(user: current_user, resource: @resource,
+          action: Action.find_by(name: "manage"))
       end
     end
     

@@ -35,6 +35,16 @@ class PermissionsController < ApplicationController
     end
   end
   
+  def destroy
+    permission = Permission.find_by(id: params[:id])
+    
+    if permission
+      permission.destroy
+    end
+    
+    redirect_to new_permission_path(resource_id: params[:resource_id])
+  end
+  
   private
   
   def set_other_fields
@@ -45,14 +55,13 @@ class PermissionsController < ApplicationController
     @user_permissions = {}
     User.joins(permissions: :resource).includes(permissions: :action)
         .where(resources: {id: @resource.id}).each do |user|
-      @user_permissions[user.email] = user.permissions.map { |permission| permission.action.name }  
+      @user_permissions[user.email] = user.permissions 
     end
     
     @group_permissions = {}
     Group.joins(permissions: :resource).includes(permissions: :action)
         .where(resources: {id: @resource.id}).each do |group|
-      @group_permissions[group.name] = group.permissions.map { |permission|
-        permission.action.name }
+      @group_permissions[group.name] = group.permissions
     end
   end
   

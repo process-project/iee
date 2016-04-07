@@ -13,24 +13,32 @@
         - if !@user_permissions.empty?
           %table.table
             %tbody
-              - @user_permissions.each do |email, actions|
+              - @user_permissions.each do |email, permissions|
                 %tr
                   %td= email
                   %td
-                    - actions.each do |action|
-                      %span.label.label-primary= action
+                    - permissions.each do |permission|
+                      %span.label.label-primary
+                        = permission.action.name
+                        = link_to(permission_path(permission.id, resource_id: @resource.id),
+                          method: :delete, data: { confirm: t("are_you_sure") }) do
+                          = icon("remove", class: "fa-white")
         - else
           %p= t("no_user_permissions")
         %h5= t("group_resource_permissions")
         - if !@group_permissions.empty?
           %table.table
             %tbody
-              - @group_permissions.each do |name, actions|
+              - @group_permissions.each do |name, permissions|
                 %tr
                   %td= name
                   %td
-                    - actions.each do |action|
-                      %span.label.label-primary= action
+                    - permissions.each do |permission|
+                      %span.label.label-primary
+                        = permission.action.name
+                        = link_to(permission_path(permission.id, resource_id: @resource.id),
+                          method: :delete, data: { confirm: t("are_you_sure") }) do
+                          = icon("remove", class: "fa-white")
         - else
           %p= t("no_group_permissions")
         %h5{title: t("user_or_group")}

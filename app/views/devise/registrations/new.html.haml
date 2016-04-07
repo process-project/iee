@@ -12,7 +12,7 @@
           %div
             = f.input_field :last_name, required: true,
                 class: form_input_class(resource, :last_name), placeholder: t("last_name")
-            - show_field_errors(resource,:last_name)
+            - show_field_errors(resource, :last_name)
           %div
             = f.input_field :email, required: true, class: form_input_class(resource, :email),
               placeholder: t("email")
