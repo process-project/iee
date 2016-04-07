@@ -6,25 +6,26 @@
         %h1= t("edit_form", who: resource_name.to_s.humanize)
         = f.error_notification
         %div
-          = f.input_field :email, required: true, class: form_input_class(:email, resource),
+          = f.input_field :email, required: true, class: form_input_class(resource, :email),
             placeholder: t("email")
-          - show_field_errors(:email, resource)
+          - show_field_errors(resource, :email)
         - if devise_mapping.confirmable? && resource.pending_reconfirmation?
           %p= t("account_confirmation", email: resource.unconfirmed_email)
         %div
-          = f.input_field :password, required: false, class: form_input_class(:password, resource),
+          = f.input_field :password, required: false,
+            class: form_input_class(resource, :password),
             placeholder: t("password"), autocomplete: "off", hint: t("password_leave_blank")
-          - show_field_errors(:password, resource)
+          - show_field_errors(resource, :password)
         %div
           = f.input_field :password_confirmation, required: false,
-            class: form_input_class(:password_confirmation, resource),
+            class: form_input_class(resource, :password_confirmation),
             placeholder: t("confirmation_password")
-          - show_field_errors(:password_confirmation, resource)
+          - show_field_errors(resource, :password_confirmation)
         %div
           = f.input_field :current_password, required: true,
-            class: form_input_class(:current_password, resource),
+            class: form_input_class(resource, :current_password),
             placeholder: t("current_password"), hint: t("current_password_hint")
-          - show_field_errors(:current_password, resource)
+          - show_field_errors(resource, :current_password)
         %div
           %button.btn.btn-default.submit
             = t("edit_registration_submit")

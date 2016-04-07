@@ -21,8 +21,8 @@
 
             .col-md-6.col-sm-6.col-xs-12
               = f.input_field :case_number, required: true, autofocus: true,
-                              class: "col-md-7 col-xs-12 #{form_input_class(:case_number, @patient)}"
-              - show_field_errors(:case_number, @patient)
+                              class: "col-md-7 col-xs-12 #{form_input_class(@patient, :case_number)}"
+              - show_field_errors(@patient, :case_number)
 
           .ln_solid
 
