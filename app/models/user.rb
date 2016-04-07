@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.from_token(token)
+    User.find_by(email: User.token_data(token)[0]['email'])
+  end
+
   def plgrid_connect(auth)
     tap { update_attribute(:plgrid_login, auth.info.nickname) }
   end
@@ -48,5 +52,18 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def token
+    JWT.encode({ name: name, email: email },
+               Vapor::Application.config.jwt_key,
+               Vapor::Application.config.jwt_key_algorithm)
+  end
+
+  private
+
+  def self.token_data(token)
+    JWT.decode(token, Vapor::Application.config.jwt_key, true,
+               algorithm: Vapor::Application.config.jwt_key_algorithm)
   end
 end

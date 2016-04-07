@@ -25,4 +25,12 @@ RSpec.describe User do
       expect(user.last_name).to eq('Do Doe')
     end
   end
+
+  context 'jwt' do
+    it 'generates and find users using jwt' do
+      u = create(:user)
+
+      expect(User.from_token(u.token).id). to eq(u.id)
+    end
+  end
 end
