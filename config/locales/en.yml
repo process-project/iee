@@ -57,3 +57,27 @@ en:
   all_blocked: All non-supervisor and non-admin accounts have been blocked
   restricted_to_supervisors: Only supervisors can perform this action
   plgrid: PLGrid
+  administration: Administration
+  resources: Web resources
+  no_resources: No web resources
+  resource_name: Resource name
+  resource_uri: Resource URI
+  new_resource_title: Create new resource
+  new_permission_submit: Add permission
+  new_resource_form: New web resource
+  remove_resource_title: Remove this resource
+  edit_permissions_title: Edit permissions
+  edit_resource_form: Edit resource
+  user_resource_permissions: User permissions
+  group_resource_permissions: Group permissions
+  resource_not_found: Resource could not be found
+  no_user_permissions: No user permissions were set
+  no_group_permissions: No group permissions were set
+  select_user: Select user
+  select_group: Select group
+  permissions: Permissions
+  add_permission: Add permission
+  user_or_group: Pick user or group
+  either_user_or_group: Either user or group has to be chosen
+  missing_action: Action has to be chosen
+  new_resource_submit: Create resource

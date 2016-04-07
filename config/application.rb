@@ -31,6 +31,9 @@ module Vapor
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # Separate controller helpers to avoid conflicts
+    config.action_controller.include_all_helpers = false
 
     config.constants = config_for(:application)
 

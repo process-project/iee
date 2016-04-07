@@ -37,3 +37,24 @@ body.nav-md .container.body .left_col {
 table.users th, table.users td {
   width: 25%;
 }
+
+.new-icon, .new-icon:hover {
+  color: green;
+}
+
+.radios {
+  text-align: left;
+  padding-left: 30px;
+}
+
+div.vertical-space {
+  margin-bottom: 10px;
+}
+
+form#new_permission span.label {
+  display: inline-block;
+}
+
+.fa-white {
+  color: white;
+}

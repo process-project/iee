@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'permissions/create'
+
+  get 'resources/index'
+
   root to: redirect("users/edit")
 
   get "account_confirmations/index", to: "account_confirmation#index"
@@ -12,4 +16,8 @@ Rails.application.routes.draw do
 
   resources :patients, except: [:edit, :update]
   resources :pdp, only: :index
+  
+  resources :resources, except: [:show, :update, :edit]
+  
+  resources :permissions, only: [:new, :create, :destroy]
 end
