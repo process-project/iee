@@ -17,3 +17,8 @@ en:
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case
+    create:
+      success: New patient case added.
+    destroy:
+      success: Patient case %{case_number} was removed.
+      failure: Unable to remove patient case %{case_number}.

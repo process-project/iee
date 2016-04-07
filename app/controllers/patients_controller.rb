@@ -16,7 +16,7 @@ class PatientsController < ApplicationController
     @patient = Patient.create(create_params)
 
     if @patient.valid?
-      redirect_to @patient, notice: 'New patient case added.'
+      redirect_to @patient, notice: I18n.t('patients.create.success')
     else
       render :new
     end
@@ -26,9 +26,13 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
 
     if @patient.destroy
-      redirect_to patients_path, notice: "Patient case #{@patient.case_number} was removed."
+      redirect_to patients_path,
+                  notice: I18n.t('patients.destroy.success',
+                                 case_number: @patient.case_number)
     else
-      render :show, notice: "Unable to remove patient case #{@patient.case_number}."
+      render :show,
+             notice: I18n.t('patients.destroy.failure',
+                            case_number: @patient.case_number)
     end
   end
 
