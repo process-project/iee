@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   
   def owns_resource?(resource)
     resource.permissions.where(user_id: id).exists?
+  end
 
   def token
     JWT.encode({ name: name, email: email },
