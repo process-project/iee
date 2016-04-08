@@ -7,18 +7,22 @@
           = f.error_notification
           %div
             = f.input_field :first_name, required: true,
-                class: form_input_class(resource, :first_name), placeholder: t("first_name")
+              class: form_input_class(resource, :first_name),
+              placeholder: t("first_name")
             - show_field_errors(resource, :first_name)
           %div
             = f.input_field :last_name, required: true,
-                class: form_input_class(resource, :last_name), placeholder: t("last_name")
+              class: form_input_class(resource, :last_name),
+              placeholder: t("last_name")
             - show_field_errors(resource, :last_name)
           %div
-            = f.input_field :email, required: true, class: form_input_class(resource, :email),
+            = f.input_field :email, required: true,
+              class: form_input_class(resource, :email),
               placeholder: t("email")
             - show_field_errors(resource, :email)
           %div
-            = f.input_field :password, required: true, class: form_input_class(resource, :password),
+            = f.input_field :password, required: true,
+              class: form_input_class(resource, :password),
               placeholder: t("password")
             - show_field_errors(resource, :password)
           %div

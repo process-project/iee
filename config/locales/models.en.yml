@@ -1,0 +1,11 @@
+en:
+  patient:
+    menu_item: Patients
+    procedure_status:
+      not_started: Not yet started
+      imaging_uploaded: Imaging ready
+      virtual_model_ready: Virtual model ready
+      after_blood_flow_simulation: Simulation completed
+  data_file:
+    name: File name
+    data_type: Data type

@@ -10,6 +10,10 @@
   .menu_section
     %ul.nav.side-menu
       %li
+        %a(href=patients_path)
+          = icon("heart")
+          = t("patient.menu_item")
+      %li
         %a
           = icon("sliders")
           = t("settings")

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331113315) do
+ActiveRecord::Schema.define(version: 20160404102248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,11 +22,33 @@ ActiveRecord::Schema.define(version: 20160331113315) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "data_files", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "handle"
+    t.integer  "data_type",  null: false
+    t.integer  "patient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "data_files", ["data_type"], name: "index_data_files_on_data_type", using: :btree
+  add_index "data_files", ["patient_id"], name: "index_data_files_on_patient_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "patients", force: :cascade do |t|
+    t.string   "case_number",                  null: false
+    t.integer  "procedure_status", default: 0, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "patients", ["case_number"], name: "index_patients_on_case_number", using: :btree
+  add_index "patients", ["procedure_status"], name: "index_patients_on_procedure_status", using: :btree
 
   create_table "permissions", force: :cascade do |t|
     t.integer  "group_id"
@@ -85,4 +107,5 @@ ActiveRecord::Schema.define(version: 20160331113315) do
   add_index "users", ["plgrid_login"], name: "index_users_on_plgrid_login", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "data_files", "patients"
 end

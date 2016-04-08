@@ -8,9 +8,9 @@
           = f.error_notification
           %div
             = f.input_field :email, required: true, autofocus: true,
-              class: form_input_class(:email),
+              class: form_input_class(resource, :email),
               placeholder: t("email")
-            - show_field_errors(:email)
+            - show_field_errors(resource, :email)
           %div
             %button.btn.btn-default.submit
               = t("submit_forgot_password")
