@@ -68,17 +68,24 @@ en:
   remove_resource_title: Remove this resource
   edit_permissions_title: Edit permissions
   edit_resource_form: Edit resource
-  user_resource_permissions: User permissions
-  group_resource_permissions: Group permissions
+  user_resource_permissions: Permissions for user
+  group_resource_permissions: Permissions for group
   resource_not_found: Resource could not be found
   no_user_permissions: No user permissions were set
   no_group_permissions: No group permissions were set
   select_user: Select user
   select_group: Select group
-  permissions: Permissions
-  add_permission: Add permission
+  permissions: "%{name} (%{uri})"
+  add_permission: Add new permission
   user_or_group: Pick user or group
   either_user_or_group: Either user or group has to be chosen
   missing_action: Action has to be chosen
   new_resource_submit: Create resource
+  manage_permissions: Manage permissions of your web resource
+  permissions_list: List of permissions
+  back_to_resources: Go back to the resource list
+  pick_user: Pick user
+  pick_group: Pick group
+  pick_action: Pick action
+  new_resource_subtitle: Create new web resource
   welcome: Welcome,

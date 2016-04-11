@@ -1,64 +1,85 @@
-%div#wrapper
-  %div#login
-    %section.login_content
-      = simple_form_for(@permission) do |f|
-        %h1= t("permissions")
-        %p
-          %strong
-            #{t("resource_name")}: #{@resource.name}
-        %p
-          %strong
-            #{t("resource_uri")}: #{@resource.uri}
-        %h5= t("user_resource_permissions")
-        - if !@user_permissions.empty?
-          %table.table
-            %tbody
-              - @user_permissions.each do |email, permissions|
+.row
+  .col-md-12
+    .x_panel
+      .x_title
+        %h2
+          = t("permissions", name: @resource.name, uri: @resource.uri)
+          %small= t("manage_permissions")
+        %ul.nav.navbar-right.panel_toolbox
+          %li
+            = link_to(resources_path) do
+              = icon("hand-o-left", title: t("back_to_resources"))
+        .clearfix
+      .x_content
+        = simple_form_for(@permission, html: { class: "form-horizontal form-label-left" }) do |f|
+          - if !@user_permissions.empty?
+            %table.table.permissions
+              %thead
                 %tr
-                  %td= email
-                  %td
-                    - permissions.each do |permission|
-                      %span.label.label-primary
-                        = permission.action.name
-                        = link_to(permission_path(permission.id, resource_id: @resource.id),
-                          method: :delete, data: { confirm: t("are_you_sure") }) do
-                          = icon("remove", class: "fa-white")
-        - else
-          %p= t("no_user_permissions")
-        %h5= t("group_resource_permissions")
-        - if !@group_permissions.empty?
-          %table.table
-            %tbody
-              - @group_permissions.each do |name, permissions|
+                  %th= t("user_resource_permissions")
+                  %th= t("permissions_list")
+              %tbody
+                - @user_permissions.each do |email, permissions|
+                  %tr
+                    %td= email
+                    %td
+                      - permissions.each do |permission|
+                        %span.label.label-primary
+                          = permission.action.name
+                          = link_to(permission_path(permission.id, resource_id: @resource.id),
+                            method: :delete, data: { confirm: t("are_you_sure") }) do
+                            = icon("remove", class: "fa-white")
+          - else
+            %p= t("no_user_permissions")
+          - if !@group_permissions.empty?
+            %table.table.permissions
+              %thead
                 %tr
-                  %td= name
-                  %td
-                    - permissions.each do |permission|
-                      %span.label.label-primary
-                        = permission.action.name
-                        = link_to(permission_path(permission.id, resource_id: @resource.id),
-                          method: :delete, data: { confirm: t("are_you_sure") }) do
-                          = icon("remove", class: "fa-white")
-        - else
-          %p= t("no_group_permissions")
-        %h5{title: t("user_or_group")}
-          = t("add_permission")
-          = icon("info")
-        = f.error_notification
-        %div
-          = f.input_field :resource_id, as: :hidden, value: @resource.id
-        %div.vertical-space
-          = f.input_field :user_id, class: form_input_class(@permission, :user_id),
-              collection: @users, label_method: :email, prompt: t("select_user")
-          - show_field_errors(@permission, :user_id)
-        %div.vertical-space
-          = f.input_field :group_id, class: form_input_class(@permission, :group_id),
-              collection: @groups, prompt: t("select_group")
-          - show_field_errors(@permission, :group_id)
-        %div.radios
-          = f.input_field :action_id, class: form_input_class(@permission, :action_id),
-              collection: @actions, as: :radio_buttons
-          - show_field_errors(@permission, :action_id)
-        %div
-          %button.btn.btn-default.submit
-            = t("new_permission_submit")
+                  %th= t("group_resource_permissions")
+                  %th= t("permissions_list")
+              %tbody
+                - @group_permissions.each do |name, permissions|
+                  %tr
+                    %td= name
+                    %td
+                      - permissions.each do |permission|
+                        %span.label.label-primary
+                          = permission.action.name
+                          = link_to(permission_path(permission.id, resource_id: @resource.id),
+                            method: :delete, data: { confirm: t("are_you_sure") }) do
+                            = icon("remove", class: "fa-white")
+          - else
+            %p= t("no_group_permissions")
+          .col-md-6.col-md-offset-3
+            %h5{title: t("user_or_group")}
+              = t("add_permission")
+              = icon("info")
+            = f.error_notification
+          .form-group
+            = f.input_field :resource_id, as: :hidden, value: @resource.id
+          .form-group
+            %label.control-label.col-md-3
+              = t("pick_user")
+            .col-md-6
+              = f.input_field :user_id, class: form_input_class(@permission, :user_id),
+                  collection: @users, label_method: :email, prompt: t("select_user")
+              - show_field_errors(@permission, :user_id)
+          .form-group
+            %label.control-label.col-md-3
+              = t("pick_group")
+            .col-md-6
+              = f.input_field :group_id, class: form_input_class(@permission, :group_id),
+                  collection: @groups, prompt: t("select_group")
+              - show_field_errors(@permission, :group_id)
+          .form-group
+            %label.control-label.col-md-3
+              = t("pick_action")
+            .col-md-6
+              = f.input_field :action_id, class: form_input_class(@permission, :action_id),
+                  collection: @actions, as: :radio_buttons
+              - show_field_errors(@permission, :action_id)
+          .ln_solid
+          .form-group
+            .col-md-6.col-md-offset-3
+              %button.btn.btn-default.submit
+                = t("new_permission_submit")
