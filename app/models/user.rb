@@ -66,14 +66,14 @@ class User < ActiveRecord::Base
 
   def token
     JWT.encode({ name: name, email: email },
-               Vapor::Application.config.jwt_key,
-               Vapor::Application.config.jwt_key_algorithm)
+               Vapor::Application.config.jwt.key,
+               Vapor::Application.config.jwt.key_algorithm)
   end
 
   private
 
   def self.token_data(token)
-    JWT.decode(token, Vapor::Application.config.jwt_key, true,
-               algorithm: Vapor::Application.config.jwt_key_algorithm)
+    JWT.decode(token, Vapor::Application.config.jwt.key, true,
+               algorithm: Vapor::Application.config.jwt.key_algorithm)
   end
 end

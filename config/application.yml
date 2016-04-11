@@ -2,6 +2,8 @@ defaults: &defaults
   jwt:
     key: <%= Rails.root.join('config', 'jwt', 'dev.pem') %>
     key_algorithm: ES256
+    expiration_time: 3600
+    issuer: 'EurValve Portal'
 
 
 development:

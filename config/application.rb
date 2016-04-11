@@ -11,6 +11,8 @@ require "action_view/railtie"
 require "sprockets/railtie"
 #require "rails/test_unit/railtie" #rspec used instead
 
+require File.expand_path('lib/jwt/config')
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -37,8 +39,6 @@ module Vapor
 
     config.constants = config_for(:application)
 
-    config.jwt_key =
-      OpenSSL::PKey::EC.new(File.read(config.constants['jwt']['key']))
-    config.jwt_key_algorithm = config.constants['jwt']['key_algorithm']
+    config.jwt = Jwt::Config.new(config.constants['jwt'])
   end
 end
