@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'resources/index'
 
-  root to: redirect("users/edit")
+  root to: 'home#index'
 
   get "account_confirmations/index", to: "account_confirmation#index"
   put "account_confirmations", to: "account_confirmation#approve_all"
@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
   resources :patients, except: [:edit, :update]
   resources :pdp, only: :index
-  
+
   resources :resources, except: [:show, :update, :edit]
-  
+
   resources :permissions, only: [:new, :create, :destroy]
 end
