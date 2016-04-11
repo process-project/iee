@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Gravtastic
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -10,13 +12,15 @@ class User < ActiveRecord::Base
          :omniauthable,
          omniauth_providers: [:open_id]
 
+  gravtastic default: 'mm'
+
   has_many :user_groups
   has_many :groups, through: :user_groups
   has_many :permissions, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  
+
   scope :approved, -> { where(approved: true) }
 
   def self.from_plgrid_omniauth(auth)
@@ -55,7 +59,7 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
-  
+
   def owns_resource?(resource)
     resource.permissions.where(user_id: id).exists?
   end

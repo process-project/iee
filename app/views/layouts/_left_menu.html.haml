@@ -2,8 +2,14 @@
   = link_to root_path, class: 'site_title' do
     %i.fa.fa-heartbeat.logo
     = t("title")
-.clearfix
 
+.profile
+  .profile_pic
+    = image_tag current_user.gravatar_url(size: 56), class: 'img-circle profile_img'
+  .profile_info
+    %span= t('welcome')
+    %h2= current_user.name
+.clearfix
 %br
 
 #sidebar-menu.main_menu_side.hidden-print.main_menu
