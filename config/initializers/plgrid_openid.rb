@@ -14,9 +14,9 @@ Devise.setup do |config|
                   required: [
                     AX[:email],
                     AX[:name],
-                    # AX[:proxy],
-                    # AX[:userCert],
-                    # AX[:proxyPrivKey],
+                    AX[:proxy],
+                    AX[:userCert],
+                    AX[:proxyPrivKey],
                     AX[:POSTresponse]
                   ]
 
