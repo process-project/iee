@@ -65,9 +65,15 @@ class User < ActiveRecord::Base
   end
 
   def token
-    JWT.encode({ name: name, email: email },
-               Vapor::Application.config.jwt.key,
-               Vapor::Application.config.jwt.key_algorithm)
+    JWT.encode(
+        {
+            name: name,
+            email: email,
+            iss: Rails.configuration.jwt.issuer
+        },
+        Vapor::Application.config.jwt.key,
+        Vapor::Application.config.jwt.key_algorithm
+    )
   end
 
   private
