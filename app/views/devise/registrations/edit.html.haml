@@ -12,7 +12,8 @@
         - if devise_mapping.confirmable? && resource.pending_reconfirmation?
           %p= t("account_confirmation", email: resource.unconfirmed_email)
         %div
-          = f.input_field :password, required: false, class: form_input_class(resource, :password),
+          = f.input_field :password, required: false,
+            class: form_input_class(resource, :password),
             placeholder: t("password"), autocomplete: "off", hint: t("password_leave_blank")
           - show_field_errors(resource, :password)
         %div
