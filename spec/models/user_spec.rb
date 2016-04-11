@@ -7,7 +7,10 @@ RSpec.describe User do
     let(:auth) do
       double(info: double(nickname: 'plguser',
                           email: 'a@b.c',
-                          name: 'John Do Doe'))
+                          name: 'John Do Doe',
+                          proxy: 'a',
+                          proxyPrivKey: 'b',
+                          userCert: 'c'))
     end
 
     it 'creates new user if does not exist' do
@@ -23,6 +26,16 @@ RSpec.describe User do
       expect(user.email).to eq('a@b.c')
       expect(user.first_name).to eq('John')
       expect(user.last_name).to eq('Do Doe')
+      expect(user.proxy).to eq('abc')
+    end
+
+    it 'connects existing user with plgrid' do
+      user = create(:user)
+
+      user.plgrid_connect(auth)
+
+      expect(user.plgrid_login).to eq('plguser')
+      expect(user.proxy).to eq('abc')
     end
   end
 
@@ -30,7 +43,7 @@ RSpec.describe User do
     it 'generates and find users using jwt' do
       u = create(:user)
 
-      expect(User.from_token(u.token).id). to eq(u.id)
+      expect(User.from_token(u.token).id).to eq(u.id)
     end
   end
 end
