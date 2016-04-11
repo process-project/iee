@@ -32,20 +32,51 @@ RSpec.describe User do
 
       expect(User.from_token(u.token).id). to eq(u.id)
     end
+
+    it 'includes issuer in token' do
+      u = create(:user)
+
+      expect(issuer_from_token(u.token)).
+          to eq Vapor::Application.config.jwt.issuer
+    end
+
+    it 'includes expiration time in token' do
+      u = create(:user)
+      time_now = Time.now
+      allow(Time).to receive(:now).and_return(time_now)
+      expect(expiration_time_from_token(u.token)).
+          to eq (time_now.to_i + Vapor::Application.config.jwt.expiration_time)
+    end
+    context 'token expired' do
+      it 'fails with error' do
+        u = create(:user)
+        time_now_1 = Time.now
+        time_now_2 =
+            time_now_1 + Vapor::Application.config.jwt.expiration_time + 1
+        allow(Time).to receive(:now).and_return(time_now_1, time_now_2)
+        expired_token = u.token
+        expect {User.from_token(expired_token)}.
+            to raise_error(JWT::ExpiredSignature)
+      end
+    end
   end
 
-  it 'includes issuer in token' do
-    u = create(:user)
 
-    expect(issuer_from_token(u.token)).to eq Vapor::Application.config.jwt.issuer
-  end
+
 
   private
   def issuer_from_token(enc_token)
-    token = JWT.decode(
+    decode_token(enc_token).detect{|el| el.has_key? 'iss'}.try(:[], 'iss')
+  end
+
+  def expiration_time_from_token(enc_token)
+    decode_token(enc_token).detect{|el| el.has_key? 'exp'}.try(:[], 'exp')
+  end
+
+  def decode_token(enc_token)
+    JWT.decode(
         enc_token, Vapor::Application.config.jwt.key, true,
         algorithm: Vapor::Application.config.jwt.key_algorithm
     )
-    token.detect{|el| el.has_key? 'iss'}.try(:[], 'iss')
   end
 end

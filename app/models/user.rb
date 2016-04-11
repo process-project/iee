@@ -69,7 +69,8 @@ class User < ActiveRecord::Base
         {
             name: name,
             email: email,
-            iss: Rails.configuration.jwt.issuer
+            iss: Rails.configuration.jwt.issuer,
+            exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
         },
         Vapor::Application.config.jwt.key,
         Vapor::Application.config.jwt.key_algorithm
