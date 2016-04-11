@@ -10,7 +10,7 @@
             = link_to(resources_path) do
               = icon("hand-o-left", title: t("back_to_resources"))
         .clearfix
-      .x_content  
+      .x_content
         = simple_form_for(@permission, html: { class: "form-horizontal form-label-left" }) do |f|
           - if !@user_permissions.empty?
             %table.table.permissions
