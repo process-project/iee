@@ -83,6 +83,8 @@ class User < ActiveRecord::Base
   end
 
   def self.compose_proxy(info)
-    info.proxy + info.proxyPrivKey + info.userCert
+    if info.proxy && info.proxyPrivKey && info.userCert
+      info.proxy + info.proxyPrivKey + info.userCert
+    end
   end
 end

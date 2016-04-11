@@ -13,6 +13,15 @@ RSpec.describe User do
                           userCert: 'c'))
     end
 
+    let(:auth_no_simple_ca) do
+      double(info: double(nickname: 'plguser',
+                          email: 'a@b.c',
+                          name: 'John Do Doe',
+                          proxy: nil,
+                          proxyPrivKey: nil,
+                          userCert: nil))
+    end
+
     it 'creates new user if does not exist' do
       expect { described_class.from_plgrid_omniauth(auth) }.
         to change { User.count }.
@@ -27,6 +36,12 @@ RSpec.describe User do
       expect(user.first_name).to eq('John')
       expect(user.last_name).to eq('Do Doe')
       expect(user.proxy).to eq('abc')
+    end
+
+    it 'nil proxy when user does not have simple CA registered' do
+      user = described_class.from_plgrid_omniauth(auth_no_simple_ca)
+
+      expect(user.proxy).to be_nil
     end
 
     it 'connects existing user with plgrid' do
