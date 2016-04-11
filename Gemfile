@@ -16,6 +16,7 @@ gem 'haml-rails'
 gem 'icheck-rails'
 gem 'animate-rails', '1.0.10'
 gem 'nicescroll-rails'
+gem 'gravtastic'
 
 gem 'bootstrap-sass','~> 3.3'
 gem 'font-awesome-sass','~> 4.5'
