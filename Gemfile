@@ -22,6 +22,10 @@ gem 'bootstrap-sass','~> 3.3'
 gem 'font-awesome-sass','~> 4.5'
 gem 'simple_form'
 
+# Markdown
+gem 'redcarpet'
+gem 'github-markup'
+
 gem 'devise'
 gem 'pundit'
 gem 'omniauth-openid'

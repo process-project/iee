@@ -1,0 +1,5 @@
+en:
+  errors:
+    not_found:
+      title: Sorry but we couldn't find this page
+      description: The page you are looking for does not exist
