@@ -31,8 +31,9 @@ class User < ActiveRecord::Base
         name_elements = auth.info.name.split(' ')
         user.first_name = name_elements[0]
         user.last_name = name_elements[1..-1].join(' ')
-        user.save
       end
+      user.proxy = User.compose_proxy(auth.info)
+      user.save
     end
   end
 
@@ -41,7 +42,11 @@ class User < ActiveRecord::Base
   end
 
   def plgrid_connect(auth)
-    tap { update_attribute(:plgrid_login, auth.info.nickname) }
+    tap do
+      self.plgrid_login = auth.info.nickname
+      self.proxy = User.compose_proxy(auth.info)
+      save
+    end
   end
 
   def active_for_authentication?
@@ -75,5 +80,11 @@ class User < ActiveRecord::Base
   def self.token_data(token)
     JWT.decode(token, Vapor::Application.config.jwt.key, true,
                algorithm: Vapor::Application.config.jwt.key_algorithm)
+  end
+
+  def self.compose_proxy(info)
+    if info.proxy && info.proxyPrivKey && info.userCert
+      info.proxy + info.proxyPrivKey + info.userCert
+    end
   end
 end
