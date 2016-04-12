@@ -58,6 +58,8 @@ RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers, type: :request
   config.include Warden::Test::Helpers, type: :feature
+
+  config.filter_run_excluding proxy: true
 end
 
 Shoulda::Matchers.configure do |config|

@@ -42,6 +42,17 @@ describe 'Patients controller' do
         expect(response).to redirect_to patients_path
       end
     end
+
+    describe 'POST /patients' do
+      it 'calls execute_data_sync on newly created patient' do
+        expect_any_instance_of(Patient).
+          to receive(:execute_data_sync)
+        expect {
+          post '/patients/', patient: { case_number: '5555' }
+        }.to change { Patient.count }.by(1)
+        expect(response).to redirect_to Patient.first
+      end
+    end
   end
 
   it 'filters patients depending on access level' do

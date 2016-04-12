@@ -27,6 +27,15 @@ To execute all tests run:
 bin/rspec
 ```
 
+To execute File Storage integration tests:
+1. Get an expired and a valid PLGrid/Prometheus user proxy
+2. Put paths to these in proper ENV values (see secrets.yml)
+3. Run rspec with proxy tag on:
+
+```
+bin/rspec --tag proxy
+```
+
 Use guard to execute tests connected with modified file:
 
 ```

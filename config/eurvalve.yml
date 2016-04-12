@@ -1,0 +1,8 @@
+development:
+  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
+
+test:
+  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
+
+production:
+  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/
