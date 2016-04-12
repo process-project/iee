@@ -25,4 +25,8 @@ Rails.application.routes.draw do
   get 'help/:category/:file' => 'help#show',
        as: :help_page,
        constraints: { category: /.*/, file: /[^\/\.]+/ }
+
+  match '/404', to: 'errors#not_found', via: :all
+  match '/422', to: 'errors#unprocessable', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 end
