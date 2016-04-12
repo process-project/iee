@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   resources :pdp, only: :index
 
   resources :resources, except: [:show, :update, :edit]
-
   resources :permissions, only: [:new, :create, :destroy]
+
+  # Help
+  get 'help' => 'help#index'
+  get 'help/:category/:file' => 'help#show',
+       as: :help_page,
+       constraints: { category: /.*/, file: /[^\/\.]+/ }
 end
