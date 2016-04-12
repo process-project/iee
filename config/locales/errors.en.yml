@@ -2,4 +2,10 @@ en:
   errors:
     not_found:
       title: Sorry but we couldn't find this page
-      description: The page you are looking for does not exist
+      description: The page you are looking for does not exist.
+    unprocessable:
+      title: Unprocessable entity
+      description: We was not able to procced your request due to semantic errors.
+    internal_server_error:
+      title: Internal Server Error
+      description: We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.
