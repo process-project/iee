@@ -28,7 +28,7 @@ describe DataFileSynchronizer do
     fail
   end
 
-  it 'reports problem with provided user proxy' do
+  it 'reports problem with provided user proxy', proxy: true do
     expect(Rails.logger).to receive(:info).
       with(/The certificate has expired/).
       and_call_original
