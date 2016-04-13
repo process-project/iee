@@ -4,7 +4,7 @@ module Devise
   module Strategies
     class JwtAuthenticatable < Authenticatable
       def valid?
-        super || token
+        super || token && request.fullpath.starts_with?('/api')
       end
 
       def authenticate!
