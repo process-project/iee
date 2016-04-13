@@ -24,7 +24,7 @@ bin/rails server
 To execute all tests run:
 
 ```
-bin/rspec
+bundle exec rspec
 ```
 
 To execute File Storage integration tests:
@@ -33,7 +33,7 @@ To execute File Storage integration tests:
 3. Run rspec with proxy tag on:
 
 ```
-bin/rspec --tag proxy
+bundle exec rspec --tag proxy
 ```
 
 Use guard to execute tests connected with modified file:
