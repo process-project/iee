@@ -15,7 +15,11 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :patients, except: [:edit, :update]
-  resources :pdp, only: :index
+
+  namespace :api do
+    resources :pdp, only: :index
+    resources :sessions, only: :create
+  end
 
   resources :resources, except: [:show, :update, :edit]
   resources :permissions, only: [:new, :create, :destroy]

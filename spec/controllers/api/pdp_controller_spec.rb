@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PdpController do
+RSpec.describe Api::PdpController do
   context 'as logged in user' do
     let(:user) { create(:user) }
     let(:resource) { create(:resource) }
