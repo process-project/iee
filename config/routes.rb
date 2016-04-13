@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :pdp, only: :index
+    resources :sessions, only: :create
   end
 
   resources :resources, except: [:show, :update, :edit]
