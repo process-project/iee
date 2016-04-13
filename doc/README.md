@@ -1,4 +1,4 @@
 # Help
 
-[PDP](pdp/README.md) Policy Decision Point
+[PDP](api/pdp.md) Policy Decision Point
 

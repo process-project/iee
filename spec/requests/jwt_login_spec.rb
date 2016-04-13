@@ -8,7 +8,7 @@ RSpec.describe 'JWT' do
            action: create(:action, name: 'get'))
     auth_headers = { 'Authorization' => "Bearer #{user.token}" }
 
-    get pdp_index_path, { uri: resource.uri, permission: 'get' }, auth_headers
+    get api_pdp_index_path, { uri: resource.uri, permission: 'get' }, auth_headers
 
     expect(response.status).to eq(200)
   end
