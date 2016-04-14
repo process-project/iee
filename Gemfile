@@ -31,8 +31,6 @@ gem 'pundit'
 gem 'omniauth-openid'
 gem 'jwt'
 
-gem 'typhoeus'
-
 gem 'puma'
 
 group :development, :test do

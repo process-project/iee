@@ -9,8 +9,10 @@ describe DataFileSynchronizer do
   let(:user_with_expired_proxy) { build(:user, proxy: expired_proxy) }
   let(:patient) { create(:patient) }
 
+  let(:connection) { double('faraday connection') }
+
   it 'does nothing for wrong input' do
-    expect_any_instance_of(Typhoeus::Request).not_to receive(:run)
+    expect(connection).not_to receive(:get)
     call(nil, nil)
     call(build(:patient, case_number: nil), nil)
     call(build(:patient), user_no_proxy)
@@ -43,15 +45,15 @@ describe DataFileSynchronizer do
     let(:test_patient) { create(:patient, case_number: '1234') }
 
     it 'handles network errors gracefully' do
-      allow_any_instance_of(DataFileSynchronizer).
-        to receive(:query_url).and_return("http://total.rubbish/")
       expect(Rails.logger).to receive(:warn).
         with(I18n.t('data_file_synchronizer.invalid_response',
                     user: user_with_phony_proxy.name,
                     patient: patient.case_number)).
         and_call_original
-      expect{ call(patient, user_with_phony_proxy) }.
-        not_to change{ DataFile.count }
+      expect do
+        call(patient, user_with_phony_proxy,
+             storage_url: 'http://total.rubbish')
+      end.not_to change{ DataFile.count }
     end
 
     it 'correctly reads test proxy' do
@@ -89,7 +91,7 @@ describe DataFileSynchronizer do
     end
   end
 
-  def call(patient, user)
-    DataFileSynchronizer.new(patient, user).call
+  def call(patient, user, options = {})
+    DataFileSynchronizer.new(patient, user, options).call
   end
 end
