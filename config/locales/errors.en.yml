@@ -9,3 +9,19 @@ en:
     internal_server_error:
       title: Internal Server Error
       description: We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.
+  data_file_synchronizer:
+    timed_out: |
+      Time out when contacting File Storage for patient %{patient} and
+      user %{user}.
+    invalid_response: |
+      Invalid response of File Storage for patient %{patient} and user %{user}.
+    request_failure: |
+      Request to File Storage failed with response code %{code} for
+      patient %{patient} and user %{user}.
+    no_case_number: |
+      User %{user} trying to run the service for a patient with no case number.
+    no_proxy: |
+      User %{user} trying to run the service without proxy certificate.
+    file_removed: |
+      Removed %{name} file from patient %{patient} as no longer present in the
+      File Storage.

@@ -24,7 +24,16 @@ bin/rails server
 To execute all tests run:
 
 ```
-bin/rspec
+bundle exec rspec
+```
+
+To execute File Storage integration tests:
+1. Get an expired and a valid PLGrid/Prometheus user proxy
+2. Put paths to these in proper ENV values (see secrets.yml)
+3. Run rspec with proxy tag on:
+
+```
+bundle exec rspec --tag proxy
 ```
 
 Use guard to execute tests connected with modified file:

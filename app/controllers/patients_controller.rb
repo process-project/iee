@@ -16,6 +16,7 @@ class PatientsController < ApplicationController
     @patient = Patient.create(create_params)
 
     if @patient.valid?
+      @patient.execute_data_sync(current_user)
       redirect_to @patient, notice: I18n.t('patients.create.success')
     else
       render :new

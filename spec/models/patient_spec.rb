@@ -19,5 +19,22 @@ RSpec.describe Patient do
           not_to eq 'N/A'
       end
     end
+
+    it 'gets updated when appropriate data_files appear' do
+      expect(subject.not_started?).to be_truthy
+      create(:data_file, data_type: 'ventricle_virtual_model', patient: subject)
+      create(:data_file, data_type: 'fluid_virtual_model', patient: subject.reload)
+      expect(subject.reload.virtual_model_ready?).to be_truthy
+      create(:data_file, data_type: 'blood_flow_result', patient: subject)
+      expect(subject.reload.after_blood_flow_simulation?).to be_truthy
+    end
+
+    it 'gets downgraded when an important data_file disappears' do
+      data_file = create(:data_file, data_type: 'ventricle_virtual_model', patient: subject)
+      create(:data_file, data_type: 'fluid_virtual_model', patient: subject.reload)
+      expect(subject.reload.virtual_model_ready?).to be_truthy
+      data_file.destroy
+      expect(subject.not_started?).to be_truthy
+    end
   end
 end
