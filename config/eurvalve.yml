@@ -1,8 +1,14 @@
+defaults: &defaults
+  rimrock_url: https://submit.plgrid.pl
+
 development:
+  <<: *defaults
   storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
 
 test:
+  <<: *defaults
   storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
 
 production:
+  <<: *defaults
   storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/
