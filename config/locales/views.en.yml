@@ -11,9 +11,11 @@ en:
       remove: Delete this case
       confirm: This will also remove all files uploaded for this case. Are you sure?
       back: See other cases
+      details: Details
       files: Files
       nothing: There are no files uploaded for this patient's case.
       download: Download
+      download_unavailable: (download unavailable)
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case
