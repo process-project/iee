@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :user_groups
   has_many :groups, through: :user_groups
   has_many :permissions, dependent: :destroy
+  has_many :computations
 
   validates :first_name, presence: true
   validates :last_name, presence: true
