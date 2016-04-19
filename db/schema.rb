@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160418082419) do
     t.text     "script"
     t.string   "tag"
     t.string   "working_directory"
-    t.string   "status"
+    t.string   "status",            default: "new"
     t.string   "stdout_path"
     t.string   "stderr_path"
     t.text     "standard_output"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20160418082419) do
     t.string   "error_message"
     t.integer  "exit_code"
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "data_files", force: :cascade do |t|
