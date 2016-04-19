@@ -41,3 +41,15 @@
                             = link_to t('.download'), df.handle
                           - else
                             %i= t '.download_unavailable'
+        - if @patient.procedure_status == 'virtual_model_ready' && @computations.blank?
+          %section.content
+            %h3= 'Submit CFD computation'
+            .row
+              .col-xs-12.table
+                = simple_form_for(computation) do |f|
+                  %h4= 'CFD computation'
+                  = f.error_notification
+                  = f.hidden_field :patient_id, value: @patient.id
+                  %div
+                    %button.btn.btn-default.submit
+                      = 'Submit'

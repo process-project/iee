@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :resources, except: [:show, :update, :edit]
   resources :permissions, only: [:new, :create, :destroy]
+  resources :computations, only: [:create]
 
   # Help
   get 'help' => 'help#index'

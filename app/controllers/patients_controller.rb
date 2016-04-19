@@ -6,6 +6,7 @@ class PatientsController < ApplicationController
 
   def show
     @patient = @patients.find(params[:id])
+    @computations = Computation.where(user: current_user, patient: @patient)
   end
 
   def new
