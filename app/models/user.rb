@@ -70,6 +70,11 @@ class User < ActiveRecord::Base
     resource.permissions.where(user_id: id).exists?
   end
 
+  def admin?
+    @admin = groups.where(name: 'admin').exists? if @admin.nil?
+    @admin
+  end
+
   def token
     JWT.encode(
         {

@@ -31,6 +31,10 @@ gem 'pundit'
 gem 'omniauth-openid'
 gem 'jwt'
 
+# Delayed jobs
+gem 'sidekiq'
+gem 'sinatra', require: false
+
 gem 'puma'
 
 group :development, :test do

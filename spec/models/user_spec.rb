@@ -90,10 +90,17 @@ RSpec.describe User do
     end
   end
 
+  it 'checks if user is an admin' do
+    admin_group = create(:group, name: 'admin')
+    admin = create(:user, groups: [admin_group])
+    non_admin = create(:user)
 
-
+    expect(admin).to be_admin
+    expect(non_admin).to_not be_admin
+  end
 
   private
+
   def issuer_from_token(enc_token)
     decode_token(enc_token).detect{|el| el.has_key? 'iss'}.try(:[], 'iss')
   end
