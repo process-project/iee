@@ -1,0 +1,9 @@
+.col-md-12.col-sm-12.col-xs-6
+  %div
+    = succeed ':' do
+      = t 'patients.index.progress'
+    %strong
+      = t "patient.procedure_status.#{patient.procedure_status}"
+    %div
+      .progress.progress_sm
+        .progress-bar.bg-green(role="progressbar" style="width: #{procedure_progress(patient)}")
