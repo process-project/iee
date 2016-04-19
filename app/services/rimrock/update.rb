@@ -2,7 +2,7 @@ module Rimrock
   class Update < ProxyService
     def initialize(user, options = {})
       super(user,
-            Rails.application.config_for('eurvalve')['rimrock_url'],
+            Rails.application.config_for('eurvalve')['rimrock']['url'],
             options)
 
       @user = user
