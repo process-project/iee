@@ -14,6 +14,10 @@
 
       .x_content
         %section.content
+          %span
+            %h3= t '.details'
+            = render partial: 'progress', locals: { patient: @patient }
+
           %h3= t '.files'
           .row
             - if @patient.data_files.blank?
@@ -32,4 +36,8 @@
                       %tr
                         %td= df.name
                         %td= df.data_type
-                        %td= t '.download'
+                        %td
+                          - if df.handle
+                            = link_to t('.download'), df.handle
+                          - else
+                            %i= t '.download_unavailable'

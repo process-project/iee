@@ -43,6 +43,7 @@ class DataFileSynchronizer < ProxyService
         unless current_names.include?(file['name'])
           DataFile.create(name: file['name'],
                           data_type: data_type,
+                          handle: construct_handle(file['name']),
                           patient: @patient)
         end
         remote_names << file['name']
@@ -60,6 +61,13 @@ class DataFileSynchronizer < ProxyService
         )
       end
     end
+  end
+
+  def construct_handle(filename)
+    case_directory = Rails.application.config_for('eurvalve')['handle_url']
+    case_directory += '/' unless case_directory.end_with?('/')
+    case_directory += @patient.case_number
+    case_directory + '/' + filename
   end
 
   def recognize_data_type(name)

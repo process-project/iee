@@ -65,6 +65,8 @@ describe DataFileSynchronizer do
       expect{ call(test_patient, user) }.to change{ DataFile.count }.by(2)
       expect(DataFile.all.map(&:data_type)).
         to match_array ['fluid_virtual_model', 'ventricle_virtual_model']
+      expect(DataFile.all.map(&:handle)).
+        to include file_handle(test_patient.case_number, 'fluidFlow.cas')
     end
 
     it 'only creates data_files not yet present' do
@@ -101,5 +103,9 @@ describe DataFileSynchronizer do
 
   def call(patient, user, options = {})
     DataFileSynchronizer.new(patient, user, options).call
+  end
+
+  def file_handle(case_number, filename)
+    "#{Rails.application.config_for('eurvalve')['handle_url']}#{case_number}/#{filename}"
   end
 end

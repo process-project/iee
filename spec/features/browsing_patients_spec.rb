@@ -74,8 +74,9 @@ RSpec.feature 'Patient browsing' do
       expect(current_path).to eq patients_path
     end
 
-    scenario 'shows a table for present case data files' do
+    scenario 'shows a table for present case data files with handles' do
       data_files = create_list(:data_file, 2, patient: patient)
+      data_files[0].update_column(:handle, 'test_handle')
 
       visit patient_path(patient)
 
@@ -83,6 +84,8 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content(data_files[0].data_type)
       expect(page).to have_content(data_files[1].name)
       expect(page).to have_content(data_files[1].data_type)
+      expect(page).to have_content(I18n.t('patients.show.download_unavailable'))
+      expect(page).to have_selector "a[href='test_handle']"
     end
 
     scenario 'lets the user to get a case data file from file storage' do
