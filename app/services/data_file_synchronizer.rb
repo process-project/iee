@@ -66,6 +66,8 @@ class DataFileSynchronizer < ProxyService
     case name
     when 'fluidFlow.cas' then 'fluid_virtual_model'
     when 'structural_vent.dat' then 'ventricle_virtual_model'
+    when /fluidFlow.*.dat/ then 'blood_flow_result'
+    when /fluidFlow.*.cas/ then 'blood_flow_model'
     else nil
     end
   end

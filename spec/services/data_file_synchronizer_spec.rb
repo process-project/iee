@@ -43,6 +43,7 @@ describe DataFileSynchronizer do
     end
     let(:user) { build(:user, proxy: test_proxy) }
     let(:test_patient) { create(:patient, case_number: '1234') }
+    let(:test_advanced_patient) { create(:patient, case_number: '5678') }
 
     it 'handles network errors gracefully' do
       expect(Rails.logger).to receive(:warn).
@@ -75,8 +76,15 @@ describe DataFileSynchronizer do
         to match_array ['fluid_virtual_model', 'ventricle_virtual_model']
     end
 
+    it 'recognizes files with regexps' do
+      expect{ call(test_advanced_patient, user) }.to change{ DataFile.count }.by(1)
+      expect(DataFile.all.map(&:data_type)).to match_array ['blood_flow_result']
+      expect(DataFile.all.map(&:name)).to match_array ['fluidFlow-1-00002.dat']
+    end
+
     it 'destroys data_files which are no longer stored in File Storage' do
       create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
+      create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
       create(:data_file, name: 'structural_vent.dat',
              data_type: 'ventricle_virtual_model',
              patient: test_patient)
@@ -84,7 +92,7 @@ describe DataFileSynchronizer do
              data_type: 'fluid_virtual_model',
              patient: test_patient)
       expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
-      expect{ call(test_patient, user) }.to change{ DataFile.count }.by(-1)
+      expect{ call(test_patient, user) }.to change{ DataFile.count }.by(-2)
       expect(DataFile.all.map(&:data_type)).
         to match_array ['fluid_virtual_model', 'ventricle_virtual_model']
       expect(test_patient.reload.virtual_model_ready?).to be_truthy
