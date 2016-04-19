@@ -19,10 +19,10 @@ module Rimrock
         req.url 'api/jobs'
         req.headers['Content-Type'] = 'application/json'
         req.body = {
-          host: 'prometheus.cyfronet.pl',
+          host: Rails.application.config_for('eurvalve')['rimrock']['host'],
           working_directory: computation.working_directory,
           script: computation.script,
-          tag: computation.tag
+          tag: Rails.application.config_for('eurvalve')['rimrock']['tag']
         }.to_json
       end
     end

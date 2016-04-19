@@ -10,7 +10,7 @@ module Rimrock
 
     def call
       if active_computations.size > 0
-        response = connection.get('api/jobs')
+        response = connection.get('api/jobs', tag: tag)
         case response.status
         when 200 then success(response.body)
         when 422 then error(response.body, :timeout)
@@ -20,6 +20,10 @@ module Rimrock
     end
 
     private
+
+    def tag
+      Rails.application.config_for('eurvalve')['rimrock']['tag']
+    end
 
     def success(body)
       json_body = JSON.parse(body)
