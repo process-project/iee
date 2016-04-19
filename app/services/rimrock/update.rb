@@ -26,7 +26,6 @@ module Rimrock
       statuses = Hash[json_body.map { |e| [e['job_id'], e] }]
 
       active_computations.each do |computation|
-        puts "active: #{computation}"
         new_status = statuses[computation.job_id]
         if new_status
           computation.update_attribute(:status, new_status['status'].downcase)

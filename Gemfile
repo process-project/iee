@@ -34,6 +34,7 @@ gem 'jwt'
 # Delayed jobs
 gem 'sidekiq'
 gem 'sinatra', require: false
+gem 'clockwork'
 
 gem 'puma'
 
