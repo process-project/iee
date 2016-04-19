@@ -1,12 +1,24 @@
 class ComputationsController < ApplicationController
+  include PatientsHelper
+
+  def show
+    @computation = Computation.find(params[:id])
+
+    render partial: 'patients/computation',
+           layout: false,
+           object: @computation
+  end
 
   def create
-    # invoke MK service here
-    params = create_params
-    params[:user_id] = current_user.id
     params[:script] = 'vapor_script.sh'
-    @computation = Computation.create(params)
-    redirect_to controller: 'patients', action: 'show', id: params[:patient_id], notice: 'Computation submitted'
+    @computation = Computation.create(
+      create_params.merge(
+        user: current_user,
+        script: script
+      )
+    )
+    Rimrock::StartJob.perform_later @computation
+    redirect_to @computation.patient, notice: 'Computation submitted'
   end
 
   private
@@ -15,19 +27,21 @@ class ComputationsController < ApplicationController
     params.require(:computation).permit(:patient_id)
   end
 
-  def script
+  def patient
+    @patient ||= Patient.find(params[:computation][:patient_id])
+  end
 
+  def script
     #see https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
     <<~SCRIPT
       #!/bin/bash -l
-      SBATCH -J eurvalve_4548
       #SBATCH -N 1
       #SBATCH --ntasks-per-node=24
-      #SBATCH --time=00:15:00
+      #SBATCH --time=00:01:00
       #SBATCH -A eurvalve2
       #SBATCH -p plgrid
 
-      CASE_DIR=$PLG_GROUPS_STORAGE/plggeurvalve/production/4548
+      CASE_DIR=$PLG_GROUPS_STORAGE/plggeurvalve/#{Rails.env}/#{patient.case_number}
 
       ## Change to the directory where sbatch was called
       cd $SCRATCHDIR
@@ -49,5 +63,4 @@ class ComputationsController < ApplicationController
       cp $OUT_FILE_2 $CASE_DIR/
     SCRIPT
   end
-
 end

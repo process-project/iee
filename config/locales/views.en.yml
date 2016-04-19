@@ -13,9 +13,12 @@ en:
       back: See other cases
       details: Details
       files: Files
+      computations: Computations
+      new_computation: Run new blood flow computation
       nothing: There are no files uploaded for this patient's case.
       download: Download
       download_unavailable: (download unavailable)
+      submit: Execute simulation
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case

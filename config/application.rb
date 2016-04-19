@@ -38,7 +38,7 @@ module Vapor
     config.active_record.raise_in_transactional_callbacks = true
 
     # Separate controller helpers to avoid conflicts
-    config.action_controller.include_all_helpers = false
+    config.action_controller.include_all_helpers = true
 
     config.constants = config_for(:application)
 
