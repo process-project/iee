@@ -19,7 +19,8 @@ class Patient < ActiveRecord::Base
   def update_procedure_status
     data_files.reload
     # This should go from the most advanced status to the least advanced one.
-    if data_files.reload.any?(&:blood_flow_result?)
+    if data_files.reload.any?(&:blood_flow_result?) &&
+       data_files.reload.any?(&:blood_flow_model?)
       after_blood_flow_simulation!
     elsif data_files.any?(&:fluid_virtual_model?) &&
           data_files.any?(&:ventricle_virtual_model?)
