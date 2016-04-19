@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20160418142336) do
   create_table "computations", force: :cascade do |t|
     t.string   "job_id"
     t.text     "script"
-    t.string   "tag"
     t.string   "working_directory"
     t.string   "status",            default: "new"
     t.string   "stdout_path"

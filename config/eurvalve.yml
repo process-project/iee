@@ -1,5 +1,8 @@
 defaults: &defaults
-  rimrock_url: https://submit.plgrid.pl
+  rimrock:
+    url: https://submit.plgrid.pl
+    host: prometheus.cyfronet.pl
+    tag: vapor
 
 development:
   <<: *defaults

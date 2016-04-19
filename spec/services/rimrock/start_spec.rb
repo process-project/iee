@@ -18,10 +18,10 @@ RSpec.describe Rimrock::Start do
 
       expect(start_request['host']).to eq('prometheus.cyfronet.pl')
       expect(start_request['script']).to eq(computation.script)
-      expect(start_request['tag']).to eq(computation.tag)
+      expect(start_request['tag']).to eq('vapor')
 
       [201, {}, '{"job_id":"id", "stdout_path":"out", ' +
-                '"stderr_path":"err", "status":"QUEUED", "tag":"t"}']
+                '"stderr_path":"err", "status":"QUEUED"}']
     end
 
     described_class.new(computation, connection: connection).call
@@ -38,7 +38,7 @@ RSpec.describe Rimrock::Start do
     stubs.post('api/jobs') do |env|
       [422, {}, '{"status":"error", "exit_code": -1, ' +
                 '"standard_output":"stdout", "error_output":"stderr", ' +
-                '"error_message": "error_msg", "tag": "t" }']
+                '"error_message": "error_msg"}']
     end
 
     described_class.new(computation, connection: connection).call

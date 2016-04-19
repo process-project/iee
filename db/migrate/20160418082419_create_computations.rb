@@ -3,7 +3,6 @@ class CreateComputations < ActiveRecord::Migration
     create_table :computations do |t|
       t.string :job_id
       t.text :script, nil: false
-      t.string :tag
       t.string :working_directory, unique: true
       t.string :status, nil: false, default: 'new'
 
