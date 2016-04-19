@@ -6,8 +6,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
-  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/test/
+  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/development/
+  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/development/
 
 test:
   <<: *defaults
