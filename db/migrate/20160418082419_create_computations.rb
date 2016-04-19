@@ -5,7 +5,7 @@ class CreateComputations < ActiveRecord::Migration
       t.text :script, nil: false
       t.string :tag
       t.string :working_directory, unique: true
-      t.string :status, nil: false
+      t.string :status, nil: false, default: 'new'
 
       t.string :stdout_path
       t.string :stderr_path

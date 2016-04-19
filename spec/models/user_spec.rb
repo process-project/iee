@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User do
   it { should have_many(:permissions).dependent(:destroy) }
+  it { should have_many(:computations) }
 
   context 'plgrid login' do
     let(:auth) do
@@ -89,10 +90,28 @@ RSpec.describe User do
     end
   end
 
+  it 'checks if user is an admin' do
+    admin_group = create(:group, name: 'admin')
+    admin = create(:user, groups: [admin_group])
+    non_admin = create(:user)
 
+    expect(admin).to be_admin
+    expect(non_admin).to_not be_admin
+  end
 
+  it 'returns users with active computations' do
+    u1, u2, u3 = create_list(:user, 3)
+
+    create(:computation, status: 'new', user: u1)
+    create(:computation, status: 'finished', user: u1)
+    create(:computation, status: 'queued', user: u2)
+    create(:computation, status: 'running', user: u3)
+
+    expect(User.with_active_computations).to contain_exactly(u2, u3)
+  end
 
   private
+
   def issuer_from_token(enc_token)
     decode_token(enc_token).detect{|el| el.has_key? 'iss'}.try(:[], 'iss')
   end

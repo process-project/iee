@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160418142336) do
     t.text     "script"
     t.string   "tag"
     t.string   "working_directory"
-    t.string   "status"
+    t.string   "status",            default: "new"
     t.string   "stdout_path"
     t.string   "stderr_path"
     t.text     "standard_output"

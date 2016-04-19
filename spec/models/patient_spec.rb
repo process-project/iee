@@ -26,6 +26,7 @@ RSpec.describe Patient do
       create(:data_file, data_type: 'fluid_virtual_model', patient: subject.reload)
       expect(subject.reload.virtual_model_ready?).to be_truthy
       create(:data_file, data_type: 'blood_flow_result', patient: subject)
+      create(:data_file, data_type: 'blood_flow_model', patient: subject)
       expect(subject.reload.after_blood_flow_simulation?).to be_truthy
     end
 

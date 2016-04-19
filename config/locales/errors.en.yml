@@ -25,3 +25,7 @@ en:
     file_removed: |
       Removed %{name} file from patient %{patient} as no longer present in the
       File Storage.
+  rimrock:
+    update:
+      timeout: Time out when updating %{user} computations (%{details})
+      internal: Internal rimrock error while updating %{user} computations (%{details})

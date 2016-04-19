@@ -17,11 +17,21 @@ class User < ActiveRecord::Base
   has_many :user_groups
   has_many :groups, through: :user_groups
   has_many :permissions, dependent: :destroy
+  has_many :computations
 
   validates :first_name, presence: true
   validates :last_name, presence: true
 
   scope :approved, -> { where(approved: true) }
+
+  def self.with_active_computations
+    User.where(<<~SQL
+      id IN (SELECT DISTINCT(user_id)
+             FROM computations
+             WHERE status IN ('queued', 'running'))
+    SQL
+    )
+  end
 
   def self.from_plgrid_omniauth(auth)
     find_or_initialize_by(plgrid_login: auth.info.nickname).tap do |user|
@@ -67,6 +77,11 @@ class User < ActiveRecord::Base
 
   def owns_resource?(resource)
     resource.permissions.where(user_id: id).exists?
+  end
+
+  def admin?
+    @admin = groups.where(name: 'admin').exists? if @admin.nil?
+    @admin
   end
 
   def token
