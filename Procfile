@@ -1,2 +1,2 @@
 web: bundle exec puma -C ./config/puma.rb
-jobs: bundle exec sidekiq -q default
+jobs: bundle exec sidekiq -q computation

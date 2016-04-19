@@ -99,6 +99,17 @@ RSpec.describe User do
     expect(non_admin).to_not be_admin
   end
 
+  it 'returns users with active computations' do
+    u1, u2, u3 = create_list(:user, 3)
+
+    create(:computation, status: 'new', user: u1)
+    create(:computation, status: 'finished', user: u1)
+    create(:computation, status: 'queued', user: u2)
+    create(:computation, status: 'running', user: u3)
+
+    expect(User.with_active_computations).to contain_exactly(u2, u3)
+  end
+
   private
 
   def issuer_from_token(enc_token)

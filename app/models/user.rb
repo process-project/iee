@@ -24,6 +24,15 @@ class User < ActiveRecord::Base
 
   scope :approved, -> { where(approved: true) }
 
+  def self.with_active_computations
+    User.where(<<~SQL
+      id IN (SELECT DISTINCT(user_id)
+             FROM computations
+             WHERE status IN ('queued', 'running'))
+    SQL
+    )
+  end
+
   def self.from_plgrid_omniauth(auth)
     find_or_initialize_by(plgrid_login: auth.info.nickname).tap do |user|
       if user.new_record?
