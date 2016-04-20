@@ -1,6 +1,4 @@
 class ComputationsController < ApplicationController
-  include PatientsHelper
-
   def show
     @computation = Computation.find(params[:id])
 
@@ -37,7 +35,7 @@ class ComputationsController < ApplicationController
       #!/bin/bash -l
       #SBATCH -N 1
       #SBATCH --ntasks-per-node=24
-      #SBATCH --time=00:15:00
+      #SBATCH --time=00:01:00
       #SBATCH -A eurvalve2
       #SBATCH -p plgrid
 
@@ -57,13 +55,10 @@ class ComputationsController < ApplicationController
       ./run_coupled_bashscript.sh
 
       ## Copy output back
-      cd FluidFlow/
-      OUT_FILE_1=`ls -t fluidFlow-1-* | head -1`
-      OUT_FILE_2=`ls -t fluidFlow-1-* | head -2 | tail -1`
+      OUT_FILE_1=`ls -t FluidFlow/fluidFlow-1-* | head -1`
+      OUT_FILE_2=`ls -t FluidFlow/fluidFlow-1-* | head -2 | tail -1`
       cp $OUT_FILE_1 $CASE_DIR/
       cp $OUT_FILE_2 $CASE_DIR/
-      chmod g+w $CASE_DIR/$OUT_FILE_1
-      chmod g+w $CASE_DIR/$OUT_FILE_2
     SCRIPT
   end
 end
