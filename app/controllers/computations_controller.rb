@@ -35,7 +35,7 @@ class ComputationsController < ApplicationController
       #!/bin/bash -l
       #SBATCH -N 1
       #SBATCH --ntasks-per-node=24
-      #SBATCH --time=00:01:00
+      #SBATCH --time=00:15:00
       #SBATCH -A eurvalve2
       #SBATCH -p plgrid
 
