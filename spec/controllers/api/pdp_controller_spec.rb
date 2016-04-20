@@ -30,10 +30,12 @@ RSpec.describe Api::PdpController do
   end
 
   context 'as anonymous' do
-    it 'returns 403' do
+    it 'returns 401' do
       get :index, uri: 'some_resource', permission: 'get'
 
-      expect(response.status).to eq(403)
+      expect(response.status).to eq(401)
+      expect(response.headers['WWW-Authenticate'])
+        .to eq('Bearer realm="example"')
     end
   end
 end
