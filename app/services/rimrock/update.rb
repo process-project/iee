@@ -6,6 +6,7 @@ module Rimrock
             options)
 
       @user = user
+      @on_finish_callback = options[:on_finish_callback]
     end
 
     def call
@@ -33,6 +34,7 @@ module Rimrock
         new_status = statuses[computation.job_id]
         if new_status
           computation.update_attribute(:status, new_status['status'].downcase)
+          on_finish_callback(computation) if computation.status == 'finished'
         else
           computation.update_attributes(
             status: 'error',
@@ -49,8 +51,11 @@ module Rimrock
     end
 
     def active_computations
-      @ac ||=
-        @user.computations.where(status: ['queued', 'running'])
+      @ac ||= @user.computations.where(status: ['queued', 'running'])
+    end
+
+    def on_finish_callback(computation)
+      @on_finish_callback.new(computation).call if @on_finish_callback
     end
   end
 end
