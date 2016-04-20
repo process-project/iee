@@ -15,4 +15,5 @@ test:
 
 production:
   <<: *defaults
-  jwt_key: <%= Rails.root.join('config', 'jwt', 'prod.pem') %>
+  jwt:
+    key: <%= Rails.root.join('config', 'jwt', 'prod.pem') %>
