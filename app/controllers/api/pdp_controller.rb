@@ -1,7 +1,5 @@
 module Api
   class PdpController < Api::ApplicationController
-    skip_before_action :authenticate_user!
-
     def index
       head(permit? ? :ok : :forbidden)
     end
