@@ -9,3 +9,9 @@ en:
   data_file:
     name: File name
     data_type: Data type
+  computation:
+    started_at: Start time
+    execution_time: Execution time
+    status: Status
+    computation_type:
+      blood_flow_simulation: Blood flow CFD simulation

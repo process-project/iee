@@ -92,3 +92,5 @@ en:
   help:
     title: Help
     pdp: Policy Decision Point
+  jobs:
+   title: Delayed jobs

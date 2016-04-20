@@ -23,12 +23,22 @@ Rails.application.routes.draw do
 
   resources :resources, except: [:show, :update, :edit]
   resources :permissions, only: [:new, :create, :destroy]
+  resources :computations, only: [:show, :create]
 
   # Help
   get 'help' => 'help#index'
   get 'help/:category/:file' => 'help#show',
        as: :help_page,
        constraints: { category: /.*/, file: /[^\/\.]+/ }
+
+  # Sidekiq monitoring
+  authenticate :user, lambda { |u| u.admin? } do
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+    namespace :admin do
+      resource :job, only: :show
+    end
+  end
 
   match '/404', to: 'errors#not_found', via: :all
   match '/422', to: 'errors#unprocessable', via: :all

@@ -2,6 +2,8 @@ class Patient < ActiveRecord::Base
   enum procedure_status: [ :not_started, :imaging_uploaded, :virtual_model_ready, :after_blood_flow_simulation ]
 
   has_many :data_files, dependent: :destroy
+  has_many :computations, dependent: :destroy
+  has_one :computation
 
   validates :case_number, :procedure_status, presence: true
   validates :case_number, uniqueness: true
@@ -19,7 +21,8 @@ class Patient < ActiveRecord::Base
   def update_procedure_status
     data_files.reload
     # This should go from the most advanced status to the least advanced one.
-    if data_files.reload.any?(&:blood_flow_result?)
+    if data_files.reload.any?(&:blood_flow_result?) &&
+       data_files.reload.any?(&:blood_flow_model?)
       after_blood_flow_simulation!
     elsif data_files.any?(&:fluid_virtual_model?) &&
           data_files.any?(&:ventricle_virtual_model?)

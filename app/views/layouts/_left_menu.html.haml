@@ -34,6 +34,9 @@
                 = t("user_confirmation")
                 - if @user_confirmations
                   = icon("exclamation-triangle")
+          - if policy(:job).show?
+            %li
+              = link_to(t('jobs.title'), admin_job_path)
       %li
         %a
           = icon("gears")

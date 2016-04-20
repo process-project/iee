@@ -1,15 +1,8 @@
-require 'base64'
-require 'faraday'
-
-class DataFileSynchronizer
+class DataFileSynchronizer < ProxyService
   def initialize(patient, user, options = {})
+    super(user, options[:storage_url] || storage_url, options)
     @patient = patient
     @user = user
-    @proxy = encode_proxy user.try(:proxy)
-
-    @connection = options[:connection]
-    @storage_url = options[:storage_url] ||
-                   Rails.application.config_for('eurvalve')['storage_url']
   end
 
   # Contacts EurValve file storage and updates the list of DataFiles
@@ -33,6 +26,10 @@ class DataFileSynchronizer
   end
 
   private
+
+  def storage_url
+    Rails.application.config_for('eurvalve')['storage_url']
+  end
 
   def parse_response(body)
     remote_names = []
@@ -73,14 +70,12 @@ class DataFileSynchronizer
     case_directory + '/' + filename
   end
 
-  def encode_proxy(proxy)
-    proxy ? Base64.encode64(proxy).gsub!(/\s+/, '') : nil
-  end
-
   def recognize_data_type(name)
     case name
     when 'fluidFlow.cas' then 'fluid_virtual_model'
     when 'structural_vent.dat' then 'ventricle_virtual_model'
+    when /fluidFlow.*.dat/ then 'blood_flow_result'
+    when /fluidFlow.*.cas/ then 'blood_flow_model'
     else nil
     end
   end
@@ -97,14 +92,6 @@ class DataFileSynchronizer
     Rails.logger.tagged(self.class.name) do
       Rails.logger.warn I18n.t("data_file_synchronizer.#{problem}", details)
       Rails.logger.info(details[:response].body) if details[:response]
-    end
-  end
-
-  def connection
-    @connection ||= Faraday.new(url: @storage_url) do |faraday|
-      faraday.request :url_encoded
-      faraday.adapter Faraday.default_adapter
-      faraday.headers['PROXY'] = @proxy
     end
   end
 end

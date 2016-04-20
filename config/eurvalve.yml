@@ -1,11 +1,20 @@
+defaults: &defaults
+  rimrock:
+    url: https://submit.plgrid.pl
+    host: prometheus.cyfronet.pl
+    tag: vapor
+
 development:
-  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
-  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/test/
+  <<: *defaults
+  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/development/
+  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/development/
 
 test:
+  <<: *defaults
   storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
   handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/test/
 
 production:
+  <<: *defaults
   storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/
   handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/

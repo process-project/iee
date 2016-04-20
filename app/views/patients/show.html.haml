@@ -41,3 +41,31 @@
                             = link_to t('.download'), df.handle
                           - else
                             %i= t '.download_unavailable'
+
+        - if @patient.virtual_model_ready?
+          %h3= t '.computations'
+
+          - if @patient.computations.active.blank?
+            .row
+              .col-xs-12.table
+                = simple_form_for(computation) do |f|
+                  %h4= t '.new_computation'
+                  = f.error_notification
+                  = f.hidden_field :patient_id, value: @patient.id
+                  %div
+                    %button.btn.btn-default.submit
+                      = t '.submit'
+
+          - if @patient.computations.present?
+            .row
+              .col-xs-12.table
+                %table.table.table-striped
+                  %thead
+                    %tr
+                      %th
+                      %th= t 'computation.started_at'
+                      %th= t 'computation.execution_time'
+                      %th= t 'computation.status'
+
+                  %tbody
+                    = render partial: 'computation', collection: @patient.computations

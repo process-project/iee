@@ -4,6 +4,7 @@ defaults: &defaults
     key_algorithm: ES256
     expiration_time: 3600
     issuer: 'EurValve Portal'
+  redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
 
 
 development:
