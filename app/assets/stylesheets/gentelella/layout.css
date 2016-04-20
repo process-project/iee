@@ -22,6 +22,12 @@ body.nav-sm .container.body .right_col {
     padding: 45px 20px;
     margin-left: 70px;
     z-index: 2;
+    overflow: auto;
+    position: absolute;
+    top: 58px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 body.nav-sm .navbar.nav_title {
     width: 70px;
@@ -161,12 +167,17 @@ body.nav-md .container.body .col-md-3.left_col {
 
 body .container.body .right_col {
     background: #F7F7F7;
-    height: 100%;
 }
 
 body.nav-md .container.body .right_col {
     padding: 60px 20px 0;
     margin-left: 230px;
+    overflow: auto;
+    position: absolute;
+    top: 58px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .nav_title {
@@ -248,7 +259,11 @@ body {
 }
 
 .main_container {
-    height: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 .no-padding {
