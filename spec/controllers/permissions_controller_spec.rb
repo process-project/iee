@@ -31,4 +31,16 @@ RSpec.describe PermissionsController, type: :controller do
     
     expect(response).to redirect_to(new_permission_path(resource_id: @resource.id))
   end
+  
+  it "should create only single permission for a given action" do
+    post :create, permission: {user_id: @user.id, group_id: "", action_id: @action.id,
+      resource_id: @resource.id}
+    post :create, permission: {user_id: @user.id, group_id: "", action_id: @action.id,
+      resource_id: @resource.id}
+      post :create, permission: {user_id: @user.id, group_id: "", action_id: @action.id,
+      resource_id: @resource.id}
+    get :new, resource_id: @resource.id
+      
+    expect(response.body).to have_selector("span.label:contains('#{@action.name}')", count: 1)
+  end
 end
