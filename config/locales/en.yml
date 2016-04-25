@@ -80,6 +80,7 @@ en:
   user_or_group: Pick user or group
   either_user_or_group: Either user or group has to be chosen
   missing_action: Action has to be chosen
+  missing_resource: Resource is missing
   new_resource_submit: Create resource
   manage_permissions: Manage permissions of your web resource
   permissions_list: List of permissions
@@ -94,3 +95,4 @@ en:
     pdp: Policy Decision Point
   jobs:
    title: Delayed jobs
+  similar_permission_exists: Similar permission already exists

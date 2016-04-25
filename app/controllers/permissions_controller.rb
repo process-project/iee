@@ -13,36 +13,16 @@ class PermissionsController < ApplicationController
   
   def create
     @permission = Permission.new(permission_params)
-    puts @permission.to_json
-    valid = true
-    already_exists = false
     @resource = Resource.find_by(id: @permission.resource_id)
     
     if !@resource
       flash[:alert] = t("resource_not_found")
-      valid = false
-    end
-    
-    if !(@permission.user_id.nil? ^ @permission.group_id.nil?)
-      @permission.errors.add(:user_id, t("either_user_or_group"))
-      valid = false
-    end
-    
-    if @permission.action_id.nil?
-      @permission.errors.add(:action_id, t("missing_action"))
-      valid = false
-    end
-    
-    if not Permission.find_by(user_id: @permission.user_id, group_id: @permission.group_id,
-        action_id: @permission.action_id,
-        resource_id: @permission.resource_id).nil?
-      already_exists = true
     end
     
     set_other_fields
       
-    if already_exists || valid && @permission.save
-      redirect_to new_permission_path(resource_id: params[:permission][:resource_id])
+    if @permission.similar_exists? || @permission.save
+      redirect_to new_permission_path(resource_id: @permission.resource_id)
     else
       render :new
     end
