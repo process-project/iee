@@ -13,7 +13,7 @@ RSpec.feature "Resource and permissions UI management" do
     visit(new_resource_path)
     fill_in(:resource_name, with: resource_name)
     fill_in(:resource_uri, with: resource_uri)
-    find("form#new_resource").find("button").click
+    find("form#new_resource").find("input.btn").click
     
     expect(page).to(have_content(resource_name))
     expect(page).to(have_content(resource_uri))
@@ -30,7 +30,7 @@ RSpec.feature "Resource and permissions UI management" do
     visit(new_resource_path)
     fill_in(:resource_name, with: resource_name)
     fill_in(:resource_uri, with: resource_uri)
-    find("form#new_resource").find("button").click
+    find("form#new_resource").find("input.btn").click
     #we cannot use JavaScript so this is used instead
     page.driver.submit(:delete, destroy_user_session_path, {})
     

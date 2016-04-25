@@ -11,22 +11,11 @@
               = icon("hand-o-left", title: t("back_to_resources"))
         .clearfix
       .x_content
-        = simple_form_for(resource, html: { class: "form-horizontal form-label-left" }) do |f|
+        = simple_form_for(resource) do |f|
           = f.error_notification
-          .form-group
-            %label.control-label.col-md-3
-              = t("resource_name")
-            .col-md-6
-              = f.input_field :name, required: true, class: form_input_class(resource, :name)
-              - show_field_errors(resource, :name)
-          .form-group
-            %label.control-label.col-md-3
-              = t("resource_uri")
-            .col-md-6
-              = f.input_field :uri, required: true, class: form_input_class(resource, :uri)
-              - show_field_errors(resource, :uri)
+          = f.input :name, label: t("resource_name")
+          = f.input :uri, label: t("resource_uri")
           .ln_solid
           .form-group
             .col-md-6.col-md-offset-3
-              %button.btn.btn-default.submit
-                = t("new_resource_submit")
+              = f.button :submit, t("new_resource_submit")
