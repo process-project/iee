@@ -6,45 +6,47 @@ RSpec.describe Permission do
   it { should belong_to(:action) }
   it { should belong_to(:resource) }
 
-  context "if no action" do
-    before {
-      allow(subject).to receive(:action).and_return(nil)
-      subject.validate
-    }
-    it {
-      should_not subject.valid?
-      expect(subject.errors[:action_id]).to include(I18n.t("missing_action"))
-    }
-  end
-  
-  context "if no resource" do
-    before {
-      allow(subject).to receive(:resource).and_return(nil)
-      subject.validate
-    }
-    it {
-      should_not subject.valid?
-      expect(subject.errors[:resource_id]).to include(I18n.t("missing_resource"))
-    }
-  end
-  
-  context 'if no user' do
-    before { allow(subject).to receive(:user).and_return(nil) }
-    it { should subject.valid? }
+  it 'validates action presence' do
+    permission = build(:permission, action: nil)
+
+    permission.validate
+
+    expect(permission).to_not be_valid
+    expect(permission.errors[:action_id]).to include(I18n.t('missing_action'))
   end
 
-  context 'if no group' do
-    before { allow(subject).to receive(:group).and_return(nil) }
-    it { should subject.valid? }
+  it 'validates resource presence' do
+    permission = build(:permission, resource: nil)
+
+    permission.validate
+
+    expect(permission).to_not be_valid
+    expect(permission.errors[:resource_id]).
+      to include(I18n.t('missing_resource'))
   end
-  
-  context "user and group where passed" do
-    before { subject.validate }
-    it {
-      should_not subject.valid?
-      expect(subject.errors.keys).to include(:user_id, :group_id)
-      expect(subject.errors[:user_id]).to include(I18n.t("either_user_or_group"))
-      expect(subject.errors[:group_id]).to include(I18n.t("either_user_or_group"))
-    }
+
+  it 'group is required when no user' do
+    permission = create(:group_permission)
+
+    expect(permission).to be_valid
+  end
+
+  it 'user is required when no group' do
+    permission = create(:user_permission)
+
+    expect(permission).to be_valid
+  end
+
+  it 'requires user or group' do
+    user_group_empty = build(:permission)
+    user_group_not_empty = build(:permission,
+                                 user: build(:user),
+                                 group: build(:group))
+
+    user_group_empty.save
+    user_group_not_empty.save
+
+    expect(user_group_empty).to_not be_valid
+    expect(user_group_not_empty).to_not be_valid
   end
 end
