@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
         name_elements = auth.info.name.split(' ')
         user.first_name = name_elements[0]
         user.last_name = name_elements[1..-1].join(' ')
+        user.approved = true
       end
       user.proxy = User.compose_proxy(auth.info)
       user.save

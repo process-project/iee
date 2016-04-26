@@ -39,6 +39,12 @@ RSpec.describe User do
       expect(user.proxy).to eq('abc')
     end
 
+    it 'approve user account' do
+      user = described_class.from_plgrid_omniauth(auth)
+
+      expect(user).to be_approved
+    end
+
     it 'nil proxy when user does not have simple CA registered' do
       user = described_class.from_plgrid_omniauth(auth_no_simple_ca)
 
