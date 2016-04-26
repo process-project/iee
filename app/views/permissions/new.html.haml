@@ -11,7 +11,7 @@
               = icon("hand-o-left", title: t("back_to_resources"))
         .clearfix
       .x_content
-        = simple_form_for(@permission, html: { class: "form-horizontal form-label-left" }) do |f|
+        = simple_form_for(@permission) do |f|
           - if !@user_permissions.empty?
             %table.table.permissions
               %thead
@@ -57,29 +57,11 @@
             = f.error_notification
           .form-group
             = f.input_field :resource_id, as: :hidden, value: @resource.id
-          .form-group
-            %label.control-label.col-md-3
-              = t("pick_user")
-            .col-md-6
-              = f.input_field :user_id, class: form_input_class(@permission, :user_id),
-                  collection: @users, label_method: :email, prompt: t("select_user")
-              - show_field_errors(@permission, :user_id)
-          .form-group
-            %label.control-label.col-md-3
-              = t("pick_group")
-            .col-md-6
-              = f.input_field :group_id, class: form_input_class(@permission, :group_id),
-                  collection: @groups, prompt: t("select_group")
-              - show_field_errors(@permission, :group_id)
-          .form-group
-            %label.control-label.col-md-3
-              = t("pick_action")
-            .col-md-6
-              = f.input_field :action_id, class: form_input_class(@permission, :action_id),
-                  collection: @actions, as: :radio_buttons
-              - show_field_errors(@permission, :action_id)
+          = f.input :user_id, label: t("pick_user"), collection: @users, label_method: :email,
+            prompt: t("select_user")
+          = f.input :group_id, label: t("pick_group"), collection: @groups, prompt: t("select_user")
+          = f.input :action_id, label: t("pick_action"), collection: @actions, as: :radio_buttons
           .ln_solid
           .form-group
             .col-md-6.col-md-offset-3
-              %button.btn.btn-default.submit
-                = t("new_permission_submit")
+              = f.button :submit, t("new_permission_submit")

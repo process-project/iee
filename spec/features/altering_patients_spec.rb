@@ -42,7 +42,7 @@ RSpec.feature 'Patient altering' do
             not_to change { Patient.count }
 
         expect(page).to have_selector "input[value='#{patient.case_number}']"
-        expect(page).to have_content 'Case number has already been taken'
+        expect(page).to have_content 'has already been taken'
       end
     end
 
