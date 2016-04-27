@@ -1,3 +1,3 @@
 web: bundle exec puma -C ./config/puma.rb
-jobs: bundle exec sidekiq -q computation
+jobs: bundle exec sidekiq -q computation -q mailers
 clock: bundle exec clockwork lib/clock.rb
