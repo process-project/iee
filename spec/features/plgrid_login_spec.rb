@@ -18,7 +18,6 @@ RSpec.feature 'PLGrid authentication' do
 
     plgrid_sign_in_as(plgrid_user)
 
-    puts ">>> current page: #{current_path}"
     expect(page).
       to have_content(I18n.t('devise.omniauth_callbacks.email_not_unique'))
   end
