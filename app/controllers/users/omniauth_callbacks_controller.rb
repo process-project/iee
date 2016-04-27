@@ -6,10 +6,13 @@ module Users
       if user.persisted?
         sign_in_and_redirect user, event: :authentication
         if is_navigational_format?
-          set_flash_message(:notice, :success, kind: 'open_id')
+          set_flash_message(:notice, :success, kind: 'PLGrid')
         end
+      elsif user.errors.messages.include?(:email)
+          set_flash_message(:alert, :email_not_unique)
+          redirect_to new_user_session_path
       else
-        session['devise.open_id_data'] = auth.except('extra')
+        set_flash_message(:alert, :failure, kind: 'PLGrid')
         redirect_to root_url
       end
     end
