@@ -10,7 +10,7 @@ class ResourcePolicy < ApplicationPolicy
   def permit?(action_name)
     permissions(action_name).count > 0
   end
-  
+
   def permitted_attributes
     if user.owns_resource?(record) || record.new_record?
       [:name, :uri]
@@ -18,7 +18,7 @@ class ResourcePolicy < ApplicationPolicy
       []
     end
   end
-  
+
   def destroy?
     user.owns_resource?(record)
   end
@@ -30,6 +30,6 @@ class ResourcePolicy < ApplicationPolicy
       includes(group: :user_groups).references(group: :user_groups).
       where("permissions.user_id = :id OR user_groups.user_id = :id", id: user.id).
       where(resource_id: record.id).
-      where("actions.name = :name OR actions.name = 'manage'", name: action_name)
+      where("actions.name = :name", name: action_name)
   end
 end
