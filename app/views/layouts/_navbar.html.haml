@@ -13,7 +13,7 @@
             %span.fa.fa-angle-down
           %ul.dropdown-menu.dropdown-usermenu.fadeInDown.pull-right
             - unless current_user.plgrid_login
-              %li= link_to(t('connect_to_plgrid'), user_omniauth_authorize_path(:open_id))
+              %li= link_to(t('connect_to_plgrid'), user_open_id_omniauth_authorize_path)
             %li= link_to t('profile'), edit_user_registration_path
             %li
               = link_to destroy_user_session_path, method: :delete do

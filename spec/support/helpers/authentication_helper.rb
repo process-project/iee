@@ -7,7 +7,7 @@ module AuthenticationHelper
       nickname: user.plgrid_login,
       email: user.email
     )
-    visit user_omniauth_authorize_path(:open_id)
+    visit user_open_id_omniauth_authorize_path
   end
 
   def sign_in_as(user)

@@ -23,7 +23,7 @@
           .clearfix
           .separator
           = t('login_with')
-          = link_to(user_omniauth_authorize_path(:open_id)) do
+          = link_to(user_open_id_omniauth_authorize_path) do
             = image_tag('plgrid.png')
           .separator
           .change_link
