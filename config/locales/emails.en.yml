@@ -1,0 +1,5 @@
+en:
+  emails:
+    approve_user:
+      subject: New user %{name} acceptance pending
+      body: New user %{name} has been registered. He/She is waiting for the acceptance. You can do it using this link %{approve_url}

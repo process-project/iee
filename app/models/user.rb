@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
 
   scope :approved, -> { where(approved: true) }
+  scope :supervisors, -> { joins(:groups).where(groups: {name: 'supervisor' }) }
 
   def self.with_active_computations
     User.where(<<~SQL
