@@ -97,6 +97,13 @@ class User < ActiveRecord::Base
     )
   end
 
+  # Send devise emails asynchronously.
+  # See https://github.com/plataformatec/devise#activejob-integration for
+  # details.
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
   private
 
   def self.token_data(token)
