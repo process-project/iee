@@ -12,7 +12,10 @@ Rails.application.routes.draw do
   delete "account_confirmations/:id", to: "account_confirmation#block", as: "block_user"
 
   devise_for :users,
-             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+             controllers: {
+               omniauth_callbacks: 'users/omniauth_callbacks',
+               registrations: 'users/registrations'
+             }
 
   resources :patients, except: [:edit, :update]
 
