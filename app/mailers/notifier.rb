@@ -4,10 +4,9 @@ class Notifier < ApplicationMailer
     @approve_url = account_confirmations_index_url
     to = User.supervisors.pluck(:email)
 
-    if to.size > 0
+    if to.present?
       mail(to: to,
-          subject: I18n.t('emails.approve_user.subject',
-          name: user.name))
+           subject: I18n.t('emails.approve_user.subject', name: user.name))
     end
   end
 end
