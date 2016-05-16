@@ -60,6 +60,10 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers, type: :feature
 
   config.filter_run_excluding proxy: true
+
+  config.after :each do
+    Warden.test_reset!
+  end
 end
 
 Shoulda::Matchers.configure do |config|

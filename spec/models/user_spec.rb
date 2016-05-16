@@ -110,6 +110,17 @@ RSpec.describe User do
     expect(User.with_active_computations).to contain_exactly(u2, u3)
   end
 
+  it 'returns supervisors' do
+    supervisor_group = create(:group, name: 'supervisor')
+    supervisor = create(:user, groups: [supervisor_group])
+    create(:user)
+
+    supervisors = User.supervisors
+
+    expect(supervisors.length).to eq 1
+    expect(supervisors.first.id).to eq supervisor.id
+  end
+
   private
 
   def issuer_from_token(enc_token)
