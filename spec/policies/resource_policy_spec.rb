@@ -21,4 +21,11 @@ RSpec.describe ResourcePolicy do
 
     expect(subject.permit?('get')).to be_truthy
   end
+
+  it 'ignore upper/lower action name case' do
+    create(:user_permission,
+           action: get_action, user: user, resource: resource)
+
+    expect(subject.permit?('GET')).to be_truthy
+  end
 end

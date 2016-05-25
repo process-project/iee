@@ -30,6 +30,6 @@ class ResourcePolicy < ApplicationPolicy
       includes(group: :user_groups).references(group: :user_groups).
       where("permissions.user_id = :id OR user_groups.user_id = :id", id: user.id).
       where(resource_id: record.id).
-      where("actions.name = :name", name: action_name)
+      where("LOWER(actions.name) = :name", name: action_name.downcase)
   end
 end
