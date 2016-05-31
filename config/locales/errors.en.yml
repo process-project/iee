@@ -29,3 +29,9 @@ en:
     update:
       timeout: Time out when updating %{user} computations (%{details})
       internal: Internal rimrock error while updating %{user} computations (%{details})
+  activerecord:
+    errors:
+      models:
+        service:
+          uri:
+            override: Given URI overrides already existing URI
