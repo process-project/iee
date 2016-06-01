@@ -11,7 +11,7 @@ module Api
     end
 
     def resource
-      @resource ||= Resource.find_by(uri: params[:uri])
+      @resource ||= Resource.where(":uri ~ uri", uri: params[:uri]).first
     end
   end
 end
