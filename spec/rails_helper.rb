@@ -56,8 +56,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
-  config.include Warden::Test::Helpers, type: :request
-  config.include Warden::Test::Helpers, type: :feature
+  config.include Warden::Test::Helpers
 
   config.filter_run_excluding proxy: true
 
