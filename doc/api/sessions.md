@@ -9,7 +9,7 @@ POST /api/sessions
 Parameters:
 
 ```json
-{ "user": { "email": "foo@bar", "password: "secretsecret" } }
+{ "user": { "email": "foo@bar", "password": "secretsecret" } }
 ```
 
 When credentials are valid JWT token will be returned with basic information
