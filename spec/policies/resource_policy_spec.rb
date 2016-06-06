@@ -21,4 +21,14 @@ RSpec.describe ResourcePolicy do
 
     expect(subject.permit?('get')).to be_truthy
   end
+
+
+  it 'checks user parent group permission' do
+    user = create(:user)
+    create(:group, parent_group: group, users: [user])
+    create(:group_permission,
+           action: get_action, group: group, resource: resource)
+
+    expect(subject.permit?(get_action.name)).to be true
+  end
 end
