@@ -10,5 +10,9 @@ module Jwt
       @expiration_time = conf_hash['expiration_time']
       @issuer = conf_hash['issuer']
     end
+
+    def public_key
+      @pub_key ||= OpenSSL::PKey::EC.new(key).tap { |pk| pk.private_key = nil }
+    end
   end
 end
