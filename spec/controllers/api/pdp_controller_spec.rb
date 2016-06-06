@@ -27,6 +27,27 @@ RSpec.describe Api::PdpController do
 
       expect(response.status).to eq(403)
     end
+    
+    context "resource with regular expressions" do
+      let(:resource) { create(:resource, uri: "http://localhost/.*") }
+      
+      before do
+        sign_in(user)
+        create(:user_permission, user: user, resource: resource, action: action)
+      end
+      
+      it "returns 200 for matching resource" do
+        get :index, uri: "http://localhost/something", permission: "get"
+        
+        expect(response.status).to eq(200)
+      end
+      
+      it "returns 403 for not matching resources" do
+        get :index, uri: "http://localhost2/something", permission: "get"
+        
+        expect(response.status).to eq(403)
+      end
+    end
   end
 
   context 'as anonymous' do
