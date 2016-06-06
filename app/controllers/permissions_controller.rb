@@ -48,13 +48,13 @@ class PermissionsController < ApplicationController
     @user_permissions = {}
     User.joins(permissions: :resource).includes(permissions: :action)
         .where(resources: {id: @resource.id}).each do |user|
-      @user_permissions[user.email] = user.permissions
+      @user_permissions[user.email] = user.permissions.where(resource_id: @resource.id)
     end
 
     @group_permissions = {}
     Group.joins(permissions: :resource).includes(permissions: :action)
         .where(resources: {id: @resource.id}).each do |group|
-      @group_permissions[group.name] = group.permissions
+      @group_permissions[group.name] = group.permissions.where(resource_id: @resource.id)
     end
   end
 
