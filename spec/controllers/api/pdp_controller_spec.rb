@@ -32,7 +32,6 @@ RSpec.describe Api::PdpController do
       let(:resource) { create(:resource, uri: "http://localhost/.*") }
       
       before do
-        sign_in(user)
         create(:user_permission, user: user, resource: resource, action: action)
       end
       
