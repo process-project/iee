@@ -4,7 +4,6 @@ class CreateServices < ActiveRecord::Migration
       t.string :uri, unique: true, null: false, index: true
       t.string :token, null: false, unique: true
       t.string :name
-      t.boolean :editable_by_user, null: false, default: false
 
       t.timestamps null: false
     end

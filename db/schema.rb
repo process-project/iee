@@ -95,12 +95,11 @@ ActiveRecord::Schema.define(version: 20160531065917) do
   add_index "resources", ["service_id"], name: "index_resources_on_service_id", using: :btree
 
   create_table "services", force: :cascade do |t|
-    t.string   "uri",                              null: false
-    t.string   "token",                            null: false
+    t.string   "uri",        null: false
+    t.string   "token",      null: false
     t.string   "name"
-    t.boolean  "editable_by_user", default: false, null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "services", ["uri"], name: "index_services_on_uri", using: :btree
