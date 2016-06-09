@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418142336) do
+ActiveRecord::Schema.define(version: 20160531065917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,13 +84,25 @@ ActiveRecord::Schema.define(version: 20160418142336) do
   add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
 
   create_table "resources", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "name"
+    t.string   "path",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "service_id", null: false
+  end
+
+  add_index "resources", ["path"], name: "index_resources_on_path", using: :btree
+  add_index "resources", ["service_id"], name: "index_resources_on_service_id", using: :btree
+
+  create_table "services", force: :cascade do |t|
     t.string   "uri",        null: false
+    t.string   "token",      null: false
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "resources", ["uri"], name: "index_resources_on_uri", using: :btree
+  add_index "services", ["uri"], name: "index_services_on_uri", using: :btree
 
   create_table "user_groups", force: :cascade do |t|
     t.integer  "user_id"

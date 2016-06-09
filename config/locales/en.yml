@@ -62,6 +62,7 @@ en:
   no_resources: No web resources
   resource_name: Resource name
   resource_uri: Resource URI
+  resource_path: Resource path
   new_resource_title: Create new resource
   new_permission_submit: Add permission
   new_resource_form: New web resource

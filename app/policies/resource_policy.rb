@@ -13,7 +13,7 @@ class ResourcePolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.owns_resource?(record) || record.new_record?
-      [:name, :uri]
+      [:name, :path, :service_id]
     else
       []
     end

@@ -1,5 +1,5 @@
 module Rimrock
-  class Start < Service
+  class Start < Rimrock::Service
     def call
       if computation.job_id
         raise Rimrock::Exception, 'Cannot start computation twice'
