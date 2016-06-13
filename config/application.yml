@@ -5,7 +5,9 @@ defaults: &defaults
     expiration_time: 3600
     issuer: 'EurValve Portal'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
-
+  file_store:
+    web_dav_base_url: "https://files.valve.cyfronet.pl/webdav"
+    web_dav_base_href: "/"
 
 development:
   <<: *defaults

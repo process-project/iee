@@ -97,3 +97,5 @@ en:
   jobs:
    title: Delayed jobs
   similar_permission_exists: Similar permission already exists
+  file_store:
+    menu_item: File resources
