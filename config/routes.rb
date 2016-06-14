@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   get 'help/:category/:file' => 'help#show',
        as: :help_page,
        constraints: { category: /.*/, file: /[^\/\.]+/ }
+  
+  # File Store
+  get "file_store" => "file_store#index"
 
   # Sidekiq monitoring
   authenticate :user, lambda { |u| u.admin? } do

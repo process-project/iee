@@ -1,0 +1,11 @@
+= content_for :extra_head do
+  %script{type: "text/javascript", src: "/slet/slet.nocache.js"}
+  %script{type: "text/javascript", src: "/slet/FileSaver.min.js"}
+  :javascript
+    var SletOverrides = {
+      webDavBaseUrl: '#{@web_dav_base_url}',
+      webDavBaseHref: '#{@web_dav_base_href}',
+      webDavAuthUrl: '/api/auth',
+      token: '#{@token}'
+    };
+%div{id: "lobcderContainer"}
