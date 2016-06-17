@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :group do
-    name "a_group"
+    name { Faker::Name.name }
     
     factory :supervisor_group do
       name "supervisor"
