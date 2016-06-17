@@ -1,12 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe ResourcePolicy do
-  let(:user) { create(:user) }
-  let(:group) { create(:group, users: [user]) }
-  let(:resource) { create(:resource) }
+  let(:user) { create(:user, first_name: 'tomek') }
+  let(:group) { create(:group, name: 'subgroup', users: [user]) }
+  let(:resource) { create(:resource, name: 'zasób') }
   let(:get_action) { create(:action, name: 'get') }
 
   subject { ResourcePolicy.new(user, resource) }
+
+  it 'denies user without permission' do
+    expect(subject.permit?('get')).to be_falsey
+  end
 
   it 'checks user permission' do
     create(:user_permission,
@@ -15,9 +19,30 @@ RSpec.describe ResourcePolicy do
     expect(subject.permit?('get')).to be_truthy
   end
 
+  it 'denies user not associated with group permission' do
+    another_group = create(:group)
+    create(:permission,
+           action: get_action, group: another_group, resource: resource)
+
+    expect(subject.permit?('get')).to be_falsey
+  end
+
   it 'checks user group permission' do
     create(:group_permission,
            action: get_action, group: group, resource: resource)
+
+    expect(subject.permit?('get')).to be_truthy
+  end
+
+  it 'checks user parent group permission' do
+    parent_group = build(:group, name: 'parent group')
+    parent_group.subgroups << group
+    parent_group.save!
+    create(:permission,
+           action: get_action, group: parent_group, resource: resource)
+    user.reload
+    resource.reload
+
 
     expect(subject.permit?('get')).to be_truthy
   end
