@@ -2,20 +2,32 @@ class Group < ActiveRecord::Base
   has_many :user_groups
   has_many :users, through: :user_groups
   has_many :permissions, dependent: :destroy
-  has_many :subgroups, class_name: 'Group', foreign_key: 'parent_group'
+  has_many :subgroups, class_name: 'Group', foreign_key: 'parent_group_id'
   belongs_to :parent_group, class_name: 'Group'
 
   validates :name, presence: true
+  validate :no_cycles_in_ancestors
 
-  def all_parents
+  def ancestors
     if parent_group
-      [parent_group] + parent_group.all_parents
+      [parent_group] + parent_group.ancestors
     else
       []
     end
   end
 
-  def all_parents_comp
-    ([parent_group] + [parent_group.try(:parent_group)]).flatten.compact!
+  def offspring
+    if subgroups
+      subgroups.collect { |subgroup| [subgroup] + subgroup.offspring }.flatten
+    else
+      []
+    end
+  end
+
+  private
+  def no_cycles_in_ancestors
+    if offspring.include? parent_group
+      errors.add(:parent_group, 'Cannot be one of ancestors')
+    end
   end
 end
