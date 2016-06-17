@@ -62,6 +62,7 @@ en:
   no_resources: No web resources
   resource_name: Resource name
   resource_uri: Resource URI
+  resource_path: Resource path
   new_resource_title: Create new resource
   new_permission_submit: Add permission
   new_resource_form: New web resource
@@ -96,3 +97,5 @@ en:
   jobs:
    title: Delayed jobs
   similar_permission_exists: Similar permission already exists
+  file_store:
+    menu_item: File resources

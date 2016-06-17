@@ -14,7 +14,8 @@
         = simple_form_for(resource) do |f|
           = f.error_notification
           = f.input :name, label: t("resource_name")
-          = f.input :uri, label: t("resource_uri")
+          = f.association :service, label_method: :uri, include_blank: false, required: true
+          = f.input :path, label: t("resource_path")
           .ln_solid
           .form-group
             .col-md-6.col-md-offset-3

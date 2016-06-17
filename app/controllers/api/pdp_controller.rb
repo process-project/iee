@@ -11,7 +11,23 @@ module Api
     end
 
     def resource
-      @resource ||= Resource.where(":uri ~ uri", uri: params[:uri]).first
+      @resource ||= service&.resources&.
+                    where(':path ~ path', path: path)&.first
+    end
+
+    def path
+      postfix = uri
+      postfix[(service.uri.length + 1)..-1]
+    end
+
+    def service
+      @service ||= Service.find_each do |service|
+                     break service if uri.starts_with?(service.uri)
+                   end
+    end
+
+    def uri
+      params[:uri]
     end
   end
 end
