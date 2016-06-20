@@ -39,7 +39,7 @@ class ComputationsController < ApplicationController
       #SBATCH -A eurvalve2
       #SBATCH -p plgrid
 
-      CASE_DIR=$PLG_GROUPS_STORAGE/plggeurvalve/#{Rails.env}/#{patient.case_number}
+      CASE_DIR=#{Rails.application.config_for('eurvalve')['storage_url']}/#{patient.case_number}
 
       ## Change to the directory where sbatch was called
       cd $SCRATCHDIR
