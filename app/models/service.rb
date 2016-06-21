@@ -16,7 +16,7 @@ class Service < ActiveRecord::Base
   private
 
   def generate_token
-    self.token = loop do
+    self.token ||= loop do
       random_token = SecureRandom.hex
       break random_token unless Service.exists?(token: random_token)
     end
