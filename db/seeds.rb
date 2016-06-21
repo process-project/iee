@@ -20,12 +20,12 @@ admin.user_groups.each do |user_group|
   user_group.save
 end
 
-# actions
-Action.find_or_create_by(name: 'manage')
-Action.find_or_create_by(name: 'get')
-Action.find_or_create_by(name: 'post')
-Action.find_or_create_by(name: 'put')
-Action.find_or_create_by(name: 'delete')
-Action.find_or_create_by(name: 'propfind')
-Action.find_or_create_by(name: 'options')
-Action.find_or_create_by(name: 'mkcol')
+# access methods
+AccessMethod.find_or_create_by(name: 'manage')
+AccessMethod.find_or_create_by(name: 'get')
+AccessMethod.find_or_create_by(name: 'post')
+AccessMethod.find_or_create_by(name: 'put')
+AccessMethod.find_or_create_by(name: 'delete')
+AccessMethod.find_or_create_by(name: 'propfind')
+AccessMethod.find_or_create_by(name: 'options')
+AccessMethod.find_or_create_by(name: 'mkcol')

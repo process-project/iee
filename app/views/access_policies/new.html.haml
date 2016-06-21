@@ -3,56 +3,56 @@
     .x_panel
       .x_title
         %h2
-          = t("permissions", name: @resource.name, uri: @resource.uri)
-          %small= t("manage_permissions")
+          = t("access_policies", name: @resource.name, uri: @resource.uri)
+          %small= t("manage_access_policies")
         %ul.nav.navbar-right.panel_toolbox
           %li
             = link_to(resources_path) do
               = icon("hand-o-left", title: t("back_to_resources"))
         .clearfix
       .x_content
-        = simple_form_for(@permission) do |f|
-          - if !@user_permissions.empty?
-            %table.table.permissions
+        = simple_form_for(@access_policy) do |f|
+          - if !@user_access_policies.empty?
+            %table.table.access_policies
               %thead
                 %tr
-                  %th= t("user_resource_permissions")
-                  %th= t("permissions_list")
+                  %th= t("user_resource_access_policies")
+                  %th= t("access_policies_list")
               %tbody
-                - @user_permissions.each do |email, permissions|
+                - @user_access_policies.each do |email, access_policies|
                   %tr
                     %td= email
                     %td
-                      - permissions.each do |permission|
+                      - access_policies.each do |access_policy|
                         %span.label.label-primary
-                          = permission.action.name
-                          = link_to(permission_path(permission.id, resource_id: @resource.id),
+                          = access_policy.access_method.name
+                          = link_to(access_policy_path(access_policy.id, resource_id: @resource.id),
                             method: :delete, data: { confirm: t("are_you_sure") }) do
                             = icon("remove", class: "fa-white")
           - else
-            %p= t("no_user_permissions")
-          - if !@group_permissions.empty?
-            %table.table.permissions
+            %p= t("no_user_access_policies")
+          - if !@group_access_policies.empty?
+            %table.table.access_policies
               %thead
                 %tr
-                  %th= t("group_resource_permissions")
-                  %th= t("permissions_list")
+                  %th= t("group_resource_access_policies")
+                  %th= t("access_policies_list")
               %tbody
-                - @group_permissions.each do |name, permissions|
+                - @group_access_policies.each do |name, access_policies|
                   %tr
                     %td= name
                     %td
-                      - permissions.each do |permission|
+                      - access_policies.each do |access_policy|
                         %span.label.label-primary
-                          = permission.action.name
-                          = link_to(permission_path(permission.id, resource_id: @resource.id),
+                          = access_policy.access_method.name
+                          = link_to(access_policy_path(access_policy.id, resource_id: @resource.id),
                             method: :delete, data: { confirm: t("are_you_sure") }) do
                             = icon("remove", class: "fa-white")
           - else
-            %p= t("no_group_permissions")
+            %p= t("no_group_access_policies")
           .col-md-6.col-md-offset-3
             %h5{title: t("user_or_group")}
-              = t("add_permission")
+              = t("add_access_policy")
               = icon("info")
             = f.error_notification
           .form-group
@@ -60,8 +60,8 @@
           = f.input :user_id, label: t("pick_user"), collection: @users, label_method: :email,
             prompt: t("select_user")
           = f.input :group_id, label: t("pick_group"), collection: @groups, prompt: t("select_user")
-          = f.input :action_id, label: t("pick_action"), collection: @actions, as: :radio_buttons
+          = f.input :access_method_id, label: t("pick_access_method"), collection: @access_methods, as: :radio_buttons
           .ln_solid
           .form-group
             .col-md-6.col-md-offset-3
-              = f.button :submit, t("new_permission_submit")
+              = f.button :submit, t("new_access_policy_submit")

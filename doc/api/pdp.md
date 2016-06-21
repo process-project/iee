@@ -1,11 +1,11 @@
 # Policy Decision Point (PDP)
 
 Policy decision point gives simple answer to following question: does user have
-`permission` to invoke action on selected `resource`. Resource is identified by
-unique `uri`, permission is one of following: `get`, `post`, `put`, `delete`.
+permission to invoke a method on a given `resource`. Resource is identified by
+a unique `uri`, method is one of the following: `get`, `post`, `put`, `delete`, etc.
 
 ```
-GET /api/pdp?uri={uri_path}&permission={get|post|put|delete}
+GET /api/pdp?uri={uri_path}&access_method={get|post|put|delete}
 ```
 
 PDP is secured by [JWT](https://jwt.io). Which can be currently copied from
@@ -18,12 +18,12 @@ Authorization: Bearer <token>
 
 ## Response
 
-If uses is able to perform selected action on given resource `200` response code
+If user is able to perform selected method on a given resource a `200` response code
 is returned, otherwise `403` is returned. If token is not valid or expired `401`
 is returned.
 
 ## Example
 
 ```
-curl -H "Authorization: Bearer <token>" https://valve.cyfronet.pl/api/pdp?uri=http://test&permission=get
+curl -H "Authorization: Bearer <token>" https://valve.cyfronet.pl/api/pdp?uri=http://test&access_method=get
 ```

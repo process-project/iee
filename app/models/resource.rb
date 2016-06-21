@@ -1,5 +1,5 @@
 class Resource < ActiveRecord::Base
-  has_many :permissions, dependent: :destroy
+  has_many :access_policies, dependent: :destroy
   belongs_to :service
 
   validates :path, presence: true, uniqueness: { scope: :service_id }

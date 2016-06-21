@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :user_groups
   has_many :groups, through: :user_groups
-  has_many :permissions, dependent: :destroy
+  has_many :access_policies, dependent: :destroy
   has_many :computations
 
   validates :first_name, presence: true
@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   end
 
   def owns_resource?(resource)
-    resource.permissions.where(user_id: id).exists?
+    resource.access_policies.where(user_id: id).exists?
   end
 
   def admin?

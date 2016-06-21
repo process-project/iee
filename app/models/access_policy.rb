@@ -1,16 +1,16 @@
-class Permission < ActiveRecord::Base
+class AccessPolicy < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
-  belongs_to :action
+  belongs_to :access_method
   belongs_to :resource
 
   validate :user_xor_group
 
-  validates :action_id, presence: { message: I18n.t("missing_action") }
+  validates :access_method_id, presence: { message: I18n.t("missing_access_method") }
   validates :resource_id, presence: { message: I18n.t("missing_resource") }
   validates :user_id, uniqueness: {
-    scope: [:group_id, :action_id, :resource_id],
-    message: I18n.t("similar_permission_exists")
+    scope: [:group_id, :access_method_id, :resource_id],
+    message: I18n.t("similar_access_policy_exists")
   }
 
   def user_xor_group

@@ -4,27 +4,27 @@ RSpec.describe ResourcePolicy do
   let(:user) { create(:user) }
   let(:group) { create(:group, users: [user]) }
   let(:resource) { create(:resource) }
-  let(:get_action) { create(:action, name: 'get') }
+  let(:get_method) { create(:access_method, name: 'get') }
 
   subject { ResourcePolicy.new(user, resource) }
 
-  it 'checks user permission' do
-    create(:user_permission,
-           action: get_action, user: user, resource: resource)
+  it 'checks user access policies' do
+    create(:user_access_policy,
+           access_method: get_method, user: user, resource: resource)
 
     expect(subject.permit?('get')).to be_truthy
   end
 
-  it 'checks user group permission' do
-    create(:group_permission,
-           action: get_action, group: group, resource: resource)
+  it 'checks user group access_policy' do
+    create(:group_access_policy,
+           access_method: get_method, group: group, resource: resource)
 
     expect(subject.permit?('get')).to be_truthy
   end
 
   it 'ignore upper/lower action name case' do
-    create(:user_permission,
-           action: get_action, user: user, resource: resource)
+    create(:user_access_policy,
+           access_method: get_method, user: user, resource: resource)
 
     expect(subject.permit?('GET')).to be_truthy
   end

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'permissions/create'
+  get 'access_policies/create'
 
   get 'resources/index'
 
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   end
 
   resources :resources, except: [:show, :update, :edit]
-  resources :permissions, only: [:new, :create, :destroy]
+  resources :access_policies, only: [:new, :create, :destroy]
   resources :computations, only: [:show, :create]
 
   # Help

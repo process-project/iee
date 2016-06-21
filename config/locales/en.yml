@@ -64,31 +64,31 @@ en:
   resource_uri: Resource URI
   resource_path: Resource path
   new_resource_title: Create new resource
-  new_permission_submit: Add permission
+  new_access_policy_submit: Add access policy
   new_resource_form: New web resource
   remove_resource_title: Remove this resource
-  edit_permissions_title: Edit permissions
+  edit_access_policies_title: Edit access policies
   edit_resource_form: Edit resource
-  user_resource_permissions: Permissions for user
-  group_resource_permissions: Permissions for group
+  user_resource_access_policies: Access policies for user
+  group_resource_access_policies: Access policies for group
   resource_not_found: Resource could not be found
-  no_user_permissions: No user permissions were set
-  no_group_permissions: No group permissions were set
+  no_user_access_policies: No user access policies were set
+  no_group_access_policies: No group access policies were set
   select_user: Select user
   select_group: Select group
-  permissions: "%{name} (%{uri})"
-  add_permission: Add new permission
+  access_policies: "%{name} (%{uri})"
+  add_access_policy: Add new access policy
   user_or_group: Pick user or group
   either_user_or_group: Either user or group has to be chosen
-  missing_action: Action has to be chosen
+  missing_access_method: Method has to be chosen
   missing_resource: Resource is missing
   new_resource_submit: Create resource
-  manage_permissions: Manage permissions of your web resource
-  permissions_list: List of permissions
+  manage_access_policies: Manage access policies of your web resource
+  access_policies_list: List of access policies
   back_to_resources: Go back to the resource list
   pick_user: Pick user
   pick_group: Pick group
-  pick_action: Pick action
+  pick_access_method: Pick method
   new_resource_subtitle: Create new web resource
   welcome: Welcome,
   help:
@@ -96,6 +96,6 @@ en:
     pdp: Policy Decision Point
   jobs:
    title: Delayed jobs
-  similar_permission_exists: Similar permission already exists
+  similar_access_policy_exists: Similar access policy already exists
   file_store:
     menu_item: File resources

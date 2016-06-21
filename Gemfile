@@ -38,9 +38,6 @@ gem 'clockwork'
 
 gem 'puma'
 
-#REST API
-gem "jsonapi-resources"
-
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'

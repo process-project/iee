@@ -7,7 +7,7 @@ module Api
     private
 
     def permit?
-      current_user && resource && policy(resource).permit?(params[:permission])
+      current_user && resource && policy(resource).permit?(params[:access_method])
     end
 
     def resource

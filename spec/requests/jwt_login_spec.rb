@@ -7,14 +7,14 @@ RSpec.describe 'JWT' do
            password_confirmation: 'asdfgh123')
   end
   let(:auth_headers) { { 'Authorization' => "Bearer #{user.token}" } }
+  let(:access_method) { create(:access_method, name: 'get') }
 
-  it 'is used to login into API endpoitns' do
+  it 'is used to login into API endpoints' do
     resource = create(:resource)
-    create(:permission, user: user, resource: resource,
-           action: create(:action, name: 'get'))
+    create(:access_policy, user: user, resource: resource, access_method: access_method)
 
     get api_pdp_index_path,
-        { uri: resource.uri, permission: 'get' },
+        { uri: resource.uri, access_method: 'get' },
         auth_headers
 
     expect(response.status).to eq(200)

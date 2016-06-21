@@ -11,16 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531065917) do
+ActiveRecord::Schema.define(version: 20160621092617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "actions", force: :cascade do |t|
+  create_table "access_methods", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "access_policies", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.integer  "access_method_id", null: false
+    t.integer  "resource_id",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "access_policies", ["access_method_id"], name: "index_access_policies_on_access_method_id", using: :btree
+  add_index "access_policies", ["group_id"], name: "index_access_policies_on_group_id", using: :btree
+  add_index "access_policies", ["resource_id"], name: "index_access_policies_on_resource_id", using: :btree
+  add_index "access_policies", ["user_id"], name: "index_access_policies_on_user_id", using: :btree
 
   create_table "computations", force: :cascade do |t|
     t.string   "job_id"
@@ -68,20 +82,6 @@ ActiveRecord::Schema.define(version: 20160531065917) do
 
   add_index "patients", ["case_number"], name: "index_patients_on_case_number", using: :btree
   add_index "patients", ["procedure_status"], name: "index_patients_on_procedure_status", using: :btree
-
-  create_table "permissions", force: :cascade do |t|
-    t.integer  "group_id"
-    t.integer  "user_id"
-    t.integer  "action_id",   null: false
-    t.integer  "resource_id", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "permissions", ["action_id"], name: "index_permissions_on_action_id", using: :btree
-  add_index "permissions", ["group_id"], name: "index_permissions_on_group_id", using: :btree
-  add_index "permissions", ["resource_id"], name: "index_permissions_on_resource_id", using: :btree
-  add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
 
   create_table "resources", force: :cascade do |t|
     t.string   "name"
