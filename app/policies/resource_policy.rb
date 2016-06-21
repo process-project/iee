@@ -26,9 +26,12 @@ class ResourcePolicy < ApplicationPolicy
   private
 
   def access_policies(access_method_name)
+    groups_with_ancestors = UserGroupsWithAncestors.new(user).get
+    group_ids = groups_with_ancestors.collect { |g| g.id }
+
     AccessPolicy.joins(:access_method).
-      includes(group: :user_groups).references(group: :user_groups).
-      where("access_policies.user_id = :id OR user_groups.user_id = :id", id: user.id).
+      includes(:group).references(:group).
+      where("access_policies.user_id = :user_id OR groups.id IN (:group_ids)", user_id: user.id, group_ids: group_ids).
       where(resource_id: record.id).
       where("LOWER(access_methods.name) = :name", name: access_method_name.downcase)
   end
