@@ -1,6 +1,8 @@
 module Api
   class ResourcePolicyController < ActionController::Base
-    before_filter :authenticate_service, :parse_request
+    before_filter :authenticate_service
+    
+    before_filter only: :parse_request, only: :create
     
     before_filter only: :create do
       unless @json.has_key?("resource_path") && @json.has_key?("user") &&
@@ -31,6 +33,18 @@ module Api
       end
       
       render nothing: true, status: :created
+    end
+    
+    def index
+      result = {}
+      result["users"] = []
+      result["groups"] = []
+      result["access_methods"] = []
+      User.approved.each { |user| result["users"] << user.email }
+      Group.all.each { |group| result["groups"] << group.name }
+      AccessMethod.all.each { |access_method| result["access_methods"] << access_method.name }
+      
+      render json: result, status: :ok
     end
     
     private
