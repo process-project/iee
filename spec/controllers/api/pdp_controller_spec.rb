@@ -47,6 +47,22 @@ RSpec.describe Api::PdpController do
 
         expect(response.status).to eq(403)
       end
+      
+      context "several resources with overlapping regural expressions" do
+        let(:resource_2) { create(:resource, path: "path/extra/.*", service: service) }
+        let(:access_method_2) { create(:access_method, name: "post") }
+        
+        before do
+          create(:user_access_policy, user: user, resource: resource_2,
+            access_method: access_method_2)
+        end
+        
+        it "returns 403 as conflicting access policies exist" do
+          get :index, uri: 'http://localhost/path/extra/something', access_method: 'get'
+
+          expect(response.status).to eq(403)
+        end
+      end
     end
   end
 
