@@ -2,7 +2,7 @@ module Api
   class ResourcePolicyController < ActionController::Base
     before_filter :authenticate_service
     
-    before_filter only: :parse_request, only: :create
+    before_filter :parse_request, only: :create
     
     before_filter only: :create do
       unless @json.has_key?("resource_path") && @json.has_key?("user") &&
