@@ -10,7 +10,7 @@ module Api
     def permit?
       resources = service&.resources&.where(':path ~ path', path: path)
       
-      if resources && resources.count > 0
+      if resources&.any?
         resources.each do |resource|
           if !policy(resource).permit?(params[:access_method])
             return false
