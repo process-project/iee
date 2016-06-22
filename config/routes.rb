@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'permissions/create'
+  get 'access_policies/create'
 
   get 'resources/index'
 
@@ -22,10 +22,12 @@ Rails.application.routes.draw do
   namespace :api do
     resources :pdp, only: :index
     resources :sessions, only: :create
+    resources :resource_policy, only: :create
+    get "resource_policy_entities", to: "resource_policy#index"
   end
 
   resources :resources, except: [:show, :update, :edit]
-  resources :permissions, only: [:new, :create, :destroy]
+  resources :access_policies, only: [:new, :create, :destroy]
   resources :computations, only: [:show, :create]
 
   # Help

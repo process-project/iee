@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature "Resource and permissions UI management" do
+RSpec.feature "Resource and access policies UI management" do
   include AuthenticationHelper
 
   scenario "users should see resources they created" do
     user = create(:approved_user)
-    create(:action, name: "manage")
+    create(:access_method, name: "manage")
     resource_name = "My New Resource"
     service = create(:service, uri: "http://host.com")
     resource_path = "my_resource"
@@ -24,9 +24,9 @@ RSpec.feature "Resource and permissions UI management" do
   scenario "users should not see resources they did not create" do
     #first user creates a resource
     user1 = create(:approved_user)
-    manage = create(:action, name: "manage")
+    manage = create(:access_method, name: "manage")
     resource = create(:resource)
-    create(:permission, resource: resource, user: user1, action: manage)
+    create(:access_policy, resource: resource, user: user1, access_method: manage)
 
     #second user logs in and goes to the resource management page
     user2 = create(:approved_user)
@@ -37,10 +37,10 @@ RSpec.feature "Resource and permissions UI management" do
     expect(page).not_to(have_content(resource.uri))
   end
 
-  scenario "permissions for different resources should not mix" do
+  scenario "access policies for different resources should not mix" do
     #user creates two resources
     user1 = create(:approved_user)
-    create(:action, name: "manage")
+    create(:access_method, name: "manage")
     service = create(:service, uri: "http://host.com")
     resource_name = "My New Resource"
     resource_uri = "my_resource"
@@ -62,9 +62,9 @@ RSpec.feature "Resource and permissions UI management" do
     select(service.uri, from: :resource_service_id)
     find("form#new_resource").find("input.btn").click
 
-    #showing the permission management tab for the first resource
+    #showing the access policy management tab for the first resource
     resource_1 = Resource.find_by(path: resource_uri)
-    visit(new_permission_path(resource_id: resource_1.id))
+    visit(new_access_policy_path(resource_id: resource_1.id))
 
     #the page should contain two manage texts: one for the resource and the second one for the menu
     expect(page).to(have_content("manage", count: 2))

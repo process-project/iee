@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :action do
+  factory :access_method do
     name { Faker::Name.name }
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe ResourcesController, type: :controller do
 
   it 'should create a new resource' do
     user = create(:approved_user)
-    create(:action, name: 'manage')
+    create(:access_method, name: 'manage')
     service = create(:service)
     sign_in(user)
 

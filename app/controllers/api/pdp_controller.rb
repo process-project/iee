@@ -6,13 +6,10 @@ module Api
 
     private
 
+    #policies of all matching resources must allow for access and at least one policy has to exist
     def permit?
-      current_user && resource && policy(resource).permit?(params[:permission])
-    end
-
-    def resource
-      @resource ||= service&.resources&.
-                    where(':path ~ path', path: path)&.first
+      resources = service&.resources&.where(':path ~ path', path: path)
+      every_resource_permitted? resources
     end
 
     def path
@@ -21,11 +18,15 @@ module Api
     end
 
     def service
-      @service ||= Service.find_each do |service|
-                     break service if uri.starts_with?(service.uri)
-                   end
+      Service.find_each do |service|
+        break service if uri.starts_with?(service.uri)
+      end
     end
-
+    
+    def every_resource_permitted?(resources)
+      resources&.map { |r| policy(r).permit?(params[:access_method]) }&.reduce(:&)
+    end
+    
     def uri
       params[:uri]
     end

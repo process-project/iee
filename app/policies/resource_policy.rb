@@ -1,14 +1,14 @@
 class ResourcePolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::ApplicationScope
     def resolve
-      scope.joins(permissions: [:action, :user])
-        .where(actions: {name: "manage"})
+      scope.joins(access_policies: [:access_method, :user])
+        .where(access_methods: {name: "manage"})
         .where(users: {id: user.id})
     end
   end
 
-  def permit?(action_name)
-    permissions(action_name).count > 0
+  def permit?(access_method_name)
+    access_policies(access_method_name).count > 0
   end
 
   def permitted_attributes
@@ -25,14 +25,14 @@ class ResourcePolicy < ApplicationPolicy
 
   private
 
-  def permissions(action_name)
+  def access_policies(access_method_name)
     groups_with_ancestors = UserGroupsWithAncestors.new(user).get
     group_ids = groups_with_ancestors.collect { |g| g.id }
 
-    Permission.joins(:action).
+    AccessPolicy.joins(:access_method).
       includes(:group).references(:group).
-      where("permissions.user_id = :user_id OR groups.id IN (:group_ids)", user_id: user.id, group_ids: group_ids).
+      where("access_policies.user_id = :user_id OR groups.id IN (:group_ids)", user_id: user.id, group_ids: group_ids).
       where(resource_id: record.id).
-      where("LOWER(actions.name) = :name", name: action_name.downcase)
+      where("LOWER(access_methods.name) = :name", name: access_method_name.downcase)
   end
 end

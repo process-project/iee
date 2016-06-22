@@ -1,7 +1,7 @@
 class Group < ActiveRecord::Base
   has_many :user_groups
   has_many :users, through: :user_groups
-  has_many :permissions, dependent: :destroy
+  has_many :access_policies, dependent: :destroy
   has_many :subgroups, class_name: 'Group', foreign_key: 'parent_group_id'
   belongs_to :parent_group, class_name: 'Group'
 

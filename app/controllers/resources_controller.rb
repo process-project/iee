@@ -12,8 +12,8 @@ class ResourcesController < ApplicationController
 
     @resource.transaction do
       if @resource.save
-        @resource.permissions.create!(user: current_user, resource: @resource,
-          action: Action.find_by(name: "manage"))
+        @resource.access_policies.create!(user: current_user, resource: @resource,
+          access_method: AccessMethod.find_by(name: "manage"))
       end
     end
 

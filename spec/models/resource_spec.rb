@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Resource do
   it { should validate_presence_of(:path) }
-  it { should have_many(:permissions).dependent(:destroy) }
+  it { should have_many(:access_policies).dependent(:destroy) }
 
   it 'checks regular expression match' do
     resource = build(:resource, path: 'path/.*')
