@@ -9,18 +9,7 @@ module Api
     #policies of all matching resources must allow for access and at least one policy has to exist
     def permit?
       resources = service&.resources&.where(':path ~ path', path: path)
-      
-      if resources&.any?
-        resources.each do |resource|
-          if !policy(resource).permit?(params[:access_method])
-            return false
-          end
-        end
-      else
-        return false
-      end
-      
-      return true
+      resources&.map { |r| policy(r).permit?(params[:access_method]) }&.reduce(:&)
     end
 
     def path
