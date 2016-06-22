@@ -48,7 +48,7 @@ RSpec.describe Api::PdpController do
         expect(response.status).to eq(403)
       end
       
-      context "several resources with overlapping regural expressions" do
+      context "several resources with overlapping regular expressions" do
         let(:resource_2) { create(:resource, path: "path/extra/.*", service: service) }
         let(:access_method_2) { create(:access_method, name: "post") }
         

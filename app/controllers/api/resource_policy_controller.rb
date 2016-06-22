@@ -1,24 +1,12 @@
 module Api
   class ResourcePolicyController < ActionController::Base
-    before_filter :authenticate_service
+    before_filter :authorize_service
     
     before_filter :parse_request, only: :create
     
     before_filter only: :create do
-      unless @json.has_key?("resource_path") && @json.has_key?("user") &&
-          @json.has_key?("access_methods") && @json["access_methods"].respond_to?(:[]) &&
-          User.exists?(email: @json["user"])
+      unless json_params_valid?
         render nothing: true, status: :bad_request
-        
-        next
-      end
-      
-      @json["access_methods"].each do |access_method|
-        if !AccessMethod.exists?(name: access_method)
-          render nothing: true, status: :bad_request
-          
-          break
-        end
       end
     end
     
@@ -36,37 +24,38 @@ module Api
     end
     
     def index
-      result = {}
-      result["users"] = []
-      result["groups"] = []
-      result["access_methods"] = []
-      User.approved.each { |user| result["users"] << user.email }
-      Group.all.each { |group| result["groups"] << group.name }
-      AccessMethod.all.each { |access_method| result["access_methods"] << access_method.name }
+      result  = { users: [], groups: [], access_methods: [] }
+      User.approved.each { |user| result[:users] << user.email }
+      Group.all.each { |group| result[:groups] << group.name }
+      AccessMethod.all.each { |access_method| result[:access_methods] << access_method.name }
       
       render json: result, status: :ok
     end
     
     private
     
-    def authenticate_service
-      token = request.headers["HTTP_X_SERVICE_TOKEN"]
-      
-      if token
-        service = Service.find_by(token: token)
-        
-        if service
-            @service = service
-            
-            return
-        end
-      end
-      
-      head :unauthorized, "WWW-Authenticate" => "X-SERVICE-TOKEN header required"
+    def authorize_service
+      @service = token ? Service.find_by(token: token) : nil
+      @service ? nil : unauthorized_response
     end
     
     def parse_request
       @json = JSON.parse(request.body.read)
+    end
+    
+    def json_params_valid?
+      @json.has_key?("resource_path") && @json.has_key?("user") &&
+        @json.has_key?("access_methods") && @json["access_methods"].respond_to?(:[]) &&
+          User.exists?(email: @json["user"]) &&
+            @json["access_methods"].map { |access_method| AccessMethod.exists?(name: access_method)}.reduce(:&)
+    end
+    
+    def token
+      request.headers["HTTP_X_SERVICE_TOKEN"]
+    end
+    
+    def unauthorized_response
+      head :unauthorized, "WWW-Authenticate" => "X-SERVICE-TOKEN header required"
     end
   end
 end
