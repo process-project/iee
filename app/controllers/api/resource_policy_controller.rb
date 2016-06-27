@@ -84,7 +84,11 @@ module Api
     end
     
     def resource_path_param
-      params[:resource_path]
+      if params[:resource_path]
+        Resource.normalize_path(params[:resource_path])
+      else
+        nil
+      end
     end
   end
 end
