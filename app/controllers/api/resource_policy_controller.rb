@@ -6,9 +6,11 @@ module Api
     
     before_filter only: :create do
       unless json_params_valid?
-        render nothing: true, status: :bad_request
+        render_bad_request
       end
     end
+    
+    before_filter :check_delete_params, only: :delete
     
     def create
       Resource.transaction do
@@ -30,6 +32,17 @@ module Api
       AccessMethod.all.each { |access_method| result[:access_methods] << access_method.name }
       
       render json: result, status: :ok
+    end
+    
+    def delete
+      resource = Resource.find_by(path: resource_path_param)
+      
+      if resource
+        resource.destroy
+        render nothing: true, status: :no_content
+      else
+        render nothing: true, status: :not_found
+      end
     end
     
     private
@@ -56,6 +69,20 @@ module Api
     
     def unauthorized_response
       head :unauthorized, "WWW-Authenticate" => "X-SERVICE-TOKEN header required"
+    end
+    
+    def check_delete_params
+      if resource_path_param.nil?
+        render_bad_request
+      end
+    end
+    
+    def render_bad_request
+      render nothing: true, status: :bad_request
+    end
+    
+    def resource_path_param
+      params[:resource_path]
     end
   end
 end

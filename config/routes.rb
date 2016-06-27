@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :pdp, only: :index
     resources :sessions, only: :create
     resources :resource_policy, only: :create
+    delete "resource_policy", to: "resource_policy#delete"
     get "resource_policy_entities", to: "resource_policy#index"
   end
 
