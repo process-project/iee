@@ -17,8 +17,8 @@ module Api
         resource = Resource.create(service: @service, path: @json["resource_path"])
         user = User.find_by(email: @json["user"])
         @json["access_methods"].each do |access_method|
-          AccessPolicy.create(user: user, access_method: AccessMethod.find_by(name: access_method),
-            resource: resource)
+          AccessPolicy.create(user: user,
+            access_method: AccessMethod.find_by(name: access_method.downcase), resource: resource)
         end
       end
       
@@ -29,7 +29,8 @@ module Api
       result  = { users: [], groups: [], access_methods: [] }
       User.approved.each { |user| result[:users] << user.email }
       Group.all.each { |group| result[:groups] << group.name }
-      AccessMethod.all.each { |access_method| result[:access_methods] << access_method.name }
+      AccessMethod.all.each { |access_method| result[:access_methods] <<
+        access_method.name.downcase }
       
       render json: result, status: :ok
     end
@@ -60,7 +61,8 @@ module Api
       @json.has_key?("resource_path") && @json.has_key?("user") &&
         @json.has_key?("access_methods") && @json["access_methods"].respond_to?(:[]) &&
           User.exists?(email: @json["user"]) &&
-            @json["access_methods"].map { |access_method| AccessMethod.exists?(name: access_method)}.reduce(:&)
+            @json["access_methods"].map { |access_method| AccessMethod.where("lower(name) = ?",
+              access_method.downcase).exists?}.reduce(:&)
     end
     
     def token
