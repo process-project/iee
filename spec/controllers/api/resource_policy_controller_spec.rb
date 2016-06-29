@@ -37,6 +37,14 @@ RSpec.describe Api::ResourcePolicyController do
       
       expect(response.status).to eq(201)
     end
+    
+    it "should also return a 201 status code for an access method given in capital letters" do
+      set_headers
+      
+      post :create, '{ "resource_path": "/some/path", "user": "user@host.com", "access_methods": [ "GET" ]}'
+        
+      expect(AccessPolicy.first.access_method.name).to eq("get")
+    end
   end
   
   def set_headers
