@@ -35,8 +35,8 @@ module Api
       render json: result, status: :ok
     end
     
-    def delete
-      resource = Resource.find_by(path: resource_path_param)
+    def destroy
+      resource = Resource.find_by(path: resource_path_param, service: @service)
       
       if resource
         resource.destroy
@@ -74,9 +74,7 @@ module Api
     end
     
     def check_delete_params
-      if resource_path_param.nil?
-        render_bad_request
-      end
+      render_bad_request if resource_path_param.nil?
     end
     
     def render_bad_request

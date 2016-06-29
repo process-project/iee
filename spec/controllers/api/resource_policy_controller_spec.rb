@@ -48,20 +48,32 @@ RSpec.describe Api::ResourcePolicyController do
         
       expect(AccessPolicy.first.access_method.name).to eq("get")
     end
+    
+    context "with only one policy attached to resource" do
+      before do
+        request.headers["X-SERVICE-TOKEN"] = "random_token"
+      end
         
-    it "should remove a resource when only one policy is attached to it" do
-      request.headers["X-SERVICE-TOKEN"] = "random_token"
+      it "should be removed with no content status" do
+        delete :destroy, resource_path: @resource.path
+        
+        expect(response.status).to eq(204)
+      end
       
-      delete :delete, resource_path: @resource.path
-      
-      expect(Resource.all.count).to eq(0)
-      expect(AccessPolicy.all.count).to eq(0)
-      expect(response.status).to eq(204)
+      it "should remove both resource and policy from DB" do
+        delete :destroy, resource_path: @resource.path
+        
+        expect(resource_and_access_policy_destroyed?).to be_truthy
+      end
     end
   end
   
   def set_headers
     request.headers["X-SERVICE-TOKEN"] = "random_token"
     request.headers["Content-Type"] = "application/json"
+  end
+  
+  def resource_and_access_policy_destroyed?
+    Resource.count == 0 && AccessPolicy.count == 0
   end
 end
