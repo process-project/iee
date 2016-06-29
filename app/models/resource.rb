@@ -12,10 +12,18 @@ class Resource < ActiveRecord::Base
 
     uri.to_s
   end
+  
+  def self.normalize_path(path)
+    if path && path.starts_with?('/')
+      path[1..-1]
+    else
+      path
+    end
+  end
 
   private
 
   def unify_path
-    self.path = path[1..-1] if path && path.starts_with?('/')
+    self.path = Resource.normalize_path(path)
   end
 end

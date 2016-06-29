@@ -35,3 +35,14 @@ Example using cURL:
 ```
 curl -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/resource_policy_entities
 ```
+
+## `DELETE /api/resource_policy?resource_path={path}`
+
+If a corresponding resource policies (and the resource itself) are found and deleted `204` status is
+returned. In case the resource cannot be found `404` status is returned.
+
+Example using cURL:
+
+```
+curl -X DELETE -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/resource_policy?resource_path=/helloPath
+```
