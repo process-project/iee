@@ -7,6 +7,8 @@ RSpec.describe Group do
 
   it { should belong_to(:parent_group) }
 
+  it { should validate_uniqueness_of(:name) }
+
   context 'has no ancestors' do
     let(:orphan) { create(:group) }
     it 'is valid' do

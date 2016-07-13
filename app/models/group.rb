@@ -6,6 +6,7 @@ class Group < ActiveRecord::Base
   belongs_to :parent_group, class_name: 'Group'
 
   validates :name, presence: true
+  validates :name, uniqueness: true
   validate :no_cycles_in_ancestors
 
   def ancestors
