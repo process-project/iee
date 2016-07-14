@@ -1,6 +1,4 @@
 module AuthenticationHelper
-  include Devise::TestHelpers
-
   def plgrid_sign_in_as(user)
     stub_oauth(
       :open_id,

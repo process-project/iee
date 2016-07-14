@@ -26,7 +26,7 @@ gem 'simple_form'
 gem 'redcarpet'
 gem 'github-markup'
 
-gem 'devise', '~> 4.1.1'
+gem 'devise', '~> 4.2.0'
 gem 'pundit'
 gem 'omniauth-openid'
 gem 'jwt'
