@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
-gem 'rails', '4.2.7'
+gem 'rails', '5.0.0'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -41,12 +41,12 @@ gem 'puma'
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
-  gem 'quiet_assets'
+  # gem 'quiet_assets'
   gem 'guard-rspec', require: false
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.0'
   gem 'spring'
 
   # PLG OpenId requires ssh even for development
