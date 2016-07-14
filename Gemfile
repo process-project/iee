@@ -8,6 +8,9 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 
+# Element still used in vapor but deprecated in rails 5
+gem 'rails-controller-testing'
+
 # javascript
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
