@@ -1,4 +1,4 @@
-class AddProxyToUser < ActiveRecord::Migration
+class AddProxyToUser < ActiveRecord::Migration[4.2]
   def change
     add_column :users, :proxy, :text
   end
