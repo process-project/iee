@@ -28,7 +28,7 @@ module Users
     end
 
     def auth
-      @auth ||= env['omniauth.auth']
+      @auth ||= request.env['omniauth.auth']
     end
   end
 end
