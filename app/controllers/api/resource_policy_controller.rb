@@ -22,7 +22,7 @@ module Api
         end
       end
 
-      render nothing: true, status: :created
+      head :created
     end
 
     def index
@@ -40,9 +40,9 @@ module Api
 
       if resource
         resource.destroy
-        render nothing: true, status: :no_content
+        head :no_content
       else
-        render nothing: true, status: :not_found
+        head :not_found
       end
     end
 
@@ -78,7 +78,7 @@ module Api
     end
 
     def render_bad_request
-      render nothing: true, status: :bad_request
+      head :bad_request
     end
 
     def resource_path_param
