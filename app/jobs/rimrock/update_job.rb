@@ -1,5 +1,5 @@
 module Rimrock
-  class UpdateJob < ActiveJob::Base
+  class UpdateJob < ApplicationJob
     queue_as :computation
 
     def perform(user)

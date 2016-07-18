@@ -1,5 +1,5 @@
 module Rimrock
-  class TriggerUpdateJob < ActiveJob::Base
+  class TriggerUpdateJob < ApplicationJob
     queue_as :computation
 
     def perform()
