@@ -14,21 +14,22 @@ RSpec.describe 'JWT' do
     create(:access_policy, user: user, resource: resource, access_method: access_method)
 
     get api_pdp_index_path,
-        { uri: resource.uri, access_method: 'get' },
-        auth_headers
+        params: { uri: resource.uri, access_method: 'get' },
+        headers: auth_headers
 
     expect(response.status).to eq(200)
   end
 
   it 'is not permitted to be used to enter UI' do
-    get help_path, nil, auth_headers
+    get help_path,
+        headers: auth_headers
 
     expect(response.status).to_not eq(200)
   end
 
   it 'can be retrieved using API login' do
     post api_sessions_path,
-         { user: { email: user.email, password: user.password } }
+         params: { user: { email: user.email, password: user.password } }
 
     expect(response.status).to eq(201)
     expect(User.from_token(user_details['token']).id).to eq(user.id)
@@ -38,7 +39,7 @@ RSpec.describe 'JWT' do
 
   it 'can be retrieved only when valid credentials are given' do
     post api_sessions_path,
-      { user: { email: user.email, password: 'bad password' } }
+         params: { user: { email: user.email, password: 'bad password' } }
 
     expect(response.status).to eq(401)
   end

@@ -9,8 +9,9 @@ RSpec.describe ResourcesController, type: :controller do
     service = create(:service)
     sign_in(user)
 
-    post :create, resource: FactoryGirl.attributes_for(:resource).
-                                        merge(service_id: service.id)
+    post :create,
+         params: { resource: FactoryGirl.attributes_for(:resource).
+                                         merge(service_id: service.id) }
 
     expect(response).to redirect_to(resources_path)
   end

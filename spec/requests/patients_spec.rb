@@ -29,7 +29,7 @@ describe 'Patients controller' do
       it 'calls set_patients to prevent any data leak' do
         expect_any_instance_of(PatientsController).
           to receive(:set_patients).and_call_original
-        get '/patients', id: patient.id
+        get '/patients', params: { id: patient.id }
         expect(response).to be_success
       end
     end
@@ -48,7 +48,7 @@ describe 'Patients controller' do
         expect_any_instance_of(Patient).
           to receive(:execute_data_sync)
         expect {
-          post '/patients/', patient: { case_number: '5555' }
+          post '/patients/', params: { patient: { case_number: '5555' } }
         }.to change { Patient.count }.by(1)
         expect(response).to redirect_to Patient.first
       end
