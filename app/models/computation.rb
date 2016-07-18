@@ -1,4 +1,4 @@
-class Computation < ActiveRecord::Base
+class Computation < ApplicationRecord
   belongs_to :user
   belongs_to :patient
 

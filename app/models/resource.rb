@@ -1,4 +1,4 @@
-class Resource < ActiveRecord::Base
+class Resource < ApplicationRecord
   has_many :access_policies, dependent: :destroy
   belongs_to :service
 

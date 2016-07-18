@@ -1,4 +1,4 @@
-class Service < ActiveRecord::Base
+class Service < ApplicationRecord
   has_many :resources, dependent: :destroy
 
   validates :uri,

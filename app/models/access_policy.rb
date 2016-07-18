@@ -1,4 +1,4 @@
-class AccessPolicy < ActiveRecord::Base
+class AccessPolicy < ApplicationRecord
   belongs_to :user
   belongs_to :group
   belongs_to :access_method
