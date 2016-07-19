@@ -11,7 +11,6 @@ RSpec.describe 'Access Policies' do
   it "should return an error message when neither user_id or group_id is chosen" do
     post access_policies_path, params: access_policy_params("")
 
-    expect(response).to render_template(:new)
     expect(response.body).to include(I18n.t("either_user_or_group"))
   end
 
@@ -25,7 +24,6 @@ RSpec.describe 'Access Policies' do
            }
          }
 
-    expect(response).to render_template(:new)
     expect(response.body).to include(I18n.t("missing_access_method"))
   end
 
