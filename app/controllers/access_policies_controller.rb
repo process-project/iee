@@ -35,7 +35,7 @@ class AccessPoliciesController < ApplicationController
       access_policy.destroy
     end
 
-    redirect_to new_access_polixy_path(resource_id: params[:resource_id])
+    redirect_to new_access_policy_path(resource_id: params[:resource_id])
   end
 
   private
