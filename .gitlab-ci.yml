@@ -24,6 +24,7 @@ test:
 development:
   type: deploy
   script:
+  - mkdir /root/.ssh
   - echo $DEV_KEY > ~/.ssh/id_rsa
   - chmod  400 ~/.ssh/id_rsa
   - git push $DEV_GIT_REPO HEAD:master
