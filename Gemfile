@@ -51,6 +51,8 @@ group :development do
   # PLG OpenId requires ssh even for development
   # start app using `thin start --ssl
   gem 'thin'
+
+  gem 'rubocop', require: false
 end
 
 group :test do
