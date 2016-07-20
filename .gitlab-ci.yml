@@ -28,6 +28,6 @@ development:
   - echo $DEV_HOST_KEY > ~/.ssh/known_hosts
   - echo -e $DEV_KEY > ~/.ssh/id_rsa
   - chmod 400 ~/.ssh/id_rsa
-  - git push -v $DEV_GIT_REPO HEAD:master
+  - git push $DEV_GIT_REPO HEAD:master
   only:
   - master
