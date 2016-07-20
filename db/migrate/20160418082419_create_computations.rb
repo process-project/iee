@@ -1,4 +1,4 @@
-class CreateComputations < ActiveRecord::Migration
+class CreateComputations < ActiveRecord::Migration[4.2]
   def change
     create_table :computations do |t|
       t.string :job_id

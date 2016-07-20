@@ -1,5 +1,5 @@
 module Rimrock
-  class StartJob < ActiveJob::Base
+  class StartJob < ApplicationJob
     queue_as :computation
 
     def perform(computation)

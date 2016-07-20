@@ -1,17 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', :groups => [:development, :test]
-
-gem 'rails', '4.2.6'
+gem 'rails', '~> 5.0.0'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2'
 
 # javascript
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
-gem 'turbolinks'
+gem 'turbolinks', '~> 5.0'
 gem 'haml-rails'
 gem 'icheck-rails'
 gem 'animate-rails', '1.0.10'
@@ -26,28 +24,29 @@ gem 'simple_form'
 gem 'redcarpet'
 gem 'github-markup'
 
-gem 'devise'
+gem 'devise', '~> 4.2.0'
 gem 'pundit'
 gem 'omniauth-openid'
 gem 'jwt'
 
 # Delayed jobs
 gem 'sidekiq'
-gem 'sinatra', require: false
+gem 'sinatra', require: false, github: 'sinatra'
 gem 'clockwork'
 
-gem 'puma'
+gem 'puma', '~> 3.0'
 
 group :development, :test do
-  gem 'byebug'
+  gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.0'
-  gem 'quiet_assets'
   gem 'guard-rspec', require: false
+  gem 'dotenv-rails'
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
   gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 
   # PLG OpenId requires ssh even for development
   # start app using `thin start --ssl

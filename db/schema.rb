@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -29,12 +28,11 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.integer  "resource_id",      null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["access_method_id"], name: "index_access_policies_on_access_method_id", using: :btree
+    t.index ["group_id"], name: "index_access_policies_on_group_id", using: :btree
+    t.index ["resource_id"], name: "index_access_policies_on_resource_id", using: :btree
+    t.index ["user_id"], name: "index_access_policies_on_user_id", using: :btree
   end
-
-  add_index "access_policies", ["access_method_id"], name: "index_access_policies_on_access_method_id", using: :btree
-  add_index "access_policies", ["group_id"], name: "index_access_policies_on_group_id", using: :btree
-  add_index "access_policies", ["resource_id"], name: "index_access_policies_on_resource_id", using: :btree
-  add_index "access_policies", ["user_id"], name: "index_access_policies_on_user_id", using: :btree
 
   create_table "computations", force: :cascade do |t|
     t.string   "job_id"
@@ -51,9 +49,8 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.integer  "patient_id"
+    t.index ["patient_id"], name: "index_computations_on_patient_id", using: :btree
   end
-
-  add_index "computations", ["patient_id"], name: "index_computations_on_patient_id", using: :btree
 
   create_table "data_files", force: :cascade do |t|
     t.string   "name",       null: false
@@ -62,29 +59,26 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.integer  "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["data_type"], name: "index_data_files_on_data_type", using: :btree
+    t.index ["patient_id"], name: "index_data_files_on_patient_id", using: :btree
   end
-
-  add_index "data_files", ["data_type"], name: "index_data_files_on_data_type", using: :btree
-  add_index "data_files", ["patient_id"], name: "index_data_files_on_patient_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "parent_group_id"
+    t.index ["parent_group_id"], name: "index_groups_on_parent_group_id", using: :btree
   end
-
-  add_index "groups", ["parent_group_id"], name: "index_groups_on_parent_group_id", using: :btree
 
   create_table "patients", force: :cascade do |t|
     t.string   "case_number",                  null: false
     t.integer  "procedure_status", default: 0, null: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.index ["case_number"], name: "index_patients_on_case_number", using: :btree
+    t.index ["procedure_status"], name: "index_patients_on_procedure_status", using: :btree
   end
-
-  add_index "patients", ["case_number"], name: "index_patients_on_case_number", using: :btree
-  add_index "patients", ["procedure_status"], name: "index_patients_on_procedure_status", using: :btree
 
   create_table "resources", force: :cascade do |t|
     t.string   "name"
@@ -92,10 +86,9 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "service_id", null: false
+    t.index ["path"], name: "index_resources_on_path", using: :btree
+    t.index ["service_id"], name: "index_resources_on_service_id", using: :btree
   end
-
-  add_index "resources", ["path"], name: "index_resources_on_path", using: :btree
-  add_index "resources", ["service_id"], name: "index_resources_on_service_id", using: :btree
 
   create_table "services", force: :cascade do |t|
     t.string   "uri",        null: false
@@ -103,9 +96,8 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["uri"], name: "index_services_on_uri", using: :btree
   end
-
-  add_index "services", ["uri"], name: "index_services_on_uri", using: :btree
 
   create_table "user_groups", force: :cascade do |t|
     t.integer  "user_id"
@@ -113,10 +105,9 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.boolean  "owner",      default: false, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["group_id"], name: "index_user_groups_on_group_id", using: :btree
+    t.index ["user_id"], name: "index_user_groups_on_user_id", using: :btree
   end
-
-  add_index "user_groups", ["group_id"], name: "index_user_groups_on_group_id", using: :btree
-  add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -136,11 +127,10 @@ ActiveRecord::Schema.define(version: 20160621092617) do
     t.string   "last_name",                              null: false
     t.boolean  "approved",               default: false, null: false
     t.text     "proxy"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["plgrid_login"], name: "index_users_on_plgrid_login", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["plgrid_login"], name: "index_users_on_plgrid_login", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "computations", "patients"
   add_foreign_key "data_files", "patients"
