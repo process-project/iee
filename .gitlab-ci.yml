@@ -12,12 +12,17 @@ cache:
   paths:
   - vendor/
 
-test:
-  script:
+before_script:
   - apt-get update -qy
   - apt-get install -y nodejs
+  - ruby -v
+  - which ruby
+  - gem install bundler --no-ri --no-rdoc
+  - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
+
+test:
+  script:
   - cp config/database.yml.gitlab-ci config/database.yml
-  - bundle install --path vendor
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rspec
 
@@ -31,3 +36,7 @@ development:
   - git push $DEV_GIT_REPO HEAD:master
   only:
   - master
+
+rubocop:
+  script:
+    - bundle exec rubocop
