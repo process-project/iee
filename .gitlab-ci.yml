@@ -20,3 +20,12 @@ test:
   - bundle install --path vendor
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rspec
+
+development:
+  type: deploy
+  script:
+  - echo $DEV_KEY > ~/.ssh/id_rsa
+  - chmod  400 ~/.ssh/id_rsa
+  - git push $DEV_GIT_REPO HEAD:master
+  only:
+  - master
