@@ -26,8 +26,9 @@ development:
   script:
   - mkdir /root/.ssh
   - echo $DEV_HOST_KEY > ~/.ssh/known_hosts
-  - echo $DEV_KEY > ~/.ssh/id_rsa
-  - chmod  400 ~/.ssh/id_rsa
-  - git push $DEV_GIT_REPO HEAD:master
+  - echo -e $DEV_KEY > ~/.ssh/id_rsa
+  - chmod 400 ~/.ssh/id_rsa
+  - cat ~/.ssh/id_rsa
+  - git push -v $DEV_GIT_REPO HEAD:master
   only:
-  - master
+  - continous-delivery
