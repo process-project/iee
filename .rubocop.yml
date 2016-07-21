@@ -1,3 +1,5 @@
 Rails:
   Enabled: true
 
+Documentation:
+  Enabled: false
