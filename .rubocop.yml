@@ -3,3 +3,7 @@ Rails:
 
 Documentation:
   Enabled: false
+
+Style/SignalException:
+  Exclude:
+    - 'lib/devise/strategies/*.rb'
