@@ -3,7 +3,7 @@
     %div#login
       %section.login_content
         = simple_form_for(resource, as: resource_name, url: password_path(resource_name),
-          html: { method: :put }) do |f|
+          html: { method: :put }, wrapper: :login_form) do |f|
           %h1= t("change_password_form")
           = f.error_notification
           = f.input :reset_password_token, as: :hidden
@@ -12,17 +12,11 @@
               %li.parsley-required
                 = t('token_expired')
                 = link_to t('token_expired_link'), new_password_path(resource_name)
-          %div
-            = f.input_field :password, required: true, autofocus: true,
-              class: form_input_class(resource, :password),
+          = f.input :password, required: true, autofocus: true,
               placeholder: t("new_password"),
               hint: t("password_hint", length: @minimum_password_length)
-            - show_field_errors(resource, :password)
-          %div
-            = f.input_field :password_confirmation, required: true,
-              class: form_input_class(resource, :password_confirmation),
+          = f.input :password_confirmation, required: true,
               placeholder: t("new_password_confirmation")
-            - show_field_errors(resource, :password_confirmation)
           %div
             %button.btn.btn-default.submit
               = t("change_password_submit")

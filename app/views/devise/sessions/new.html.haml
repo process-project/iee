@@ -2,14 +2,11 @@
   %div#wrapper
     %div#login
       %section.login_content
-        = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        = simple_form_for(resource, as: resource_name, url: session_path(resource_name), wrapper: :login_form) do |f|
           %h1= t("login_form")
-          %div
-            = f.input_field :email, required: true, autofocus: true, class: "form-control",
-              placeholder: t("email")
-          %div
-            = f.input_field :password, required: true, class: "form-control",
-              placeholder: t("password")
+          = f.error_notification
+          = f.input :email, required: true, autofocus: true, placeholder: t("email")
+          = f.input :password, required: true, placeholder: t("password")
           %div.checkbox
             %label
               = f.input_field :remember_me, type: "checkbox" if devise_mapping.rememberable?
@@ -18,8 +15,7 @@
             %button.btn.btn-default.submit
               = t("login")
             - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
-              = link_to t("forgot"), new_password_path(resource_name),
-                class: "reset_pass"
+              = link_to t('forgot'), new_password_path(resource_name), class: 'reset_pass'
           .clearfix
           .separator
           = t('login_with')

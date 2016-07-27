@@ -3,14 +3,10 @@
     %div#login
       %section.login_content
         = simple_form_for(resource, as: resource_name, url: password_path(resource_name),
-          html: { method: :post }) do |f|
+          html: { method: :post }, wrapper: :login_form) do |f|
           %h1= t("forgot_password_form")
           = f.error_notification
-          %div
-            = f.input_field :email, required: true, autofocus: true,
-              class: form_input_class(resource, :email),
-              placeholder: t("email")
-            - show_field_errors(resource, :email)
+          = f.input :email, required: true, autofocus: true, placeholder: t('email')
           %div
             %button.btn.btn-default.submit
               = t("submit_forgot_password")
