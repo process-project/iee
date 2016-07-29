@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User < ApplicationRecord
   include Gravtastic
 
@@ -23,7 +24,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   scope :approved, -> { where(approved: true) }
-  scope :supervisors, -> { joins(:groups).where(groups: {name: 'supervisor' }) }
+  scope :supervisors, -> { joins(:groups).where(groups: { name: 'supervisor' }) }
 
   def self.with_active_computations
     User.where(<<~SQL
@@ -31,7 +32,7 @@ class User < ApplicationRecord
              FROM computations
              WHERE status IN ('queued', 'running'))
     SQL
-    )
+              )
   end
 
   def self.from_plgrid_omniauth(auth)
@@ -88,14 +89,14 @@ class User < ApplicationRecord
 
   def token
     JWT.encode(
-        {
-            name: name,
-            email: email,
-            iss: Rails.configuration.jwt.issuer,
-            exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
-        },
-        Vapor::Application.config.jwt.key,
-        Vapor::Application.config.jwt.key_algorithm
+      {
+        name: name,
+        email: email,
+        iss: Rails.configuration.jwt.issuer,
+        exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
+      },
+      Vapor::Application.config.jwt.key,
+      Vapor::Application.config.jwt.key_algorithm
     )
   end
 

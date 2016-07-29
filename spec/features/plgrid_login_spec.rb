@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'PLGrid authentication' do
@@ -18,8 +19,8 @@ RSpec.feature 'PLGrid authentication' do
 
     plgrid_sign_in_as(plgrid_user)
 
-    expect(page).
-      to have_content(I18n.t('devise.omniauth_callbacks.email_not_unique'))
+    expect(page)
+      .to have_content(I18n.t('devise.omniauth_callbacks.email_not_unique'))
   end
 
   scenario 'connect with existing account' do
@@ -50,4 +51,3 @@ RSpec.feature 'PLGrid authentication' do
     expect(page).to have_selector('a', text: 'PLGrid', match: :prefer_exact)
   end
 end
-

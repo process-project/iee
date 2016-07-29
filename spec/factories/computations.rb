@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :computation do
     script { Faker::Lorem.sentence }
@@ -6,4 +7,3 @@ FactoryGirl.define do
     user
   end
 end
-

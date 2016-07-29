@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   # Wrappers are used by the form builder to generate a
@@ -6,7 +7,7 @@ SimpleForm.setup do |config|
   # stack. The options given below are used to wrap the
   # whole input.
   config.wrappers :default, class: :input,
-    hint_class: :field_with_hint, error_class: :field_with_errors do |b|
+                            hint_class: :field_with_hint, error_class: :field_with_errors do |b|
     ## Extensions enabled by default
     # Any of these extensions can be disabled for a
     # given input by passing: `f.input EXTENSION_NAME => false`.
@@ -104,7 +105,7 @@ SimpleForm.setup do |config|
 
   # You can define the default class to be used on forms. Can be overriden
   # with `html: { :class }`. Defaulting to none.
-  config.default_form_class = "form-horizontal form-label-left"
+  config.default_form_class = 'form-horizontal form-label-left'
 
   # You can define which elements should obtain additional classes
   # config.generate_additional_classes_for = [:wrapper, :label, :input]

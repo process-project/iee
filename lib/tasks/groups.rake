@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :groups do
   desc 'Generates groups in DB for testing hierarchical groups performance'
   task generate: :environment do
@@ -14,10 +15,10 @@ namespace :groups do
     raise 'N must be grater than 0' if n <= 0
     groups = Group.all
     results = {}
-    groups.each {|g| results[g.name] = []}
+    groups.each { |g| results[g.name] = [] }
     n.times do
       groups.each do |g|
-        results[g.name] << (Benchmark.measure {g.all_parents}).real
+        results[g.name] << (Benchmark.measure { g.all_parents }).real
       end
     end
     # results.each do |k, v|
@@ -30,6 +31,7 @@ namespace :groups do
   end
 
   private
+
   def generate_groups(top_level_groups, children_number, tree_height)
     name_prefix = SecureRandom.urlsafe_base64 4
     1.upto top_level_groups do |group_no|
@@ -55,5 +57,4 @@ namespace :groups do
     msg << "GROUP_TREE_HEIGHT must be greater than 0\n" if group_tree_height <= 0
     raise msg unless msg == ''
   end
-
 end

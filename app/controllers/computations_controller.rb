@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ComputationsController < ApplicationController
   def show
     @computation = Computation.find(params[:id])
@@ -30,7 +31,7 @@ class ComputationsController < ApplicationController
   end
 
   def script
-    #see https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
+    # see https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
     <<~SCRIPT
       #!/bin/bash -l
       #SBATCH -N 1

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token, only: [:open_id, :failure]
@@ -9,8 +10,8 @@ module Users
           set_flash_message(:notice, :success, kind: 'PLGrid')
         end
       elsif user.errors.messages.include?(:email)
-          set_flash_message(:alert, :email_not_unique)
-          redirect_to new_user_session_path
+        set_flash_message(:alert, :email_not_unique)
+        redirect_to new_user_session_path
       else
         set_flash_message(:alert, :failure, kind: 'PLGrid')
         redirect_to root_url
@@ -32,4 +33,3 @@ module Users
     end
   end
 end
-

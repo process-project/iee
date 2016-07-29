@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 module Rimrock
   class TriggerUpdateJob < ApplicationJob
     queue_as :computation
 
-    def perform()
+    def perform
       User.with_active_computations.each do |user|
         Rimrock::UpdateJob.perform_later(user)
       end

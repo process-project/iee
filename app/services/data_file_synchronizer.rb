@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DataFileSynchronizer < ProxyService
   def initialize(patient, user, options = {})
     super(user, options[:storage_url] || storage_url, options)
@@ -16,9 +17,9 @@ class DataFileSynchronizer < ProxyService
       response = connection.get(@patient.case_number)
 
       case response.status
-        when 200 then parse_response(response.body)
-        when 408 then report_problem(:timed_out, response: response)
-        else report_problem(:request_failure, response: response)
+      when 200 then parse_response(response.body)
+      when 408 then report_problem(:timed_out, response: response)
+      else report_problem(:request_failure, response: response)
       end
     end
   rescue
@@ -39,27 +40,25 @@ class DataFileSynchronizer < ProxyService
     JSON.parse(body).each do |file|
       next if file['is_dir']
       data_type = recognize_data_type(file['name'])
-      if data_type
-        unless current_names.include?(file['name'])
-          DataFile.create(name: file['name'],
-                          data_type: data_type,
-                          handle: construct_handle(file['name']),
-                          patient: @patient)
-        end
-        remote_names << file['name']
+      next unless data_type
+      unless current_names.include?(file['name'])
+        DataFile.create(name: file['name'],
+                        data_type: data_type,
+                        handle: construct_handle(file['name']),
+                        patient: @patient)
       end
+      remote_names << file['name']
     end
 
     # Remove DataFiles which are no longer stored
     @patient.data_files.each do |data_file|
-      unless remote_names.include? data_file.name
-        data_file.destroy!
-        Rails.logger.info(
-          I18n.t('data_file_synchronizer.file_removed',
-                 name: data_file.name,
-                 patient: @patient.case_number)
-        )
-      end
+      next if remote_names.include? data_file.name
+      data_file.destroy!
+      Rails.logger.info(
+        I18n.t('data_file_synchronizer.file_removed',
+               name: data_file.name,
+               patient: @patient.case_number)
+      )
     end
   end
 
@@ -76,18 +75,15 @@ class DataFileSynchronizer < ProxyService
     when 'structural_vent.dat' then 'ventricle_virtual_model'
     when /fluidFlow.*.dat/ then 'blood_flow_result'
     when /fluidFlow.*.cas/ then 'blood_flow_model'
-    else nil
     end
   end
 
   def report_problem(problem, details = {})
-    details.merge!({
-      patient: @patient.try(:case_number),
-      user: @user.try(:name),
-      code: details[:response].try(:code)
-    })
+    details.merge!(patient: @patient.try(:case_number),
+                   user: @user.try(:name),
+                   code: details[:response].try(:code))
 
-    # TODO FIXME Add Raven Sentry notification; issue #32
+    # TODO: FIXME Add Raven Sentry notification; issue #32
 
     Rails.logger.tagged(self.class.name) do
       Rails.logger.warn I18n.t("data_file_synchronizer.#{problem}", details)

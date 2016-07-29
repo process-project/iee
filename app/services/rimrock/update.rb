@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Rimrock
   class Update < ProxyService
     def initialize(user, options = {})
@@ -10,7 +11,7 @@ module Rimrock
     end
 
     def call
-      if active_computations.size > 0
+      unless active_computations.empty?
         response = connection.get('api/jobs', tag: tag)
         case response.status
         when 200 then success(response.body)
@@ -38,7 +39,8 @@ module Rimrock
         else
           computation.update_attributes(
             status: 'error',
-            error_message: 'Job cannot be found')
+            error_message: 'Job cannot be found'
+          )
         end
       end
     end
@@ -46,12 +48,13 @@ module Rimrock
     def error(body, error_type)
       Rails.logger.tagged(self.class.name) do
         Rails.logger.warn(
-          I18n.t("rimrock.#{error_type}", user: @user&.name, details: body))
+          I18n.t("rimrock.#{error_type}", user: @user&.name, details: body)
+        )
       end
     end
 
     def active_computations
-      @ac ||= @user.computations.where(status: ['queued', 'running'])
+      @ac ||= @user.computations.where(status: %w(queued running))
     end
 
     def on_finish_callback(computation)

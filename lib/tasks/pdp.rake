@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :pdp do
   namespace :perf do
     desc 'Test performance of checking whether'\
@@ -19,6 +20,7 @@ namespace :pdp do
   end
 
   private
+
   def random_object_of_model(model_class)
     models_no = model_class.send :count
     offset = Random.rand models_no

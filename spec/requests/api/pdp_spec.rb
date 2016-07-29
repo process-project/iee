@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe 'PDP' do
   context 'as logged in user' do
     let(:user) { create(:user, :approved) }
-    let(:service) { create(:service, uri:'http://localhost') }
+    let(:service) { create(:service, uri: 'http://localhost') }
     let(:resource) { create(:resource, service: service) }
     let(:access_method) { create(:access_method, name: 'get') }
 
@@ -60,11 +61,11 @@ RSpec.describe 'PDP' do
         expect(response.status).to eq(403)
       end
 
-      context "several resources with overlapping regular expressions" do
+      context 'several resources with overlapping regular expressions' do
         let(:resource_2) do
-          create(:resource, path: "path/extra/.*", service: service)
+          create(:resource, path: 'path/extra/.*', service: service)
         end
-        let(:access_method_2) { create(:access_method, name: "post") }
+        let(:access_method_2) { create(:access_method, name: 'post') }
 
         before do
           create(:user_access_policy,
@@ -72,7 +73,7 @@ RSpec.describe 'PDP' do
                  access_method: access_method_2)
         end
 
-        it "returns 403 as conflicting access policies exist" do
+        it 'returns 403 as conflicting access policies exist' do
           get api_pdp_index_path,
               params: {
                 uri: 'http://localhost/path/extra/something',

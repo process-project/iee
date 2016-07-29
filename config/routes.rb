@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
   get 'access_policies/create'
 
@@ -5,11 +6,11 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  get "account_confirmations/index", to: "account_confirmation#index"
-  put "account_confirmations", to: "account_confirmation#approve_all"
-  put "account_confirmations/:id", to: "account_confirmation#approve", as: "approve_user"
-  delete "account_confirmations", to: "account_confirmation#block_all"
-  delete "account_confirmations/:id", to: "account_confirmation#block", as: "block_user"
+  get 'account_confirmations/index', to: 'account_confirmation#index'
+  put 'account_confirmations', to: 'account_confirmation#approve_all'
+  put 'account_confirmations/:id', to: 'account_confirmation#approve', as: 'approve_user'
+  delete 'account_confirmations', to: 'account_confirmation#block_all'
+  delete 'account_confirmations/:id', to: 'account_confirmation#block', as: 'block_user'
 
   devise_for :users,
              controllers: {
@@ -23,8 +24,8 @@ Rails.application.routes.draw do
     resources :pdp, only: :index
     resources :sessions, only: :create
     resources :resource_policy, only: :create
-    delete "resource_policy", to: "resource_policy#destroy"
-    get "resource_policy_entities", to: "resource_policy#index"
+    delete 'resource_policy', to: 'resource_policy#destroy'
+    get 'resource_policy_entities', to: 'resource_policy#index'
   end
 
   resources :resources, except: [:show, :update, :edit]
@@ -34,14 +35,14 @@ Rails.application.routes.draw do
   # Help
   get 'help' => 'help#index'
   get 'help/:category/:file' => 'help#show',
-       as: :help_page,
-       constraints: { category: /.*/, file: /[^\/\.]+/ }
-  
+      as: :help_page,
+      constraints: { category: /.*/, file: /[^\/\.]+/ }
+
   # File Store
-  get "file_store" => "file_store#index"
+  get 'file_store' => 'file_store#index'
 
   # Sidekiq monitoring
-  authenticate :user, lambda { |u| u.admin? } do
+  authenticate :user, ->(u) { u.admin? } do
     require 'sidekiq/web'
     mount Sidekiq::Web => '/sidekiq'
     namespace :admin do

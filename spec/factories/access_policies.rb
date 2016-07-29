@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :access_policy do
     access_method
@@ -15,4 +16,3 @@ FactoryGirl.define do
     factory :group_access_policy, traits: [:group_access_policy]
   end
 end
-

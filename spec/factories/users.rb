@@ -1,12 +1,13 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :group do
     name { Faker::Name.name }
-    
+
     factory :supervisor_group do
-      name "supervisor"
+      name 'supervisor'
     end
   end
-  
+
   factory :user do
     email { Faker::Internet.email }
     password '12345678'
@@ -16,13 +17,13 @@ FactoryGirl.define do
     trait :plgrid do
       plgrid_login { Faker::Name.name }
     end
-    
+
     trait :approved do
       approved true
     end
-    
+
     trait :supervisor do
-      after(:create) do |user, evaluator|
+      after(:create) do |user, _evaluator|
         create_list(:supervisor_group, 1, users: [user])
       end
     end

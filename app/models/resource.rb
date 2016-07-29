@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Resource < ApplicationRecord
   has_many :access_policies, dependent: :destroy
   belongs_to :service
@@ -12,7 +13,7 @@ class Resource < ApplicationRecord
 
     uri.to_s
   end
-  
+
   def self.normalize_path(path)
     if path && path.starts_with?('/')
       path[1..-1]

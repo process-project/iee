@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Rimrock
   class Start < Rimrock::Service
     def call

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'openid/fetchers'
 
 Devise.setup do |config|

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Rimrock
   class Service < ProxyService
     def initialize(computation, options = {})
@@ -18,6 +19,6 @@ module Rimrock
     end
   end
 
-  class Exception < ::Exception
+  class Exception < RuntimeError
   end
 end

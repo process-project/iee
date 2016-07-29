@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
@@ -16,8 +17,8 @@ gem 'animate-rails', '1.0.10'
 gem 'nicescroll-rails'
 gem 'gravtastic'
 
-gem 'bootstrap-sass','~> 3.3'
-gem 'font-awesome-sass','~> 4.5'
+gem 'bootstrap-sass', '~> 3.3'
+gem 'font-awesome-sass', '~> 4.5'
 gem 'simple_form'
 
 # Markdown

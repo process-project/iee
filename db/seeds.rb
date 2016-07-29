@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -6,13 +7,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-#creating an admin user with owned admin and supervisor groups
-groups = ["admin", "supervisor"].map do |role_name|
+# creating an admin user with owned admin and supervisor groups
+groups = %w(admin supervisor).map do |role_name|
   Group.find_or_create_by(name: role_name)
 end
-admin = User.find_by(email: "admin@host.domain")
-admin ||= User.create(first_name: "admin", last_name: "admin", email: "admin@host.domain",
-  password: "admin123", password_confirmation: "admin123", approved: true)
+admin = User.find_by(email: 'admin@host.domain')
+admin ||= User.create(first_name: 'admin', last_name: 'admin', email: 'admin@host.domain',
+                      password: 'admin123', password_confirmation: 'admin123', approved: true)
 admin.groups = groups
 admin.save
 admin.user_groups.each do |user_group|

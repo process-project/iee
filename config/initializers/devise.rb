@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'devise/strategies/jwt_authenticatable'
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
@@ -265,10 +266,12 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  Devise::SessionsController.layout "login"
-  Devise::RegistrationsController.layout proc { |controller| user_signed_in? ? "application" :
-    "login" }
-  Devise::ConfirmationsController.layout "login"
-  Devise::UnlocksController.layout "login"
-  Devise::PasswordsController.layout "login"
+  Devise::SessionsController.layout 'login'
+  Devise::RegistrationsController.layout proc { |_controller|
+    user_signed_in? ? 'application' :
+    'login'
+  }
+  Devise::ConfirmationsController.layout 'login'
+  Devise::UnlocksController.layout 'login'
+  Devise::PasswordsController.layout 'login'
 end

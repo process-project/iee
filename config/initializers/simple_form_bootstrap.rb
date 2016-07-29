@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   config.error_notification_class = 'alert alert-danger'
@@ -76,11 +77,11 @@ SimpleForm.setup do |config|
     b.use :label, class: 'col-sm-3 control-label'
 
     b.wrapper tag: 'div', class: 'col-sm-6' do |ba|
-      ba.use :input, class: 'form-control', error_html: "parsley-error"
-      ba.wrapper tag: "ul", class: "parsley-errors-list filled" do |error|
-        error.use :error, wrap_with: {tag: "li", class: "parsley-required"}
+      ba.use :input, class: 'form-control', error_html: 'parsley-error'
+      ba.wrapper tag: 'ul', class: 'parsley-errors-list filled' do |error|
+        error.use :error, wrap_with: { tag: 'li', class: 'parsley-required' }
       end
-      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+      ba.use :hint, wrap_with: { tag: 'p', class: 'help-block' }
     end
   end
 
@@ -129,8 +130,8 @@ SimpleForm.setup do |config|
 
     b.wrapper tag: 'div', class: 'col-sm-6' do |ba|
       ba.use :input
-      ba.wrapper tag: "ul", class: "parsley-errors-list filled" do |error|
-        error.use :error, wrap_with: {tag: "li", class: "parsley-required"}
+      ba.wrapper tag: 'ul', class: 'parsley-errors-list filled' do |error|
+        error.use :error, wrap_with: { tag: 'li', class: 'parsley-required' }
       end
       ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
     end
@@ -167,7 +168,6 @@ SimpleForm.setup do |config|
     end
   end
 
-
   config.wrappers :login_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
@@ -177,11 +177,11 @@ SimpleForm.setup do |config|
     b.optional :readonly
 
     b.wrapper tag: 'div' do |ba|
-      ba.use :input, class: 'form-control', error_html: "parsley-error"
-      ba.wrapper tag: "ul", class: "parsley-errors-list filled" do |error|
-        error.use :error, wrap_with: {tag: "li", class: "parsley-required"}
+      ba.use :input, class: 'form-control', error_html: 'parsley-error'
+      ba.wrapper tag: 'ul', class: 'parsley-errors-list filled' do |error|
+        error.use :error, wrap_with: { tag: 'li', class: 'parsley-required' }
       end
-      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+      ba.use :hint, wrap_with: { tag: 'p', class: 'help-block' }
     end
   end
 

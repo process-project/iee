@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe 'Resources' do
@@ -10,12 +11,12 @@ RSpec.describe 'Resources' do
       it 'should create a new resource' do
         create(:access_method, name: 'manage')
 
-        expect {
+        expect do
           post '/resources/',
                params: {
                  resource: FactoryGirl.attributes_for(:resource).merge(service_id: service.id)
                }
-        }.to change { Resource.count }.by(1)
+        end.to change { Resource.count }.by(1)
 
         expect(response).to redirect_to(resources_path)
       end

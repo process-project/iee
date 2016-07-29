@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'User registration' do
@@ -15,14 +16,14 @@ RSpec.feature 'User registration' do
     fill_in 'user_password', with: 'verysecretpass'
     fill_in 'user_password_confirmation', with: 'verysecretpass'
 
-    expect{ click_on 'Register' }.
-      to change { ActionMailer::Base.deliveries.count }.by(1)
+    expect { click_on 'Register' }
+      .to change { ActionMailer::Base.deliveries.count }.by(1)
   end
 
   scenario 'email is not sent when user is not created' do
     visit new_user_registration_path
 
-    expect{ click_on 'Register' }.
-      to_not change { ActionMailer::Base.deliveries.count }
+    expect { click_on 'Register' }
+      .to_not change { ActionMailer::Base.deliveries.count }
   end
 end

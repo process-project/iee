@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Api
   class ApplicationController < ActionController::Base
     include Pundit
@@ -13,7 +14,7 @@ module Api
     protected
 
     def api_error(status: 500, errors: [])
-      head status and return if errors.empty?
+      head(status) && return if errors.empty?
       render json: jsonapi_format(errors).to_json, status: status
     end
 
@@ -23,10 +24,10 @@ module Api
       errors.messages.each do |attribute, error|
         array_hash = []
         error.each { |e| array_hash << { attribute: attribute, message: e } }
-        errors_hash.merge!({ attribute => array_hash })
+        errors_hash.merge!(attribute => array_hash)
       end
 
-      return errors_hash
+      errors_hash
     end
 
     private

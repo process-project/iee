@@ -49,7 +49,7 @@ module NavHelper
         c = path.map { |p| p.split('#').first }
         a = path.map { |p| p.split('#').last }
       else
-        c, a, _ = path.split('#')
+        c, a, = path.split('#')
       end
     else
       c = options.delete(:controller)
@@ -58,13 +58,13 @@ module NavHelper
 
     active_class = options.fetch(:active_class, 'active')
 
-    if c && a
-      # When given both options, make sure BOTH are active
-      klass = current_controller?(*c) && current_action?(*a) ? active_class : ''
-    else
-      # Otherwise check EITHER option
-      klass = current_controller?(*c) || current_action?(*a) ? active_class : ''
-    end
+    klass = if c && a
+              # When given both options, make sure BOTH are active
+              current_controller?(*c) && current_action?(*a) ? active_class : ''
+            else
+              # Otherwise check EITHER option
+              current_controller?(*c) || current_action?(*a) ? active_class : ''
+            end
 
     # Add our custom class into the html_options, which may or may not exist
     # and which may or may not already have a :class key

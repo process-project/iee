@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe User do
@@ -24,9 +25,9 @@ RSpec.describe User do
     end
 
     it 'creates new user if does not exist' do
-      expect { described_class.from_plgrid_omniauth(auth) }.
-        to change { User.count }.
-        by(1)
+      expect { described_class.from_plgrid_omniauth(auth) }
+        .to change { User.count }
+        .by(1)
     end
 
     it 'uses auth info to populate user data' do
@@ -71,27 +72,27 @@ RSpec.describe User do
     it 'includes issuer in token' do
       u = create(:user)
 
-      expect(issuer_from_token(u.token)).
-          to eq Vapor::Application.config.jwt.issuer
+      expect(issuer_from_token(u.token))
+        .to eq Vapor::Application.config.jwt.issuer
     end
 
     it 'includes expiration time in token' do
       u = create(:user)
       time_now = Time.now
       allow(Time).to receive(:now).and_return(time_now)
-      expect(expiration_time_from_token(u.token)).
-          to eq (time_now.to_i + Vapor::Application.config.jwt.expiration_time)
+      expect(expiration_time_from_token(u.token))
+        .to eq (time_now.to_i + Vapor::Application.config.jwt.expiration_time)
     end
     context 'token expired' do
       it 'fails with error' do
         u = create(:user)
         time_now_1 = Time.now
         time_now_2 =
-            time_now_1 + Vapor::Application.config.jwt.expiration_time + 1
+          time_now_1 + Vapor::Application.config.jwt.expiration_time + 1
         allow(Time).to receive(:now).and_return(time_now_1, time_now_2)
         expired_token = u.token
-        expect {User.from_token(expired_token)}.
-            to raise_error(JWT::ExpiredSignature)
+        expect { User.from_token(expired_token) }
+          .to raise_error(JWT::ExpiredSignature)
       end
     end
   end
@@ -130,17 +131,17 @@ RSpec.describe User do
   private
 
   def issuer_from_token(enc_token)
-    decode_token(enc_token).detect{|el| el.has_key? 'iss'}.try(:[], 'iss')
+    decode_token(enc_token).detect { |el| el.key? 'iss' }.try(:[], 'iss')
   end
 
   def expiration_time_from_token(enc_token)
-    decode_token(enc_token).detect{|el| el.has_key? 'exp'}.try(:[], 'exp')
+    decode_token(enc_token).detect { |el| el.key? 'exp' }.try(:[], 'exp')
   end
 
   def decode_token(enc_token)
     JWT.decode(
-        enc_token, Vapor::Application.config.jwt.key, true,
-        algorithm: Vapor::Application.config.jwt.key_algorithm
+      enc_token, Vapor::Application.config.jwt.key, true,
+      algorithm: Vapor::Application.config.jwt.key_algorithm
     )
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe AccessPolicy do
@@ -21,8 +22,8 @@ RSpec.describe AccessPolicy do
     access_policy.validate
 
     expect(access_policy).to_not be_valid
-    expect(access_policy.errors[:resource_id]).
-      to include(I18n.t('missing_resource'))
+    expect(access_policy.errors[:resource_id])
+      .to include(I18n.t('missing_resource'))
   end
 
   it 'group is required when no user' do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class HelpController < ApplicationController
   def index
     @help_index = File.read(Rails.root.join('doc', 'README.md'))
