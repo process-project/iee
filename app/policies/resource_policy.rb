@@ -32,8 +32,10 @@ class ResourcePolicy < ApplicationPolicy
 
     AccessPolicy.joins(:access_method)
                 .includes(:group).references(:group)
-                .where('access_policies.user_id = :user_id OR groups.id IN (:group_ids)', user_id: user.id, group_ids: group_ids)
-                .where(resource_id: record.id)
+                .where(
+                  'access_policies.user_id = :user_id OR groups.id IN (:group_ids)',
+                  user_id: user.id, group_ids: group_ids
+                ).where(resource_id: record.id)
                 .where('LOWER(access_methods.name) = :name', name: access_method_name.downcase)
   end
 end

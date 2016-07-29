@@ -8,5 +8,10 @@ Style/SignalException:
   Exclude:
     - 'lib/devise/strategies/*.rb'
 
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'bin/**/*'
+
 Metrics/LineLength:
   Max: 100

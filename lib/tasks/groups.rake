@@ -21,12 +21,9 @@ namespace :groups do
         results[g.name] << (Benchmark.measure { g.all_parents }).real
       end
     end
-    # results.each do |k, v|
-    #   puts "Times for all_parents for group #{k} #{v}"
-    # end
-    worst_time = results.values.flatten.max
-    puts "Worst time #{'%.6f s' % worst_time}"
 
+    worst_time = results.values.flatten.max
+    puts format('Worst time %.6f s', worst_time)
     puts 'Finished'
   end
 

@@ -4,9 +4,6 @@ namespace :pdp do
     desc 'Test performance of checking whether'\
           ' user permission to execute action on random resources'
     task test: :environment do
-      Resource
-      User
-      Action
       Benchmark.bm do |x|
         10.times do
           resource = random_object_of_model Resource

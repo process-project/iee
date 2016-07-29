@@ -29,8 +29,6 @@ class Group < ApplicationRecord
   private
 
   def no_cycles_in_ancestors
-    if offspring.include? parent_group
-      errors.add(:parent_group, 'Cannot be one of ancestors')
-    end
+    errors.add(:parent_group, 'Cannot be one of ancestors') if offspring.include? parent_group
   end
 end
