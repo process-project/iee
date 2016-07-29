@@ -7,3 +7,6 @@ Documentation:
 Style/SignalException:
   Exclude:
     - 'lib/devise/strategies/*.rb'
+
+Metrics/LineLength:
+  Max: 100
