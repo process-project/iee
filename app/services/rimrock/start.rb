@@ -34,7 +34,8 @@ module Rimrock
         job_id: body_json['job_id'],
         status: body_json['status'].downcase,
         stdout_path: body_json['stdout_path'],
-        stderr_path: body_json['stderr_path'])
+        stderr_path: body_json['stderr_path']
+      )
     end
 
     def failure(body)
@@ -45,7 +46,8 @@ module Rimrock
         exit_code: body_json['exit_code'],
         standard_output: body_json['standard_output'],
         error_output: body_json['error_output'],
-        error_message: body_json['error_message'])
+        error_message: body_json['error_message']
+      )
     end
   end
 end
