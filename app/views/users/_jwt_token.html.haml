@@ -1,0 +1,5 @@
+%button#d_clip_button.btn.btn-success{ 'data-clipboard-target' => 'fe_text', 'data-clipboard-text' => current_user.token, :title => 'Copy Json Web Token'} Copy Json Web Token
+:javascript
+  $(document).ready(function() {
+    new ZeroClipboard($("#d_clip_button"))
+  });

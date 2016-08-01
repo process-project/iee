@@ -31,8 +31,8 @@
             = icon("exclamation-triangle")
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
-          = nav_link controller: :registrations, active_class: 'current-page' do
-            = link_to(t("profile"), edit_user_registration_path)
+          = nav_link controller: [:profiles, :accounts, :passwords, :plgrids], active_class: 'current-page' do
+            = link_to(t("profile"), profile_path)
           - if policy(:admin).manage_users?
             = nav_link controller: :account_confirmation, active_class: 'current-page' do
               = link_to account_confirmations_index_path do

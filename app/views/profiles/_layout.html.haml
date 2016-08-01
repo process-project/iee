@@ -1,0 +1,26 @@
+.row
+  .col-md-12.col-sm-12.col-xs-12
+    .x_panel
+      .x_content
+        .col-md-3.col-sm-3.col-xs-12.profile_left
+          .profile_img
+            .avatar-view
+              = image_tag current_user.gravatar_url(size: 214)
+            %h3= current_user.name
+            = render('users/jwt_token')
+            -# = link_to t("remove_account"), registration_path(User),
+            -#   data: { confirm: t("are_you_sure") }, method: :delete,
+            -#   class: 'btn btn-danger'
+        .col-md-9.col-sm-9.col-xs-12
+          %ul.nav.nav-tabs.bar_tabs
+            = nav_link controller: :profiles do
+              = link_to 'Profile', profile_path
+            = nav_link controller: :accounts do
+              = link_to 'Account', profile_account_path
+            = nav_link controller: :passwords do
+              = link_to 'Password', profile_password_path
+            - if policy(:plgrid).show?
+              = nav_link controller: :plgrids do
+                = link_to 'PLGrid', profile_plgrid_path
+          .tab-content
+            = yield

@@ -1,0 +1,10 @@
+= render('profiles/layout') do
+  = simple_form_for(current_user, url: profile_path, html: {method: :put }) do |f|
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :email, hint: 'Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service'.html_safe
+    - if policy(:plgrid).show?
+      = f.input :plgrid_login, readonly: true
+    .form-group
+      .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
+        = f.button :submit, 'Update profile', class: 'btn btn-success'
