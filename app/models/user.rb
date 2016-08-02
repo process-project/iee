@@ -101,13 +101,11 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
-  private_class_method :token_data
   def self.token_data(token)
     JWT.decode(token, Vapor::Application.config.jwt.key, true,
                algorithm: Vapor::Application.config.jwt.key_algorithm)
   end
 
-  private_class_method :compose_proxy
   def self.compose_proxy(info)
     if info.proxy && info.proxyPrivKey && info.userCert
       info.proxy + info.proxyPrivKey + info.userCert
