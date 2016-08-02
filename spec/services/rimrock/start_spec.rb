@@ -55,7 +55,7 @@ RSpec.describe Rimrock::Start do
   it 'cannot start already started computation' do
     computation = create(:computation, job_id: 'some_id')
 
-    expect { described_class.new(computation).call }
-      .to raise_error(Rimrock::Exception, 'Cannot start computation twice')
+    expect { described_class.new(computation).call }.
+      to raise_error(Rimrock::Exception, 'Cannot start computation twice')
   end
 end

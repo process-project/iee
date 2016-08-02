@@ -45,9 +45,9 @@ RSpec.describe Rimrock::Update do
       [500, {}, 'error details']
     end
 
-    expect(Rails.logger).to receive(:warn)
-      .with(I18n.t('rimrock.internal',
-                   user: user.name, details: 'error details'))
+    expect(Rails.logger).to receive(:warn).
+      with(I18n.t('rimrock.internal',
+                  user: user.name, details: 'error details'))
 
     described_class.new(user, connection: connection).call
   end

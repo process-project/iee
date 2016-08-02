@@ -19,8 +19,8 @@ describe 'Patients controller' do
 
     describe 'GET /patients' do
       it 'calls set_patients to prevent any data leak' do
-        expect_any_instance_of(PatientsController)
-          .to receive(:set_patients).and_call_original
+        expect_any_instance_of(PatientsController).
+          to receive(:set_patients).and_call_original
         get '/patients'
         expect(response).to be_success
       end
@@ -28,8 +28,8 @@ describe 'Patients controller' do
 
     describe 'SHOW /patient/:id' do
       it 'calls set_patients to prevent any data leak' do
-        expect_any_instance_of(PatientsController)
-          .to receive(:set_patients).and_call_original
+        expect_any_instance_of(PatientsController).
+          to receive(:set_patients).and_call_original
         get '/patients', params: { id: patient.id }
         expect(response).to be_success
       end
@@ -37,8 +37,8 @@ describe 'Patients controller' do
 
     describe 'DELETE /patient/:id' do
       it 'calls set_patients to prevent any data leak' do
-        expect_any_instance_of(PatientsController)
-          .to receive(:set_patients).and_call_original
+        expect_any_instance_of(PatientsController).
+          to receive(:set_patients).and_call_original
         delete "/patients/#{patient.id}"
         expect(response).to redirect_to patients_path
       end
@@ -46,8 +46,8 @@ describe 'Patients controller' do
 
     describe 'POST /patients' do
       it 'calls execute_data_sync on newly created patient' do
-        expect_any_instance_of(Patient)
-          .to receive(:execute_data_sync)
+        expect_any_instance_of(Patient).
+          to receive(:execute_data_sync)
         expect do
           post '/patients/', params: { patient: { case_number: '5555' } }
         end.to change { Patient.count }.by(1)

@@ -38,15 +38,15 @@ describe NavHelper do
     end
 
     it 'passes active class option' do
-      expect(nav_link(controller: :foo, active_class: 'current-page'))
-        .to match(/<li class="current-page">/)
+      expect(nav_link(controller: :foo, active_class: 'current-page')).
+        to match(/<li class="current-page">/)
     end
 
     it 'passes extra html options to the list element' do
-      expect(nav_link(action: :foo, html_options: { class: 'home' }))
-        .to match(/<li class="home active">/)
-      expect(nav_link(html_options: { class: 'active' }))
-        .to match(/<li class="active">/)
+      expect(nav_link(action: :foo, html_options: { class: 'home' })).
+        to match(/<li class="home active">/)
+      expect(nav_link(html_options: { class: 'active' })).
+        to match(/<li class="active">/)
     end
   end
 end

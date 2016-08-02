@@ -92,8 +92,8 @@ RSpec.describe 'PDP' do
           params: { uri: 'some_resource' }
 
       expect(response.status).to eq(401)
-      expect(response.headers['WWW-Authenticate'])
-        .to eq('Bearer realm="example"')
+      expect(response.headers['WWW-Authenticate']).
+        to eq('Bearer realm="example"')
     end
   end
 end

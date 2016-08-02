@@ -17,7 +17,7 @@ RSpec.feature 'Delayed jobs monitoring' do
     user = create(:approved_user)
 
     login_as(user)
-    expect { visit(admin_job_path) }
-      .to raise_error(ActionController::RoutingError)
+    expect { visit(admin_job_path) }.
+      to raise_error(ActionController::RoutingError)
   end
 end

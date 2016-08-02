@@ -25,9 +25,9 @@ RSpec.describe User do
     end
 
     it 'creates new user if does not exist' do
-      expect { described_class.from_plgrid_omniauth(auth) }
-        .to change { User.count }
-        .by(1)
+      expect { described_class.from_plgrid_omniauth(auth) }.
+        to change { User.count }.
+        by(1)
     end
 
     it 'uses auth info to populate user data' do
@@ -72,16 +72,16 @@ RSpec.describe User do
     it 'includes issuer in token' do
       u = create(:user)
 
-      expect(issuer_from_token(u.token))
-        .to eq Vapor::Application.config.jwt.issuer
+      expect(issuer_from_token(u.token)).
+        to eq Vapor::Application.config.jwt.issuer
     end
 
     it 'includes expiration time in token' do
       u = create(:user)
       time_now = Time.now
       allow(Time).to receive(:now).and_return(time_now)
-      expect(expiration_time_from_token(u.token))
-        .to eq (time_now.to_i + Vapor::Application.config.jwt.expiration_time)
+      expect(expiration_time_from_token(u.token)).
+        to eq (time_now.to_i + Vapor::Application.config.jwt.expiration_time)
     end
     context 'token expired' do
       it 'fails with error' do
@@ -91,8 +91,8 @@ RSpec.describe User do
           time_now_1 + Vapor::Application.config.jwt.expiration_time + 1
         allow(Time).to receive(:now).and_return(time_now_1, time_now_2)
         expired_token = u.token
-        expect { User.from_token(expired_token) }
-          .to raise_error(JWT::ExpiredSignature)
+        expect { User.from_token(expired_token) }.
+          to raise_error(JWT::ExpiredSignature)
       end
     end
   end
