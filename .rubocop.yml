@@ -12,6 +12,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'bin/**/*'
+    - 'db/schema.rb'
 
 Metrics/LineLength:
   Max: 100
