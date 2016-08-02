@@ -25,7 +25,7 @@ RSpec.describe Group do
     let(:childless) { create(:group) }
     it 'is valid' do
       valid_childless = build(:group)
-      expect(childless.valid?).to be_truthy
+      expect(valid_childless.valid?).to be_truthy
     end
     it 'returns empty offspring array' do
       expect(childless.offspring).to eq []
