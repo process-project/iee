@@ -13,9 +13,15 @@ en:
     labels:
       patient:
         case_number: Case number
+      user:
+        plgrid_login: PLGrid user login
     placeholders:
       patient:
         case_number: The unique EurValve identification
+    hints:
+      user:
+        email: Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service
+        current_password: You must provide your current password in order to change it.
     # Examples
     # labels:
     #   defaults:

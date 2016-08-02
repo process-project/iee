@@ -8,7 +8,7 @@ module Profiles
       if current_user.update_attributes(plgrid_login: nil, proxy: nil)
         redirect_to profile_path
       else
-        flash[:alert] = 'Unable to disconect from PLGrid'
+        flash[:alert] = t('profiles.plgrids.destroy.failure')
         render 'show'
       end
     end

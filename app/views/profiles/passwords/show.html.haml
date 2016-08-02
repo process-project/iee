@@ -1,10 +1,9 @@
 = render('profiles/layout') do
-  %p
-    After a successful password update, you will be redirected to the login page where you can log in with your new password.
-  = simple_form_for(current_user, url: profile_password_path, html: {method: :put }) do |f|
-    = f.input :current_password, hint: 'You must provide your current password in order to change it.'
+  %p= t('profiles.passwords.show.info')
+  = simple_form_for(current_user, url: profile_password_path, html: { method: :put }) do |f|
+    = f.input :current_password
     = f.input :password
     = f.input :password_confirmation
     .form-group
       .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
-        = f.button :submit, 'Update password', class: 'btn btn-success'
+        = f.button :submit, t('profiles.passwords.show.update'), class: 'btn btn-success'

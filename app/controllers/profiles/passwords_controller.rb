@@ -7,11 +7,11 @@ module Profiles
     def update
       if !current_user.valid_password?(current_password)
         current_user.errors.add(:current_password,
-                                'You must provide a valid current password')
+                                t('user.wrong_password'))
         render 'show'
       elsif current_user.update_attributes(user_params)
         redirect_to new_user_session_path,
-                    notice: 'Password was successfully updated. Please login with it'
+                    notice: t('profiles.passwords.update.success')
       else
         render 'show'
       end
