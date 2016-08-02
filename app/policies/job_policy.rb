@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class JobPolicy < Struct.new(:user, :job)
+JobPolicy = Struct.new(:user, :job) do
   def show?
     user && user.admin?
   end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PlgridPolicy < Struct.new(:user, :plgrid)
+PlgridPolicy = Struct.new(:user, :plgrid) do
   def show?
     user && user.plgrid_login
   end

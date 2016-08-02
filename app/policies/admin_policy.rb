@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AdminPolicy < Struct.new(:user, :admin)
+AdminPolicy = Struct.new(:user, :admin) do
   def manage_users?
     user && user.groups.where(name: 'supervisor').exists?
   end
