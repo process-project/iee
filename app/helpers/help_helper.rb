@@ -13,7 +13,10 @@ module HelpHelper
                               space_after_headers: true,
                               superscript: true)
 
+    # we can disable cop because Markdown render method ensures its output is html safe.
+    # rubocop:disable Rails/OutputSafety
     @markdown_renderer.render(text || '').html_safe
+    # rubocop:enable Rails/OutputSafety
   end
 
   private
