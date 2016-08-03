@@ -33,9 +33,7 @@ module Api
     private
 
     def authenticate_user!
-      unless current_user
-        head :unauthorized, 'WWW-Authenticate' => error_401_message
-      end
+      head :unauthorized, 'WWW-Authenticate' => error_401_message unless current_user
     end
 
     def error_401_message

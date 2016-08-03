@@ -28,20 +28,19 @@ module Rimrock
     end
 
     def success(body)
-      json_body = JSON.parse(body)
-      statuses = Hash[json_body.map { |e| [e['job_id'], e] }]
+      statuses = Hash[JSON.parse(body).map { |e| [e['job_id'], e] }]
 
       active_computations.each do |computation|
-        new_status = statuses[computation.job_id]
-        if new_status
-          computation.update_attribute(:status, new_status['status'].downcase)
-          on_finish_callback(computation) if computation.status == 'finished'
-        else
-          computation.update_attributes(
-            status: 'error',
-            error_message: 'Job cannot be found'
-          )
-        end
+        update_computation(computation, statuses[computation.job_id])
+      end
+    end
+
+    def update_computation(computation, new_status)
+      if new_status
+        computation.update_attribute(:status, new_status['status'].downcase)
+        on_finish_callback(computation) if computation.status == 'finished'
+      else
+        computation.update_attributes(status: 'error', error_message: 'Job cannot be found')
       end
     end
 

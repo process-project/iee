@@ -29,16 +29,14 @@ class AccountConfirmationController < ApplicationController
   end
 
   def block
-    user = User.find(params[:id])
+    @user = User.find(params[:id])
 
-    if user
-      if user == current_user
+    if @user
+      if @user == current_user
         flash[:alert] = t('cannot_block_itself')
       else
-        logger.info "Blocking #{user.email} by #{current_user.email}"
-        user.approved = false
-        user.save
-        flash[:notice] = t('user_blocked', email: user.email)
+        perform_blocking
+        flash[:notice] = t('user_blocked', email: @user.email)
       end
     end
 
@@ -64,5 +62,11 @@ class AccountConfirmationController < ApplicationController
       flash[:alert] = t('restricted_to_supervisors')
       redirect_to root_path
     end
+  end
+
+  def perform_blocking
+    logger.info "Blocking #{@user.email} by #{current_user.email}"
+    @user.approved = false
+    @user.save
   end
 end

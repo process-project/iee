@@ -81,7 +81,7 @@ RSpec.describe User do
       time_now = Time.zone.now
       allow(Time).to receive(:now).and_return(time_now)
       expect(expiration_time_from_token(u.token)).
-        to eq (time_now.to_i + Vapor::Application.config.jwt.expiration_time)
+        to eq(time_now.to_i + Vapor::Application.config.jwt.expiration_time)
     end
     context 'token expired' do
       it 'fails with error' do

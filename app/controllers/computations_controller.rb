@@ -13,7 +13,7 @@ class ComputationsController < ApplicationController
     @computation = Computation.create(
       create_params.merge(
         user: current_user,
-        script: script
+        script: SCRIPT
       )
     )
     Rimrock::StartJob.perform_later @computation
@@ -30,8 +30,9 @@ class ComputationsController < ApplicationController
     @patient ||= Patient.find(params[:computation][:patient_id])
   end
 
-  def script
-    # see https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
+  # See
+  # https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
+  SCRIPT =
     <<~SCRIPT
       #!/bin/bash -l
       #SBATCH -N 1
@@ -61,5 +62,4 @@ class ComputationsController < ApplicationController
       cp $OUT_FILE_1 $CASE_DIR/
       cp $OUT_FILE_2 $CASE_DIR/
     SCRIPT
-  end
 end

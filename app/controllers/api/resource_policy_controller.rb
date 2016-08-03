@@ -17,7 +17,8 @@ module Api
         user = User.find_by(email: @json['user'])
         @json['access_methods'].each do |access_method|
           AccessPolicy.create(user: user,
-                              access_method: AccessMethod.find_by(name: access_method.downcase), resource: resource)
+                              access_method: AccessMethod.find_by(name: access_method.downcase),
+                              resource: resource)
         end
       end
 
@@ -25,15 +26,18 @@ module Api
     end
 
     def index
-      result = { users: [], groups: [], access_methods: [] }
-      User.approved.each { |user| result[:users] << user.email }
-      Group.all.each { |group| result[:groups] << group.name }
-      AccessMethod.all.each do |access_method|
-        result[:access_methods] <<
-          access_method.name.downcase
-      end
+      init_result
+      add_approved_users_emails
+      add_groups_names
+      add_access_methods_names
 
-      render json: result, status: :ok
+      render json: @result, status: :ok
+    end
+
+    def add_access_methods_names
+      AccessMethod.all.each do |access_method|
+        @result[:access_methods] << access_method.name.downcase
+      end
     end
 
     def destroy
@@ -48,6 +52,18 @@ module Api
     end
 
     private
+
+    def init_result
+      @result = { users: [], groups: [], access_methods: [] }
+    end
+
+    def add_approved_users_emails
+      User.approved.each { |user| @result[:users] << user.email }
+    end
+
+    def add_groups_names
+      Group.all.each { |group| @result[:groups] << group.name }
+    end
 
     def authorize_service
       @service = token ? Service.find_by(token: token) : nil

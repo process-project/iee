@@ -7,8 +7,6 @@ module Rimrock
       Rimrock::Update.new(user, on_finish_callback: Updater).call
     end
 
-    private
-
     class Updater
       def initialize(computation)
         @computation = computation

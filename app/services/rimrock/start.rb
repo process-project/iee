@@ -2,14 +2,12 @@
 module Rimrock
   class Start < Rimrock::Service
     def call
-      if computation.job_id
-        raise Rimrock::Exception, 'Cannot start computation twice'
-      else
-        response = make_call
-        case response.status
-        when 201 then success(response.body)
-        else failure(response.body)
-        end
+      raise Rimrock::Exception, 'Cannot start computation twice' if computation.job_id
+
+      response = make_call
+      case response.status
+      when 201 then success(response.body)
+      else failure(response.body)
       end
     end
 
@@ -19,13 +17,17 @@ module Rimrock
       connection.post do |req|
         req.url 'api/jobs'
         req.headers['Content-Type'] = 'application/json'
-        req.body = {
-          host: Rails.application.config_for('eurvalve')['rimrock']['host'],
-          working_directory: computation.working_directory,
-          script: computation.script,
-          tag: Rails.application.config_for('eurvalve')['rimrock']['tag']
-        }.to_json
+        req.body = req_body
       end
+    end
+
+    def req_body
+      {
+        host: Rails.application.config_for('eurvalve')['rimrock']['host'],
+        working_directory: computation.working_directory,
+        script: computation.script,
+        tag: Rails.application.config_for('eurvalve')['rimrock']['tag']
+      }.to_json
     end
 
     def success(body)
