@@ -13,7 +13,7 @@ class ComputationsController < ApplicationController
     @computation = Computation.create(
       create_params.merge(
         user: current_user,
-        script: SCRIPT
+        script: script
       )
     )
     Rimrock::StartJob.perform_later @computation
@@ -32,7 +32,8 @@ class ComputationsController < ApplicationController
 
   # See
   # https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
-  SCRIPT =
+  # rubocop:disable Metrics/MethodLength
+  def script
     <<~SCRIPT
       #!/bin/bash -l
       #SBATCH -N 1
@@ -62,4 +63,6 @@ class ComputationsController < ApplicationController
       cp $OUT_FILE_1 $CASE_DIR/
       cp $OUT_FILE_2 $CASE_DIR/
     SCRIPT
+  end
+  # rubocop:enable Metrics/MethodLength
 end
