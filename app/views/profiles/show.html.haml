@@ -2,7 +2,7 @@
   = simple_form_for(current_user, url: profile_path, html: { method: :put }) do |f|
     = f.input :first_name
     = f.input :last_name
-    = f.input :email
+    = f.input :email, hint: t('profiles.show.email_hint').html_safe
     - if policy(:plgrid).show?
       = f.input :plgrid_login, readonly: true
     .form-group
