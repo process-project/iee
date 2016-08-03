@@ -44,39 +44,66 @@ module NavHelper
   #
   # Returns a list item element String
   def nav_link(options = {}, &block)
-    if path = options.delete(:path)
-      if path.respond_to?(:each)
-        c = path.map { |p| p.split('#').first }
-        a = path.map { |p| p.split('#').last }
-      else
-        c, a, _ = path.split('#')
-      end
-    else
-      c = options.delete(:controller)
-      a = options.delete(:action)
-    end
-
-    active_class = options.fetch(:active_class, 'active')
-
-    if c && a
-      # When given both options, make sure BOTH are active
-      klass = current_controller?(*c) && current_action?(*a) ? active_class : ''
-    else
-      # Otherwise check EITHER option
-      klass = current_controller?(*c) || current_action?(*a) ? active_class : ''
-    end
-
-    # Add our custom class into the html_options, which may or may not exist
-    # and which may or may not already have a :class key
-    o = options.delete(:html_options) || {}
-    o[:class] ||= ''
-    o[:class] += ' ' + klass
-    o[:class].strip!
+    o = html_options(options)
 
     if block_given?
       content_tag(:li, capture(&block), o)
     else
       content_tag(:li, nil, o)
     end
+  end
+
+  private
+
+  def html_options(options)
+    klass = extract_klass(options)
+    # Add our custom class into the html_options, which may or may not exist
+    # and which may or may not already have a :class key
+    o = options.delete(:html_options) || {}
+    o[:class] ||= ''
+    o[:class] += ' ' + klass
+    o[:class].strip!
+    o
+  end
+
+  def extract_klass(options)
+    act, ctrl = extract_controller_and_action(options)
+    active_class = options.fetch(:active_class, 'active')
+    if ctrl && act
+      # When given both options, make sure BOTH are active
+      current_controller_and_action?(act, ctrl) ? active_class : ''
+    else
+      # Otherwise check EITHER option
+      current_controller_or_action(act, ctrl) ? active_class : ''
+    end
+  end
+
+  def current_controller_or_action(act, ctrl)
+    current_controller?(*ctrl) || current_action?(*act)
+  end
+
+  def current_controller_and_action?(act, ctrl)
+    current_controller?(*ctrl) && current_action?(*act)
+  end
+
+  def extract_controller_and_action(options)
+    path = options.delete(:path)
+    if path
+      act, ctrl = extract_ctrl_and_action_from_path(path)
+    else
+      ctrl = options.delete(:controller)
+      act = options.delete(:action)
+    end
+    [act, ctrl]
+  end
+
+  def extract_ctrl_and_action_from_path(path)
+    if path.respond_to?(:each)
+      ctrl = path.map { |p| p.split('#').first }
+      act = path.map { |p| p.split('#').last }
+    else
+      ctrl, act, = path.split('#')
+    end
+    [act, ctrl]
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateServices < ActiveRecord::Migration[4.2]
   def change
     create_table :services do |t|
@@ -20,7 +21,8 @@ class CreateServices < ActiveRecord::Migration[4.2]
         Resource.find_each do |resource|
           uri = URI.parse(resource.path)
           service = Service.find_or_create_by(
-            uri: "#{uri.scheme || 'https'}://#{uri.host}")
+            uri: "#{uri.scheme || 'https'}://#{uri.host}"
+          )
 
           resource.update_columns(service_id: service.id, path: uri.path)
         end

@@ -1,11 +1,9 @@
+# frozen_string_literal: true
 namespace :pdp do
   namespace :perf do
     desc 'Test performance of checking whether'\
           ' user permission to execute action on random resources'
     task test: :environment do
-      Resource
-      User
-      Action
       Benchmark.bm do |x|
         10.times do
           resource = random_object_of_model Resource
@@ -19,6 +17,7 @@ namespace :pdp do
   end
 
   private
+
   def random_object_of_model(model_class)
     models_no = model_class.send :count
     offset = Random.rand models_no

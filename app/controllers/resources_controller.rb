@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ResourcesController < ApplicationController
   def index
     @resources = policy_scope(Resource).order(:name)
@@ -13,15 +14,11 @@ class ResourcesController < ApplicationController
     @resource.transaction do
       if @resource.save
         @resource.access_policies.create!(user: current_user, resource: @resource,
-          access_method: AccessMethod.find_by(name: "manage"))
+                                          access_method: AccessMethod.find_by(name: 'manage'))
       end
     end
 
-    if @resource.new_record?
-      render :new
-    else
-      redirect_to resources_path
-    end
+    @resource.new_record? ? render(:new) : redirect_to(resources_path)
   end
 
   def destroy

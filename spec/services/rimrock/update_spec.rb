@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 require 'faraday'
 
@@ -24,7 +25,7 @@ RSpec.describe Rimrock::Update do
     c1 = create(:computation, status: 'queued', job_id: 'job1', user: user)
     c2 = create(:computation, status: 'queued', job_id: 'job2', user: user)
 
-    stubs.get('api/jobs') do |env|
+    stubs.get('api/jobs') do |_env|
       [200, {}, '[{"job_id": "job1", "status": "FINISHED"},
                   {"job_id": "job2", "status": "RUNNING"}]']
     end
@@ -40,7 +41,7 @@ RSpec.describe Rimrock::Update do
   it 'logs when error updating computations' do
     create(:computation, status: 'queued', job_id: 'job1', user: user)
 
-    stubs.get('api/jobs') do |env|
+    stubs.get('api/jobs') do |_env|
       [500, {}, 'error details']
     end
 
@@ -56,7 +57,7 @@ RSpec.describe Rimrock::Update do
     callback = double('callback')
     callback_instance = double('callback instance')
 
-    stubs.get('api/jobs') do |env|
+    stubs.get('api/jobs') do |_env|
       [200, {}, '[{"job_id": "job1", "status": "FINISHED"}]']
     end
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 require 'faraday'
 
@@ -20,8 +21,8 @@ RSpec.describe Rimrock::Start do
       expect(start_request['script']).to eq(computation.script)
       expect(start_request['tag']).to eq('vapor')
 
-      [201, {}, '{"job_id":"id", "stdout_path":"out", ' +
-                '"stderr_path":"err", "status":"QUEUED"}']
+      [201, {}, '{"job_id":"id", "stdout_path":"out", ' \
+        '"stderr_path":"err", "status":"QUEUED"}']
     end
 
     described_class.new(computation, connection: connection).call
@@ -35,10 +36,10 @@ RSpec.describe Rimrock::Start do
   it 'fails to start computation' do
     computation = create(:computation)
 
-    stubs.post('api/jobs') do |env|
-      [422, {}, '{"status":"error", "exit_code": -1, ' +
-                '"standard_output":"stdout", "error_output":"stderr", ' +
-                '"error_message": "error_msg"}']
+    stubs.post('api/jobs') do |_env|
+      [422, {}, '{"status":"error", "exit_code": -1, ' \
+        '"standard_output":"stdout", "error_output":"stderr", ' \
+        '"error_message": "error_msg"}']
     end
 
     described_class.new(computation, connection: connection).call
@@ -54,7 +55,7 @@ RSpec.describe Rimrock::Start do
   it 'cannot start already started computation' do
     computation = create(:computation, job_id: 'some_id')
 
-    expect { described_class.new(computation).call }
-      .to raise_error(Rimrock::Exception, 'Cannot start computation twice')
+    expect { described_class.new(computation).call }.
+      to raise_error(Rimrock::Exception, 'Cannot start computation twice')
   end
 end

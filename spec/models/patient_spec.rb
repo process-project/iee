@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Patient do
@@ -14,7 +15,7 @@ RSpec.describe Patient do
 
   describe '#procedue_status' do
     it 'has localization label for each state' do
-      Patient.procedure_statuses.each do |name,_|
+      Patient.procedure_statuses.each do |name, _|
         expect(I18n.t("patient.procedure_status.#{name}", default: 'N/A')).
           not_to eq 'N/A'
       end

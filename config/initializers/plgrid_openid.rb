@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'openid/fetchers'
 
 Devise.setup do |config|
@@ -24,42 +25,54 @@ Devise.setup do |config|
                                      'DigiCertAssuredIDRootCA.pem')
 end
 
-class OpenID::AX::AttrInfo
-  def initialize(type_uri, ns_alias = nil, required = false, count = 1)
-    @type_uri = type_uri
-    @count = count
-    @required = required
-    @ns_alias = uri_to_alias(type_uri)
-  end
+module OpenID
+  module AX
+    class AttrInfo
+      def initialize(type_uri, _ = nil, required = false, count = 1)
+        @type_uri = type_uri
+        @count = count
+        @required = required
+        @ns_alias = uri_to_alias(type_uri)
+      end
 
-  private
+      private
 
-  def uri_to_alias(uri)
-    case uri
-    when 'http://openid.plgrid.pl/certificate/proxy' then 'proxy'
-    when 'http://openid.plgrid.pl/certificate/userCert' then 'userCert'
-    when 'http://openid.plgrid.pl/certificate/proxyPrivKey' then 'proxyPrivKey'
-    when 'http://openid.plgrid.pl/POSTresponse' then 'POSTresponse'
+      def uri_to_alias(uri)
+        case uri
+        when 'http://openid.plgrid.pl/certificate/proxy'
+          'proxy'
+        when 'http://openid.plgrid.pl/certificate/userCert'
+          'userCert'
+        when 'http://openid.plgrid.pl/certificate/proxyPrivKey'
+          'proxyPrivKey'
+        when 'http://openid.plgrid.pl/POSTresponse'
+          'POSTresponse'
+        end
+      end
     end
   end
 end
 
-class OmniAuth::Strategies::OpenID
-  alias old_ax_user_info ax_user_info
+module OmniAuth
+  module Strategies
+    class OpenID
+      alias old_ax_user_info ax_user_info
 
-  def ax_user_info
-    ax = ::OpenID::AX::FetchResponse.from_success_response(openid_response)
+      def ax_user_info
+        ax = ::OpenID::AX::FetchResponse.from_success_response(openid_response)
 
-    old_ax_user_info.tap do |user_info|
-      user_info['proxy'] = get_proxy_element(ax, :proxy)
-      user_info['userCert'] = get_proxy_element(ax, :userCert)
-      user_info['proxyPrivKey'] = get_proxy_element(ax, :proxyPrivKey)
+        old_ax_user_info.tap do |user_info|
+          user_info['proxy'] = get_proxy_element(ax, :proxy)
+          user_info['userCert'] = get_proxy_element(ax, :userCert)
+          user_info['proxyPrivKey'] = get_proxy_element(ax, :proxyPrivKey)
+        end
+      end
+
+      private
+
+      def get_proxy_element(ax, id)
+        ax.get_single(OmniAuth::Strategies::OpenID::AX[id])&.gsub('<br>', "\n")
+      end
     end
-  end
-
-  private
-
-  def get_proxy_element(ax, id)
-    ax.get_single(OmniAuth::Strategies::OpenID::AX[id])&.gsub('<br>',"\n")
   end
 end

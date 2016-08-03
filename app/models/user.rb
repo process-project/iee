@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User < ApplicationRecord
   include Gravtastic
 
@@ -24,7 +25,7 @@ class User < ApplicationRecord
   validates :email, presence: true
 
   scope :approved, -> { where(approved: true) }
-  scope :supervisors, -> { joins(:groups).where(groups: {name: 'supervisor' }) }
+  scope :supervisors, -> { joins(:groups).where(groups: { name: 'supervisor' }) }
 
   def self.with_active_computations
     User.where(<<~SQL
@@ -32,22 +33,25 @@ class User < ApplicationRecord
              FROM computations
              WHERE status IN ('queued', 'running'))
     SQL
-    )
+              )
   end
 
   def self.from_plgrid_omniauth(auth)
     find_or_initialize_by(plgrid_login: auth.info.nickname).tap do |user|
-      if user.new_record?
-        user.email = auth.info.email
-        user.password = Devise.friendly_token.first(8)
-        name_elements = auth.info.name.split(' ')
-        user.first_name = name_elements[0]
-        user.last_name = name_elements[1..-1].join(' ')
-        user.approved = true
-      end
+      set_new_user_attrs(auth, user) if user.new_record?
+
       user.proxy = User.compose_proxy(auth.info)
       user.save
     end
+  end
+
+  def self.set_new_user_attrs(auth, user)
+    user.email = auth.info.email
+    user.password = Devise.friendly_token.first(8)
+    name_elements = auth.info.name.split(' ')
+    user.first_name = name_elements[0]
+    user.last_name = name_elements[1..-1].join(' ')
+    user.approved = true
   end
 
   def self.from_token(token)
@@ -67,11 +71,7 @@ class User < ApplicationRecord
   end
 
   def inactive_message
-    if !approved?
-      :not_approved
-    else
-      super
-    end
+    approved? ? super : :not_approved
   end
 
   def name
@@ -89,14 +89,9 @@ class User < ApplicationRecord
 
   def token
     JWT.encode(
-        {
-            name: name,
-            email: email,
-            iss: Rails.configuration.jwt.issuer,
-            exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
-        },
-        Vapor::Application.config.jwt.key,
-        Vapor::Application.config.jwt.key_algorithm
+      token_payload,
+      Vapor::Application.config.jwt.key,
+      Vapor::Application.config.jwt.key_algorithm
     )
   end
 
@@ -107,8 +102,6 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
-  private
-
   def self.token_data(token)
     JWT.decode(token, Vapor::Application.config.jwt.key, true,
                algorithm: Vapor::Application.config.jwt.key_algorithm)
@@ -118,5 +111,16 @@ class User < ApplicationRecord
     if info.proxy && info.proxyPrivKey && info.userCert
       info.proxy + info.proxyPrivKey + info.userCert
     end
+  end
+
+  private
+
+  def token_payload
+    {
+      name: name,
+      email: email,
+      iss: Rails.configuration.jwt.issuer,
+      exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
+    }
   end
 end

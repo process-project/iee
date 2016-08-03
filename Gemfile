@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
@@ -17,8 +18,8 @@ gem 'nicescroll-rails'
 gem 'gravtastic'
 gem 'zeroclipboard-rails' # copy text to clipboard
 
-gem 'bootstrap-sass','~> 3.3'
-gem 'font-awesome-sass','~> 4.5'
+gem 'bootstrap-sass', '~> 3.3'
+gem 'font-awesome-sass', '~> 4.5'
 gem 'simple_form'
 
 # Markdown
@@ -52,6 +53,8 @@ group :development do
   # PLG OpenId requires ssh even for development
   # start app using `thin start --ssl
   gem 'thin'
+
+  gem 'rubocop', require: false
 end
 
 group :test do

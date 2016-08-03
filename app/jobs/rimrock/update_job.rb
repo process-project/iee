@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Rimrock
   class UpdateJob < ApplicationJob
     queue_as :computation
@@ -5,8 +6,6 @@ module Rimrock
     def perform(user)
       Rimrock::Update.new(user, on_finish_callback: Updater).call
     end
-
-    private
 
     class Updater
       def initialize(computation)

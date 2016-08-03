@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe ResourcePolicy do
@@ -42,7 +43,6 @@ RSpec.describe ResourcePolicy do
            access_method: get_method, group: parent_group, resource: resource)
     user.reload
     resource.reload
-
 
     expect(subject.permit?('get')).to be_truthy
   end

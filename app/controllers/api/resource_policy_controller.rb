@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Api
   class ResourcePolicyController < ActionController::Base
     before_action :authorize_service
@@ -5,20 +6,19 @@ module Api
     before_action :parse_request, only: :create
 
     before_action only: :create do
-      unless json_params_valid?
-        render_bad_request
-      end
+      render_bad_request unless json_params_valid?
     end
 
     before_action :check_delete_params, only: :delete
 
     def create
       Resource.transaction do
-        resource = Resource.create(service: @service, path: @json["resource_path"])
-        user = User.find_by(email: @json["user"])
-        @json["access_methods"].each do |access_method|
+        resource = Resource.create(service: @service, path: @json['resource_path'])
+        user = User.find_by(email: @json['user'])
+        @json['access_methods'].each do |access_method|
           AccessPolicy.create(user: user,
-            access_method: AccessMethod.find_by(name: access_method.downcase), resource: resource)
+                              access_method: AccessMethod.find_by(name: access_method.downcase),
+                              resource: resource)
         end
       end
 
@@ -26,13 +26,18 @@ module Api
     end
 
     def index
-      result  = { users: [], groups: [], access_methods: [] }
-      User.approved.each { |user| result[:users] << user.email }
-      Group.all.each { |group| result[:groups] << group.name }
-      AccessMethod.all.each { |access_method| result[:access_methods] <<
-        access_method.name.downcase }
+      init_result
+      add_approved_users_emails
+      add_groups_names
+      add_access_methods_names
 
-      render json: result, status: :ok
+      render json: @result, status: :ok
+    end
+
+    def add_access_methods_names
+      AccessMethod.all.each do |access_method|
+        @result[:access_methods] << access_method.name.downcase
+      end
     end
 
     def destroy
@@ -48,6 +53,18 @@ module Api
 
     private
 
+    def init_result
+      @result = { users: [], groups: [], access_methods: [] }
+    end
+
+    def add_approved_users_emails
+      User.approved.each { |user| @result[:users] << user.email }
+    end
+
+    def add_groups_names
+      Group.all.each { |group| @result[:groups] << group.name }
+    end
+
     def authorize_service
       @service = token ? Service.find_by(token: token) : nil
       @service ? nil : unauthorized_response
@@ -58,19 +75,21 @@ module Api
     end
 
     def json_params_valid?
-      @json.has_key?("resource_path") && @json.has_key?("user") &&
-        @json.has_key?("access_methods") && @json["access_methods"].respond_to?(:[]) &&
-          User.exists?(email: @json["user"]) &&
-            @json["access_methods"].map { |access_method| AccessMethod.where("lower(name) = ?",
-              access_method.downcase).exists?}.reduce(:&)
+      @json.key?('resource_path') && @json.key?('user') &&
+        @json.key?('access_methods') && @json['access_methods'].respond_to?(:[]) &&
+        User.exists?(email: @json['user']) &&
+        @json['access_methods'].map do |access_method|
+          AccessMethod.where('lower(name) = ?',
+                             access_method.downcase).exists?
+        end.reduce(:&)
     end
 
     def token
-      request.headers["HTTP_X_SERVICE_TOKEN"]
+      request.headers['HTTP_X_SERVICE_TOKEN']
     end
 
     def unauthorized_response
-      head :unauthorized, "WWW-Authenticate" => "X-SERVICE-TOKEN header required"
+      head :unauthorized, 'WWW-Authenticate' => 'X-SERVICE-TOKEN header required'
     end
 
     def check_delete_params
@@ -82,11 +101,7 @@ module Api
     end
 
     def resource_path_param
-      if params[:resource_path]
-        Resource.normalize_path(params[:resource_path])
-      else
-        nil
-      end
+      Resource.normalize_path(params[:resource_path]) if params[:resource_path]
     end
   end
 end

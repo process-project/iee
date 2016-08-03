@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :resources do
   desc 'Generates resources without any assocations to other models'
   task generate: :environment do
@@ -10,5 +11,4 @@ namespace :resources do
       )
     end
   end
-
 end

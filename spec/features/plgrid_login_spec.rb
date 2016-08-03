@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'PLGrid authentication' do
@@ -50,4 +51,3 @@ RSpec.feature 'PLGrid authentication' do
     expect(page).to have_selector('a', text: 'PLGrid', match: :prefer_exact)
   end
 end
-

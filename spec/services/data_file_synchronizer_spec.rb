@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe DataFileSynchronizer do
@@ -27,7 +28,7 @@ describe DataFileSynchronizer do
 
   it 'reports problems in Sentry' do
     pending 'Sentry reporting still not implemented; issue #32'
-    fail
+    raise
   end
 
   it 'reports problem with provided user proxy', proxy: true do
@@ -54,7 +55,7 @@ describe DataFileSynchronizer do
       expect do
         call(patient, user_with_phony_proxy,
              storage_url: 'http://total.rubbish')
-      end.not_to change{ DataFile.count }
+      end.not_to change { DataFile.count }
     end
 
     it 'correctly reads test proxy' do
@@ -62,9 +63,9 @@ describe DataFileSynchronizer do
     end
 
     it 'calls file storage and creates new related data_files' do
-      expect{ call(test_patient, user) }.to change{ DataFile.count }.by(2)
+      expect { call(test_patient, user) }.to change { DataFile.count }.by(2)
       expect(DataFile.all.map(&:data_type)).
-        to match_array ['fluid_virtual_model', 'ventricle_virtual_model']
+        to match_array %w(fluid_virtual_model ventricle_virtual_model)
       expect(DataFile.all.map(&:handle)).
         to include file_handle(test_patient.case_number, 'fluidFlow.cas')
     end
@@ -73,13 +74,13 @@ describe DataFileSynchronizer do
       create(:data_file, name: 'structural_vent.dat',
                          data_type: 'ventricle_virtual_model',
                          patient: test_patient)
-      expect{ call(test_patient, user) }.to change{ DataFile.count }.by(1)
+      expect { call(test_patient, user) }.to change { DataFile.count }.by(1)
       expect(DataFile.all.map(&:data_type)).
-        to match_array ['fluid_virtual_model', 'ventricle_virtual_model']
+        to match_array %w(fluid_virtual_model ventricle_virtual_model)
     end
 
     it 'recognizes files with regexps' do
-      expect{ call(test_advanced_patient, user) }.to change{ DataFile.count }.by(1)
+      expect { call(test_advanced_patient, user) }.to change { DataFile.count }.by(1)
       expect(DataFile.all.map(&:data_type)).to match_array ['blood_flow_result']
       expect(DataFile.all.map(&:name)).to match_array ['fluidFlow-1-00002.dat']
     end
@@ -88,15 +89,15 @@ describe DataFileSynchronizer do
       create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
       create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
       create(:data_file, name: 'structural_vent.dat',
-             data_type: 'ventricle_virtual_model',
-             patient: test_patient)
+                         data_type: 'ventricle_virtual_model',
+                         patient: test_patient)
       create(:data_file, name: 'fluidFlow.cas',
-             data_type: 'fluid_virtual_model',
-             patient: test_patient)
+                         data_type: 'fluid_virtual_model',
+                         patient: test_patient)
       expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
-      expect{ call(test_patient, user) }.to change{ DataFile.count }.by(-2)
+      expect { call(test_patient, user) }.to change { DataFile.count }.by(-2)
       expect(DataFile.all.map(&:data_type)).
-        to match_array ['fluid_virtual_model', 'ventricle_virtual_model']
+        to match_array %w(fluid_virtual_model ventricle_virtual_model)
       expect(test_patient.reload.virtual_model_ready?).to be_truthy
     end
   end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Group < ApplicationRecord
   has_many :user_groups
   has_many :users, through: :user_groups
@@ -26,9 +27,8 @@ class Group < ApplicationRecord
   end
 
   private
+
   def no_cycles_in_ancestors
-    if offspring.include? parent_group
-      errors.add(:parent_group, 'Cannot be one of ancestors')
-    end
+    errors.add(:parent_group, 'Cannot be one of ancestors') if offspring.include? parent_group
   end
 end

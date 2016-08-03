@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Rimrock::UpdateJob do
@@ -14,4 +15,3 @@ RSpec.describe Rimrock::UpdateJob do
     described_class.perform_now(user)
   end
 end
-

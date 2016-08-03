@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Patient browsing' do
@@ -56,7 +57,6 @@ RSpec.feature 'Patient browsing' do
     end
   end
 
-
   context 'in the context of inspecting a given case' do
     scenario 'shows proper notification for no-files case' do
       visit patient_path(patient)
@@ -90,7 +90,7 @@ RSpec.feature 'Patient browsing' do
 
     scenario 'lets the user to get a case data file from file storage' do
       pending 'waiting for storage client implementation'
-      fail
+      raise
     end
   end
 end

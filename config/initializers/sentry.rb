@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if Rails.env.production? && ENV['SENTRY_DSN']
   require 'raven'
 

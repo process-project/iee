@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'redcarpet'
 
 class MarkdownRenderer < Redcarpet::Render::HTML
@@ -10,10 +11,10 @@ class MarkdownRenderer < Redcarpet::Render::HTML
     # full_document is a ActiveSupport::SafeBuffer and must be
     # converted to string so that gsub works properly.
     # see: https://github.com/rails/rails/issues/1734
-    full_document = "#{full_document}"
+    full_document = full_document.to_s
 
     full_document.gsub(/\$\{([^}]*?)\}/) do
-      @context.fetch($1, '')
+      @context.fetch(Regexp.last_match(1), '')
     end
   end
 end

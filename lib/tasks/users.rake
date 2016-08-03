@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :users do
   desc 'Generates users in DB for testing hierarchical groups performance'
   task generate: :environment do
@@ -10,12 +11,12 @@ namespace :users do
       first_name = SecureRandom.urlsafe_base64(8)
       passwd = SecureRandom.urlsafe_base64(8)
       u = User.new(
-          first_name: first_name,
-          last_name: SecureRandom.urlsafe_base64(8),
-          email: "#{first_name}@host.domain",
-          password: passwd,
-          password_confirmation: passwd,
-          approved: true
+        first_name: first_name,
+        last_name: SecureRandom.urlsafe_base64(8),
+        email: "#{first_name}@host.domain",
+        password: passwd,
+        password_confirmation: passwd,
+        approved: true
       )
       u.groups = groups.sample(groups_per_user)
       u.save!

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :permissions do
   desc 'Generates permission randomly associated with resources,'\
     ' action, groups and users'
@@ -21,5 +22,4 @@ namespace :permissions do
       Permission.create permission_attr
     end
   end
-
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe 'Patients controller' do
@@ -47,9 +48,9 @@ describe 'Patients controller' do
       it 'calls execute_data_sync on newly created patient' do
         expect_any_instance_of(Patient).
           to receive(:execute_data_sync)
-        expect {
+        expect do
           post '/patients/', params: { patient: { case_number: '5555' } }
-        }.to change { Patient.count }.by(1)
+        end.to change { Patient.count }.by(1)
         expect(response).to redirect_to Patient.first
       end
     end
@@ -57,6 +58,6 @@ describe 'Patients controller' do
 
   it 'filters patients depending on access level' do
     pending 'A placeholder spec to remember to test filtering patients out'
-    fail
+    raise
   end
 end
