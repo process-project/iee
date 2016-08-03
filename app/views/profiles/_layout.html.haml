@@ -1,0 +1,27 @@
+.row
+  .col-md-12.col-sm-12.col-xs-12
+    .x_panel
+      .x_content
+        .col-md-3.col-sm-3.col-xs-12.profile_left
+          .profile_img
+            .avatar-view
+              = image_tag current_user.gravatar_url(size: 214)
+            %h3= current_user.name
+            %button#d_clip_button.btn.btn-success{ 'data-clipboard-target' => 'fe_text', 'data-clipboard-text' => current_user.token, :title => t('profiles.layout.copy_jwt')}= t('profiles.layout.copy_jwt')
+            :javascript
+              $(document).ready(function() {
+                new ZeroClipboard($("#d_clip_button"))
+              });
+        .col-md-9.col-sm-9.col-xs-12
+          %ul.nav.nav-tabs.bar_tabs
+            = nav_link controller: :profiles do
+              = link_to 'Profile', profile_path
+            = nav_link controller: :accounts do
+              = link_to 'Account', profile_account_path
+            = nav_link controller: :passwords do
+              = link_to 'Password', profile_password_path
+            - if policy(:plgrid).show?
+              = nav_link controller: :plgrids do
+                = link_to 'PLGrid', profile_plgrid_path
+          .tab-content
+            = yield

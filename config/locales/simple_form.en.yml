@@ -13,9 +13,14 @@ en:
     labels:
       patient:
         case_number: Case number
+      user:
+        plgrid_login: PLGrid user login
     placeholders:
       patient:
         case_number: The unique EurValve identification
+    hints:
+      user:
+        current_password: You must provide your current password in order to change it.
     # Examples
     # labels:
     #   defaults:
