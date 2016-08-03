@@ -1,0 +1,4 @@
+= render('profiles/layout') do
+  = link_to t('profiles.plgrids.show.destroy'), profile_plgrid_path,
+    data: { confirm: t("are_you_sure") }, method: :delete,
+    class: 'btn btn-danger'

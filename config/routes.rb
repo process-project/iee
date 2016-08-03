@@ -18,6 +18,15 @@ Rails.application.routes.draw do
                registrations: 'users/registrations'
              }
 
+  ## User profile section routes
+  resource :profile, only: [:show, :update] do
+    scope module: :profiles do
+      resource :account, only: [:show, :update]
+      resource :password, only: [:show, :update]
+      resource :plgrid, only: [:show, :destroy]
+    end
+  end
+
   resources :patients, except: [:edit, :update]
 
   namespace :api do
@@ -37,7 +46,7 @@ Rails.application.routes.draw do
   get 'help/:category/:file' => 'help#show',
       as: :help_page,
       constraints: { category: /.*/, file: %r{[^/\.]+} }
-
+  
   # File Store
   get 'file_store' => 'file_store#index'
 

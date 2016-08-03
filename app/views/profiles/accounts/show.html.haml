@@ -1,0 +1,4 @@
+= render('profiles/layout') do
+  = link_to t('profiles.accounts.show.destroy'), registration_path(User),
+    data: { confirm: t('are_you_sure') }, method: :delete,
+    class: 'btn btn-danger'

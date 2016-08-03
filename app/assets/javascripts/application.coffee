@@ -5,6 +5,7 @@
 #= require bootstrap-sprockets
 #= require icheck
 #= require jquery.nicescroll
+#= require zeroclipboard
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.
 

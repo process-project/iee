@@ -27,3 +27,26 @@ en:
     destroy:
       success: Patient case %{case_number} was removed.
       failure: Unable to remove patient case %{case_number}.
+  profiles:
+    layout:
+      copy_jwt: Copy Json Web Token
+    show:
+      update: Update profile
+      email_hint: Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service
+    update:
+      success: Your profile has been updated
+      failure: Unable to update profile
+    accounts:
+      show:
+        destroy: Remove account
+    passwords:
+      show:
+        info: After a successful password update, you will be redirected to the login page where you can log in with your new password.
+        update: Update password
+      update:
+        success: Password was successfully updated. Please login with it
+    plgrids:
+      show:
+        destroy: Disconnect from PLGrid
+      destroy:
+        failure: Unable to disconect from PLGrid

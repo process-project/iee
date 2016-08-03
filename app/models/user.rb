@@ -22,6 +22,7 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :email, presence: true
 
   scope :approved, -> { where(approved: true) }
   scope :supervisors, -> { joins(:groups).where(groups: { name: 'supervisor' }) }

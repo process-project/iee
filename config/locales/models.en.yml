@@ -15,3 +15,5 @@ en:
     status: Status
     computation_type:
       blood_flow_simulation: Blood flow CFD simulation
+  user:
+    wrong_password: You must provide a valid current password
