@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   get 'help/:category/:file' => 'help#show',
       as: :help_page,
       constraints: { category: /.*/, file: %r{[^/\.]+} }
-  
+
   # File Store
   get 'file_store' => 'file_store#index'
 
