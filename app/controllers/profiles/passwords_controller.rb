@@ -6,8 +6,7 @@ module Profiles
 
     def update
       if !current_user.valid_password?(current_password)
-        current_user.errors.add(:current_password,
-                                t('user.wrong_password'))
+        wrong_password!
         render 'show'
       elsif current_user.update_attributes(user_params)
         redirect_to new_user_session_path,
@@ -18,6 +17,11 @@ module Profiles
     end
 
     private
+
+    def wrong_password!
+      current_user.errors.add(:current_password,
+                              t('user.wrong_password'))
+    end
 
     def user_params
       params.require(:user).permit(:password, :password_confirmation)
