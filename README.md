@@ -1,6 +1,29 @@
 # Vapor - EurValve portal
 
-TODO
+## Project description
+
+Vapor is a portal framework for the EurValve project. The goal of EurValve is to facilitate clinical modeling of heart
+valvular defects, and to simulate treatment strategies for various types of valve-related cardiac conditions. In order
+to facilitate this goal the project aims to prepare a set of so-called Reduced Order Models (ROM) whereby detailed
+simulations of representative cases will be performed in advance (given that they require substantial HPC involvement
+and may run for a long time), following which each patient can be matched to one of the representative cases on the
+basis of a reduced set of input data. This, in turn, enables the system to produce accurate and timely treatment
+predictions for real-life patient cases - a task handled by the Decision Support System, another component of the
+EurValve software stack.
+
+The aim of Vapor is to provide a one-stop environment for the so-called research (computational) branch of EurValve,
+i.e. permit computational scientists to manage representative patient models, schedule HPC simulations, download
+results and manage experimental pipelines.
+
+Vapor provides:
+
+  * A consistent, Web-based GUI
+  * HPC access automation, including staging of input data and retrieval of results from HPC storage
+  * A WebDAV like data federation to manage all file-based data relevant to EurValve
+  * A uniform security model, permitting authentication and authorization when accessing any of the above
+
+
+Vapor is intended for members of the EurValve consortium and their clinical collaborators.
 
 ## Dependencies
 
