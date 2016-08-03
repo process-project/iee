@@ -18,11 +18,7 @@ class ResourcesController < ApplicationController
       end
     end
 
-    if @resource.new_record?
-      render :new
-    else
-      redirect_to resources_path
-    end
+    @resource.new_record? ? render(:new) : redirect_to(resources_path)
   end
 
   def destroy

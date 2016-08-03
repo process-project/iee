@@ -42,17 +42,24 @@ class AccessPoliciesController < ApplicationController
     @groups = Group.all
     @access_methods = AccessMethod.all
 
-    @user_access_policies = {}
-    User.joins(access_policies: :resource).includes(access_policies: :access_method).
-      where(resources: { id: @resource.id }).each do |user|
-      @user_access_policies[user.email] = user.access_policies.where(resource_id: @resource.id)
-    end
+    set_user_access_policies
+    set_group_access_policies
+  end
 
+  def set_group_access_policies
     @group_access_policies = {}
     Group.joins(access_policies: :resource).includes(access_policies: :access_method).
       where(resources: { id: @resource.id }).each do |group|
-      @group_access_policies[group.name] = group.access_policies.where(resource_id: @resource.id)
-    end
+        @group_access_policies[group.name] = group.access_policies.where(resource_id: @resource.id)
+      end
+  end
+
+  def set_user_access_policies
+    @user_access_policies = {}
+    User.joins(access_policies: :resource).includes(access_policies: :access_method).
+      where(resources: { id: @resource.id }).each do |user|
+        @user_access_policies[user.email] = user.access_policies.where(resource_id: @resource.id)
+      end
   end
 
   def access_policy_params

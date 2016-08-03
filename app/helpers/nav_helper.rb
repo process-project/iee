@@ -104,6 +104,6 @@ module NavHelper
     else
       ctrl, act, = path.split('#')
     end
-    return act, ctrl
+    [act, ctrl]
   end
 end
