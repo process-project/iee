@@ -1,7 +1,7 @@
 .flash-container
   - if alert
-    .flash-alert
+    .alert.alert-danger
       = alert
   - elsif notice
-  .flash-notice
-    = notice
+    .alert.alert-success
+      = notice

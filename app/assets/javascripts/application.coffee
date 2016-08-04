@@ -11,3 +11,9 @@
 
 $(document).ready ->
   $('input').iCheck {checkboxClass: 'icheckbox_flat-green', radioClass: 'iradio_flat-green'}
+
+  # Flash
+  if (flash = $(".flash-container")).length > 0
+    flash.click -> $(@).fadeOut()
+    flash.show()
+    setTimeout (-> flash.fadeOut()), 3000
