@@ -4,6 +4,9 @@ require 'rails_helper'
 RSpec.describe ServiceOwnership do
   subject { create(:service_ownership) }
 
+  it { should validate_presence_of(:service) }
+  it { should validate_presence_of(:user) }
+
   it 'prevents duplicated ownership records through validation' do
     duplicated = subject.dup
     expect(ServiceOwnership.count).to eq 1

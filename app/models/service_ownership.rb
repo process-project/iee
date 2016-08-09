@@ -4,4 +4,5 @@ class ServiceOwnership < ApplicationRecord
   belongs_to :user
 
   validates :service, uniqueness: { scope: :user }
+  validates :service, :user, presence: true
 end

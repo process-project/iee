@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 20160809085712) do
   end
 
   create_table "service_ownerships", force: :cascade do |t|
-    t.integer  "service_id"
-    t.integer  "user_id"
+    t.integer  "service_id", null: false
+    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["service_id"], name: "index_service_ownerships_on_service_id", using: :btree
