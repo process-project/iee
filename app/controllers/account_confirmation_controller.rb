@@ -9,10 +9,9 @@ class AccountConfirmationController < ApplicationController
     user = User.find(params[:id])
 
     if user
-      logger.info "Approving #{user.email} by #{current_user.email}"
-      user.approved = true
-      user.save
+      approve_user(user)
       flash[:notice] = t('user_approved', email: user.email)
+      Notifier.account_approved(user).deliver_later
     end
 
     redirect_to(action: 'index')
@@ -20,11 +19,12 @@ class AccountConfirmationController < ApplicationController
 
   def approve_all
     logger.info "Approving all pending users by #{current_user.email}"
+    not_approved = User.where(approved: false)
 
-    User.where(approved: false).update_all(approved: true)
+    not_approved.each { |u| Notifier.account_approved(u).deliver_later }
+    not_approved.update_all(approved: true)
 
     flash[:notice] = t('all_approved')
-
     redirect_to(action: 'index')
   end
 
@@ -56,6 +56,11 @@ class AccountConfirmationController < ApplicationController
   end
 
   private
+
+  def approve_user(user)
+    logger.info "Approving #{user.email} by #{current_user.email}"
+    user.update_attribute(:approved, true)
+  end
 
   def user_is_supervisor
     unless view_context.supervisor?
