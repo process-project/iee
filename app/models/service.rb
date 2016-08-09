@@ -24,7 +24,7 @@ class Service < ApplicationRecord
   end
 
   def check_if_not_override_uri
-    if Service.where('uri LIKE ?', "#{uri}%").count > 0
+    if Service.where('uri LIKE ?', "#{uri}%").where.not(id: id).count > 0
       errors.add(:uri,
                  I18n.t('activerecord.errors.models.service.uri.override'))
     end

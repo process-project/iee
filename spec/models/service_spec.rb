@@ -25,4 +25,8 @@ RSpec.describe Service do
 
     expect(service).to_not be_valid
   end
+
+  it 'allows to update a service without failing URI validation' do
+    expect{ create(:service).save! }.not_to raise_error
+  end
 end
