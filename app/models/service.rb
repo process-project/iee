@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class Service < ApplicationRecord
   has_many :resources, dependent: :destroy
+  has_many :service_ownerships
+  has_many :users, through: :service_ownerships
 
   validates :uri,
             presence: true,
