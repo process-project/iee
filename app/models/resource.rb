@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Resource < ApplicationRecord
+  enum resource_type: [:global, :local]
+  
   has_many :access_policies, dependent: :destroy
   belongs_to :service
 

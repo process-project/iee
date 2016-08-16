@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809085712) do
+ActiveRecord::Schema.define(version: 20160816170702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,10 +82,11 @@ ActiveRecord::Schema.define(version: 20160809085712) do
 
   create_table "resources", force: :cascade do |t|
     t.string   "name"
-    t.string   "path",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "service_id", null: false
+    t.string   "path",                      null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "service_id",                null: false
+    t.integer  "resource_type", default: 0, null: false
     t.index ["path"], name: "index_resources_on_path", using: :btree
     t.index ["service_id"], name: "index_resources_on_service_id", using: :btree
   end
