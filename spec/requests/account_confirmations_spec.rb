@@ -17,7 +17,7 @@ RSpec.describe 'AccountConfirmations' do
       expect(flash[:alert]).to eq(I18n.t('cannot_block_itself'))
     end
 
-    it 'sends email to the user after confirming his/hers account' do
+    it 'sends email to the user after confirming his/her account' do
       user = create(:user)
 
       expect { put approve_user_path(id: user.id) }.
