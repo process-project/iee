@@ -1,8 +1,9 @@
 # Resource policy management API
 
-Access to the resource policy management API is authorized by providing a service token
-via the `X-SERVICE-TOKEN` header with each of the requests. The API exposes the following
-REST methods:  
+Access to the resource policy management API is authorized by delegating user
+credentials (using Bearer Authorization header) and providing a service token
+via the `X-SERVICE-TOKEN` header with each of the requests. The API exposes the
+following REST methods:
 
 ## `POST /api/resource_policy`
 
