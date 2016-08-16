@@ -63,6 +63,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'faker'
+  gem 'rspec-json_expectations'
 end
 
 group :production do

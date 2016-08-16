@@ -26,3 +26,4 @@
 
 # Dont add production JWT key into git
 /config/key/prod.key
+/.buildpath

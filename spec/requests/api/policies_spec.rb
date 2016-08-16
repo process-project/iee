@@ -1,34 +1,31 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Resource policies API' do
+RSpec.describe 'Policies API' do
   before do
-    service = create(:service,
-                     uri: 'https://service.host.com', token: 'random_token')
+    service = create(:service, uri: 'https://service.host.com', token: 'random_token')
     access_method = create(:access_method, name: 'get')
     user = create(:user, email: 'user@host.com', approved: true)
     @resource = create(:resource, service: service)
-    create(:access_policy,
-           user: user, access_method: access_method, resource: @resource)
-
+    create(:access_policy, user: user, access_method: access_method, resource: @resource)
     @service_auth_header = { 'X-SERVICE-TOKEN' => 'random_token' }
     @user_auth_headers = { 'Authorization' => "Bearer #{user.token}" }
   end
 
   it 'should return unauthorized status when no token is provided in the request' do
-    post api_resource_policy_index_path, headers: @user_auth_headers
+    post api_policies_path, headers: @user_auth_headers
 
     expect(response.status).to eq(401)
   end
 
   it 'should return unauthorized status when no user token is provided' do
-    post api_resource_policy_index_path, headers: @service_auth_header
+    post api_policies_path, headers: @service_auth_header
 
     expect(response.status).to eq(401)
   end
 
   it 'should return a bad request status if we send a JSON with invalid attributes' do
-    post api_resource_policy_index_path,
+    post api_policies_path,
          params: {
            path: '/some/path',
            user: 'a_user',
@@ -41,7 +38,7 @@ RSpec.describe 'Resource policies API' do
   end
 
   it 'should return a bad request status as the passed access method does not exist' do
-    post api_resource_policy_index_path,
+    post api_policies_path,
          params: {
            resource_path: '/some/path',
            user: 'user@host.com',
@@ -54,7 +51,7 @@ RSpec.describe 'Resource policies API' do
   end
 
   it 'should return a 201 status code' do
-    post api_resource_policy_index_path,
+    post api_policies_path,
          params: {
            resource_path: '/some/path',
            user: 'user@host.com',
@@ -67,7 +64,7 @@ RSpec.describe 'Resource policies API' do
   end
 
   it 'should also return a 201 status code for an access method given in capital letters' do
-    post api_resource_policy_index_path,
+    post api_policies_path,
          params: {
            resource_path: '/some/path',
            user: 'user@host.com',
@@ -81,7 +78,7 @@ RSpec.describe 'Resource policies API' do
 
   context 'with only one policy attached to resource' do
     it 'should be removed with no content status' do
-      delete api_resource_policy_path,
+      delete api_policies_path,
              params: { resource_path: @resource.path },
              headers: valid_auth_headers
 
@@ -89,7 +86,7 @@ RSpec.describe 'Resource policies API' do
     end
 
     it 'should remove both resource and policy from DB' do
-      delete api_resource_policy_path,
+      delete api_policies_path,
              params: { resource_path: @resource.path },
              headers: valid_auth_headers
 
