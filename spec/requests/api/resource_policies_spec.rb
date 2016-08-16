@@ -100,7 +100,7 @@ RSpec.describe 'Resource policies API' do
     end
 
     def resource_and_access_policy_destroyed?
-      Resource.count == 0 && AccessPolicy.count == 0
+      Resource.count.zero? && AccessPolicy.count.zero?
     end
   end
 end
