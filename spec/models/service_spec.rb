@@ -19,7 +19,7 @@ RSpec.describe Service do
     expect(service).to_not be_valid
   end
 
-  it 'don\'t allow to create second service with higher uri' do
+  it 'doesn\'t allow to create second service with higher uri' do
     create(:service, uri: 'https://my.service.pl/my/service')
     service = build(:service, uri: 'https://my.service.pl')
 

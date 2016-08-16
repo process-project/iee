@@ -5,11 +5,12 @@ class ResourcesController < ApplicationController
   end
 
   def new
-    @services = Service.all
+    @services = current_user.services
   end
 
   def create
     @resource = Resource.new(resource_params)
+    authorize(@resource.service, :update?)
 
     @resource.transaction do
       if @resource.save

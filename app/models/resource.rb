@@ -4,6 +4,7 @@ class Resource < ApplicationRecord
   belongs_to :service
 
   validates :path, presence: true, uniqueness: { scope: :service_id }
+  validates :service, presence: true
 
   before_validation :unify_path
 

@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe Resource do
   it { should validate_presence_of(:path) }
+  it { should validate_presence_of(:service) }
   it { should have_many(:access_policies).dependent(:destroy) }
 
   it 'checks regular expression match' do
