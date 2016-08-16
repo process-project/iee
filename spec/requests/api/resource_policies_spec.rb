@@ -6,14 +6,23 @@ RSpec.describe 'Resource policies API' do
     service = create(:service,
                      uri: 'https://service.host.com', token: 'random_token')
     access_method = create(:access_method, name: 'get')
-    user = create(:user, email: 'user@host.com')
+    user = create(:user, email: 'user@host.com', approved: true)
     @resource = create(:resource, service: service)
     create(:access_policy,
            user: user, access_method: access_method, resource: @resource)
+
+    @service_auth_header = { 'X-SERVICE-TOKEN' => 'random_token' }
+    @user_auth_headers = { 'Authorization' => "Bearer #{user.token}" }
   end
 
   it 'should return unauthorized status when no token is provided in the request' do
-    post api_resource_policy_index_path
+    post api_resource_policy_index_path, headers: @user_auth_headers
+
+    expect(response.status).to eq(401)
+  end
+
+  it 'should return unauthorized status when no user token is provided' do
+    post api_resource_policy_index_path, headers: @service_auth_header
 
     expect(response.status).to eq(401)
   end
@@ -25,9 +34,7 @@ RSpec.describe 'Resource policies API' do
            user: 'a_user',
            methods: ['a_method']
          },
-         headers: {
-           'X-SERVICE-TOKEN' => 'random_token'
-         },
+         headers: valid_auth_headers,
          as: :json
 
     expect(response.status).to eq(400)
@@ -40,9 +47,7 @@ RSpec.describe 'Resource policies API' do
            user: 'user@host.com',
            access_methods: %w(get not_exisitng_method)
          },
-         headers: {
-           'X-SERVICE-TOKEN' => 'random_token'
-         },
+         headers: valid_auth_headers,
          as: :json
 
     expect(response.status).to eq(400)
@@ -55,9 +60,7 @@ RSpec.describe 'Resource policies API' do
            user: 'user@host.com',
            access_methods: ['get']
          },
-         headers: {
-           'X-SERVICE-TOKEN' => 'random_token'
-         },
+         headers: valid_auth_headers,
          as: :json
 
     expect(response.status).to eq(201)
@@ -70,9 +73,7 @@ RSpec.describe 'Resource policies API' do
            user: 'user@host.com',
            access_methods: ['GET']
          },
-         headers: {
-           'X-SERVICE-TOKEN' => 'random_token'
-         },
+         headers: valid_auth_headers,
          as: :json
 
     expect(AccessPolicy.first.access_method.name).to eq('get')
@@ -82,9 +83,7 @@ RSpec.describe 'Resource policies API' do
     it 'should be removed with no content status' do
       delete api_resource_policy_path,
              params: { resource_path: @resource.path },
-             headers: {
-               'X-SERVICE-TOKEN' => 'random_token'
-             }
+             headers: valid_auth_headers
 
       expect(response.status).to eq(204)
     end
@@ -92,9 +91,7 @@ RSpec.describe 'Resource policies API' do
     it 'should remove both resource and policy from DB' do
       delete api_resource_policy_path,
              params: { resource_path: @resource.path },
-             headers: {
-               'X-SERVICE-TOKEN' => 'random_token'
-             }
+             headers: valid_auth_headers
 
       expect(resource_and_access_policy_destroyed?).to be_truthy
     end
@@ -102,5 +99,9 @@ RSpec.describe 'Resource policies API' do
     def resource_and_access_policy_destroyed?
       Resource.count.zero? && AccessPolicy.count.zero?
     end
+  end
+
+  def valid_auth_headers
+    @user_auth_headers.merge(@service_auth_header)
   end
 end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 module Api
-  class ResourcePolicyController < ActionController::Base
-    before_action :authorize_service
-
+  class ResourcePolicyController < Api::ServiceController
     before_action :parse_request, only: :create
 
     before_action only: :create do
@@ -13,7 +11,7 @@ module Api
 
     def create
       Resource.transaction do
-        resource = Resource.create(service: @service, path: @json['resource_path'])
+        resource = Resource.create(service: service, path: @json['resource_path'])
         user = User.find_by(email: @json['user'])
         @json['access_methods'].each do |access_method|
           AccessPolicy.create(user: user,
@@ -41,7 +39,7 @@ module Api
     end
 
     def destroy
-      resource = Resource.find_by(path: resource_path_param, service: @service)
+      resource = Resource.find_by(path: resource_path_param, service: service)
 
       if resource
         resource.destroy
@@ -65,11 +63,6 @@ module Api
       Group.all.each { |group| @result[:groups] << group.name }
     end
 
-    def authorize_service
-      @service = token ? Service.find_by(token: token) : nil
-      @service ? nil : unauthorized_response
-    end
-
     def parse_request
       @json = JSON.parse(request.body.read)
     end
@@ -82,14 +75,6 @@ module Api
           AccessMethod.where('lower(name) = ?',
                              access_method.downcase).exists?
         end.reduce(:&)
-    end
-
-    def token
-      request.headers['HTTP_X_SERVICE_TOKEN']
-    end
-
-    def unauthorized_response
-      head :unauthorized, 'WWW-Authenticate' => 'X-SERVICE-TOKEN header required'
     end
 
     def check_delete_params
