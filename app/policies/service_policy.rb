@@ -8,8 +8,13 @@ class ServicePolicy < ApplicationPolicy
     end
   end
 
-  def update?; owned? end
-  def destroy?; owned? end
+  def update?
+    owned?
+  end
+
+  def destroy?
+    owned?
+  end
 
   private
 
