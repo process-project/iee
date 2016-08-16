@@ -8,7 +8,8 @@ RSpec.feature 'Resource and access policies UI management' do
     user = create(:approved_user)
     create(:access_method, name: 'manage')
     resource_name = 'My New Resource'
-    service = create(:service, uri: 'http://host.com')
+    service = create(:service)
+    user.services << service
     resource_path = 'my_resource'
 
     sign_in_as(user)
@@ -42,7 +43,8 @@ RSpec.feature 'Resource and access policies UI management' do
     # user creates two resources
     user1 = create(:approved_user)
     create(:access_method, name: 'manage')
-    service = create(:service, uri: 'http://host.com')
+    service = create(:service)
+    user1.services << service
     resource_name = 'My New Resource'
     resource_uri = 'my_resource'
     resource_name_2 = 'My New Resource 2'
