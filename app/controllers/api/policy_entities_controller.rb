@@ -3,7 +3,7 @@ module Api
   class PolicyEntitiesController < Api::ServiceController
     def index
       result = {
-        policy_entities: (user_entities << group_entities << access_method_entities).flatten!
+        policy_entities: user_entities + group_entities + access_method_entities
       }
 
       render json: result, status: :ok
