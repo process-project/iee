@@ -1,0 +1,23 @@
+.row
+  .col-md-12
+    .x_panel
+      .x_title
+        %h2
+          = t '.title'
+          %small= t '.subtitle'
+
+        %ul.nav.navbar-right.panel_toolbox
+          %li
+            = link_to(services_path) do
+              = icon("hand-o-left", title: t('.back_to_index'))
+        .clearfix
+
+      .x_content
+        = simple_form_for(@service) do |f|
+          = f.error_notification
+          = f.input :name
+          = f.input :uri
+          .ln_solid
+          .form-group
+            .col-md-6.col-md-offset-3
+              = f.button :submit
