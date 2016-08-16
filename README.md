@@ -38,8 +38,18 @@ bin/setup
 
 ## Running
 
+To start only web application run:
 ```
 bin/rails server
+```
+
+We are also using [sidekiq](https://github.com/mperham/sidekiq) to execute
+delayed jobs and [clockwork](https://github.com/tomykaira/clockworki) for
+triggering delayed jobs in defined interval. To run full application stack
+perform following steps:
+```
+gem install foreman
+foreman start
 ```
 
 ## Testing
