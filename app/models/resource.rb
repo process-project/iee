@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 class Resource < ApplicationRecord
+  enum resource_type: [:global, :local]
+
   has_many :access_policies, dependent: :destroy
   belongs_to :service
 
   validates :path, presence: true, uniqueness: { scope: :service_id }
+  validates :service, presence: true
+  validates :resource_type, presence: true
+  validate :local_path_exclusion
 
   before_validation :unify_path
 
@@ -26,5 +31,11 @@ class Resource < ApplicationRecord
 
   def unify_path
     self.path = Resource.normalize_path(path)
+  end
+
+  def local_path_exclusion
+    if Resource.where(resource_type: :local).where('path ~ :path', path: path).exists?
+      errors.add(:resource_type, 'local resource paths cannot overlap')
+    end
   end
 end

@@ -5,11 +5,12 @@ class ResourcesController < ApplicationController
   end
 
   def new
-    @services = Service.all
+    @services = current_user.services
   end
 
   def create
     @resource = Resource.new(resource_params)
+    authorize(@resource.service, :update?)
 
     @resource.transaction do
       if @resource.save
@@ -35,6 +36,7 @@ class ResourcesController < ApplicationController
   private
 
   def resource_params
-    params.require(:resource).permit(policy(view_context.resource).permitted_attributes)
+    params.require(:resource).permit(policy(view_context.resource).permitted_attributes).
+      merge(resource_type: :global)
   end
 end
