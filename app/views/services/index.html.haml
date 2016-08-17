@@ -1,0 +1,24 @@
+%h1
+  = t '.title'
+  %a{ href: url_for(new_service_path), title: t('.add'), class: "new-icon" }
+    = icon("plus")
+
+- if @services.exists?
+  %table.table
+    %thead
+      %tr
+        %th= t 'service.name'
+        %th= t 'service.uri'
+        %th
+
+      - @services.each do |service|
+        %tr
+          %td= service.name
+          %td= service.uri
+          %td
+            = link_to(service_path(service), title: t('.remove_title'),
+                method: :delete,
+                data: { confirm: t("are_you_sure") }) do
+              = icon("remove")
+- else
+  %p= t '.nothing'

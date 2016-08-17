@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     get 'resource_policy_entities', to: 'resource_policy#index'
   end
 
+  resources :services, except: [:show, :update, :edit]
   resources :resources, except: [:show, :update, :edit]
   resources :access_policies, only: [:new, :create, :destroy]
   resources :computations, only: [:show, :create]
