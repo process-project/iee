@@ -23,7 +23,7 @@ RSpec.describe 'Resources' do
     end
 
     describe 'POST /resources' do
-      it 'creates a new resource for owned service' do
+      it 'creates a new global resource for owned service' do
         user.services << service
 
         expect do
@@ -32,7 +32,7 @@ RSpec.describe 'Resources' do
                  resource: FactoryGirl.attributes_for(:resource).merge(service_id: service.id)
                }
         end.to change { Resource.count }.by(1)
-
+        expect(Resource.last.global?).to be(true)
         expect(response).to redirect_to(resources_path)
       end
 

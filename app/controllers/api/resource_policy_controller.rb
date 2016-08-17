@@ -11,12 +11,12 @@ module Api
 
     def create
       Resource.transaction do
-        resource = Resource.create(service: service, path: @json['resource_path'])
+        resource = Resource.create(service: service,
+                                   path: @json['resource_path'], resource_type: :local)
         user = User.find_by(email: @json['user'])
         @json['access_methods'].each do |access_method|
-          AccessPolicy.create(user: user,
-                              access_method: AccessMethod.find_by(name: access_method.downcase),
-                              resource: resource)
+          AccessPolicy.create(user: user, access_method: AccessMethod.
+            find_by(name: access_method.downcase), resource: resource)
         end
       end
 

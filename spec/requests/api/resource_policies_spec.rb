@@ -53,7 +53,7 @@ RSpec.describe 'Resource policies API' do
     expect(response.status).to eq(400)
   end
 
-  it 'should return a 201 status code' do
+  it 'should return a 201 status code after a new local resource is created' do
     post api_resource_policy_index_path,
          params: {
            resource_path: '/some/path',
@@ -64,6 +64,7 @@ RSpec.describe 'Resource policies API' do
          as: :json
 
     expect(response.status).to eq(201)
+    expect(Resource.last.local?).to be(true)
   end
 
   it 'should also return a 201 status code for an access method given in capital letters' do
