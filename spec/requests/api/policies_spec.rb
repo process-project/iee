@@ -1,15 +1,40 @@
 # frozen_string_literal: true
 require 'rails_helper'
+require 'rspec/json_expectations'
 
 RSpec.describe 'Policies API' do
   before do
     service = create(:service, uri: 'https://service.host.com', token: 'random_token')
-    access_method = create(:access_method, name: 'get')
-    user = create(:user, email: 'user@host.com', approved: true)
+    @access_method = create(:access_method, name: 'get')
+    @user = create(:user, email: 'user@host.com', approved: true)
     @resource = create(:resource, service: service)
-    create(:access_policy, user: user, access_method: access_method, resource: @resource)
+    create(:access_policy, user: @user, access_method: @access_method, resource: @resource)
     @service_auth_header = { 'X-SERVICE-TOKEN' => 'random_token' }
-    @user_auth_headers = { 'Authorization' => "Bearer #{user.token}" }
+    @user_auth_headers = { 'Authorization' => "Bearer #{@user.token}" }
+  end
+
+  it 'should return a single policy with single user and group as managers' do
+    manage_method = create(:access_method, name: 'manage')
+    create(:access_policy, user: @user, resource: @resource, access_method: manage_method)
+    group = create(:group, name: 'group_name')
+    create(:access_policy, group: group, resource: @resource, access_method: manage_method)
+    get api_policies_path, params: { path: @resource.path }, headers: valid_auth_headers
+    puts response_json
+
+    expect(response_json).to include_json(
+      policies: [
+        {
+          path: @resource.path,
+          managers: {
+            users: [@user.email],
+            groups: [group.name]
+          },
+          permissions: [
+            { type: 'user_permission', entity_name: @user.email, access_methods: ['get'] }
+          ]
+        }
+      ]
+    )
   end
 
   it 'should return unauthorized status when no token is provided in the request' do
@@ -100,5 +125,9 @@ RSpec.describe 'Policies API' do
 
   def valid_auth_headers
     @user_auth_headers.merge(@service_auth_header)
+  end
+
+  def response_json
+    JSON.parse(response.body)
   end
 end
