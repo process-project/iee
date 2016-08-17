@@ -6,6 +6,7 @@
 #= require icheck
 #= require jquery.nicescroll
 #= require zeroclipboard
+#= require select2
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.
 
