@@ -28,4 +28,14 @@ RSpec.describe Notifier do
       create_list(:user, supervisors_count, groups: [supervisor_group])
     end
   end
+
+  describe 'account approved' do
+    it 'sends email to account owner' do
+      user = build(:user)
+
+      mail = described_class.account_approved(user).deliver_now
+
+      expect(mail.body.encoded).to match('has been approved')
+    end
+  end
 end
