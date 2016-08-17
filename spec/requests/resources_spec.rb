@@ -37,12 +37,12 @@ RSpec.describe 'Resources' do
       end
 
       it 'prevents creating a resource for not owned service' do
-        expect do
-          post '/resources/',
-               params: {
-                 resource: FactoryGirl.attributes_for(:resource).merge(service_id: service.id)
-               }
-        end.to raise_error Pundit::NotAuthorizedError
+        post '/resources/',
+             params: {
+               resource: FactoryGirl.attributes_for(:resource).merge(service_id: service.id)
+             }
+
+        expect(response.status).to eq(403)
       end
     end
 
