@@ -9,9 +9,7 @@ class AccountConfirmationController < ApplicationController
     user = User.find(params[:id])
 
     if user
-      logger.info "Approving #{user.email} by #{current_user.email}"
-      user.approved = true
-      user.save
+      approve_user(user)
       flash[:notice] = t('user_approved', email: user.email)
     end
 
@@ -20,23 +18,21 @@ class AccountConfirmationController < ApplicationController
 
   def approve_all
     logger.info "Approving all pending users by #{current_user.email}"
-
-    User.where(approved: false).update_all(approved: true)
+    User.where(approved: false).each { |u| approve_user(u) }
 
     flash[:notice] = t('all_approved')
-
     redirect_to(action: 'index')
   end
 
   def block
-    @user = User.find(params[:id])
+    user = User.find(params[:id])
 
-    if @user
-      if @user == current_user
+    if user
+      if user == current_user
         flash[:alert] = t('cannot_block_itself')
       else
-        perform_blocking
-        flash[:notice] = t('user_blocked', email: @user.email)
+        block_user(user)
+        flash[:notice] = t('user_blocked', email: user.email)
       end
     end
 
@@ -48,7 +44,7 @@ class AccountConfirmationController < ApplicationController
 
     user_ids = User.eager_load(:groups).where('groups.name NOT IN (?) OR groups.id IS NULL',
                                               %w(admin supervisor)).map(&:id)
-    User.where(id: user_ids).update_all(approved: false)
+    User.where(id: user_ids).each { |u| block_user(u) }
 
     flash[:notice] = t('all_blocked')
 
@@ -57,16 +53,22 @@ class AccountConfirmationController < ApplicationController
 
   private
 
+  def approve_user(user)
+    logger.info "Approving #{user.email} by #{current_user.email}"
+
+    user.update(approved: true) &&
+      Notifier.account_approved(user).deliver_later
+  end
+
+  def block_user(user)
+    logger.info "Blocking #{user.email} by #{current_user.email}"
+    user.update(approved: false)
+  end
+
   def user_is_supervisor
     unless view_context.supervisor?
       flash[:alert] = t('restricted_to_supervisors')
       redirect_to root_path
     end
-  end
-
-  def perform_blocking
-    logger.info "Blocking #{@user.email} by #{current_user.email}"
-    @user.approved = false
-    @user.save
   end
 end

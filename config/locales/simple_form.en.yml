@@ -1,4 +1,8 @@
 en:
+  helpers:
+    submit:
+      service:
+        create: Register this service
   simple_form:
     "yes": 'Yes'
     "no": 'No'
@@ -15,9 +19,15 @@ en:
         case_number: Case number
       user:
         plgrid_login: PLGrid user login
+      service:
+        name: Service name
+        uri: Service access URL
     placeholders:
       patient:
         case_number: The unique EurValve identification
+      service:
+        name: Please use a short name recognizable for other project members
+        uri: "e.g. https://files.eurvalve.eu/"
     hints:
       user:
         current_password: You must provide your current password in order to change it.

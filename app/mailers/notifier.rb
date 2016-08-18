@@ -10,4 +10,8 @@ class Notifier < ApplicationMailer
            subject: I18n.t('emails.approve_user.subject', name: user.name))
     end
   end
+
+  def account_approved(user)
+    mail(to: user.email, subject: I18n.t('emails.account_approved.subject'))
+  end
 end

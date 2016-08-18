@@ -27,6 +27,35 @@ en:
     destroy:
       success: Patient case %{case_number} was removed.
       failure: Unable to remove patient case %{case_number}.
+
+  services:
+    index:
+      title: Services
+      nothing: You do not manage any service right now.
+      add: Register a new service.
+      remove_title: Remove this service completelly.
+    new:
+      title: New service
+      subtitle: Register a new EurValve service in order to make it accessible to other users.
+      back_to_index: Go back to the service list.
+
+  groups:
+    index:
+      title: Groups
+      nothing: You do not manage any group right now.
+      add: Register a new group.
+      remove_title: Remove this group completelly.
+      edit_title: Edit this group, manage group members
+    show:
+      back_to_index: Go back to the group list.
+    new:
+      title: New group
+      subtitle: Register new user group.
+      back_to_index: Go back to the group list.
+    edit:
+      title: Edit group
+      subtitle: Edit existing group. You can manage assigned users and other groups.
+
   profiles:
     layout:
       copy_jwt: Copy Json Web Token

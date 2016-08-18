@@ -1,6 +1,7 @@
 en:
   title: EurValve Portal
   rights: ©2016 All Rights Reserved.
+  record_not_found: Record not found!
   login_form: Login form
   first_name: Name
   last_name: Surname
@@ -56,7 +57,10 @@ en:
   all_blocked: All non-supervisor and non-admin accounts have been blocked
   restricted_to_supervisors: Only supervisors can perform this action
   plgrid: PLGrid
+
   administration: Administration
+  services_menu_label: Services
+  groups_menu_label: Groups
   resources: Web resources
   no_resources: No web resources
   resource_name: Resource name
@@ -77,6 +81,7 @@ en:
   select_group: Select group
   access_policies: "%{name} (%{uri})"
   add_access_policy: Add new access policy
+
   user_or_group: Pick user or group
   either_user_or_group: Either user or group has to be chosen
   missing_access_method: Method has to be chosen

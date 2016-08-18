@@ -49,6 +49,12 @@
           = t("administration")
           %span.fa.fa-chevron-down
         %ul.nav.child_menu
+          = nav_link controller: :services, active_class: 'current-page' do
+            = link_to(t("services_menu_label"), services_path)
+        %ul.nav.child_menu
+          = nav_link controller: :groups, active_class: 'current-page' do
+            = link_to(t("groups_menu_label"), groups_path)
+        %ul.nav.child_menu
           = nav_link controller: [:resources, :access_policies], active_class: 'current-page' do
             = link_to(t("resources"), resources_path)
       = nav_link controller: :help do
