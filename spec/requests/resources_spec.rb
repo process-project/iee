@@ -32,7 +32,7 @@ RSpec.describe 'Resources' do
                  resource: FactoryGirl.attributes_for(:resource).merge(service_id: service.id)
                }
         end.to change { Resource.count }.by(1)
-        expect(Resource.last.global?).to be(true)
+        expect(Resource.last).to be_global
         expect(response).to redirect_to(resources_path)
       end
 

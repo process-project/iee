@@ -39,7 +39,7 @@ RSpec.describe Resource do
   end
 
   it 'should set a default resource type to global' do
-    resource = create(:resource, path: '/a_path')
+    resource = create(:resource)
 
     expect(resource.resource_type).to eq('global')
     expect(resource.global?).to be(true)

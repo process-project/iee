@@ -15,8 +15,7 @@ module Api
                                    path: @json['resource_path'], resource_type: :local)
         user = User.find_by(email: @json['user'])
         @json['access_methods'].each do |access_method|
-          AccessPolicy.create(user: user, access_method: AccessMethod.
-            find_by(name: access_method.downcase), resource: resource)
+          create_access_method(user, access_method, resource)
         end
       end
 
@@ -87,6 +86,14 @@ module Api
 
     def resource_path_param
       Resource.normalize_path(params[:resource_path]) if params[:resource_path]
+    end
+
+    def create_access_method(user, access_method, resource)
+      AccessPolicy.create(
+        user: user,
+        access_method: AccessMethod.find_by(name: access_method.downcase),
+        resource: resource
+      )
     end
   end
 end

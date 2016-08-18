@@ -64,7 +64,7 @@ RSpec.describe 'Resource policies API' do
          as: :json
 
     expect(response.status).to eq(201)
-    expect(Resource.last.local?).to be(true)
+    expect(Resource.last).to be_local
   end
 
   it 'should also return a 201 status code for an access method given in capital letters' do

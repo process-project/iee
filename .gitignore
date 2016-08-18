@@ -12,6 +12,7 @@
 !/log/.keep
 /tmp
 /.project
+/.buildpath
 
 # Ignore gemspecs
 .gems
@@ -26,4 +27,3 @@
 
 # Dont add production JWT key into git
 /config/key/prod.key
-/.buildpath
