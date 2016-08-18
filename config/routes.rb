@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   end
 
   resources :services, except: [:show, :update, :edit]
+  resources :groups
   resources :resources, except: [:show, :update, :edit]
   resources :access_policies, only: [:new, :create, :destroy]
   resources :computations, only: [:show, :create]

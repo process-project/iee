@@ -45,9 +45,9 @@ describe 'Services controller' do
 
     describe 'DELETE /services/:id' do
       it 'prevents removal of not owned service' do
-        expect do
-          delete "/services/#{service.id}"
-        end.to raise_error Pundit::NotAuthorizedError
+        delete "/services/#{service.id}"
+
+        expect(response.status).to eq(403)
       end
 
       it 'removes service with all related resources' do

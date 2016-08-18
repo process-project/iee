@@ -1,6 +1,7 @@
 en:
   title: EurValve Portal
   rights: ©2016 All Rights Reserved.
+  record_not_found: Record not found!
   login_form: Login form
   first_name: Name
   last_name: Surname
@@ -59,6 +60,7 @@ en:
 
   administration: Administration
   services_menu_label: Services
+  groups_menu_label: Groups
   resources: Web resources
   no_resources: No web resources
   resource_name: Resource name

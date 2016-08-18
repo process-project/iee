@@ -59,4 +59,29 @@ RSpec.describe Group do
       expect(grandpa.valid?).to be_falsey
     end
   end
+
+  context 'members and owners' do
+    it 'are converted into user_groups' do
+      group = create(:group)
+      u1, u2, u3 = create_list(:user, 3)
+
+      expect do
+        group.update_attributes(member_ids: [u1.id, u2.id],
+                                owner_ids: [u2.id, u3.id])
+      end.to change { UserGroup.count }.by(3)
+    end
+
+    it 'removes user_groups for non existing members and owners' do
+      group = create(:group)
+      u1, u2, u3 = create_list(:user, 3)
+
+      group.user_groups.create(user: u1, owner: true)
+      group.user_groups.create(user: u2, owner: true)
+      group.user_groups.create(user: u3, owner: false)
+
+      expect do
+        group.update_attributes(member_ids: [], owner_ids: [u1.id])
+      end.to change { UserGroup.count }.by(-2)
+    end
+  end
 end
