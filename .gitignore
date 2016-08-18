@@ -12,6 +12,7 @@
 !/log/.keep
 /tmp
 /.project
+/.buildpath
 
 # Ignore gemspecs
 .gems
