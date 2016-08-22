@@ -4,9 +4,11 @@ require 'rails_helper'
 RSpec.describe Group do
   it { should have_many(:access_policies).dependent(:destroy) }
 
-  it { should have_many(:subgroups) }
+  it { should have_many(:parent_group_relationship).dependent(:destroy) }
+  it { should have_many(:child_group_relationship).dependent(:destroy) }
 
-  it { should belong_to(:parent_group) }
+  it { should have_many(:children) }
+  it { should have_many(:parents) }
 
   it { should validate_uniqueness_of(:name) }
 
@@ -34,8 +36,8 @@ RSpec.describe Group do
 
   context 'has ancestors and offspring' do
     let!(:grandpa) { create(:group) }
-    let!(:parent) { create(:group, parent_group: grandpa) }
-    let!(:child) { create(:group, parent_group: parent) }
+    let!(:parent) { create(:group, parents: [grandpa]) }
+    let!(:child) { create(:group, parents: [parent]) }
 
     it 'is valid' do
       expect(child.valid?).to be_truthy
@@ -47,16 +49,6 @@ RSpec.describe Group do
     it 'returns an array of offspring for a grandpa' do
       grandpa.reload
       expect(grandpa.offspring).to eq [parent, child]
-    end
-  end
-  context 'ancestors cycle' do
-    it 'is not valid' do
-      grandpa = create(:group)
-      parent = create(:group, parent_group: grandpa)
-      child = create(:group, parent_group: parent)
-      grandpa.reload
-      grandpa.parent_group = child
-      expect(grandpa.valid?).to be_falsey
     end
   end
 

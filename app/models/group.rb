@@ -3,8 +3,22 @@ class Group < ApplicationRecord
   has_many :user_groups
   has_many :users, through: :user_groups
   has_many :access_policies, dependent: :destroy
-  has_many :subgroups, class_name: 'Group', foreign_key: 'parent_group_id'
-  belongs_to :parent_group, class_name: 'Group', optional: true
+  has_many :parent_group_relationship,
+           class_name: 'GroupRelationship',
+           foreign_key: 'child_id',
+           dependent: :destroy,
+           inverse_of: :child
+  has_many :child_group_relationship,
+           class_name: 'GroupRelationship',
+           foreign_key: 'parent_id',
+           dependent: :destroy,
+           inverse_of: :parent
+  has_many :parents,
+           through: :parent_group_relationship,
+           source: :parent
+  has_many :children,
+           through: :child_group_relationship,
+           source: :child
 
   validates :name, presence: true
   validates :name, uniqueness: true
@@ -14,19 +28,11 @@ class Group < ApplicationRecord
   before_save :member_ids_into_user_groups
 
   def ancestors
-    if parent_group
-      [parent_group] + parent_group.ancestors
-    else
-      []
-    end
+    parents + parents.map(&:parents).flatten
   end
 
   def offspring
-    if subgroups
-      subgroups.collect { |subgroup| [subgroup] + subgroup.offspring }.flatten
-    else
-      []
-    end
+    children + children.map(&:children).flatten
   end
 
   attr_writer :member_ids
@@ -70,7 +76,7 @@ class Group < ApplicationRecord
   end
 
   def no_cycles_in_ancestors
-    errors.add(:parent_group, 'Cannot be one of ancestors') if offspring.include? parent_group
+    # errors.add(:parent_group, 'Cannot be one of ancestors') unless (offspring & ancestors).empty?
   end
 
   def members
