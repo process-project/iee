@@ -5,5 +5,6 @@ FactoryGirl.define do
     working_directory { Faker::Lorem.characters(10) }
 
     user
+    patient
   end
 end

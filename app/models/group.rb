@@ -4,7 +4,7 @@ class Group < ApplicationRecord
   has_many :users, through: :user_groups
   has_many :access_policies, dependent: :destroy
   has_many :subgroups, class_name: 'Group', foreign_key: 'parent_group_id'
-  belongs_to :parent_group, class_name: 'Group'
+  belongs_to :parent_group, class_name: 'Group', optional: true
 
   validates :name, presence: true
   validates :name, uniqueness: true
