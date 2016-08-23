@@ -70,6 +70,7 @@ RSpec.describe 'Groups controller' do
       end
 
       it 'updates group attributes for managed group' do
+        child = create(:group)
         group = group_with_user(managed: true, name: 'old_name')
         u1, u2 = create_list(:user, 2)
 
@@ -77,13 +78,24 @@ RSpec.describe 'Groups controller' do
             params: { group: {
               name: 'new_name',
               owner_ids: [u1.id],
-              member_ids: [u2.id]
+              member_ids: [u2.id],
+              child_ids: [child.id]
             } }
         group.reload
 
         expect(group.name).to eq('new_name')
         expect(group.user_groups.find_by(user: u1).owner).to be_truthy
         expect(group.user_groups.find_by(user: u2).owner).to be_falsy
+        expect(group.children).to include(child)
+      end
+
+      it 'rejest cycles' do
+        group = group_with_user(managed: true, name: 'group_name')
+
+        put group_path(group),
+            params: { group: { child_ids: [group.id] } }
+
+        expect(response.status).to eq(400)
       end
     end
 

@@ -22,7 +22,7 @@ class Group < ApplicationRecord
 
   validates :name, presence: true
   validates :name, uniqueness: true
-  validate :no_cycles_in_ancestors
+  validate :no_cycles
 
   before_save :owner_ids_into_user_groups
   before_save :member_ids_into_user_groups
@@ -35,6 +35,14 @@ class Group < ApplicationRecord
     children + children.map(&:children).flatten
   end
 
+  def offspring_candidates
+    Group.all - ancestors - [self]
+  end
+
+  def all_users
+    (users + offspring.map(&:users).flatten).uniq
+  end
+
   attr_writer :member_ids
   def member_ids
     members.pluck(:id)
@@ -45,7 +53,26 @@ class Group < ApplicationRecord
     owners.pluck(:id)
   end
 
+  def members
+    users.joins(:user_groups).where(user_groups: { owner: false }).distinct
+  end
+
+  def owners
+    users.joins(:user_groups).where(user_groups: { owner: true }).distinct
+  end
+
   private
+
+  def no_cycles
+    errors.add(:child_ids, 'Cycles are not allowed') if cycle?
+  end
+
+  def cycle?
+    a = ancestors
+    o = offspring
+
+    !(a & o).empty? || a.include?(self) || o.include?(self)
+  end
 
   def owner_ids_into_user_groups
     return unless @owner_ids
@@ -73,17 +100,5 @@ class Group < ApplicationRecord
 
   def destroy_non_existing(members, owner:)
     user_groups.where(owner: owner).where.not(user: members).destroy_all
-  end
-
-  def no_cycles_in_ancestors
-    # errors.add(:parent_group, 'Cannot be one of ancestors') unless (offspring & ancestors).empty?
-  end
-
-  def members
-    users.joins(:user_groups).where(user_groups: { owner: false })
-  end
-
-  def owners
-    users.joins(:user_groups).where(user_groups: { owner: true })
   end
 end

@@ -52,6 +52,25 @@ RSpec.describe Group do
     end
   end
 
+  context 'group cycles' do
+    it 'denies compex cycle' do
+      parent = create(:group)
+      child = create(:group, parents: [parent])
+
+      child.child_ids = [parent.id]
+
+      expect(child).to be_invalid
+    end
+
+    it 'denies direct cycle' do
+      group = create(:group)
+
+      group.child_ids = [group.id]
+
+      expect(group).to be_invalid
+    end
+  end
+
   context 'members and owners' do
     it 'are converted into user_groups' do
       group = create(:group)

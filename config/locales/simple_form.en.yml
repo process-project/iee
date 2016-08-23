@@ -22,6 +22,16 @@ en:
       service:
         name: Service name
         uri: Service access URL
+      group:
+        name: Group name
+        member_ids: Group members
+        owner_ids: Group owners
+        children: Directly included groups
+        parents: Directly included in groups
+        ancestors: All included groups
+        offspring: All groups where this group is included
+        all_users: All group members
+
     placeholders:
       patient:
         case_number: The unique EurValve identification
