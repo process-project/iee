@@ -49,7 +49,9 @@ RSpec.describe 'Resources' do
     describe 'DELETE /resources/:id' do
       it 'removes resource even for not owned service' do
         resource = create(:resource)
-        create(:access_policy, user: user, resource: resource)
+        create(:access_policy,
+               access_method: AccessMethod.find_or_create_by(name: 'manage'),
+               user: user, resource: resource)
 
         expect(user.services).to be_empty
         expect do

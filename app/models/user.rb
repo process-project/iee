@@ -80,10 +80,6 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def owns_resource?(resource)
-    resource.access_policies.where(user_id: id).exists?
-  end
-
   def admin?
     @admin = groups.where(name: 'admin').exists? if @admin.nil?
     @admin
