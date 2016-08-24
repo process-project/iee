@@ -1,4 +1,4 @@
-class CreateGroupRelationships < ActiveRecord::Migration[5.0]
+class RefactorGroupRelationships < ActiveRecord::Migration[5.0]
   def change
     create_table :group_relationships do |t|
       t.belongs_to :parent, foreign_key: { to_table: :groups }, null: false
