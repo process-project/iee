@@ -54,21 +54,19 @@ RSpec.describe Group do
   end
 
   context 'group cycles' do
-    it 'denies compex cycle' do
+    it 'denies complex cycle' do
       parent = create(:group)
       child = create(:group, parents: [parent])
 
-      child.child_ids = [parent.id]
-
-      expect(child).to be_invalid
+      expect { child.child_ids = [parent.id] }.
+        to raise_error(ActiveRecord::RecordInvalid)
     end
 
     it 'denies direct cycle' do
       group = create(:group)
 
-      group.child_ids = [group.id]
-
-      expect(group).to be_invalid
+      expect { group.child_ids = [group.id] }.
+        to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 

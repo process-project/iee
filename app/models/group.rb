@@ -22,7 +22,6 @@ class Group < ApplicationRecord
 
   validates :name, presence: true
   validates :name, uniqueness: true
-  validate :no_cycles
 
   before_save :owner_ids_into_user_groups
   before_save :member_ids_into_user_groups
@@ -62,17 +61,6 @@ class Group < ApplicationRecord
   end
 
   private
-
-  def no_cycles
-    errors.add(:child_ids, 'Cycles are not allowed') if cycle?
-  end
-
-  def cycle?
-    a = ancestors
-    o = offspring
-
-    !(a & o).empty? || a.include?(self) || o.include?(self)
-  end
 
   def owner_ids_into_user_groups
     return unless @owner_ids

@@ -36,6 +36,9 @@ class GroupsController < ApplicationController
     else
       render(:edit, status: :bad_request)
     end
+  rescue ActiveRecord::RecordInvalid
+    @group.errors.add(:child_ids, 'Cycles are not allowed')
+    render(:edit, status: :bad_request)
   end
 
   def destroy
