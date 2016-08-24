@@ -35,7 +35,8 @@ RSpec.describe Group do
   end
 
   context 'has ancestors and offspring' do
-    let!(:grandpa) { create(:group) }
+    let!(:great_grandpa) { create(:group) }
+    let!(:grandpa) { create(:group, parents: [great_grandpa]) }
     let!(:parent) { create(:group, parents: [grandpa]) }
     let!(:child) { create(:group, parents: [parent]) }
 
@@ -43,7 +44,7 @@ RSpec.describe Group do
       expect(child.valid?).to be_truthy
     end
     it 'returns an array of ancestors for a child' do
-      expect(child.ancestors).to eq [parent, grandpa]
+      expect(child.ancestors).to match_array [parent, grandpa, great_grandpa]
     end
 
     it 'returns an array of offspring for a grandpa' do

@@ -28,11 +28,11 @@ class Group < ApplicationRecord
   before_save :member_ids_into_user_groups
 
   def ancestors
-    parents + parents.map(&:parents).flatten
+    parents + parents.map(&:ancestors).flatten
   end
 
   def offspring
-    children + children.map(&:children).flatten
+    children + children.map(&:offspring).flatten
   end
 
   def offspring_candidates
