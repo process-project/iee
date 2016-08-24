@@ -35,3 +35,6 @@ en:
         service:
           uri:
             override: Given URI overrides already existing URI
+        group:
+          child_ids:
+            cycle: Cycle is not allowed
