@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
     authorize(@group)
 
     if @group.save
-      redirect_to(groups_path)
+      redirect_to(group_path(@group))
     else
       render(:edit)
     end
@@ -32,10 +32,14 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update_attributes(permitted_attributes(@group))
-      redirect_to(groups_path)
+      redirect_to(group_path(@group))
     else
-      render(:edit)
+      render(:edit, status: :bad_request)
     end
+  rescue ActiveRecord::RecordInvalid
+    @group.errors.add(:child_ids,
+                      I18n.t('activerecord.errors.models.group.child_ids.cycle'))
+    render(:edit, status: :bad_request)
   end
 
   def destroy

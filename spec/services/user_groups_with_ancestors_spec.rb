@@ -19,8 +19,8 @@ describe UserGroupsWithAncestors do
 
   context 'users has many groups with ancestors' do
     let!(:grandpa) { create(:group) }
-    let!(:parent) { create(:group, parent_group: grandpa) }
-    let!(:child) { create(:group, parent_group: parent, users: [user]) }
+    let!(:parent) { create(:group, parents: [grandpa]) }
+    let!(:child) { create(:group, parents: [parent], users: [user]) }
     let!(:group) { create(:group, users: [user]) }
 
     it 'return an array with associated groups with ancestors' do
