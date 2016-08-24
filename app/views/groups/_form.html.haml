@@ -13,7 +13,7 @@
             label_method: :name,
             include_blank: false,
             input_html: { multiple: true }
-  = f.association :children
+  = f.association :children, collection: @group.offspring_candidates
   = f.association :parents, disabled: true
 
   .ln_solid
