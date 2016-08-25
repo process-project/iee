@@ -43,7 +43,6 @@ class User < ApplicationRecord
       set_new_user_attrs(auth, user) if user.new_record?
 
       user.proxy = User.compose_proxy(auth.info)
-      user.save
     end
   end
 
@@ -64,7 +63,6 @@ class User < ApplicationRecord
     tap do
       self.plgrid_login = auth.info.nickname
       self.proxy = User.compose_proxy(auth.info)
-      save
     end
   end
 
