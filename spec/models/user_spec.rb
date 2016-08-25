@@ -25,7 +25,7 @@ RSpec.describe User do
     end
 
     it 'creates new user if does not exist' do
-      expect { described_class.from_plgrid_omniauth(auth) }.
+      expect { described_class.from_plgrid_omniauth(auth).save }.
         to change { User.count }.
         by(1)
     end

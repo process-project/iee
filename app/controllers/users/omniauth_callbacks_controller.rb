@@ -4,8 +4,11 @@ module Users
     skip_before_action :verify_authenticity_token, only: [:open_id, :failure]
 
     def open_id
+      new_user = user.new_record?
+      user.save
+
       if user.persisted?
-        success
+        success(new_user)
       elsif user.errors.messages.include?(:email)
         email_error
       else
@@ -15,9 +18,10 @@ module Users
 
     private
 
-    def success
+    def success(new_user)
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: 'PLGrid') if is_navigational_format?
+      Users::AddToDefaultGroups.new(user).call if new_user
     end
 
     def email_error

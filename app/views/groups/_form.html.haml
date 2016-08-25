@@ -15,6 +15,7 @@
             input_html: { multiple: true }
   = f.association :children, collection: @group.offspring_candidates
   = f.association :parents, disabled: true
+  = f.input :default
 
   .ln_solid
   .form-group

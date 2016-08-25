@@ -31,6 +31,7 @@ en:
         ancestors: All included groups
         offspring: All groups where this group is included
         all_users: All group members
+        default: All new registered users will be added to this group
 
     placeholders:
       patient:
