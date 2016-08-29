@@ -140,58 +140,82 @@ RSpec.describe 'Policies API' do
     expect(AccessPolicy.last.access_method.name).to eq('manage')
   end
 
-  it `should merge the new method of the given policy with an existing one` do
-    create(:access_method, name: 'post')
+  context 'with managing permissions' do
+    before do
+      manage_method = create(:access_method, name: 'manage')
+      create(:access_policy, user: @user, resource: @resource, access_method: manage_method)
+    end
 
-    post  api_policies_path,
-          params: {
-            path: @resource.path,
-            managers: {},
-            permissions: [
-              type: 'user_permission',
-              entity_name: @user.email,
-              access_methods: ['post']
-            ]
-          },
-          headers: valid_auth_headers,
-          as: :json
+    it `should merge the new method of the given policy with an existing one` do
+      create(:access_method, name: 'post')
 
-    expect(response.status).to eq(200)
-    expect(AccessPolicy.last.access_method.name).to eq('post')
-  end
+      post  api_policies_path,
+            params: {
+              path: @resource.path,
+              managers: {},
+              permissions: [
+                type: 'user_permission',
+                entity_name: @user.email,
+                access_methods: ['post']
+              ]
+            },
+            headers: valid_auth_headers,
+            as: :json
 
-  it `should merge the given user manager of the given policy with an existing one` do
-    create(:access_method, name: 'manage')
-    another_user = create(:user, email: 'another@host.com', approved: true)
+      expect(response.status).to eq(200)
+      expect(AccessPolicy.last.access_method.name).to eq('post')
+    end
 
-    post  api_policies_path,
-          params: {
-            path: @resource.path,
-            managers: { users: [another_user.email] }
-          },
-          headers: valid_auth_headers,
-          as: :json
+    it `should merge the given user manager of the given policy with an existing one` do
+      another_user = create(:user, email: 'another@host.com', approved: true)
 
-    expect(response.status).to eq(200)
-    expect(AccessPolicy.last.user.email).to eq(another_user.email)
-    expect(AccessPolicy.last.access_method.name).to eq('manage')
-  end
+      post  api_policies_path,
+            params: {
+              path: @resource.path,
+              managers: { users: [another_user.email] }
+            },
+            headers: valid_auth_headers,
+            as: :json
 
-  it `should merge the given management group of the given policy with an existing one` do
-    create(:access_method, name: 'manage')
-    another_group = create(:group, name: 'another_group')
+      expect(response.status).to eq(200)
+      expect(AccessPolicy.last.user.email).to eq(another_user.email)
+      expect(AccessPolicy.last.access_method.name).to eq('manage')
+    end
 
-    post  api_policies_path,
-          params: {
-            path: @resource.path,
-            managers: { groups: [another_group.name] }
-          },
-          headers: valid_auth_headers,
-          as: :json
+    it `should merge the given management group of the given policy with an existing one` do
+      another_group = create(:group, name: 'another_group')
 
-    expect(response.status).to eq(200)
-    expect(AccessPolicy.last.group.name).to eq(another_group.name)
-    expect(AccessPolicy.last.access_method.name).to eq('manage')
+      post  api_policies_path,
+            params: {
+              path: @resource.path,
+              managers: { groups: [another_group.name] }
+            },
+            headers: valid_auth_headers,
+            as: :json
+
+      expect(response.status).to eq(200)
+      expect(AccessPolicy.last.group.name).to eq(another_group.name)
+      expect(AccessPolicy.last.access_method.name).to eq('manage')
+    end
+
+    it 'should delete an access policy for a user' do
+      another_user = create(:user, email: 'another@host.com', approved: true)
+      create(:access_policy, user: another_user, access_method: @access_method, resource: @resource)
+
+      expect do
+        delete  api_policies_path,
+                params: {
+                  path: @resource.path,
+                  user: @user.email,
+                  access_method: @access_method.name
+                },
+                headers: valid_auth_headers
+      end.to change { AccessPolicy.count }.by(-1)
+      expect(response.status).to eq(204)
+      expect(
+        AccessPolicy.find_by(resource: @resource, user: @user, access_method: @access_method)
+      ).to be_nil
+    end
   end
 
   it `should return a forbidden status when a user is not allowed to manage a given resource` do
@@ -228,25 +252,6 @@ RSpec.describe 'Policies API' do
             headers: valid_auth_headers
 
     expect(response.status).to eq(400)
-  end
-
-  it 'should delete an access policy for a user' do
-    another_user = create(:user, email: 'another@host.com', approved: true)
-    create(:access_policy, user: another_user, access_method: @access_method, resource: @resource)
-
-    expect do
-      delete  api_policies_path,
-              params: {
-                path: @resource.path,
-                user: @user.email,
-                access_method: @access_method.name
-              },
-              headers: valid_auth_headers
-    end.to change { AccessPolicy.count }.by(-1)
-    expect(response.status).to eq(204)
-    expect(
-      AccessPolicy.find_by(resource: @resource, user: @user, access_method: @access_method)
-    ).to be_nil
   end
 
   it `should return a forbidden status when a user does not own every resource being deleted` do

@@ -17,7 +17,7 @@ module Api
       resource = Resource.find_by(path: @json['path'])
 
       if resource
-        if current_user.owns_resource?(resource)
+        if ResourcePolicy.new(current_user, resource).owns_resource?
           merge_policy
 
           head :ok
@@ -251,7 +251,7 @@ module Api
 
     def user_allowed_to_modify_resources?(resource_paths)
       Resource.where(path: resource_paths).map do |resource|
-        current_user.owns_resource?(resource)
+        ResourcePolicy.new(current_user, resource).owns_resource?
       end.reduce(:&)
     end
   end

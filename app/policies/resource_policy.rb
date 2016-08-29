@@ -24,12 +24,12 @@ class ResourcePolicy < ApplicationPolicy
     owns_resource?
   end
 
-  private
-
   def owns_resource?
     record.access_policies.joins(:access_method).
       where(user_id: user.id, access_methods: { name: 'manage' }).exists?
   end
+
+  private
 
   def access_policies(access_method_name)
     groups_with_ancestors = UserGroupsWithAncestors.new(user).get
