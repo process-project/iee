@@ -16,6 +16,7 @@ en:
   create_account: Create account
   registration_form: Registration form
   confirmation_password: Password confirmation
+  edit: Edit
   register: Register
   cancel: Cancel
   already_registered: Already registered?

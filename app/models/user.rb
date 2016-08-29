@@ -41,7 +41,6 @@ class User < ApplicationRecord
       set_new_user_attrs(auth, user) if user.new_record?
 
       user.proxy = User.compose_proxy(auth.info)
-      user.save
     end
   end
 
@@ -77,7 +76,6 @@ class User < ApplicationRecord
     tap do
       self.plgrid_login = auth.info.nickname
       self.proxy = User.compose_proxy(auth.info)
-      save
     end
   end
 
@@ -91,10 +89,6 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
-  end
-
-  def owns_resource?(resource)
-    resource.access_policies.where(user_id: id).exists?
   end
 
   def admin?

@@ -6,6 +6,7 @@ RSpec.describe ResourcePolicy do
   let(:group) { create(:group, name: 'subgroup', users: [user]) }
   let(:resource) { create(:resource, name: 'zasób') }
   let(:get_method) { create(:access_method, name: 'get') }
+  let(:manage_method) { create(:access_method, name: 'manage') }
 
   subject { ResourcePolicy.new(user, resource) }
 
@@ -36,8 +37,7 @@ RSpec.describe ResourcePolicy do
   end
 
   it 'checks user parent group permission' do
-    parent_group = build(:group, name: 'parent group')
-    parent_group.subgroups << group
+    parent_group = build(:group, name: 'parent group', children: [group])
     parent_group.save!
     create(:access_policy,
            access_method: get_method, group: parent_group, resource: resource)
@@ -52,5 +52,19 @@ RSpec.describe ResourcePolicy do
            access_method: get_method, user: user, resource: resource)
 
     expect(subject.permit?('GET')).to be_truthy
+  end
+
+  it 'grants access to destroy managed resource' do
+    create(:user_access_policy,
+           access_method: manage_method, user: user, resource: resource)
+
+    expect(subject).to be_destroy
+  end
+
+  it 'denies to destroy not managed resource' do
+    create(:user_access_policy,
+           access_method: get_method, user: user, resource: resource)
+
+    expect(subject).to_not be_destroy
   end
 end

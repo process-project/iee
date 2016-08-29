@@ -2,18 +2,21 @@
   = f.error_notification
   = f.input :name
   = f.input :member_ids,
-                  as: :select,
-                  collection: User.all,
-                  label_method: :name,
-                  include_blank: false,
-                  input_html: { multiple: true }
-
+            as: :select,
+            collection: User.all,
+            label_method: :name,
+            include_blank: false,
+            input_html: { multiple: true }
   = f.input :owner_ids,
-                  as: :select,
-                  collection: User.all,
-                  label_method: :name,
-                  include_blank: false,
-                  input_html: { multiple: true }
+            as: :select,
+            collection: User.all,
+            label_method: :name,
+            include_blank: false,
+            input_html: { multiple: true }
+  = f.association :children, collection: @group.offspring_candidates
+  = f.association :parents, disabled: true
+  = f.input :default
+
   .ln_solid
   .form-group
     .col-md-6.col-md-offset-3
@@ -24,5 +27,11 @@
   });
 
   $("#group_owner_ids").select2({
+    theme: "bootstrap"
+  });
+  $("#group_child_ids").select2({
+    theme: "bootstrap"
+  });
+  $("#group_parent_ids").select2({
     theme: "bootstrap"
   });

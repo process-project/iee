@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816170535) do
+ActiveRecord::Schema.define(version: 20160824155823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,12 +63,21 @@ ActiveRecord::Schema.define(version: 20160816170535) do
     t.index ["patient_id"], name: "index_data_files_on_patient_id", using: :btree
   end
 
+  create_table "group_relationships", force: :cascade do |t|
+    t.integer  "parent_id",  null: false
+    t.integer  "child_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_group_relationships_on_child_id", using: :btree
+    t.index ["parent_id", "child_id"], name: "index_group_relationships_on_parent_id_and_child_id", unique: true, using: :btree
+    t.index ["parent_id"], name: "index_group_relationships_on_parent_id", using: :btree
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "parent_group_id"
-    t.index ["parent_group_id"], name: "index_groups_on_parent_group_id", using: :btree
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "default",    default: false, null: false
   end
 
   create_table "patients", force: :cascade do |t|
@@ -145,4 +154,6 @@ ActiveRecord::Schema.define(version: 20160816170535) do
 
   add_foreign_key "computations", "patients"
   add_foreign_key "data_files", "patients"
+  add_foreign_key "group_relationships", "groups", column: "child_id"
+  add_foreign_key "group_relationships", "groups", column: "parent_id"
 end

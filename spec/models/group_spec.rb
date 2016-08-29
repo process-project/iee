@@ -4,9 +4,11 @@ require 'rails_helper'
 RSpec.describe Group do
   it { should have_many(:access_policies).dependent(:destroy) }
 
-  it { should have_many(:subgroups) }
+  it { should have_many(:parent_group_relationship).dependent(:destroy) }
+  it { should have_many(:child_group_relationship).dependent(:destroy) }
 
-  it { should belong_to(:parent_group) }
+  it { should have_many(:children) }
+  it { should have_many(:parents) }
 
   it { should validate_uniqueness_of(:name) }
 
@@ -33,15 +35,16 @@ RSpec.describe Group do
   end
 
   context 'has ancestors and offspring' do
-    let!(:grandpa) { create(:group) }
-    let!(:parent) { create(:group, parent_group: grandpa) }
-    let!(:child) { create(:group, parent_group: parent) }
+    let!(:great_grandpa) { create(:group) }
+    let!(:grandpa) { create(:group, parents: [great_grandpa]) }
+    let!(:parent) { create(:group, parents: [grandpa]) }
+    let!(:child) { create(:group, parents: [parent]) }
 
     it 'is valid' do
       expect(child.valid?).to be_truthy
     end
     it 'returns an array of ancestors for a child' do
-      expect(child.ancestors).to eq [parent, grandpa]
+      expect(child.ancestors).to match_array [parent, grandpa, great_grandpa]
     end
 
     it 'returns an array of offspring for a grandpa' do
@@ -49,14 +52,21 @@ RSpec.describe Group do
       expect(grandpa.offspring).to eq [parent, child]
     end
   end
-  context 'ancestors cycle' do
-    it 'is not valid' do
-      grandpa = create(:group)
-      parent = create(:group, parent_group: grandpa)
-      child = create(:group, parent_group: parent)
-      grandpa.reload
-      grandpa.parent_group = child
-      expect(grandpa.valid?).to be_falsey
+
+  context 'group cycles' do
+    it 'denies complex cycle' do
+      parent = create(:group)
+      child = create(:group, parents: [parent])
+
+      expect { child.child_ids = [parent.id] }.
+        to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it 'denies direct cycle' do
+      group = create(:group)
+
+      expect { group.child_ids = [group.id] }.
+        to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 

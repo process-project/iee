@@ -50,4 +50,24 @@ RSpec.feature 'PLGrid authentication' do
     expect(page).to_not have_content('Connect to PLGrid')
     expect(page).to have_selector('a', text: 'PLGrid', match: :prefer_exact)
   end
+
+  scenario 'Adds to default group new created user' do
+    default_group = create(:group, default: true)
+    create(:group, default: false)
+    user = build(:plgrid_user)
+
+    plgrid_sign_in_as(user)
+    plgrid_user = User.find_by(email: user.email)
+
+    expect(plgrid_user.groups).to contain_exactly(default_group)
+  end
+
+  scenario 'Don\'t add to default group after existing user plgrid login' do
+    create(:group, default: true)
+    user = create(:plgrid_user, :approved)
+
+    plgrid_sign_in_as(user)
+
+    expect(user.groups.count).to eq(0)
+  end
 end
