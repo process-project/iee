@@ -24,6 +24,10 @@ class Resource < ApplicationRecord
     Resource.where(path: paths).count == paths.length
   end
 
+  def self.normalize_paths(paths)
+    paths.map { |path| normalize_path(path) }
+  end
+
   def uri
     uri = URI.parse(service.uri)
     uri.path = "/#{path}"
