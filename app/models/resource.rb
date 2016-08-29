@@ -12,19 +12,23 @@ class Resource < ApplicationRecord
 
   before_validation :unify_path
 
-  def uri
-    uri = URI.parse(service.uri)
-    uri.path = "/#{path}"
-
-    uri.to_s
-  end
-
   def self.normalize_path(path)
     if path && path.starts_with?('/')
       path[1..-1]
     else
       path
     end
+  end
+
+  def self.paths_exist?(paths)
+    Resource.where(path: paths).count == paths.length
+  end
+
+  def uri
+    uri = URI.parse(service.uri)
+    uri.path = "/#{path}"
+
+    uri.to_s
   end
 
   private

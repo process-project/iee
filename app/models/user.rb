@@ -31,9 +31,7 @@ class User < ApplicationRecord
 
   def self.with_active_computations
     User.where(<<~SQL
-      id IN (SELECT DISTINCT(user_id)
-             FROM computations
-             WHERE status IN ('queued', 'running'))
+      id IN (SELECT DISTINCT(user_id) FROM computations WHERE status IN ('queued', 'running'))
     SQL
               )
   end
@@ -58,6 +56,21 @@ class User < ApplicationRecord
 
   def self.from_token(token)
     User.find_by(email: User.token_data(token)[0]['email'])
+  end
+
+  def self.token_data(token)
+    JWT.decode(token, Vapor::Application.config.jwt.key, true,
+               algorithm: Vapor::Application.config.jwt.key_algorithm)
+  end
+
+  def self.compose_proxy(info)
+    if info.proxy && info.proxyPrivKey && info.userCert
+      info.proxy + info.proxyPrivKey + info.userCert
+    end
+  end
+
+  def self.emails_exist?(emails)
+    User.where(email: emails).count == emails.length
   end
 
   def plgrid_connect(auth)
@@ -102,17 +115,6 @@ class User < ApplicationRecord
   # details.
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
-  end
-
-  def self.token_data(token)
-    JWT.decode(token, Vapor::Application.config.jwt.key, true,
-               algorithm: Vapor::Application.config.jwt.key_algorithm)
-  end
-
-  def self.compose_proxy(info)
-    if info.proxy && info.proxyPrivKey && info.userCert
-      info.proxy + info.proxyPrivKey + info.userCert
-    end
   end
 
   private

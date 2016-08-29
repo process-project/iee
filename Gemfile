@@ -23,6 +23,9 @@ gem 'bootstrap-sass', '~> 3.3'
 gem 'font-awesome-sass', '~> 4.5'
 gem 'simple_form'
 
+# JSON validation
+gem 'json-schema'
+
 # Markdown
 gem 'redcarpet'
 gem 'github-markup'

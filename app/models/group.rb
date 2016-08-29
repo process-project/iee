@@ -13,6 +13,10 @@ class Group < ApplicationRecord
   before_save :owner_ids_into_user_groups
   before_save :member_ids_into_user_groups
 
+  def self.names_exist?(names)
+    Group.where(name: names).count == names.length
+  end
+
   def ancestors
     if parent_group
       [parent_group] + parent_group.ancestors

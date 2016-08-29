@@ -1,69 +1,152 @@
 # frozen_string_literal: true
+require 'json-schema'
+
 module Api
   class PoliciesController < Api::ServiceController
-    before_action :parse_request, only: :create
+    before_action :validate_index_request, only: :index
 
-    before_action only: :create do
-      render_bad_request unless json_params_valid?
-    end
+    before_action :parse_and_validate_create_request, only: :create
+
+    before_action :validate_destroy_request, only: :destroy
 
     def index
-      result = { policies: build_policies(params[:path]) }
-
-      render json: result, status: :ok
+      render json: { policies: build_policies(params[:path]) }, status: :ok
     end
 
     def create
-      Resource.transaction do
-        resource = Resource.create(service: service, path: @json['resource_path'])
-        user = User.find_by(email: @json['user'])
-        @json['access_methods'].each do |access_method|
-          create_access_policy(user, access_method, resource)
-        end
-      end
+      resource = Resource.find_by(path: @json['path'])
 
-      head :created
+      if resource
+        if current_user.owns_resource?(resource)
+          merge_policy
+
+          head :ok
+        else
+          head :forbidden
+        end
+      else
+        Resource.transaction do
+          resource = Resource.create(service: service, path: @json['path'])
+          create_user_access_policy(current_user, ['manage'], resource)
+          if @json['permissions']
+            @json['permissions'].each do |permission|
+              if permission['type'] == 'user_permission'
+                user = User.find_by(email: permission['entity_name'])
+                create_user_access_policy(user, permission['access_methods'], resource)
+              elsif permission['type'] == 'group_permission'
+                group = Group.find_by(name: permission['entity_name'])
+                create_group_access_policy(group, permission['access_methods'], resource)
+              end
+            end
+          end
+
+          if @json['managers'] && @json['managers']['users']
+            access_method = AccessMethod.find_by(name: 'manage'),
+            @json['managers']['users'].each do |email|
+              AccessPolicy.create(
+                user: User.find_by(email: email),
+                access_method: access_method,
+                resource: resource
+              )
+            end
+          end
+
+          if @json['managers'] && @json['managers']['groups']
+            access_method = AccessMethod.find_by(name: 'manage'),
+            @json['managers']['groups'].each do |group_name|
+              AccessPolicy.create(
+                group: Group.find_by(name: group_name),
+                access_method: access_method,
+                resource: resource
+              )
+            end
+          end
+        end
+
+        head :created
+      end
     end
 
     def destroy
-      resource = Resource.find_by(path: resource_path_param, service: service)
+      paths = resource_paths_from_param
 
-      if resource
-        resource.destroy
+      if user_allowed_to_modify_resources?(paths)
+        user_emails = user_emails_from_param
+        group_names = group_names_from_param
+        access_method_names = access_method_names_from_param
+
+        query = AccessPolicy.where(resource: Resource.where(path: paths)).
+                             where.not(access_method: AccessMethod.where(name: 'manage'))
+        query = query.where(access_method: AccessMethod.where(name: access_method_names)) unless
+          access_method_names.empty?
+        query = query.where(user: User.where(email: user_emails)) unless user_emails.empty?
+        query = query.where(group: Group.where(name: group_names)) unless group_names.empty?
+        query.destroy_all
+
         head :no_content
       else
-        head :not_found
+        head :forbidden
       end
     end
 
     private
 
-    def parse_request
+    def validate_index_request
+      head :bad_request unless Resource.paths_exist?(resource_paths_from_param)
+    end
+
+    def parse_and_validate_create_request
+      schema = File.read(File.join(Rails.root, 'config', 'schemas', 'policy-schema.json'))
       @json = JSON.parse(request.body.read)
+      head :bad_request unless JSON::Validator.validate(schema, @json)
     end
 
-    def json_params_valid?
-      @json.key?('resource_path') && @json.key?('user') && @json.key?('access_methods') &&
-        @json['access_methods'].respond_to?(:[]) && User.exists?(email: @json['user']) &&
-        @json['access_methods'].map do |access_method|
-          AccessMethod.where('lower(name) = ?', access_method.downcase).exists?
-        end.reduce(:&)
+    def validate_destroy_request
+      head :bad_request unless resource_paths_from_param.any? &&
+        Resource.paths_exist?(resource_paths_from_param) &&
+        User.emails_exist?(user_emails_from_param) &&
+        Group.names_exist?(group_names_from_param) &&
+        AccessMethod.names_exist?(access_method_names_from_param)
     end
 
-    def render_bad_request
-      head :bad_request
+    def create_user_access_policy(user, access_methods, resource)
+      access_methods.each do |access_method|
+        AccessPolicy.create(
+          user: user,
+          access_method: AccessMethod.find_by(name: access_method.downcase),
+          resource: resource
+        )
+      end
     end
 
-    def create_access_policy(user, access_method, resource)
-      AccessPolicy.create(
-        user: user,
-        access_method: AccessMethod.find_by(name: access_method.downcase),
-        resource: resource
-      )
+    def create_group_access_policy(group, access_methods, resource)
+      access_methods.each do |access_method|
+        AccessPolicy.create(
+          group: group,
+          access_method: AccessMethod.find_by(name: access_method.downcase),
+          resource: resource
+        )
+      end
     end
 
-    def resource_path_param
-      Resource.normalize_path(params[:resource_path]) if params[:resource_path]
+    def resource_paths_from_param
+      if params[:path]
+        params[:path].split(',').map { |param_path| Resource.normalize_path(param_path) }
+      else
+        []
+      end
+    end
+
+    def user_emails_from_param
+      params[:user] ? params[:user].split(',') : []
+    end
+
+    def group_names_from_param
+      params[:group] ? params[:group].split(',') : []
+    end
+
+    def access_method_names_from_param
+      params[:access_method] ? params[:access_method].split(',') : []
     end
 
     def build_policies(path_param)
@@ -125,6 +208,51 @@ module Api
           group_methods[policy.group.name] << policy.access_method.name
         end
       end
+    end
+
+    def merge_policy
+      resource = Resource.find_by(path: @json['path'])
+
+      if @json['managers']
+        if @json['managers']['users']
+          @json['managers']['users'].each do |email|
+            AccessPolicy.find_or_create_by(
+              user: User.find_by(email: email),
+              access_method: AccessMethod.find_by(name: 'manage'),
+              resource: resource
+            )
+          end
+        end
+
+        if @json['managers']['groups']
+          @json['managers']['groups'].each do |group_name|
+            AccessPolicy.find_or_create_by(
+              group: Group.find_by(name: group_name),
+              access_method: AccessMethod.find_by(name: 'manage'),
+              resource: resource
+            )
+          end
+        end
+      end
+
+      if @json['permissions']
+        @json['permissions'].each do |permission|
+          permission['access_methods'].each do |access_method_name|
+            AccessPolicy.find_or_create_by(
+              user: User.find_by(email: permission['entity_name']),
+              group: Group.find_by(name: permission['entity_name']),
+              access_method: AccessMethod.find_by(name: access_method_name),
+              resource: resource
+            )
+          end
+        end
+      end
+    end
+
+    def user_allowed_to_modify_resources?(resource_paths)
+      Resource.where(path: resource_paths).map do |resource|
+        current_user.owns_resource?(resource)
+      end.reduce(:&)
     end
   end
 end
