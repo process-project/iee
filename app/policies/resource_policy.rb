@@ -8,6 +8,12 @@ class ResourcePolicy < ApplicationPolicy
     end
   end
 
+  def self.user_owns_resources?(user, resource_paths)
+    Resource.where(path: resource_paths).map do |resource|
+      ResourcePolicy.new(user, resource).owns_resource?
+    end.reduce(:&)
+  end
+
   def permit?(access_method_name)
     access_policies(access_method_name).count.positive?
   end

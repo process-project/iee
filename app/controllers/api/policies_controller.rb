@@ -28,13 +28,13 @@ module Api
     def destroy
       paths = resource_paths
 
-      if user_allowed_to_modify_resources?(paths)
+      if ResourcePolicy.user_owns_resources?(current_user, paths)
         Policies::RemovePolicies.new(paths, extract_multiple_param(:user),
                                      extract_multiple_param(:group),
                                      extract_multiple_param(:access_method)).call
         head :no_content
       else
-        head :forbidden
+        api_error(status: :forbidden)
       end
     end
 
@@ -46,27 +46,27 @@ module Api
 
         head :ok
       else
-        head :forbidden
+        api_error(status: :forbidden)
       end
     end
 
     def validate_index_request
-      head :bad_request unless Resource.paths_exist?(resource_paths)
+      api_error(status: :bad_request) unless Resource.exists_for_attribute?('path', resource_paths)
     end
 
     def parse_and_validate_create_request
-      schema = File.read(File.join(Rails.root, 'config', 'schemas', 'policy-schema.json'))
+      schema = File.read(Rails.root.join('config', 'schemas', 'policy-schema.json'))
       @json = JSON.parse(request.body.read)
-      head :bad_request unless JSON::Validator.validate(schema, @json)
+      api_error(status: :bad_request) unless JSON::Validator.validate(schema, @json)
     end
 
     def validate_destroy_request
-      head :bad_request unless
+      api_error(status: :bad_request) unless
         resource_paths.any? &&
-        Resource.paths_exist?(resource_paths) &&
-        User.emails_exist?(extract_multiple_param(:user)) &&
-        Group.names_exist?(extract_multiple_param(:group)) &&
-        AccessMethod.names_exist?(extract_multiple_param(:access_method))
+        Resource.exists_for_attribute?('path', resource_paths) &&
+        User.exists_for_attribute?('email', extract_multiple_param(:user)) &&
+        Group.exists_for_attribute?('name', extract_multiple_param(:group)) &&
+        AccessMethod.exists_for_attribute?('name', extract_multiple_param(:access_method))
     end
 
     def resource_paths
@@ -75,12 +75,6 @@ module Api
 
     def extract_multiple_param(name)
       params[name] ? params[name].split(',') : []
-    end
-
-    def user_allowed_to_modify_resources?(resource_paths)
-      Resource.where(path: resource_paths).map do |resource|
-        ResourcePolicy.new(current_user, resource).owns_resource?
-      end.reduce(:&)
     end
   end
 end

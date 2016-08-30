@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class User < ApplicationRecord
   include Gravtastic
+  include CheckExistenceConcern
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -66,10 +67,6 @@ class User < ApplicationRecord
     if info.proxy && info.proxyPrivKey && info.userCert
       info.proxy + info.proxyPrivKey + info.userCert
     end
-  end
-
-  def self.emails_exist?(emails)
-    User.where(email: emails).count == emails.length
   end
 
   def plgrid_connect(auth)

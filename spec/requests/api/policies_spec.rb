@@ -3,45 +3,48 @@ require 'rails_helper'
 require 'rspec/json_expectations'
 
 RSpec.describe 'Policies API' do
+  include JsonHelpers
+
+  let(:service) { create(:service, uri: 'https://service.host.com', token: 'random_token') }
+  let(:access_method) { create(:access_method, name: 'get') }
+  let(:user) { create(:user, email: 'user@host.com', approved: true) }
+  let(:resource) { create(:resource, service: service) }
+  let(:service_auth_header) { { 'X-SERVICE-TOKEN' => 'random_token' } }
+  let(:user_auth_headers) { { 'Authorization' => "Bearer #{user.token}" } }
+
   before do
-    service = create(:service, uri: 'https://service.host.com', token: 'random_token')
-    @access_method = create(:access_method, name: 'get')
-    @user = create(:user, email: 'user@host.com', approved: true)
-    @resource = create(:resource, service: service)
-    create(:access_policy, user: @user, access_method: @access_method, resource: @resource)
-    @service_auth_header = { 'X-SERVICE-TOKEN' => 'random_token' }
-    @user_auth_headers = { 'Authorization' => "Bearer #{@user.token}" }
+    create(:access_policy, user: user, access_method: access_method, resource: resource)
   end
 
   it 'should return unauthorized status when no token is provided in the request' do
-    post api_policies_path, headers: @user_auth_headers
+    post api_policies_path, headers: user_auth_headers
 
     expect(response.status).to eq(401)
   end
 
   it 'should return unauthorized status when no user token is provided' do
-    post api_policies_path, headers: @service_auth_header
+    post api_policies_path, headers: service_auth_header
 
     expect(response.status).to eq(401)
   end
 
   it 'should return a single policy with single user and group as managers' do
     manage_method = create(:access_method, name: 'manage')
-    create(:access_policy, user: @user, resource: @resource, access_method: manage_method)
+    create(:access_policy, user: user, resource: resource, access_method: manage_method)
     group = create(:group, name: 'group_name')
-    create(:access_policy, group: group, resource: @resource, access_method: manage_method)
-    get api_policies_path, params: { path: @resource.path }, headers: valid_auth_headers
+    create(:access_policy, group: group, resource: resource, access_method: manage_method)
+    get api_policies_path, params: { path: resource.path }, headers: valid_auth_headers
 
     expect(response_json).to include_json(
       policies: [
         {
-          path: @resource.path,
+          path: resource.path,
           managers: {
-            users: [@user.email],
+            users: [user.email],
             groups: [group.name]
           },
           permissions: [
-            { type: 'user_permission', entity_name: @user.email, access_methods: ['get'] }
+            { type: 'user_permission', entity_name: user.email, access_methods: ['get'] }
           ]
         }
       ]
@@ -65,9 +68,9 @@ RSpec.describe 'Policies API' do
 
   it `should not return the manage role in the response body` do
     manage_method = create(:access_method, name: 'manage')
-    create(:access_policy, user: @user, resource: @resource, access_method: manage_method)
+    create(:access_policy, user: user, resource: resource, access_method: manage_method)
 
-    get api_policies_path, params: { path: @resource.path }, headers: valid_auth_headers
+    get api_policies_path, params: { path: resource.path }, headers: valid_auth_headers
 
     expect(response.status).to eq(200)
     expect(response_json).not_to include_json(
@@ -101,7 +104,7 @@ RSpec.describe 'Policies API' do
             managers: {},
             permissions: [
               type: 'user_permission',
-              entity_name: @user.email,
+              entity_name: user.email,
               access_methods: ['get']
             ]
           },
@@ -119,7 +122,7 @@ RSpec.describe 'Policies API' do
             managers: {},
             permissions: [
               type: 'user_permission',
-              entity_name: @user.email,
+              entity_name: user.email,
               access_methods: ['get']
             ]
           },
@@ -143,7 +146,7 @@ RSpec.describe 'Policies API' do
   context 'with managing permissions' do
     before do
       manage_method = create(:access_method, name: 'manage')
-      create(:access_policy, user: @user, resource: @resource, access_method: manage_method)
+      create(:access_policy, user: user, resource: resource, access_method: manage_method)
     end
 
     it `should merge the new method of the given policy with an existing one` do
@@ -151,11 +154,11 @@ RSpec.describe 'Policies API' do
 
       post  api_policies_path,
             params: {
-              path: @resource.path,
+              path: resource.path,
               managers: {},
               permissions: [
                 type: 'user_permission',
-                entity_name: @user.email,
+                entity_name: user.email,
                 access_methods: ['post']
               ]
             },
@@ -171,7 +174,7 @@ RSpec.describe 'Policies API' do
 
       post  api_policies_path,
             params: {
-              path: @resource.path,
+              path: resource.path,
               managers: { users: [another_user.email] }
             },
             headers: valid_auth_headers,
@@ -187,7 +190,7 @@ RSpec.describe 'Policies API' do
 
       post  api_policies_path,
             params: {
-              path: @resource.path,
+              path: resource.path,
               managers: { groups: [another_group.name] }
             },
             headers: valid_auth_headers,
@@ -200,20 +203,20 @@ RSpec.describe 'Policies API' do
 
     it 'should delete an access policy for a user' do
       another_user = create(:user, email: 'another@host.com', approved: true)
-      create(:access_policy, user: another_user, access_method: @access_method, resource: @resource)
+      create(:access_policy, user: another_user, access_method: access_method, resource: resource)
 
       expect do
         delete  api_policies_path,
                 params: {
-                  path: @resource.path,
-                  user: @user.email,
-                  access_method: @access_method.name
+                  path: resource.path,
+                  user: user.email,
+                  access_method: access_method.name
                 },
                 headers: valid_auth_headers
       end.to change { AccessPolicy.count }.by(-1)
       expect(response.status).to eq(204)
       expect(
-        AccessPolicy.find_by(resource: @resource, user: @user, access_method: @access_method)
+        AccessPolicy.find_by(resource: resource, user: user, access_method: access_method)
       ).to be_nil
     end
   end
@@ -223,7 +226,7 @@ RSpec.describe 'Policies API' do
 
     post  api_policies_path,
           params: {
-            path: @resource.path
+            path: resource.path
           },
           headers: valid_auth_headers.merge('Authorization' => "Bearer #{another_user.token}"),
           as: :json
@@ -246,7 +249,7 @@ RSpec.describe 'Policies API' do
   it 'should return a bad request when any given user is invalid' do
     delete  api_policies_path,
             params: {
-              path: @resource.path,
+              path: resource.path,
               user: 'hello'
             },
             headers: valid_auth_headers
@@ -258,17 +261,13 @@ RSpec.describe 'Policies API' do
     another_user = create(:user, email: 'another@host.com', approved: true)
 
     delete  api_policies_path,
-            params: { path: @resource.path },
+            params: { path: resource.path },
             headers: valid_auth_headers.merge('Authorization' => "Bearer #{another_user.token}")
 
     expect(response.status).to eq(403)
   end
 
   def valid_auth_headers
-    @user_auth_headers.merge(@service_auth_header)
-  end
-
-  def response_json
-    JSON.parse(response.body)
+    user_auth_headers.merge(service_auth_header)
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Policies
-  class CreatePolicy
+  class CreatePolicy < Policies::BasePoliciesService
     def initialize(json_body, service, user)
       @json_body = json_body
       @service = service
@@ -19,17 +19,6 @@ module Policies
 
     private
 
-    def safely_create_access_policy(user, group, access_methods, resource)
-      access_methods.each do |access_method|
-        AccessPolicy.find_or_create_by(
-          user: user,
-          group: group,
-          access_method: AccessMethod.find_by(name: access_method.downcase),
-          resource: resource
-        )
-      end
-    end
-
     def create_access_policies(resource)
       if @json_body['permissions']
         @json_body['permissions'].each do |permission|
@@ -40,18 +29,13 @@ module Policies
 
     def create_user_managers(resource)
       if @json_body['managers'] && @json_body['managers']['users']
-        @json_body['managers']['users'].each do |email|
-          safely_create_access_policy(User.find_by(email: email), nil, ['manage'], resource)
-        end
+        merge_user_managers(@json_body['managers']['users'], resource)
       end
     end
 
     def create_group_managers(resource)
       if @json_body['managers'] && @json_body['managers']['groups']
-        @json_body['managers']['groups'].each do |group_name|
-          safely_create_access_policy(nil, Group.find_by(name: group_name), nil, ['manage'],
-                                      resource)
-        end
+        merge_group_managers(@json_body['managers']['groups'], resource)
       end
     end
 

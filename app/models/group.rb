@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Group < ApplicationRecord
+  include CheckExistenceConcern
+
   has_many :user_groups
   has_many :users, through: :user_groups
   has_many :access_policies, dependent: :destroy
@@ -25,10 +27,6 @@ class Group < ApplicationRecord
 
   before_save :owner_ids_into_user_groups
   before_save :member_ids_into_user_groups
-
-  def self.names_exist?(names)
-    Group.where(name: names).count == names.length
-  end
 
   def ancestors
     parents + parents.map(&:ancestors).flatten

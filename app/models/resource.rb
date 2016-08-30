@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Resource < ApplicationRecord
+  include CheckExistenceConcern
+
   enum resource_type: [:global, :local]
 
   has_many :access_policies, dependent: :destroy
@@ -18,10 +20,6 @@ class Resource < ApplicationRecord
     else
       path
     end
-  end
-
-  def self.paths_exist?(paths)
-    Resource.where(path: paths).count == paths.length
   end
 
   def self.normalize_paths(paths)
