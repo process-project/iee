@@ -14,7 +14,7 @@ any regular expression processing.
 
 Response body:
 
-```json
+```
 {
   policies: [
     {
@@ -35,43 +35,77 @@ Response body:
 
 ## `POST /api/policies`
 
+Creates or merges the given policy.
+
 Request body:
 
 ```
-{ "resource_path": "/a/path", "user": "user@host.com", "access_methods": [ "get", "post" ]}
+{
+  path: "...",
+  managers: {
+    users: ["..."],
+    groups: ["..."]
+  },
+  permissions: [
+    type: "user_permission|group_permission",
+    entity_name: "...",
+    access_methods: ["..."]
+  ]
+}
 ```
 
 Response contains the resulting status code of a method call. After a successful creation
-a `201` status is returned. If the body is invalid or given user or methods do not exist a `400`
+a `201` status is returned. When the given policy is merged with an existing one a `200` status is
+returned. If the body is invalid or given user or methods do not exist a `400`
 status is returned instead.
 
 Example using cURL:
 
 ```
-curl -X POST --data '{ "resource_path": "/a/path", "user": "user@host.com", "access_methods": [ "get", "post" ]}' -H "Content-Type: application/json" -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/resource_policy
+curl -X POST --data '{ "path": "/a/path", "permissions": [ { "type": "user_permission", "entity_name": "user@host.com" }, "access_methods": [ "get", "post" ]  ]' -H "Content-Type: application/json" -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/policies
 ```
 
-## `GET /api/resource_policy_entities`
+## `DELETE /api/policies?path=...[&user=...|group=...[&access_method=...]]`
+
+Deletes policies identified by given parameters. Values used for individual parameters can be
+obtained by using the `/api/policy_entities` method.
+
+`path`: A coma-separated list of paths.
+
+`user`: A coma-separated list of user emails.
+
+`group`: A coma-separated list of group names.
+
+`access_methods`: A coma-separated list of access method names.
+
+If corresponding policies are found and deleted `204` status is
+returned. In case the resources for given parameters cannot be found a `400` status is returned.
+
+Example using cURL:
+
+```
+curl -X DELETE -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/policies?path=/helloPath
+```
+
+## `GET /api/policy_entities`
+
+Returns a list of policy entities which can be used to define new policies and delete existing ones.
 
 Response body:
 
 ```
-{ "users": [ "user@host.com", "another@domain.com" ], "groups": [ "group1", "group2" ], "methods": [ "get", "post" ] }
+{
+  policy_entities: [
+    {
+      type: "user_entity|group_entity|access_method_entity",
+      name: "..."
+    }
+  ]
+}
 ```
 
 Example using cURL:
 
 ```
-curl -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/resource_policy_entities
-```
-
-## `DELETE /api/resource_policy?resource_path={path}`
-
-If a corresponding resource policies (and the resource itself) are found and deleted `204` status is
-returned. In case the resource cannot be found `404` status is returned.
-
-Example using cURL:
-
-```
-curl -X DELETE -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/resource_policy?resource_path=/helloPath
+curl -H "X-SERVICE-TOKEN: {service_token}" https://valve.cyfronet.pl/api/policy_entities
 ```
