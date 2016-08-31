@@ -8,6 +8,12 @@ class ResourcePolicy < ApplicationPolicy
     end
   end
 
+  def self.user_owns_resources?(user, resource_paths)
+    Resource.where(path: resource_paths).map do |resource|
+      ResourcePolicy.new(user, resource).owns_resource?
+    end.reduce(:&)
+  end
+
   def permit?(access_method_name)
     access_policies(access_method_name).count.positive?
   end
@@ -24,12 +30,12 @@ class ResourcePolicy < ApplicationPolicy
     owns_resource?
   end
 
-  private
-
   def owns_resource?
     record.access_policies.joins(:access_method).
       where(user_id: user.id, access_methods: { name: 'manage' }).exists?
   end
+
+  private
 
   def access_policies(access_method_name)
     groups_with_ancestors = UserGroupsWithAncestors.new(user).get
