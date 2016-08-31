@@ -86,11 +86,7 @@ RSpec.describe 'Policies API' do
 
   it 'should return a bad request status if we send a JSON with empty permission array' do
     post api_policies_path,
-         params: {
-           path: '/some/path',
-           managers: {},
-           permissions: []
-         },
+         params: policy_post_params(path: '/some/path', permissions: []),
          headers: valid_auth_headers,
          as: :json
 
@@ -99,15 +95,12 @@ RSpec.describe 'Policies API' do
 
   it 'should return a 201 status code and create a DB resource when valid policy JSON is sent' do
     post  api_policies_path,
-          params: {
-            path: 'some/path',
-            managers: {},
-            permissions: [
-              type: 'user_permission',
-              entity_name: user.email,
-              access_methods: ['get']
-            ]
-          },
+          params: policy_post_params(
+            path: '/some/path',
+            permissions: [{ type: 'user_permission',
+                            entity_name: user.email,
+                            access_methods: ['get'] }]
+          ),
           headers: valid_auth_headers,
           as: :json
 
@@ -117,15 +110,12 @@ RSpec.describe 'Policies API' do
 
   it 'should return a 201 status code for an access method given in capital letters' do
     post  api_policies_path,
-          params: {
+          params: policy_post_params(
             path: '/some/path',
-            managers: {},
-            permissions: [
-              type: 'user_permission',
-              entity_name: user.email,
-              access_methods: ['get']
-            ]
-          },
+            permissions: [{ type: 'user_permission',
+                            entity_name: user.email,
+                            access_methods: ['get'] }]
+          ),
           headers: valid_auth_headers,
           as: :json
 
@@ -136,7 +126,7 @@ RSpec.describe 'Policies API' do
     create(:access_method, name: 'manage')
 
     post  api_policies_path,
-          params: { path: '/some/path' },
+          params: policy_post_params(path: '/some/path'),
           headers: valid_auth_headers,
           as: :json
 
@@ -153,15 +143,12 @@ RSpec.describe 'Policies API' do
       create(:access_method, name: 'post')
 
       post  api_policies_path,
-            params: {
+            params: policy_post_params(
               path: resource.path,
-              managers: {},
-              permissions: [
-                type: 'user_permission',
-                entity_name: user.email,
-                access_methods: ['post']
-              ]
-            },
+              permissions: [{ type: 'user_permission',
+                              entity_name: user.email,
+                              access_methods: ['post'] }]
+            ),
             headers: valid_auth_headers,
             as: :json
 
@@ -173,10 +160,10 @@ RSpec.describe 'Policies API' do
       another_user = create(:user, email: 'another@host.com', approved: true)
 
       post  api_policies_path,
-            params: {
+            params: policy_post_params(
               path: resource.path,
               managers: { users: [another_user.email] }
-            },
+            ),
             headers: valid_auth_headers,
             as: :json
 
@@ -189,10 +176,10 @@ RSpec.describe 'Policies API' do
       another_group = create(:group, name: 'another_group')
 
       post  api_policies_path,
-            params: {
+            params: policy_post_params(
               path: resource.path,
               managers: { groups: [another_group.name] }
-            },
+            ),
             headers: valid_auth_headers,
             as: :json
 
@@ -225,9 +212,7 @@ RSpec.describe 'Policies API' do
     another_user = create(:user, email: 'another@host.com', approved: true)
 
     post  api_policies_path,
-          params: {
-            path: resource.path
-          },
+          params: policy_post_params(path: resource.path),
           headers: valid_auth_headers.merge('Authorization' => "Bearer #{another_user.token}"),
           as: :json
 
@@ -269,5 +254,14 @@ RSpec.describe 'Policies API' do
 
   def valid_auth_headers
     user_auth_headers.merge(service_auth_header)
+  end
+
+  def policy_post_params(path: '', managers: nil, permissions: nil)
+    result = {}
+    result[:path] = path
+    result[:managers] = managers if managers
+    result[:permissions] = permissions if permissions
+
+    result
   end
 end
