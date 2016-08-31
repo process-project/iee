@@ -62,16 +62,10 @@ en:
   administration: Administration
   services_menu_label: Services
   groups_menu_label: Groups
-  resources: Web resources
-  no_resources: No web resources
-  resource_name: Resource name
-  resource_uri: Resource URI
+  resources_menu_label: Web resources
   resource_path: Resource path
-  new_resource_title: Create new resource
   new_access_policy_submit: Add access policy
   new_resource_form: New web resource
-  remove_resource_title: Remove this resource
-  edit_access_policies_title: Edit access policies
   edit_resource_form: Edit resource
   user_resource_access_policies: Access policies for user
   group_resource_access_policies: Access policies for group

@@ -32,7 +32,7 @@ en:
     index:
       title: Services
       nothing: You do not manage any service right now.
-      add: Register a new service.
+      add: Register a new service
       remove_title: Remove this service completelly.
     new:
       title: New service
@@ -43,7 +43,7 @@ en:
     index:
       title: Groups
       nothing: You do not manage any group right now.
-      add: Register a new group.
+      add: Register a new group
       remove_title: Remove this group completelly.
       edit_title: Edit this group, manage group members
     show:
@@ -56,6 +56,16 @@ en:
       title: Edit group
       subtitle: Edit existing group. You can manage assigned users and other groups.
       back_to_index: Go back to the group list.
+
+  resources:
+    index:
+      title: Web resources
+      nothing: No web resources
+      add: Create new resource
+      name: Resource name
+      uri: Resource URI
+      edit: Edit access policies
+      remove: Remove this resource
 
   profiles:
     layout:

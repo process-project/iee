@@ -1,0 +1,9 @@
+%tr
+  %td= resource.name
+  %td= resource.uri
+  %td
+    = link_to(new_access_policy_path(resource_id: resource.id), title: t('.edit')) do
+      = icon('edit')
+    = link_to(resource_path(resource), title: t('.remove'), method: :delete,
+        data: {confirm: t('are_you_sure')}) do
+      = icon('remove')

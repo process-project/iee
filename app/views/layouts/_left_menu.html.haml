@@ -56,7 +56,7 @@
             = link_to(t("groups_menu_label"), groups_path)
         %ul.nav.child_menu
           = nav_link controller: [:resources, :access_policies], active_class: 'current-page' do
-            = link_to(t("resources"), resources_path)
+            = link_to(t("resources_menu_label"), resources_path)
       = nav_link controller: :help do
         = link_to(help_path) do
           = icon('question-circle')
