@@ -25,5 +25,5 @@ is returned.
 ## Example
 
 ```
-curl -H "Authorization: Bearer <token>" https://valve.cyfronet.pl/api/pdp?uri=http://test&access_method=get
+curl -H "Authorization: Bearer <token>" ${root_url}api/pdp?uri=http://test&access_method=get
 ```

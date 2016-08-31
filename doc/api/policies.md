@@ -36,7 +36,7 @@ Response body:
 Example using cURL:
 
 ```
-curl -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" https://valve.cyfronet.pl/api/policies?path=/path
+curl -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" ${root_url}api/policies?path=/path
 ```
 
 ## `POST /api/policies`
@@ -68,7 +68,7 @@ status is returned instead.
 Example using cURL:
 
 ```
-curl -X POST --data '{ "path": "/a/path", "permissions": [ { "type": "user_permission", "entity_name": "user@host.com" }, "access_methods": [ "get", "post" ]  ]' -H "Content-Type: application/json" -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" https://valve.cyfronet.pl/api/policies
+curl -X POST --data '{ "path": "/a/path", "permissions": [ { "type": "user_permission", "entity_name": "user@host.com" }, "access_methods": [ "get", "post" ]  ]' -H "Content-Type: application/json" -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" ${root_url}api/policies
 ```
 
 ## `DELETE /api/policies?path=...[&user=...|group=...[&access_method=...]]`
@@ -90,7 +90,7 @@ returned. In case the resources for given parameters cannot be found a `400` sta
 Example using cURL:
 
 ```
-curl -X DELETE -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" https://valve.cyfronet.pl/api/policies?path=/helloPath
+curl -X DELETE -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" ${root_url}api/policies?path=/helloPath
 ```
 
 ## `GET /api/policy_entities`
@@ -113,5 +113,5 @@ Response body:
 Example using cURL:
 
 ```
-curl -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" https://valve.cyfronet.pl/api/policy_entities
+curl -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" ${root_url}api/policy_entities
 ```
