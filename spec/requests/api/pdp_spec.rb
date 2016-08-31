@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'PDP' do
   context 'as logged in user' do
     let(:user) { create(:user, :approved) }
-    let(:service) { create(:service, uri: 'http://localhost') }
+    let(:service) { create(:service, uri: 'http://localhost', uri_aliases: ['http://cyfronet.pl']) }
     let(:resource) { create(:resource, service: service) }
     let(:access_method) { create(:access_method, name: 'get') }
 
@@ -50,6 +50,16 @@ RSpec.describe 'PDP' do
 
         expect(response.status).to eq(200)
       end
+
+      # it 'returns 200 for matching resource with uri_alias' do
+      #   get api_pdp_index_path,
+      #       params:  {
+      #           uri: 'http://cyfronet.pl/path/something',
+      #           access_method: 'get'
+      #       }
+      #
+      #   expect(response.status).to eq(200)
+      # end
 
       it 'returns 403 for not matching resources' do
         get api_pdp_index_path,

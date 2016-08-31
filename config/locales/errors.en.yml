@@ -38,6 +38,7 @@ en:
           uri_alias:
             format: One of the URI aliases has invalid format
             uniqueness: URI aliases are not unique
+            urialiassame: URI cannot be the same as any of the aliases
         group:
           child_ids:
             cycle: Cycle is not allowed
