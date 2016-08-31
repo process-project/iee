@@ -6,6 +6,7 @@ RSpec.describe Service do
 
   it { should validate_presence_of(:uri) }
   it { should validate_uniqueness_of(:uri) }
+  it { should validate_uniqueness_of(:uri_aliases) }
 
   it { should have_many(:resources).dependent(:destroy) }
 
@@ -15,6 +16,12 @@ RSpec.describe Service do
 
   it 'validates correct uri format' do
     service = build(:service, uri: 'wrong$%^uri')
+
+    expect(service).to_not be_valid
+  end
+
+  it 'validates correct uri_aliases format' do
+    service = build(:service, uri_aliases: ['wrong$%^uri'])
 
     expect(service).to_not be_valid
   end

@@ -35,6 +35,9 @@ en:
         service:
           uri:
             override: Given URI overrides already existing URI
+          uri_alias:
+            format: One of the URI aliases has invalid format
+            uniqueness: URI aliases are not unique
         group:
           child_ids:
             cycle: Cycle is not allowed
