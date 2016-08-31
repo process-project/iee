@@ -24,7 +24,8 @@ module HelpHelper
   def renderer
     context = {
       'jwt_public_key' => jwt_public_key,
-      'jwt_key_algorithm' => jwt_key_algorithm
+      'jwt_key_algorithm' => jwt_key_algorithm,
+      'root_url' => root_url
     }
     MarkdownRenderer.new(context)
   end
