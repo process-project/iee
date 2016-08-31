@@ -1,11 +1,39 @@
-# Resource policy management API
+# Policy management API
 
-Access to the resource policy management API is authorized by delegating user
+Access to the policy management API is authorized by delegating user
 credentials (using Bearer Authorization header) and providing a service token
 via the `X-SERVICE-TOKEN` header with each of the requests. The API exposes the
 following REST methods:
 
-## `POST /api/resource_policy`
+## `GET /api/policies[?path=...]`
+
+`path`: A coma-separated list of paths or a single path.
+
+Returns a list of policies for a given path (or paths). The matching of paths is exact without
+any regular expression processing.
+
+Response body:
+
+```json
+{
+  policies: [
+    {
+      path: "...",
+      managers: {
+        users: ["..."],
+        groups: ["..."]
+      },
+      permissions: [
+        type: "user_permission|group_permission",
+        entity_name: "...",
+        access_methods: ["..."]
+      ]
+    }
+  ]
+}
+```
+
+## `POST /api/policies`
 
 Request body:
 
