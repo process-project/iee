@@ -51,15 +51,15 @@ RSpec.describe 'PDP' do
         expect(response.status).to eq(200)
       end
 
-      # it 'returns 200 for matching resource with uri_alias' do
-      #   get api_pdp_index_path,
-      #       params:  {
-      #           uri: 'http://cyfronet.pl/path/something',
-      #           access_method: 'get'
-      #       }
-      #
-      #   expect(response.status).to eq(200)
-      # end
+      it 'returns 200 for matching resource with uri_alias' do
+        get api_pdp_index_path,
+            params:  {
+              uri: 'http://cyfronet.pl/path/something',
+              access_method: 'get'
+            }
+
+        expect(response.status).to eq(200)
+      end
 
       it 'returns 403 for not matching resources' do
         get api_pdp_index_path,

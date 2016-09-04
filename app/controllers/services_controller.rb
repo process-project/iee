@@ -6,6 +6,8 @@ class ServicesController < ApplicationController
 
   def new
     @service = Service.new
+    # @service.uri_aliases << 'http://abc.pl'
+    # @service.uri_aliases << 'http://def.pl'
   end
 
   def create
@@ -33,6 +35,6 @@ class ServicesController < ApplicationController
   private
 
   def service_params
-    params.require(:service).permit([:name, :uri])
+    params.require(:service).permit([:name, :uri, uri_aliases: []])
   end
 end
