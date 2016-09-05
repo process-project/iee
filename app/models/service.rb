@@ -47,16 +47,16 @@ class Service < ApplicationRecord
   def check_uri_aliases_format
     uri_aliases.each do |uri_alias|
       next if uri_alias =~ /\A#{URI.regexp}\z/
-      errors.add(:uri_alias,
-                 I18n.t('activerecord.errors.models.service.uri_alias.format'))
+      errors.add(:uri_aliases,
+                 I18n.t('activerecord.errors.models.service.uri_aliases.format'))
       break
     end
   end
 
   def check_uri_aliases_same(u_alias)
     if u_alias == uri
-      errors.add(:uri_alias,
-                 I18n.t('activerecord.errors.models.service.uri_alias.urialiassame'))
+      errors.add(:uri_aliases,
+                 I18n.t('activerecord.errors.models.service.uri_aliases.urialiassame'))
       return false
     end
     true
@@ -79,8 +79,8 @@ class Service < ApplicationRecord
                             'x(uri_aliases) where x.uri_aliases like ?)',
                             "#{uri_alias}%").where.not(id: id).empty?
       # next if Service.where('? LIKE ANY (uri_aliases)', uri_alias).where.not(id: id).empty?
-      errors.add(:uri_alias,
-                 I18n.t('activerecord.errors.models.service.uri_alias.uniqueness'))
+      errors.add(:uri_aliases,
+                 I18n.t('activerecord.errors.models.service.uri_aliases.uniqueness'))
       break
     end
   end

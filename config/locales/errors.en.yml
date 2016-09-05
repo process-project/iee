@@ -35,7 +35,7 @@ en:
         service:
           uri:
             override: Given URI overrides already existing URI
-          uri_alias:
+          uri_aliases:
             format: One of the URI aliases has invalid format
             uniqueness: URI aliases are not unique
             urialiassame: URI cannot be the same as any of the aliases

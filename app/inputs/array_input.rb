@@ -1,10 +1,18 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 class ArrayInput < SimpleForm::Inputs::StringInput
+  include ActionView::Helpers::JavaScriptHelper
+
   def input(_wrapper_options = nil)
     input_html_options[:type] ||= input_type
 
     a = gen_fields
-    a << content_tag(:a, 'Add', href: 'javascript:', id: 'add')
+    oid = SecureRandom.hex(4)
+    script = "ni=0;function addAI#{oid}() { "
+    script << "$('a#add').before('<input class=\"string optional form-control\" "
+    script << "error_html=\"parsley-error\" type=\"text\" style=\"margin-bottom: 5px\" "
+    script << "name=\"service[uri_aliases][]\" id=\"service_'+ni+'\">'); ni = ni+1 }"
+    a << javascript_tag(script)
+    a << content_tag(:a, 'Add', href: "javascript:addAI#{oid}()", id: 'add')
     safe_join(a)
   end
 
