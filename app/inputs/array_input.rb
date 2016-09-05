@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ArrayInput < SimpleForm::Inputs::StringInput
-  def input
+  def input(_wrapper_options = nil)
     input_html_options[:type] ||= input_type
 
     a = gen_fields
@@ -24,6 +24,7 @@ class ArrayInput < SimpleForm::Inputs::StringInput
     @builder.text_field(nil, input_html_options.merge(value: ae,
                                                       class: 'string optional form-control',
                                                       style: 'margin-bottom: 5px',
+                                                      error_html: 'parsley-error',
                                                       name: "#{object_name}[#{attribute_name}][]"))
   end
 end
