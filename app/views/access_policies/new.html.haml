@@ -3,12 +3,12 @@
     .x_panel
       .x_title
         %h2
-          = t("access_policies", name: @resource.name, uri: @resource.uri)
-          %small= t("manage_access_policies")
+          = t('.title', name: @resource.name, uri: @resource.uri)
+          %small= t('.subtitle')
         %ul.nav.navbar-right.panel_toolbox
           %li
-            = link_to(resources_path) do
-              = icon("hand-o-left", title: t("back_to_resources"))
+            = link_to(resources_path, class: 'back') do
+              = icon('hand-o-left', title: t('.back'))
         .clearfix
       .x_content
         = simple_form_for(@access_policy) do |f|
@@ -16,8 +16,8 @@
             %table.table.access_policies
               %thead
                 %tr
-                  %th= t("user_resource_access_policies")
-                  %th= t("access_policies_list")
+                  %th= t('.user')
+                  %th= t('.list')
               %tbody
                 - @user_access_policies.each do |email, access_policies|
                   %tr
@@ -30,13 +30,13 @@
                             method: :delete, data: { confirm: t("are_you_sure") }) do
                             = icon("remove", class: "fa-white")
           - else
-            %p= t("no_user_access_policies")
+            %p= t('.no_user_access_policies')
           - if !@group_access_policies.empty?
             %table.table.access_policies
               %thead
                 %tr
-                  %th= t("group_resource_access_policies")
-                  %th= t("access_policies_list")
+                  %th= t('.group')
+                  %th= t('.list')
               %tbody
                 - @group_access_policies.each do |name, access_policies|
                   %tr
@@ -49,19 +49,19 @@
                             method: :delete, data: { confirm: t("are_you_sure") }) do
                             = icon("remove", class: "fa-white")
           - else
-            %p= t("no_group_access_policies")
+            %p= t('.no_group_access_policies')
           .col-md-6.col-md-offset-3
-            %h5{title: t("user_or_group")}
-              = t("add_access_policy")
-              = icon("info")
+            %h5{title: t('.user_or_group')}
+              = t('.add')
+              = icon('info')
             = f.error_notification
           .form-group
             = f.input_field :resource_id, as: :hidden, value: @resource.id
-          = f.input :user_id, label: t("pick_user"), collection: @users, label_method: :email,
-            prompt: t("select_user")
-          = f.input :group_id, label: t("pick_group"), collection: @groups, prompt: t("select_user")
-          = f.input :access_method_id, label: t("pick_access_method"), collection: @access_methods, as: :radio_buttons
+          = f.input :user_id, label: t('.pick_user'), collection: @users, label_method: :email,
+            prompt: t('.select_user')
+          = f.input :group_id, label: t('.pick_group'), collection: @groups, prompt: t('.select_group')
+          = f.input :access_method_id, label: t('.pick_method'), collection: @access_methods, as: :radio_buttons
           .ln_solid
           .form-group
             .col-md-6.col-md-offset-3
-              = f.button :submit, t("new_access_policy_submit")
+              = f.button :submit, t('.submit'), class: 'btn btn-success'

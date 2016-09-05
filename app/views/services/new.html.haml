@@ -8,7 +8,7 @@
 
         %ul.nav.navbar-right.panel_toolbox
           %li
-            = link_to(services_path) do
+            = link_to(services_path, class: 'back') do
               = icon("hand-o-left", title: t('.back_to_index'))
         .clearfix
 
@@ -20,4 +20,4 @@
           .ln_solid
           .form-group
             .col-md-6.col-md-offset-3
-              = f.button :submit
+              = f.button :submit, class: 'btn btn-success'

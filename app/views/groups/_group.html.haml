@@ -3,10 +3,11 @@
     = link_to group.name, group
   %td
     - if policy(group).edit?
-      = link_to(edit_group_path(group), title: t('.edit_title')) do
+      = link_to(edit_group_path(group), title: t('.edit'), class: 'edit') do
         = icon('edit')
     - if policy(group).destroy?
-      = link_to(group_path(group), title: t('.remove_title'),
+      = link_to(group_path(group), title: t('.remove'),
           method: :delete,
+          class: 'delete',
           data: { confirm: t('are_you_sure') }) do
         = icon('remove')
