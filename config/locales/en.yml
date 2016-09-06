@@ -42,9 +42,6 @@ en:
   dice: Dice Team
   by: by
   logout: Logout
-  profile: Profile
-  settings: Settings
-  user_confirmation: User confirmation
   not_confirmed_users: Users to be confirmed
   confirmed_users: Confirmed users
   no_users: No users
@@ -60,10 +57,6 @@ en:
   restricted_to_supervisors: Only supervisors can perform this action
   plgrid: PLGrid
 
-  administration: Administration
-  services_menu_label: Services
-  groups_menu_label: Groups
-  resources_menu_label: Web resources
   edit_resource_form: Edit resource
   resource_not_found: Resource could not be found
 
@@ -73,10 +66,5 @@ en:
   access_policies_list: List of access policies
   welcome: Welcome,
   help:
-    title: Help
     pdp: Policy Decision Point
-  jobs:
-   title: Delayed jobs
   similar_access_policy_exists: Similar access policy already exists
-  file_store:
-    menu_item: File resources

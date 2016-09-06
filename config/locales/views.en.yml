@@ -126,3 +126,7 @@ en:
       select_user: Select user
       select_group: Select group
       submit: Add access policy
+  admin:
+    jobs:
+      show:
+        title: Delayed jobs

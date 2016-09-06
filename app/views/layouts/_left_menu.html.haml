@@ -15,58 +15,11 @@
 #sidebar-menu.main_menu_side.hidden-print.main_menu
   .menu_section
     %ul.nav.side-menu
-      = nav_link controller: :patients do
-        = link_to patients_path do
-          = icon("heart")
-          = t("patient.menu_item")
-      = nav_link controller: :file_store do
-        = link_to file_store_path do
-          = icon("files-o")
-          = t("file_store.menu_item")
-      = nav_link controller: [:profiles, :accounts, :passwords, :plgrids, :account_confirmation, :jobs] do
-        %a
-          = icon("sliders")
-          = t("settings")
-          - if @user_confirmations && policy(:admin).manage_users?
-            = icon("exclamation-triangle")
-          %span.fa.fa-chevron-down
-        %ul.nav.child_menu
-          = nav_link controller: [:profiles, :accounts, :passwords, :plgrids], active_class: 'current-page' do
-            = link_to(t("profile"), profile_path)
-          - if policy(:admin).manage_users?
-            = nav_link controller: :account_confirmation, active_class: 'current-page' do
-              = link_to account_confirmations_index_path do
-                = t("user_confirmation")
-                - if @user_confirmations
-                  = icon("exclamation-triangle")
-          - if policy(:job).show?
-            = nav_link controller: :jobs, active_class: 'current-page' do
-              = link_to(t('jobs.title'), admin_job_path)
-
-      = nav_link controller: [:resources, :access_policies] do
-        %a
-          = icon("gears")
-          = t("administration")
-          %span.fa.fa-chevron-down
-        %ul.nav.child_menu
-          = nav_link controller: :services, active_class: 'current-page' do
-            = link_to(t("services_menu_label"), services_path)
-        %ul.nav.child_menu
-          = nav_link controller: :groups, active_class: 'current-page' do
-            = link_to(t("groups_menu_label"), groups_path)
-        %ul.nav.child_menu
-          = nav_link controller: [:resources, :access_policies], active_class: 'current-page' do
-            = link_to(t("resources_menu_label"), resources_path)
-      = nav_link controller: :help do
-        = link_to(help_path) do
-          = icon('question-circle')
-          = t('help.title')
-      - if policy(:plgrid).show?
-        %li
-          %a
-            = icon('cogs')
-            = t('plgrid')
-            %span.fa.fa-chevron-down
+      = render 'layouts/left_menu/research'
+      = render 'layouts/left_menu/settings'
+      = render 'layouts/left_menu/administration'
+      = render 'layouts/left_menu/help'
+      = render 'layouts/left_menu/plgrid'
 
 .sidebar-footer.hidden-small
   = render 'layouts/footer'

@@ -1,6 +1,5 @@
 en:
   patient:
-    menu_item: Patients
     procedure_status:
       not_started: Not yet started
       imaging_uploaded: Imaging ready

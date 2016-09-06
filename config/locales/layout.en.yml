@@ -1,0 +1,21 @@
+en:
+  layouts:
+    left_menu:
+      research:
+        title: Research
+        patients: Patients
+        files: Files
+      plgrid:
+        title: PLGrid
+      administration:
+        title: Administration
+        user_confirmation: User confirmation
+        jobs: Delayed jobs
+      settings:
+        title: Settings
+        profile: Profile
+        services: Services
+        groups: Groups
+        resources: Web resources
+      help:
+        title: Help
