@@ -8,12 +8,24 @@ class ServicePolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    true
+  end
+
+  def edit?
+    owned?
+  end
+
   def update?
     owned?
   end
 
   def destroy?
     owned?
+  end
+
+  def permitted_attributes
+    [:name, :uri]
   end
 
   private

@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     resources :policy_entities, only: :index
   end
 
-  resources :services, except: [:show, :update, :edit]
+  resources :services
   resources :groups
   resources :resources, except: [:show, :update, :edit]
   resources :access_policies, only: [:new, :create, :destroy]
