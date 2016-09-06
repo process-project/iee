@@ -1,6 +1,7 @@
 en:
   patients:
     index:
+      title: Patients
       nothing: There are no patients to be shown.
       new: New
       add: Add a new case
@@ -86,6 +87,7 @@ en:
   profiles:
     layout:
       copy_jwt: Copy Json Web Token
+      title: Profile
     show:
       update: Update profile
       email_hint: Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service
