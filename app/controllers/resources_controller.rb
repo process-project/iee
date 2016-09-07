@@ -19,7 +19,7 @@ class ResourcesController < ApplicationController
       end
     end
 
-    @resource.new_record? ? render(:new) : redirect_to(resources_path)
+    render_created_resource(@resource)
   end
 
   def destroy
@@ -34,6 +34,15 @@ class ResourcesController < ApplicationController
   end
 
   private
+
+  def render_created_resource(resource)
+    if resource.new_record?
+      @services = current_user.services
+      render(:new)
+    else
+      redirect_to(resources_path)
+    end
+  end
 
   def resource_params
     params.require(:resource).permit(policy(view_context.resource).permitted_attributes).
