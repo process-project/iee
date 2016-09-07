@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 class ServicesController < ApplicationController
+  before_action :find_and_authorize,
+                only: [:show, :edit, :update, :destroy]
+
   def index
     @services = policy_scope(Service).order(:name)
   end
@@ -10,8 +13,11 @@ class ServicesController < ApplicationController
     # @service.uri_aliases << 'http://def.pl'
   end
 
+  def show
+  end
+
   def create
-    @service = Service.new(service_params)
+    @service = Service.new(permitted_attributes(Service))
     @service.users << current_user
 
     if @service.save
@@ -21,20 +27,26 @@ class ServicesController < ApplicationController
     end
   end
 
-  def destroy
-    service = Service.find(params[:id])
+  def edit
+  end
 
-    if service
-      authorize(service)
-      service.destroy
+  def update
+    if @service.update_attributes(permitted_attributes(@service))
+      redirect_to(service_path(@service))
+    else
+      render(:edit)
     end
+  end
 
+  def destroy
+    @service.destroy
     redirect_to services_path
   end
 
   private
 
-  def service_params
-    params.require(:service).permit([:name, :uri, uri_aliases: []])
+  def find_and_authorize
+    @service = Service.find(params[:id])
+    authorize(@service)
   end
 end

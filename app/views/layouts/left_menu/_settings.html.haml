@@ -1,0 +1,14 @@
+= nav_link controller: [:profiles, :accounts, :passwords, :plgrids, :services, :groups, :access_policies, :resources] do
+  %a
+    = icon('sliders')
+    = t('.title')
+    %span.fa.fa-chevron-down
+  %ul.nav.child_menu
+    = nav_link controller: [:profiles, :accounts, :passwords, :plgrids], active_class: 'current-page' do
+      = link_to(t('.profile'), profile_path)
+    = nav_link controller: :services, active_class: 'current-page' do
+      = link_to(t('.services'), services_path)
+    = nav_link controller: :groups, active_class: 'current-page' do
+      = link_to(t('.groups'), groups_path)
+    = nav_link controller: [:resources, :access_policies], active_class: 'current-page' do
+      = link_to(t('.resources'), resources_path)

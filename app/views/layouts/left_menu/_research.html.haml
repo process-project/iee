@@ -1,0 +1,14 @@
+= nav_link controller: [:patients, :file_store] do
+  %a
+    = icon('flask')
+    = t('.title')
+    %span.fa.fa-chevron-down
+  %ul.nav.child_menu
+    = nav_link controller: :patients, active_class: 'current-page' do
+      = link_to patients_path do
+        = icon('heart')
+        = t('.patients')
+    = nav_link controller: :file_store, active_class: 'current-page' do
+      = link_to file_store_path do
+        = icon('files-o')
+        = t('files')

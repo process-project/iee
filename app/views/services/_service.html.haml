@@ -1,0 +1,13 @@
+%tr
+  %td= link_to(service.name, service)
+  %td= service.uri
+  %td
+    - if policy(service).edit?
+      = link_to([:edit, service], title: t('.edit'), class: 'edit') do
+        = icon('edit')
+    - if policy(service).destroy?
+      = link_to(service, title: t('.remove'),
+          method: :delete,
+          class: 'delete',
+          data: { confirm: t('are_you_sure') }) do
+        = icon('remove')

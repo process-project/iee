@@ -13,9 +13,9 @@ RSpec.feature 'Patient browsing' do
     scenario 'has left-hand menu provide a link to patients index' do
       visit root_path
 
-      expect(page).to have_content I18n.t('patient.menu_item')
+      expect(page).to have_content I18n.t('layouts.left_menu.research.patients')
 
-      click_link I18n.t('patient.menu_item')
+      click_link I18n.t('layouts.left_menu.research.patients')
 
       expect(current_path).to eq patients_path
     end

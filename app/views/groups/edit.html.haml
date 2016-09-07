@@ -8,8 +8,8 @@
 
         %ul.nav.navbar-right.panel_toolbox
           %li
-            = link_to(groups_path) do
-              = icon("hand-o-left", title: t('.back_to_index'))
+            = link_to(group_path(@group), class: 'back') do
+              = icon("hand-o-left", title: t('.back'))
         .clearfix
 
       .x_content

@@ -157,6 +157,8 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    json-schema (2.5.0)
+      addressable (~> 2.3)
     jwt (1.5.4)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -253,6 +255,7 @@ GEM
     rspec-expectations (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
+    rspec-json_expectations (1.4.0)
     rspec-mocks (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
@@ -365,6 +368,7 @@ DEPENDENCIES
   icheck-rails
   jquery-rails
   jquery-turbolinks
+  json-schema
   jwt
   newrelic_rpm
   nicescroll-rails
@@ -374,6 +378,7 @@ DEPENDENCIES
   pundit
   rails (~> 5.0.0)
   redcarpet
+  rspec-json_expectations
   rspec-rails (~> 3.0)
   rubocop
   sass-rails (~> 5.0)

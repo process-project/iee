@@ -1,0 +1,27 @@
+a.delete {
+  color: $brand-danger;
+
+  &:hover, &:focus {
+    color: darken($brand-danger, 15);
+    text-decoration: none;
+  }
+}
+
+a.edit {
+  color: $brand-warning;
+
+  &:hover, &:focus {
+    color: darken($brand-warning, 15);
+    text-decoration: none;
+  }
+}
+
+a.back {
+  color: $brand-success;
+
+  &:hover, &:focus {
+    color: darken($brand-success, 15);
+    text-decoration: none;
+  }
+}
+

@@ -2,9 +2,11 @@
  *= require select2
  *= require select2-bootstrap
  *= require_self
- *= require_tree .
+ *= require_tree ./gentelella
  *= require_tree ../../../vendor/assets/stylesheets/.
  */
+@import "variables";
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -14,6 +16,10 @@
 @import "icheck/flat/green";
 
 @import "animate";
+
+@import "common";
+@import "logo";
+@import "patients";
 
 .aaa-background {
   background: #F7F7F7;

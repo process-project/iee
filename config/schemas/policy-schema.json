@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": ["path"],
+  "properties": {
+    "path": { "type": "string" },
+    "managers": {
+      "type": "object",
+      "properties": {
+      "users": { "type": "array", "items": { "type": "string" }  },
+      "groups": { "type": "array", "items": { "type": "string" }  }
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "entity_name", "access_methods"],
+        "properties": {
+          "type": { "type": "string", "enum": ["user_permission", "group_permission"] },
+          "entity_name": { "type": "string" },
+          "access_methods": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

@@ -6,11 +6,16 @@
 
         %ul.nav.navbar-right.panel_toolbox
           %li
-            = link_to(groups_path) do
-              = icon('hand-o-left', title: t('.back_to_index'))
+            = link_to(groups_path, class: 'back') do
+              = icon('hand-o-left', title: t('.back'))
           %li
-            = link_to(edit_group_path(@group)) do
+            = link_to(edit_group_path(@group), class: 'edit') do
               = icon('edit', title: t('edit'))
+          %li
+            = link_to(group_path(@group),
+              method: :delete, class: 'delete',
+              data: { confirm: t('are_you_sure') }) do
+              = icon('remove', title: t('remove'))
         .clearfix
 
       .x_content

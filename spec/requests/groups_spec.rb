@@ -60,7 +60,7 @@ RSpec.describe 'Groups controller' do
       end
     end
 
-    describe 'POST /groups/:id' do
+    describe 'PUT /groups/:id' do
       it 'denies to update not owned group' do
         group = create(:group)
 

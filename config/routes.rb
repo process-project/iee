@@ -32,12 +32,12 @@ Rails.application.routes.draw do
   namespace :api do
     resources :pdp, only: :index
     resources :sessions, only: :create
-    resources :resource_policy, only: :create
-    delete 'resource_policy', to: 'resource_policy#destroy'
-    get 'resource_policy_entities', to: 'resource_policy#index'
+    resources :policies, only: [:create, :index]
+    delete 'policies', to: 'policies#destroy'
+    resources :policy_entities, only: :index
   end
 
-  resources :services, except: [:show, :update, :edit]
+  resources :services
   resources :groups
   resources :resources, except: [:show, :update, :edit]
   resources :access_policies, only: [:new, :create, :destroy]

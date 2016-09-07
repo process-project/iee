@@ -1,0 +1,31 @@
+.row
+  .col-md-12
+    .x_panel
+      .x_title
+        %h2= @service.name
+
+        %ul.nav.navbar-right.panel_toolbox
+          %li
+            = link_to(services_path, class: 'back') do
+              = icon('hand-o-left', title: t('.back'))
+          - if policy(@service).edit?
+            %li
+              = link_to([:edit, @service], class: 'edit') do
+                = icon('edit', title: t('edit'))
+          - if policy(@service).destroy?
+            %li
+              = link_to(@service,
+                method: :delete, class: 'delete',
+                data: { confirm: t('are_you_sure') }) do
+                = icon('remove', title: t('remove'))
+        .clearfix
+
+      .x_content
+        %table.table
+          %tbody
+            %tr
+              %td= t('simple_form.labels.service.name')
+              %td= @service.name
+            %tr
+              %td= t('simple_form.labels.service.uri')
+              %td= @service.uri

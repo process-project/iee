@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Resource < ApplicationRecord
+  include CheckExistenceConcern
+
   enum resource_type: [:global, :local]
 
   has_many :access_policies, dependent: :destroy
@@ -12,19 +14,23 @@ class Resource < ApplicationRecord
 
   before_validation :unify_path
 
-  def uri
-    uri = URI.parse(service.uri)
-    uri.path = "/#{path}"
-
-    uri.to_s
-  end
-
   def self.normalize_path(path)
     if path && path.starts_with?('/')
       path[1..-1]
     else
       path
     end
+  end
+
+  def self.normalize_paths(paths)
+    paths.map { |path| normalize_path(path) }
+  end
+
+  def uri
+    uri = URI.parse(service.uri)
+    uri.path = "/#{path}"
+
+    uri.to_s
   end
 
   private
