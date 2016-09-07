@@ -8,6 +8,7 @@ RSpec.describe Service do
   it { should validate_uniqueness_of(:uri) }
 
   it { should have_many(:resources).dependent(:destroy) }
+  it { should have_many(:service_ownerships).dependent(:destroy) }
 
   it 'creates unique token' do
     expect(create(:service).token).to_not be_nil
