@@ -1,4 +1,5 @@
 - content_for :extra_head do
+  %div{ "data-turbolinks" => "false" }
   :javascript
     var SletOverrides = {
       webDavBaseUrl: '#{@web_dav_base_url}',
