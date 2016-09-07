@@ -6,13 +6,13 @@ class ArrayInput < SimpleForm::Inputs::StringInput
     input_html_options[:type] ||= input_type
 
     a = gen_fields
-    oid = SecureRandom.hex(4)
-    script = "ni=0;function addAI#{oid}() { "
-    script << "$('a#add').before('<input class=\"string optional form-control\" "
+    oid = "add_#{attribute_name}"
+    script = "ni=0;function #{oid}() { "
+    script << "$('a##{oid}').before('<input class=\"string optional form-control\" "
     script << 'error_html="parsley-error" type="text" style="margin-bottom: 5px" '
-    script << "name=\"service[uri_aliases][]\" id=\"service_'+ni+'\">'); ni = ni+1 }"
+    script << "name=\"#{object_name}[#{attribute_name}][]\" id=\"#{attribute_name}_n'+ni+'\">'); ni = ni+1 }"
     a << javascript_tag(script)
-    a << content_tag(:a, 'Add', href: "javascript:addAI#{oid}()", id: 'add')
+    a << content_tag(:a, 'Add', href: "javascript:#{oid}()", id: oid)
     safe_join(a)
   end
 
@@ -23,13 +23,14 @@ class ArrayInput < SimpleForm::Inputs::StringInput
   private
 
   def gen_fields
-    Array(object.public_send(attribute_name)).map do |array_el|
-      next_field array_el
+    Array(object.public_send(attribute_name)).map.with_index do |array_el, fid|
+      next_field array_el, fid
     end
   end
 
-  def next_field(ae)
+  def next_field(ae, fid)
     @builder.text_field(nil, input_html_options.merge(value: ae,
+                                                      id: "#{attribute_name}_#{fid}",
                                                       class: 'string optional form-control',
                                                       style: 'margin-bottom: 5px',
                                                       error_html: 'parsley-error',
