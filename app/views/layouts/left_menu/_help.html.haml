@@ -1,5 +1,14 @@
 = nav_link controller: :help do
-  = link_to(help_path) do
+  %a
     = icon('question-circle')
     = t('.title')
+    %span.fa.fa-chevron-down
+  %ul.nav.child_menu
+    = nav_tab :file, 'sessions', active_class: 'current-page' do
+      = link_to t('sessions'), help_page_path(category: 'api', file: 'sessions')
+    = nav_tab :file, 'pdp', active_class: 'current-page' do
+      = link_to t('pdp'), help_page_path(category: 'api', file: 'pdp')
+    = nav_tab :file, 'resource_policies', active_class: 'current-page' do
+      = link_to t('resource_policies'),
+        help_page_path(category: 'api', file: 'resource_policies')
 

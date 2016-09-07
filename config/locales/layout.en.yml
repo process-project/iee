@@ -19,3 +19,6 @@ en:
         resources: Web resources
       help:
         title: Help
+        sessions: JWT
+        pdp: PDP
+        resource_policies: Resource policies
