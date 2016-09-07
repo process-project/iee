@@ -7,11 +7,7 @@ class ArrayInput < SimpleForm::Inputs::StringInput
 
     a = gen_fields
     oid = "add_#{attribute_name}"
-    script = "ni=0;function #{oid}() { "
-    script << "$('a##{oid}').before('<input class=\"string optional form-control\" "
-    script << 'error_html="parsley-error" type="text" style="margin-bottom: 5px" '
-    script << "name=\"#{object_name}[#{attribute_name}][]\" id=\"#{attribute_name}_n'+ni+'\">'); ni = ni+1 }"
-    a << javascript_tag(script)
+    a << javascript_tag(gen_script(oid))
     a << content_tag(:a, 'Add', href: "javascript:#{oid}()", id: oid)
     safe_join(a)
   end
@@ -21,6 +17,14 @@ class ArrayInput < SimpleForm::Inputs::StringInput
   end
 
   private
+
+  def gen_script(oid)
+    script = "ni=0;function #{oid}() { "
+    script << "$('a##{oid}').before('<input class=\"string optional form-control\" "
+    script << 'error_html="parsley-error" type="text" style="margin-bottom: 5px" '
+    script << "name=\"#{object_name}[#{attribute_name}][]\" "
+    script << "id=\"#{attribute_name}_n'+ni+'\">'); ni = ni+1 }"
+  end
 
   def gen_fields
     Array(object.public_send(attribute_name)).map.with_index do |array_el, fid|
