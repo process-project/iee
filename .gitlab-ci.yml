@@ -44,7 +44,7 @@ production:
   - chmod 400 ~/.ssh/id_rsa
   - git push $PROD_GIT_REPO HEAD:master
   only:
-  - tag
+  - tags
 
 rubocop:
   script:
