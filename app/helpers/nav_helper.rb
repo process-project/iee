@@ -53,6 +53,17 @@ module NavHelper
     end
   end
 
+  def nav_tab(key, value, options = {}, &block)
+    active_class = options.fetch(:active_class, 'active')
+    o = { class: params[key] == value ? " #{active_class}" : '' }
+
+    if block_given?
+      content_tag(:li, capture(&block), o)
+    else
+      content_tag(:li, nil, o)
+    end
+  end
+
   private
 
   def html_options(options)

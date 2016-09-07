@@ -17,6 +17,7 @@ en:
   registration_form: Registration form
   confirmation_password: Password confirmation
   edit: Edit
+  remove: Remove
   register: Register
   cancel: Cancel
   already_registered: Already registered?
@@ -41,9 +42,6 @@ en:
   dice: Dice Team
   by: by
   logout: Logout
-  profile: Profile
-  settings: Settings
-  user_confirmation: User confirmation
   not_confirmed_users: Users to be confirmed
   confirmed_users: Confirmed users
   no_users: No users
@@ -59,48 +57,14 @@ en:
   restricted_to_supervisors: Only supervisors can perform this action
   plgrid: PLGrid
 
-  administration: Administration
-  services_menu_label: Services
-  groups_menu_label: Groups
-  resources: Web resources
-  no_resources: No web resources
-  resource_name: Resource name
-  resource_uri: Resource URI
-  resource_path: Resource path
-  new_resource_title: Create new resource
-  new_access_policy_submit: Add access policy
-  new_resource_form: New web resource
-  remove_resource_title: Remove this resource
-  edit_access_policies_title: Edit access policies
   edit_resource_form: Edit resource
-  user_resource_access_policies: Access policies for user
-  group_resource_access_policies: Access policies for group
   resource_not_found: Resource could not be found
-  no_user_access_policies: No user access policies were set
-  no_group_access_policies: No group access policies were set
-  select_user: Select user
-  select_group: Select group
-  access_policies: "%{name} (%{uri})"
-  add_access_policy: Add new access policy
 
-  user_or_group: Pick user or group
   either_user_or_group: Either user or group has to be chosen
   missing_access_method: Method has to be chosen
   missing_resource: Resource is missing
-  new_resource_submit: Create resource
-  manage_access_policies: Manage access policies of your web resource
   access_policies_list: List of access policies
-  back_to_resources: Go back to the resource list
-  pick_user: Pick user
-  pick_group: Pick group
-  pick_access_method: Pick method
-  new_resource_subtitle: Create new web resource
   welcome: Welcome,
   help:
-    title: Help
     pdp: Policy Decision Point
-  jobs:
-   title: Delayed jobs
   similar_access_policy_exists: Similar access policy already exists
-  file_store:
-    menu_item: File resources

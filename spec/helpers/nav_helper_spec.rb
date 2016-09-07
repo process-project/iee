@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'rails_helper'
 
 describe NavHelper do
   include ApplicationHelper
@@ -47,6 +47,25 @@ describe NavHelper do
         to match(/<li class="home active">/)
       expect(nav_link(html_options: { class: 'active' })).
         to match(/<li class="active">/)
+    end
+  end
+
+  describe 'nav_tab' do
+    it 'captures block output' do
+      expect(nav_tab(:key, 'value') { 'Testing Blocks' }).to match(/Testing Blocks/)
+    end
+
+    it 'performs checks on params' do
+      allow(controller).to receive(:params).and_return(foo: 'bar')
+
+      expect(nav_tab(:foo, 'bar')).to match(/active/)
+      expect(nav_tab(:foo, 'other')).to_not match(/active/)
+    end
+
+    it 'supports custom active class' do
+      allow(controller).to receive(:params).and_return(foo: 'bar')
+
+      expect(nav_tab(:foo, 'bar', active_class: 'my_active')).to match(/my_active/)
     end
   end
 end

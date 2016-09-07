@@ -10,7 +10,7 @@ RSpec.feature 'Delayed jobs monitoring' do
     visit(admin_job_path)
 
     expect(page.status_code).to eq(200)
-    expect(page).to have_content(I18n.t('jobs.title'))
+    expect(page).to have_content(I18n.t('layouts.left_menu.administration.jobs'))
   end
 
   scenario 'normal user cannot see jobs monitoring UI' do

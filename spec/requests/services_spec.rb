@@ -72,5 +72,42 @@ describe 'Services controller' do
         expect(ServiceOwnership.first.user).to eq user
       end
     end
+
+    describe 'PUT /services/:id' do
+      it 'denies to update not owned service' do
+        service = create(:service)
+
+        put service_path(service), params: { service: { name: 'new_name' } }
+
+        expect(response.status).to eq(403)
+      end
+
+      it 'updates attributes for managed service' do
+        service = create(:service, users: [user])
+
+        put service_path(service),
+            params: { service: { name: 'new_name', uri: 'http://new.pl' } }
+        service.reload
+
+        expect(service.name).to eq('new_name')
+        expect(service.uri).to eq('http://new.pl')
+      end
+    end
+
+    describe 'DELETE /service/:id' do
+      it 'denies to destroy not owned service' do
+        service = create(:service)
+
+        delete service_path(service)
+
+        expect(response.status).to eq(403)
+      end
+
+      it 'destroys managed service' do
+        service = create(:service, users: [user])
+
+        expect { delete service_path(service) }.to change { Service.count }.by(-1)
+      end
+    end
   end
 end

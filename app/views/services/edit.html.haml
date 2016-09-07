@@ -8,9 +8,9 @@
 
         %ul.nav.navbar-right.panel_toolbox
           %li
-            = link_to(groups_path) do
+            = link_to(@service, class: 'back') do
               = icon("hand-o-left", title: t('.back'))
         .clearfix
 
       .x_content
-        = render partial: 'form', locals: { group: @group }
+        = render partial: 'form', locals: { service: @service }

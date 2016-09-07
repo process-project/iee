@@ -1,6 +1,7 @@
 en:
   patients:
     index:
+      title: Patients
       nothing: There are no patients to be shown.
       new: New
       add: Add a new case
@@ -32,34 +33,61 @@ en:
     index:
       title: Services
       nothing: You do not manage any service right now.
-      add: Register a new service.
-      remove_title: Remove this service completelly.
+      add: Register a new service
+      remove: Remove this service completelly
+      edit: Edit this service
     new:
       title: New service
       subtitle: Register a new EurValve service in order to make it accessible to other users.
-      back_to_index: Go back to the service list.
+      back: Go back to the service list
+    show:
+      back: Go back to the service list
+    edit:
+      title: Edit service
+      subtitle: Edit service name and uri
+      back: Go back go the service
 
   groups:
+    group:
+      edit: Edit this group, manage group members
+      remove: Remove this group completelly
     index:
       title: Groups
       nothing: You do not manage any group right now.
-      add: Register a new group.
-      remove_title: Remove this group completelly.
-      edit_title: Edit this group, manage group members
+      add: Register a new group
     show:
-      back_to_index: Go back to the group list.
+      back: Go back to the group list
     new:
       title: New group
       subtitle: Register new user group.
-      back_to_index: Go back to the group list.
+      back: Go back to the group list
     edit:
       title: Edit group
       subtitle: Edit existing group. You can manage assigned users and other groups.
-      back_to_index: Go back to the group list.
+      back: Go back to the group
+
+  resources:
+    resource:
+      edit: Edit access policies
+      remove: Remove this resource
+    index:
+      title: Web resources
+      nothing: No web resources
+      add: Create new resource
+      name: Resource name
+      uri: Resource URI
+    new:
+        title: New web resource
+        subtitle: Create new web resource
+        back: Go back to the resource list
+        submit: Create resource
+        name: Resource name
+        path: Resource path
 
   profiles:
     layout:
       copy_jwt: Copy Json Web Token
+      title: Profile
     show:
       update: Update profile
       email_hint: Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service
@@ -80,3 +108,25 @@ en:
         destroy: Disconnect from PLGrid
       destroy:
         failure: Unable to disconect from PLGrid
+  access_policies:
+    new:
+      title: "%{name} (%{uri})"
+      subtitle: Manage access policies of your web resource
+      back: Go back to resource list
+      user: Access policies for user
+      group: Access policies for group
+      list: List of access policies
+      no_user_access_policies: No user access policies were set
+      no_group_access_policies: No group access policies were set
+      user_or_group: Pick user or group
+      add: Add new access policy
+      pick_user: Pick user
+      pick_group: Pick group
+      pick_method: Pick method
+      select_user: Select user
+      select_group: Select group
+      submit: Add access policy
+  admin:
+    jobs:
+      show:
+        title: Delayed jobs
