@@ -20,7 +20,7 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
   has_many :access_policies, dependent: :destroy
   has_many :computations
-  has_many :service_ownerships
+  has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
 
   validates :first_name, presence: true
