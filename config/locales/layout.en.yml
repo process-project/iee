@@ -21,4 +21,4 @@ en:
         title: Help
         sessions: JWT
         pdp: PDP
-        resource_policies: Resource policies
+        policies: Resource policies
