@@ -5,5 +5,9 @@ FactoryGirl.define do
       uri = URI.parse(Faker::Internet.url)
       "#{uri.scheme}://#{uri.host}"
     end
+
+    before :create do |service|
+      service.users << create(:user)
+    end
   end
 end

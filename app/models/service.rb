@@ -8,6 +8,8 @@ class Service < ApplicationRecord
             presence: true,
             uniqueness: true,
             format: { with: /\A#{URI.regexp}\z/ }
+  validates :users,
+            presence: true
 
   before_validation :check_if_not_override_uri
   before_create :generate_token
