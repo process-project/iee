@@ -1,0 +1,15 @@
+%h1
+  = t 'services.show.title'
+.col-md-12.col-sm-12.col-xs-12
+  .x_panel
+    .x_content
+      %ul.nav.nav-tabs.bar_tabs
+        = nav_link controller: :services do
+          = link_to 'Service details', service_path
+        = nav_link controller: :accounts do
+          = link_to 'Global policies', '#'
+        = nav_link controller: :passwords do
+          = link_to 'Local policies', '#'
+
+      .tab-content
+        = yield

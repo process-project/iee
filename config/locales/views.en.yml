@@ -41,6 +41,7 @@ en:
       subtitle: Register a new EurValve service in order to make it accessible to other users.
       back: Go back to the service list
     show:
+      title: Service management
       back: Go back to the service list
     edit:
       title: Edit service
