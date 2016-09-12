@@ -1,4 +1,4 @@
-= nav_link controller: [:profiles, :accounts, :passwords, :plgrids, :services, :groups, :access_policies, :resources] do
+= nav_link controller: [:profiles, :accounts, :passwords, :plgrids, :services, :local_policies, :global_policies, :groups, :access_policies, :resources] do
   %a
     = icon('sliders')
     = t('.title')
@@ -6,7 +6,7 @@
   %ul.nav.child_menu
     = nav_link controller: [:profiles, :accounts, :passwords, :plgrids], active_class: 'current-page' do
       = link_to(t('.profile'), profile_path)
-    = nav_link controller: :services, active_class: 'current-page' do
+    = nav_link controller: [:services, :local_policies, :global_policies], active_class: 'current-page' do
       = link_to(t('.services'), services_path)
     = nav_link controller: :groups, active_class: 'current-page' do
       = link_to(t('.groups'), groups_path)
