@@ -9,8 +9,6 @@ class ServicesController < ApplicationController
 
   def new
     @service = Service.new
-    # @service.uri_aliases << 'http://abc.pl'
-    # @service.uri_aliases << 'http://def.pl'
   end
 
   def show

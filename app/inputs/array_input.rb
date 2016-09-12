@@ -6,6 +6,7 @@ class ArrayInput < SimpleForm::Inputs::StringInput
     input_html_options[:type] ||= input_type
 
     a = gen_fields
+    a << next_field('', 0) if a.empty?
     oid = "add_#{attribute_name}"
     a << javascript_tag(gen_script(oid))
     a << content_tag(:a, 'Add', href: "javascript:#{oid}()", id: oid)
