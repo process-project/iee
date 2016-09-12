@@ -25,8 +25,8 @@ class Group < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  before_save :owner_ids_into_user_groups
-  before_save :member_ids_into_user_groups
+  after_save :owner_ids_into_user_groups
+  after_save :member_ids_into_user_groups
 
   def ancestors
     parents + parents.map(&:ancestors).flatten
