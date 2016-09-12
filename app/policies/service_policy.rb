@@ -9,7 +9,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    owned?
   end
 
   def edit?
