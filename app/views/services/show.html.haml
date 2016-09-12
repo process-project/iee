@@ -26,3 +26,11 @@
       %tr
         %td= t('simple_form.labels.service.uri')
         %td= @service.uri
+      %tr
+        %td= t('simple_form.labels.service.user_ids')
+        %td
+          %ul.list-inline
+            - @service.users.each do |user|
+              %li
+                %span.label.label-info.label-xl
+                  = user.name

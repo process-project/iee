@@ -22,7 +22,7 @@ en:
       service:
         name: Service name
         uri: Service access URL
-        token: Token
+        user_ids: Owners
       group:
         name: Group name
         member_ids: Group members
