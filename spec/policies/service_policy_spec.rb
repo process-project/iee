@@ -5,16 +5,23 @@ RSpec.describe ServicePolicy do
   let(:user) { create(:user) }
   let(:service) { create(:service) }
 
-  subject { ServicePolicy.new(user, service) }
+  subject { described_class }
 
-  describe '#update?' do
-    it 'allows updates on owned resources' do
+  permissions :edit?, :update?, :destroy?, :view_token? do
+    it 'grants access for service owner' do
       user.services << service
-      expect(subject.update?).to be_truthy
+
+      expect(subject).to permit(user, service)
     end
 
-    it 'blocks updates on not owned resources' do
-      expect(subject.update?).to be_falsey
+    it 'denies access for not service owner' do
+      expect(subject).to_not permit(user, service)
+    end
+  end
+
+  permissions :show? do
+    it 'grants access for everyone' do
+      expect(subject).to permit(user, service)
     end
   end
 end
