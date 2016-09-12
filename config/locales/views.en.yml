@@ -45,7 +45,7 @@ en:
       back: Go back to the service list
     edit:
       title: Edit service
-      subtitle: Edit service name and uri
+      subtitle: Edit service name and uri, manage ownership
       back: Go back go the service
     local_resources:
       index:

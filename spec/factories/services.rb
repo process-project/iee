@@ -7,7 +7,7 @@ FactoryGirl.define do
     end
 
     before :create do |service|
-      service.users << create(:user)
+      service.users << create(:user) unless service.users.present?
     end
   end
 end

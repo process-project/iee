@@ -23,6 +23,7 @@ en:
         name: Service name
         uri: Service access URL
         user_ids: Owners
+        users: Owners
       group:
         name: Group name
         member_ids: Group members
