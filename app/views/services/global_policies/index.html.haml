@@ -1,0 +1,13 @@
+= render('services/show_layout') do
+  - if @resources.exists?
+    %table.table
+      %thead
+        %tr
+          %th= t('simple_form.labels.service.name')
+          %th= t('simple_form.labels.service.uri')
+          %th
+        = render partial: 'resource', collection: @resources
+  - else
+    %p= t('services.global_resources.index.nothing')
+
+-# TODO add new global resource enabled only for service owner
