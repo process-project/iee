@@ -24,6 +24,7 @@ en:
         uri: Service access URL
         user_ids: Owners
         users: Owners
+        token: Service secret token
       group:
         name: Group name
         member_ids: Group members

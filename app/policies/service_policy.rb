@@ -24,6 +24,10 @@ class ServicePolicy < ApplicationPolicy
     owned?
   end
 
+  def view_token?
+    owned?
+  end
+
   def permitted_attributes
     [:name, :uri, user_ids: []]
   end
