@@ -26,25 +26,25 @@
               %td= @group.name
             %tr
               %td= t('simple_form.labels.group.member_ids')
-              %td= name_list(@group.members)
+              %td= pill_list(@group.members)
             %tr
               %td= t('simple_form.labels.group.owner_ids')
-              %td= name_list(@group.owners)
+              %td= pill_list(@group.owners)
             %tr
               %td= t('simple_form.labels.group.children')
-              %td= name_list(@group.children)
+              %td= pill_list(@group.children)
             %tr
               %td= t('simple_form.labels.group.parents')
-              %td= name_list(@group.parents)
+              %td= pill_list(@group.parents)
             %tr
               %td= t('simple_form.labels.group.ancestors')
-              %td= name_list(@group.ancestors)
+              %td= pill_list(@group.ancestors)
             %tr
               %td= t('simple_form.labels.group.offspring')
-              %td= name_list(@group.offspring)
+              %td= pill_list(@group.offspring)
             %tr
               %td= t('simple_form.labels.group.all_users')
-              %td= name_list(@group.all_users)
+              %td= pill_list(@group.all_users)
             %tr
               %td= t('simple_form.labels.group.default')
               %td= @group.default
