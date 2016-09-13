@@ -39,5 +39,11 @@
               = uri_alias
               %br
       %tr
+        %td= t('simple_form.labels.access_method.global')
+        %td= pill_list AccessMethod.global
+      %tr
+        %td= t('simple_form.labels.service.access_method_ids')
+        %td= pill_list @service.access_methods
+      %tr
         %td= t('simple_form.labels.service.token')
         %td= @service.token
