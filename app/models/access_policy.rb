@@ -7,7 +7,13 @@ class AccessPolicy < ApplicationRecord
 
   validate :user_xor_group
 
-  validates :access_method_id, presence: { message: I18n.t('missing_access_method') }
+  validates :access_method_id,
+            presence: { message: I18n.t('missing_access_method') },
+            inclusion: {
+              in: ->(ap) { ap.resource&.service.access_methods.map(&:id) },
+              unless: ->(ap) { ap.access_method&.service.nil? },
+              message: I18n.t('different_service_access_method')
+            }
   validates :resource_id, presence: { message: I18n.t('missing_resource') }
   validates :user_id, uniqueness: {
     scope: [:group_id, :access_method_id, :resource_id],
