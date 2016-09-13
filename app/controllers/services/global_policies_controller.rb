@@ -48,7 +48,7 @@ module Services
     private
 
     def find_and_authorize
-      @resource = Resource.find(params[:id])
+      @resource = @service.resources.find(params[:id])
       do_authorize
     end
 
