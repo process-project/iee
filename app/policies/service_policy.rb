@@ -25,7 +25,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :uri, user_ids: []]
+    [:name, :uri, user_ids: [], uri_aliases: []]
   end
 
   private

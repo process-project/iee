@@ -31,6 +31,13 @@
       %tr
         %td= t('simple_form.labels.service.user_ids')
         %td= pill_list @service.users
+      - unless @service.uri_aliases.empty?
+        %tr
+          %td= t('simple_form.labels.service.uri_aliases')
+          %td
+            - @service.uri_aliases.each do |uri_alias|
+              = uri_alias
+              %br
       %tr
         %td= t('simple_form.labels.service.token')
         %td= @service.token

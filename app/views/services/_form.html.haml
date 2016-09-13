@@ -4,7 +4,7 @@
   = f.input :uri
   - unless service.new_record?
     = f.association :users
-
+  = f.input :uri_aliases, as: :array
   .ln_solid
   .form-group
     .col-md-6.col-md-offset-3

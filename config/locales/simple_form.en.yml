@@ -25,6 +25,7 @@ en:
         user_ids: Owners
         users: Owners
         token: Service secret token
+        uri_aliases: URL Aliases
       group:
         name: Group name
         member_ids: Group members

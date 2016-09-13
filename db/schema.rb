@@ -113,12 +113,14 @@ ActiveRecord::Schema.define(version: 20160913091632) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.string   "uri",        null: false
-    t.string   "token",      null: false
+    t.string   "uri",                      null: false
+    t.string   "token",                    null: false
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "uri_aliases", default: [],              array: true
     t.index ["uri"], name: "index_services_on_uri", using: :btree
+    t.index ["uri_aliases"], name: "index_services_on_uri_aliases", using: :gin
   end
 
   create_table "user_groups", force: :cascade do |t|

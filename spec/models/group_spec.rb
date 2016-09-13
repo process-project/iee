@@ -93,5 +93,15 @@ RSpec.describe Group do
         group.update_attributes(member_ids: [], owner_ids: [u1.id])
       end.to change { UserGroup.count }.by(-2)
     end
+
+    it 'create group with user added as member and owner' do
+      user = create(:user)
+      group = build(:group, member_ids: [user.id], owner_ids: [user.id])
+
+      group.save!
+      user_group = UserGroup.find_by(user: user, group: group)
+
+      expect(user_group).to be_owner
+    end
   end
 end
