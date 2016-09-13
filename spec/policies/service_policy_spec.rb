@@ -7,7 +7,7 @@ RSpec.describe ServicePolicy do
 
   subject { described_class }
 
-  permissions :show?, :edit?, :update?, :destroy?, :view_token? do
+  permissions :show?, :edit?, :update?, :destroy? do
     it 'grants access for service owner' do
       service.users << user
       expect(subject).to permit(user, service)
