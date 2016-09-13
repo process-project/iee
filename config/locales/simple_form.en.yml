@@ -23,6 +23,7 @@ en:
         name: Service name
         uri: Service access URL
         token: Service secret token
+        uri_aliases: URL Aliases
       group:
         name: Group name
         member_ids: Group members

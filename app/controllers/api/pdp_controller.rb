@@ -20,7 +20,7 @@ module Api
 
     def service
       Service.find_each do |service|
-        break service if uri.starts_with?(service.uri)
+        return service if ([service.uri] + service.uri_aliases).any? { |u| uri.starts_with?(u) }
       end
     end
 

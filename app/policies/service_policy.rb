@@ -29,7 +29,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :uri]
+    [:name, :uri, uri_aliases: []]
   end
 
   private

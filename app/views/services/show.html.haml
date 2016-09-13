@@ -29,6 +29,13 @@
             %tr
               %td= t('simple_form.labels.service.uri')
               %td= @service.uri
+            - unless @service.uri_aliases.empty?
+              %tr
+                %td= t('simple_form.labels.service.uri_aliases')
+                %td
+                  - @service.uri_aliases.each do |uri_alias|
+                    = uri_alias
+                    %br
             - if policy(@service).view_token?
               %tr
                 %td= t('simple_form.labels.service.token')
