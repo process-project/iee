@@ -19,11 +19,27 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    if owns_resource? || record.new_record?
-      [:name, :path, :service_id]
-    else
-      []
-    end
+    [:name, :path]
+  end
+
+  def new?
+    owns_resource?
+  end
+
+  def create?
+    owns_resource?
+  end
+
+  def show?
+    owns_resource?
+  end
+
+  def edit?
+    owns_resource?
+  end
+
+  def update?
+    owns_resource?
   end
 
   def destroy?
@@ -31,11 +47,23 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   def owns_resource?
+    if record.global?
+      owns_global_resource?
+    else
+      owns_local_resource?
+    end
+  end
+
+  private
+
+  def owns_local_resource?
     record.access_policies.joins(:access_method).
       where(user_id: user.id, access_methods: { name: 'manage' }).exists?
   end
 
-  private
+  def owns_global_resource?
+    record.service.users.include?(user)
+  end
 
   def access_policies(access_method_name)
     groups_with_ancestors = UserGroupsWithAncestors.new(user).get

@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     end
   end
   resources :groups
-  resources :resources, except: [:show, :update, :edit]
+  resources :resources, only: :index
   resources :access_policies, only: [:new, :create, :destroy]
   resources :computations, only: [:show, :create]
 

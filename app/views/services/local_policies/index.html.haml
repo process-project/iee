@@ -1,3 +1,5 @@
+%h1
+  = t('.title', service_name: @service.name)
 = render('services/show_layout') do
   - if @resources.exists?
     %table.table
@@ -8,6 +10,4 @@
           %th
         = render partial: 'resource', collection: @resources
   - else
-    %p= t('services.local_resources.index.nothing')
-
--# TODO add new global resource enabled only for service owner
+    %p= t('services.local_policies.index.nothing')

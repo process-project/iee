@@ -1,3 +1,5 @@
+%h1
+  = t('.title', name: @service.name)
 = render('services/show_layout') do
   .col-md-9
     %h2= @service.name
