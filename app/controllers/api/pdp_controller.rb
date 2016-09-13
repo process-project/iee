@@ -7,9 +7,12 @@ module Api
 
     private
 
-    # policies of all matching resources must allow for access and at least one policy has to exist
+    # policies of all matching resources which include the access method in question
+    # must allow for access and at least one policy has to exist
     def permit?
-      resources = service&.resources&.where(':path ~ path', path: path)
+      resources = service&.resources&.joins(access_policies: :access_method)&.
+        where(':path ~ path', path: path)&.
+        where(access_methods: { name: params[:access_method].downcase })
       every_resource_permitted? resources
     end
 

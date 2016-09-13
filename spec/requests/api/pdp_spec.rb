@@ -33,6 +33,21 @@ RSpec.describe 'PDP' do
       expect(response.status).to eq(403)
     end
 
+    it `returns 200 if another policy with a matching path but different access methods exist` do
+      create(:user_access_policy, user: user, resource: resource, access_method: access_method)
+      another_access_method = create(:access_method, name: 'post')
+      another_mathing_resource = create(:resource, path: '.*', service: service)
+      create(:user_access_policy,
+             user: user,
+             resource: another_mathing_resource,
+             access_method: another_access_method)
+
+      get api_pdp_index_path,
+          params: { uri: resource.uri, access_method: 'get' }
+
+      expect(response.status).to eq(200)
+    end
+
     context 'resource with regular expressions' do
       let(:resource) { create(:resource, path: 'path/.*', service: service) }
 
@@ -71,16 +86,14 @@ RSpec.describe 'PDP' do
         expect(response.status).to eq(403)
       end
 
-      context 'several resources with overlapping regular expressions' do
-        let(:resource_2) do
-          create(:resource, path: 'path/extra/.*', service: service)
-        end
-        let(:access_method_2) { create(:access_method, name: 'post') }
+      context 'several resources with overlapping regular expressions and different users' do
+        let(:resource_2) { create(:resource, path: 'path/extra/.*', service: service) }
+        let(:user_2) { create(:user, :approved) }
 
         before do
           create(:user_access_policy,
-                 user: user, resource: resource_2,
-                 access_method: access_method_2)
+                 user: user_2, resource: resource_2,
+                 access_method: access_method)
         end
 
         it 'returns 403 as conflicting access policies exist' do
