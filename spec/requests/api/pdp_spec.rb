@@ -36,7 +36,10 @@ RSpec.describe 'PDP' do
     it `returns 200 if another policy with a matching path but different access methods exist` do
       create(:user_access_policy, user: user, resource: resource, access_method: access_method)
       another_access_method = create(:access_method, name: 'post')
-      another_mathing_resource = create(:resource, path: '.*', service: service)
+      another_mathing_resource = create(:resource,
+                                        path: '.*',
+                                        service: service,
+                                        resource_type: :global)
       create(:user_access_policy,
              user: user,
              resource: another_mathing_resource,
@@ -87,7 +90,10 @@ RSpec.describe 'PDP' do
       end
 
       context 'several resources with overlapping regular expressions and different users' do
-        let(:resource_2) { create(:resource, path: 'path/extra/.*', service: service) }
+        let(:resource_2) do
+          create(:resource,
+                 path: 'path/extra/.*', service: service, resource_type: :global)
+        end
         let(:user_2) { create(:user, :approved) }
 
         before do
