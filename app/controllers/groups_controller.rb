@@ -16,8 +16,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(permitted_attributes(Group))
-    @group.user_groups.build(user: current_user, owner: true)
+    @group = Group.new(create_params)
     authorize(@group)
 
     if @group.save
@@ -48,6 +47,14 @@ class GroupsController < ApplicationController
   end
 
   private
+
+  def create_params
+    attrs = permitted_attributes(Group)
+    attrs[:owner_ids] ||= []
+    attrs[:owner_ids] << current_user.id
+
+    attrs
+  end
 
   def find_group_and_authorize
     @group = Group.find(params[:id])
