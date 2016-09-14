@@ -10,9 +10,13 @@
 #= require_tree .
 #= require_tree ../../../vendor/assets/javascripts/.
 
-$(document).ready ->
+init_icheck = () ->
   $('input').iCheck {checkboxClass: 'icheckbox_flat-green', radioClass: 'iradio_flat-green'}
 
+$ ->
+  $(document).on('turbolinks:load', init_icheck)
+
+$(document).ready ->
   # Flash
   if (flash = $(".flash-container")).length > 0
     flash.click -> $(@).fadeOut()
