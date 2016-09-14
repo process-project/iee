@@ -1,5 +1,5 @@
 %tr
-  %td= link_to(resource.name, service_global_policy_path(@service, resource))
+  %td= link_to(resource.name || resource.path, service_global_policy_path(@service, resource))
   %td= resource.uri
   %td
     = link_to(edit_service_global_policy_path(@service, resource),
