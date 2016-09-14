@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  factory :group do
-    name { Faker::Name.name }
-
-    factory :supervisor_group do
-      name 'supervisor'
-    end
-  end
-
   factory :user do
     email { Faker::Internet.email }
     password '12345678'

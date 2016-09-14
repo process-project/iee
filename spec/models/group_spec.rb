@@ -73,21 +73,24 @@ RSpec.describe Group do
   context 'members and owners' do
     it 'are converted into user_groups' do
       group = create(:group)
-      u1, u2, u3 = create_list(:user, 3)
+      u1 = group.user_groups.first.user
+      u2, u3 = create_list(:user, 2)
 
       expect do
         group.update_attributes(member_ids: [u1.id, u2.id],
                                 owner_ids: [u2.id, u3.id])
-      end.to change { UserGroup.count }.by(3)
+      end.to change { UserGroup.count }.by(2)
     end
 
     it 'removes user_groups for non existing members and owners' do
-      group = create(:group)
+      group = build(:group)
       u1, u2, u3 = create_list(:user, 3)
 
-      group.user_groups.create(user: u1, owner: true)
-      group.user_groups.create(user: u2, owner: true)
-      group.user_groups.create(user: u3, owner: false)
+      group.user_groups.build(user: u1, owner: true)
+      group.user_groups.build(user: u2, owner: true)
+      group.user_groups.build(user: u3, owner: false)
+
+      group.save!
 
       expect do
         group.update_attributes(member_ids: [], owner_ids: [u1.id])
@@ -102,6 +105,12 @@ RSpec.describe Group do
       user_group = UserGroup.find_by(user: user, group: group)
 
       expect(user_group).to be_owner
+    end
+
+    it 'don\'t allow to create group without owner' do
+      group = build(:group)
+
+      expect(group).to_not be_valid
     end
   end
 end
