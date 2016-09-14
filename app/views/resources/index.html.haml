@@ -1,8 +1,5 @@
 %h1
   = t('.title')
-  .pull-right
-    %a{href: url_for(new_resource_path), title: t('.add'), class: 'btn btn-success'}
-      = icon('plus', t('.add'))
 .x_panel
   .x_content
     - if @resources.exists?

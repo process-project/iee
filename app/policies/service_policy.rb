@@ -9,7 +9,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    owned?
   end
 
   def edit?
@@ -24,12 +24,8 @@ class ServicePolicy < ApplicationPolicy
     owned?
   end
 
-  def view_token?
-    owned?
-  end
-
   def permitted_attributes
-    [:name, :uri, uri_aliases: []]
+    [:name, :uri, user_ids: [], uri_aliases: []]
   end
 
   private

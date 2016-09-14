@@ -9,7 +9,6 @@ RSpec.describe ServiceOwnership do
 
   it 'prevents duplicated ownership records through validation' do
     duplicated = subject.dup
-    expect(ServiceOwnership.count).to eq 1
     expect(duplicated.valid?).to be_falsey
     expect(duplicated.errors[:service]).to include 'has already been taken'
   end

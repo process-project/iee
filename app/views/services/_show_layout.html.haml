@@ -1,0 +1,12 @@
+.x_panel
+  .x_content
+    %ul.nav.nav-tabs.bar_tabs
+      = nav_link controller: :services do
+        = link_to 'Service details', service_path(@service)
+      = nav_link controller: :global_policies do
+        = link_to 'Global policies', service_global_policies_path(service_id: @service.id)
+      = nav_link controller: :local_policies do
+        = link_to 'Local policies', service_local_policies_path(service_id: @service.id)
+
+    .tab-content
+      = yield

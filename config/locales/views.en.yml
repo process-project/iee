@@ -41,11 +41,36 @@ en:
       subtitle: Register a new EurValve service in order to make it accessible to other users.
       back: Go back to the service list
     show:
+      title: "%{name} service"
       back: Go back to the service list
     edit:
       title: Edit service
-      subtitle: Edit service name and uri
+      subtitle: Edit service name and uri, manage ownership
       back: Go back go the service
+    local_policies:
+      index:
+        title: "%{service_name} service - local policies"
+        nothing: No local resource policies defined
+        policy_name: Policy name
+        policy_uri: Policy URI
+    global_policies:
+      index:
+        title: "%{service_name} service - global policies"
+        nothing: No global resource policies defined
+        add: Add new global policy
+        policy_name: Policy name
+        policy_uri: Policy URI
+      resource:
+        edit: Edit access policies
+        remove: Remove this resource
+      new:
+        title: "%{service_name} service - new global policy"
+      show:
+        title: "%{service_name} service - %{name} global policy"
+      edit:
+        title: "%{service_name} service - edit %{name} global policy"
+        subtitle: Edit resource name and path
+        back: Go back to global policy
 
   groups:
     group:

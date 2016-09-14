@@ -22,8 +22,14 @@ en:
       service:
         name: Service name
         uri: Service access URL
+        user_ids: Owners
+        users: Owners
         token: Service secret token
         uri_aliases: URL Aliases
+        access_method_ids: Service-specific access methods
+        access_methods: Service-specific access methods
+      access_method:
+        global: Global access methods
       group:
         name: Group name
         member_ids: Group members
@@ -44,6 +50,10 @@ en:
     hints:
       user:
         current_password: You must provide your current password in order to change it.
+      service:
+        access_methods: |
+          The following global access methods are available: %{globals}. You don't need
+          to add them here in order to be able to define access policies for them.
     # Examples
     # labels:
     #   defaults:

@@ -7,13 +7,36 @@ RSpec.describe AccessPolicy do
   it { should belong_to(:access_method) }
   it { should belong_to(:resource) }
 
-  it 'validates access_method presence' do
-    access_policy = build(:access_policy, access_method: nil)
+  describe '#access_method' do
+    let(:service) { create(:service) }
+    let(:access_method) { create(:access_method, service: service) }
+    let(:resource) { create(:resource, service: service) }
 
-    access_policy.validate
+    it 'validates access_method presence' do
+      access_policy = build(:access_policy, access_method: nil)
 
-    expect(access_policy).to_not be_valid
-    expect(access_policy.errors[:access_method_id]).to include(I18n.t('missing_access_method'))
+      access_policy.validate
+
+      expect(access_policy).to_not be_valid
+      expect(access_policy.errors[:access_method_id]).to include(I18n.t('missing_access_method'))
+    end
+
+    it 'allows global (no-service) access methods' do
+      access_policy = build(:user_access_policy)
+      expect(access_policy).to be_valid
+    end
+
+    it 'allows access methods defined for the related service' do
+      access_policy = build(:user_access_policy, resource: resource, access_method: access_method)
+      expect(access_policy).to be_valid
+    end
+
+    it 'restricts service-scoped access methods' do
+      access_policy = build(:user_access_policy, access_method: access_method)
+      expect(access_policy).not_to be_valid
+      expect(access_policy.errors[:access_method_id]).
+        to include I18n.t('different_service_access_method')
+    end
   end
 
   it 'validates resource presence' do

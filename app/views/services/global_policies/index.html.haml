@@ -1,0 +1,18 @@
+%h1
+  = t('.title', service_name: @service.name)
+  .pull-right
+    = link_to(new_service_global_policy_path(@service),
+      title: t('services.global_policies.index.add'),
+      class: 'btn btn-success') do
+      = icon('plus', t('.add'))
+= render('services/show_layout') do
+  - if @resources.exists?
+    %table.table
+      %thead
+        %tr
+          %th= t('services.global_policies.index.policy_name')
+          %th= t('services.global_policies.index.policy_uri')
+          %th
+        = render partial: 'resource', collection: @resources
+  - else
+    %p= t('services.global_policies.index.nothing')

@@ -92,6 +92,26 @@ describe 'Services controller' do
         expect(service.name).to eq('new_name')
         expect(service.uri).to eq('http://new.pl')
       end
+
+      it 'updates ownership' do
+        service = create(:service, users: [user])
+
+        put service_path(service),
+            params: { service: { user_ids: [user.id, create(:user).id] } }
+        service.reload
+
+        expect(service.users.count).to eq 2
+      end
+
+      it 'prevents orphan services' do
+        service = create(:service, users: [user])
+
+        put service_path(service),
+            params: { service: { name: 'orphan?', user_ids: [] } }
+        service.reload
+
+        expect(service.users.count).to eq 1
+      end
     end
 
     describe 'DELETE /service/:id' do

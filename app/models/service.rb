@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Service < ApplicationRecord
   has_many :resources, dependent: :destroy
+  has_many :access_methods, dependent: :destroy
   has_many :service_ownerships, dependent: :destroy
   has_many :users, through: :service_ownerships
 
@@ -8,6 +9,8 @@ class Service < ApplicationRecord
             presence: true,
             uniqueness: true,
             format: { with: /\A#{URI.regexp}\z/ }
+  validates :users,
+            presence: true
 
   before_validation :reject_blank_aliases
   before_validation :check_if_not_override_uri

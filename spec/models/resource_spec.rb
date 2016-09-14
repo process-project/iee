@@ -38,13 +38,6 @@ RSpec.describe Resource do
     expect(resource.path).to eq('my-path')
   end
 
-  it 'should set a default resource type to global' do
-    resource = create(:resource)
-
-    expect(resource.resource_type).to eq('global')
-    expect(resource.global?).to be(true)
-  end
-
   it 'should not allow for a creation of a local resource which matches another local resource' do
     create(:resource, path: '/path/.*', resource_type: :local)
     another_resource = build(:resource, path: '/path.*')

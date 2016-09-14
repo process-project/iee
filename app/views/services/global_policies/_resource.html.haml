@@ -1,0 +1,10 @@
+%tr
+  %td= link_to(resource.name || resource.path, service_global_policy_path(@service, resource))
+  %td= resource.uri
+  %td
+    = link_to(edit_service_global_policy_path(@service, resource),
+      title: t('.edit'), class: 'edit') do
+      = icon('edit')
+    = link_to(service_global_policy_path(@service, resource), title: t('.remove'), method: :delete,
+        data: {confirm: t('are_you_sure')}, class: 'delete') do
+      = icon('remove')

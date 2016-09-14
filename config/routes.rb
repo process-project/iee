@@ -37,9 +37,14 @@ Rails.application.routes.draw do
     resources :policy_entities, only: :index
   end
 
-  resources :services
+  resources :services do
+    scope module: :services do
+      resources :local_policies, only: :index
+      resources :global_policies
+    end
+  end
   resources :groups
-  resources :resources, except: [:show, :update, :edit]
+  resources :resources, only: :index
   resources :access_policies, only: [:new, :create, :destroy]
   resources :computations, only: [:show, :create]
 

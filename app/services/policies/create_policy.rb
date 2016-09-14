@@ -9,7 +9,9 @@ module Policies
 
     def call
       Resource.transaction do
-        resource = Resource.create(service: @service, path: @json_body['path'])
+        resource = Resource.create(service: @service,
+                                   path: @json_body['path'],
+                                   resource_type: :local)
         safely_create_access_policy(@user, nil, ['manage'], resource)
         create_access_policies(resource)
         create_user_managers(resource)

@@ -122,7 +122,21 @@ RSpec.describe 'Policies API' do
     expect(AccessPolicy.first.access_method.name).to eq('get')
   end
 
-  it `should append the manage role for a path which is created` do
+  it 'should create a local resource when valid creation request is sent' do
+    post  api_policies_path,
+          params: policy_post_params(
+            path: '/another/path',
+            permissions: [{ type: 'user_permission',
+                            entity_name: user.email,
+                            access_methods: ['get'] }]
+          ),
+          headers: valid_auth_headers,
+          as: :json
+
+    expect(Resource.last).to be_local
+  end
+
+  it 'should append the manage role for a path which is created' do
     create(:access_method, name: 'manage')
 
     post  api_policies_path,
@@ -139,7 +153,7 @@ RSpec.describe 'Policies API' do
       create(:access_policy, user: user, resource: resource, access_method: manage_method)
     end
 
-    it `should merge the new method of the given policy with an existing one` do
+    it 'should merge the new method of the given policy with an existing one' do
       create(:access_method, name: 'post')
 
       post  api_policies_path,
@@ -156,7 +170,7 @@ RSpec.describe 'Policies API' do
       expect(AccessPolicy.last.access_method.name).to eq('post')
     end
 
-    it `should merge the given user manager of the given policy with an existing one` do
+    it 'should merge the given user manager of the given policy with an existing one' do
       another_user = create(:user, email: 'another@host.com', approved: true)
 
       post  api_policies_path,
@@ -172,7 +186,7 @@ RSpec.describe 'Policies API' do
       expect(AccessPolicy.last.access_method.name).to eq('manage')
     end
 
-    it `should merge the given management group of the given policy with an existing one` do
+    it 'should merge the given management group of the given policy with an existing one' do
       another_group = create(:group, name: 'another_group')
 
       post  api_policies_path,
@@ -208,7 +222,7 @@ RSpec.describe 'Policies API' do
     end
   end
 
-  it `should return a forbidden status when a user is not allowed to manage a given resource` do
+  it 'should return a forbidden status when a user is not allowed to manage a given resource' do
     another_user = create(:user, email: 'another@host.com', approved: true)
 
     post  api_policies_path,
@@ -219,13 +233,13 @@ RSpec.describe 'Policies API' do
     expect(response.status).to eq(403)
   end
 
-  it `should return a bad request when no path parameter is given` do
+  it 'should return a bad request when no path parameter is given' do
     delete api_policies_path, headers: valid_auth_headers
 
     expect(response.status).to eq(400)
   end
 
-  it `should return a bad request when removing a resource with invalid path` do
+  it 'should return a bad request when removing a resource with invalid path' do
     delete api_policies_path, params: { path: 'not_existing_path' }, headers: valid_auth_headers
 
     expect(response.status).to eq(400)
@@ -242,7 +256,7 @@ RSpec.describe 'Policies API' do
     expect(response.status).to eq(400)
   end
 
-  it `should return a forbidden status when a user does not own every resource being deleted` do
+  it 'should return a forbidden status when a user does not own every resource being deleted' do
     another_user = create(:user, email: 'another@host.com', approved: true)
 
     delete  api_policies_path,
