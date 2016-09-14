@@ -9,8 +9,11 @@
         %h3= current_user.name
         %button#d_clip_button.btn.btn-success{ 'data-clipboard-target' => 'fe_text', 'data-clipboard-text' => current_user.token, :title => t('profiles.layout.copy_jwt')}= t('profiles.layout.copy_jwt')
         :javascript
-          $(document).ready(function() {
+          $(document).on("turbolinks:load", function() {
             new ZeroClipboard($("#d_clip_button"))
+          });
+          $(document).on("turbolinks:before-visit", function() {
+            ZeroClipboard.destroy();
           });
     .col-md-9.col-sm-9.col-xs-12
       %ul.nav.nav-tabs.bar_tabs
