@@ -10,7 +10,7 @@ class Resource < ApplicationRecord
   validates :path, presence: true, uniqueness: { scope: :service_id }
   validates :service, presence: true
   validates :resource_type, presence: true
-  validate :local_path_exclusion
+  validate :local_path_exclusion, if: :local?
 
   before_validation :unify_path
 
