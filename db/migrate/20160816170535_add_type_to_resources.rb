@@ -4,8 +4,13 @@ class AddTypeToResources < ActiveRecord::Migration[5.0]
 
     reversible do |dir|
       dir.up do
-        Resource.all.each do |resource|
-          resource.path.start_with?('webdav') ? resource.global! : resource.local!
+        resources = execute("SELECT * FROM resources")
+        resources.each do |resource|
+          if resource['path'].start_with?('webdav')
+            execute("UPDATE resources SET resource_type = 0 WHERE id = #{resource['id']}")
+          else
+            execute("UPDATE resources SET resource_type = 1 WHERE id = #{resource['id']}")
+          end
         end
       end
     end

@@ -18,25 +18,40 @@ class CreateServices < ActiveRecord::Migration[4.2]
 
     reversible do |dir|
       dir.up do
-        Resource.find_each do |resource|
-          uri = URI.parse(resource.path)
-          service = Service.find_or_create_by(
-            uri: "#{uri.scheme || 'https'}://#{uri.host}"
-          )
-
-          resource.update_columns(service_id: service.id, path: uri.path)
+        resources = execute("SELECT * FROM resources")
+        resources.each do |resource|
+          uri = URI.parse(resource['path'])
+          uri_path = "#{uri.scheme || 'https'}://#{uri.host}"
+          services = execute("SELECT id FROM services WHERE uri = '#{uri_path}'")
+          if services.count == 0
+            token ||= loop do
+              random_token = SecureRandom.hex
+              token_clash = execute("SELECT id FROM services WHERE token = '#{random_token}'")
+              break random_token unless token_clash.count > 0
+            end
+            sql = <<-SQL
+              INSERT INTO services(uri, token, created_at, updated_at)
+              VALUES ('#{uri_path}', '#{token}', '#{Time.now.to_s}', '#{Time.now.to_s}')
+              RETURNING id
+            SQL
+            service_id = execute(sql).first['id']
+          else
+            service_id = services.first['id']
+          end
+          execute ("UPDATE resources SET service_id = #{service_id}, path = '#{uri.path}' WHERE id = #{resource['id']}")
         end
       end
 
       dir.down do
-        Resource.joins(:service).find_each do |resource|
-          uri = URI.parse(resource.service.uri)
-          uri.path = if resource.path.start_with?('/')
-                       resource.path
+        resources = execute("SELECT * FROM resources JOIN services ON resources.service_id = services.id")
+        resources.each do |resource|
+          uri = URI.parse(resource['uri'])
+          uri.path = if resource['path'].start_with?('/')
+                       resource['path']
                      else
-                       "/#{resource.path}"
+                       "/#{resource['path']}"
                      end
-          resource.update_column(:path, uri.to_s)
+          execute "UPDATE resources SET path = '#{uri.to_s}' WHERE id = #{resource['id']}"
         end
       end
     end
