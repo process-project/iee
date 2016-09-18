@@ -122,7 +122,7 @@ RSpec.describe User do
     supervisor_group = build(:group, name: 'supervisor')
     supervisor = create(:user)
     supervisor_group.user_groups.build(user: supervisor, owner: true)
-    supervisor.save!
+    supervisor_group.save!
 
     create(:user)
 

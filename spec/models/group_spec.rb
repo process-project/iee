@@ -14,10 +14,11 @@ RSpec.describe Group do
 
   context 'has no ancestors' do
     let(:orphan) { create(:group) }
+
     it 'is valid' do
-      valid_orphan = build(:group)
-      expect(valid_orphan.valid?).to be_truthy
+      expect(orphan.valid?).to be_truthy
     end
+
     it 'returns empty ancestors array' do
       expect(orphan.ancestors).to eq []
     end
@@ -26,8 +27,7 @@ RSpec.describe Group do
   context 'has no offspring' do
     let(:childless) { create(:group) }
     it 'is valid' do
-      valid_childless = build(:group)
-      expect(valid_childless.valid?).to be_truthy
+      expect(childless.valid?).to be_truthy
     end
     it 'returns empty offspring array' do
       expect(childless.offspring).to eq []

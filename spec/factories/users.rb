@@ -16,7 +16,9 @@ FactoryGirl.define do
 
     trait :supervisor do
       after(:create) do |user, _evaluator|
-        create_list(:supervisor_group, 1, users: [user])
+        group = build(:supervisor_group)
+        group.user_groups.build(user: user, owner: true)
+        group.save!
       end
     end
 
