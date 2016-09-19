@@ -132,6 +132,34 @@ RSpec.describe User do
     expect(supervisors.first.id).to eq supervisor.id
   end
 
+  context 'hierarchical groups' do
+    let(:user) { create(:user) }
+
+    it 'should return a single group' do
+      user.groups << create(:group, name: 'group1')
+
+      expect(user.all_groups.count).to eq 1
+      expect(user.all_groups.first.name).to eq 'group1'
+    end
+
+    it 'should return a group and its parent' do
+      parent = create(:group, name: 'parent')
+      user.groups << create(:group, name: 'child', parents: [parent])
+
+      expect(user.all_groups.count).to eq 2
+      expect(user.all_groups.map(&:name)).to match_array(['parent', 'child'])
+    end
+
+    it 'should not contain a child group if user belongs to parent' do
+      parent = create(:group, name: 'parent')
+      create(:group, name: 'child', parents: [parent])
+      user.groups << parent
+
+      expect(user.all_groups.count).to eq 1
+      expect(user.all_groups.map(&:name)).to match_array(['parent'])
+    end
+  end
+
   private
 
   def issuer_from_token(enc_token)
