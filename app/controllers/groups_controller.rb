@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to(group_path(@group))
     else
-      render(:edit)
+      render(:new)
     end
   end
 
