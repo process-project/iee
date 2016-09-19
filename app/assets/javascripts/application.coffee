@@ -21,4 +21,4 @@ $(document).ready ->
   if (flash = $(".flash-container")).length > 0
     flash.click -> $(@).fadeOut()
     flash.show()
-    setTimeout (-> flash.fadeOut()), 3000
+    setTimeout (-> flash.fadeOut()), 10000
