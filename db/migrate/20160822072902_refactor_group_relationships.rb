@@ -7,6 +7,6 @@ class RefactorGroupRelationships < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     add_index :group_relationships, [:parent_id, :child_id], unique: true
-    remove_column :groups, :parent_group_id, index: true
+    remove_reference :groups, :parent_group, index: true
   end
 end
