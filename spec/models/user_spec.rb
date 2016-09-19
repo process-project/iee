@@ -119,8 +119,11 @@ RSpec.describe User do
   end
 
   it 'returns supervisors' do
-    supervisor_group = create(:group, name: 'supervisor')
-    supervisor = create(:user, groups: [supervisor_group])
+    supervisor_group = build(:group, name: 'supervisor')
+    supervisor = create(:user)
+    supervisor_group.user_groups.build(user: supervisor, owner: true)
+    supervisor_group.save!
+
     create(:user)
 
     supervisors = User.supervisors

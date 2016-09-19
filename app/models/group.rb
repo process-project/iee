@@ -24,9 +24,10 @@ class Group < ApplicationRecord
 
   validates :name, presence: true
   validates :name, uniqueness: true
+  validate :at_least_one_owner
 
-  after_save :owner_ids_into_user_groups
-  after_save :member_ids_into_user_groups
+  before_validation :owner_ids_into_user_groups
+  before_validation :member_ids_into_user_groups
 
   def ancestors
     parents + parents.map(&:ancestors).flatten
@@ -84,11 +85,15 @@ class Group < ApplicationRecord
   def create_user_groups(members, owner:)
     members.each do |member|
       user_group = user_groups.find_or_initialize_by(user: member)
-      user_group.update(owner: owner)
+      user_group.owner = owner
     end
   end
 
   def destroy_non_existing(members, owner:)
     user_groups.where(owner: owner).where.not(user: members).destroy_all
+  end
+
+  def at_least_one_owner
+    errors.add(:owner_ids, 'At least one group owner is required') unless user_groups.any?(&:owner)
   end
 end

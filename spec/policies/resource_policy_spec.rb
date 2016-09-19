@@ -78,8 +78,7 @@ RSpec.describe ResourcePolicy do
     end
 
     it 'checks user parent group permission' do
-      parent_group = build(:group, name: 'parent group', children: [group])
-      parent_group.save!
+      parent_group = create(:group, name: 'parent group', children: [group])
       create(:access_policy,
              access_method: get_method, group: parent_group, resource: resource)
       user.reload

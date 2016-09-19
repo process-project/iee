@@ -24,8 +24,11 @@ RSpec.describe Notifier do
     end
 
     def create_supervisors(supervisors_count = 1)
-      supervisor_group = create(:group, name: 'supervisor')
-      create_list(:user, supervisors_count, groups: [supervisor_group])
+      supervisor_group = build(:group, name: 'supervisor')
+      create_list(:user, supervisors_count).tap do |users|
+        users.each { |u| supervisor_group.user_groups.build(user: u, owner: true) }
+        supervisor_group.save!
+      end
     end
   end
 

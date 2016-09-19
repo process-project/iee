@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  factory :group do
-    name { Faker::Name.name }
-
-    factory :supervisor_group do
-      name 'supervisor'
-    end
-  end
-
   factory :user do
     email { Faker::Internet.email }
     password '12345678'
@@ -24,7 +16,9 @@ FactoryGirl.define do
 
     trait :supervisor do
       after(:create) do |user, _evaluator|
-        create_list(:supervisor_group, 1, users: [user])
+        group = build(:supervisor_group)
+        group.user_groups.build(user: user, owner: true)
+        group.save!
       end
     end
 
