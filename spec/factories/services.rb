@@ -15,5 +15,9 @@ FactoryGirl.define do
     before :create do |service|
       service.users << create(:user) unless service.users.present?
     end
+
+    after :build do |service|
+      service.users << create(:user) unless service.users.present?
+    end
   end
 end

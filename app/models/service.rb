@@ -39,6 +39,7 @@ class Service < ApplicationRecord
   end
 
   def check_if_not_override_uri
+    # Hint: .any?{ |l| (l.uri =~ /\A.*:\/\/.*\/.*\z/) }
     if uri.present? && Service.where('uri LIKE ?', "#{uri}%").where.not(id: id).count.positive?
       errors.add(:uri,
                  I18n.t('activerecord.errors.models.service.uri.override'))

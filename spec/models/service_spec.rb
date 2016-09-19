@@ -7,6 +7,10 @@ RSpec.describe Service do
   it { should validate_presence_of(:uri) }
   it { should validate_uniqueness_of(:uri) }
 
+  it 'auto-validate built service' do
+    build(:service).valid?
+  end
+
   # NOTE: default uniqueness test seams to not work properly for PSQL Tables
   it 'validates uri_aliases uniqueness' do
     s1 = create(:service)
@@ -62,6 +66,34 @@ RSpec.describe Service do
     expect(service).to_not be_valid
   end
 
+  it 'doesn\'t allow to create second service with lower uri' do
+    create(:service, uri: 'https://my.service.pl/my/service')
+    service = build(:service, uri: 'https://my.service.pl/my/service/1')
+
+    expect(service).to_not be_valid
+  end
+
+  it 'allow to create second service with equal-level uri' do
+    create(:service, uri: 'https://my.service.pl/1')
+    service = build(:service, uri: 'https://my.service.pl/2')
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with longer TLD' do
+    create(:service, uri: 'https://my.service.co')
+    service = build(:service, uri: 'https://my.service.com')
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with shorter TLD' do
+    create(:service, uri: 'https://my.service.com')
+    service = build(:service, uri: 'https://my.service.co')
+
+    expect(service).to be_valid
+  end
+
   it 'doesn\'t allow to create second service with higher uri as alias' do
     create(:service, uri: 'https://my.service.pl/my/service')
     service = build(:service, uri_aliases: ['https://my.service.pl'])
@@ -74,6 +106,62 @@ RSpec.describe Service do
     service = build(:service, uri: 'https://my.service.pl')
 
     expect(service).to_not be_valid
+  end
+
+  it 'doesn\'t allow to create second service with lower uri as alias' do
+    create(:service, uri: 'https://my.service.pl/my/service')
+    service = build(:service, uri_aliases: ['https://my.service.pl/my/service/1'])
+
+    expect(service).to_not be_valid
+  end
+
+  it 'doesn\'t allow to create second service with lower uri_alias' do
+    create(:service, uri_aliases: ['https://my.service.pl/my/service'])
+    service = build(:service, uri: 'https://my.service.pl/my/service/1')
+
+    expect(service).to_not be_valid
+  end
+
+  it 'allow to create second service with equal uri as alias' do
+    create(:service, uri: 'https://my.service.pl/1')
+    service = build(:service, uri_aliases: ['https://my.service.pl/2'])
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with equal uri_alias' do
+    create(:service, uri_aliases: ['https://my.service.pl/1'])
+    service = build(:service, uri: 'https://my.service.pl/2')
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with longer TLD as alias' do
+    create(:service, uri: 'https://my.service.co')
+    service = build(:service, uri_aliases: ['https://my.service.com'])
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with longer TLD in uri_alias' do
+    create(:service, uri_aliases: ['https://my.service.co'])
+    service = build(:service, uri: 'https://my.service.com')
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with shorter TLD as alias' do
+    create(:service, uri: 'https://my.service.com')
+    service = build(:service, uri_aliases: ['https://my.service.co'])
+
+    expect(service).to be_valid
+  end
+
+  it 'allow to create second service with shorter TLD in uri_alias' do
+    create(:service, uri_aliases: ['https://my.service.com'])
+    service = build(:service, uri: 'https://my.service.co')
+
+    expect(service).to be_valid
   end
 
   it 'allows to update a service without failing URI validation' do
