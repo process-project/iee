@@ -2,7 +2,7 @@
 class FileStoreController < ApplicationController
   def index
     @user_email = current_user.email
-    @user_groups = current_user.all_groups.map(&:name)
+    @user_groups = current_user.all_groups.map(&:name).to_s
     @token = current_user.token
     set_urls
   end
