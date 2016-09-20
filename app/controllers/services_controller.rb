@@ -52,12 +52,14 @@ class ServicesController < ApplicationController
   end
 
   def new_access_methods
-    return [] unless params[:service][:access_method_ids]
     new_access_method_names =
-      params[:service][:access_method_ids].
+      (params[:service][:access_method_ids] || []).
+      uniq.
       select do |value|
         value.present? &&
-          AccessMethod.where(id: value).or(AccessMethod.where(name: value, service: nil)).empty?
+          AccessMethod.where(id: value).
+            or(AccessMethod.where(name: value, service: [nil, @service&.id])).
+            empty?
       end
     new_access_method_names.map { |name| AccessMethod.new(name: name) }
   end

@@ -228,6 +228,19 @@ describe 'Services controller' do
         end.to change { AccessMethod.count }.by(0)
         expect(global_am.service).to be_nil
       end
+
+      it 'ignores access method name duplication' do
+        access_method = create(:access_method, service: service)
+        expect do
+          put service_path(service), params: {
+            service: {
+              access_method_ids: [access_method.id, access_method.name, 'q', 'q']
+            }
+          }
+        end.to change { AccessMethod.count }.by(1)
+        expect(service.access_methods.pluck(:name)).
+          to match_array [access_method.name, 'q']
+      end
     end
 
     describe 'DELETE /service/:id' do
