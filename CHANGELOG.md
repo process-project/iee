@@ -12,10 +12,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Resource management REST API documentation (@dharezlak)
 - Add new registered user into default groups (@mkasztelnik)
 - Group hierarchies management UI (@mkasztelnik)
+- Deploy to production when tag is pushed into remote git repository (@tomek.bartynski)
+- Show service token on show view (@mkasztelnik)
 - Group management UI (@mkasztelnik)
 - Service management UI (@Nuanda, @mkasztelnik)
 - Delegate user credentials in service resource management REST API (@mkasztelnik)
 - Service ownership (@Nuanda)
+- Setup rubocop (@tomek.bartynski)
+- Setup continuous delivery (@tomek.bartynski)
 - Sent confirmation email after user account is approved (@mkasztelnik)
 - Project description (@amber7b, @mkasztelnik, @dharezlak)
 - User profile page (@mkasztelnik)
@@ -46,19 +50,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Basic project structure (@mkasztelnik, @dharezlak)
 
 ### Changed
-- Increase face out time for flash messages into 10 seconds (@mkasztelnik)
+- Increase fade out time for flash messages into 10 seconds (@mkasztelnik)
 - Rewrite migrations to avoid using ActiveRecord (@amber7b)
 - Service views refactoring - separation for global/local policies management (@mkasztelnik, @Nuanda)
-- Show service token on show view (@mkasztelnik)
 - Delete service ownership when user or service is destroyed (@mkasztelnik)
-- Deploy to production when tag is pushed into remote git repository (@tomek.bartynski)
 - WebDav browser JS files obtained from a dedicated CDN (@dharezlak)
-- Unify UIs for all CRUS views (@mkasztelnik)
+- Unify UIs for all CRUD views (@mkasztelnik)
 - Resource separation into `global` and `local` (@dharezlak)
 - Simplify login form pages using `simple_form` wrapper (@mkasztelnik)
 - Left menu refactoring - not it is server side rendered (@mkasztelnik)
-- Setup rubocop (@tomek.bartynski)
-- Setup continous delivery (@tomek.bartynski)
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
 
 ### Deprecated
@@ -67,14 +67,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Show `new` view instead of `edit` while creating new group and validation failed (@mkasztelnik)
-- Show notice information to the user after new account created that is need to
+- Show notice information to the user after new account created that account needs to
   be approved by supervisor (@mkasztelnik)
 - Don't allow to create group without group owner (@mkasztelnik)
-- Make zero clipboard to work with turbolinks (@mkasztelnik)
-- Make icheck to work with turbolinks (@mkasztelnik)
+- Make zero clipboard work with turbolinks (@mkasztelnik)
+- Make icheck work with turbolinks (@mkasztelnik)
 - Policies do not forbid access for access methods which they do not define (@Nuanda)
 - Fix group validation - at last one group owner is needed (@mkasztelnik)
-- Disable turbolinks on files view to make GWT work (@mkasztelnik)
+- Disable turbolinks on WebDav browser view to make GWT work (@mkasztelnik)
 - Fix extra spaces in markdown code blocks (@mkasztelnik)
 - Improved service URI validation (@Nuanda)
 
