@@ -44,15 +44,11 @@ class ServicesController < ApplicationController
   private
 
   def access_method_params
-    {
-      access_methods:
-        (@service ? present_access_methods : []) +
-          new_access_methods
-    }
+    { access_methods: present_access_methods + new_access_methods }
   end
 
   def present_access_methods
-    @service.access_methods.where(id: params[:service][:access_method_ids])
+    @service ? @service.access_methods.where(id: params[:service][:access_method_ids]) : []
   end
 
   def new_access_methods
