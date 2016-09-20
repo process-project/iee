@@ -71,9 +71,73 @@ describe 'Services controller' do
         expect(ServiceOwnership.first.service.uri).to eq 'http://a.b'
         expect(ServiceOwnership.first.user).to eq user
       end
+
+      it 'saves new access methods' do
+        expect do
+          post '/services/', params: {
+            service: {
+              name: 's',
+              uri: 'http://a.b',
+              access_method_ids: ['ac_name']
+            }
+          }
+        end.to change { AccessMethod.count }.by(1).
+          and change { Service.count }.by(1)
+        expect(AccessMethod.find_by_name('ac_name').service.name).to eq 's'
+      end
+
+      it 'does not change existing access methods' do
+        global_am = create(:access_method)
+        other_service_am = create(:access_method, :service_scoped)
+        expect do
+          post '/services/', params: {
+            service: {
+              name: 's',
+              uri: 'http://a.b',
+              access_method_ids: [global_am.id, other_service_am.id]
+            }
+          }
+        end.to change { AccessMethod.count }.by(0).
+          and change { Service.count }.by(1)
+        expect(global_am.service).to be_nil
+        expect(other_service_am.service.name).not_to eq 's'
+      end
+
+      it 'allows same-name access methods for different services' do
+        other_service_am = create(:access_method, :service_scoped)
+        expect do
+          post '/services/', params: {
+            service: {
+              uri: 'http://a.b',
+              access_method_ids: [other_service_am.name]
+            }
+          }
+        end.to change { AccessMethod.count }.by(1).
+          and change { Service.count }.by(1)
+        expect(AccessMethod.where(name: other_service_am.name).count).to eq 2
+        expect(AccessMethod.where(name: other_service_am.name).map(&:service)).
+          to match_array Service.all
+      end
+
+      it 'ignores reusing global access method name' do
+        global_am = create(:access_method)
+        expect do
+          post '/services/', params: {
+            service: {
+              name: 's',
+              uri: 'http://a.b',
+              access_method_ids: [global_am.name]
+            }
+          }
+        end.to change { AccessMethod.count }.by(0).
+          and change { Service.count }.by(1)
+        expect(global_am.service).to be_nil
+      end
     end
 
     describe 'PUT /services/:id' do
+      let(:service) { create(:service, users: [user]) }
+
       it 'denies to update not owned service' do
         service = create(:service)
 
@@ -83,8 +147,6 @@ describe 'Services controller' do
       end
 
       it 'updates attributes for managed service' do
-        service = create(:service, users: [user])
-
         put service_path(service),
             params: { service: { name: 'new_name', uri: 'http://new.pl' } }
         service.reload
@@ -94,8 +156,6 @@ describe 'Services controller' do
       end
 
       it 'updates ownership' do
-        service = create(:service, users: [user])
-
         put service_path(service),
             params: { service: { user_ids: [user.id, create(:user).id] } }
         service.reload
@@ -104,13 +164,69 @@ describe 'Services controller' do
       end
 
       it 'prevents orphan services' do
-        service = create(:service, users: [user])
-
         put service_path(service),
             params: { service: { name: 'orphan?', user_ids: [] } }
         service.reload
 
         expect(service.users.count).to eq 1
+      end
+
+      it 'retains existing service-scoped access methods' do
+        access_method = create(:access_method, service: service)
+
+        expect do
+          put service_path(service),
+              params: { service: { access_method_ids: [access_method.id] } }
+        end.to change { AccessMethod.count }.by(0)
+      end
+
+      it 'deletes no longer related access methods' do
+        create(:access_method, service: service)
+
+        expect do
+          put service_path(service),
+              params: { service: { name: service.name, access_method_ids: [] } }
+        end.to change { AccessMethod.count }.by(-1)
+      end
+
+      it 'does not change existing access methods' do
+        global_am = create(:access_method)
+        other_service_am = create(:access_method, :service_scoped)
+        expect do
+          put service_path(service), params: {
+            service: {
+              access_method_ids: [global_am.id, other_service_am.id]
+            }
+          }
+        end.to change { AccessMethod.count }.by(0)
+        expect(global_am.service).to be_nil
+        expect(other_service_am.service.name).not_to eq 's'
+      end
+
+      it 'allows same-name access methods for different services' do
+        other_service_am = create(:access_method, :service_scoped)
+        expect do
+          put service_path(service), params: {
+            service: {
+              access_method_ids: [other_service_am.name]
+            }
+          }
+        end.to change { AccessMethod.count }.by(1)
+        expect(AccessMethod.where(name: other_service_am.name).count).to eq 2
+        expect(AccessMethod.where(name: other_service_am.name).map(&:service)).
+          to match_array Service.all
+      end
+
+      it 'ignores reusing global access method name' do
+        global_am = create(:access_method)
+        expect do
+          put service_path(service), params: {
+            service: {
+              access_method_ids: [global_am.name]
+            }
+          }
+        end.to change { AccessMethod.count }.by(0)
+        expect(global_am.service).to be_nil
       end
     end
 
