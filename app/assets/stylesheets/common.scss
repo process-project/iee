@@ -28,3 +28,7 @@ a.back {
 ul.list-inline {
   margin-bottom: 0;
 }
+
+ul#select2-service_access_method_ids-results > li.select2-results__message {
+  display: none;
+}
