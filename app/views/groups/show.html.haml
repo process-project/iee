@@ -1,54 +1,54 @@
 .row
   .col-md-8
-    .row
-      .col-md-12
-        .x_panel
-          .x_title
-            %h2= @group.name
-
-            %ul.nav.navbar-right.panel_toolbox
-              %li
-                = link_to(groups_path, class: 'back') do
-                  = icon('hand-o-left', title: t('.back'))
-              %li
-                = link_to(edit_group_path(@group), class: 'edit') do
-                  = icon('edit', title: t('edit'))
-              %li
-                = link_to(group_path(@group),
-                  method: :delete, class: 'delete',
-                  data: { confirm: t('are_you_sure') }) do
-                  = icon('remove', title: t('remove'))
-            .clearfix
-
-          .x_content
-            %table.table
-              %tbody
-                %tr
-                  %td= t('simple_form.labels.group.name')
-                  %td= @group.name
-                %tr
-                  %td= t('simple_form.labels.group.member_ids')
-                  %td= pill_list(@group.members)
-                %tr
-                  %td= t('simple_form.labels.group.owner_ids')
-                  %td= pill_list(@group.owners)
-                %tr
-                  %td= t('simple_form.labels.group.children')
-                  %td= pill_list(@group.children)
-                %tr
-                  %td= t('simple_form.labels.group.parents')
-                  %td= pill_list(@group.parents)
-                %tr
-                  %td= t('simple_form.labels.group.ancestors')
-                  %td= pill_list(@group.ancestors)
-                %tr
-                  %td= t('simple_form.labels.group.offspring')
-                  %td= pill_list(@group.offspring)
-                %tr
-                  %td= t('simple_form.labels.group.all_users')
-                  %td= pill_list(@group.all_users)
-                %tr
-                  %td= t('simple_form.labels.group.default')
-                  %td= @group.default
-  .col-md-4
     .x_panel
+      .x_title
+        %h2= @group.name
+
+        %ul.nav.navbar-right.panel_toolbox
+          %li
+            = link_to(groups_path, class: 'back') do
+              = icon('hand-o-left', title: t('.back'))
+          %li
+            = link_to(edit_group_path(@group), class: 'edit') do
+              = icon('edit', title: t('edit'))
+          %li
+            = link_to(group_path(@group),
+              method: :delete, class: 'delete',
+              data: { confirm: t('are_you_sure') }) do
+              = icon('remove', title: t('remove'))
+        .clearfix
+
+      .x_content
+        %table.table
+          %tbody
+            %tr
+              %td= t('simple_form.labels.group.name')
+              %td= @group.name
+            %tr
+              %td= t('simple_form.labels.group.member_ids')
+              %td= pill_list(@group.members)
+            %tr
+              %td= t('simple_form.labels.group.owner_ids')
+              %td= pill_list(@group.owners)
+            %tr
+              %td= t('simple_form.labels.group.children')
+              %td= pill_list(@group.children)
+            %tr
+              %td= t('simple_form.labels.group.parents')
+              %td= pill_list(@group.parents)
+            %tr
+              %td= t('simple_form.labels.group.ancestors')
+              %td= pill_list(@group.ancestors)
+            %tr
+              %td= t('simple_form.labels.group.offspring')
+              %td= pill_list(@group.offspring)
+            %tr
+              %td= t('simple_form.labels.group.all_users')
+              %td= pill_list(@group.all_users)
+            %tr
+              %td= t('simple_form.labels.group.default')
+              %td= @group.default
+  .col-md-4
+    = render 'show_help'
+
+
