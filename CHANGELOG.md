@@ -78,5 +78,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show notice information to the user after new account created that account needs to
   be approved by supervisor (@mkasztelnik)
 - Show `new` view instead of `edit` while creating new group and validation failed (@mkasztelnik)
+- Content passed to the file store JS browser sanitized to prevent XSS attacks (@dharezlak)
 
 ### Security
