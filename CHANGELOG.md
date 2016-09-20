@@ -48,6 +48,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add new registered user into default groups (@mkasztelnik)
 - Resource management REST API documentation (@dharezlak)
 - Service aliases (@jmeizner)
+- Issue and merge request templates (@mkasztelnik)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
