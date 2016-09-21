@@ -49,6 +49,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Resource management REST API documentation (@dharezlak)
 - Service aliases (@jmeizner)
 - Issue and merge request templates (@mkasztelnik)
+- Rake task for generating sample data for development purposes (@tomek.bartynski)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
