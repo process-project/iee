@@ -5,6 +5,10 @@
   - unless service.new_record?
     = f.association :users
   = f.input :uri_aliases, as: :array
+  = f.association :access_methods,
+                  collection: service.access_methods,
+                  hint: global_access_methods_hint || ''
+
   .ln_solid
   .form-group
     .col-md-6.col-md-offset-3
@@ -13,4 +17,9 @@
 :javascript
   $("#service_user_ids").select2({
     theme: "bootstrap"
+  });
+  $("#service_access_method_ids").select2({
+    theme: "bootstrap",
+    tags: true,
+    tokenSeparators: [",", " "]
   });

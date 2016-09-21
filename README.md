@@ -52,6 +52,12 @@ gem install foreman
 foreman start
 ```
 
+To load sample data for development purposes run:
+```
+bundle exec rake dev:prime RAILS_ENV=development
+```
+This task depends on _db:setup_ task so be aware that data present in database is erased.
+
 ## Testing
 
 To execute all tests run:

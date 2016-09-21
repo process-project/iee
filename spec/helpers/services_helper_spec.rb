@@ -25,4 +25,16 @@ RSpec.describe ServicesHelper do
       expect { pill_list([build(:patient)]) }.to raise_error NoMethodError
     end
   end
+
+  describe '#global_access_methods_hint' do
+    it 'returns nil when there are no global access methods' do
+      expect(global_access_methods_hint).to eq nil
+    end
+
+    it 'lists all global access method names' do
+      access_methods = create_list(:access_method, 2)
+      expect(global_access_methods_hint).to include access_methods[0].name
+      expect(global_access_methods_hint).to include access_methods[1].name
+    end
+  end
 end

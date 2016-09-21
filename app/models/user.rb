@@ -108,6 +108,10 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
+  def all_groups
+    groups.flat_map { |group| [group] + group.ancestors }
+  end
+
   private
 
   def token_payload
