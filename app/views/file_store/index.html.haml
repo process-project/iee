@@ -3,7 +3,7 @@
   :javascript
     var SletOverrides = {
       userLogin: '#{@user_email}',
-      userGroups: #{@user_groups},
+      userGroups: #{sanitize(@user_groups)},
       webDavBaseUrl: '#{@web_dav_base_url}',
       webDavBaseHref: '#{@web_dav_base_href}',
       webDavAuthUrl: '/api/auth',

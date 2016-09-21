@@ -1,0 +1,24 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "0ccdc60b216d7da6139c1cb8bcff16488047a19534d3a040ae71bb78b61c6f7b",
+      "message": "Unescaped model attribute",
+      "file": "app/views/file_store/index.html.haml",
+      "line": 6,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "sanitize(current_user.all_groups.map(&:name).to_s)",
+      "render_path": [{"type":"controller","class":"FileStoreController","method":"index","line":8,"file":"app/controllers/file_store_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "file_store/index"
+      },
+      "user_input": "current_user.all_groups.map(&:name)",
+      "confidence": "Weak",
+      "note": "Content sanitized."
+    }
+  ],
+  "updated": "2016-09-20 12:18:09 +0200",
+  "brakeman_version": "3.4.0"
+}
