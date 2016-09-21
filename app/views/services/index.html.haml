@@ -4,17 +4,20 @@
     %a{ href: url_for(new_service_path), title: t('.add'), class: 'btn btn-success' }
       = icon('plus', t('.add'))
 
-.x_panel
-  .x_content
-    - if @services.exists?
-      %table.table.table-striped
-        %thead
-          %tr
-            %th= t 'service.name'
-            %th= t 'service.uri'
-            %th
+.col-md-8
+  .x_panel
+    .x_content
+      - if @services.exists?
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t 'service.name'
+              %th= t 'service.uri'
+              %th
 
-        %tbody
-          = render @services
-    - else
-      %p= t '.nothing'
+          %tbody
+            = render @services
+      - else
+        %p= t '.nothing'
+.col-md-4
+  = render 'index_help'

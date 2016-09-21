@@ -1,5 +1,5 @@
 .row
-  .col-md-12
+  .col-md-8
     .x_panel
       .x_title
         %h2
@@ -14,3 +14,5 @@
 
       .x_content
         = render partial: 'form', locals: { group: @group }
+  .col-md-4
+    = render 'new_help'

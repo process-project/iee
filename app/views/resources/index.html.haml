@@ -1,14 +1,17 @@
 %h1
   = t('.title')
-.x_panel
-  .x_content
-    - if @resources.exists?
-      %table.table
-        %thead
-          %tr
-            %th= t('.name')
-            %th= t('.uri')
-            %th
-          = render @resources
-    - else
-      %p= t('.nothing')
+.col-md-8
+  .x_panel
+    .x_content
+      - if @resources.exists?
+        %table.table
+          %thead
+            %tr
+              %th= t('.name')
+              %th= t('.uri')
+              %th
+            = render @resources
+      - else
+        %p= t('.nothing')
+.col-md-4
+  =render 'index_help'

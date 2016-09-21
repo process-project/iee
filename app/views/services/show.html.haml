@@ -1,49 +1,51 @@
 %h1
   = t('.title', name: @service.name)
-= render('services/show_layout') do
-  .col-md-9
-    %h2= @service.name
+.col-md-8
+  = render('services/show_layout') do
+    .col-md-9
+      %h2= @service.name
 
-  .col-md-3
-    %ul.nav.navbar-right.panel_toolbox
-      %li
-        = link_to(services_path, class: 'back') do
-          = icon('hand-o-left', title: t('.back'))
-      - if policy(@service).edit?
+    .col-md-3
+      %ul.nav.navbar-right.panel_toolbox
         %li
-          = link_to([:edit, @service], class: 'edit') do
-            = icon('edit', title: t('edit'))
-      - if policy(@service).destroy?
-        %li
-          = link_to(@service,
-            method: :delete, class: 'delete',
-            data: { confirm: t('are_you_sure') }) do
-            = icon('remove', title: t('remove'))
-
-  %table.table
-    %tbody
-      %tr
-        %td= t('simple_form.labels.service.name')
-        %td= @service.name
-      %tr
-        %td= t('simple_form.labels.service.uri')
-        %td= @service.uri
-      %tr
-        %td= t('simple_form.labels.service.user_ids')
-        %td= pill_list @service.users
-      - unless @service.uri_aliases.empty?
+          = link_to(services_path, class: 'back') do
+            = icon('hand-o-left', title: t('.back'))
+        - if policy(@service).edit?
+          %li
+            = link_to([:edit, @service], class: 'edit') do
+              = icon('edit', title: t('edit'))
+        - if policy(@service).destroy?
+          %li
+            = link_to(@service,
+              method: :delete, class: 'delete',
+              data: { confirm: t('are_you_sure') }) do
+              = icon('remove', title: t('remove'))
+    %table.table
+      %tbody
         %tr
-          %td= t('simple_form.labels.service.uri_aliases')
-          %td
-            - @service.uri_aliases.each do |uri_alias|
-              = uri_alias
-              %br
-      %tr
-        %td= t('simple_form.labels.access_method.global')
-        %td= pill_list AccessMethod.global
-      %tr
-        %td= t('simple_form.labels.service.access_method_ids')
-        %td= pill_list @service.access_methods
-      %tr
-        %td= t('simple_form.labels.service.token')
-        %td= @service.token
+          %td= t('simple_form.labels.service.name')
+          %td= @service.name
+        %tr
+          %td= t('simple_form.labels.service.uri')
+          %td= @service.uri
+        %tr
+          %td= t('simple_form.labels.service.user_ids')
+          %td= pill_list @service.users
+        - unless @service.uri_aliases.empty?
+          %tr
+            %td= t('simple_form.labels.service.uri_aliases')
+            %td
+              - @service.uri_aliases.each do |uri_alias|
+                = uri_alias
+                %br
+        %tr
+          %td= t('simple_form.labels.access_method.global')
+          %td= pill_list AccessMethod.global
+        %tr
+          %td= t('simple_form.labels.service.access_method_ids')
+          %td= pill_list @service.access_methods
+        %tr
+          %td= t('simple_form.labels.service.token')
+          %td= @service.token
+.col-md-4
+  =render 'show_help'
