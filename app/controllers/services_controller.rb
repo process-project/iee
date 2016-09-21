@@ -4,7 +4,7 @@ class ServicesController < ApplicationController
                 only: [:show, :edit, :update, :destroy]
 
   def index
-    @services = policy_scope(Service).order(:name)
+    @services = policy_scope(Service).includes(:users).order(:name)
   end
 
   def new
