@@ -36,6 +36,8 @@ en:
       add: Register a new service
       remove: Remove this service completelly
       edit: Edit this service
+    service:
+      no_name: N/A
     new:
       title: New service
       subtitle: Register a new EurValve service in order to make it accessible to other users.
