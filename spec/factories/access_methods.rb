@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :access_method do
-    name { Faker::Name.name }
+    name { Faker::Lorem.word }
+
+    trait :service_scoped do
+      service
+    end
   end
 end
