@@ -38,9 +38,16 @@ class Service < ApplicationRecord
     uri_aliases.reject!(&:blank?)
   end
 
+  def check_override(uri)
+    return false unless uri.present?
+    sc = Service.where('uri LIKE ?', "#{uri}%").where.not(id: id)
+
+    # Regexp used to eliminate false-positives for TLDs (e.g. .co vs .com)
+    sc.any? { |s| (s.uri =~ %r{\A.*:\/\/.*\/.*\z}) }
+  end
+
   def check_if_not_override_uri
-    # Hint: .any?{ |l| (l.uri =~ /\A.*:\/\/.*\/.*\z/) }
-    if uri.present? && Service.where('uri LIKE ?', "#{uri}%").where.not(id: id).count.positive?
+    if check_override(uri)
       errors.add(:uri,
                  I18n.t('activerecord.errors.models.service.uri.override'))
     end
