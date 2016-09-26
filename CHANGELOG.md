@@ -85,5 +85,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Removed n+1 query for service ownership in Services#index view (@Nuanda)
 - Made it possible to navigate to Service#show with a click if a service had no name (@Nuanda)
 - Content passed to the file store JS browser sanitized to prevent XSS attacks (@dharezlak)
+- Turbolinks disabled directly on the Files link (@dharezlak)
 
 ### Security
