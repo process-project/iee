@@ -12,5 +12,9 @@ FactoryGirl.define do
     factory :supervisor_group do
       name 'supervisor'
     end
+
+    factory :admin_group do
+      name 'admin'
+    end
   end
 end
