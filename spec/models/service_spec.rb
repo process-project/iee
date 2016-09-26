@@ -33,6 +33,12 @@ RSpec.describe Service do
     expect(service).to_not be_valid
   end
 
+  it 'doesn\'t allow to add service with same URI and alias' do
+    service = build(:service, uri: 'https://my.service.pl', uri_aliases: ['https://my.service.pl'])
+
+    expect(service).to_not be_valid
+  end
+
   it 'doesn\'t allow to add service with URI equal to one of the alias' do
     service = build(:service)
     service.uri = service.uri_aliases.first
@@ -73,9 +79,10 @@ RSpec.describe Service do
     expect(service).to_not be_valid
   end
 
+  # Intentionally used similar URI to test false positives on lower uri test
   it 'allow to create second service with equal-level uri' do
-    create(:service, uri: 'https://my.service.pl/1')
-    service = build(:service, uri: 'https://my.service.pl/2')
+    create(:service, uri: 'https://my.service.pl/my/service')
+    service = build(:service, uri: 'https://my.service.pl/my/service1')
 
     expect(service).to be_valid
   end
