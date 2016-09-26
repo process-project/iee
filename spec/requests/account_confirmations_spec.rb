@@ -24,12 +24,14 @@ RSpec.describe 'AccountConfirmations' do
         to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
-    it 'sends email to all confirmed users' do
-      create_list(:user, 2)
-      create(:user, approved: true)
+    describe '#approve_all' do
+      it 'sends email to all confirmed users' do
+        create_list(:user, 2)
+        create(:user, approved: true)
 
-      expect { put approve_all_path }.
-        to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect { put approve_all_path }.
+            to change { ActionMailer::Base.deliveries.count }.by(2)
+      end
     end
   end
 end
