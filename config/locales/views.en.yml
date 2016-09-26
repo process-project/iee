@@ -104,12 +104,12 @@ en:
       name: Resource name
       uri: Resource URI
     new:
-        title: New web resource
-        subtitle: Create new web resource
-        back: Go back to the resource list
-        submit: Create resource
-        name: Resource name
-        path: Resource path
+      title: New web resource
+      subtitle: Create new web resource
+      back: Go back to the resource list
+      submit: Create resource
+      name: Resource name
+      path: Resource path
 
   profiles:
     layout:
@@ -135,16 +135,14 @@ en:
         destroy: Disconnect from PLGrid
       destroy:
         failure: Unable to disconect from PLGrid
+
   access_policies:
-    new:
-      title: "%{name} (%{uri})"
-      subtitle: Manage access policies of your web resource
-      back: Go back to resource list
+    index:
       user: Access policies for user
       group: Access policies for group
-      list: List of access policies
       no_user_access_policies: No user access policies were set
       no_group_access_policies: No group access policies were set
+    form:
       user_or_group: Pick user or group
       add: Add new access policy
       pick_user: Pick user
@@ -152,7 +150,6 @@ en:
       pick_method: Pick method
       select_user: Select user
       select_group: Select group
-      submit: Add access policy
   admin:
     jobs:
       show:

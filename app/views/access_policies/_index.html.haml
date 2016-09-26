@@ -1,0 +1,38 @@
+- if !@model.user_access_policies.empty?
+  %table.table.access_policies
+    %thead
+      %tr
+        %th= t('.user')
+        %th= t('.list')
+    %tbody
+      - @model.user_access_policies.each do |email, access_policies|
+        %tr
+          %td= email
+          %td
+            - access_policies.each do |access_policy|
+              %span.label.label-primary
+                = access_policy.access_method.name
+                = link_to(resource_access_policy_path(@model.resource, access_policy),
+                  method: :delete, data: { confirm: t("are_you_sure") }) do
+                  = icon("remove", class: "fa-white")
+- else
+  %p= t('.no_user_access_policies')
+- if !@model.group_access_policies.empty?
+  %table.table.access_policies
+    %thead
+      %tr
+        %th= t('.group')
+        %th= t('.list')
+    %tbody
+      - @model.group_access_policies.each do |name, access_policies|
+        %tr
+          %td= name
+          %td
+            - access_policies.each do |access_policy|
+              %span.label.label-primary
+                = access_policy.access_method.name
+                = link_to(resource_access_policy_path(@model.resource, access_policy),
+                  method: :delete, data: { confirm: t("are_you_sure") }) do
+                  = icon("remove", class: "fa-white")
+- else
+  %p= t('.no_group_access_policies')
