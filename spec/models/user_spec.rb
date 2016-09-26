@@ -84,6 +84,7 @@ RSpec.describe User do
       expect(expiration_time_from_token(u.token)).
         to eq(time_now.to_i + Vapor::Application.config.jwt.expiration_time)
     end
+
     context 'token expired' do
       it 'fails with error' do
         u = create(:user)
@@ -98,13 +99,18 @@ RSpec.describe User do
     end
   end
 
-  it 'checks if user is an admin' do
-    admin_group = create(:group, name: 'admin')
-    admin = create(:user, groups: [admin_group])
-    non_admin = create(:user)
+  describe '#admin?' do
+    it 'checks if user is an admin' do
+      expect(create(:admin)).to be_admin
+      expect(create(:user)).to_not be_admin
+    end
+  end
 
-    expect(admin).to be_admin
-    expect(non_admin).to_not be_admin
+  describe '#supervisor?' do
+    it 'checks if user is a supervisor' do
+      expect(create(:supervisor_user)).to be_supervisor
+      expect(create(:user)).to_not be_supervisor
+    end
   end
 
   it 'returns users with active computations' do
