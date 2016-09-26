@@ -9,6 +9,6 @@
         = icon('heart')
         = t('.patients')
     = nav_link controller: :file_store, active_class: 'current-page' do
-      = link_to file_store_path do
+      = link_to(file_store_path, data: { turbolinks: false }) do
         = icon('files-o')
         = t('files')
