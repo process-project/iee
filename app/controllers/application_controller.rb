@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_confirmation_data
-    if current_user&.supervisor?
+    if current_user&.admin? || current_user&.supervisor?
       @users = {}
       @users[:confirmed] = User.where(approved: true)
       @users[:not_confirmed] = User.where(approved: false)
