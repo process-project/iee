@@ -31,22 +31,27 @@ class ResourceAccessPoliciesDecorator
   private
 
   def init_group_access_policies
-    Group.joins(access_policies: :resource).
-      includes(access_policies: :access_method).
-      where(resources: { id: resource.id }).
-      each_with_object({}) do |group, hsh|
-        hsh[group.name] = group.access_policies.
-                          where(resource_id: @resource.id)
-      end
+    group(query: { user_id: nil }, includes: [:group, :access_method]) do |ap|
+      ap.group.name
+    end
   end
 
   def init_user_access_policies
-    User.joins(access_policies: :resource).
-      includes(access_policies: :access_method).
-      where(resources: { id: resource.id }).
-      each_with_object({}) do |user, hsh|
-        hsh[user.email] = user.access_policies.
-                          where(resource_id: @resource.id)
+    group(query: { group_id: nil }, includes: [:user, :access_method]) do |ap|
+      ap.user.email
+    end
+  end
+
+  def group(query:, includes:)
+    resource.access_policies.
+      where(query).
+      includes(includes).
+      each_with_object(array_initialized_hsh) do |ap, hsh|
+        hsh[yield(ap)] << ap
       end
+  end
+
+  def array_initialized_hsh
+    Hash.new { |h, k| h[k] = [] }
   end
 end
