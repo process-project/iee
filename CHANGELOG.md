@@ -53,6 +53,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Users can set Access Methods for new and existing Services (@Nuanda)
 - There are global Access Methods which work for all Services (@Nuanda)
 - Bullet gem warns about database queries performance problems (@tomek.bartynski)
+- Omnipotent admin (@Nuanda)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
