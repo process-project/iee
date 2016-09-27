@@ -14,8 +14,7 @@ RSpec.describe ResourceAccessPoliciesDecorator do
       ap3 = AccessPolicy.create!(resource: resource, user: u2, access_method: am1)
       AccessPolicy.create!(resource: resource, group: group, access_method: am1)
 
-      user_access_policies = described_class.new(resource, AccessPolicy.new).
-                             user_access_policies
+      user_access_policies = decorator.user_access_policies
 
       expect(user_access_policies.size).to eq(2)
       expect(user_access_policies[u1.email]).to contain_exactly(ap1, ap2)
@@ -33,8 +32,7 @@ RSpec.describe ResourceAccessPoliciesDecorator do
       ap3 = AccessPolicy.create!(resource: resource, group: g2, access_method: am1)
       AccessPolicy.create!(resource: resource, user: user, access_method: am1)
 
-      group_access_policies = described_class.new(resource, AccessPolicy.new).
-                              group_access_policies
+      group_access_policies = decorator.group_access_policies
 
       expect(group_access_policies.size).to eq(2)
       expect(group_access_policies[g1.name]).to contain_exactly(ap1, ap2)
@@ -48,8 +46,19 @@ RSpec.describe ResourceAccessPoliciesDecorator do
       local_am = create(:access_method, service: resource.service)
       create(:access_method, :service_scoped) # unavailable access method
 
-      expect(described_class.new(resource, AccessPolicy.new).access_methods).
-        to match_array [global_am, local_am]
+      expect(decorator.access_methods).to match_array [global_am, local_am]
     end
+  end
+
+  describe '#groups' do
+    it 'returns all groups' do
+      create_list(:group, 2)
+
+      expect(decorator.groups.count).to eq(2)
+    end
+  end
+
+  def decorator
+    described_class.new(User.new, resource, AccessPolicy.new)
   end
 end

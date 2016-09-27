@@ -2,10 +2,11 @@
 class ResourceAccessPoliciesDecorator
   attr_accessor :resource, :access_policy, :service
 
-  def initialize(resource, access_policy)
+  def initialize(user, resource, access_policy)
     @resource = resource
     @access_policy = access_policy
     @service = resource.service
+    @user = user
   end
 
   def group_access_policies
@@ -21,7 +22,7 @@ class ResourceAccessPoliciesDecorator
   end
 
   def groups
-    @groups ||= Group.all
+    @groups ||= GroupPolicy::Scope.new(@user, Group.all).resolve
   end
 
   def access_methods
