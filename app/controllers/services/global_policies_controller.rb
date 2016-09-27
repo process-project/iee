@@ -15,7 +15,7 @@ module Services
 
     def show
       @model = ResourceAccessPoliciesDecorator.
-               new(@resource, AccessPolicy.new, @service)
+               new(@resource, AccessPolicy.new)
     end
 
     def create

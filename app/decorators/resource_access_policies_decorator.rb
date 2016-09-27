@@ -2,10 +2,10 @@
 class ResourceAccessPoliciesDecorator
   attr_accessor :resource, :access_policy, :service
 
-  def initialize(resource, access_policy, service = nil)
+  def initialize(resource, access_policy)
     @resource = resource
     @access_policy = access_policy
-    @service = service || resource.service
+    @service = resource.service
   end
 
   def group_access_policies

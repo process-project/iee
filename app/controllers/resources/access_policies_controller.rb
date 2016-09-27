@@ -11,7 +11,7 @@ module Resources
         redirect_to service_global_policy_path(@resource.service, @resource)
       else
         @model = ResourceAccessPoliciesDecorator.
-                 new(@resource, @access_policy, @resource.service)
+                 new(@resource, @access_policy)
         @service = @resource.service
         render('services/global_policies/show', status: :bad_request)
       end
