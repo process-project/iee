@@ -89,8 +89,11 @@ class User < ApplicationRecord
   end
 
   def admin?
-    @admin = groups.where(name: 'admin').exists? if @admin.nil?
-    @admin
+    @admin ||= groups.where(name: 'admin').exists?
+  end
+
+  def supervisor?
+    @supervisor ||= groups.where(name: 'supervisor').exists?
   end
 
   def token
