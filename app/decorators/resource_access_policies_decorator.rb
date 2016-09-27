@@ -25,7 +25,7 @@ class ResourceAccessPoliciesDecorator
   end
 
   def access_methods
-    @access_methods ||= AccessMethod.all
+    @access_methods ||= (AccessMethod.global + @service.access_methods)
   end
 
   private
