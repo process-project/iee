@@ -34,10 +34,10 @@ en:
       title: Services
       nothing: You do not manage any service right now.
       add: Register a new service
-      remove: Remove this service completelly
-      edit: Edit this service
     service:
       no_name: N/A
+      remove: Remove this service completelly
+      edit: Edit this service
     new:
       title: New service
       subtitle: Register a new EurValve service in order to make it accessible to other users.
