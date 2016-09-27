@@ -77,7 +77,7 @@ en:
   groups:
     group:
       edit: Edit this group, manage group members
-      remove: Remove this group completelly
+      remove: Remove this group completely
     index:
       title: Groups
       nothing: You do not manage any group right now.
