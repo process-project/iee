@@ -17,6 +17,7 @@
                   = icon("remove", class: "fa-white")
 - else
   %p= t('.no_user_access_policies')
+
 - if !@model.group_access_policies.empty?
   %table.table.access_policies
     %thead

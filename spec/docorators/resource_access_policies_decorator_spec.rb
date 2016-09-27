@@ -15,7 +15,7 @@ RSpec.describe ResourceAccessPoliciesDecorator do
       AccessPolicy.create!(resource: resource, group: group, access_method: am1)
 
       user_access_policies = described_class.new(resource, AccessPolicy.new).
-          user_access_policies
+                             user_access_policies
 
       expect(user_access_policies.size).to eq(2)
       expect(user_access_policies[u1.email]).to contain_exactly(ap1, ap2)
