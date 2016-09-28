@@ -55,6 +55,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bullet gem warns about database queries performance problems (@tomek.bartynski)
 - Omnipotent admin (@Nuanda)
 - Global resource access policies management UI (@mkasztelnik)
+- Additional attribute with policy proxy URL is passed to the file store browser (@dharezlak)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
