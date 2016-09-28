@@ -3,9 +3,10 @@
     var SletOverrides = {
       userLogin: '#{@user_email}',
       userGroups: #{sanitize(@user_groups)},
-      webDavBaseUrl: '#{@web_dav_base_url}',
-      webDavBaseHref: '#{@web_dav_base_href}',
+      webDavBaseUrl: '#{@web_dav_base_url}#{@web_dav_base_path}',
+      webDavBaseHref: '#{@web_dav_base_path}',
       webDavAuthUrl: '/api/auth',
+      policiesApiUrl: '#{@web_dav_base_url}#{@web_dav_policy_proxy_path}',
       token: '#{@token}'
     };
   %script{type: 'text/javascript', src: @web_dav_base_url + '/browser/browser.nocache.js'}
