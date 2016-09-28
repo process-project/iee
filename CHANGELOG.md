@@ -53,6 +53,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Users can set Access Methods for new and existing Services (@Nuanda)
 - There are global Access Methods which work for all Services (@Nuanda)
 - Bullet gem warns about database queries performance problems (@tomek.bartynski)
+- Omnipotent admin (@Nuanda)
 - Global resource access policies management UI (@mkasztelnik)
 
 ### Changed
@@ -87,5 +88,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Made it possible to navigate to Service#show with a click if a service had no name (@Nuanda)
 - Content passed to the file store JS browser sanitized to prevent XSS attacks (@dharezlak)
 - Turbolinks disabled directly on the Files link (@dharezlak)
+- Fix missing translations on service list and service show views (@mkasztelnik, @Nuanda)
 
 ### Security

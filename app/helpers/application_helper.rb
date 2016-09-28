@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 module ApplicationHelper
-  def supervisor?
-    controller.current_user&.groups&.where(name: 'supervisor')&.exists?
-  end
-
   # Check if a particular controller is the current one
   #
   # args - One or more controller names to check
