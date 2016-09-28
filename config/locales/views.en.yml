@@ -148,8 +148,6 @@ en:
       pick_user: Pick user
       pick_group: Pick group
       pick_method: Pick method
-      select_user: Select user
-      select_group: Select group
   admin:
     jobs:
       show:
