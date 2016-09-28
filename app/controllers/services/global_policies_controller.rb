@@ -58,5 +58,9 @@ module Services
       authorize(@service, :show?)
       authorize(@resource)
     end
+
+    def service_finder
+      action_name == 'show' ? Service.includes(:access_methods) : Service
+    end
   end
 end
