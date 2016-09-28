@@ -19,12 +19,5 @@ admin ||= User.create(first_name: 'admin', last_name: 'admin', email: 'admin@hos
   group.save!
 end
 
-# access methods
+# Global access methods
 AccessMethod.find_or_create_by(name: 'manage')
-AccessMethod.find_or_create_by(name: 'get')
-AccessMethod.find_or_create_by(name: 'post')
-AccessMethod.find_or_create_by(name: 'put')
-AccessMethod.find_or_create_by(name: 'delete')
-AccessMethod.find_or_create_by(name: 'propfind')
-AccessMethod.find_or_create_by(name: 'options')
-AccessMethod.find_or_create_by(name: 'mkcol')

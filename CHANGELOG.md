@@ -71,9 +71,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Remove webdav specific access methods from seeds (@mkasztelnik)
 
 ### Fixed
-- Improved service URI validation (@Nuanda)
+- Improve service URI validation (@Nuanda)
 - Fix extra spaces in markdown code blocks (@mkasztelnik)
 - Disable turbolinks on WebDav browser view to make GWT work (@mkasztelnik)
 - Fix group validation - at last one group owner is needed (@mkasztelnik)
@@ -84,7 +85,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show notice information to the user after new account created that account needs to
   be approved by supervisor (@mkasztelnik)
 - Show `new` view instead of `edit` while creating new group and validation failed (@mkasztelnik)
-- Removed n+1 query for service ownership in Services#index view (@Nuanda)
+- Remove n+1 query for service ownership in Services#index view (@Nuanda)
 - Made it possible to navigate to Service#show with a click if a service had no name (@Nuanda)
 - Content passed to the file store JS browser sanitized to prevent XSS attacks (@dharezlak)
 - Turbolinks disabled directly on the Files link (@dharezlak)
