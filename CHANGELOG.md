@@ -88,6 +88,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Made it possible to navigate to Service#show with a click if a service had no name (@Nuanda)
 - Content passed to the file store JS browser sanitized to prevent XSS attacks (@dharezlak)
 - Turbolinks disabled directly on the Files link (@dharezlak)
+- PDP returns 403 when `uri` or `access_method` query params are missing (@mkasztelnik)
 - Fix missing translations on service list and service show views (@mkasztelnik, @Nuanda)
 
 ### Security
