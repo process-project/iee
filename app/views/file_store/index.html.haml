@@ -8,9 +8,9 @@
       webDavAuthUrl: '/api/auth',
       token: '#{@token}'
     };
-  %script{type: "text/javascript", src: "https://files.valve.cyfronet.pl/browser/browser.nocache.js"}
+  %script{type: 'text/javascript', src: @web_dav_base_url + '/browser/browser.nocache.js'}
 %h1
   = t '.title'
 .x_panel
   .x_content
-    %div{ id: "lobcderContainer" }
+    %div{ id: 'lobcderContainer' }
