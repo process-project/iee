@@ -92,5 +92,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Turbolinks disabled directly on the Files link (@dharezlak)
 - PDP returns 403 when `uri` or `access_method` query params are missing (@mkasztelnik)
 - Fix missing translations on service list and service show views (@mkasztelnik, @Nuanda)
+- Fix n+1 queries problems in service sections (@mkasztelnik)
 
 ### Security

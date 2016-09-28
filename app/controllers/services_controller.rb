@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ServicesController < ApplicationController
   before_action :find_and_authorize,
-                only: [:show, :edit, :update, :destroy]
+                only: [:update, :destroy]
 
   def index
     @services = policy_scope(Service).includes(:users).order(:name)
@@ -12,6 +12,8 @@ class ServicesController < ApplicationController
   end
 
   def show
+    @service = Service.includes(:access_methods).find(params[:id])
+    authorize(@service)
   end
 
   def create
@@ -26,6 +28,8 @@ class ServicesController < ApplicationController
   end
 
   def edit
+    @service = Service.includes(:access_methods, :users).find(params[:id])
+    authorize(@service)
   end
 
   def update
