@@ -4,31 +4,28 @@ require 'rails_helper'
 RSpec.feature 'Resource and access policies UI management' do
   include AuthenticationHelper
 
-  scenario 'users should see resources they created' do
+  scenario 'shows access policies for owned services' do
     user = create(:approved_user)
-    manage = create(:access_method, name: 'manage')
     service = create(:service, users: [user])
-    resource = create(:resource, name: 'R name', path: 'my_resource', service: service)
-    AccessPolicy.create(access_method: manage, user: user, resource: resource)
+    resource = create(:resource, service: service, resource_type: :global)
+    get_ac = create(:access_method, name: 'get')
+    AccessPolicy.create(access_method: get_ac, user: user, resource: resource)
 
     sign_in_as(user)
-    visit(resources_path)
+    visit(service_global_policy_path(service, resource))
 
-    expect(page).to(have_content(resource.name))
-    expect(page).to(have_content(resource.uri))
+    expect(page).to have_content(resource.name)
+    expect(page).to have_content(resource.uri)
+    expect(page).to have_content('get')
   end
 
-  scenario 'users should not see resources they did not create' do
+  scenario 'denies to see not owned service access policies' do
     # first user creates a resource
-    user1 = create(:approved_user)
-    manage = create(:access_method, name: 'manage')
+    user = create(:approved_user)
     resource = create(:resource)
-    create(:access_policy, resource: resource, user: user1, access_method: manage)
 
-    # second user logs in and goes to the resource management page
-    user2 = create(:approved_user)
-    sign_in_as(user2)
-    visit(resources_path)
+    sign_in_as(user)
+    visit(service_global_policy_path(resource.service, resource))
 
     expect(page).not_to(have_content(resource.name))
     expect(page).not_to(have_content(resource.uri))

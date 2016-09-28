@@ -54,6 +54,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - There are global Access Methods which work for all Services (@Nuanda)
 - Bullet gem warns about database queries performance problems (@tomek.bartynski)
 - Omnipotent admin (@Nuanda)
+- Global resource access policies management UI (@mkasztelnik)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
