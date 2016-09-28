@@ -241,7 +241,6 @@ RSpec.describe 'Policies API' do
     end
   end
 
-
   it 'should return a forbidden status when a user is not allowed to manage a given resource' do
     another_user = create(:user, email: 'another@host.com', approved: true)
 
