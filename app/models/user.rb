@@ -112,7 +112,7 @@ class User < ApplicationRecord
   end
 
   def all_groups
-    groups.flat_map { |group| [group] + group.ancestors }
+    groups.includes(:parents).flat_map { |group| [group] + group.ancestors }
   end
 
   private

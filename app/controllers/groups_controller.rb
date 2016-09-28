@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 class GroupsController < ApplicationController
   before_action :find_group_and_authorize,
-                only: [:show, :edit, :destroy, :update]
+                only: [:destroy, :update]
 
   def index
     @groups = policy_scope(Group).order(:name)
   end
 
   def show
+    @group = Group.includes(:users, :children, :parents).find(params[:id])
+    authorize(@group)
   end
 
   def new
@@ -27,6 +29,8 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @group = Group.includes(:parents).find(params[:id])
+    authorize(@group)
   end
 
   def update
