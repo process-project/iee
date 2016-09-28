@@ -153,3 +153,6 @@ en:
     jobs:
       show:
         title: Delayed jobs
+  file_store:
+    index:
+        title: Files
