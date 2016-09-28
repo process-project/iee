@@ -9,4 +9,8 @@
       token: '#{@token}'
     };
   %script{type: "text/javascript", src: "https://files.valve.cyfronet.pl/browser/browser.nocache.js"}
-%div{id: "lobcderContainer"}
+%h1
+  = t '.title'
+.x_panel
+  .x_content
+    %div{ id: "lobcderContainer" }

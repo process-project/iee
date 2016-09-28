@@ -68,6 +68,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rewrite migrations to avoid using ActiveRecord (@amber7b)
 - Increase fade out time for flash messages into 10 seconds (@mkasztelnik)
 - Got to new user session path after logout (@mkasztelnik)
+- File store view uses a common layout (@dharezlak)
 
 ### Deprecated
 
