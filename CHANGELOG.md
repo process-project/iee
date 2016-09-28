@@ -67,7 +67,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service views refactoring - separation for global/local policies management (@mkasztelnik, @Nuanda)
 - Rewrite migrations to avoid using ActiveRecord (@amber7b)
 - Increase fade out time for flash messages into 10 seconds (@mkasztelnik)
-- Got to new user session path after logout (@mkasztelnik)
+- Go to new user session path after logout (@mkasztelnik)
+- Added a spec checking for correct removal of only policies specified by the API request parameter (@dharezlak)
 
 ### Deprecated
 

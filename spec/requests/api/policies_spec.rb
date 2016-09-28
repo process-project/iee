@@ -51,7 +51,7 @@ RSpec.describe 'Policies API' do
     )
   end
 
-  it `should return a valid response when no path parameter is given` do
+  it 'should return a valid response when no path parameter is given' do
     get api_policies_path, headers: valid_auth_headers
 
     expect(response.status).to eq(200)
@@ -60,13 +60,13 @@ RSpec.describe 'Policies API' do
     )
   end
 
-  it `should return a bad request status for a path which does not exist` do
+  it 'should return a bad request status for a path which does not exist' do
     get api_policies_path, params: { path: 'does_not_exist' }, headers: valid_auth_headers
 
     expect(response.status).to eq(400)
   end
 
-  it `should not return the manage role in the response body` do
+  it 'should not return the manage role in the response body' do
     manage_method = create(:access_method, name: 'manage')
     create(:access_policy, user: user, resource: resource, access_method: manage_method)
 
@@ -219,6 +219,25 @@ RSpec.describe 'Policies API' do
       expect(
         AccessPolicy.find_by(resource: resource, user: user, access_method: access_method)
       ).to be_nil
+    end
+
+    it 'should delete only an access policy for the given access method leaving the rest intact' do
+      post_method = create(:access_method, name: 'post')
+      create(:access_policy, user: user, access_method: post_method, resource: resource)
+
+      expect do
+        delete  api_policies_path,
+                params: {
+                  path: resource.path,
+                  user: user.email,
+                  access_method: post_method.name
+                },
+                headers: valid_auth_headers
+      end.to change { AccessPolicy.count }.by(-1)
+      expect(response.status).to eq(204)
+      expect(
+        AccessPolicy.find_by(resource: resource, user: user, access_method: access_method)
+      ).not_to be_nil
     end
   end
 
