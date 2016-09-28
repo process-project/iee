@@ -5,7 +5,6 @@ module Resources
 
     def create
       @access_policy = AccessPolicy.new(permitted_attributes(AccessPolicy))
-      @access_policy.resource = @resource
 
       if @access_policy.save
         redirect_to service_global_policy_path(@resource.service, @resource)
