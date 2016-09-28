@@ -69,6 +69,7 @@ en:
         title: "%{service_name} service - new global policy"
       show:
         title: "%{service_name} service - %{name} global policy"
+        back: Go back to global policy list
       edit:
         title: "%{service_name} service - edit %{name} global policy"
         subtitle: Edit resource name and path

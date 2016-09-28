@@ -8,7 +8,7 @@
     %ul.nav.navbar-right.panel_toolbox
       %li
         = link_to(service_global_policies_path(@model.service), class: 'back') do
-          = icon("hand-o-left", title: t('.back_to_index'))
+          = icon("hand-o-left", title: t('services.global_policies.show.back'))
       %li
         = link_to(edit_service_global_policy_path(@model.service, @model.resource), class: 'edit') do
           = icon('edit', title: t('edit'))
