@@ -3,15 +3,18 @@
   .pull-right
     %a{ href: url_for(new_group_path), title: t('.add'), class: 'btn btn-success' }
       = icon('plus', t('.add'))
-.x_panel
-  .x_content
-    - if @groups.exists?
-      %table.table.table-striped
-        %thead
-          %tr
-            %th= t 'group.name'
-            %th
-        #tbody
-          = render @groups
-    - else
-      %p= t '.nothing'
+.col-md-8
+  .x_panel
+    .x_content
+      - if @groups.exists?
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t 'group.name'
+              %th
+          #tbody
+            = render @groups
+      - else
+        %p= t '.nothing'
+.col-md-4
+  = render 'index_help'

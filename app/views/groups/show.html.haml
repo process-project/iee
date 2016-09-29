@@ -1,5 +1,5 @@
 .row
-  .col-md-12
+  .col-md-8
     .x_panel
       .x_title
         %h2= @group.name
@@ -48,3 +48,6 @@
             %tr
               %td= t('simple_form.labels.group.default')
               %td= @group.default
+  .col-md-4
+    = render 'show_help'
+

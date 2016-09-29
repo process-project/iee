@@ -56,6 +56,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Omnipotent admin (@Nuanda)
 - Global resource access policies management UI (@mkasztelnik)
 - Additional attribute with policy proxy URL is passed to the file store browser (@dharezlak)
+- Provide help panels for resource actions (@nowakowski)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
