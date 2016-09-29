@@ -51,6 +51,27 @@ RSpec.describe 'PDP' do
       expect(response.status).to eq(200)
     end
 
+    context 'missing query params' do
+      before do
+        create(:user_access_policy,
+               user: user, resource: resource, access_method: access_method)
+      end
+
+      it 'returns 403 when access_method is missing' do
+        get api_pdp_index_path,
+            params: { uri: resource.uri }
+
+        expect(response.status).to eq(403)
+      end
+
+      it 'returns 403 when uri is missing' do
+        get api_pdp_index_path,
+            params: { access_method: 'get' }
+
+        expect(response.status).to eq(403)
+      end
+    end
+
     context 'resource with regular expressions' do
       let(:resource) { create(:resource, path: 'path/.*', service: service) }
 

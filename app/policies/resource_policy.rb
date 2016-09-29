@@ -23,27 +23,27 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   def new?
-    owns_resource?
+    user.admin? || owns_resource?
   end
 
   def create?
-    owns_resource?
+    user.admin? || owns_resource?
   end
 
   def show?
-    owns_resource?
+    user.admin? || owns_resource?
   end
 
   def edit?
-    owns_resource?
+    user.admin? || owns_resource?
   end
 
   def update?
-    owns_resource?
+    user.admin? || owns_resource?
   end
 
   def destroy?
-    owns_resource?
+    user.admin? || owns_resource?
   end
 
   def owns_resource?

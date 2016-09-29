@@ -47,6 +47,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'guard-rspec', require: false
   gem 'dotenv-rails'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'bullet'
 end
 
 group :development do
@@ -63,10 +66,8 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'factory_girl_rails'
   gem 'shoulda-matchers'
   gem 'database_cleaner'
-  gem 'faker'
   gem 'rspec-json_expectations'
 end
 

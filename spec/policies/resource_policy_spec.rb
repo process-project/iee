@@ -3,12 +3,13 @@ require 'rails_helper'
 
 RSpec.describe ResourcePolicy do
   let(:user) { create(:user, first_name: 'tomek') }
+  let(:admin) { create(:admin) }
   let(:group) { create(:group, name: 'subgroup', users: [user]) }
   let(:get_method) { create(:access_method, name: 'get') }
+  let(:manage_method) { create(:access_method, name: 'manage') }
 
   describe 'local resource' do
     let(:resource) { create(:resource, name: 'zasób', resource_type: :local) }
-    let(:manage_method) { create(:access_method, name: 'manage') }
 
     subject { ResourcePolicy.new(user, resource) }
 
@@ -17,6 +18,10 @@ RSpec.describe ResourcePolicy do
              access_method: manage_method, user: user, resource: resource)
 
       expect(subject).to be_destroy
+    end
+
+    it 'grants access to destroy resource for admins' do
+      expect(ResourcePolicy.new(admin, resource)).to be_destroy
     end
 
     it 'denies to destroy not managed resource' do
@@ -28,16 +33,19 @@ RSpec.describe ResourcePolicy do
   end
 
   describe 'global policies' do
-    let(:service) { create(:service) }
     let(:resource) { create(:resource, resource_type: :global) }
 
     subject { described_class }
 
-    permissions :new?, :create?, :show?, :edit?, :update?, :destroy? do
+    permissions :new? do
       it 'grants access for resource service owner' do
-        service.users << user
+        resource.service.users << user
 
-        expect(subject).to_not permit(user, resource)
+        expect(subject).to permit(user, resource)
+      end
+
+      it 'grants access for admins' do
+        expect(subject).to permit(admin, resource)
       end
 
       it 'denies access for not resource service owner' do

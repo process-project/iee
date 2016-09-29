@@ -13,6 +13,10 @@ RSpec.describe ServicePolicy do
       expect(subject).to permit(user, service)
     end
 
+    it 'grants access for vapor admin' do
+      expect(subject).to permit(create(:admin), service)
+    end
+
     it 'denies access for not service owner' do
       expect(subject).to_not permit(user, service)
     end

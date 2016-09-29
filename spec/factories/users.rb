@@ -22,8 +22,15 @@ FactoryGirl.define do
       end
     end
 
+    trait :admin do
+      after(:create) do |user, _|
+        create(:admin_group).users << user
+      end
+    end
+
     factory :approved_user, traits: [:approved]
     factory :plgrid_user, parent: :approved_user, traits: [:plgrid]
     factory :supervisor_user, parent: :approved_user, traits: [:supervisor]
+    factory :admin, parent: :approved_user, traits: [:admin]
   end
 end

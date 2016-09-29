@@ -52,6 +52,12 @@ gem install foreman
 foreman start
 ```
 
+To load sample data for development purposes run:
+```
+bundle exec rake dev:prime RAILS_ENV=development
+```
+This task depends on _db:setup_ task so be aware that data present in database is erased.
+
 ## Testing
 
 To execute all tests run:
@@ -74,6 +80,10 @@ Use guard to execute tests connected with modified file:
 ```
 guard
 ```
+
+## Using bullet to increase application perfromance
+[Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments. 
+While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
 
 ## Contributing
 

@@ -89,8 +89,11 @@ class User < ApplicationRecord
   end
 
   def admin?
-    @admin = groups.where(name: 'admin').exists? if @admin.nil?
-    @admin
+    @admin ||= groups.where(name: 'admin').exists?
+  end
+
+  def supervisor?
+    @supervisor ||= groups.where(name: 'supervisor').exists?
   end
 
   def token
@@ -106,6 +109,10 @@ class User < ApplicationRecord
   # details.
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  def all_groups
+    groups.includes(:parents).flat_map { |group| [group] + group.ancestors }
   end
 
   private

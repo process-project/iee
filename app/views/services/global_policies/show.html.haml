@@ -1,22 +1,23 @@
-%h1= t('.title', service_name: @service.name, name: @resource.name)
+%h1= t('.title', service_name: @model.service.name, name: @model.resource.name)
 = render('services/show_layout') do
   .x_title
     %h2
-      = @resource.name
-      %small= @resource.uri
+      = @model.resource.name
+      %small= @model.resource.uri
 
     %ul.nav.navbar-right.panel_toolbox
       %li
-        = link_to(service_global_policies_path(@service), class: 'back') do
-          = icon("hand-o-left", title: t('.back_to_index'))
+        = link_to(service_global_policies_path(@model.service), class: 'back') do
+          = icon("hand-o-left", title: t('services.global_policies.show.back'))
       %li
-        = link_to(edit_service_global_policy_path(@service, @resource), class: 'edit') do
+        = link_to(edit_service_global_policy_path(@model.service, @model.resource), class: 'edit') do
           = icon('edit', title: t('edit'))
       %li
-        = link_to(service_global_policy_path(@service, @resource),
+        = link_to(service_global_policy_path(@model.service, @model.resource),
           method: :delete, class: 'delete',
           data: { confirm: t('are_you_sure') }) do
           = icon('remove', title: t('remove'))
     .clearfix
-  .x_content
-    TODO - add, remove access policies
+  .x_content#access-policies
+    = render('access_policies/index', model: @model)
+    = render('access_policies/form', model: @model)

@@ -1,5 +1,5 @@
 %tr
-  %td= link_to(service.name, service)
+  %td= link_to(service.name.presence || t('.no_name'), service)
   %td= service.uri
   %td
     - if policy(service).edit?

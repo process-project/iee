@@ -16,7 +16,6 @@ en:
         profile: Profile
         services: Services
         groups: Groups
-        resources: Web resources
       help:
         title: Help
         sessions: JWT

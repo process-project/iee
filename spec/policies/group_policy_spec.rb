@@ -7,10 +7,14 @@ RSpec.describe GroupPolicy do
   subject { described_class }
 
   permissions :edit?, :update?, :destroy? do
-    it 'grants access only for managed groups' do
+    it 'grants access for managed groups' do
       owned_group = group_with_user(true)
 
       expect(subject).to permit(user, owned_group)
+    end
+
+    it 'grants access to admins' do
+      expect(subject).to permit(create(:admin), create(:group))
     end
 
     it 'denies access for not managed groups' do

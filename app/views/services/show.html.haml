@@ -8,17 +8,17 @@
     %ul.nav.navbar-right.panel_toolbox
       %li
         = link_to(services_path, class: 'back') do
-          = icon('hand-o-left', title: t('.back'))
+          = icon('hand-o-left', title: t('services.show.back'))
       - if policy(@service).edit?
         %li
           = link_to([:edit, @service], class: 'edit') do
-            = icon('edit', title: t('edit'))
+            = icon('edit', title: t('services.service.edit'))
       - if policy(@service).destroy?
         %li
           = link_to(@service,
             method: :delete, class: 'delete',
             data: { confirm: t('are_you_sure') }) do
-            = icon('remove', title: t('remove'))
+            = icon('remove', title: t('services.service.remove'))
 
   %table.table
     %tbody
