@@ -6,9 +6,9 @@ defaults: &defaults
     issuer: 'EurValve Portal'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
   file_store:
-    web_dav_base_url: "https://files.valve.cyfronet.pl"
-    web_dav_base_path: "/webdav"
-    web_dav_policy_proxy_path: "/portal-proxy"
+    web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve.cyfronet.pl' %>
+    web_dav_base_path: '/webdav'
+    web_dav_policy_proxy_path: '/portal-proxy'
 
 development:
   <<: *defaults
