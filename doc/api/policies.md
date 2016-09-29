@@ -24,9 +24,11 @@ Response body:
         "groups": ["..."]
       },
       "permissions": [
-        "type": "user_permission|group_permission",
-        "entity_name": "...",
-        "access_methods": ["..."]
+        {
+          "type": "user_permission|group_permission",
+          "entity_name": "...",
+          "access_methods": ["..."]
+        }
       ]
     }
   ]
@@ -53,9 +55,11 @@ Request body:
     "groups": ["..."]
   },
   "permissions": [
-    "type": "user_permission|group_permission",
-    "entity_name": "...",
-    "access_methods": ["..."]
+    {
+      "type": "user_permission|group_permission",
+      "entity_name": "...",
+      "access_methods": ["..."]
+    }
   ]
 }
 ```
@@ -68,7 +72,7 @@ status is returned instead.
 Example using cURL:
 
 ```
-curl -X POST --data '{ "path": "/a/path", "permissions": [ { "type": "user_permission", "entity_name": "user@host.com" }, "access_methods": [ "get", "post" ]  ]' -H "Content-Type: application/json" -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" ${root_url}api/policies
+curl -X POST --data '{ "path": "/a/path", "permissions": [ { "type": "user_permission", "entity_name": "user@host.com", "access_methods": [ "get", "post" ] } ] }' -H "Content-Type: application/json" -H "X-SERVICE-TOKEN: {service_token}" -H "Authorization: Bearer {user_token}" ${root_url}api/policies
 ```
 
 ## `DELETE /api/policies?path=...[&user=...|group=...[&access_method=...]]`
@@ -82,7 +86,7 @@ obtained by using the `/api/policy_entities` method.
 
 `group`: A coma-separated list of group names.
 
-`access_methods`: A coma-separated list of access method names.
+`access_method`: A coma-separated list of access method names.
 
 If corresponding policies are found and deleted `204` status is
 returned. In case the resources for given parameters cannot be found a `400` status is returned.
