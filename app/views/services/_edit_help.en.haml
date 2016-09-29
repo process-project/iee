@@ -7,3 +7,11 @@
       Here you can change service properties, including its name, URI and ownership.
     %p
       Users flagged as owners will be able to manage the service, edit its properties and de-register it.
+    %p
+      Service-specific access methods are names of methods provided by the service - these can include standard
+      REST interface methods such as
+      %b PUT, POST, DELETE
+      etc., or other methods specific to your type of service (e.g.
+      %b SELECT, UPDATE
+      etc. for a relational database). These methods are listed here in order to facilitate definition of
+      security policies applicable to the service (since each policy applies to a specific set of access methods).

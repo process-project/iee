@@ -5,14 +5,17 @@
       title: t('services.global_policies.index.add'),
       class: 'btn btn-success') do
       = icon('plus', t('.add'))
-= render('services/show_layout') do
-  - if @resources.exists?
-    %table.table
-      %thead
-        %tr
-          %th= t('services.global_policies.index.policy_name')
-          %th= t('services.global_policies.index.policy_uri')
-          %th
-        = render partial: 'resource', collection: @resources
-  - else
-    %p= t('services.global_policies.index.nothing')
+.col-md-8
+  = render('services/show_layout') do
+    - if @resources.exists?
+      %table.table
+        %thead
+          %tr
+            %th= t('services.global_policies.index.policy_name')
+            %th= t('services.global_policies.index.policy_uri')
+            %th
+          = render partial: 'resource', collection: @resources
+    - else
+      %p= t('services.global_policies.index.nothing')
+.col-md-4
+  = render 'index_help'

@@ -1,13 +1,10 @@
 .x_panel
   .x_title
-    %h2 Global policies
+    %h2 Creating a new global policy
     .clearfix
   .x_content
     %p
-      This is a list of global security policies defined for the service. You can manage existing policies or add
-      a new policy by clicking the
-      %b Add new global policy
-      button.
-    %p
-      Global policies restrict access to the service to selected users or user groups. They can only be defined and
-      managed by service owners.
+      To create a new global policy for the whole service or for one of its resources, you need to specify
+      the policy name and path. The path attribute is appended to the service URI (e.g.
+      %b http://my.service.com/path
+      ) and restricts the applicability of this policy to the given path.
