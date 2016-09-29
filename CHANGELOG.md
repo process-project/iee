@@ -98,5 +98,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix missing translations on service list and service show views (@mkasztelnik, @Nuanda)
 - Fix n+1 queries problems in service and group sections (@mkasztelnik)
 - Check service policy only once on global policies view (@mkasztelnik)
+- More advance validation for service `uri` overridden (@jmeizner)
 
 ### Security
