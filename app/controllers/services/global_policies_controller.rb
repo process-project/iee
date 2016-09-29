@@ -4,23 +4,24 @@ module Services
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
     def index
-      authorize(@service, :show?)
       @resources = @service.resources.where(resource_type: :global)
     end
 
     def new
       @resource = Resource.new(service: @service, resource_type: :global)
-      do_authorize
+      authorize(@resource)
     end
 
     def show
+      @model = ResourceAccessPoliciesDecorator.
+               new(current_user, @resource, AccessPolicy.new)
     end
 
     def create
       @resource = Resource.new(permitted_attributes(Resource))
       @resource.service = @service
       @resource.resource_type = :global
-      do_authorize
+      authorize(@resource)
 
       if @resource.save
         redirect_to(service_global_policy_path(@service, @resource))
@@ -49,12 +50,11 @@ module Services
 
     def find_and_authorize
       @resource = @service.resources.find(params[:id])
-      do_authorize
+      authorize(@resource)
     end
 
-    def do_authorize
-      authorize(@service, :show?)
-      authorize(@resource)
+    def service_finder
+      action_name == 'show' ? Service.includes(:access_methods) : Service
     end
   end
 end

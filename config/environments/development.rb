@@ -66,4 +66,10 @@ Rails.application.configure do
     user_name: ENV['MAILER_USERNAME'],
     password: ENV['MAILER_PASSWORD']
   }
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+  end
 end

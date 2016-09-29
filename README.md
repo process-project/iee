@@ -81,6 +81,10 @@ Use guard to execute tests connected with modified file:
 guard
 ```
 
+## Using bullet to increase application perfromance
+[Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments. 
+While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
+
 ## Contributing
 
 1. Fork the project

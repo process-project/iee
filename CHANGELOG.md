@@ -52,6 +52,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rake task for generating sample data for development purposes (@tomek.bartynski)
 - Users can set Access Methods for new and existing Services (@Nuanda)
 - There are global Access Methods which work for all Services (@Nuanda)
+- Bullet gem warns about database queries performance problems (@tomek.bartynski)
+- Omnipotent admin (@Nuanda)
+- Global resource access policies management UI (@mkasztelnik)
+- Additional attribute with policy proxy URL is passed to the file store browser (@dharezlak)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
@@ -64,13 +68,18 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service views refactoring - separation for global/local policies management (@mkasztelnik, @Nuanda)
 - Rewrite migrations to avoid using ActiveRecord (@amber7b)
 - Increase fade out time for flash messages into 10 seconds (@mkasztelnik)
+- Go to new user session path after logout (@mkasztelnik)
+- Got to new user session path after logout (@mkasztelnik)
+- Added a spec checking for correct removal of only policies specified by the API request parameter (@dharezlak)
+- File store view uses a common layout (@dharezlak)
 
 ### Deprecated
 
 ### Removed
+- Remove webdav specific access methods from seeds (@mkasztelnik)
 
 ### Fixed
-- Improved service URI validation (@Nuanda)
+- Improve service URI validation (@Nuanda)
 - Fix extra spaces in markdown code blocks (@mkasztelnik)
 - Disable turbolinks on WebDav browser view to make GWT work (@mkasztelnik)
 - Fix group validation - at last one group owner is needed (@mkasztelnik)
@@ -81,8 +90,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show notice information to the user after new account created that account needs to
   be approved by supervisor (@mkasztelnik)
 - Show `new` view instead of `edit` while creating new group and validation failed (@mkasztelnik)
-- Removed n+1 query for service ownership in Services#index view (@Nuanda)
+- Remove n+1 query for service ownership in Services#index view (@Nuanda)
 - Made it possible to navigate to Service#show with a click if a service had no name (@Nuanda)
 - Content passed to the file store JS browser sanitized to prevent XSS attacks (@dharezlak)
+- Turbolinks disabled directly on the Files link (@dharezlak)
+- PDP returns 403 when `uri` or `access_method` query params are missing (@mkasztelnik)
+- Fix missing translations on service list and service show views (@mkasztelnik, @Nuanda)
+- Fix n+1 queries problems in service and group sections (@mkasztelnik)
+- Check service policy only once on global policies view (@mkasztelnik)
+- More advance validation for service `uri` overridden (@jmeizner)
 
 ### Security

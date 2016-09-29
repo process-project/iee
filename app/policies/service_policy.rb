@@ -9,19 +9,19 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def show?
-    owned?
+    user.admin? || owned?
   end
 
   def edit?
-    owned?
+    user.admin? || owned?
   end
 
   def update?
-    owned?
+    user.admin? || owned?
   end
 
   def destroy?
-    owned?
+    user.admin? || owned?
   end
 
   def permitted_attributes

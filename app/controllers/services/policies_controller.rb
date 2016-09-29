@@ -6,8 +6,12 @@ module Services
     private
 
     def load_service
-      @service = Service.find(params[:service_id])
+      @service = service_finder.find(params[:service_id])
       authorize(@service, :show?)
+    end
+
+    def service_finder
+      Service
     end
   end
 end

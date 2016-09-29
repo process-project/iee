@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: {
                omniauth_callbacks: 'users/omniauth_callbacks',
-               registrations: 'users/registrations'
+               registrations: 'users/registrations',
+               sessions: 'users/sessions'
              }
 
   ## User profile section routes
@@ -44,8 +45,11 @@ Rails.application.routes.draw do
     end
   end
   resources :groups
-  resources :resources, only: :index
-  resources :access_policies, only: [:new, :create, :destroy]
+  resources :resources, only: :index do
+    scope module: :resources do
+      resources :access_policies, only: [:create, :destroy]
+    end
+  end
   resources :computations, only: [:show, :create]
 
   # Help

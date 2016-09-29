@@ -66,7 +66,7 @@ class AccountConfirmationController < ApplicationController
   end
 
   def user_is_supervisor
-    unless view_context.supervisor?
+    unless current_user&.admin? || current_user&.supervisor?
       flash[:alert] = t('restricted_to_supervisors')
       redirect_to root_path
     end

@@ -11,6 +11,8 @@ class FileStoreController < ApplicationController
 
   def set_urls
     @web_dav_base_url = Rails.configuration.constants['file_store']['web_dav_base_url']
-    @web_dav_base_href = Rails.configuration.constants['file_store']['web_dav_base_href']
+    @web_dav_base_path = Rails.configuration.constants['file_store']['web_dav_base_path']
+    @web_dav_policy_proxy_path = Rails.configuration.
+                                 constants['file_store']['web_dav_policy_proxy_path']
   end
 end

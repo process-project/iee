@@ -19,15 +19,15 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def edit?
-    owned?
+    user.admin? || owned?
   end
 
   def update?
-    owned?
+    user.admin? || owned?
   end
 
   def destroy?
-    owned?
+    user.admin? || owned?
   end
 
   def permitted_attributes
