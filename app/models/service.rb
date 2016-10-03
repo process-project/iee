@@ -11,6 +11,7 @@ class Service < ApplicationRecord
             format: { with: /\A#{URI.regexp}\z/ }
   validates :users,
             presence: true
+  validate :uri_does_not_end_with_slash
 
   before_validation :reject_blank_aliases
   before_validation :check_if_not_override_uri
@@ -35,6 +36,10 @@ class Service < ApplicationRecord
       random_token = SecureRandom.hex
       break random_token unless Service.exists?(token: random_token)
     end
+  end
+
+  def uri_does_not_end_with_slash
+    errors.add(:uri, 'Service URI cannot end with a slash') if uri.present? && uri.end_with?('/')
   end
 
   def reject_blank_aliases

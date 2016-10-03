@@ -174,4 +174,16 @@ RSpec.describe Service do
   it 'allows to update a service without failing URI validation' do
     expect { create(:service).save! }.not_to raise_error
   end
+
+  context 'service uri ends with slash' do
+    let(:slash_service) { build(:service, uri: 'http://host.pl/') }
+    it 'is invalid' do
+      expect(slash_service).to_not be_valid
+    end
+
+    it 'has a proper error message' do
+      slash_service.save
+      expect(slash_service.errors.messages).to eq(uri: ['Service URI cannot end with a slash'])
+    end
+  end
 end
