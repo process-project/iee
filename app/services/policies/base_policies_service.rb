@@ -9,7 +9,7 @@ module Policies
 
     def safely_create_access_policy(user, group, access_methods, resource, global = false)
       access_methods.each do |access_method_name|
-        access_method = get_access_method(access_method_name, global)
+        access_method = access_method_for_name(access_method_name, global)
         AccessPolicy.find_or_create_by(
           user: user,
           group: group,
@@ -33,7 +33,7 @@ module Policies
       end
     end
 
-    def get_access_method(access_method_name, global)
+    def access_method_for_name(access_method_name, global)
       if global
         AccessMethod.find_by(name: access_method_name.downcase)
       else
