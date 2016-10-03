@@ -12,31 +12,11 @@ class Resource < ApplicationRecord
   validates :resource_type, presence: true
   validate :local_path_exclusion, if: :local?
 
-  before_validation :unify_path
-
-  def self.normalize_path(path)
-    if path && path.starts_with?('/')
-      path[1..-1]
-    else
-      path
-    end
-  end
-
-  def self.normalize_paths(paths)
-    paths.map { |path| normalize_path(path) }
-  end
-
   def uri
     uri = URI.parse(service.uri)
-    uri.path = "/#{path}"
+    uri.path = path
 
     uri.to_s
-  end
-
-  private
-
-  def unify_path
-    self.path = Resource.normalize_path(path)
   end
 
   def local_path_exclusion
