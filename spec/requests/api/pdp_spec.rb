@@ -37,7 +37,7 @@ RSpec.describe 'PDP' do
       create(:user_access_policy, user: user, resource: resource, access_method: access_method)
       another_access_method = create(:access_method, name: 'post')
       another_mathing_resource = create(:resource,
-                                        path: '.*',
+                                        path: '/.*',
                                         service: service,
                                         resource_type: :global)
       create(:user_access_policy,
@@ -73,7 +73,7 @@ RSpec.describe 'PDP' do
     end
 
     context 'resource with regular expressions' do
-      let(:resource) { create(:resource, path: 'path/.*', service: service) }
+      let(:resource) { create(:resource, path: '/path/.*', service: service) }
 
       before do
         create(:user_access_policy,
@@ -113,7 +113,7 @@ RSpec.describe 'PDP' do
       context 'several resources with overlapping regular expressions and different users' do
         let(:resource_2) do
           create(:resource,
-                 path: 'path/extra/.*', service: service, resource_type: :global)
+                 path: '/path/extra/.*', service: service, resource_type: :global)
         end
         let(:user_2) { create(:user, :approved) }
 

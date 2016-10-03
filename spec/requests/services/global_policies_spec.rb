@@ -36,18 +36,18 @@ RSpec.describe 'Service global policies' do
       service = create(:service, users: [user])
 
       post service_global_policies_path(service),
-           params: { resource: { name: 'my_resource', path: 'my_path' } }
+           params: { resource: { name: 'my_resource', path: '/my_path' } }
       new_resource = Resource.last
 
       expect(new_resource.name).to eq('my_resource')
-      expect(new_resource.path).to eq('my_path')
+      expect(new_resource.path).to eq('/my_path')
     end
 
     it 'denies creating global policy for not owned service' do
       service = create(:service)
 
       post service_global_policies_path(service),
-           params: { resource: { name: 'my_resource', path: 'my_path' } }
+           params: { resource: { name: 'my_resource', path: '/my_path' } }
 
       expect(response.status).to eq(403)
     end
@@ -59,11 +59,12 @@ RSpec.describe 'Service global policies' do
       resource = create(:global_resource, service: service)
 
       put service_global_policy_path(service, resource),
-          params: { resource: { name: 'my_resource', path: 'my_path' } }
+          params: { resource: { name: 'my_resource', path: '/my_path' } }
+
       resource.reload
 
       expect(resource.name).to eq('my_resource')
-      expect(resource.path).to eq('my_path')
+      expect(resource.path).to eq('/my_path')
     end
 
     it 'denies updates global policy for not owned service' do
@@ -71,7 +72,7 @@ RSpec.describe 'Service global policies' do
       resource = create(:global_resource, service: service)
 
       put service_global_policy_path(service, resource),
-          params: { resource: { name: 'my_resource', path: 'my_path' } }
+          params: { resource: { name: 'my_resource', path: '/my_path' } }
 
       expect(response.status).to eq(403)
     end
