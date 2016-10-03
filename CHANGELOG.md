@@ -102,5 +102,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - More advance validation for service `uri` overridden (@jmeizner)
 - Policy management API documentation corrected (@dharezlak)
 - Fix duplicates and missing part of `Service#show` (@jmeizner)
+- Policy API uses a service reference when querying for access methods (@dharezlak)
 
 ### Security
