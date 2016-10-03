@@ -42,6 +42,15 @@ RSpec.describe Resource do
     expect(r1.uri).to eq('https://test/my-path')
   end
 
+  context 'path present in service uri' do
+    it 'concatenates uri correctly' do
+      service_with_path = build(:service, uri: 'https://test/service')
+      r1 = build(:resource, service: service_with_path, path: '/resource')
+
+    expect(r1.uri).to eq('https://test/service/resource')
+    end
+  end
+
   it 'should not allow for a creation of a local resource which matches another local resource' do
     create(:resource, path: '/path/.*', resource_type: :local)
     another_resource = build(:resource, path: '/path.*')

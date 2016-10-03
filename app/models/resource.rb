@@ -15,7 +15,7 @@ class Resource < ApplicationRecord
 
   def uri
     uri = URI.parse(service.uri)
-    uri.path = path
+    uri.path += path
 
     uri.to_s
   end
