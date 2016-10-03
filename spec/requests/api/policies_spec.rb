@@ -154,7 +154,7 @@ RSpec.describe 'Policies API' do
     end
 
     it 'should merge the new method of the given policy with an existing one' do
-      create(:access_method, name: 'post')
+      create(:access_method, name: 'post', service: service)
 
       post  api_policies_path,
             params: policy_post_params(
