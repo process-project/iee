@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 module Policies
   class MergePolicy < Policies::BasePoliciesService
-    def initialize(json_body, resource)
+    def initialize(json_body, resource, service)
+      super(service)
       @json_body = json_body
       @resource = resource
     end
@@ -28,12 +29,9 @@ module Policies
     def merge_permissions
       if @json_body['permissions']
         @json_body['permissions'].each do |permission|
-          safely_create_access_policy(
-            User.find_by(email: permission['entity_name']),
-            Group.find_by(name: permission['entity_name']),
-            permission['access_methods'],
-            @resource
-          )
+          safely_create_access_policy(User.find_by(email: permission['entity_name']),
+                                      Group.find_by(name: permission['entity_name']),
+                                      permission['access_methods'], @resource)
         end
       end
     end

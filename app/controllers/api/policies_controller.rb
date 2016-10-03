@@ -42,7 +42,7 @@ module Api
 
     def merge_policy(resource)
       if ResourcePolicy.new(current_user, resource).owns_resource?
-        Policies::MergePolicy.new(@json, resource).call
+        Policies::MergePolicy.new(@json, resource, service).call
 
         head :ok
       else
