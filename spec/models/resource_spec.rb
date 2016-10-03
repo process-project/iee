@@ -47,7 +47,7 @@ RSpec.describe Resource do
       service_with_path = build(:service, uri: 'https://test/service')
       r1 = build(:resource, service: service_with_path, path: '/resource')
 
-    expect(r1.uri).to eq('https://test/service/resource')
+      expect(r1.uri).to eq('https://test/service/resource')
     end
   end
 

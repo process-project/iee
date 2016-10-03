@@ -137,7 +137,8 @@ RSpec.describe 'PDP' do
 
     context 'path in service uri' do
       let(:webdav) do
-        create(:service, uri: 'http://localhost:8080/webdav',
+        create(:service,
+               uri: 'http://localhost:8080/webdav',
                uri_aliases: ['http://cyfronet.pl/webdav'])
       end
       let(:dav_resource) { create(:resource, service: webdav, path: '/') }
