@@ -12,12 +12,6 @@ FactoryGirl.define do
       %W(#{uri_alias1.scheme}://#{uri_alias1.host} #{uri_alias2.scheme}://#{uri_alias2.host})
     end
 
-    before :create do |service|
-      service.users << create(:user) unless service.users.present?
-    end
-
-    after :build do |service|
-      service.users << create(:user) unless service.users.present?
-    end
+    users { [create(:user)] }
   end
 end
