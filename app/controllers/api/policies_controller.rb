@@ -70,7 +70,7 @@ module Api
     end
 
     def resource_paths
-      Resource.normalize_paths(extract_multiple_param(:path))
+      extract_multiple_param(:path)
     end
 
     def extract_multiple_param(name)

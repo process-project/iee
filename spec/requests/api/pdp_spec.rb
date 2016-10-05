@@ -37,7 +37,7 @@ RSpec.describe 'PDP' do
       create(:user_access_policy, user: user, resource: resource, access_method: access_method)
       another_access_method = create(:access_method, name: 'post')
       another_mathing_resource = create(:resource,
-                                        path: '.*',
+                                        path: '/.*',
                                         service: service,
                                         resource_type: :global)
       create(:user_access_policy,
@@ -73,7 +73,7 @@ RSpec.describe 'PDP' do
     end
 
     context 'resource with regular expressions' do
-      let(:resource) { create(:resource, path: 'path/.*', service: service) }
+      let(:resource) { create(:resource, path: '/path/.*', service: service) }
 
       before do
         create(:user_access_policy,
@@ -113,7 +113,7 @@ RSpec.describe 'PDP' do
       context 'several resources with overlapping regular expressions and different users' do
         let(:resource_2) do
           create(:resource,
-                 path: 'path/extra/.*', service: service, resource_type: :global)
+                 path: '/path/extra/.*', service: service, resource_type: :global)
         end
         let(:user_2) { create(:user, :approved) }
 
@@ -132,6 +132,27 @@ RSpec.describe 'PDP' do
 
           expect(response.status).to eq(403)
         end
+      end
+    end
+
+    context 'path in service uri' do
+      let(:webdav) do
+        create(:service,
+               uri: 'http://localhost:8080/webdav',
+               uri_aliases: ['http://cyfronet.pl/webdav'])
+      end
+      let(:dav_resource) { create(:resource, service: webdav, path: '/') }
+      let(:dav_access_method) { create(:access_method, name: 'get') }
+      it 'returns 200' do
+        create(:user_access_policy,
+               user: user, resource: dav_resource, access_method: dav_access_method)
+        get api_pdp_index_path,
+            params:  {
+              uri: 'http://localhost:8080/webdav/',
+              access_method: 'get'
+            }
+
+        expect(response.status).to eq(200)
       end
     end
   end

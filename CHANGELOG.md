@@ -57,6 +57,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Global resource access policies management UI (@mkasztelnik)
 - Additional attribute with policy proxy URL is passed to the file store browser (@dharezlak)
 - Provide help panels for resource actions (@nowakowski)
+- Hint regarding resource paths in global policies tab (@tomek.bartynski)
+- Support path component in service uri (@tomek.bartynski)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
@@ -73,6 +75,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Got to new user session path after logout (@mkasztelnik)
 - Added a spec checking for correct removal of only policies specified by the API request parameter (@dharezlak)
 - File store view uses a common layout (@dharezlak)
+- Service uri must not end with a slash (@tomek.bartynski)
+- Resource path must start with a slash (@tomek.bartynski)
+- Removed path unification in Resource model (@tomek.bartynski)
 
 ### Deprecated
 

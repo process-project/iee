@@ -105,7 +105,7 @@ RSpec.describe 'Policies API' do
           as: :json
 
     expect(response.status).to eq(201)
-    expect(Resource.last.path).to eq('some/path')
+    expect(Resource.last.path).to eq('/some/path')
   end
 
   it 'should return a 201 status code for an access method given in capital letters' do

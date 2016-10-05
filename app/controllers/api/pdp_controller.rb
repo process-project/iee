@@ -21,7 +21,7 @@ module Api
 
     def path
       postfix = uri
-      postfix[(service.uri.length + 1)..-1]
+      postfix[(service.uri.length)..-1]
     end
 
     def service

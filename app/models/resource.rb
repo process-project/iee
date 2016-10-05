@@ -11,37 +11,26 @@ class Resource < ApplicationRecord
   validates :service, presence: true
   validates :resource_type, presence: true
   validate :local_path_exclusion, if: :local?
-
-  before_validation :unify_path
-
-  def self.normalize_path(path)
-    if path && path.starts_with?('/')
-      path[1..-1]
-    else
-      path
-    end
-  end
-
-  def self.normalize_paths(paths)
-    paths.map { |path| normalize_path(path) }
-  end
+  validate :path_starts_with_slash
 
   def uri
     uri = URI.parse(service.uri)
-    uri.path = "/#{path}"
+    uri.path += path
 
     uri.to_s
-  end
-
-  private
-
-  def unify_path
-    self.path = Resource.normalize_path(path)
   end
 
   def local_path_exclusion
     if Resource.where(resource_type: :local).where('path ~ :path', path: path).exists?
       errors.add(:resource_type, 'local resource paths cannot overlap')
+    end
+  end
+
+  private
+
+  def path_starts_with_slash
+    if path.present? && !path.start_with?('/')
+      errors.add(:path, 'Resource path must start with a slash')
     end
   end
 end
