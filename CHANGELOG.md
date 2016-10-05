@@ -78,6 +78,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Service uri must not end with a slash (@tomek.bartynski)
 - Resource path must start with a slash (@tomek.bartynski)
 - Removed path unification in Resource model (@tomek.bartynski)
+- Update to sidekiq 4.2.2 and remove unused anymore sinatra dependency (@mkasztelnik)
 
 ### Deprecated
 
