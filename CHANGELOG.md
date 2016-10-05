@@ -79,6 +79,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Resource path must start with a slash (@tomek.bartynski)
 - Removed path unification in Resource model (@tomek.bartynski)
 - Administrator is able to see all registered services (@mkasztelnik)
+- Fixed path field in a form for Resource (@tomek.bartynski)
 
 ### Deprecated
 
