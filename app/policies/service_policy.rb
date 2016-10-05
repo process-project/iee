@@ -2,9 +2,13 @@
 class ServicePolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::ApplicationScope
     def resolve
-      scope.
-        joins(:users).
-        where(users: { id: user.id })
+      if user.admin?
+        scope.all
+      else
+        scope.
+          joins(:users).
+          where(users: { id: user.id })
+      end
     end
   end
 
