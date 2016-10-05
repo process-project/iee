@@ -1,7 +1,7 @@
 = simple_form_for(resource, url: url) do |f|
   = f.error_notification
   = f.input :name
-  = f.input(:path, input_html: { value: '/' },
+  = f.input(:path, input_html: { value: resource&.path || '/' },
       hint: "Path must start with '/' and will be appended to #{resource&.service&.uri}")
   .ln_solid
   .form-group
