@@ -9,8 +9,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Pundit authorized error messages for groups and services (@mkasztelnik)
 
 ### Changed
+- Redirect status set to 302 instead of 404 (when record not found), 401 (when
+  user does not have permission to perform action) to avoid ugly "You are being
+  redirected" page (@mkasztelnik)
 
 ### Deprecated
 
