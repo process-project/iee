@@ -239,6 +239,20 @@ RSpec.describe 'Policies API' do
         AccessPolicy.find_by(resource: resource, user: user, access_method: access_method)
       ).not_to be_nil
     end
+
+    it 'should delete all access policies and the resource itself when only path is given' do
+      expect do
+        delete  api_policies_path,
+                params: {
+                  path: resource.path
+                },
+                headers: valid_auth_headers
+      end.to change { Resource.count }.by(-1)
+      expect(response.status).to eq(204)
+      expect(
+        AccessPolicy.find_by(resource: resource, user: user, access_method: 'manage')
+      ).to be_nil
+    end
   end
 
   it 'should return a forbidden status when a user is not allowed to manage a given resource' do
