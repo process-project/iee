@@ -9,7 +9,7 @@ RSpec.feature 'User registration approval' do
 
     sign_in_as(user)
 
-    expect(page).to have_content(I18n.t('devise.failure.user.not_approved'))
+    expect(page.body).to have_content(I18n.t('devise.failure.user.not_approved'))
   end
 
   scenario 'approved users can login' do
@@ -17,6 +17,6 @@ RSpec.feature 'User registration approval' do
 
     sign_in_as(user)
 
-    expect(page).to have_content(I18n.t('devise.sessions.signed_in'))
+    expect(page.body).to have_content(I18n.t('devise.sessions.signed_in'))
   end
 end
