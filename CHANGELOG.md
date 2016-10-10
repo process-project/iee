@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Edit/destroy group buttons visible only for group owners (@mkasztelnik)
 
 ### Security
 
