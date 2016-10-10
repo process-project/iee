@@ -66,7 +66,7 @@ RSpec.describe 'Groups controller' do
 
         put group_path(group), params: { group: { name: 'new_name' } }
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(302)
       end
 
       it 'updates group attributes for managed group' do
@@ -105,7 +105,7 @@ RSpec.describe 'Groups controller' do
 
         delete group_path(group)
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(302)
       end
 
       it 'destroys managed group' do

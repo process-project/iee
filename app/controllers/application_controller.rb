@@ -10,14 +10,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do
     redirect_back fallback_location: root_path,
-                  alert: I18n.t('record_not_found'),
-                  status: 404
+                  alert: I18n.t('record_not_found')
   end
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_back fallback_location: root_path,
-                  alert: not_authorized_msg(exception),
-                  status: 403
+                  alert: not_authorized_msg(exception)
   end
 
   protected

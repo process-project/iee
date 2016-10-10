@@ -27,7 +27,7 @@ RSpec.describe 'Service global policies' do
 
       get service_global_policies_path(service)
 
-      expect(response.status).to eq(403)
+      expect(response.status).to eq(302)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe 'Service global policies' do
       post service_global_policies_path(service),
            params: { resource: { name: 'my_resource', path: '/my_path' } }
 
-      expect(response.status).to eq(403)
+      expect(response.status).to eq(302)
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe 'Service global policies' do
       put service_global_policy_path(service, resource),
           params: { resource: { name: 'my_resource', path: '/my_path' } }
 
-      expect(response.status).to eq(403)
+      expect(response.status).to eq(302)
     end
   end
 
@@ -93,7 +93,7 @@ RSpec.describe 'Service global policies' do
 
       expect { delete service_global_policy_path(service, resource) }.
         to change { Resource.count }.by(0)
-      expect(response.status).to eq(403)
+      expect(response.status).to eq(302)
     end
   end
 end
