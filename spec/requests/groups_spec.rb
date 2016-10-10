@@ -40,6 +40,15 @@ RSpec.describe 'Groups controller' do
 
         expect(response.status).to eq(200)
       end
+
+      it 'does not allow to see edit/destroy buttons for non group owner' do
+        group = create(:group, name: 'g1')
+
+        get group_path(group)
+
+        expect(response.body).to_not include('Edit')
+        expect(response.body).to_not include('Remove')
+      end
     end
 
     describe 'POST /groups' do
