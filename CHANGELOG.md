@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Application version and revision in layout footer (@mkasztelnik)
 
 ### Changed
 
