@@ -41,6 +41,7 @@ en:
   go_back: Go back
   dice: Dice Team
   by: by
+  version: Version
   logout: Logout
   not_confirmed_users: Users to be confirmed
   confirmed_users: Confirmed users
