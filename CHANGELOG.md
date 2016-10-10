@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Application version and revision in layout footer (@mkasztelnik)
 - Pundit authorized error messages for groups and services (@mkasztelnik)
+- Notifications are using the JS toastr library for fancier popups (@dharezlak)
 
 ### Changed
 - Redirect status set to 302 instead of 404 (when record not found), 401 (when

@@ -1,7 +1,5 @@
-.flash-container
-  - if alert
-    .alert.alert-danger
-      = alert
-  - elsif notice
-    .alert.alert-success
-      = notice
+- unless flash.empty?
+  %script(type='text/javascript')
+    - flash.each do |f|
+      - flash_type = f[0] == 'notice' ? 'success' : 'error'
+      jQuery(document).ready(function() { toastr['#{flash_type}']('#{f[1]}'); });
