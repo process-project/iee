@@ -17,8 +17,9 @@ $ ->
   $(document).on('turbolinks:load', init_icheck)
 
 $(document).ready ->
-  # Flash
-  if (flash = $(".flash-container")).length > 0
-    flash.click -> $(@).fadeOut()
-    flash.show()
-    setTimeout (-> flash.fadeOut()), 10000
+  # default toastr config
+  toastr.options = {
+    "positionClass": "toast-top-center",
+    "progressBar": "true",
+    "timeOut": "10000"
+  }
