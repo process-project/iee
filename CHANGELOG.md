@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Service factory that used to randomly produce invalid objects (@tomek.bartynski)
 - Edit/destroy group buttons visible only for group owners (@mkasztelnik)
+- Administration side menu item displayed only if it is not empty (@tomek.bartynski)
 
 ### Security
 
