@@ -9,6 +9,11 @@
       policiesApiUrl: '#{@web_dav_base_url}#{@web_dav_policy_proxy_path}',
       token: '#{@token}'
     };
+    var fileStoreConfig = function() {
+      valve.FileStore.setErrorCallback(function(message) {
+        toastr.error(message);
+      });
+    };
   %script{type: 'text/javascript', src: @web_dav_base_url + '/browser/browser.nocache.js'}
 %h1
   = t '.title'
