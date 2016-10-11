@@ -12,7 +12,7 @@
             = icon('hand-o-left', title: t('services.global_policies.edit.back'))
       .clearfix
     .x_content
-      = render partial: 'form',
+      = render partial: 'resources/form',
                locals: { resource: resource, url: service_global_policy_path(@service, @resource) }
 .col-md-4
   = render 'edit_help'

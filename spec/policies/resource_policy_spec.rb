@@ -11,24 +11,40 @@ RSpec.describe ResourcePolicy do
   describe 'local resource' do
     let(:resource) { create(:resource, name: 'zasób', resource_type: :local) }
 
-    subject { ResourcePolicy.new(user, resource) }
+    subject { described_class }
 
-    it 'grants access to destroy managed resource' do
-      create(:user_access_policy,
-             access_method: manage_method, user: user, resource: resource)
+    permissions :new?, :create?, :show?, :edit?, :update?, :destroy? do
+      it 'grants access to destroy managed resource' do
+        create(:user_access_policy,
+               access_method: manage_method, user: user, resource: resource)
 
-      expect(subject).to be_destroy
-    end
+        expect(subject).to permit(user, resource)
+      end
 
-    it 'grants access to destroy resource for admins' do
-      expect(ResourcePolicy.new(admin, resource)).to be_destroy
-    end
+      it 'grants access to destroy resource for admins' do
+        expect(subject).to permit(admin, resource)
+      end
 
-    it 'denies to destroy not managed resource' do
-      create(:user_access_policy,
-             access_method: get_method, user: user, resource: resource)
+      it 'denies to destroy not managed resource' do
+        create(:user_access_policy,
+               access_method: get_method, user: user, resource: resource)
 
-      expect(subject).to_not be_destroy
+        expect(subject).to_not permit(user, resource)
+      end
+
+      it 'grants access for resource service owner' do
+        resource.service.users << user
+
+        expect(subject).to permit(user, resource)
+      end
+
+      it 'grants access for admins' do
+        expect(subject).to permit(admin, resource)
+      end
+
+      it 'denies access for not resource service owner' do
+        expect(subject).to_not permit(user, resource)
+      end
     end
   end
 
@@ -37,7 +53,7 @@ RSpec.describe ResourcePolicy do
 
     subject { described_class }
 
-    permissions :new? do
+    permissions :new?, :create?, :show?, :edit?, :update?, :destroy? do
       it 'grants access for resource service owner' do
         resource.service.users << user
 

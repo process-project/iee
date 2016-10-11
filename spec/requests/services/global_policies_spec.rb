@@ -41,6 +41,7 @@ RSpec.describe 'Service global policies' do
 
       expect(new_resource.name).to eq('my_resource')
       expect(new_resource.path).to eq('/my_path')
+      expect(new_resource).to be_global
     end
 
     it 'denies creating global policy for not owned service' do
