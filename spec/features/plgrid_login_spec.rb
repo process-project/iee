@@ -10,7 +10,7 @@ RSpec.feature 'PLGrid authentication' do
 
     plgrid_sign_in_as(user)
 
-    expect(page).to have_content('Successfully authenticated')
+    expect(page.body).to have_content('Successfully authenticated')
   end
 
   scenario 'login when email is not unique' do
@@ -19,8 +19,7 @@ RSpec.feature 'PLGrid authentication' do
 
     plgrid_sign_in_as(plgrid_user)
 
-    expect(page).
-      to have_content(I18n.t('devise.omniauth_callbacks.email_not_unique'))
+    expect(page.body).to have_content(I18n.t('devise.omniauth_callbacks.email_not_unique'))
   end
 
   scenario 'connect with existing account' do
