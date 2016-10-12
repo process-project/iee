@@ -15,7 +15,7 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   def permit?(access_method_name)
-    access_policies(access_method_name).count.positive?
+    user.approved? && access_policies(access_method_name).count.positive?
   end
 
   def permitted_attributes
