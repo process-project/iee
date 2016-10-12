@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Redirect status set to 302 instead of 404 (when record not found), 401 (when
   user does not have permission to perform action) to avoid ugly "You are being
   redirected" page (@mkasztelnik)
+- PDP denies everything when user is not approved (@mkasztelnik)
 
 ### Deprecated
 
