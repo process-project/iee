@@ -53,8 +53,21 @@ en:
       index:
         title: "%{service_name} service - local policies"
         nothing: No local resource policies defined
+        add: Add new local policy
         policy_name: Policy name
         policy_uri: Policy URI
+      resource:
+        edit: Edit access policies
+        remove: Remove this resource
+      new:
+        title: "%{service_name} service - new local policy"
+      show:
+        title: "%{service_name} service - %{name} local policy"
+        back: Go back to local policy list
+      edit:
+        title: "%{service_name} service - edit %{name} local policy"
+        subtitle: Edit resource name and path
+        back: Go back to local policy
     global_policies:
       index:
         title: "%{service_name} service - global policies"

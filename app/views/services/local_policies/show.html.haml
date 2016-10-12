@@ -8,13 +8,13 @@
 
       %ul.nav.navbar-right.panel_toolbox
         %li
-          = link_to(service_global_policies_path(@model.service), class: 'back') do
-            = icon("hand-o-left", title: t('services.global_policies.show.back'))
+          = link_to(service_local_policies_path(@model.service), class: 'back') do
+            = icon("hand-o-left", title: t('services.local_policies.show.back'))
         %li
-          = link_to(edit_service_global_policy_path(@model.service, @model.resource), class: 'edit') do
+          = link_to(edit_service_local_policy_path(@model.service, @model.resource), class: 'edit') do
             = icon('edit', title: t('edit'))
         %li
-          = link_to(service_global_policy_path(@model.service, @model.resource),
+          = link_to(service_local_policy_path(@model.service, @model.resource),
             method: :delete, class: 'delete',
             data: { confirm: t('are_you_sure') }) do
             = icon('remove', title: t('remove'))
@@ -23,4 +23,4 @@
       = render('access_policies/index', model: @model)
       = render('access_policies/form', model: @model)
 .col-md-4
-  = render 'services/global_policies/show_help'
+  = render 'services/local_policies/show_help'

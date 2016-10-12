@@ -8,11 +8,11 @@
 
       %ul.nav.navbar-right.panel_toolbox
         %li
-          = link_to(service_global_policies_path(@service), class: 'back') do
+          = link_to(service_local_policies_path(@service), class: 'back') do
             = icon("hand-o-left", title: t('.back_to_index'))
       .clearfix
     .x_content
       = render partial: 'resources/form',
-               locals: { resource: resource, url: service_global_policies_path(@service) }
+               locals: { resource: resource, url: service_local_policies_path(@service) }
 .col-md-4
   = render 'new_help'

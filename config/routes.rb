@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
   resources :services do
     scope module: :services do
-      resources :local_policies, only: :index
+      resources :local_policies
       resources :global_policies
     end
   end

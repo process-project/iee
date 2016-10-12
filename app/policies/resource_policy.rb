@@ -47,11 +47,7 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   def owns_resource?
-    if record.global?
-      owns_global_resource?
-    else
-      owns_local_resource?
-    end
+    owns_service? || record.local? && owns_local_resource?
   end
 
   private
@@ -61,7 +57,7 @@ class ResourcePolicy < ApplicationPolicy
       where(user_id: user.id, access_methods: { name: 'manage' }).exists?
   end
 
-  def owns_global_resource?
+  def owns_service?
     record.service.users.include?(user)
   end
 
