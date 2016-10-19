@@ -1,0 +1,15 @@
+= simple_form_for [@group, UserGroup.new] do |f|
+  .form-group
+    = f.label :users, class: 'control-label col-sm-3'
+    .col-md-6
+      = f.select :user_id,
+        User.approved.map { |u| ["#{u.name} (#{u.email})", u.id] }, {},
+        multiple: true, class: 'form-select'
+  = f.input :owner
+  .ln_solid
+  .form-group
+    .col-md-6.col-md-offset-3
+      = f.button :submit, class: 'btn btn-success'
+
+:javascript
+  $('#user_group_user_id').select2({ theme: 'bootstrap' });
