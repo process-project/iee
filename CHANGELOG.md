@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
   user does not have permission to perform action) to avoid ugly "You are being
   redirected" page (@mkasztelnik)
 - PDP denies everything when user is not approved (@mkasztelnik)
+- Add/remove group members redesigned (@mkasztelnik)
 
 ### Deprecated
 

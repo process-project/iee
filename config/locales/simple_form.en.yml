@@ -3,6 +3,8 @@ en:
     submit:
       service:
         create: Register this service
+      user_group:
+        create: Add users to group
   simple_form:
     "yes": 'Yes'
     "no": 'No'

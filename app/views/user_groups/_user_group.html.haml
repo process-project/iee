@@ -1,0 +1,14 @@
+%li.clearfix
+  - user = user_group.user
+  .pull-left
+    = user.name
+    %small.light= user.email
+    - if user_group.owner
+      %span.label.label-danger= t('.owner')
+  .pull-right
+    - if policy(user_group).destroy?
+      = link_to([user_group.group, user_group], title: t('.remove'),
+          method: :delete,
+          class: 'delete',
+          data: { confirm: t('are_you_sure') }) do
+        = icon('remove')

@@ -31,7 +31,7 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :default, member_ids: [], owner_ids: [], child_ids: []]
+    [:name, :default, child_ids: []]
   end
 
   private

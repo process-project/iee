@@ -9,6 +9,8 @@ en:
     internal_server_error:
       title: Internal Server Error
       description: We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.
+    user_groups:
+      last_owner: Cannot remove last group owner
   data_file_synchronizer:
     timed_out: |
       Time out when contacting File Storage for patient %{patient} and

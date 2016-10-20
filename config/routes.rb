@@ -44,7 +44,11 @@ Rails.application.routes.draw do
       resources :global_policies
     end
   end
-  resources :groups
+  resources :groups do
+    scope module: :groups do
+      resources :user_groups, only: [:create, :destroy]
+    end
+  end
   resources :resources, only: :index do
     scope module: :resources do
       resources :access_policies, only: [:create, :destroy]

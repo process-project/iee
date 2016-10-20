@@ -27,12 +27,6 @@
               %td= t('simple_form.labels.group.name')
               %td= @group.name
             %tr
-              %td= t('simple_form.labels.group.member_ids')
-              %td= pill_list(@group.members)
-            %tr
-              %td= t('simple_form.labels.group.owner_ids')
-              %td= pill_list(@group.owners)
-            %tr
               %td= t('simple_form.labels.group.children')
               %td= pill_list(@group.children)
             %tr
@@ -50,6 +44,17 @@
             %tr
               %td= t('simple_form.labels.group.default')
               %td= @group.default
+        %hr
+    .x_panel
+      .x_title
+        %h2= t('.members')
+        .clearfix
+      .x_content
+        = render('user_groups/index', user_groups: @group.user_groups)
   .col-md-4
     = render 'show_help'
+    .x_panel
+      .x_title= t('.add')
+      .x_content
+        = render('user_groups/form')
 
