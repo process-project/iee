@@ -1,8 +1,7 @@
 %li.clearfix
   - user = user_group.user
   .pull-left
-    = user.name
-    %small.light= user.email
+    = user_name(user)
     - if user_group.owner
       %span.label.label-danger= t('.owner')
   .pull-right

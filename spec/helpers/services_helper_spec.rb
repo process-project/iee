@@ -24,6 +24,17 @@ RSpec.describe ServicesHelper do
     it 'raises error if items have no names' do
       expect { pill_list([build(:patient)]) }.to raise_error NoMethodError
     end
+
+    it 'uses block to render name' do
+      item = 'item'
+
+      expect(pill_list([item]) { |i| "my #{i}" }).
+        to eq(
+          '<ul class="list-inline">'\
+          '<li><span class="label label-info label-xs">my item</span></li>'\
+          '</ul>'
+        )
+    end
   end
 
   describe '#global_access_methods_hint' do

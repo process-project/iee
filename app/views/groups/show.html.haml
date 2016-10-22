@@ -40,7 +40,7 @@
               %td= pill_list(@group.offspring)
             %tr
               %td= t('simple_form.labels.group.all_users')
-              %td= pill_list(@group.all_users)
+              %td= pill_list(@group.all_users) { |user| raw_user_name(user) }
             %tr
               %td= t('simple_form.labels.group.default')
               %td= @group.default

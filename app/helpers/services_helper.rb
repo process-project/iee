@@ -3,10 +3,10 @@ module ServicesHelper
   def pill_list(collection)
     content_tag(:ul, class: 'list-inline') do
       (collection || []).map do |item|
+        name = block_given? ? yield(item) : item.name
         concat(
           content_tag(
-            :li,
-            content_tag(:span, item.name, class: %w(label label-info label-xs))
+            :li, content_tag(:span, name, class: %w(label label-info label-xs))
           )
         )
       end
