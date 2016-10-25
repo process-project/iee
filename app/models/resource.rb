@@ -13,6 +13,9 @@ class Resource < ApplicationRecord
   validate :local_path_exclusion, if: :local?
   validate :path_starts_with_slash
 
+  scope :local_paths,
+        ->(path) { where(resource_type: :local).where('path ~ :path', path: path) }
+
   def uri
     uri = URI.parse(service.uri)
     uri.path += path
@@ -21,16 +24,14 @@ class Resource < ApplicationRecord
   end
 
   def local_path_exclusion
-    if Resource.where(resource_type: :local).where('path ~ :path', path: path).exists?
-      errors.add(:path, 'local resource paths cannot overlap')
-    end
+    return unless Resource.local_paths(path).exists?
+    errors.add(:path, 'local resource paths cannot overlap')
   end
 
   private
 
   def path_starts_with_slash
-    if path.present? && !path.start_with?('/')
-      errors.add(:path, 'Resource path must start with a slash')
-    end
+    return unless path.present? && !path.start_with?('/')
+    errors.add(:path, 'Resource path must start with a slash')
   end
 end

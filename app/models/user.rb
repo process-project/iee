@@ -64,9 +64,8 @@ class User < ApplicationRecord
   end
 
   def self.compose_proxy(info)
-    if info.proxy && info.proxyPrivKey && info.userCert
-      info.proxy + info.proxyPrivKey + info.userCert
-    end
+    return unless info.proxy && info.proxyPrivKey && info.userCert
+    info.proxy + info.proxyPrivKey + info.userCert
   end
 
   def plgrid_connect(auth)

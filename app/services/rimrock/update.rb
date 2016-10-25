@@ -11,13 +11,13 @@ module Rimrock
     end
 
     def call
-      unless active_computations.empty?
-        response = connection.get('api/jobs', tag: tag)
-        case response.status
-        when 200 then success(response.body)
-        when 422 then error(response.body, :timeout)
-        else error(response.body, :internal)
-        end
+      return if active_computations.empty?
+
+      response = connection.get('api/jobs', tag: tag)
+      case response.status
+      when 200 then success(response.body)
+      when 422 then error(response.body, :timeout)
+      else error(response.body, :internal)
       end
     end
 
