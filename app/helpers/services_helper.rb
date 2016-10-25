@@ -15,11 +15,8 @@ module ServicesHelper
 
   def global_access_methods_hint
     global_access_methods = AccessMethod.global.pluck(:name)
-    if global_access_methods.present?
-      I18n.t(
-        'simple_form.hints.service.access_methods',
-        globals: global_access_methods.join(', ')
-      )
-    end
+    return unless global_access_methods.present?
+    I18n.t('simple_form.hints.service.access_methods',
+           globals: global_access_methods.join(', '))
   end
 end

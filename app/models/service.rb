@@ -55,17 +55,13 @@ class Service < ApplicationRecord
   end
 
   def check_if_not_override_uri
-    if check_override(uri)
-      errors.add(:uri, I18n.t('activerecord.errors.models.service.uri.override'))
-    end
+    return unless check_override(uri)
+    errors.add(:uri, I18n.t('activerecord.errors.models.service.uri.override'))
   end
 
   def check_if_not_overridden_by_uri
-    return false unless uri.present?
-
-    if Service.where.not(id: id).any? { |s| uri.start_with? "#{s.uri}/" }
-      errors.add(:uri, I18n.t('activerecord.errors.models.service.uri.overridden'))
-    end
+    return unless uri.present? && any_other? { |s| uri.start_with? "#{s.uri}/" }
+    errors.add(:uri, I18n.t('activerecord.errors.models.service.uri.overridden'))
   end
 
   def check_overridden(op1, op2)
@@ -73,21 +69,19 @@ class Service < ApplicationRecord
   end
 
   def check_if_not_overridden_by_alias
-    return false unless uri.present?
-
-    if Service.where.not(id: id).any? { |s| check_overridden(uri_aliases, s.uri) }
-      errors.add(:uri_aliases,
-                 I18n.t('activerecord.errors.models.service.uri_aliases.overridden'))
-    end
+    return unless uri.present? && any_other? { |s| check_overridden(uri_aliases, s.uri) }
+    errors.add(:uri_aliases,
+               I18n.t('activerecord.errors.models.service.uri_aliases.overridden'))
   end
 
   def check_if_alias_not_overridden
-    return false unless uri.present?
+    return unless uri.present? && any_other? { |s| check_overridden(s.uri_aliases, uri) }
+    errors.add(:uri_aliases,
+               I18n.t('activerecord.errors.models.service.uri_aliases.overridden'))
+  end
 
-    if Service.where.not(id: id).any? { |s| check_overridden(s.uri_aliases, uri) }
-      errors.add(:uri_aliases,
-                 I18n.t('activerecord.errors.models.service.uri_aliases.overridden'))
-    end
+  def any_other?
+    Service.where.not(id: id).any? { |s| yield(s) }
   end
 
   def duplicate_aliases?(la)
@@ -103,22 +97,19 @@ class Service < ApplicationRecord
   end
 
   def check_uri_aliases_format
-    if uri_aliases.any? { |u| !(u =~ /\A#{URI.regexp}\z/) }
-      errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.format'))
-    end
+    return unless uri_aliases.any? { |u| !(u =~ /\A#{URI.regexp}\z/) }
+    errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.format'))
   end
 
   def check_uri_aliases_same
-    if uri_aliases.any? { |u| u == uri }
-      errors.add(:uri_aliases,
-                 I18n.t('activerecord.errors.models.service.uri_aliases.urialiassame'))
-    end
+    return unless uri_aliases.any? { |u| u == uri }
+    errors.add(:uri_aliases,
+               I18n.t('activerecord.errors.models.service.uri_aliases.urialiassame'))
   end
 
   # Checks if any of the aliases overlaps with any of the services' aliases
   def check_uri_aliases_uniqueness
-    if uri_aliases.any? { |u| duplicate_aliases?(u) }
-      errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.uniqueness'))
-    end
+    return unless uri_aliases.any? { |u| duplicate_aliases?(u) }
+    errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.uniqueness'))
   end
 end

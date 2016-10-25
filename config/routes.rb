@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop:disable BlockLength
 Rails.application.routes.draw do
   get 'access_policies/create'
 
@@ -78,3 +79,4 @@ Rails.application.routes.draw do
   match '/422', to: 'errors#unprocessable', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
 end
+# rubocop:enable BlockLength

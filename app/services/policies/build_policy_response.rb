@@ -56,13 +56,13 @@ module Policies
 
     def build_user_permissions(user_methods)
       user_methods.map do |user, methods|
-        { type: 'user_permission', entity_name:  user, access_methods: methods }
+        { type: 'user_permission', entity_name: user, access_methods: methods }
       end
     end
 
     def build_group_permissions(group_methods)
       group_methods.map do |group, methods|
-        { type: 'group_permission', entity_name:  group, access_methods: methods }
+        { type: 'group_permission', entity_name: group, access_methods: methods }
       end
     end
 

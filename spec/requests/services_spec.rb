@@ -83,7 +83,7 @@ describe 'Services controller' do
           }
         end.to change { AccessMethod.count }.by(1).
           and change { Service.count }.by(1)
-        expect(AccessMethod.find_by_name('ac_name').service.name).to eq 's'
+        expect(AccessMethod.find_by(name: 'ac_name').service.name).to eq 's'
       end
 
       it 'does not change existing access methods' do
