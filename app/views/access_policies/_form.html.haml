@@ -7,7 +7,7 @@
   = f.input :user_id,
     label: t('.pick_user'),
     collection: model.users,
-    label_method: :email,
+    label_method: ->(user) { raw_user_name(user) },
     hint: t('.user_or_group'),
     include_blank: true
   = f.input :group_id,
