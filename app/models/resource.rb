@@ -23,12 +23,12 @@ class Resource < ApplicationRecord
     uri.to_s
   end
 
+  private
+
   def local_path_exclusion
     return unless Resource.local_paths(path).exists?
     errors.add(:path, 'local resource paths cannot overlap')
   end
-
-  private
 
   def path_starts_with_slash
     return unless path.present? && !path.start_with?('/')
