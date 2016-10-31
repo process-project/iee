@@ -1,0 +1,14 @@
+%table.table
+  %tbody
+    %tr
+      %td= t('.users')
+      %td
+        %ul.list-inline
+          = render partial: 'resource_managers/resource_manager',
+                   collection: model.manager_users
+    %tr
+      %td= t('.groups')
+      %td
+        %ul.list-inline
+          = render partial: 'resource_managers/resource_manager',
+                   collection: model.manager_groups

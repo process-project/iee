@@ -5,6 +5,7 @@ class Resource < ApplicationRecord
   enum resource_type: [:global, :local]
 
   has_many :access_policies, dependent: :destroy
+  has_many :resource_managers, dependent: :destroy
   belongs_to :service
 
   validates :path, presence: true, uniqueness: { scope: :service_id }
