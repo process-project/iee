@@ -5,11 +5,10 @@ describe Policies::RemovePolicies do
   let(:user) { create(:user) }
   let(:group) { create(:group) }
   let(:resource) { create(:resource, resource_type: :local) }
-  let(:manage_method) { create(:access_method, name: 'manage') }
   let(:get_method) { create(:access_method, name: 'get') }
 
   it 'should delete all access policies and the resource itself when only path is given' do
-    create(:access_policy, user: user, resource: resource, access_method: manage_method)
+    create(:access_policy, user: user, resource: resource, access_method: get_method)
 
     expect do
       described_class.new([resource.path], [], [], []).call

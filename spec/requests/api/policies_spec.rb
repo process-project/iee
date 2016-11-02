@@ -29,10 +29,10 @@ RSpec.describe 'Policies API' do
   end
 
   it 'should return a single policy with single user and group as managers' do
-    manage_method = create(:access_method, name: 'manage')
-    create(:access_policy, user: user, resource: resource, access_method: manage_method)
     group = create(:group, name: 'group_name')
-    create(:access_policy, group: group, resource: resource, access_method: manage_method)
+    ResourceManager.create(user: user, resource: resource)
+    ResourceManager.create(group: group, resource: resource)
+
     get api_policies_path, params: { path: resource.path }, headers: valid_auth_headers
 
     expect(response_json).to include_json(
@@ -64,24 +64,6 @@ RSpec.describe 'Policies API' do
     get api_policies_path, params: { path: 'does_not_exist' }, headers: valid_auth_headers
 
     expect(response.status).to eq(400)
-  end
-
-  it 'should not return the manage role in the response body' do
-    manage_method = create(:access_method, name: 'manage')
-    create(:access_policy, user: user, resource: resource, access_method: manage_method)
-
-    get api_policies_path, params: { path: resource.path }, headers: valid_auth_headers
-
-    expect(response.status).to eq(200)
-    expect(response_json).not_to include_json(
-      policies: [
-        {
-          permissions: [
-            { access_methods: ['manage'] }
-          ]
-        }
-      ]
-    )
   end
 
   it 'should return a bad request status if we send a JSON with empty permission array' do
@@ -136,21 +118,9 @@ RSpec.describe 'Policies API' do
     expect(Resource.last).to be_local
   end
 
-  it 'should append the manage role for a path which is created' do
-    create(:access_method, name: 'manage')
-
-    post  api_policies_path,
-          params: policy_post_params(path: '/some/path'),
-          headers: valid_auth_headers,
-          as: :json
-
-    expect(AccessPolicy.last.access_method.name).to eq('manage')
-  end
-
-  context 'with managing permissions' do
+  context 'as resource manager' do
     before do
-      manage_method = create(:access_method, name: 'manage')
-      create(:access_policy, user: user, resource: resource, access_method: manage_method)
+      ResourceManager.create(user: user, resource: resource)
     end
 
     it 'should merge the new method of the given policy with an existing one' do
@@ -182,8 +152,7 @@ RSpec.describe 'Policies API' do
             as: :json
 
       expect(response.status).to eq(200)
-      expect(AccessPolicy.last.user.email).to eq(another_user.email)
-      expect(AccessPolicy.last.access_method.name).to eq('manage')
+      expect(resource.resource_managers.where(user: another_user)).to be_exist
     end
 
     it 'should merge the given management group of the given policy with an existing one' do
@@ -198,8 +167,7 @@ RSpec.describe 'Policies API' do
             as: :json
 
       expect(response.status).to eq(200)
-      expect(AccessPolicy.last.group.name).to eq(another_group.name)
-      expect(AccessPolicy.last.access_method.name).to eq('manage')
+      expect(resource.resource_managers.where(group: another_group)).to be_exist
     end
 
     it 'should delete an access policy for a user' do

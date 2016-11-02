@@ -18,6 +18,3 @@ admin ||= User.create(first_name: 'admin', last_name: 'admin', email: 'admin@hos
   group.user_groups.build(user: admin, owner: true)
   group.save!
 end
-
-# Global access methods
-AccessMethod.find_or_create_by(name: 'manage')

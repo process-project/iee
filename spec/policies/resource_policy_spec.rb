@@ -6,7 +6,6 @@ RSpec.describe ResourcePolicy do
   let(:admin) { create(:admin) }
   let(:group) { create(:group, name: 'subgroup', users: [user]) }
   let(:get_method) { create(:access_method, name: 'get') }
-  let(:manage_method) { create(:access_method, name: 'manage') }
 
   describe 'local resource' do
     let(:resource) { create(:resource, name: 'zasób', resource_type: :local) }
@@ -15,21 +14,9 @@ RSpec.describe ResourcePolicy do
 
     permissions :new?, :create?, :show?, :edit?, :update?, :destroy? do
       it 'grants access to destroy managed resource' do
-        create(:user_access_policy,
-               access_method: manage_method, user: user, resource: resource)
+        ResourceManager.create(user: user, resource: resource)
 
         expect(subject).to permit(user, resource)
-      end
-
-      it 'grants access to destroy resource for admins' do
-        expect(subject).to permit(admin, resource)
-      end
-
-      it 'denies to destroy not managed resource' do
-        create(:user_access_policy,
-               access_method: get_method, user: user, resource: resource)
-
-        expect(subject).to_not permit(user, resource)
       end
 
       it 'grants access for resource service owner' do

@@ -2,9 +2,8 @@
 class ResourcePolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::ApplicationScope
     def resolve
-      scope.joins(access_policies: [:access_method, :user]).
-        where(access_methods: { name: 'manage' }).
-        where(users: { id: user.id })
+      scope.joins(:resource_managers).
+        where(resource_managers: { user_id: user.id })
     end
   end
 
@@ -53,8 +52,7 @@ class ResourcePolicy < ApplicationPolicy
   private
 
   def owns_local_resource?
-    record.access_policies.joins(:access_method).
-      where(user_id: user.id, access_methods: { name: 'manage' }).exists?
+    record.resource_managers.where(user_id: user.id).exists?
   end
 
   def owns_service?
