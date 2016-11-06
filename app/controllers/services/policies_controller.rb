@@ -25,6 +25,7 @@ module Services
       @resource = Resource.new(permitted_attributes(Resource))
       @resource.service = @service
       @resource.resource_type = resource_type
+      @resource.resource_managers.build(user: current_user)
       authorize(@resource)
 
       if @resource.save
