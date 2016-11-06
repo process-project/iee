@@ -118,6 +118,16 @@ RSpec.describe 'Policies API' do
     expect(Resource.last).to be_local
   end
 
+  it 'set current user as resource manager' do
+    post  api_policies_path,
+          params: policy_post_params(path: '/another/path'),
+          headers: valid_auth_headers,
+          as: :json
+    resource = Resource.last
+
+    expect(resource.resource_managers.where(user: user)).to be_exist
+  end
+
   context 'as resource manager' do
     before do
       ResourceManager.create(user: user, resource: resource)
