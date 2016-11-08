@@ -18,19 +18,19 @@ module Resources
     protected
 
     def build_relatd_object
-      raise 'Need to be implemented'
+      raise 'This method must be overridden in controllers that inherit from this class'
     end
 
     def find_relatd_object
-      raise 'Need to be implemented'
+      raise 'This method must be overridden in controllers that inherit from this class'
     end
 
     def access_policy
-      raise 'Need to be implemented'
+      raise 'This method must be overridden in controllers that inherit from this class'
     end
 
     def resource_manager
-      raise 'Need to be implemented'
+      raise 'This method must be overridden in controllers that inherit from this class'
     end
 
     private

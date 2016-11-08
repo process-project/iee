@@ -31,12 +31,12 @@ module Policies
     end
 
     def permissions(resource)
-      policies = non_management_access_policies(resource)
+      policies = access_policies(resource)
       user_methods, group_methods = process_policies(policies)
       build_user_permissions(user_methods) + build_group_permissions(group_methods)
     end
 
-    def non_management_access_policies(resource)
+    def access_policies(resource)
       resource.access_policies.includes(:user, :group, :access_method)
     end
 
