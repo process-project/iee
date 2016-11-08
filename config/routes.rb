@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   resources :resources, only: :index do
     scope module: :resources do
       resources :access_policies, only: [:create, :destroy]
+      resources :resource_managers, only: [:create, :destroy]
     end
   end
   resources :computations, only: [:show, :create]

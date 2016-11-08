@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :user_groups
   has_many :groups, through: :user_groups
   has_many :access_policies, dependent: :destroy
+  has_many :resource_managers, dependent: :destroy
   has_many :computations
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships

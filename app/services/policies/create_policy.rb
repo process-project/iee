@@ -12,7 +12,6 @@ module Policies
         resource = Resource.create(service: @service,
                                    path: @json_body['path'],
                                    resource_type: :local)
-        safely_create_access_policy(@user, nil, ['manage'], resource, true)
         create_access_policies(resource)
         create_user_managers(resource)
         create_group_managers(resource)
@@ -29,6 +28,8 @@ module Policies
     end
 
     def create_user_managers(resource)
+      resource.resource_managers.find_or_create_by(user: @user)
+
       return unless @json_body['managers'] && @json_body['managers']['users']
       merge_user_managers(@json_body['managers']['users'], resource)
     end

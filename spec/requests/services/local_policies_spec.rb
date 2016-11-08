@@ -44,6 +44,16 @@ RSpec.describe 'Service local policies' do
       expect(new_resource).to be_local
     end
 
+    it 'current user as manager for new created resource' do
+      service = create(:service, users: [user])
+
+      post service_global_policies_path(service),
+           params: { resource: { name: 'my_resource', path: '/my_path' } }
+      new_resource = Resource.last
+
+      expect(new_resource.resource_managers.where(user: user)).to be_exist
+    end
+
     it 'denies creating local policy for not owned service' do
       service = create(:service)
 

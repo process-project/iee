@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe Group do
   it { should have_many(:access_policies).dependent(:destroy) }
+  it { should have_many(:resource_managers).dependent(:destroy) }
 
   it { should have_many(:parent_group_relationship).dependent(:destroy) }
   it { should have_many(:child_group_relationship).dependent(:destroy) }

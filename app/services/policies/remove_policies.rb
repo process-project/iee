@@ -12,8 +12,7 @@ module Policies
       if only_paths_given?
         Resource.where(path: @resource_paths).destroy_all
       else
-        query = AccessPolicy.joins(:access_method).where.not(access_methods: { name: 'manage' })
-        query = query.joins(:resource).where(resources: { path: @resource_paths })
+        query = AccessPolicy.joins(:resource).where(resources: { path: @resource_paths })
         query = complete_where_clauses(query)
         query.destroy_all
       end

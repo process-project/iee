@@ -16,12 +16,16 @@ module Services
     def show
       @model = ResourceAccessPoliciesDecorator.
                new(current_user, @resource, AccessPolicy.new)
+
+      @managers_model = ResourceManagersDecorator.
+                        new(@resource, ResourceManager.new)
     end
 
     def create
       @resource = Resource.new(permitted_attributes(Resource))
       @resource.service = @service
       @resource.resource_type = resource_type
+      @resource.resource_managers.build(user: current_user)
       authorize(@resource)
 
       if @resource.save

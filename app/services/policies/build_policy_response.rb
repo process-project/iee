@@ -22,7 +22,7 @@ module Policies
     end
 
     def managers(resource)
-      policies = management_access_policies(resource)
+      policies = resource.resource_managers
 
       {
         users: policies.select(&:user).map { |policy| policy.user.email },
@@ -31,20 +31,13 @@ module Policies
     end
 
     def permissions(resource)
-      policies = non_management_access_policies(resource)
+      policies = access_policies(resource)
       user_methods, group_methods = process_policies(policies)
       build_user_permissions(user_methods) + build_group_permissions(group_methods)
     end
 
-    def management_access_policies(resource)
-      AccessPolicy.includes(:user, :group, :access_method).
-        where(resource: resource, access_method: AccessMethod.where(name: 'manage'))
-    end
-
-    def non_management_access_policies(resource)
-      AccessPolicy.includes(:user, :group, :access_method).
-        where(resource: resource).
-        where.not(access_method: AccessMethod.where(name: 'manage'))
+    def access_policies(resource)
+      resource.access_policies.includes(:user, :group, :access_method)
     end
 
     def process_policies(policies)

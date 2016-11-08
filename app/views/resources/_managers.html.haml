@@ -1,0 +1,8 @@
+.x_panel
+  .x_title
+    %h2= t('.title')
+    .clearfix
+  .x_content
+    = render('resource_managers/index', model: @managers_model)
+    %hr
+    = render('resource_managers/form', model: @managers_model)

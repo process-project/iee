@@ -1,0 +1,15 @@
+= simple_form_for([model.resource, model.resource_manager]) do |f|
+  = f.input :user_id,
+    label: t('.user'),
+    collection: model.users,
+    label_method: ->(user) { raw_user_name(user) },
+    hint: t('.user_or_group'),
+    include_blank: true
+  = f.input :group_id,
+    label: t('.group'),
+    collection: model.groups,
+    include_blank: true
+  .ln_solid
+  .form-group
+    .col-md-6.col-md-offset-3
+      = f.button :submit, class: 'btn btn-success'

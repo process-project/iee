@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe User do
   it { should have_many(:access_policies).dependent(:destroy) }
+  it { should have_many(:resource_managers).dependent(:destroy) }
   it { should have_many(:computations) }
   it { should have_many(:service_ownerships).dependent(:destroy) }
 

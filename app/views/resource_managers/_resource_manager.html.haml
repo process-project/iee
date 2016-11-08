@@ -1,0 +1,10 @@
+%li.label.label-primary
+  - if resource_manager.user_id.blank?
+    = resource_manager.group.name
+  - else
+    = raw_user_name(resource_manager.user)
+  - if policy(resource_manager).destroy?
+    = link_to([resource_manager.resource, resource_manager], title: t('.remove'),
+        method: :delete,
+        data: { confirm: t('are_you_sure') }) do
+      = icon('remove', class: 'fa-white')

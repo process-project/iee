@@ -131,6 +131,19 @@ en:
       submit: Create resource
       name: Resource name
       path: Resource path
+    managers:
+      title: Resource managers
+
+  resource_managers:
+    index:
+      users: Users
+      groups: Groups
+    resource_manager:
+      remove: Remove resource manager
+    form:
+      user: Pick user
+      group: Pick group
+      user_or_group: Pick user or group
 
   profiles:
     layout:
