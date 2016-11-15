@@ -1,0 +1,18 @@
+%h1= t('.title', service_name: @service.name, name: @resource.name)
+.col-md-8
+  = render('services/show_layout') do
+    .x_title
+      %h2
+        = @resource.name
+        %small= t 'services.local_policies.edit.subtitle'
+
+      %ul.nav.navbar-right.panel_toolbox
+        %li
+          = link_to(service_local_policy_path(@service, @resource), class: 'back') do
+            = icon('hand-o-left', title: t('services.local_policies.edit.back'))
+      .clearfix
+    .x_content
+      = render partial: 'resources/form',
+               locals: { resource: resource, url: service_local_policy_path(@service, @resource) }
+.col-md-4
+  = render 'edit_help'

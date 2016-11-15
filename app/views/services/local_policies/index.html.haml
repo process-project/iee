@@ -1,5 +1,10 @@
 %h1
   = t('.title', service_name: @service.name)
+  .pull-right
+    = link_to(new_service_local_policy_path(@service),
+      title: t('services.local_policies.index.add'),
+      class: 'btn btn-success') do
+      = icon('plus', t('.add'))
 .col-md-8
   = render('services/show_layout') do
     - if @resources.exists?

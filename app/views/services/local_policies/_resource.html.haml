@@ -1,5 +1,10 @@
 %tr
-  %td= resource.name || resource.path
+  %td= link_to(resource.name || resource.path, service_local_policy_path(@service, resource))
   %td= resource.uri
   %td
-    -# TODO edit, destroy actions enabled for service owner
+    = link_to(edit_service_local_policy_path(@service, resource),
+      title: t('.edit'), class: 'edit') do
+      = icon('edit')
+    = link_to(service_local_policy_path(@service, resource), title: t('.remove'), method: :delete,
+        data: {confirm: t('are_you_sure')}, class: 'delete') do
+      = icon('remove')

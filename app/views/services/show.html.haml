@@ -31,32 +31,22 @@
           %td= @service.uri
         %tr
           %td= t('simple_form.labels.service.user_ids')
-          %td= pill_list @service.users
+          %td= pill_list(@service.users) { |user| raw_user_name(user) }
         - unless @service.uri_aliases.empty?
           %tr
-            %td= t('simple_form.labels.service.name')
-            %td= @service.name
-          %tr
-            %td= t('simple_form.labels.service.uri')
-            %td= @service.uri
-          %tr
-            %td= t('simple_form.labels.service.user_ids')
-            %td= pill_list @service.users
-          - unless @service.uri_aliases.empty?
-            %tr
-              %td= t('simple_form.labels.service.uri_aliases')
-              %td
-                - @service.uri_aliases.each do |uri_alias|
-                  = uri_alias
-                  %br
-          %tr
-            %td= t('simple_form.labels.access_method.global')
-            %td= pill_list AccessMethod.global
-          %tr
-            %td= t('simple_form.labels.service.access_method_ids')
-            %td= pill_list @service.access_methods
-          %tr
-            %td= t('simple_form.labels.service.token')
-            %td= @service.token
+            %td= t('simple_form.labels.service.uri_aliases')
+            %td
+              - @service.uri_aliases.each do |uri_alias|
+                = uri_alias
+                %br
+        %tr
+          %td= t('simple_form.labels.access_method.global')
+          %td= pill_list AccessMethod.global
+        %tr
+          %td= t('simple_form.labels.service.access_method_ids')
+          %td= pill_list @service.access_methods
+        %tr
+          %td= t('simple_form.labels.service.token')
+          %td= @service.token
 .col-md-4
   =render 'show_help'

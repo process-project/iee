@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop:disable BlockLength
 Rails.application.routes.draw do
   get 'access_policies/create'
 
@@ -40,14 +41,19 @@ Rails.application.routes.draw do
 
   resources :services do
     scope module: :services do
-      resources :local_policies, only: :index
+      resources :local_policies
       resources :global_policies
     end
   end
-  resources :groups
+  resources :groups do
+    scope module: :groups do
+      resources :user_groups, only: [:create, :destroy]
+    end
+  end
   resources :resources, only: :index do
     scope module: :resources do
       resources :access_policies, only: [:create, :destroy]
+      resources :resource_managers, only: [:create, :destroy]
     end
   end
   resources :computations, only: [:show, :create]
@@ -75,3 +81,4 @@ Rails.application.routes.draw do
   match '/422', to: 'errors#unprocessable', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
 end
+# rubocop:enable BlockLength

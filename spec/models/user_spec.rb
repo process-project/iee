@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe User do
   it { should have_many(:access_policies).dependent(:destroy) }
+  it { should have_many(:resource_managers).dependent(:destroy) }
   it { should have_many(:computations) }
   it { should have_many(:service_ownerships).dependent(:destroy) }
 
@@ -88,10 +89,9 @@ RSpec.describe User do
     context 'token expired' do
       it 'fails with error' do
         u = create(:user)
-        time_now_1 = Time.zone.now
-        time_now_2 =
-          time_now_1 + Vapor::Application.config.jwt.expiration_time + 1
-        allow(Time).to receive(:now).and_return(time_now_1, time_now_2)
+        time_now1 = Time.zone.now
+        time_now2 = time_now1 + Vapor::Application.config.jwt.expiration_time + 1
+        allow(Time).to receive(:now).and_return(time_now1, time_now2)
         expired_token = u.token
         expect { User.from_token(expired_token) }.
           to raise_error(JWT::ExpiredSignature)

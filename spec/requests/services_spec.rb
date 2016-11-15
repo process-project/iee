@@ -47,7 +47,7 @@ describe 'Services controller' do
       it 'prevents removal of not owned service' do
         delete "/services/#{service.id}"
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(302)
       end
 
       it 'removes service with all related resources' do
@@ -83,7 +83,7 @@ describe 'Services controller' do
           }
         end.to change { AccessMethod.count }.by(1).
           and change { Service.count }.by(1)
-        expect(AccessMethod.find_by_name('ac_name').service.name).to eq 's'
+        expect(AccessMethod.find_by(name: 'ac_name').service.name).to eq 's'
       end
 
       it 'does not change existing access methods' do
@@ -143,7 +143,7 @@ describe 'Services controller' do
 
         put service_path(service), params: { service: { name: 'new_name' } }
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(302)
       end
 
       it 'updates attributes for managed service' do
@@ -249,7 +249,7 @@ describe 'Services controller' do
 
         delete service_path(service)
 
-        expect(response.status).to eq(403)
+        expect(response.status).to eq(302)
       end
 
       it 'destroys managed service' do

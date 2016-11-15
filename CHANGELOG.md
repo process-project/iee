@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Please view this file on the master branch, on stable branches it's out of date.
 
 ## [Unreleased]
+
+### Added
+- Application version and revision in layout footer (@mkasztelnik)
+- Pundit authorized error messages for groups and services (@mkasztelnik)
+- Notifications are using the JS toastr library for fancier popups (@dharezlak)
+- The file store component uses portal's notification system to report errors (@dharezlak)
+- Service owner can manage local policies through UI (@mkasztelnik)
+- Unique user name composed with full name and email (@mkasztelnik)
+
+### Changed
+- Redirect status set to 302 instead of 404 (when record not found), 401 (when
+  user does not have permission to perform action) to avoid ugly "You are being
+  redirected" page (@mkasztelnik)
+- PDP denies everything when user is not approved (@mkasztelnik)
+- Add/remove group members redesigned (@mkasztelnik)
+- Update rubocop and remove new offenses (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Service factory that used to randomly produce invalid objects (@tomek.bartynski)
+- Edit/destroy group buttons visible only for group owners (@mkasztelnik)
+- Administration side menu item displayed only if it is not empty (@tomek.bartynski)
+- Corresponding resource entities are removed when policy API called with
+  only a `path` param (@dharezlak)
+
+### Security
+
+
+## 0.1.0
+
 ### Added
 - Basic project structure (@mkasztelnik, @dharezlak)
 - Use [gentelalla](https://github.com/puikinsh/gentelella) theme (@dharezlak, @mkasztelnik)
@@ -57,6 +90,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Global resource access policies management UI (@mkasztelnik)
 - Additional attribute with policy proxy URL is passed to the file store browser (@dharezlak)
 - Provide help panels for resource actions (@nowakowski)
+- Hint regarding resource paths in global policies tab (@tomek.bartynski)
+- Support path component in service uri (@tomek.bartynski)
 
 ### Changed
 - Upgrade to Rails 5 (@mkasztelnik, @Nuanda)
@@ -73,6 +108,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Got to new user session path after logout (@mkasztelnik)
 - Added a spec checking for correct removal of only policies specified by the API request parameter (@dharezlak)
 - File store view uses a common layout (@dharezlak)
+- Service uri must not end with a slash (@tomek.bartynski)
+- Resource path must start with a slash (@tomek.bartynski)
+- Removed path unification in Resource model (@tomek.bartynski)
+- Update to sidekiq 4.2.2 and remove unused anymore sinatra dependency (@mkasztelnik)
+- Administrator is able to see all registered services (@mkasztelnik)
+- Fixed path field in a form for Resource (@tomek.bartynski)
 
 ### Deprecated
 
@@ -101,5 +142,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Check service policy only once on global policies view (@mkasztelnik)
 - More advance validation for service `uri` overridden (@jmeizner)
 - Policy management API documentation corrected (@dharezlak)
+- Fix duplicates and missing part of `Service#show` (@jmeizner)
+- Policy API uses a service reference when querying for access methods (@dharezlak)
 
 ### Security

@@ -1,6 +1,14 @@
 en:
   pundit:
     default: You are not authorized to perform this action.
+    group_policy:
+      edit?: You are not authorized to edit this group
+      destroy?: You are not authorized to remove this group
+    service_policy:
+      edit?: You are not authorized to edit this service
+      destroy?: You are not authorized to remove this service
+    resource_policy:
+      show?: You are not authorized to see this resource policy
     # post_policy:
     #   update?: You cannot edit this port!
     #   create?: You cannot create posts!

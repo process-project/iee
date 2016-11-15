@@ -1,33 +1,22 @@
 # frozen_string_literal: true
 module Resources
-  class AccessPoliciesController < ApplicationController
-    before_action :find_and_authorize
+  class AccessPoliciesController < Resources::ResourceRelationsController
+    protected
 
-    def create
-      @access_policy = AccessPolicy.new(permitted_attributes(AccessPolicy))
-
-      if @access_policy.save
-        redirect_to service_global_policy_path(@resource.service, @resource)
-      else
-        @model = ResourceAccessPoliciesDecorator.
-                 new(current_user, @resource, @access_policy)
-        @service = @resource.service
-        render('services/global_policies/show', status: :bad_request)
-      end
+    def build_related_object
+      @resource.access_policies.build(permitted_attributes(AccessPolicy))
     end
 
-    def destroy
-      access_policy = AccessPolicy.find(params[:id])
-      access_policy.destroy!
-
-      redirect_to service_global_policy_path(@resource.service, @resource)
+    def find_related_object
+      AccessPolicy.find(params[:id])
     end
 
-    private
+    def access_policy
+      @related_object
+    end
 
-    def find_and_authorize
-      @resource = Resource.find(params[:resource_id])
-      authorize(@resource, :update?)
+    def resource_manager
+      ResourceManager.new
     end
   end
 end

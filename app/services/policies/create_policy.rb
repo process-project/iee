@@ -2,8 +2,8 @@
 module Policies
   class CreatePolicy < Policies::BasePoliciesService
     def initialize(json_body, service, user)
+      super(service)
       @json_body = json_body
-      @service = service
       @user = user
     end
 
@@ -12,7 +12,6 @@ module Policies
         resource = Resource.create(service: @service,
                                    path: @json_body['path'],
                                    resource_type: :local)
-        safely_create_access_policy(@user, nil, ['manage'], resource)
         create_access_policies(resource)
         create_user_managers(resource)
         create_group_managers(resource)
@@ -22,23 +21,22 @@ module Policies
     private
 
     def create_access_policies(resource)
-      if @json_body['permissions']
-        @json_body['permissions'].each do |permission|
-          process_permission(permission, resource)
-        end
+      return unless @json_body['permissions']
+      @json_body['permissions'].each do |permission|
+        process_permission(permission, resource)
       end
     end
 
     def create_user_managers(resource)
-      if @json_body['managers'] && @json_body['managers']['users']
-        merge_user_managers(@json_body['managers']['users'], resource)
-      end
+      resource.resource_managers.find_or_create_by(user: @user)
+
+      return unless @json_body['managers'] && @json_body['managers']['users']
+      merge_user_managers(@json_body['managers']['users'], resource)
     end
 
     def create_group_managers(resource)
-      if @json_body['managers'] && @json_body['managers']['groups']
-        merge_group_managers(@json_body['managers']['groups'], resource)
-      end
+      return unless @json_body['managers'] && @json_body['managers']['groups']
+      merge_group_managers(@json_body['managers']['groups'], resource)
     end
 
     def process_permission(permission, resource)

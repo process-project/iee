@@ -39,12 +39,10 @@ namespace :groups do
   def generate_group_with_children(g_name, children_number, tree_height, parent = nil)
     group = Group.create(name: g_name, parent_group: parent)
     puts "Generate Group #{g_name} with parent #{parent.try :name}"
-    if tree_height > 1
-      1.upto children_number do |child_number|
-        group_name = g_name.to_s + child_number.to_s
-        generate_group_with_children(group_name, children_number, tree_height - 1, group)
-      end
-    end
+    1.upto children_number do |child_number|
+      group_name = g_name.to_s + child_number.to_s
+      generate_group_with_children(group_name, children_number, tree_height - 1, group)
+    end if tree_height > 1
   end
 
   def fail_if_invalid_arguments(top_level_groups, children_number, group_tree_height)

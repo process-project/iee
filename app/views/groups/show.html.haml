@@ -8,14 +8,16 @@
           %li
             = link_to(groups_path, class: 'back') do
               = icon('hand-o-left', title: t('.back'))
-          %li
-            = link_to(edit_group_path(@group), class: 'edit') do
-              = icon('edit', title: t('edit'))
-          %li
-            = link_to(group_path(@group),
-              method: :delete, class: 'delete',
-              data: { confirm: t('are_you_sure') }) do
-              = icon('remove', title: t('remove'))
+          - if policy(@group).edit?
+            %li
+              = link_to(edit_group_path(@group), class: 'edit') do
+                = icon('edit', title: t('edit'))
+          - if policy(@group).destroy?
+            %li
+              = link_to(group_path(@group),
+                method: :delete, class: 'delete',
+                data: { confirm: t('are_you_sure') }) do
+                = icon('remove', title: t('remove'))
         .clearfix
 
       .x_content
@@ -24,12 +26,6 @@
             %tr
               %td= t('simple_form.labels.group.name')
               %td= @group.name
-            %tr
-              %td= t('simple_form.labels.group.member_ids')
-              %td= pill_list(@group.members)
-            %tr
-              %td= t('simple_form.labels.group.owner_ids')
-              %td= pill_list(@group.owners)
             %tr
               %td= t('simple_form.labels.group.children')
               %td= pill_list(@group.children)
@@ -44,10 +40,21 @@
               %td= pill_list(@group.offspring)
             %tr
               %td= t('simple_form.labels.group.all_users')
-              %td= pill_list(@group.all_users)
+              %td= pill_list(@group.all_users) { |user| raw_user_name(user) }
             %tr
               %td= t('simple_form.labels.group.default')
               %td= @group.default
+        %hr
+    .x_panel
+      .x_title
+        %h2= t('.members')
+        .clearfix
+      .x_content
+        = render('user_groups/index', user_groups: @group.user_groups)
   .col-md-4
     = render 'show_help'
+    .x_panel
+      .x_title= t('.add')
+      .x_content
+        = render('user_groups/form')
 

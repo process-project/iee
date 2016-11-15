@@ -10,14 +10,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do
     redirect_back fallback_location: root_path,
-                  alert: I18n.t('record_not_found'),
-                  status: 404
+                  alert: I18n.t('record_not_found')
   end
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_back fallback_location: root_path,
-                  alert: not_authorized_msg(exception),
-                  status: 403
+                  alert: not_authorized_msg(exception)
   end
 
   protected
@@ -27,12 +25,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_confirmation_data
-    if current_user&.admin? || current_user&.supervisor?
-      @users = {}
-      @users[:confirmed] = User.where(approved: true)
-      @users[:not_confirmed] = User.where(approved: false)
-      @user_confirmations = @users[:not_confirmed].exists?
-    end
+    return unless current_user&.admin? || current_user&.supervisor?
+    @users = {
+      confirmed: User.where(approved: true),
+      not_confirmed: User.where(approved: false)
+    }
+    @user_confirmations = @users[:not_confirmed].exists?
   end
 
   private

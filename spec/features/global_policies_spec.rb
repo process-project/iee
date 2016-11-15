@@ -12,11 +12,11 @@ RSpec.feature 'Global policy' do
     scenario 'can be created' do
       visit new_service_global_policy_path(service)
       fill_in 'resource[name]', with: 'My resource'
-      fill_in 'resource[path]', with: 'my_path'
+      fill_in 'resource[path]', with: '/my_path'
       click_button 'Create Resource'
 
       expect(page).to have_content('My resource')
-      expect(page).to have_content('my_path')
+      expect(page).to have_content('/my_path')
     end
 
     scenario 'can be edited' do
@@ -36,26 +36,26 @@ RSpec.feature 'Global policy' do
 
     scenario 'cannot be listed' do
       visit service_global_policies_path(service)
-      expect(page.status_code).to be(403)
+      expect(current_path).to eq(profile_path)
     end
 
     scenario 'cannot be shown' do
       resource = create(:global_resource, service: service)
 
       visit service_global_policy_path(service, resource)
-      expect(page.status_code).to be(403)
+      expect(current_path).to eq(profile_path)
     end
 
     scenario 'cannot be edited' do
       resource = create(:global_resource, service: service)
 
       visit edit_service_global_policy_path(service, resource)
-      expect(page.status_code).to be(403)
+      expect(current_path).to eq(profile_path)
     end
 
     scenario 'cannot be created' do
       visit new_service_global_policy_path(service)
-      expect(page.status_code).to be(403)
+      expect(current_path).to eq(profile_path)
     end
   end
 end

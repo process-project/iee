@@ -1,23 +1,16 @@
 # frozen_string_literal: true
+require 'factory_girl/service_helper'
+
 FactoryGirl.define do
   factory :service do
-    uri do
-      uri = URI.parse(Faker::Internet.url)
-      "#{uri.scheme}://#{uri.host}"
-    end
+    uri { FactoryGirl::ServiceHelper.uniq_uri }
 
     uri_aliases do
-      uri_alias1 = URI.parse(Faker::Internet.url)
-      uri_alias2 = URI.parse(Faker::Internet.url)
-      %W(#{uri_alias1.scheme}://#{uri_alias1.host} #{uri_alias2.scheme}://#{uri_alias2.host})
+      uri_alias1 = FactoryGirl::ServiceHelper.uniq_uri(uri)
+      uri_alias2 = FactoryGirl::ServiceHelper.uniq_uri(uri, uri_alias1)
+      [uri_alias1, uri_alias2]
     end
 
-    before :create do |service|
-      service.users << create(:user) unless service.users.present?
-    end
-
-    after :build do |service|
-      service.users << create(:user) unless service.users.present?
-    end
+    users { [create(:user)] }
   end
 end

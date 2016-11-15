@@ -12,7 +12,7 @@
             = icon("hand-o-left", title: t('.back_to_index'))
       .clearfix
     .x_content
-      = render partial: 'form',
+      = render partial: 'resources/form',
                locals: { resource: resource, url: service_global_policies_path(@service) }
 .col-md-4
   = render 'new_help'
