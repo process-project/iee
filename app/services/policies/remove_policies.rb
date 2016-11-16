@@ -21,11 +21,15 @@ module Policies
     private
 
     def complete_where_clauses(query)
-      query = query.joins(:access_method).where(access_methods:
-              { name: @access_method_names }) unless @access_method_names.empty?
-      query = query.left_outer_joins(:user).left_outer_joins(:group).
-              where('users.email = ? OR groups.name = ?', @user_emails, @group_names) unless
-        @user_emails.empty? && @group_names.empty?
+      unless @access_method_names.empty?
+        query = query.joins(:access_method).
+                where(access_methods: { name: @access_method_names })
+      end
+
+      unless @user_emails.empty? && @group_names.empty?
+        query = query.left_outer_joins(:user).left_outer_joins(:group).
+                where('users.email = ? OR groups.name = ?', @user_emails, @group_names)
+      end
 
       query
     end
