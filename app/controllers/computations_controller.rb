@@ -32,7 +32,6 @@ class ComputationsController < ApplicationController
 
   # See
   # https://infinum.co/the-capsized-eight/articles/multiline-strings-ruby-2-3-0-the-squiggly-heredoc
-  # rubocop:disable Metrics/MethodLength
   def script
     <<~SCRIPT
       #!/bin/bash -l
