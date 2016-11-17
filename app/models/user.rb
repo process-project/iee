@@ -97,10 +97,6 @@ class User < ApplicationRecord
   end
 
   def token
-    puts Vapor::Application.config.jwt.key
-    puts Vapor::Application.config.jwt.key_algorithm
-
-
     JWT.encode(
       token_payload,
       Vapor::Application.config.jwt.key,
