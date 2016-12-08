@@ -3,7 +3,7 @@
 
 :javascript
   var ClewOverrides = {
-    cloudFacadeUrl: 'https://localhost:3040/api/v1/',
+    cloudFacadeUrl: '#{Rails.configuration.cloud_facade_url}',
     jwtToken: '#{current_user.token}',
     username: '#{current_user.email}',
     roles: ['developer']

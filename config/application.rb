@@ -21,5 +21,8 @@ module Vapor
     config.constants = config_for(:application)
 
     config.jwt = Jwt::Config.new(config.constants['jwt'])
+
+    # URL of the Atmosphere Cloud Facade API (required for integration)
+    config.cloud_facade_url = 'https://localhost:3040/api/v1/'
   end
 end
