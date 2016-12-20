@@ -5,6 +5,7 @@ en:
         title: Research
         patients: Patients
         files: Files
+        cloud_resources: Cloud resources
       plgrid:
         title: PLGrid
       administration:

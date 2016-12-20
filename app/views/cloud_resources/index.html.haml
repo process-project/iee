@@ -3,7 +3,7 @@
 
 :javascript
   var ClewOverrides = {
-    cloudFacadeUrl: '#{Rails.configuration.cloud_facade_url}',
+    cloudFacadeUrl: "#{Rails.configuration.constants['cloud']['atmosphere_url']}#{Rails.configuration.constants['cloud']['cloud_facade_path']}",
     jwtToken: '#{current_user.token}',
     username: '#{current_user.email}',
     roles: ['developer']

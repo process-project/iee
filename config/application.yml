@@ -12,6 +12,9 @@ defaults: &defaults
 
 development:
   <<: *defaults
+  cloud:
+    atmosphere_url: 'https://localhost:3040'
+    cloud_facade_path: '/api/v1/'
 
 test:
   <<: *defaults
@@ -23,4 +26,7 @@ production:
     key_algorithm: ES256
     expiration_time: 3600
     issuer: 'EurValve Portal'
+  cloud:
+    atmosphere_url: 'https://vph.cyfronet.pl/'
+    cloud_facade_path: '/api/v1/'
 

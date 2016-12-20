@@ -2,6 +2,7 @@
   = link_to root_path, class: 'site_title' do
     %i.fa.fa-heartbeat.logo
     = t("title")
+
 .profile
   .profile_pic
     = image_tag current_user.gravatar_url(size: 56), class: 'img-circle profile_img'
@@ -10,6 +11,7 @@
     %h2= current_user.name
 .clearfix
 %br
+
 #sidebar-menu.main_menu_side.hidden-print.main_menu
   .menu_section
     %ul.nav.side-menu
@@ -18,5 +20,6 @@
       = render 'layouts/left_menu/administration'
       = render 'layouts/left_menu/help'
       = render 'layouts/left_menu/plgrid'
+
 .sidebar-footer.hidden-small
   = render 'layouts/footer'
