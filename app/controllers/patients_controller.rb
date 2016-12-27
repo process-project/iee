@@ -2,8 +2,7 @@
 class PatientsController < ApplicationController
   before_action :set_patients
 
-  def index
-  end
+  def index; end
 
   def show
     @patient = @patients.find(params[:id])

@@ -35,8 +35,7 @@ module Services
       end
     end
 
-    def edit
-    end
+    def edit; end
 
     def update
       if @resource.update_attributes(permitted_attributes(@resource))

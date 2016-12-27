@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add/remove group members redesigned (@mkasztelnik)
 - Update rubocop and remove new offenses (@mkasztelnik)
 - Update project dependencies (@mkasztelnik)
+- Update rubocop to 0.46.0, remove new discovered offences (@mkasztelnik)
 
 ### Deprecated
 
