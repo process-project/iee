@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Update rubocop and remove new offenses (@mkasztelnik)
 - Update project dependencies (@mkasztelnik)
 - Update rubocop to 0.46.0, remove new discovered offences (@mkasztelnik)
+- Update to rails 5.0.1 (@mkasztelnik)
 
 ### Deprecated
 
