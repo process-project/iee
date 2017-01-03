@@ -1,5 +1,5 @@
 =content_for :head do
-  %script{src: 'clew/clew.nocache.js'}
+  %script{src: Rails.configuration.constants['cloud']['atmosphere_url'] + '/clew/clew.nocache.js'}
 
 :javascript
   var ClewOverrides = {

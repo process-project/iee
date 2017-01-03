@@ -27,6 +27,6 @@ production:
     expiration_time: 3600
     issuer: 'EurValve Portal'
   cloud:
-    atmosphere_url: 'https://vph.cyfronet.pl/'
+    atmosphere_url: 'https://vph.cyfronet.pl'
     cloud_facade_path: '/api/v1/'
 
