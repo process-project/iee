@@ -5,7 +5,6 @@ class Patient < ApplicationRecord
 
   has_many :data_files, dependent: :destroy
   has_many :computations, dependent: :destroy
-  has_one :computation
 
   validates :case_number, :procedure_status, presence: true
   validates :case_number, uniqueness: true
