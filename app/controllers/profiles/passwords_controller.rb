@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 module Profiles
   class PasswordsController < ApplicationController
-    def show
-    end
+    def show; end
 
     def update
       if !current_user.valid_password?(current_password)

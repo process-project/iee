@@ -2,8 +2,7 @@
 class AccountConfirmationController < ApplicationController
   before_action :user_is_supervisor
 
-  def index
-  end
+  def index; end
 
   def approve
     user = User.find(params[:id])
