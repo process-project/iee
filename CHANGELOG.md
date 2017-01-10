@@ -9,6 +9,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## 0.2.0
+
+### Added
 - Application version and revision in layout footer (@mkasztelnik)
 - Pundit authorized error messages for groups and services (@mkasztelnik)
 - Notifications are using the JS toastr library for fancier popups (@dharezlak)
