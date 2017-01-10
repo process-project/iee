@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - The file store component uses portal's notification system to report errors (@dharezlak)
 - Service owner can manage local policies through UI (@mkasztelnik)
 - Unique user name composed with full name and email (@mkasztelnik)
+- Embed atmosphere UI into cloud resources section (@nowakowski)
 
 ### Changed
 - Redirect status set to 302 instead of 404 (when record not found), 401 (when

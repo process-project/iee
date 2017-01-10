@@ -12,3 +12,7 @@
       = link_to(file_store_path, data: { turbolinks: false }) do
         = icon('files-o')
         = t('files')
+    = nav_link controller: :cloud_resources, active_class: 'current-page' do
+      = link_to cloud_resources_path do
+        = icon('cloud')
+        = t('cloud_resources')

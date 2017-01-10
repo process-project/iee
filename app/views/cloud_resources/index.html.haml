@@ -1,0 +1,11 @@
+=content_for :head do
+  %script{src: Rails.configuration.constants['cloud']['atmosphere_url'] + '/clew/clew.nocache.js'}
+
+:javascript
+  var ClewOverrides = {
+    cloudFacadeUrl: "#{Rails.configuration.constants['cloud']['atmosphere_url']}#{Rails.configuration.constants['cloud']['cloud_facade_path']}",
+    jwtToken: '#{current_user.token}',
+    username: '#{current_user.email}',
+    roles: ['developer']
+  }
+#clewContainer

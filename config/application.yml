@@ -9,6 +9,9 @@ defaults: &defaults
     web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve.cyfronet.pl' %>
     web_dav_base_path: '/webdav'
     web_dav_policy_proxy_path: '/portal-proxy'
+  cloud:
+    atmosphere_url: <%= ENV['ATMOSPHERE_BASE_URL'] || 'https://vph.cyfronet.pl' %>
+    cloud_facade_path: '/api/v1/'
 
 development:
   <<: *defaults
@@ -23,4 +26,3 @@ production:
     key_algorithm: ES256
     expiration_time: 3600
     issuer: 'EurValve Portal'
-
