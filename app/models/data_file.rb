@@ -6,4 +6,9 @@ class DataFile < ApplicationRecord
   belongs_to :patient, touch: true
 
   validates :name, :data_type, :patient, presence: true
+
+  def self.synchronizer_class
+    synchronizer_klass_name = Rails.application.config_for('eurvalve')['data_synchronizer']
+    @synchronizer = synchronizer_klass_name.constantize
+  end
 end

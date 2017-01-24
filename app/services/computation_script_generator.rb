@@ -61,14 +61,11 @@ class ComputationScriptGenerator
         " -H \"Content-Type:application/octet-stream\" -H \"Authorization: Bearer #{@user.token}\""\
         " \"#{synchronizer.computation_file_handle(filename)}\""
     else
-      "cp #{filename} $PLG_GROUPS_STORAGE/plggeurvalve/#{Rails.env}/patients/#{@patient.case_number}"
+      "cp #{filename} #{synchronizer.computation_file_handle('')}"
     end
   end
 
   def synchronizer
-    @synchronizer || begin
-      synchronizer_klass_name = Rails.application.config_for('eurvalve')['data_synchronizer']
-      @synchronizer = synchronizer_klass_name.constantize.new(@patient, @user)
-    end
+    @synchronizer || DataFile.synchronizer_class.new(@patient, @user)
   end
 end

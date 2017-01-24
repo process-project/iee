@@ -20,27 +20,7 @@
 
           %h3= t '.files'
           .row
-            - if @patient.data_files.blank?
-              .alert.alert-info= t '.nothing'
-
-            - else
-              .col-xs-12.table
-                %table.table.table-striped
-                  %thead
-                    %tr
-                      %th= t 'data_file.name'
-                      %th= t 'data_file.data_type'
-
-                  %tbody
-                    - @patient.data_files.each do |df|
-                      %tr
-                        %td= df.name
-                        %td= df.data_type
-                        %td
-                          - if df.handle
-                            = link_to t('.download'), df.handle
-                          - else
-                            %i= t '.download_unavailable'
+            = render partial: 'patient_files', locals: { patient: @patient }
 
         - if @patient.virtual_model_ready?
           %h3= t '.computations'

@@ -34,4 +34,26 @@ module PatientsHelper
       Time.at(computation.updated_at - computation.created_at).utc.strftime('%Hh %Mm %Ss')
     end
   end
+
+  def file_store_path
+    file_store_config['web_dav_base_path']
+  end
+
+  def file_store_url
+    file_store_config['web_dav_base_url']
+  end
+
+  def file_store_proxy_path
+    file_store_url + file_store_config['web_dav_policy_proxy_path']
+  end
+
+  def file_store_js_path
+    file_store_url + '/browser/browser.nocache.js'
+  end
+
+  private
+
+  def file_store_config
+    Rails.configuration.constants['file_store']
+  end
 end
