@@ -7,8 +7,8 @@ RSpec.describe 'Policy entities API' do
 
   it 'should return a JSON object with policy entities' do
     create(:service, uri: 'https://service.host.com', token: 'random_token')
-    user = create(:user, email: 'user@host.com', approved: true)
     group = create(:group, name: 'group_name')
+    user = group.users.first
     access_method = create(:access_method, name: 'get')
     auth_headers = {
       'X-SERVICE-TOKEN' => 'random_token',
