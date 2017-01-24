@@ -1,7 +1,7 @@
 - if require_new_proxy?
   :javascript
     $(document).ready(function() {
-      toastr.error('<strong>#{t('warning')}</strong> #{t('.outdated')} #{link_to(t('.new_proxy'), user_open_id_omniauth_authorize_path)}', '',
+      toastr.error('<strong>#{t('warning')}</strong> #{t('.outdated')} <u>#{link_to(t('.new_proxy'), user_open_id_omniauth_authorize_path)}</u>', '',
         {timeOut: 0, extendedTimeOut: 0, tapToDismiss: false})
         .css('width', '50%')
     })
