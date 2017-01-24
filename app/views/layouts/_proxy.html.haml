@@ -1,0 +1,6 @@
+- if require_new_proxy?
+  .alert.alert-danger
+    %strong= t('warning')
+    = t('.outdated')
+    = link_to(t('.new_proxy'), user_open_id_omniauth_authorize_path)
+

@@ -1,4 +1,8 @@
 en:
+  layouts:
+    proxy:
+      outdated: Your proxy certificate is outdated and thus we are not able to monitor your active computations.
+      new_proxy: Please generate new proxy certificate.
   patients:
     index:
       title: Patients
