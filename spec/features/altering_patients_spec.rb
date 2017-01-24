@@ -59,7 +59,7 @@ RSpec.feature 'Patient altering' do
     end
   end
 
-  context 'for every plgrid/prometheus user', proxy: true do
+  context 'for every plgrid/prometheus user', files: true do
     include OauthHelper
     include AuthenticationHelper
 
@@ -76,7 +76,38 @@ RSpec.feature 'Patient altering' do
     context 'when registering a new patient' do
       scenario 'automatically synchronizes data_files and updates status' do
         allow_any_instance_of(User).to receive(:proxy).and_return(test_proxy)
+        allow(Rails.application).
+          to receive(:config_for).
+          with('eurvalve').
+          and_return(
+            'data_synchronizer' => 'PlgridDataFileSynchronizer',
+            'storage_url' => Rails.application.config_for('eurvalve')['storage_url'],
+            'handle_url' => Rails.application.config_for('eurvalve')['handle_url']
+          )
 
+        visit new_patient_path
+
+        fill_in 'patient[case_number]', with: '1234'
+
+        expect { click_button I18n.t('register') }.to change { Patient.count }.by(1)
+
+        expect(current_path).to eq patient_path(Patient.first)
+        expect(page).to have_content '1234'
+        expect(page).to have_content 'fluidFlow.cas'
+        expect(page).to have_content 'structural_vent.dat'
+      end
+    end
+  end
+
+  context 'for every user with WebDAV file store access', files: true do
+    before(:each) do
+      @user = create(:user, :approved, :file_store_user)
+
+      login_as(@user)
+    end
+
+    context 'when registering a new patient' do
+      scenario 'automatically synchronizes data_files and updates status' do
         visit new_patient_path
 
         fill_in 'patient[case_number]', with: '1234'

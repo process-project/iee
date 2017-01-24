@@ -28,6 +28,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :file_store_user do
+      first_name { Rails.application.secrets[:test_file_store_first_name] }
+      last_name { Rails.application.secrets[:test_file_store_last_name] }
+      email { Rails.application.secrets[:test_file_store_email] }
+    end
+
     factory :approved_user, traits: [:approved]
     factory :plgrid_user, parent: :approved_user, traits: [:plgrid]
     factory :supervisor_user, parent: :approved_user, traits: [:supervisor]

@@ -15,7 +15,7 @@ module Rimrock
       def call
         patient = @computation.patient
         user = @computation.user
-        patient && user && DataFileSynchronizer.new(patient, user).call
+        patient && user && patient.execute_data_sync(user)
       end
     end
   end

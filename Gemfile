@@ -36,6 +36,9 @@ gem 'jwt'
 gem 'omniauth-openid'
 gem 'pundit'
 
+# Files store client
+gem 'net_dav'
+
 # Delayed jobs
 gem 'clockwork'
 gem 'sidekiq'
