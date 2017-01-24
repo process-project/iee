@@ -21,7 +21,6 @@ class User < ApplicationRecord
   has_many :access_policies, dependent: :destroy
   has_many :resource_managers, dependent: :destroy
   has_many :computations
-  has_many :active_computations, -> { where(status: %w(queued running)) }
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
 
