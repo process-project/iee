@@ -1,0 +1,7 @@
+.alert.alert-warning
+  .pull-left
+    %strong= t('warning')
+    = msg
+  .pull-right
+    = link_to(t('.new_proxy'), user_open_id_omniauth_authorize_path)
+  .clearfix

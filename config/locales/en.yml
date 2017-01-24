@@ -71,3 +71,4 @@ en:
   help:
     pdp: Policy Decision Point
   similar_access_policy_exists: Similar access policy already exists
+  warning: Warning!
