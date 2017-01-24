@@ -3,14 +3,13 @@ require 'rails_helper'
 
 RSpec.describe 'Group members' do
   let(:user) { create(:approved_user) }
+  let(:group) { create(:group) }
 
-  before { login_as(user) }
+  before { login_as(group.users.first) }
 
   describe 'POST /groups/:group_id/user_groups' do
     it 'allows adding normal users into managed group' do
       u1, u2 = create_list(:approved_user, 2)
-      group = create(:group)
-      UserGroup.create(group: group, user: user, owner: true)
 
       expect do
         post group_user_groups_path(group),
@@ -23,8 +22,6 @@ RSpec.describe 'Group members' do
 
     it 'allows adding owners into managed group' do
       u = create(:approved_user)
-      group = create(:group)
-      UserGroup.create(group: group, user: user, owner: true)
 
       post group_user_groups_path(group),
            params: { user_group: { user_id: [u.id], owner: true } }
@@ -33,48 +30,38 @@ RSpec.describe 'Group members' do
     end
 
     it 'denies adding user to not managed group' do
-      u = create(:approved_user)
-      group = create(:group)
-
-      post group_user_groups_path(group),
-           params: { user_group: { user_id: [u.id] } }
+      post group_user_groups_path(create(:group)),
+           params: { user_group: { user_id: [create(:approved_user).id] } }
 
       expect(response.status).to eq(302)
     end
 
     it 'update from normal user to owner' do
       u = create(:approved_user)
-      group = create(:group)
-      UserGroup.create(group: group, user: user, owner: true)
       ug = UserGroup.create(group: group, user: u, owner: false)
 
-      post group_user_groups_path(group),
-           params: { user_group: { user_id: [u.id], owner: true } }
-      ug.reload
-
-      expect(ug).to be_owner
+      expect do
+        post group_user_groups_path(group),
+             params: { user_group: { user_id: [u.id], owner: true } }
+      end.to change { ug.reload.owner }.from(false).to(true)
     end
 
     it 'cannot downgrade owner into member' do
       u = create(:approved_user)
-      group = create(:group)
-      UserGroup.create(group: group, user: user, owner: true)
       ug = UserGroup.create(group: group, user: u, owner: true)
 
-      post group_user_groups_path(group),
-           params: { user_group: { user_id: [u.id], owner: false } }
-      ug.reload
-
-      expect(ug).to be_owner
+      expect do
+        post group_user_groups_path(group),
+             params: { user_group: { user_id: [u.id], owner: false } }
+      end.not_to change { ug.reload.owner }
     end
 
     it 'does not allow to add new members by normal member' do
-      u = create(:approved_user)
       group = create(:group)
       UserGroup.create(group: group, user: user, owner: false)
 
       post group_user_groups_path(group),
-           params: { user_group: { user_id: [u.id], owner: false } }
+           params: { user_group: { user_id: [create(:approved_user).id], owner: false } }
 
       expect(flash[:alert]).
         to include('You are not authorized to perform this action')
@@ -84,8 +71,6 @@ RSpec.describe 'Group members' do
   describe 'DELETE /groups/:group_id/user_groups/:id' do
     it 'allows to delete user from managed group' do
       u = create(:approved_user)
-      group = create(:group)
-      UserGroup.create(user: user, group: group, owner: true)
       ug = UserGroup.create(user: u, group: group, owner: false)
 
       expect { delete group_user_group_path(group, ug) }.
@@ -95,9 +80,8 @@ RSpec.describe 'Group members' do
     end
 
     it 'denies removing user from not managed group' do
-      u = create(:approved_user)
       group = create(:group)
-      ug = UserGroup.create(user: u, group: group, owner: false)
+      ug = UserGroup.create(user: create(:approved_user), group: create(:group), owner: false)
 
       delete group_user_group_path(group, ug)
 
@@ -105,11 +89,10 @@ RSpec.describe 'Group members' do
     end
 
     it 'denies to remove last group owner' do
-      group = create(:group)
       ug = group.user_groups.find_by(owner: true)
 
       expect { delete group_user_group_path(group, ug) }.
-        to change { UserGroup.count }.by(0)
+        not_to change { UserGroup.count }
     end
   end
 end
