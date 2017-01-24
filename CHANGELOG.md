@@ -9,6 +9,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Show PLGrid proxy details on profile view (@mkasztelnik)
+- Show alert when user has active computations but proxy is outdated (@mkasztelnik)
 
 ### Changed
 
