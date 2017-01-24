@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Correct default pundit permission denied message is returned when no custom message is defined (@mkasztelnik)
+- Missing toastr Javascript map file added (@mkasztelnik)
 
 ### Security
 
