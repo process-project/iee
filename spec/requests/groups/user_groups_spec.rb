@@ -67,6 +67,18 @@ RSpec.describe 'Group members' do
 
       expect(ug).to be_owner
     end
+
+    it 'does not allow to add new members by normal member' do
+      u = create(:approved_user)
+      group = create(:group)
+      UserGroup.create(group: group, user: user, owner: false)
+
+      post group_user_groups_path(group),
+           params: { user_group: { user_id: [u.id], owner: false } }
+
+      expect(flash[:alert]).
+        to include('You are not authorized to perform this action')
+    end
   end
 
   describe 'DELETE /groups/:group_id/user_groups/:id' do
