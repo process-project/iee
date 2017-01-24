@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.feature 'PLGrid proxy', js: true do
-  scenario 'show warning when has active computations and proxy is outdated' do
+  scenario 'show warning when user has active computations and proxy is outdated' do
     user = create(:user, :approved)
     create(:computation, status: 'new', user: user)
     login_as(user)
