@@ -2,9 +2,12 @@
 class Proxy < OpenSSL::X509::Certificate
   def initialize(user)
     super(user.proxy)
+    @valid = true
+  rescue
+    @valid = false
   end
 
   def valid?
-    not_after > Time.current
+    @valid && not_after > Time.current
   end
 end
