@@ -1,0 +1,13 @@
+.alert.alert-success
+  .pull-left
+    %strong= t('.description', not_after: proxy.not_after)
+  .pull-right
+    = link_to(t('.new_proxy'), user_open_id_omniauth_authorize_path)
+  .clearfix
+  %ul
+    %li
+      %strong= t('.issuer')
+      = proxy.issuer
+    %li
+      %strong= t('.subject')
+      = proxy.subject

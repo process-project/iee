@@ -62,6 +62,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    cliver (0.3.2)
     clockwork (2.0.0)
       activesupport
       tzinfo
@@ -188,6 +189,10 @@ GEM
     parser (2.3.3.1)
       ast (~> 2.2)
     pg (0.19.0)
+    poltergeist (1.13.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -367,6 +372,7 @@ DEPENDENCIES
   nicescroll-rails
   omniauth-openid
   pg (~> 0.15)
+  poltergeist
   puma (~> 3.0)
   pundit
   rails (~> 5.0.0)

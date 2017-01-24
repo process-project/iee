@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 module Profiles
   class PlgridsController < ApplicationController
-    def show; end
+    def show
+      @proxy = Proxy.new(current_user) unless current_user.proxy.blank?
+    end
 
     def destroy
       if current_user.update_attributes(plgrid_login: nil, proxy: nil)

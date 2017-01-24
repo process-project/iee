@@ -60,6 +60,10 @@ This task depends on _db:setup_ task so be aware that data present in database i
 
 ## Testing
 
+Some tests require PnahtomJS installed. Please take a look at:
+https://github.com/teampoltergeist/poltergeist#installing-phantomjs for manual
+how to install it on your machine.
+
 To execute all tests run:
 
 ```
