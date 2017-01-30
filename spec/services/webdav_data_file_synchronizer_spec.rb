@@ -92,8 +92,8 @@ describe WebdavDataFileSynchronizer, files: true do
 
   describe '#computation_file_handle' do
     it 'gives "downloadable" file handle"' do
-      expect(WebdavDataFileSynchronizer.new(test_patient, user).file_handle('a')).
-        to eq computation_file_handle(test_patient.case_number, 'a')
+      expect(WebdavDataFileSynchronizer.new(test_patient, user).computation_file_handle('a')).
+        to eq file_handle(test_patient.case_number, 'a')
     end
   end
 
