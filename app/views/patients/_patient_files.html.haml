@@ -30,10 +30,10 @@
         var SletOverrides = {
           userLogin: '#{current_user.email}',
           userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
-          webDavBaseUrl: '#{file_store_url}#{file_store_path}/#{Rails.env}/patients/#{patient.case_number}',
-          webDavBaseHref: '#{file_store_path}',
+          webDavBaseUrl: '#{FileStore.patients_url}#{patient.case_number}',
+          webDavBaseHref: '#{FileStore.file_store_path}',
           webDavAuthUrl: '/api/auth',
-          policiesApiUrl: '#{file_store_proxy_path}',
+          policiesApiUrl: '#{FileStore.file_store_proxy_path}',
           token: '#{current_user.token}'
         };
         var fileStoreConfig = function() {
@@ -41,7 +41,7 @@
             toastr.error(message);
           });
         };
-      %script{ type: 'text/javascript', src: file_store_js_path }
+      %script{ type: 'text/javascript', src: FileStore.file_store_js_path }
 
     .x_panel
       .x_content
