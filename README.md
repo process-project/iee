@@ -67,6 +67,10 @@ inside the eurvalve.yml file, to either of these values:
 
 ## Testing
 
+Some tests require PnahtomJS installed. Please take a look at:
+https://github.com/teampoltergeist/poltergeist#installing-phantomjs for manual
+how to install it on your machine.
+
 To execute all tests run:
 
 ```

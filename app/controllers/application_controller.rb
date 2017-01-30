@@ -51,6 +51,7 @@ class ApplicationController < ActionController::Base
   def not_authorized_msg(exception)
     policy_name = exception.policy.class.to_s.underscore
 
-    I18n.t("#{policy_name}.#{exception.query}", scope: 'pundit', defult: :defult)
+    I18n.t("#{policy_name}.#{exception.query}",
+           scope: 'pundit', default: :default)
   end
 end

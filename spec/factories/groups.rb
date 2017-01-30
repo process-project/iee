@@ -5,7 +5,7 @@ FactoryGirl.define do
 
     before(:create) do |group, _evaluator|
       unless group.user_groups.any?(&:owner)
-        group.user_groups.build(user: create(:user), owner: true)
+        group.user_groups.build(user: create(:approved_user), owner: true)
       end
     end
 

@@ -9,6 +9,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- PLGrid proxy details shown in the profile view, warning shown when proxy is
+  outdated while active computations are present (@mkasztelnik)
+- Support for running specs with JS support (@mkasztelnik)
 
 ### Changed
 
@@ -17,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Correct default pundit permission denied message is returned when no custom message is defined (@mkasztelnik)
 
 ### Security
 

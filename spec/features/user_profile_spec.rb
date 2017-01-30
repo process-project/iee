@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Profile page' do
+  include ProxySpecHelper
+
   let(:user) do
     create(:approved_user,
            password: 'asdfasdf', password_confirmation: 'asdfasdf')
@@ -44,7 +46,7 @@ RSpec.feature 'Profile page' do
 
   scenario 'is used to disconect with plgrid account' do
     user.update_attributes(plgrid_login: 'plgjdoe',
-                           proxy: 'asdf')
+                           proxy: outdated_proxy)
 
     visit profile_plgrid_path
     click_link 'Disconnect from PLGrid'
@@ -52,5 +54,14 @@ RSpec.feature 'Profile page' do
 
     expect(user.plgrid_login).to be_nil
     expect(user.proxy).to be_nil
+  end
+
+  scenario 'shows PLGrid proxy info' do
+    user.update_attributes(plgrid_login: 'plgjdoe',
+                           proxy: outdated_proxy)
+
+    visit profile_plgrid_path
+
+    expect(page).to have_content('Generate new proxy')
   end
 end
