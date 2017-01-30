@@ -10,3 +10,11 @@ en:
       body: |
         Your EurValve portal account has been approved by one of the supervisors.
         You can now log into the portal using this link: %{login_url}.
+    proxy_expired:
+      subject: Your PLGrid proxy has expired
+      body: |
+        You have active computations but your PLGrid proxy certificate has expired
+        at %{expired_at}. As a conclusion we are not able to monitor your computations.
+        Please use %{link} to generate new PLGrid proxy certificate.
+      link_text: following link %{link}
+      link_html: <a href=%{link}>following link</a>

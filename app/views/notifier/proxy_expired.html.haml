@@ -1,0 +1,5 @@
+%p
+  = t('emails.proxy_expired.body',
+      expired_at: @proxy.not_after,
+      link: t('emails.proxy_expired.link_html',
+              link: user_open_id_omniauth_authorize_url))

@@ -13,4 +13,9 @@ class Notifier < ApplicationMailer
   def account_approved(user)
     mail(to: user.email, subject: I18n.t('emails.account_approved.subject'))
   end
+
+  def proxy_expired(user)
+    @proxy = Proxy.new(user)
+    mail(to: user.email, subject: I18n.t('emails.proxy.expired'))
+  end
 end
