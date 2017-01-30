@@ -1,11 +1,11 @@
--# NOTE: requires target_url local setting which tells what directory it should list
+-# NOTE: requires target_path local setting which tells what directory it should list
 - content_for :extra_head do
   :javascript
     var SletOverrides = {
       userLogin: '#{current_user.email}',
       userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
-      webDavBaseUrl: '#{target_url}',
-      webDavBaseHref: '#{FileStore.file_store_path}',
+      webDavBaseUrl: '#{FileStore.file_store_url}#{target_path}',
+      webDavBaseHref: '#{target_path}',
       webDavAuthUrl: '/api/auth',
       policiesApiUrl: '#{FileStore.file_store_proxy_path}',
       token: '#{current_user.token}'

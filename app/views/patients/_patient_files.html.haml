@@ -26,4 +26,4 @@
   - else
 
     = render partial: 'file_store/file_browser',
-             locals: { target_url: FileStore.patients_url + patient.case_number }
+             locals: { target_path: FileStore.patients_path + patient.case_number }

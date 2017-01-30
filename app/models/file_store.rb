@@ -17,8 +17,8 @@ class FileStore
     file_store_url + '/browser/browser.nocache.js'
   end
 
-  def self.patients_url
-    file_store_url + file_store_path + "/#{Rails.env}/patients/"
+  def self.patients_path
+    file_store_path + "/#{Rails.env}/patients/"
   end
 
   def self.file_store_config
