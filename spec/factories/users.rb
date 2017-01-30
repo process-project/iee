@@ -29,8 +29,6 @@ FactoryGirl.define do
     end
 
     trait :file_store_user do
-      first_name { Rails.application.secrets[:test_file_store_first_name] }
-      last_name { Rails.application.secrets[:test_file_store_last_name] }
       email { Rails.application.secrets[:test_file_store_email] }
     end
 
