@@ -10,7 +10,7 @@
   - @patients.each do |patient|
     .col-lg-3.col-md-3.col-sm-6.col-xs-12
       .tile-stats
-        = link_to patient do
+        = link_to patient, data: { turbolinks: false } do
           .icon
             %i.fa.fa-heart
           .count= patient.case_number
