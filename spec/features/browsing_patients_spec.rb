@@ -5,8 +5,7 @@ RSpec.feature 'Patient browsing' do
   let(:patient) { create(:patient, case_number: '1234') }
 
   before(:each) do
-    # let(:correct_user) { build(:user, :file_store_user) }
-    user = create(:user, :file_store_user, :approved)
+    user = create(:user, :approved)
     login_as(user)
   end
 
