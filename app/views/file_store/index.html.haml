@@ -1,22 +1,4 @@
-- content_for :extra_head do
-  :javascript
-    var SletOverrides = {
-      userLogin: '#{@user_email}',
-      userGroups: #{sanitize(@user_groups)},
-      webDavBaseUrl: '#{@web_dav_base_url}#{@web_dav_base_path}',
-      webDavBaseHref: '#{@web_dav_base_path}',
-      webDavAuthUrl: '/api/auth',
-      policiesApiUrl: '#{@web_dav_base_url}#{@web_dav_policy_proxy_path}',
-      token: '#{@token}'
-    };
-    var fileStoreConfig = function() {
-      valve.FileStore.setErrorCallback(function(message) {
-        toastr.error(message);
-      });
-    };
-  %script{type: 'text/javascript', src: @web_dav_base_url + '/browser/browser.nocache.js'}
 %h1
   = t '.title'
-.x_panel
-  .x_content
-    %div{ id: 'lobcderContainer' }
+
+= render partial: 'file_browser', locals: { target_path: FileStore.file_store_path }

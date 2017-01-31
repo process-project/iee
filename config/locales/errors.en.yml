@@ -24,6 +24,10 @@ en:
       User %{user} trying to run the service for a patient with no case number.
     no_proxy: |
       User %{user} trying to run the service without proxy certificate.
+    no_token: |
+      User %{user} trying to run the service without token.
+    no_fs_client: |
+      There were problems accessing the EurValve File Store service.
     file_removed: |
       Removed %{name} file from patient %{patient} as no longer present in the
       File Storage.

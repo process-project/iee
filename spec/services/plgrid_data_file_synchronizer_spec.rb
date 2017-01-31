@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe DataFileSynchronizer do
+describe PlgridDataFileSynchronizer do
   let(:user_no_proxy) { build(:user, proxy: nil) }
   let(:user_with_phony_proxy) { build(:user, proxy: 'proxy') }
   let(:expired_proxy) do
@@ -31,14 +31,14 @@ describe DataFileSynchronizer do
     raise
   end
 
-  it 'reports problem with provided user proxy', proxy: true do
+  it 'reports problem with provided user proxy', files: true do
     expect(Rails.logger).to receive(:info).
       with(/The certificate has expired/).
       and_call_original
     call(patient, user_with_expired_proxy)
   end
 
-  context 'when provided with correct input', proxy: true do
+  context 'when provided with correct input', files: true do
     let(:test_proxy) do
       File.open(Rails.application.secrets[:test_proxy_path]).read
     end
@@ -103,10 +103,10 @@ describe DataFileSynchronizer do
   end
 
   def call(patient, user, options = {})
-    DataFileSynchronizer.new(patient, user, options).call
+    PlgridDataFileSynchronizer.new(patient, user, options).call
   end
 
   def file_handle(case_number, filename)
-    "#{Rails.application.config_for('eurvalve')['handle_url']}#{case_number}/#{filename}"
+    "#{Rails.application.config_for('eurvalve')['handle_url']}patients/#{case_number}/#{filename}"
   end
 end

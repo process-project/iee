@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Patient browsing' do
-  let(:patient) { create(:patient) }
+  let(:patient) { create(:patient, case_number: '1234') }
 
   before(:each) do
     user = create(:user, :approved)
@@ -74,23 +74,29 @@ RSpec.feature 'Patient browsing' do
       expect(current_path).to eq patients_path
     end
 
-    scenario 'shows a table for present case data files with handles' do
-      data_files = create_list(:data_file, 2, patient: patient)
-      data_files[0].update_column(:handle, 'test_handle')
+    context 'with plgrid file backend' do
+      scenario 'shows a table for present case data files with handles' do
+        allow(Rails.application).
+          to receive(:config_for).
+          with('eurvalve').
+          and_return(
+            'data_synchronizer' => 'PlgridDataFileSynchronizer',
+            'storage_url' => Rails.application.config_for('eurvalve')['storage_url'],
+            'handle_url' => Rails.application.config_for('eurvalve')['handle_url']
+          )
 
-      visit patient_path(patient)
+        data_files = create_list(:data_file, 2, patient: patient)
+        data_files[0].update_column(:handle, 'test_handle')
 
-      expect(page).to have_content(data_files[0].name)
-      expect(page).to have_content(data_files[0].data_type)
-      expect(page).to have_content(data_files[1].name)
-      expect(page).to have_content(data_files[1].data_type)
-      expect(page).to have_content(I18n.t('patients.show.download_unavailable'))
-      expect(page).to have_selector "a[href='test_handle']"
-    end
+        visit patient_path(patient)
 
-    scenario 'lets the user to get a case data file from file storage' do
-      pending 'waiting for storage client implementation'
-      raise
+        expect(page).to have_content(data_files[0].name)
+        expect(page).to have_content(data_files[0].data_type)
+        expect(page).to have_content(data_files[1].name)
+        expect(page).to have_content(data_files[1].data_type)
+        expect(page).to have_content(I18n.t('patients.show.download_unavailable'))
+        expect(page).to have_selector "a[href='test_handle']"
+      end
     end
   end
 end

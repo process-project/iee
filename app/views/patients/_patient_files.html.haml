@@ -1,0 +1,29 @@
+- if patient.data_files.blank?
+  .alert.alert-info= t 'patients.show.nothing'
+
+- else
+
+  - if DataFile.synchronizer_class == PlgridDataFileSynchronizer
+
+    .col-xs-12.table
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= t 'data_file.name'
+            %th= t 'data_file.data_type'
+
+        %tbody
+          - patient.data_files.each do |df|
+            %tr
+              %td= df.name
+              %td= df.data_type
+              %td
+                - if df.handle
+                  = link_to t('patients.show.download'), df.handle
+                - else
+                  %i= t 'patients.show.download_unavailable'
+
+  - else
+
+    = render partial: 'file_store/file_browser',
+             locals: { target_path: FileStore.patients_path + patient.case_number }

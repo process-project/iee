@@ -58,6 +58,13 @@ bundle exec rake dev:prime RAILS_ENV=development
 ```
 This task depends on _db:setup_ task so be aware that data present in database is erased.
 
+Vapor uses a file store backend and it may either use the PLGrid's PLG-Data service (and
+the Prometheus cluster's file system) or the EurValve's internal WebDAV File Store. Set it
+inside the eurvalve.yml file, to either of these values:
+
+  * data_synchronizer: PlgridDataFileSynchronizer
+  * data_synchronizer: WebdavDataFileSynchronizer
+
 ## Testing
 
 Some tests require PnahtomJS installed. Please take a look at:
@@ -73,10 +80,13 @@ bundle exec rspec
 To execute File Storage integration tests:
 1. Get an expired and a valid PLGrid/Prometheus user proxy
 2. Put paths to these in proper ENV values (see secrets.yml)
-3. Run rspec with proxy tag on:
+3. Obtain EurValve dev file store key in the form of a pem file
+4. Set path to this certificate in application.yml jwt.key value
+5. Set test user names and email ENV values (see secrets.yml) - this user needs to be in the 'webdav' group
+6. Run rspec with files tag on:
 
 ```
-bundle exec rspec --tag proxy
+bundle exec rspec --tag files
 ```
 
 Use guard to execute tests connected with modified file:
