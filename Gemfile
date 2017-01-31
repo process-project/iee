@@ -70,10 +70,10 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'launchy'
   gem 'poltergeist'
   gem 'rspec-json_expectations'
   gem 'shoulda-matchers'
-  gem 'launchy'
 end
 
 group :production do
