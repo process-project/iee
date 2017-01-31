@@ -9,7 +9,10 @@ $ ->
         success: (data) ->
           newRow = $(data)
           $(row).replaceWith newRow
-          refreshComputation(newRow, 30000) if newRow.data('refresh')
+          if newRow.data('refresh')
+            refreshComputation(newRow, 30000)
+          else
+            location.reload()
     , timeout
 
   $('tr[data-refresh="true"]').each ->

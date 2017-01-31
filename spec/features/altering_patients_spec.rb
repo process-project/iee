@@ -116,8 +116,6 @@ RSpec.feature 'Patient altering' do
 
         expect(current_path).to eq patient_path(Patient.first)
         expect(page).to have_content '1234'
-        expect(page).to have_content 'fluidFlow.cas'
-        expect(page).to have_content 'structural_vent.dat'
       end
     end
   end
