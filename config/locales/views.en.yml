@@ -19,8 +19,7 @@ en:
       details: Details
       files: Files
       computations: Computations
-      new_blood_flow_computation: Run new blood flow computation
-      new_heart_model_computation: Run new 0D Heart Model computation
+      new_computation: Run new blood flow computation
       nothing: There are no files uploaded for this patient's case.
       download: Download
       download_unavailable: (download unavailable)

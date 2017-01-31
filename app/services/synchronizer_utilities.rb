@@ -48,8 +48,6 @@ module SynchronizerUtilities
     when 'structural_vent.dat' then 'ventricle_virtual_model'
     when /fluidFlow.*.dat/ then 'blood_flow_result'
     when /fluidFlow.*.cas/ then 'blood_flow_model'
-    when '0DModel_input.csv' then 'estimated_parameters'
-    when 'Outfile.csv' then 'heart_model_output'
     end
   end
 
