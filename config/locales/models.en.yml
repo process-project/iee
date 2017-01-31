@@ -4,7 +4,9 @@ en:
       not_started: Not yet started
       imaging_uploaded: Imaging ready
       virtual_model_ready: Virtual model ready
-      after_blood_flow_simulation: Simulation completed
+      after_blood_flow_simulation: Blood flow simulation completed
+      after_parameter_estimation: Parameters estimated
+      after_heart_simulation: Heart simulation completed
   data_file:
     name: File name
     data_type: Data type

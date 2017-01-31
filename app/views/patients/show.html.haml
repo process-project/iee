@@ -22,14 +22,18 @@
           .row
             = render partial: 'patient_files', locals: { patient: @patient }
 
-        - if @patient.virtual_model_ready?
+        - if @patient.virtual_model_ready? || @patient.after_parameter_estimation?
           %h3= t '.computations'
 
           - if @patient.computations.active.blank?
             .row
               .col-xs-12.table
                 = simple_form_for(computation) do |f|
-                  %h4= t '.new_computation'
+                  %h4
+                    - if @patient.virtual_model_ready?
+                      =t '.new_blood_flow_computation'
+                    - else
+                      =t '.new_heart_model_computation'
                   = f.error_notification
                   = f.hidden_field :patient_id, value: @patient.id
                   %div
