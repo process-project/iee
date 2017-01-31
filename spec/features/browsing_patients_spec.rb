@@ -2,10 +2,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Patient browsing' do
-  let(:patient) { create(:patient) }
+  let(:patient) { create(:patient, case_number: '1234') }
 
   before(:each) do
-    user = create(:user, :approved)
+    # let(:correct_user) { build(:user, :file_store_user) }
+    user = create(:user, :file_store_user, :approved)
     login_as(user)
   end
 
@@ -96,20 +97,6 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content(data_files[1].data_type)
         expect(page).to have_content(I18n.t('patients.show.download_unavailable'))
         expect(page).to have_selector "a[href='test_handle']"
-      end
-    end
-
-    context 'with webdav file backed' do
-      scenario 'shows the user the webdav file browser' do
-        data_files = create_list(:data_file, 2, patient: patient)
-        data_files[0].update_column(:handle, 'test_handle')
-
-        visit patient_path(patient)
-
-        expect(page).to have_selector '#lobcderContainer'
-
-        pending 'waiting for js testing enabled'
-        raise
       end
     end
   end
