@@ -73,6 +73,7 @@ group :test do
   gem 'poltergeist'
   gem 'rspec-json_expectations'
   gem 'shoulda-matchers'
+  gem 'launchy'
 end
 
 group :production do
