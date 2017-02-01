@@ -18,5 +18,6 @@ RSpec.describe Rimrock::UpdateJob do
       and_return(update)
 
     described_class.perform_now(user)
+    travel_back
   end
 end

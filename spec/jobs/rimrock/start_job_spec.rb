@@ -16,5 +16,6 @@ RSpec.describe Rimrock::StartJob do
     allow(Rimrock::Start).to receive(:new).with(computation).and_return(start)
 
     described_class.perform_now(computation)
+    travel_back
   end
 end
