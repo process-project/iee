@@ -1,0 +1,3 @@
+class ProxyJob < ApplicationJob
+
+end

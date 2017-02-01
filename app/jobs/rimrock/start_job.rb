@@ -4,7 +4,8 @@ module Rimrock
     queue_as :computation
 
     def perform(computation)
-      Rimrock::Start.new(computation).call
+      ValidateProxy.new(computation.user).
+        call { Rimrock::Start.new(computation).call }
     end
   end
 end
