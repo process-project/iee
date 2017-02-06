@@ -23,7 +23,7 @@ class ComputationsController < ApplicationController
   private
 
   def create_params
-    params.require(:computation).permit(:patient_id)
+    params.require(:computation).permit(:patient_id, :computation_type)
   end
 
   def patient
