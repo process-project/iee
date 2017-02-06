@@ -4,4 +4,8 @@ module ProxyHelper
     !Proxy.new(current_user).valid? &&
       Computation.active.where(user: current_user).count.positive?
   end
+
+  def proxy_valid?
+    Proxy.new(current_user).valid?
+  end
 end

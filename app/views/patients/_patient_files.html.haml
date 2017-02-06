@@ -6,6 +6,8 @@
   - if DataFile.synchronizer_class == PlgridDataFileSynchronizer
 
     .col-xs-12.table
+      - unless proxy_valid?
+        .alert.alert-warning= t('.proxy.invalid')
       %table.table.table-striped
         %thead
           %tr

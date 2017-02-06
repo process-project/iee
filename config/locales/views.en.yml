@@ -32,6 +32,11 @@ en:
     destroy:
       success: Patient case %{case_number} was removed.
       failure: Unable to remove patient case %{case_number}.
+    patient_files:
+      proxy:
+        invalid: |
+          Your proxy certificate is not valid anymore. As a result we are not
+          able to update files list (cached files list is presented bellow).
 
   services:
     index:
