@@ -6,43 +6,86 @@ class ComputationScriptGenerator
   end
 
   def script
-    <<~SCRIPT
-      #!/bin/bash -l
-      #SBATCH -N 1
-      #SBATCH --ntasks-per-node=24
-      #SBATCH --time=00:15:00
-      #SBATCH -A eurvalve2
-      #SBATCH -p plgrid
-
-      ## Change to the directory where sbatch was called
-      cd $SCRATCHDIR
-
-      ## Copy the template file structure over
-      cp $PLG_GROUPS_STORAGE/plggeurvalve/template/* .
-
-      #{stage_in}
-
-      ## Run the script
-      ./run_coupled_bashscript.sh
-
-      ## Copy output back
-      cd FluidFlow
-      OUT_FILE_1=`ls -t fluidFlow-1-* | head -1`
-      OUT_FILE_2=`ls -t fluidFlow-1-* | head -2 | tail -1`
-
-      #{stage_out_file('$OUT_FILE_1')}
-      #{stage_out_file('$OUT_FILE_2')}
-    SCRIPT
+    header + stage_in +
+      if @patient.virtual_model_ready?
+        "./run_coupled_bashscript.sh\n"
+      elsif @patient.after_parameter_estimation?
+        <<~SCRIPT
+          module load plgrid/apps/matlab/R2016b
+          matlab -nojvm -r "addpath('$PLG_GROUPS_STORAGE/plggeurvalve/0DModel');op=Launch0D(0,'0DModel_input.csv');disp(op);exit;"
+        SCRIPT
+      end +
+      stage_out
   end
 
   private
 
   def stage_in
-    <<~STAGEIN
-      ## Copy both fluid and structure files for the given case
-      #{stage_in_file 'fluidFlow.cas'}
-      #{stage_in_file 'structural_vent.dat'}
-    STAGEIN
+    if @patient.virtual_model_ready?
+      <<~STAGEIN
+        ## Copy the template file structure over
+        cp $PLG_GROUPS_STORAGE/plggeurvalve/template/* .
+
+        ## Copy both fluid and structure files for the given case
+        #{stage_in_file 'fluidFlow.cas'}
+        #{stage_in_file 'structural_vent.dat'}
+      STAGEIN
+    elsif @patient.after_parameter_estimation?
+      <<~STAGEIN
+        ## Copy the required compiled library file structure over
+        cp -r $PLG_GROUPS_STORAGE/plggeurvalve/0DModel/Linx64 .
+
+        ## Copy estimated patient-specific parameters
+        #{stage_in_file '0DModel_input.csv'}
+      STAGEIN
+    end
+  end
+
+  def stage_out
+    if @patient.virtual_model_ready?
+      <<~STAGEOUT
+        cd FluidFlow
+        OUT_FILE_1=`ls -t fluidFlow-1-* | head -1`
+        OUT_FILE_2=`ls -t fluidFlow-1-* | head -2 | tail -1`
+
+        #{stage_out_file('$OUT_FILE_1')}
+        #{stage_out_file('$OUT_FILE_2')}
+      STAGEOUT
+    elsif @patient.after_parameter_estimation?
+      <<~STAGEOUT
+        #{stage_out_file('Outfile.csv')}
+      STAGEOUT
+    end
+  end
+
+  def header
+    <<~HEADER
+      #!/bin/bash -l
+      #{execution_settings}
+
+      ## Change to the directory where sbatch was called
+      cd $SCRATCHDIR
+    HEADER
+  end
+
+  def execution_settings
+    if @patient.virtual_model_ready?
+      <<~EXECSETTINGS
+        #SBATCH -N 1
+        #SBATCH --ntasks-per-node=24
+        #SBATCH --time=00:15:00
+        #SBATCH -A eurvalve2
+        #SBATCH -p plgrid
+      EXECSETTINGS
+    elsif @patient.after_parameter_estimation?
+      <<~EXECSETTINGS
+        #SBATCH -N 1
+        #SBATCH --ntasks-per-node=1
+        #SBATCH --time=00:02:00
+        #SBATCH -A eurvalve2
+        #SBATCH -p plgrid
+      EXECSETTINGS
+    end
   end
 
   def stage_in_file(filename)

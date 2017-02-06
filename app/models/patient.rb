@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 class Patient < ApplicationRecord
-  enum procedure_status:
-           [:not_started, :imaging_uploaded, :virtual_model_ready, :after_blood_flow_simulation]
+  enum procedure_status: [
+    :not_started,
+    :imaging_uploaded,
+    :virtual_model_ready,
+    :after_blood_flow_simulation,
+    :after_parameter_estimation,
+    :after_heart_simulation
+  ]
 
   has_many :data_files, dependent: :destroy
   has_many :computations, dependent: :destroy
@@ -23,12 +29,11 @@ class Patient < ApplicationRecord
   def update_procedure_status
     data_files.reload
     # This should go from the most advanced status to the least advanced one.
-    if blood_flow_result_and_model_exist?
-      after_blood_flow_simulation!
-    elsif fluid_and_ventricle_virtual_models_exist?
-      virtual_model_ready!
-    else
-      not_started!
+    if heart_model_output_exist? then after_heart_simulation!
+    elsif estimated_paramters_exist? then after_parameter_estimation!
+    elsif blood_flow_result_and_model_exist? then after_blood_flow_simulation!
+    elsif fluid_and_ventricle_virtual_models_exist? then virtual_model_ready!
+    else not_started!
     end
   end
 
@@ -40,5 +45,13 @@ class Patient < ApplicationRecord
   def blood_flow_result_and_model_exist?
     data_files.reload.any?(&:blood_flow_result?) &&
       data_files.reload.any?(&:blood_flow_model?)
+  end
+
+  def estimated_paramters_exist?
+    data_files.reload.any?(&:estimated_parameters?)
+  end
+
+  def heart_model_output_exist?
+    data_files.reload.any?(&:heart_model_output?)
   end
 end

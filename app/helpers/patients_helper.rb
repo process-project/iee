@@ -14,10 +14,6 @@ module PatientsHelper
     "#{status_number.to_f / (Patient.procedure_statuses.size - 1).to_f * 100}%"
   end
 
-  def computation
-    @computation ||= Computation.new
-  end
-
   def computation_status(status)
     label_class = STATUS_MAP[status] || 'default'
     content_tag :div, status.humanize, class: "label label-#{label_class}"

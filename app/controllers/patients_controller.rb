@@ -6,6 +6,9 @@ class PatientsController < ApplicationController
 
   def show
     @patient = @patients.find(params[:id])
+    @new_computation = Computation.new(
+      computation_type: Computation.type_for_patient_status(@patient.procedure_status)
+    )
   end
 
   def new
