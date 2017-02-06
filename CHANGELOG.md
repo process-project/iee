@@ -12,6 +12,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - PLGrid proxy details shown in the profile view, warning shown when proxy is
   outdated while active computations are present (@mkasztelnik)
 - Support for running specs with JS support (@mkasztelnik)
+- When a computation finishes the patient view is automatically reloaded in order
+  to show the user the latest files produced by the computation
 
 ### Changed
 

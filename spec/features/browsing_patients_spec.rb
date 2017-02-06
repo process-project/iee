@@ -74,6 +74,55 @@ RSpec.feature 'Patient browsing' do
       expect(current_path).to eq patients_path
     end
 
+    context 'when computing for patient\'s wellbeing' do
+      scenario 'displays computations related to the patient\'s state' do
+        create(:computation, patient: patient)
+
+        visit patient_path(patient)
+
+        expect(page).not_to have_content('Computations')
+
+        patient.virtual_model_ready!
+        visit patient_path(patient)
+
+        expect(page).to have_content('Computations')
+        expect(page).to have_content(I18n.t('computation.computation_type.blood_flow_simulation'))
+        expect(page).to have_content('New')
+      end
+
+      scenario 'periodically ajax-refreshes computation status', js: true do
+        computation = create(:computation, patient: patient)
+        patient.virtual_model_ready!
+
+        visit patient_path(patient)
+
+        expect(page).to have_content('New')
+
+        page.execute_script '$(document.body).addClass("not-reloaded")'
+        page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
+        computation.update_column(:status, 'running')
+
+        expect(page).to have_content('Running')
+        expect(page).to have_selector('body.not-reloaded')
+      end
+
+      scenario 'refreshes entire page when computation status turns finished', js: true do
+        computation = create(:computation, patient: patient)
+        patient.virtual_model_ready!
+
+        visit patient_path(patient)
+
+        expect(page).to have_content('New')
+
+        page.execute_script '$(document.body).addClass("not-reloaded")'
+        page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
+        computation.update_column(:status, 'success')
+
+        expect(page).to have_content('Success')
+        expect(page).not_to have_selector('body.not-reloaded')
+      end
+    end
+
     context 'with plgrid file backend' do
       scenario 'shows a table for present case data files with handles' do
         allow(Rails.application).
