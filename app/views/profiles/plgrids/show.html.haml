@@ -11,8 +11,8 @@
 
     %p.description= t('profiles.plgrids.show.proxy_description')
     - unless @proxy
-      = render(partial: 'proxy_warning', locals: { msg: t('profiles.plgrids.show.no_proxy') })
+      = render(partial: 'proxy/warning', locals: { msg: t('profiles.plgrids.show.no_proxy') })
     - if @proxy && @proxy.valid?
-      = render(partial: 'proxy_info', locals: { proxy: @proxy })
+      = render(partial: 'proxy/info', locals: { proxy: @proxy })
     - else
-      = render(partial: 'proxy_warning', locals: { msg: t('profiles.plgrids.show.proxy_not_valid') })
+      = render(partial: 'proxy/warning', locals: { msg: t('profiles.plgrids.show.proxy_not_valid') })
