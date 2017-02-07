@@ -15,6 +15,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - When a computation finishes the patient view is automatically reloaded in order
   to show the user the latest files produced by the computation (@Nuanda)
 - OD Heart model is now incorporated in the patient case pipeline (@Nuanda)
+- Show alert when unable to update patient files or run computations
+  because PLGrid proxy is outdated (@mkasztelnik)
+- User with active computations is notified (via email) while proxy expired (@mkasztelnik)
 
 ### Changed
 

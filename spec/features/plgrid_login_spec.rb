@@ -13,6 +13,15 @@ RSpec.feature 'PLGrid authentication' do
     expect(page.body).to have_content('Successfully authenticated')
   end
 
+  scenario 'after plgrid login proxy expired notification date is reseted' do
+    user = create(:plgrid_user, proxy_expired_notification_time: Time.zone.now)
+
+    plgrid_sign_in_as(user)
+    user.reload
+
+    expect(user.proxy_expired_notification_time).to be_blank
+  end
+
   scenario 'login when email is not unique' do
     user = create(:user)
     plgrid_user = build(:plgrid_user, email: user.email)
@@ -30,6 +39,16 @@ RSpec.feature 'PLGrid authentication' do
     user.reload
 
     expect(user.plgrid_login).to eq('plguser')
+  end
+
+  scenario 'after connecting accounts proxy expired notification date is reseted' do
+    user = create(:approved_user, proxy_expired_notification_time: Time.zone.now)
+
+    sign_in_as(user)
+    plgrid_sign_in_as(build(:approved_user, plgrid_login: 'plguser', email: user.email))
+    user.reload
+
+    expect(user.proxy_expired_notification_time).to be_blank
   end
 
   scenario 'normal user account can connect to PLGrid no PLGRid section' do

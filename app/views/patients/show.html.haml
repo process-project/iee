@@ -27,15 +27,19 @@
 
           - computations = @patient.computations.for_patient_status(@patient.procedure_status)
           - if computations.active.blank?
-            .row
-              .col-xs-12.table
-                = simple_form_for(@new_computation) do |f|
-                  %h4= t ".new_computation.#{@new_computation.computation_type}"
-                  = f.error_notification
-                  = f.hidden_field :patient_id, value: @patient.id
-                  %div
-                    %button.btn.btn-default.submit
-                      = t '.submit'
+            - unless proxy_valid?
+              = render partial: 'proxy/warning',
+                       locals: { msg: t('.proxy.invalid') }
+            - else
+              .row
+                .col-xs-12.table
+                  = simple_form_for(@new_computation) do |f|
+                    %h4= t ".new_computation.#{@new_computation.computation_type}"
+                    = f.error_notification
+                    = f.hidden_field :patient_id, value: @patient.id
+                    %div
+                      %button.btn.btn-default.submit
+                        = t '.submit'
 
           - if computations.present?
             .row

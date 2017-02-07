@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe Notifier do
+  include ProxySpecHelper
+
   describe 'user registered' do
     let(:user) { create(:user) }
     let(:mail) { described_class.user_registered(user).deliver_now }
@@ -39,6 +41,17 @@ RSpec.describe Notifier do
       mail = described_class.account_approved(user).deliver_now
 
       expect(mail.body.encoded).to match('has been approved')
+    end
+  end
+
+  describe 'proxy has expired' do
+    it 'sends email to proxy owner' do
+      user = build(:user, proxy: outdated_proxy)
+
+      mail = described_class.proxy_expired(user).deliver_now
+
+      expect(mail.to).to contain_exactly(user.email)
+      expect(mail.body.encoded).to match('proxy certificate has expired')
     end
   end
 end

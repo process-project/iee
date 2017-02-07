@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 describe 'Patients controller' do
+  include ProxySpecHelper
+
   context 'with no user signed in' do
     describe 'GET /patients' do
       it 'is redirects to signin url' do
@@ -32,6 +34,15 @@ describe 'Patients controller' do
           to receive(:set_patients).and_call_original
         get '/patients', params: { id: patient.id }
         expect(response).to be_success
+      end
+
+      it 'shows proxy oudated warning for computations' do
+        user.update_attribute(:proxy, outdated_proxy)
+        patient.update_attribute(:procedure_status, :virtual_model_ready)
+
+        get patient_path(patient.id)
+
+        expect(response.body).to include(I18n.t('patients.show.proxy.invalid'))
       end
     end
 
