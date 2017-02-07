@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe ValidateProxy do
+describe GuardedProxyExecutor do
   include ProxySpecHelper
   include ActiveSupport::Testing::TimeHelpers
 
   let(:user) { create(:user, proxy: outdated_proxy) }
 
-  subject { ValidateProxy.new(user) }
+  subject { described_class.new(user) }
 
   context 'valid proxy' do
     before(:context) { travel_to valid_proxy_time }

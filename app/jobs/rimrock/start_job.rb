@@ -4,7 +4,7 @@ module Rimrock
     queue_as :computation
 
     def perform(computation)
-      ValidateProxy.new(computation.user).
+      GuardedProxyExecutor.new(computation.user).
         call { Rimrock::Start.new(computation).call }
     end
   end

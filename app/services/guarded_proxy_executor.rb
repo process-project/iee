@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ValidateProxy
+class GuardedProxyExecutor
   def initialize(user)
     @user = user
   end
