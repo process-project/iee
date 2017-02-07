@@ -102,6 +102,7 @@ RSpec.feature 'Patient browsing' do
 
       scenario 'creates new computations of appropriate type' do
         allow(Rimrock::StartJob).to receive(:perform_later) {}
+        allow_any_instance_of(ProxyHelper).to receive(:proxy_valid?) { true }
 
         patient.virtual_model_ready!
         visit patient_path(patient)
