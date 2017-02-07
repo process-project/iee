@@ -30,7 +30,7 @@ class Patient < ApplicationRecord
     data_files.reload
     # This should go from the most advanced status to the least advanced one.
     if heart_model_output_exist? then after_heart_simulation!
-    elsif estimated_paramters_exist? then after_parameter_estimation!
+    elsif estimated_parameters_exist? then after_parameter_estimation!
     elsif blood_flow_result_and_model_exist? then after_blood_flow_simulation!
     elsif fluid_and_ventricle_virtual_models_exist? then virtual_model_ready!
     else not_started!
@@ -47,7 +47,7 @@ class Patient < ApplicationRecord
       data_files.reload.any?(&:blood_flow_model?)
   end
 
-  def estimated_paramters_exist?
+  def estimated_parameters_exist?
     data_files.reload.any?(&:estimated_parameters?)
   end
 
