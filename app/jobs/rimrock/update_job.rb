@@ -4,7 +4,8 @@ module Rimrock
     queue_as :computation
 
     def perform(user)
-      Rimrock::Update.new(user, on_finish_callback: Updater).call
+      GuardedProxyExecutor.new(user).
+        call { Rimrock::Update.new(user, on_finish_callback: Updater).call }
     end
 
     class Updater
