@@ -14,7 +14,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Support for running specs with JS support (@mkasztelnik)
 - When a computation finishes the patient view is automatically reloaded in order
   to show the user the latest files produced by the computation (@Nuanda)
-- Show alert when unable to update patient files because PLGrid proxy is outdated (@mkasztelnik)
+- Show alert when unable to update patient files or run computations
+  because PLGrid proxy is outdated (@mkasztelnik)
 
 ### Changed
 

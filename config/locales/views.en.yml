@@ -24,6 +24,10 @@ en:
       download: Download
       download_unavailable: (download unavailable)
       submit: Execute simulation
+      proxy:
+        invalid: |
+          Your proxy certificate is not valid anymore and thus you are not
+          able to start computation on PLGrid infrastructure.
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case
@@ -183,13 +187,15 @@ en:
         proxy_not_valid: Your proxy is not valid anymore, please generate new one to start/monitor jobs on PLGrid infrastructure.
       destroy:
         failure: Unable to disconect from PLGrid
-      proxy_warning:
-        new_proxy: Generate new proxy
-      proxy_info:
-        new_proxy: Generate new proxy
-        issuer: 'Issuer:'
-        subject: 'Subject:'
-        description: 'Your proxy certificate is valid until: %{not_after}'
+
+  proxy:
+    warning:
+      new_proxy: Generate new proxy
+    info:
+      new_proxy: Generate new proxy
+      issuer: 'Issuer:'
+      subject: 'Subject:'
+      description: 'Your proxy certificate is valid until: %{not_after}'
 
   access_policies:
     index:
