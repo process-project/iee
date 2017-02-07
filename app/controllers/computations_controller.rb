@@ -9,7 +9,6 @@ class ComputationsController < ApplicationController
   end
 
   def create
-    params[:script] = 'vapor_script.sh'
     @computation = Computation.create(
       create_params.merge(
         user: current_user,
