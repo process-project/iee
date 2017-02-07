@@ -13,6 +13,7 @@ class ComputationsController < ApplicationController
     @computation = Computation.create(
       create_params.merge(
         user: current_user,
+        computation_type: Computation.type_for_patient_status(patient.procedure_status),
         script: ComputationScriptGenerator.new(patient, current_user).script
       )
     )
@@ -23,7 +24,7 @@ class ComputationsController < ApplicationController
   private
 
   def create_params
-    params.require(:computation).permit(:patient_id, :computation_type)
+    params.require(:computation).permit(:patient_id)
   end
 
   def patient

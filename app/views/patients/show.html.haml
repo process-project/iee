@@ -33,7 +33,6 @@
                   %h4= t ".new_computation.#{@new_computation.computation_type}"
                   = f.error_notification
                   = f.hidden_field :patient_id, value: @patient.id
-                  = f.hidden_field :computation_type, value: @new_computation.computation_type
                   %div
                     %button.btn.btn-default.submit
                       = t '.submit'
