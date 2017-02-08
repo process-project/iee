@@ -86,8 +86,43 @@ RSpec.feature 'Patient browsing' do
         visit patient_path(patient)
 
         expect(page).to have_content('Computations')
-        expect(page).to have_content(I18n.t('computation.computation_type.blood_flow_simulation'))
+        expect(page).
+          to have_content(I18n.t('computation.computation_type.blood_flow_simulation'))
         expect(page).to have_content('New')
+
+        create(:computation, patient: patient, computation_type: 'heart_model_computation')
+        patient.after_parameter_estimation!
+        visit patient_path(patient)
+
+        expect(page).to have_content('Computations')
+        expect(page).
+          to have_content(I18n.t('computation.computation_type.heart_model_computation'))
+        expect(page).to have_content('New')
+      end
+
+      scenario 'creates new computations of appropriate type' do
+        allow(Rimrock::StartJob).to receive(:perform_later) {}
+        allow_any_instance_of(ProxyHelper).to receive(:proxy_valid?) { true }
+
+        patient.virtual_model_ready!
+        visit patient_path(patient)
+
+        expect(page).to have_content('Computations')
+        expect(page).
+          to have_content(I18n.t('patients.show.new_computation.blood_flow_simulation'))
+
+        expect { click_button 'Execute simulation' }.
+          to change { Computation.blood_flow_simulation.count }.by(1)
+
+        patient.after_parameter_estimation!
+        visit patient_path(patient)
+
+        expect(page).to have_content('Computations')
+        expect(page).
+          to have_content(I18n.t('patients.show.new_computation.heart_model_computation'))
+
+        expect { click_button 'Execute simulation' }.
+          to change { Computation.heart_model_computation.count }.by(1)
       end
 
       scenario 'periodically ajax-refreshes computation status', js: true do
@@ -116,9 +151,9 @@ RSpec.feature 'Patient browsing' do
 
         page.execute_script '$(document.body).addClass("not-reloaded")'
         page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-        computation.update_column(:status, 'success')
+        computation.update_column(:status, 'finished')
 
-        expect(page).to have_content('Success')
+        expect(page).to have_content('Finished')
         expect(page).not_to have_selector('body.not-reloaded')
       end
     end
