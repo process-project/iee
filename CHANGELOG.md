@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - User with active computations is notified (via email) while proxy expired (@mkasztelnik)
 
 ### Changed
+- Make jwt pem path configurable though system variable (@mkasztelnik)
 
 ### Deprecated
 
