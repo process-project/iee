@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
   gravtastic default: 'mm'
 
+  enum state: [:new_account, :approved, :blocked]
+
   has_many :user_groups
   has_many :groups, through: :user_groups
   has_many :access_policies, dependent: :destroy
@@ -28,7 +30,9 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :email, presence: true
 
-  scope :approved, -> { where(approved: true) }
+  scope :approved, -> { where(state: :approved) }
+  scope :new_accounts, -> { where(state: :new_account) }
+  scope :blocked, -> { where(state: :blocked) }
   scope :supervisors, -> { joins(:groups).where(groups: { name: 'supervisor' }) }
 
   def self.with_active_computations
@@ -53,7 +57,7 @@ class User < ApplicationRecord
     name_elements = auth.info.name.split(' ')
     user.first_name = name_elements[0]
     user.last_name = name_elements[1..-1].join(' ')
-    user.approved = true
+    user.state = :approved
   end
 
   def self.from_token(token)

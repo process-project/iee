@@ -1,18 +1,18 @@
-- if policy(:admin).manage_users? || policy(:job).show?
+- if policy(User).manage_users? || policy(:job).show?
   = nav_link controller: [:account_confirmation, :jobs] do
     %a
       = icon('gears')
       = t('.title')
-      - if @user_confirmations && policy(:admin).manage_users?
-        = icon('exclamation-triangle')
       %span.fa.fa-chevron-down
     %ul.nav.child_menu
-      - if policy(:admin).manage_users?
-        = nav_link controller: :account_confirmation, active_class: 'current-page' do
-          = link_to account_confirmations_index_path do
-            = t('.user_confirmation')
-            - if @user_confirmations
-              = icon('exclamation-triangle')
+      - if policy(User).manage_users?
+        = nav_link controller: :users, active_class: 'current-page' do
+          = link_to admin_users_path do
+            = t('.users')
+            - if User.new_accounts.count.positive?
+              .pull-right
+                = icon('exclamation-triangle')
+              .clearfix
       - if policy(:job).show?
         = nav_link controller: :jobs, active_class: 'current-page' do
           = link_to(t('.jobs'), admin_job_path)

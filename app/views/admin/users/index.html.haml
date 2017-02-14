@@ -1,0 +1,19 @@
+%h1
+  = t '.title'
+.x_panel
+  .x_content
+    %ul.nav.nav-tabs.bar_tabs
+      = nav_tab('state', nil) do
+        = link_to t('.all'), admin_users_path
+      = nav_tab('state', 'active') do
+        = link_to t('.active'), admin_users_path(state: 'active')
+      = nav_tab('state', 'new') do
+        = link_to admin_users_path(state: 'new') do
+          = t('.new')
+          %span.badge= User.new_accounts.count
+      = nav_tab('state', 'blocked') do
+        = link_to t('.blocked'), admin_users_path(state: 'blocked')
+
+    .tab-content
+      %ul.well-list
+        = render @users

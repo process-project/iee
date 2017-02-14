@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_raven_context, if: :sentry_enabled?
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_confirmation_data
 
   rescue_from ActiveRecord::RecordNotFound do
     redirect_back fallback_location: root_path,
@@ -22,15 +21,6 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
-  end
-
-  def set_confirmation_data
-    return unless current_user&.admin? || current_user&.supervisor?
-    @users = {
-      confirmed: User.where(approved: true),
-      not_confirmed: User.where(approved: false)
-    }
-    @user_confirmations = @users[:not_confirmed].exists?
   end
 
   private

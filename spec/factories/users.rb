@@ -11,7 +11,7 @@ FactoryGirl.define do
     end
 
     trait :approved do
-      approved true
+      state :approved
     end
 
     trait :supervisor do

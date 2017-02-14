@@ -108,7 +108,7 @@ RSpec.describe ResourcePolicy do
     end
 
     context 'not approved user' do
-      let(:user) { create(:user, approved: false) }
+      let(:user) { create(:user, state: :new_account) }
       let(:resource) { create(:resource, name: 'zasób') }
 
       subject { ResourcePolicy.new(user, resource) }

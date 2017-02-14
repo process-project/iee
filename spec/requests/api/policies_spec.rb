@@ -7,7 +7,7 @@ RSpec.describe 'Policies API' do
 
   let(:service) { create(:service, uri: 'https://service.host.com', token: 'random_token') }
   let(:access_method) { create(:access_method, name: 'get') }
-  let(:user) { create(:user, email: 'user@host.com', approved: true) }
+  let(:user) { create(:approved_user, email: 'user@host.com') }
   let(:resource) { create(:resource, service: service) }
   let(:service_auth_header) { { 'X-SERVICE-TOKEN' => 'random_token' } }
   let(:user_auth_headers) { { 'Authorization' => "Bearer #{user.token}" } }
@@ -151,7 +151,7 @@ RSpec.describe 'Policies API' do
     end
 
     it 'should merge the given user manager of the given policy with an existing one' do
-      another_user = create(:user, email: 'another@host.com', approved: true)
+      another_user = create(:approved_user, email: 'another@host.com')
 
       post  api_policies_path,
             params: policy_post_params(
@@ -181,7 +181,7 @@ RSpec.describe 'Policies API' do
     end
 
     it 'should delete an access policy for a user' do
-      another_user = create(:user, email: 'another@host.com', approved: true)
+      another_user = create(:approved_user, email: 'another@host.com')
       create(:access_policy, user: another_user, access_method: access_method, resource: resource)
 
       expect do
@@ -220,7 +220,7 @@ RSpec.describe 'Policies API' do
   end
 
   it 'should return a forbidden status when a user is not allowed to manage a given resource' do
-    another_user = create(:user, email: 'another@host.com', approved: true)
+    another_user = create(:approved_user, email: 'another@host.com')
 
     post  api_policies_path,
           params: policy_post_params(path: resource.path),
@@ -254,7 +254,7 @@ RSpec.describe 'Policies API' do
   end
 
   it 'should return a forbidden status when a user does not own every resource being deleted' do
-    another_user = create(:user, email: 'another@host.com', approved: true)
+    another_user = create(:approved_user, email: 'another@host.com')
 
     delete  api_policies_path,
             params: { path: resource.path },
