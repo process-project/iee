@@ -215,6 +215,17 @@ en:
     jobs:
       show:
         title: Delayed jobs
+    users:
+      index:
+        title: Users
+        all: All users
+        active: Active users
+        new: New users
+        blocked: Blocked users
+      user:
+        approve: Approve this user
+        block: Block this user
+        destroy: Destroy user account
   file_store:
     index:
         title: Files

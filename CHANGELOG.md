@@ -18,9 +18,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show alert when unable to update patient files or run computations
   because PLGrid proxy is outdated (@mkasztelnik)
 - User with active computations is notified (via email) while proxy expired (@mkasztelnik)
+- Users management view redesigned, added possibility to remove user by admin (@mkasztelnik)
 
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)
+- Externalize JWT token generation from user into separate class (@mkasztelnik)
 
 ### Deprecated
 

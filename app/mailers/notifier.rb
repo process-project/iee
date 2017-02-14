@@ -5,7 +5,7 @@ class Notifier < ApplicationMailer
     subject = I18n.t('emails.approve_user.subject', name: user.name)
 
     @user = user
-    @approve_url = account_confirmations_index_url
+    @approve_url = admin_users_url
 
     mail(to: to, subject: subject) if to.present?
   end

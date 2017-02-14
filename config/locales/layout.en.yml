@@ -10,7 +10,7 @@ en:
         title: PLGrid
       administration:
         title: Administration
-        user_confirmation: User confirmation
+        users: Users
         jobs: Delayed jobs
       settings:
         title: Settings

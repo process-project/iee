@@ -9,7 +9,7 @@ RSpec.feature 'Suprvisor confirmations' do
 
     sign_in_as(user)
 
-    expect(page).not_to have_content(I18n.t('layouts.left_menu.administration.user_confirmation'))
+    expect(page).not_to have_content(I18n.t('layouts.left_menu.administration.users'))
   end
 
   scenario 'supervisor users should see the confirmation page' do
@@ -17,6 +17,6 @@ RSpec.feature 'Suprvisor confirmations' do
 
     sign_in_as(user)
 
-    expect(page).to have_content(I18n.t('layouts.left_menu.administration.user_confirmation'))
+    expect(page).to have_content(I18n.t('layouts.left_menu.administration.users'))
   end
 end

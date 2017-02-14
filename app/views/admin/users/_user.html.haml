@@ -1,0 +1,34 @@
+%li
+  .pull-left
+    - if user.blocked?
+      = icon('ban', class: 'cred')
+    = user.name
+    - if user.new_account?
+      %span.label.label-info New
+    - if user.admin?
+      %span.label.label-danger Admin
+    - if user.supervisor?
+      %span.label.label-warning Supervisor
+  .pull-right
+    .btn-group
+      - if policy(user).update? && user.new_account? || user.blocked?
+        = link_to admin_user_path(user, state: :approved),
+          title: t('.approve'),
+          data: { confirm: t('are_you_sure') }, method: :put,
+          class: 'btn btn-xs btn-success' do
+          = icon('check')
+
+      - if policy(user).update? && user.new_account? || user.approved?
+        = link_to admin_user_path(user, state: :blocked),
+          title: t('.block'),
+          data: { confirm: t('are_you_sure') }, method: :put,
+          class: 'btn btn-xs btn-warning' do
+          = icon('ban')
+
+      - if policy(user).destroy?
+        = link_to admin_user_path(user),
+          title: t('.destroy'),
+          data: { confirm: t('are_you_sure') }, method: :delete,
+          class: 'btn btn-xs btn-danger' do
+          = icon('times')
+  .clearfix
