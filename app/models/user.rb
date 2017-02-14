@@ -61,12 +61,7 @@ class User < ApplicationRecord
   end
 
   def self.from_token(token)
-    User.find_by(email: User.token_data(token)[0]['email'])
-  end
-
-  def self.token_data(token)
-    JWT.decode(token, Vapor::Application.config.jwt.key, true,
-               algorithm: Vapor::Application.config.jwt.key_algorithm)
+    User.find_by(email: JwtToken.decode(token)[0]['email'])
   end
 
   def self.compose_proxy(info)
@@ -103,11 +98,7 @@ class User < ApplicationRecord
   end
 
   def token
-    JWT.encode(
-      token_payload,
-      Vapor::Application.config.jwt.key,
-      Vapor::Application.config.jwt.key_algorithm
-    )
+    JwtToken.new(self).to_s
   end
 
   # Send devise emails asynchronously.
@@ -119,16 +110,5 @@ class User < ApplicationRecord
 
   def all_groups
     groups.includes(:parents).flat_map { |group| [group] + group.ancestors }
-  end
-
-  private
-
-  def token_payload
-    {
-      name: name,
-      email: email,
-      iss: Rails.configuration.jwt.issuer,
-      exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
-    }
   end
 end

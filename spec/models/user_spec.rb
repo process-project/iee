@@ -70,33 +70,6 @@ RSpec.describe User do
 
       expect(User.from_token(u.token).id).to eq(u.id)
     end
-
-    it 'includes issuer in token' do
-      u = create(:user)
-
-      expect(issuer_from_token(u.token)).
-        to eq Vapor::Application.config.jwt.issuer
-    end
-
-    it 'includes expiration time in token' do
-      u = create(:user)
-      time_now = Time.zone.now
-      allow(Time).to receive(:now).and_return(time_now)
-      expect(expiration_time_from_token(u.token)).
-        to eq(time_now.to_i + Vapor::Application.config.jwt.expiration_time)
-    end
-
-    context 'token expired' do
-      it 'fails with error' do
-        u = create(:user)
-        time_now1 = Time.zone.now
-        time_now2 = time_now1 + Vapor::Application.config.jwt.expiration_time + 1
-        allow(Time).to receive(:now).and_return(time_now1, time_now2)
-        expired_token = u.token
-        expect { User.from_token(expired_token) }.
-          to raise_error(JWT::ExpiredSignature)
-      end
-    end
   end
 
   describe '#admin?' do
