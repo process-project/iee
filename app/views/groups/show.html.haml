@@ -51,10 +51,11 @@
         .clearfix
       .x_content
         = render('user_groups/index', user_groups: @group.user_groups)
-  .col-md-4
-    = render 'show_help'
-    .x_panel
-      .x_title= t('.add')
-      .x_content
-        = render('user_groups/form')
+  - if policy(@group).update?
+    .col-md-4
+      = render 'show_help'
+      .x_panel
+        .x_title= t('.add')
+        .x_content
+          = render('user_groups/form')
 
