@@ -229,3 +229,7 @@ en:
   file_store:
     index:
         title: Files
+
+  cloud_resources:
+    index:
+      title: Cloud resources
