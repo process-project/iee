@@ -11,7 +11,6 @@ Devise.setup do |config|
 
   config.omniauth :open_id,
                   require: 'omniauth-openid',
-                  identifier: 'https://openid.plgrid.pl/gateway',
                   required: [
                     AX[:email],
                     AX[:name],
@@ -68,7 +67,20 @@ module OmniAuth
         end
       end
 
+      def identifier
+        "https://openid.plgrid.pl/#{identifier_postfix}"
+      end
+
       private
+
+      def identifier_postfix
+        login = current_user&.plgrid_login
+        login.blank? ? 'gateway' : login
+      end
+
+      def current_user
+        @current_user ||= env['warden'].authenticate(scope: :user)
+      end
 
       def get_proxy_element(ax, id)
         ax.get_single(OmniAuth::Strategies::OpenID::AX[id])&.gsub('<br>', "\n")
