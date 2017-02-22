@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'PDP' do
   context 'as logged in user' do
     let(:user) { create(:user, :approved) }
-    let(:service) { create(:service, uri: 'http://localhost', uri_aliases: ['http://cyfronet.pl']) }
+    let(:service) { create(:service, uri: 'http://localhost', uri_aliases: ['http://alias.pl']) }
     let(:resource) { create(:resource, service: service) }
     let(:access_method) { create(:access_method, name: 'get') }
 
@@ -93,7 +93,7 @@ RSpec.describe 'PDP' do
       it 'returns 200 for matching resource with uri_alias' do
         get api_pdp_index_path,
             params:  {
-              uri: 'http://cyfronet.pl/path/something',
+              uri: 'http://alias.pl/path/something',
               access_method: 'get'
             }
 
@@ -139,7 +139,7 @@ RSpec.describe 'PDP' do
       let(:webdav) do
         create(:service,
                uri: 'http://localhost:8080/webdav',
-               uri_aliases: ['http://cyfronet.pl/webdav'])
+               uri_aliases: ['http://alias.pl/webdav'])
       end
       let(:dav_resource) { create(:resource, service: webdav, path: '/') }
       let(:dav_access_method) { create(:access_method, name: 'get') }
