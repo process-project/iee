@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
   because PLGrid proxy is outdated (@mkasztelnik)
 - User with active computations is notified (via email) while proxy expired (@mkasztelnik)
 - Users management view redesigned, added possibility to remove user by admin (@mkasztelnik)
+- Set plgrid login in OpenId request while regenerating proxy certificate (@mkasztelnik)
 
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)
