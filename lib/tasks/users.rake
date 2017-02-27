@@ -16,7 +16,7 @@ namespace :users do
         email: "#{first_name}@host.domain",
         password: passwd,
         password_confirmation: passwd,
-        approved: true
+        state: :approved
       )
       u.groups = groups.sample(groups_per_user)
       u.save!
