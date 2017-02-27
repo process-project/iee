@@ -97,8 +97,8 @@ class User < ApplicationRecord
     @supervisor ||= groups.where(name: 'supervisor').exists?
   end
 
-  def token
-    JwtToken.new(self).to_s
+  def token(expiration_time_in_seconds = nil)
+    JwtToken.new(self).generate(expiration_time_in_seconds)
   end
 
   # Send devise emails asynchronously.
