@@ -20,6 +20,7 @@ module Api
                   joins(access_policies: :access_method).
                   where(':path ~ path', path: path).
                   where(access_methods: { name: access_method })
+
       every_resource_permitted?(resources)
     end
 
@@ -34,7 +35,7 @@ module Api
     def find_service_and_path
       Service.find_each do |service|
         service_uri = ([service.uri] + service.uri_aliases).
-                      find { |u| uri.starts_with?(u) }
+                      find { |u| uri.downcase.starts_with?(u.downcase) }
 
         return { service: service, service_uri: service_uri } if service_uri
       end
@@ -43,7 +44,9 @@ module Api
 
     def path
       postfix = uri
-      postfix[(@service_uri.length)..-1]
+      path = postfix[(@service_uri.length)..-1]
+
+      path.blank? ? '/' : path
     end
 
     def every_resource_permitted?(resources)

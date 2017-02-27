@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)
 - Externalize JWT token generation from user into separate class (@mkasztelnik)
+- Make PDP URI and access method case insensitive (@mkasztelnik)
 
 ### Deprecated
 

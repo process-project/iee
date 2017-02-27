@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213112940) do
+ActiveRecord::Schema.define(version: 20170227093146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "access_methods", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.citext   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "service_id"
@@ -105,7 +106,7 @@ ActiveRecord::Schema.define(version: 20170213112940) do
 
   create_table "resources", force: :cascade do |t|
     t.string   "name"
-    t.string   "path",                      null: false
+    t.citext   "path",                      null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "service_id",                null: false
