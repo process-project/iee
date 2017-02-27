@@ -2,10 +2,12 @@
 module Profiles
   class PlgridsController < ApplicationController
     def show
+      authorize(:plgrid)
       @proxy = Proxy.new(current_user) unless current_user.proxy.blank?
     end
 
     def destroy
+      authorize(:plgrid)
       if current_user.update_attributes(plgrid_login: nil, proxy: nil)
         redirect_to profile_path
       else
