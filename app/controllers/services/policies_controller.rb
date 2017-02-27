@@ -31,6 +31,7 @@ module Services
       if @resource.save
         redirect_to(resource_path(@service, @resource))
       else
+        copy_path_errors
         render(:new)
       end
     end
@@ -77,6 +78,12 @@ module Services
 
     def resources_path(_service)
       raise 'Need resource path'
+    end
+
+    def copy_path_errors
+      if @resource.errors.include?(:path)
+        @resource.errors.add(:pretty_path, @resource.errors.get(:path)[0])
+      end
     end
   end
 end

@@ -14,7 +14,7 @@ module Api
     end
 
     def create
-      resource = Resource.find_by(path: @json['path'])
+      resource = Resource.find_by(path: PathService.from_pretty_path(@json['path']).get_path)
 
       if resource
         merge_policy(resource)
@@ -70,7 +70,7 @@ module Api
     end
 
     def resource_paths
-      extract_multiple_param(:path)
+      extract_multiple_param(:path).map { |path| PathService.from_pretty_path(path).get_path }
     end
 
     def extract_multiple_param(name)

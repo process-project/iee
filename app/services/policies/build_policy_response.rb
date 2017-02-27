@@ -13,7 +13,7 @@ module Policies
 
     def build_policies
       fetch_resources.map do |resource|
-        { path: resource.path, managers: managers(resource), permissions: permissions(resource) }
+        { path: PathService.from_path(resource.path).get_pretty_path, managers: managers(resource), permissions: permissions(resource) }
       end
     end
 

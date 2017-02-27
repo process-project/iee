@@ -50,3 +50,6 @@ en:
         group:
           child_ids:
             cycle: Cycle is not allowed
+        resource:
+          pretty_path:
+            wildcard: Path may contain a single wildcard character at the end

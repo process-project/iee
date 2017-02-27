@@ -33,7 +33,7 @@ RSpec.describe ServicePolicy do
       expect(result).to contain_exactly(s1, s2)
     end
 
-    it 'shows only owned services for notmal user' do
+    it 'shows only owned services for normal user' do
       user = create(:user)
       owned = create(:service, users: [user])
       create(:service)
