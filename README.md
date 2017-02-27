@@ -29,6 +29,7 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
 
   * MRI 2.3.x
   * PostgreSQL
+  * PostgreSQL citext extension (`sudo apt-get install postgresql-contrib`)
 
 ## Installation
 
@@ -96,7 +97,7 @@ guard
 ```
 
 ## Using bullet to increase application perfromance
-[Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments. 
+[Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments.
 While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
 
 ## Contributing
@@ -120,5 +121,5 @@ the review process is finished.
 
 When the merge request owner is notified that the review is finished (`reviewed`
 flag set) he should fix/respond to all the remarks and decide whether the merge
-request should be merged or reviewed again (by setting the `ready for review` 
+request should be merged or reviewed again (by setting the `ready for review`
 label again).

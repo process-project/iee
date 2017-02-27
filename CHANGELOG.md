@@ -20,10 +20,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 - User with active computations is notified (via email) while proxy expired (@mkasztelnik)
 - Users management view redesigned, added possibility to remove user by admin (@mkasztelnik)
 - Set plgrid login in OpenId request while regenerating proxy certificate (@mkasztelnik)
+- Long living JWT tokens can be generated using internal API (@mkasztelnik)
 
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)
 - Externalize JWT token generation from user into separate class (@mkasztelnik)
+- Make PDP URI and access method case insensitive (@mkasztelnik)
+- Improve service URL form placeholder (@mkasztelnik)
 
 ### Deprecated
 

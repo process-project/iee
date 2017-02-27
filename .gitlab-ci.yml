@@ -16,6 +16,7 @@ test:
   script:
   - apt-get update -qy
   - apt-get install -y nodejs
+  - apt-get install -y postgresql-contrib
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc

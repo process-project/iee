@@ -52,7 +52,7 @@ en:
         case_number: The unique EurValve identification
       service:
         name: Please use a short name recognizable for other project members
-        uri: "e.g. https://files.eurvalve.eu/"
+        uri: "e.g. https://files.eurvalve.eu"
     hints:
       user:
         current_password: You must provide your current password in order to change it.
