@@ -36,7 +36,7 @@ RSpec.describe 'Service local policies' do
       service = create(:service, users: [user])
 
       post service_local_policies_path(service),
-           params: { resource: { name: 'my_resource', path: '/my_path' } }
+           params: { resource: { name: 'my_resource', pretty_path: '/my_path' } }
       new_resource = Resource.last
 
       expect(new_resource.name).to eq('my_resource')
@@ -48,7 +48,7 @@ RSpec.describe 'Service local policies' do
       service = create(:service, users: [user])
 
       post service_global_policies_path(service),
-           params: { resource: { name: 'my_resource', path: '/my_path' } }
+           params: { resource: { name: 'my_resource', pretty_path: '/my_path' } }
       new_resource = Resource.last
 
       expect(new_resource.resource_managers.where(user: user)).to be_exist
@@ -58,7 +58,7 @@ RSpec.describe 'Service local policies' do
       service = create(:service)
 
       post service_local_policies_path(service),
-           params: { resource: { name: 'my_resource', path: '/my_path' } }
+           params: { resource: { name: 'my_resource', pretty_path: '/my_path' } }
 
       expect(response.status).to eq(302)
     end
@@ -70,7 +70,7 @@ RSpec.describe 'Service local policies' do
       resource = create(:local_resource, service: service)
 
       put service_local_policy_path(service, resource),
-          params: { resource: { name: 'my_resource', path: '/my_path' } }
+          params: { resource: { name: 'my_resource', pretty_path: '/my_path' } }
 
       resource.reload
 
@@ -83,7 +83,7 @@ RSpec.describe 'Service local policies' do
       resource = create(:local_resource, service: service)
 
       put service_local_policy_path(service, resource),
-          params: { resource: { name: 'my_resource', path: '/my_path' } }
+          params: { resource: { name: 'my_resource', pretty_path: '/my_path' } }
 
       expect(response.status).to eq(302)
     end

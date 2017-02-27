@@ -12,7 +12,7 @@ RSpec.feature 'Global policy' do
     scenario 'can be created' do
       visit new_service_global_policy_path(service)
       fill_in 'resource[name]', with: 'My resource'
-      fill_in 'resource[path]', with: '/my_path'
+      fill_in 'resource[pretty_path]', with: '/my_path'
       click_button 'Create Resource'
 
       expect(page).to have_content('My resource')
