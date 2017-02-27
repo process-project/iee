@@ -20,6 +20,7 @@ module Api
                   joins(access_policies: :access_method).
                   where(':path ~ path', path: path).
                   where(access_methods: { name: access_method })
+
       every_resource_permitted?(resources)
     end
 
@@ -43,7 +44,9 @@ module Api
 
     def path
       postfix = uri
-      postfix[(@service_uri.length)..-1]
+      path = postfix[(@service_uri.length)..-1]
+
+      path.blank? ? '/' : path
     end
 
     def every_resource_permitted?(resources)
