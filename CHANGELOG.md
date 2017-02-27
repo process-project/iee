@@ -35,6 +35,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show add group member and group management help only to group group owner (@mkasztelnik)
 - Unify cloud resources view with other views (surrounding white box added) (@mkasztelnik)
 - Fix path parsing when alias service name is used in PDP request (@mkasztelnik)
+- PLGrid profile view visible only for connected accounts (@mkasztelnik)
 
 ### Security
 
