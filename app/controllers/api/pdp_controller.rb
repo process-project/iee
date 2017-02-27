@@ -35,7 +35,7 @@ module Api
     def find_service_and_path
       Service.find_each do |service|
         service_uri = ([service.uri] + service.uri_aliases).
-                      find { |u| uri.starts_with?(u) }
+                      find { |u| uri.downcase.starts_with?(u.downcase) }
 
         return { service: service, service_uri: service_uri } if service_uri
       end

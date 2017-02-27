@@ -5,7 +5,7 @@ RSpec.describe 'PDP' do
   context 'as logged in user' do
     let(:user) { create(:user, :approved) }
     let(:service) { create(:service, uri: 'http://localhost', uri_aliases: ['http://alias.pl']) }
-    let(:resource) { create(:resource, service: service) }
+    let(:resource) { create(:resource, service: service, name: 'rname') }
     let(:access_method) { create(:access_method, name: 'get') }
 
     before { login_as(user) }
@@ -15,6 +15,25 @@ RSpec.describe 'PDP' do
 
       get api_pdp_index_path,
           params: { uri: resource.uri, access_method: 'get' }
+
+      expect(response.status).to eq(200)
+    end
+
+    it 'access method is case insensitive' do
+      access_method = create(:access_method, name: 'GET')
+      create(:user_access_policy, user: user, resource: resource, access_method: access_method)
+
+      get api_pdp_index_path,
+          params: { uri: resource.uri, access_method: 'get' }
+
+      expect(response.status).to eq(200)
+    end
+
+    it 'service uri is case insensitive' do
+      create(:user_access_policy, user: user, resource: resource, access_method: access_method)
+
+      get api_pdp_index_path,
+          params: { uri: resource.uri.upcase, access_method: 'get' }
 
       expect(response.status).to eq(200)
     end
