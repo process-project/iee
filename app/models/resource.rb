@@ -27,14 +27,14 @@ class Resource < ApplicationRecord
 
   def pretty_path
     if path
-      PathService.from_path(path).get_pretty_path
+      PathService.from_path(path).pretty_path
     else
       path
     end
   end
 
   def pretty_path=(pretty_path)
-    self.path = PathService.from_pretty_path(pretty_path).get_path
+    self.path = PathService.from_pretty_path(pretty_path).path
   end
 
   private
@@ -51,7 +51,7 @@ class Resource < ApplicationRecord
 
   def pretty_path_asterisk_at_the_end
     if pretty_path && pretty_path.include?('*') &&
-      (pretty_path.match(/\*$/) == nil || pretty_path.count('*') > 1)
+       (pretty_path.match(/\*$/).nil? || pretty_path.count('*') > 1)
       errors.add(:pretty_path, I18n.t('activerecord.errors.models.resource.pretty_path.wildcard'))
     end
   end

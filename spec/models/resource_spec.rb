@@ -94,7 +94,8 @@ RSpec.describe Resource do
       resource.save
 
       expect(resource.errors.messages).to eq(
-        pretty_path: ['Path may contain a single wildcard character at the end'])
+        pretty_path: ['Path may contain a single wildcard character at the end']
+      )
     end
   end
 end

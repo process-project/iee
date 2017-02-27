@@ -287,7 +287,7 @@ RSpec.describe 'Policies API' do
       end
 
       it 'should be matched with a resource defined with a wildcard regular expression' do
-        access_method = create(:access_method, name: 'post', service: service)
+        create(:access_method, name: 'post', service: service)
 
         post  api_policies_path,
               params: policy_post_params(

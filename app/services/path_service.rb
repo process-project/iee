@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class PathService
+  attr_reader :path
+
   def self.from_path(path)
     PathService.new(path)
   end
@@ -12,15 +14,9 @@ class PathService
     @path = path
   end
 
-  def get_path
-    @path
-  end
-
-  def get_pretty_path
+  def pretty_path
     PathService.convert_to_pretty_path(@path)
   end
-
-  private
 
   def self.convert_to_path(pretty_path)
     pretty_path.gsub(/\*$/, '.*')
