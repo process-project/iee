@@ -4,9 +4,9 @@ class JwtToken
     @user = user
   end
 
-  def to_s
+  def generate(expiration_time_in_seconds = nil)
     JWT.encode(
-      token_payload,
+      token_payload(expiration_time_in_seconds),
       Vapor::Application.config.jwt.key,
       Vapor::Application.config.jwt.key_algorithm
     )
@@ -19,12 +19,13 @@ class JwtToken
 
   private
 
-  def token_payload
+  def token_payload(expiration_time_in_seconds)
     {
       name: @user.name,
       email: @user.email,
       iss: Rails.configuration.jwt.issuer,
-      exp: Time.now.to_i + Rails.configuration.jwt.expiration_time
+      exp: Time.now.to_i + (expiration_time_in_seconds ||
+             Rails.configuration.jwt.expiration_time)
     }
   end
 end
