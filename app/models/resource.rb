@@ -15,6 +15,8 @@ class Resource < ApplicationRecord
   validate :path_starts_with_slash
   validate :pretty_path_asterisk_at_the_end
 
+  after_validation :copy_path_errors
+
   scope :local_paths,
         ->(path) { where(resource_type: :local).where('path ~ :path', path: path) }
 
@@ -27,14 +29,14 @@ class Resource < ApplicationRecord
 
   def pretty_path
     if path
-      PathService.from_path(path).pretty_path
+      PathService.to_pretty_path(path)
     else
       path
     end
   end
 
   def pretty_path=(pretty_path)
-    self.path = PathService.from_pretty_path(pretty_path).path
+    self.path = PathService.to_path(pretty_path)
   end
 
   private
@@ -54,5 +56,9 @@ class Resource < ApplicationRecord
        (pretty_path.match(/\*$/).nil? || pretty_path.count('*') > 1)
       errors.add(:pretty_path, I18n.t('activerecord.errors.models.resource.pretty_path.wildcard'))
     end
+  end
+
+  def copy_path_errors
+    errors.add(:pretty_path, errors.get(:path)[0]) if errors.include?(:path)
   end
 end

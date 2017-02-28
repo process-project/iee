@@ -280,10 +280,10 @@ RSpec.describe 'Policies API' do
     end
 
     context 'for exising wildcard resource' do
-      let(:resource2) { create(:resource, pretty_path: '/another/path/*', service: service) }
+      let(:wildcard_resource) { create(:resource, pretty_path: '/another/path/*', service: service) }
 
       before do
-        ResourceManager.create(user: user, resource: resource2)
+        ResourceManager.create(user: user, resource: wildcard_resource)
       end
 
       it 'should be matched with a resource defined with a wildcard regular expression' do
@@ -304,14 +304,14 @@ RSpec.describe 'Policies API' do
       end
 
       it 'should return a policy with proper wildcard character' do
-        create(:access_policy, user: user, access_method: access_method, resource: resource2)
+        create(:access_policy, user: user, access_method: access_method, resource: wildcard_resource)
 
-        get api_policies_path, params: { path: resource2.pretty_path }, headers: valid_auth_headers
+        get api_policies_path, params: { path: wildcard_resource.pretty_path }, headers: valid_auth_headers
 
         expect(response_json).to include_json(
           policies: [
             {
-              path: resource2.pretty_path,
+              path: wildcard_resource.pretty_path,
               managers: {
                 users: [user.email],
                 groups: []
@@ -325,11 +325,11 @@ RSpec.describe 'Policies API' do
       end
 
       it 'should delete a selected policy for a resource with a wildcard in the path' do
-        create(:access_policy, user: user, access_method: access_method, resource: resource2)
+        create(:access_policy, user: user, access_method: access_method, resource: wildcard_resource)
 
         delete  api_policies_path,
                 params: {
-                  path: resource2.pretty_path,
+                  path: wildcard_resource.pretty_path,
                   user: user.email,
                   access_method: access_method.name
                 },
@@ -337,7 +337,7 @@ RSpec.describe 'Policies API' do
 
         expect(response.status).to eq(204)
         expect(
-          AccessPolicy.find_by(resource: resource2, user: user, access_method: access_method)
+          AccessPolicy.find_by(resource: wildcard_resource, user: user, access_method: access_method)
         ).to be_nil
       end
     end

@@ -14,7 +14,7 @@ module Policies
     def build_policies
       fetch_resources.map do |resource|
         {
-          path: PathService.from_path(resource.path).pretty_path,
+          path: resource.pretty_path,
           managers: managers(resource),
           permissions: permissions(resource)
         }

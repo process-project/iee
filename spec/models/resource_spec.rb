@@ -90,8 +90,7 @@ RSpec.describe Resource do
     end
 
     it 'should contain a proper error message' do
-      resource = build(:resource, pretty_path: '/any_path*/')
-      resource.save
+      resource = create(:resource, pretty_path: '/any_path*/')
 
       expect(resource.errors.messages).to eq(
         pretty_path: ['Path may contain a single wildcard character at the end']
