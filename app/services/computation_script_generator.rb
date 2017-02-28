@@ -74,16 +74,20 @@ class ComputationScriptGenerator
         #SBATCH -N 1
         #SBATCH --ntasks-per-node=24
         #SBATCH --time=00:15:00
-        #SBATCH -A eurvalve2
+        #SBATCH -A eurvalve3
         #SBATCH -p plgrid
+        #SBATCH --output /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.out
+        #SBATCH --error /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.err
       EXECSETTINGS
     elsif @patient.after_parameter_estimation?
       <<~EXECSETTINGS
         #SBATCH -N 1
         #SBATCH --ntasks-per-node=1
         #SBATCH --time=00:02:00
-        #SBATCH -A eurvalve2
+        #SBATCH -A eurvalve3
         #SBATCH -p plgrid
+        #SBATCH --output /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.out
+        #SBATCH --error /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.err
       EXECSETTINGS
     end
   end
