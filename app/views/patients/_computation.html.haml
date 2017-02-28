@@ -3,6 +3,6 @@
   %td= l(computation.created_at, format: :short)
   %td= execution_time(computation)
   %td
-    =safe_join([link_to(t('computation.stdout_path'), computation.stdout_path),
-                link_to(t('computation.stderr_path'), computation.stderr_path)], ', ')
+    =safe_join([link_to(t('computation.stdout_path'), infrastructure_file_path(computation.stdout_path)),
+                link_to(t('computation.stderr_path'), infrastructure_file_path(computation.stderr_path))], ', ')
   %td= computation_status(computation.status)
