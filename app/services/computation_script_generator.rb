@@ -74,7 +74,7 @@ class ComputationScriptGenerator
         #SBATCH -N 1
         #SBATCH --ntasks-per-node=24
         #SBATCH --time=00:15:00
-        #SBATCH -A eurvalve3
+        #SBATCH -A #{grant_id}
         #SBATCH -p plgrid
         #SBATCH --output /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.out
         #SBATCH --error /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.err
@@ -84,7 +84,7 @@ class ComputationScriptGenerator
         #SBATCH -N 1
         #SBATCH --ntasks-per-node=1
         #SBATCH --time=00:02:00
-        #SBATCH -A eurvalve3
+        #SBATCH -A #{grant_id}
         #SBATCH -p plgrid
         #SBATCH --output /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.out
         #SBATCH --error /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.err
@@ -114,5 +114,9 @@ class ComputationScriptGenerator
 
   def synchronizer
     @synchronizer || DataFile.synchronizer_class.new(@patient, @user)
+  end
+
+  def grant_id
+    Rails.application.config_for('eurvalve')['grant_id']
   end
 end
