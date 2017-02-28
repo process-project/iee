@@ -280,7 +280,9 @@ RSpec.describe 'Policies API' do
     end
 
     context 'for exising wildcard resource' do
-      let(:wildcard_resource) { create(:resource, pretty_path: '/another/path/*', service: service) }
+      let(:wildcard_resource) do
+        create(:resource, pretty_path: '/another/path/*', service: service)
+      end
 
       before do
         ResourceManager.create(user: user, resource: wildcard_resource)
@@ -304,9 +306,11 @@ RSpec.describe 'Policies API' do
       end
 
       it 'should return a policy with proper wildcard character' do
-        create(:access_policy, user: user, access_method: access_method, resource: wildcard_resource)
+        create(:access_policy, user: user, access_method: access_method,
+                               resource: wildcard_resource)
 
-        get api_policies_path, params: { path: wildcard_resource.pretty_path }, headers: valid_auth_headers
+        get api_policies_path, params: { path: wildcard_resource.pretty_path },
+                               headers: valid_auth_headers
 
         expect(response_json).to include_json(
           policies: [
@@ -325,7 +329,8 @@ RSpec.describe 'Policies API' do
       end
 
       it 'should delete a selected policy for a resource with a wildcard in the path' do
-        create(:access_policy, user: user, access_method: access_method, resource: wildcard_resource)
+        create(:access_policy, user: user, access_method: access_method,
+                               resource: wildcard_resource)
 
         delete  api_policies_path,
                 params: {
@@ -337,7 +342,8 @@ RSpec.describe 'Policies API' do
 
         expect(response.status).to eq(204)
         expect(
-          AccessPolicy.find_by(resource: wildcard_resource, user: user, access_method: access_method)
+          AccessPolicy.find_by(resource: wildcard_resource, user: user,
+                               access_method: access_method)
         ).to be_nil
       end
     end
