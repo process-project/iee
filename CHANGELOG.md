@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Users management view redesigned, added possibility to remove user by admin (@mkasztelnik)
 - Set plgrid login in OpenId request while regenerating proxy certificate (@mkasztelnik)
 - Long living JWT tokens can be generated using internal API (@mkasztelnik)
+- Resource paths support wildcard characters through UI and API (@dharezlak)
 
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)

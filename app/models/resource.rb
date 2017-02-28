@@ -13,15 +13,30 @@ class Resource < ApplicationRecord
   validates :resource_type, presence: true
   validate :local_path_exclusion, if: :local?
   validate :path_starts_with_slash
+  validate :pretty_path_asterisk_at_the_end
+
+  after_validation :copy_path_errors
 
   scope :local_paths,
         ->(path) { where(resource_type: :local).where('path ~ :path', path: path) }
 
   def uri
     uri = URI.parse(service.uri)
-    uri.path += path
+    uri.path += pretty_path
 
     uri.to_s
+  end
+
+  def pretty_path
+    if path
+      PathService.to_pretty_path(path)
+    else
+      path
+    end
+  end
+
+  def pretty_path=(pretty_path)
+    self.path = PathService.to_path(pretty_path)
   end
 
   private
@@ -34,5 +49,16 @@ class Resource < ApplicationRecord
   def path_starts_with_slash
     return unless path.present? && !path.start_with?('/')
     errors.add(:path, 'Resource path must start with a slash')
+  end
+
+  def pretty_path_asterisk_at_the_end
+    if pretty_path && pretty_path.include?('*') &&
+       (pretty_path.match(/\*$/).nil? || pretty_path.count('*') > 1)
+      errors.add(:pretty_path, I18n.t('activerecord.errors.models.resource.pretty_path.wildcard'))
+    end
+  end
+
+  def copy_path_errors
+    errors.add(:pretty_path, errors.get(:path)[0]) if errors.include?(:path)
   end
 end

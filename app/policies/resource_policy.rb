@@ -18,7 +18,7 @@ class ResourcePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :path]
+    [:name, :pretty_path]
   end
 
   def new?

@@ -44,6 +44,8 @@ en:
         offspring: All groups where this group is included
         all_users: All group members
         default: All new registered users will be added to this group
+      resource:
+        pretty_path: Path
 
     placeholders:
       patient:
@@ -60,6 +62,10 @@ en:
           The following global access methods are available: %{globals}. You don't need
           to add them here in order to be able to define access policies for these
           global methods.
+      resource:
+        pretty_path: |
+          Path must start with '/' and will be appended to the service URL.
+          It may contain a wildcard character '*' at the end to match any occurences.
     # Examples
     # labels:
     #   defaults:

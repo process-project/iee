@@ -263,6 +263,92 @@ RSpec.describe 'Policies API' do
     expect(response.status).to eq(403)
   end
 
+  context 'with resources containing wildcards' do
+    it 'should save a new policy given with a wildcard with a converted asterisk character' do
+      post  api_policies_path,
+            params: policy_post_params(
+              path: '/another/path/*',
+              permissions: [{ type: 'user_permission',
+                              entity_name: user.email,
+                              access_methods: ['get'] }]
+            ),
+            headers: valid_auth_headers,
+            as: :json
+
+      expect(response.status).to eq(201)
+      expect(Resource.last.path).to eq('/another/path/.*')
+    end
+
+    context 'for exising wildcard resource' do
+      let(:wildcard_resource) do
+        create(:resource, pretty_path: '/another/path/*', service: service)
+      end
+
+      before do
+        ResourceManager.create(user: user, resource: wildcard_resource)
+      end
+
+      it 'should be matched with a resource defined with a wildcard regular expression' do
+        create(:access_method, name: 'post', service: service)
+
+        post  api_policies_path,
+              params: policy_post_params(
+                path: '/another/path/*',
+                permissions: [{ type: 'user_permission',
+                                entity_name: user.email,
+                                access_methods: ['post'] }]
+              ),
+              headers: valid_auth_headers,
+              as: :json
+
+        expect(response.status).to eq(200)
+        expect(AccessPolicy.last.access_method.name).to eq('post')
+      end
+
+      it 'should return a policy with proper wildcard character' do
+        create(:access_policy, user: user, access_method: access_method,
+                               resource: wildcard_resource)
+
+        get api_policies_path, params: { path: wildcard_resource.pretty_path },
+                               headers: valid_auth_headers
+
+        expect(response_json).to include_json(
+          policies: [
+            {
+              path: wildcard_resource.pretty_path,
+              managers: {
+                users: [user.email],
+                groups: []
+              },
+              permissions: [
+                { type: 'user_permission', entity_name: user.email, access_methods: ['get'] }
+              ]
+            }
+          ]
+        )
+      end
+
+      it 'should delete a selected policy for a resource with a wildcard in the path' do
+        create(:access_policy, user: user, access_method: access_method,
+                               resource: wildcard_resource)
+
+        delete  api_policies_path,
+                params: {
+                  path: wildcard_resource.pretty_path,
+                  user: user.email,
+                  access_method: access_method.name
+                },
+                headers: valid_auth_headers
+
+        expect(response.status).to eq(204)
+        expect(
+          AccessPolicy.find_by(resource: wildcard_resource, user: user,
+                               access_method: access_method)
+        ).to be_nil
+      end
+    end
+  end
+
   def valid_auth_headers
     user_auth_headers.merge(service_auth_header)
   end

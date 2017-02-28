@@ -22,11 +22,7 @@ module Services
     end
 
     def create
-      @resource = Resource.new(permitted_attributes(Resource))
-      @resource.service = @service
-      @resource.resource_type = resource_type
-      @resource.resource_managers.build(user: current_user)
-      authorize(@resource)
+      create_and_authorize_resource
 
       if @resource.save
         redirect_to(resource_path(@service, @resource))
@@ -77,6 +73,14 @@ module Services
 
     def resources_path(_service)
       raise 'Need resource path'
+    end
+
+    def create_and_authorize_resource
+      @resource = Resource.new(permitted_attributes(Resource))
+      @resource.service = @service
+      @resource.resource_type = resource_type
+      @resource.resource_managers.build(user: current_user)
+      authorize(@resource)
     end
   end
 end

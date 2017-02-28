@@ -15,7 +15,7 @@ RSpec.describe Resource do
 
     it 'has a proper error message' do
       resource.save
-      expect(resource.errors.messages).to eq(path: ['Resource path must start with a slash'])
+      expect(resource.errors.messages).to include(path: ['Resource path must start with a slash'])
     end
   end
 
@@ -56,5 +56,46 @@ RSpec.describe Resource do
     another_resource = build(:resource, path: '/path.*')
 
     expect(another_resource).not_to be_valid
+  end
+
+  context 'with path edited via the pretty_path accessor' do
+    it 'should accept a pretty path without an asterisk character' do
+      resource = build(:resource, pretty_path: '/any_path/')
+
+      expect(resource).to be_valid
+    end
+
+    it 'should accept a pretty path with an asterisk character at the end' do
+      resource = build(:resource, pretty_path: '/any_path/*')
+
+      expect(resource).to be_valid
+    end
+
+    it 'should not accept a pretty path with an asterisk in the middle' do
+      resource = build(:resource, pretty_path: '/any_path*/')
+
+      expect(resource).not_to be_valid
+    end
+
+    it 'should transform pretty_path with an asterisk at the end to a regular expression' do
+      resource = build(:resource, pretty_path: '/any_path/*')
+
+      expect(resource.path).to eq('/any_path/.*')
+    end
+
+    it 'should transform a path with a wildcard expression at the end to an asterisk character' do
+      resource = build(:resource, path: '/any_path/.*')
+
+      expect(resource.pretty_path).to eq('/any_path/*')
+    end
+
+    it 'should contain a proper error message' do
+      resource = build(:resource, pretty_path: '/any_path*/')
+      resource.validate
+
+      expect(resource.errors.messages).to eq(
+        pretty_path: ['Path may contain a single wildcard character at the end']
+      )
+    end
   end
 end
