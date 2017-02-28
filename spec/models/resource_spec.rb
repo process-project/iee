@@ -15,7 +15,7 @@ RSpec.describe Resource do
 
     it 'has a proper error message' do
       resource.save
-      expect(resource.errors.messages).to eq(path: ['Resource path must start with a slash'])
+      expect(resource.errors.messages).to include(path: ['Resource path must start with a slash'])
     end
   end
 
@@ -90,7 +90,8 @@ RSpec.describe Resource do
     end
 
     it 'should contain a proper error message' do
-      resource = create(:resource, pretty_path: '/any_path*/')
+      resource = build(:resource, pretty_path: '/any_path*/')
+      resource.validate
 
       expect(resource.errors.messages).to eq(
         pretty_path: ['Path may contain a single wildcard character at the end']
