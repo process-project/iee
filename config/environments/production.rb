@@ -71,8 +71,12 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'kinga.cyf-kr.edu.pl',
-    port: 25
+    address: ENV['MAIL_HOST'],
+    port: 25,
+    user_name: ENV['MAIL_USER'],
+    password: ENV['MAIL_PASS'],
+    authentication: 'plain',
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
