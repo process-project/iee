@@ -16,6 +16,8 @@ en:
     outputs: Outputs
     stdout_path: stdout
     stderr_path: stderr
+    stdout_path_missing: no stdout
+    stderr_path_missing: no stderr
     status: Status
     computation_type:
       blood_flow_simulation: Blood flow CFD simulation

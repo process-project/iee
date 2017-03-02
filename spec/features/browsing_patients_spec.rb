@@ -102,14 +102,14 @@ RSpec.feature 'Patient browsing' do
 
       scenario 'displays computation stdout and stderr' do
         create(:computation, patient: patient,
-                             stdout_path: 'http://stdout.pl',
-                             stderr_path: 'http://stderr.pl')
+                             stdout_path: 'http://download/stdout.pl',
+                             stderr_path: 'http://download/stderr.pl')
 
         patient.virtual_model_ready!
         visit patient_path(patient)
 
-        expect(page).to have_link('stdout', href: 'http://stdout.pl')
-        expect(page).to have_link('stderr', href: 'http://stderr.pl')
+        expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
+        expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
       end
 
       scenario 'creates new computations of appropriate type' do
