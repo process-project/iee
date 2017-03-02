@@ -100,6 +100,18 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content('New')
       end
 
+      scenario 'displays computation stdout and stderr' do
+        create(:computation, patient: patient,
+                             stdout_path: 'http://download/stdout.pl',
+                             stderr_path: 'http://download/stderr.pl')
+
+        patient.virtual_model_ready!
+        visit patient_path(patient)
+
+        expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
+        expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
+      end
+
       scenario 'creates new computations of appropriate type' do
         allow(Rimrock::StartJob).to receive(:perform_later) {}
         allow_any_instance_of(ProxyHelper).to receive(:proxy_valid?) { true }
