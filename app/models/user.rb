@@ -35,7 +35,7 @@ class User < ApplicationRecord
   scope :blocked, -> { where(state: :blocked) }
   scope :supervisors, -> { joins(:groups).where(groups: { name: 'supervisor' }) }
 
-  def self.with_active_computations
+  def self.with_submitted_computations
     User.where(<<~SQL
       id IN (SELECT DISTINCT(user_id) FROM computations WHERE status IN ('queued', 'running'))
     SQL
