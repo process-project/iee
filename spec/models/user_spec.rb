@@ -94,7 +94,7 @@ RSpec.describe User do
     create(:computation, status: 'queued', user: u2)
     create(:computation, status: 'running', user: u3)
 
-    expect(User.with_active_computations).to contain_exactly(u2, u3)
+    expect(User.with_submitted_computations).to contain_exactly(u2, u3)
   end
 
   it 'returns supervisors' do

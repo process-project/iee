@@ -30,6 +30,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Make PDP URI and access method case insensitive (@mkasztelnik)
 - Improve service URL form placeholder (@mkasztelnik)
 - Externalize PLGrid grant id into configuration file (@mkasztelnik)
+- Rename `User.with_active_computations` into `User.with_submitted_computations` (@mkasztelnik)
 
 ### Deprecated
 
