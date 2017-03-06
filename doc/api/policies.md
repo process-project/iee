@@ -3,7 +3,7 @@
 Access to the policy management API is authorized by delegating user
 credentials (using Bearer Authorization header) and providing a service token
 via the `X-SERVICE-TOKEN` header with each of the requests. The path attibute
-can contain a wildcard character at the end to match any path part
+can contain a wildcard character at the end (and **only there**) to match any path part
 (e.g. http://host.com/path/*).
 The API exposes the following REST methods:
 
