@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Long living JWT tokens can be generated using internal API (@mkasztelnik)
 - Resource paths support wildcard characters through UI and API (@dharezlak)
 - User can download patient case computation stdout and stderr (@mkasztelnik)
+- Data sets view from an external server was integrated as an iframe (@dharezlak)
 
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)

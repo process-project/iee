@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   end
   resources :computations, only: [:show, :create]
   resources :cloud_resources, only: :index
+  resources :data_sets, only: :index
 
   # Help
   get 'help' => 'help#index'
