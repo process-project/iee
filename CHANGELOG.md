@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## 0.3.0
 
 ### Added
 - PLGrid proxy details shown in the profile view, warning shown when proxy is
