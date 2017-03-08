@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Rename `User.with_active_computations` into `User.with_submitted_computations` (@mkasztelnik)
 - Corrected SMTP config to include Auth support (@jmeizner)
 - Updated PDP and Services documentation (@jmeizner)
+- Update rails into 5.0.2 and other dependencies (@mkasztelnik)
 
 ### Deprecated
 
