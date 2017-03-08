@@ -47,7 +47,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unify cloud resources view with other views (surrounding white box added) (@mkasztelnik)
 - Fix path parsing when alias service name is used in PDP request (@mkasztelnik)
 - PLGrid profile view visible only for connected accounts (@mkasztelnik)
-- PDP - wildcard at the end of URI should not be default (@mkasztelnik)
+- PDP - wildcard at the beginning and end of resource path should not be default (@mkasztelnik)
 
 ### Security
 
