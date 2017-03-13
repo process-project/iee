@@ -9,14 +9,7 @@ class ComputationsController < ApplicationController
   end
 
   def create
-    @computation = Computation.create(
-      create_params.merge(
-        user: current_user,
-        computation_type: Computation.type_for_patient_status(patient.procedure_status),
-        script: ComputationScriptGenerator.new(patient, current_user).script
-      )
-    )
-    Rimrock::StartJob.perform_later @computation
+    @computation = Patient::PIPELINE[patient.procedure_status].run(patient, current_user)
     redirect_to @computation.patient, notice: 'Computation submitted'
   end
 
