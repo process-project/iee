@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- PLGrid left menu removed since we are not showing any item there (@mkasztelnik)
 
 ### Fixed
 
