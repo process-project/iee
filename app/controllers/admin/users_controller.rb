@@ -28,7 +28,7 @@ module Admin
     def update
       if block_yourself?
         redirect_to(admin_users_path, alert: t('me'))
-      elsif @user.update_attribute(:state, params[:state])
+      elsif @user.update_attributes(state: params[:state])
         redirect_to(admin_users_path, notice: state_changed_msg)
       else
         redirect_to(admin_users_path, alert: t('error'))

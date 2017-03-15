@@ -146,8 +146,8 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content('New')
 
         page.execute_script '$(document.body).addClass("not-reloaded")'
+        computation.update_attributes(status: 'running')
         page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-        computation.update_column(:status, 'running')
 
         expect(page).to have_content('Running')
         expect(page).to have_selector('body.not-reloaded')
@@ -162,8 +162,8 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content('New')
 
         page.execute_script '$(document.body).addClass("not-reloaded")'
+        computation.update_attributes(status: 'finished')
         page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-        computation.update_column(:status, 'finished')
 
         expect(page).to have_content('Finished')
         expect(page).not_to have_selector('body.not-reloaded')
@@ -182,7 +182,7 @@ RSpec.feature 'Patient browsing' do
           )
 
         data_files = create_list(:data_file, 2, patient: patient)
-        data_files[0].update_column(:handle, 'test_handle')
+        data_files[0].update_attributes(handle: 'test_handle')
 
         visit patient_path(patient)
 

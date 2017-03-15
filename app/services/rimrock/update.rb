@@ -37,7 +37,7 @@ module Rimrock
 
     def update_computation(computation, new_status)
       if new_status
-        computation.update_attribute(:status, new_status['status'].downcase)
+        computation.update_attributes(status: new_status['status'].downcase)
         on_finish_callback(computation) if computation.status == 'finished'
       else
         computation.update_attributes(status: 'error', error_message: 'Job cannot be found')

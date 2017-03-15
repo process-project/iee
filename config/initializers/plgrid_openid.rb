@@ -20,8 +20,7 @@ Devise.setup do |config|
                     AX[:POSTresponse]
                   ]
 
-  OpenID.fetcher.ca_file = File.join(Rails.root, 'config', 'ssl',
-                                     'DigiCertAssuredIDRootCA.pem')
+  OpenID.fetcher.ca_file = Rails.root.join('config', 'ssl', 'DigiCertAssuredIDRootCA.pem')
 end
 
 module OpenID
