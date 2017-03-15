@@ -12,7 +12,7 @@ class HelpController < ApplicationController
     @category = clean_path_info(path_params[:category])
     @file = path_params[:file]
 
-    path = File.join(Rails.root, 'doc', @category, "#{@file}.md")
+    path = Rails.root.join('doc', @category, "#{@file}.md")
     if File.exist?(path)
       @markdown = File.read(path)
     else
