@@ -9,7 +9,7 @@ class ComputationsController < ApplicationController
   end
 
   def create
-    @computation = Patient::PIPELINE[patient.procedure_status].run(patient, current_user)
+    @computation = Patient::PIPELINE[patient.procedure_status.to_sym].run(patient, current_user)
     redirect_to @computation.patient, notice: 'Computation submitted'
   end
 
