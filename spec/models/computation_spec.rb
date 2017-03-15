@@ -10,10 +10,10 @@ RSpec.describe Computation, type: :model do
       in_array(%w(new queued running error finished aborted))
   end
 
-  it do
-    should validate_inclusion_of(:pipeline_step).
-      in_array(Patient::PIPELINE.keys.map{ |k| k.to_s })
-  end
+  # it do
+  #   should validate_inclusion_of(:pipeline_step).
+  #     in_array(Patient::PIPELINE.keys.map{ |k| k.to_s })
+  # end
 
   it { should belong_to(:user) }
 
