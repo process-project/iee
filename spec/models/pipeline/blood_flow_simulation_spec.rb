@@ -22,8 +22,8 @@ RSpec.describe Pipeline::BloodFlowSimulation do
 
   it "raise error if patient's virtual model is not ready yet" do
     patient.not_started!
-    expect { Pipeline::BloodFlowSimulation.run(patient, user) }
-      .to raise_error('Virtual model must be ready to run Blood Flow Simulation')
+    expect { Pipeline::BloodFlowSimulation.run(patient, user) }.
+      to raise_error('Virtual model must be ready to run Blood Flow Simulation')
   end
 
   it 'uses appropriate script generator' do

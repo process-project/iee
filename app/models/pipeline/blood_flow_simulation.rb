@@ -13,7 +13,7 @@ module Pipeline
       computation
     end
 
-    private
+    private_class_method
 
     def self.validate_procedure_status!(patient)
       statuses = Patient.procedure_statuses

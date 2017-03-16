@@ -40,5 +40,4 @@ class HeartModelScriptGenerator < ComputationScriptGenerator
       #{stage_out_file('Outfile.csv')}
     STAGEOUT
   end
-
 end

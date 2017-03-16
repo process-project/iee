@@ -139,7 +139,7 @@ RSpec.feature 'Patient browsing' do
 
         expect(page).to have_content('Computations')
         expect(page).
-           to have_content(I18n.t('patients.show.new_computation.after_parameter_estimation'))
+          to have_content(I18n.t('patients.show.new_computation.after_parameter_estimation'))
 
         expect { click_button 'Execute simulation' }.
           to change { Computation.where(pipeline_step: 'after_parameter_estimation').count }.by(1)

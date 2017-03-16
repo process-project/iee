@@ -13,6 +13,8 @@ module Pipeline
       computation
     end
 
+    private_class_method
+
     def self.validate_procedure_status!(patient)
       statuses = Patient.procedure_statuses
       model_ready = statuses[patient.procedure_status] >= statuses['after_parameter_estimation']

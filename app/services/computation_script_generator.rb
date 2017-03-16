@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 class ComputationScriptGenerator
-
   def script
     header + stage_in + job_script + stage_out
   end
