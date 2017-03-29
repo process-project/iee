@@ -3,7 +3,7 @@ class Patient < ApplicationRecord
   PIPELINE = {
     imaging_uploaded: Pipeline::Segmentation,
     virtual_model_ready: Pipeline::BloodFlowSimulation,
-    after_parameter_estimation: Pipeline::HeartModelComputation
+    after_parameter_estimation: Pipeline::HeartModelCalculation
   }.freeze
 
   enum procedure_status: [

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Pipeline
-  class HeartModelComputation
+  class HeartModelCalculation
     def self.run(patient, user)
       validate_procedure_status!(patient)
       computation = RimrockComputation.create(
