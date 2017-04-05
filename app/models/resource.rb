@@ -59,6 +59,6 @@ class Resource < ApplicationRecord
   end
 
   def copy_path_errors
-    errors.add(:pretty_path, errors.get(:path)[0]) if errors.include?(:path)
+    errors.add(:pretty_path, errors[:path][0]) if errors.include?(:path)
   end
 end

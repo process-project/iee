@@ -9,6 +9,25 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+- Update rubocop into 0.47.1, fix new discovered offenses (@mkasztelnik)
+- JWT token expiration time extended to 6 hours (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- PLGrid left menu removed since we are not showing any item there (@mkasztelnik)
+
+### Fixed
+- Left menu can be scrolled when high is small (@mkasztelnik)
+
+### Security
+
+
+## 0.3.0
+
+### Added
 - PLGrid proxy details shown in the profile view, warning shown when proxy is
   outdated while active computations are present (@mkasztelnik)
 - Support for running specs with JS support (@mkasztelnik)
@@ -22,12 +41,19 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Set plgrid login in OpenId request while regenerating proxy certificate (@mkasztelnik)
 - Long living JWT tokens can be generated using internal API (@mkasztelnik)
 - Resource paths support wildcard characters through UI and API (@dharezlak)
+- User can download patient case computation stdout and stderr (@mkasztelnik)
+- Data sets view from an external server was integrated as an iframe (@dharezlak)
 
 ### Changed
 - Make jwt pem path configurable though system variable (@mkasztelnik)
 - Externalize JWT token generation from user into separate class (@mkasztelnik)
 - Make PDP URI and access method case insensitive (@mkasztelnik)
 - Improve service URL form placeholder (@mkasztelnik)
+- Externalize PLGrid grant id into configuration file (@mkasztelnik)
+- Rename `User.with_active_computations` into `User.with_submitted_computations` (@mkasztelnik)
+- Corrected SMTP config to include Auth support (@jmeizner)
+- Updated PDP and Services documentation (@jmeizner)
+- Update rails into 5.0.2 and other dependencies (@mkasztelnik)
 
 ### Deprecated
 
@@ -40,6 +66,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unify cloud resources view with other views (surrounding white box added) (@mkasztelnik)
 - Fix path parsing when alias service name is used in PDP request (@mkasztelnik)
 - PLGrid profile view visible only for connected accounts (@mkasztelnik)
+- PDP - wildcard at the beginning and end of resource path should not be default (@mkasztelnik)
 
 ### Security
 

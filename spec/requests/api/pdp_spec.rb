@@ -52,6 +52,25 @@ RSpec.describe 'PDP' do
       expect(response.status).to eq(403)
     end
 
+    it 'widlcard at the end should not be default' do
+      create(:user_access_policy, user: user, resource: resource, access_method: access_method)
+
+      get api_pdp_index_path,
+          params: { uri: "#{resource.uri}/subpath", access_method: 'get' }
+
+      expect(response.status).to eq(403)
+    end
+
+    it 'wildcard at the path beginning should not be default' do
+      create(:user_access_policy, user: user, resource: resource, access_method: access_method)
+
+      get api_pdp_index_path,
+          params: { uri: "#{service.uri}/something/#{resource.pretty_path}",
+                    access_method: 'get' }
+
+      expect(response.status).to eq(403)
+    end
+
     it `returns 200 if another policy with a matching path but different access methods exist` do
       create(:user_access_policy, user: user, resource: resource, access_method: access_method)
       another_access_method = create(:access_method, name: 'post')

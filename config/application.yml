@@ -2,7 +2,7 @@ defaults: &defaults
   jwt:
     key: <%= ENV['JWT_KEY_PATH'] || Rails.root.join('config', 'jwt', 'dev.pem') %>
     key_algorithm: ES256
-    expiration_time: 3600
+    expiration_time: 21600 #6 hours
     issuer: 'EurValve Portal'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
   file_store:
@@ -12,6 +12,8 @@ defaults: &defaults
   cloud:
     atmosphere_url: <%= ENV['ATMOSPHERE_BASE_URL'] || 'https://vph.cyfronet.pl' %>
     cloud_facade_path: '/api/v1/'
+  data_sets:
+    url: https://eurvalve.shef.ac.uk/eurvalve/WebQuery/site.html
 
 development:
   <<: *defaults

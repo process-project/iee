@@ -8,7 +8,7 @@ class AccessPolicy < ApplicationRecord
   validates :access_method_id,
             presence: { message: I18n.t('missing_access_method') },
             inclusion: {
-              in: ->(ap) { ap.resource&.service.access_methods.map(&:id) },
+              in: ->(ap) { ap.resource&.service&.access_methods&.map(&:id) },
               unless: ->(ap) { ap.access_method&.service.nil? },
               message: I18n.t('different_service_access_method')
             }

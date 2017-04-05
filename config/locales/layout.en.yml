@@ -6,6 +6,7 @@ en:
         patients: Patients
         files: Files
         cloud_resources: Cloud resources
+        data_sets: Data Sets
       plgrid:
         title: PLGrid
       administration:

@@ -37,8 +37,8 @@ describe 'Patients controller' do
       end
 
       it 'shows proxy oudated warning for computations' do
-        user.update_attribute(:proxy, outdated_proxy)
-        patient.update_attribute(:procedure_status, :virtual_model_ready)
+        user.update_attributes(proxy: outdated_proxy)
+        patient.update_attributes(procedure_status: :virtual_model_ready)
 
         get patient_path(patient.id)
 

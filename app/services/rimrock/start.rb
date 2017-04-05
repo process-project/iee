@@ -45,7 +45,7 @@ module Rimrock
       body_json = JSON.parse(body)
 
       computation.update_attributes(
-        status: body_json['status'],
+        status: body_json['status'].downcase,
         exit_code: body_json['exit_code'],
         standard_output: body_json['standard_output'],
         error_output: body_json['error_output'],

@@ -18,7 +18,7 @@ module Api
 
       resources = service.resources.
                   joins(access_policies: :access_method).
-                  where(':path ~ path', path: path).
+                  where(':path ~* CONCAT(\'^\', CONCAT(path, \'$\'))', path: path).
                   where(access_methods: { name: access_method })
 
       every_resource_permitted?(resources)

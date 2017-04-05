@@ -100,6 +100,18 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content('New')
       end
 
+      scenario 'displays computation stdout and stderr' do
+        create(:computation, patient: patient,
+                             stdout_path: 'http://download/stdout.pl',
+                             stderr_path: 'http://download/stderr.pl')
+
+        patient.virtual_model_ready!
+        visit patient_path(patient)
+
+        expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
+        expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
+      end
+
       scenario 'creates new computations of appropriate type' do
         allow(Rimrock::StartJob).to receive(:perform_later) {}
         allow_any_instance_of(ProxyHelper).to receive(:proxy_valid?) { true }
@@ -134,8 +146,8 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content('New')
 
         page.execute_script '$(document.body).addClass("not-reloaded")'
+        computation.update_attributes(status: 'running')
         page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-        computation.update_column(:status, 'running')
 
         expect(page).to have_content('Running')
         expect(page).to have_selector('body.not-reloaded')
@@ -150,8 +162,8 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content('New')
 
         page.execute_script '$(document.body).addClass("not-reloaded")'
+        computation.update_attributes(status: 'finished')
         page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-        computation.update_column(:status, 'finished')
 
         expect(page).to have_content('Finished')
         expect(page).not_to have_selector('body.not-reloaded')
@@ -170,7 +182,7 @@ RSpec.feature 'Patient browsing' do
           )
 
         data_files = create_list(:data_file, 2, patient: patient)
-        data_files[0].update_column(:handle, 'test_handle')
+        data_files[0].update_attributes(handle: 'test_handle')
 
         visit patient_path(patient)
 
