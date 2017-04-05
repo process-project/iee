@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - PLGrid left menu removed since we are not showing any item there (@mkasztelnik)
 
 ### Fixed
+- Left menu can be scrolled when high is small (@mkasztelnik)
 
 ### Security
 
