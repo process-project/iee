@@ -22,6 +22,8 @@
           "access_methods": { "type": "array", "items": { "type": "string" } }
         }
       }
-    }
+    },
+    "copy_from": { "type": "string" },
+    "move_from": { "type": "string" }
   }
 }

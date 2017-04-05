@@ -28,6 +28,15 @@ RSpec.describe 'Policies API' do
     expect(response.status).to eq(401)
   end
 
+  it 'should return unauthorized when a copy request on a resources which is not owned is sent' do
+    post api_policies_path,
+         params: policy_post_params(path: '/another/path', copy_from: resource.path),
+         headers: valid_auth_headers,
+         as: :json
+
+    expect(response.status).to eq(403)
+  end
+
   it 'should return a single policy with single user and group as managers' do
     group = create(:group, name: 'group_name')
     ResourceManager.create(user: user, resource: resource)
@@ -69,6 +78,24 @@ RSpec.describe 'Policies API' do
   it 'should return a bad request status if we send a JSON with empty permission array' do
     post api_policies_path,
          params: policy_post_params(path: '/some/path', permissions: []),
+         headers: valid_auth_headers,
+         as: :json
+
+    expect(response.status).to eq(400)
+  end
+
+  it 'should return a bad request when a copy request is sent for existing resource' do
+    post api_policies_path,
+         params: policy_post_params(path: resource.path, copy_from: '/another/path'),
+         headers: valid_auth_headers,
+         as: :json
+
+    expect(response.status).to eq(400)
+  end
+
+  it 'should return a bad request when a move request is sent for existing resource' do
+    post api_policies_path,
+         params: policy_post_params(path: resource.path, move_from: '/another/path'),
          headers: valid_auth_headers,
          as: :json
 
@@ -217,6 +244,59 @@ RSpec.describe 'Policies API' do
         AccessPolicy.find_by(resource: resource, user: user, access_method: access_method)
       ).not_to be_nil
     end
+
+    context 'with copy and move operations for a resource with policies' do
+      before do
+        resource.access_policies.create(user: user, access_method: access_method, resource: resource)
+        subresource = create(:resource, service: service, path: resource.path + '/sub')
+      end
+
+      it 'should copy the resource and subresource with managers and access policies' do
+        post api_policies_path,
+             params: policy_post_params(path: '/another/path', copy_from: resource.path),
+             headers: valid_auth_headers,
+             as: :json
+
+        expect(response.status).to eq(201)
+        expect(Resource.find_by(path: resource.path)).to be
+        expect(Resource.find_by(path: resource.path + '/sub')).to be
+
+        copied_resource = Resource.find_by(path: '/another/path')
+        expect(copied_resource).to be
+        expect(copied_resource.path).to eq('/another/path')
+        expect(copied_resource.access_policies.count).to eq(1)
+        expect(copied_resource.access_policies[0].user).to eq(user)
+        expect(copied_resource.access_policies[0].access_method).to eq(access_method)
+        expect(copied_resource.resource_managers.count).to eq(1)
+        expect(copied_resource.resource_managers[0].user).to eq(user)
+
+        copied_subresource = Resource.find_by(path: '/another/path/sub')
+        expect(copied_subresource).to be
+      end
+
+      it 'should move the resource and subresource with managers and access policies' do
+        post api_policies_path,
+             params: policy_post_params(path: '/another/path', move_from: resource.path),
+             headers: valid_auth_headers,
+             as: :json
+
+        expect(response.status).to eq(201)
+        expect(Resource.find_by(path: resource.path)).to be_nil
+        expect(Resource.find_by(path: resource.path + '/sub')).to be_nil
+
+        copied_resource = Resource.find_by(path: '/another/path')
+        expect(copied_resource).to be
+        expect(copied_resource.path).to eq('/another/path')
+        expect(copied_resource.access_policies.count).to eq(1)
+        expect(copied_resource.access_policies[0].user).to eq(user)
+        expect(copied_resource.access_policies[0].access_method).to eq(access_method)
+        expect(copied_resource.resource_managers.count).to eq(1)
+        expect(copied_resource.resource_managers[0].user).to eq(user)
+
+        copied_subresource = Resource.find_by(path: '/another/path/sub')
+        expect(copied_subresource).to be
+      end
+    end
   end
 
   it 'should return a forbidden status when a user is not allowed to manage a given resource' do
@@ -279,7 +359,7 @@ RSpec.describe 'Policies API' do
       expect(Resource.last.path).to eq('/another/path/.*')
     end
 
-    context 'for exising wildcard resource' do
+    context 'for existing wildcard resource' do
       let(:wildcard_resource) do
         create(:resource, pretty_path: '/another/path/*', service: service)
       end
@@ -353,11 +433,13 @@ RSpec.describe 'Policies API' do
     user_auth_headers.merge(service_auth_header)
   end
 
-  def policy_post_params(path: '', managers: nil, permissions: nil)
+  def policy_post_params(path: '', managers: nil, permissions: nil, copy_from: nil, move_from: nil)
     result = {}
     result[:path] = path
     result[:managers] = managers if managers
     result[:permissions] = permissions if permissions
+    result[:copy_from] = copy_from if copy_from
+    result[:move_from] = move_from if move_from
 
     result
   end

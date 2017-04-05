@@ -17,11 +17,25 @@ module Api
       resource = Resource.find_by(path: PathService.to_path(@json['path']))
 
       if resource
-        merge_policy(resource)
+        if copy_or_move_request?
+          api_error(status: :bad_request)
+        else
+          merge_policy(resource)
+        end
       else
-        Policies::CreatePolicy.new(@json, service, current_user).call
+        if copy_or_move_request?
+          if ResourcePolicy.user_owns_resources?(current_user, [PathService.to_path(copy_move_path)])
+            Policies::CopyMovePolicy.new(@json, service, current_user).call
 
-        head :created
+            head :created
+          else
+            api_error(status: :forbidden)
+          end
+        else
+          Policies::CreatePolicy.new(@json, service, current_user).call
+
+          head :created
+        end
       end
     end
 
@@ -75,6 +89,14 @@ module Api
 
     def extract_multiple_param(name)
       params[name] ? params[name].split(',') : []
+    end
+
+    def copy_or_move_request?
+      @json['copy_from'] || @json['move_from']
+    end
+
+    def copy_move_path
+      @json['copy_from'].presence || @json['move_from']
     end
   end
 end
