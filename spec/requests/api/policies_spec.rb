@@ -429,6 +429,26 @@ RSpec.describe 'Policies API' do
     end
   end
 
+  context 'for a second service present' do
+    let(:service2) { create(:service, uri: 'https://service2.host.com', token: 'random_token_2') }
+    let(:resource2) { create(:resource, service: service2) }
+
+    before do
+      create(:access_policy, user: user, access_method: access_method, resource: resource2)
+    end
+
+    it 'should return only policies for the first service' do
+      get api_policies_path, headers: valid_auth_headers
+
+      expect(response_json).to include_json(
+        policies: [{ path: resource.path }]
+      )
+      expect(response_json).not_to include_json(
+        policies: [{ path: resource2.path }]
+      )
+    end
+  end
+
   def valid_auth_headers
     user_auth_headers.merge(service_auth_header)
   end
