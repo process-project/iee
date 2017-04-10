@@ -247,8 +247,9 @@ RSpec.describe 'Policies API' do
 
     context 'with copy and move operations for a resource with policies' do
       before do
-        resource.access_policies.create(user: user, access_method: access_method, resource: resource)
-        subresource = create(:resource, service: service, path: resource.path + '/sub')
+        resource.access_policies.create(user: user, access_method: access_method,
+                                        resource: resource)
+        create(:resource, service: service, path: resource.path + '/sub')
       end
 
       it 'should copy the resource and subresource with managers and access policies' do
