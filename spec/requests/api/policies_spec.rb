@@ -367,17 +367,6 @@ RSpec.describe 'Policies API' do
         policies: [{ path: resource2.path }]
       )
     end
-
-    it 'should return only policies for the second service' do
-      get api_policies_path, headers: user_auth_headers.merge('X-SERVICE-TOKEN' => service2.token)
-
-      expect(response_json).not_to include_json(
-        policies: [{ path: resource.path }]
-      )
-      expect(response_json).to include_json(
-        policies: [{ path: resource2.path }]
-      )
-    end
   end
 
   def valid_auth_headers

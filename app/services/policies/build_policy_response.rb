@@ -23,11 +23,8 @@ module Policies
     end
 
     def fetch_resources
-      if @resource_paths.any?
-        Resource.where(path: @resource_paths, service: @service)
-      else
-        Resource.where(service: @service)
-      end
+      resources = Resource.where(service: @service)
+      @resource_paths.any? ? resources.where(path: @resource_paths) : resources
     end
 
     def managers(resource)
