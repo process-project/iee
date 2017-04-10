@@ -10,7 +10,7 @@ module Api
     before_action :validate_destroy_request, only: :destroy
 
     def index
-      render json: Policies::BuildPolicyResponse.new(resource_paths).call, status: :ok
+      render json: Policies::BuildPolicyResponse.new(resource_paths, service).call, status: :ok
     end
 
     def create
@@ -21,7 +21,7 @@ module Api
       elsif copy_or_move_request?
         process_copy_move_request
       else
-        process_create_reqeust
+        process_create_request
       end
     end
 
