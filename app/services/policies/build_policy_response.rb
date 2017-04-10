@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 module Policies
   class BuildPolicyResponse
-    def initialize(resource_paths)
+    def initialize(resource_paths, service)
       @resource_paths = resource_paths
+      @service = service
     end
 
     def call
@@ -22,7 +23,8 @@ module Policies
     end
 
     def fetch_resources
-      @resource_paths.any? ? Resource.where(path: @resource_paths) : Resource.all
+      resources = Resource.where(service: @service)
+      @resource_paths.any? ? resources.where(path: @resource_paths) : resources
     end
 
     def managers(resource)
