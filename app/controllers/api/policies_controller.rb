@@ -10,7 +10,7 @@ module Api
     before_action :validate_destroy_request, only: :destroy
 
     def index
-      render json: Policies::BuildPolicyResponse.new(resource_paths, service).call, status: :ok
+      render json: Policies::BuildPolicyResponse.new(resource_paths).call, status: :ok
     end
 
     def create
@@ -24,7 +24,7 @@ module Api
         end
       else
         if copy_or_move_request?
-          if ResourcePolicy.user_owns_resources?(current_user, subresource_paths(PathService.to_path(copy_move_path)))
+          if ResourcePolicy.user_owns_resources?(current_user, [PathService.to_path(copy_move_path)])
             Policies::CopyMovePolicy.new(@json, service, current_user).call
 
             head :created
@@ -97,12 +97,6 @@ module Api
 
     def copy_move_path
       @json['copy_from'].presence || @json['move_from']
-    end
-
-    def subresource_paths(path)
-      Resource.where('path like :prefix', prefix: "^#{path}%").map do |resource|
-        resource.path
-      end
     end
   end
 end

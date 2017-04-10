@@ -43,7 +43,7 @@ module Policies
     end
 
     def find_subresources(pretty_path)
-      Resource.where('path like :prefix', prefix: "^#{PathService.to_path(pretty_path)}%")
+      Resource.where('path like :prefix', prefix: "#{PathService.to_path(pretty_path)}%")
     end
 
     def sub_path(root_path, sub_path)
