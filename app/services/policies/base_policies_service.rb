@@ -35,5 +35,25 @@ module Policies
     def access_method_for_name(access_method_name)
       AccessMethod.find_by(name: access_method_name.downcase, service: @service)
     end
+
+    def find_subresources(pretty_path)
+      Resource.where('path like :prefix', prefix: "#{PathService.to_path(pretty_path)}%")
+    end
+
+    def copy_managers(source_resource, target_resource)
+      source_resource.resource_managers.each do |manager|
+        target_resource.resource_managers << manager.dup
+      end
+    end
+
+    def copy_policies(source_resource, target_resource)
+      source_resource.access_policies.each do |access_policy|
+        target_resource.access_policies << access_policy.dup
+      end
+    end
+
+    def sub_path(root_path, sub_path)
+      sub_path[root_path.length..-1]
+    end
   end
 end

@@ -49,6 +49,10 @@ class ResourcePolicy < ApplicationPolicy
     owns_service? || record.local? && owns_local_resource?
   end
 
+  def copy_move?
+    owns_resource?
+  end
+
   private
 
   def owns_local_resource?

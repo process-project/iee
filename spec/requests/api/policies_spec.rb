@@ -100,6 +100,7 @@ RSpec.describe 'Policies API' do
          as: :json
 
     expect(response.status).to eq(400)
+    expect(response.body).to include('Destination resource already exists')
   end
 
   it 'should return a 201 status code and create a DB resource when valid policy JSON is sent' do
@@ -261,18 +262,7 @@ RSpec.describe 'Policies API' do
         expect(response.status).to eq(201)
         expect(Resource.find_by(path: resource.path)).to be
         expect(Resource.find_by(path: resource.path + '/sub')).to be
-
-        copied_resource = Resource.find_by(path: '/another/path')
-        expect(copied_resource).to be
-        expect(copied_resource.path).to eq('/another/path')
-        expect(copied_resource.access_policies.count).to eq(1)
-        expect(copied_resource.access_policies[0].user).to eq(user)
-        expect(copied_resource.access_policies[0].access_method).to eq(access_method)
-        expect(copied_resource.resource_managers.count).to eq(1)
-        expect(copied_resource.resource_managers[0].user).to eq(user)
-
-        copied_subresource = Resource.find_by(path: '/another/path/sub')
-        expect(copied_subresource).to be
+        check_resource_existence('/another/path', '/another/path/sub')
       end
 
       it 'should move the resource and subresource with managers and access policies' do
@@ -284,18 +274,7 @@ RSpec.describe 'Policies API' do
         expect(response.status).to eq(201)
         expect(Resource.find_by(path: resource.path)).to be_nil
         expect(Resource.find_by(path: resource.path + '/sub')).to be_nil
-
-        copied_resource = Resource.find_by(path: '/another/path')
-        expect(copied_resource).to be
-        expect(copied_resource.path).to eq('/another/path')
-        expect(copied_resource.access_policies.count).to eq(1)
-        expect(copied_resource.access_policies[0].user).to eq(user)
-        expect(copied_resource.access_policies[0].access_method).to eq(access_method)
-        expect(copied_resource.resource_managers.count).to eq(1)
-        expect(copied_resource.resource_managers[0].user).to eq(user)
-
-        copied_subresource = Resource.find_by(path: '/another/path/sub')
-        expect(copied_subresource).to be
+        check_resource_existence('/another/path', '/another/path/sub')
       end
     end
   end
@@ -463,5 +442,29 @@ RSpec.describe 'Policies API' do
     result[:move_from] = move_from if move_from
 
     result
+  end
+
+  def check_resource_existence(path, subpath)
+    resource = Resource.find_by(path: path)
+    expect(resource).to be
+    expect(resource.path).to eq(path)
+    check_managers(resource)
+    check_access_policies(resource)
+    expect(Resource.find_by(path: subpath)).to be
+  end
+
+  def check_managers(resource)
+    expect(resource.resource_managers.count).to eq(1)
+    expect(resource.resource_managers[0].user).to eq(user)
+  end
+
+  def check_access_policies(resource)
+    check_access_method(resource)
+    expect(resource.access_policies.count).to eq(1)
+    expect(resource.access_policies[0].user).to eq(user)
+  end
+
+  def check_access_method(resource)
+    expect(resource.access_policies[0].access_method).to eq(access_method)
   end
 end

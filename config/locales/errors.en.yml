@@ -53,3 +53,5 @@ en:
         resource:
           pretty_path:
             wildcard: Path may contain a single wildcard character at the end
+  api:
+    destination_resource_exists: Destination resource already exists
