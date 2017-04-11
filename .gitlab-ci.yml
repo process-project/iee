@@ -52,7 +52,7 @@ production:
   - echo $PROD_HOST_KEY > ~/.ssh/known_hosts
   - echo -e $PROD_KEY > ~/.ssh/id_rsa
   - chmod 400 ~/.ssh/id_rsa
-  - git push $PROD_GIT_REPO HEAD:master
+  - git push $PROD_GIT_REPO $CI_COMMIT_TAG
   only:
   - tags
 
