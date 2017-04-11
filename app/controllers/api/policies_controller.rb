@@ -14,14 +14,12 @@ module Api
     end
 
     def create
-      resource = Resource.find_by(path: PathService.to_path(@json['path']))
-
-      if resource
-        merge_policy(resource)
+      if @resource
+        merge_policy
+      elsif copy_or_move_request?
+        process_copy_move_request
       else
-        Policies::CreatePolicy.new(@json, service, current_user).call
-
-        head :created
+        process_create_request
       end
     end
 
@@ -40,9 +38,9 @@ module Api
 
     private
 
-    def merge_policy(resource)
-      if ResourcePolicy.new(current_user, resource).owns_resource?
-        Policies::MergePolicy.new(@json, resource, service).call
+    def merge_policy
+      if ResourcePolicy.new(current_user, @resource).owns_resource?
+        Policies::MergePolicy.new(@json, @resource, service).call
 
         head :ok
       else
@@ -58,6 +56,30 @@ module Api
       schema = File.read(Rails.root.join('config', 'schemas', 'policy-schema.json'))
       @json = JSON.parse(request.body.read)
       api_error(status: :bad_request) unless JSON::Validator.validate(schema, @json)
+      return if check_existence
+      check_access
+    end
+
+    def check_existence
+      @resource = Resource.find_by(path: PathService.to_path(@json['path']))
+      if @resource && copy_or_move_request?
+        resource_exist_api_error
+        true
+      else
+        false
+      end
+    end
+
+    def resource_exist_api_error
+      api_error(status: :bad_request, errors: I18n.t('api.destination_resource_exists'))
+    end
+
+    def check_access
+      authorize_copy_move if copy_or_move_request?
+    end
+
+    def authorize_copy_move
+      authorize(Resource.find_by(path: PathService.to_path(copy_move_path)), :copy_move?)
     end
 
     def validate_destroy_request
@@ -75,6 +97,30 @@ module Api
 
     def extract_multiple_param(name)
       params[name] ? params[name].split(',') : []
+    end
+
+    def copy_or_move_request?
+      @json['copy_from'] || @json['move_from']
+    end
+
+    def copy_move_path
+      @json['copy_from'].presence || @json['move_from']
+    end
+
+    def process_copy_move_request
+      if @json['copy_from']
+        Policies::CopyPolicy.new(@json['copy_from'], @json['path'], service, current_user).call
+      else
+        Policies::MovePolicy.new(@json['move_from'], @json['path'], service, current_user).call
+      end
+
+      head :created
+    end
+
+    def process_create_request
+      Policies::CreatePolicy.new(@json, service, current_user).call
+
+      head :created
     end
   end
 end

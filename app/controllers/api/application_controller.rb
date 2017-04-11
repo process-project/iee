@@ -6,6 +6,7 @@ module Api
     protect_from_forgery with: :null_session
     before_action :authenticate_user!
     before_action :destroy_session
+    rescue_from Pundit::NotAuthorizedError, with: :forbidden
 
     def destroy_session
       request.session_options[:skip] = true
@@ -41,6 +42,10 @@ module Api
       msg += ', error="invalid_token"' if request.env['HTTP_AUTHORIZATION']
 
       msg
+    end
+
+    def forbidden
+      api_error(status: :forbidden)
     end
   end
 end
