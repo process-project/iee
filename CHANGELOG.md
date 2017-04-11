@@ -26,6 +26,19 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Security
 
 
+## 0.3.2
+
+### Fixed
+
+- Fixed pushing tag into production from different branch than master (@mkasztelnik)
+
+
+## 0.3.1
+
+### Fixed
+
+- Policy API filters policies according to the service identified by the passed id (@dharezlak)
+
 ## 0.3.0
 
 ### Added
