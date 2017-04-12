@@ -24,6 +24,9 @@ gem 'bootstrap-sass', '~> 3.3'
 gem 'font-awesome-sass', '~> 4.5'
 gem 'simple_form'
 
+# app security
+gem 'rack-attack'
+
 # JSON validation
 gem 'json-schema'
 
