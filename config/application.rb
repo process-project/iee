@@ -15,6 +15,8 @@ module Vapor
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.middleware.insert_before Warden::Manager, Rack::Attack
+
     # Custom error pages
     config.exceptions_app = routes
 
