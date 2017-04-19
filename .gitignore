@@ -27,3 +27,4 @@
 
 # Dont add production JWT key into git
 /config/jwt/prod.pem
+/config/jwt/prod-dev.pem
