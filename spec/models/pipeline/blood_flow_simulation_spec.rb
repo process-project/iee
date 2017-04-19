@@ -26,11 +26,6 @@ RSpec.describe Pipeline::BloodFlowSimulation do
       to raise_error('Virtual model must be ready to run Blood Flow Simulation')
   end
 
-  it 'uses appropriate script generator' do
-    expect(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call)
-    Pipeline::BloodFlowSimulation.run(patient, user)
-  end
-
   it 'creates computation with script returned by generator' do
     script = 'BLOOD FLOW SCRIPT'
     allow(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call) { script }

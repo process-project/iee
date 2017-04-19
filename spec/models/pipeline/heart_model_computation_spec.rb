@@ -27,11 +27,6 @@ RSpec.describe Pipeline::HeartModelCalculation do
     )
   end
 
-  it 'uses appropriate script generator' do
-    expect(ScriptGenerator::HeartModel).to receive_message_chain(:new, :call)
-    Pipeline::HeartModelCalculation.run(patient, user)
-  end
-
   it 'creates computation with script returned by generator' do
     script = 'HEART MODEL SCRIPT'
     allow(ScriptGenerator::HeartModel).to receive_message_chain(:new, :call) { script }
