@@ -7,7 +7,7 @@ module Pipeline
         patient: patient,
         user: user,
         pipeline_step: 'virtual_model_ready',
-        script: BloodFlowScriptGenerator.new(patient, user).script
+        script: ScriptGenerator::BloodFlow.new(patient, user).call
       )
       Rimrock::StartJob.perform_later computation
       computation

@@ -27,13 +27,13 @@ RSpec.describe Pipeline::BloodFlowSimulation do
   end
 
   it 'uses appropriate script generator' do
-    expect(BloodFlowScriptGenerator).to receive_message_chain(:new, :script)
+    expect(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call)
     Pipeline::BloodFlowSimulation.run(patient, user)
   end
 
   it 'creates computation with script returned by generator' do
     script = 'BLOOD FLOW SCRIPT'
-    allow(BloodFlowScriptGenerator).to receive_message_chain(:new, :script) { script }
+    allow(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call) { script }
     computation = Pipeline::BloodFlowSimulation.run(patient, user)
     expect(computation.script).to eq script
   end

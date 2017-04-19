@@ -7,7 +7,7 @@ module Pipeline
         patient: patient,
         user: user,
         pipeline_step: 'after_parameter_estimation',
-        script: HeartModelScriptGenerator.new(patient, user).script
+        script: ScriptGenerator::HeartModel.new(patient, user).call
       )
       Rimrock::StartJob.perform_later computation
       computation
