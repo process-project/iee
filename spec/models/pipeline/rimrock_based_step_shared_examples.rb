@@ -7,17 +7,17 @@ shared_examples 'a Rimrock-based step' do
   end
 
   it 'creates RimrockComputation' do
-    expect { Pipeline::BloodFlowSimulation.run(patient, user) }.
+    expect { described_class.run(patient, user) }.
       to change { RimrockComputation.count }.by(1)
   end
 
   it 'returns a RimrockComputation object' do
-    computation = Pipeline::BloodFlowSimulation.run(patient, user)
+    computation = described_class.run(patient, user)
     expect(computation.class).to eq RimrockComputation
   end
 
   it 'starts a Rimrock job' do
     expect(Rimrock::StartJob).to receive(:perform_later)
-    Pipeline::BloodFlowSimulation.run(patient, user)
+    described_class.run(patient, user)
   end
 end
