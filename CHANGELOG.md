@@ -69,6 +69,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Corrected SMTP config to include Auth support (@jmeizner)
 - Updated PDP and Services documentation (@jmeizner)
 - Update rails into 5.0.2 and other dependencies (@mkasztelnik)
+- Make Computation a base class for more specialized classes (@tomek.bartynski)
+- Introduced WebdavComputation and RimrockComputation that inherit from Computation class (@tomek.bartynski)
+- Patient Case pipeline is now hardcoded in Patient model (@tomek.bartynski)
+- Implemented classes that run Blood Flow Simulation and Heart Model Computation pipeline steps (@tomek.bartynski)
 
 ### Deprecated
 

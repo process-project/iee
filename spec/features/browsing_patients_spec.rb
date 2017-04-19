@@ -82,21 +82,29 @@ RSpec.feature 'Patient browsing' do
 
         expect(page).not_to have_content('Computations')
 
+        patient.imaging_uploaded!
+        visit patient_path(patient)
+
+        expect(page).to have_content('Computations')
+        expect(page).to have_content(I18n.t('computation.for_procedure_status.imaging_uploaded'))
+        expect(page).to have_content('New')
+
+        create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
         patient.virtual_model_ready!
         visit patient_path(patient)
 
         expect(page).to have_content('Computations')
-        expect(page).
-          to have_content(I18n.t('computation.computation_type.blood_flow_simulation'))
+        expect(page).to have_content(I18n.t('computation.for_procedure_status.virtual_model_ready'))
         expect(page).to have_content('New')
 
-        create(:computation, patient: patient, computation_type: 'heart_model_computation')
+        create(:computation, patient: patient, pipeline_step: 'after_parameter_estimation')
         patient.after_parameter_estimation!
         visit patient_path(patient)
 
         expect(page).to have_content('Computations')
-        expect(page).
-          to have_content(I18n.t('computation.computation_type.heart_model_computation'))
+        expect(page).to have_content(
+          I18n.t('computation.for_procedure_status.after_parameter_estimation')
+        )
         expect(page).to have_content('New')
       end
 
@@ -105,7 +113,7 @@ RSpec.feature 'Patient browsing' do
                              stdout_path: 'http://download/stdout.pl',
                              stderr_path: 'http://download/stderr.pl')
 
-        patient.virtual_model_ready!
+        patient.imaging_uploaded!
         visit patient_path(patient)
 
         expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
@@ -121,24 +129,24 @@ RSpec.feature 'Patient browsing' do
 
         expect(page).to have_content('Computations')
         expect(page).
-          to have_content(I18n.t('patients.show.new_computation.blood_flow_simulation'))
+          to have_content(I18n.t('patients.show.new_computation.virtual_model_ready'))
 
         expect { click_button 'Execute simulation' }.
-          to change { Computation.blood_flow_simulation.count }.by(1)
+          to change { Computation.where(pipeline_step: 'virtual_model_ready').count }.by(1)
 
         patient.after_parameter_estimation!
         visit patient_path(patient)
 
         expect(page).to have_content('Computations')
         expect(page).
-          to have_content(I18n.t('patients.show.new_computation.heart_model_computation'))
+          to have_content(I18n.t('patients.show.new_computation.after_parameter_estimation'))
 
         expect { click_button 'Execute simulation' }.
-          to change { Computation.heart_model_computation.count }.by(1)
+          to change { Computation.where(pipeline_step: 'after_parameter_estimation').count }.by(1)
       end
 
       scenario 'periodically ajax-refreshes computation status', js: true do
-        computation = create(:computation, patient: patient)
+        computation = create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
         patient.virtual_model_ready!
 
         visit patient_path(patient)
@@ -154,7 +162,7 @@ RSpec.feature 'Patient browsing' do
       end
 
       scenario 'refreshes entire page when computation status turns finished', js: true do
-        computation = create(:computation, patient: patient)
+        computation = create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
         patient.virtual_model_ready!
 
         visit patient_path(patient)

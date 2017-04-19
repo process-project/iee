@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 class Patient < ApplicationRecord
+  PIPELINE = {
+    imaging_uploaded: Pipeline::Segmentation,
+    virtual_model_ready: Pipeline::BloodFlowSimulation,
+    after_parameter_estimation: Pipeline::HeartModelCalculation
+  }.freeze
+
   enum procedure_status: [
     :not_started,
     :imaging_uploaded,

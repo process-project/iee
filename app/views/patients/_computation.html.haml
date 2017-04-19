@@ -1,5 +1,5 @@
 %tr{ data: { refresh: computation.active?.to_s, url: computation_path(computation) }}
-  %td= t "computation.computation_type.#{computation.computation_type}"
+  %td= t "computation.for_procedure_status.#{computation.pipeline_step}"
   %td= l(computation.created_at, format: :short)
   %td= execution_time(computation)
   %td

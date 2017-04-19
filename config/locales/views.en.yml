@@ -20,8 +20,9 @@ en:
       files: Files
       computations: Computations
       new_computation:
-        blood_flow_simulation: Run new blood flow computation
-        heart_model_computation: Run new 0D Heart Model computation
+        imaging_uploaded: Run Segmentation
+        virtual_model_ready: Run new Blood flow CFD simulation
+        after_parameter_estimation: Run new 0D Heart Model computation
       nothing: There are no files uploaded for this patient's case.
       download: Download
       download_unavailable: (download unavailable)

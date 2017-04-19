@@ -22,7 +22,7 @@
           .row
             = render partial: 'patient_files', locals: { patient: @patient }
 
-        - if @patient.virtual_model_ready? || @patient.after_parameter_estimation?
+        - if @patient.imaging_uploaded? || @patient.virtual_model_ready? || @patient.after_parameter_estimation?
           %h3= t '.computations'
 
           - computations = @patient.computations.for_patient_status(@patient.procedure_status)
@@ -34,7 +34,7 @@
               .row
                 .col-xs-12.table
                   = simple_form_for(@new_computation) do |f|
-                    %h4= t ".new_computation.#{@new_computation.computation_type}"
+                    %h4= t ".new_computation.#{@new_computation.pipeline_step}"
                     = f.error_notification
                     = f.hidden_field :patient_id, value: @patient.id
                     %div

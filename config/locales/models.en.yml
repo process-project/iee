@@ -19,9 +19,11 @@ en:
     stdout_path_missing: no stdout
     stderr_path_missing: no stderr
     status: Status
-    computation_type:
-      blood_flow_simulation: Blood flow CFD simulation
-      heart_model_computation: 0D Heart Model computation
+    for_procedure_status:
+      imaging_uploaded: Segmentation
+      virtual_model_ready: Blood flow CFD simulation
+      after_parameter_estimation: 0D Heart Model computation
+
   user:
     wrong_password: You must provide a valid current password
   service:
