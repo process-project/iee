@@ -13,7 +13,7 @@ module ScriptGenerator
         #SBATCH -p plgrid
         #SBATCH --output /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.out
         #SBATCH --error /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.err
-  
+
         ## Change to the directory where sbatch was called
         cd $SCRATCHDIR
       HEADER
@@ -23,7 +23,7 @@ module ScriptGenerator
       <<~STAGEIN
         ## Copy the required compiled library file structure over
         cp -r $PLG_GROUPS_STORAGE/plggeurvalve/0DModel/Linx64 .
-  
+
         ## Copy estimated patient-specific parameters
         #{stage_in_file '0DModel_input.csv'}
       STAGEIN

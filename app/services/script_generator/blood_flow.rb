@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 module ScriptGenerator
   class BloodFlow < ScriptGenerator::Computation
-
     private
 
     def header
@@ -14,7 +13,7 @@ module ScriptGenerator
         #SBATCH -p plgrid
         #SBATCH --output /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.out
         #SBATCH --error /net/archive/groups/plggeurvalve/slurm_outputs/slurm-%j.err
-  
+
         ## Change to the directory where sbatch was called
         cd $SCRATCHDIR
       HEADER
@@ -24,7 +23,7 @@ module ScriptGenerator
       <<~STAGEIN
         ## Copy the template file structure over
         cp $PLG_GROUPS_STORAGE/plggeurvalve/template/* .
-  
+
         ## Copy both fluid and structure files for the given case
         #{stage_in_file 'fluidFlow.cas'}
         #{stage_in_file 'structural_vent.dat'}
@@ -40,7 +39,7 @@ module ScriptGenerator
         cd FluidFlow
         OUT_FILE_1=`ls -t fluidFlow-1-* | head -1`
         OUT_FILE_2=`ls -t fluidFlow-1-* | head -2 | tail -1`
-  
+
         #{stage_out_file('$OUT_FILE_1')}
         #{stage_out_file('$OUT_FILE_2')}
       STAGEOUT

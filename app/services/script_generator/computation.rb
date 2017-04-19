@@ -52,8 +52,8 @@ module ScriptGenerator
 
     def stage_out_file(filename)
       if synchronizer.class == WebdavDataFileSynchronizer
-        "curl -X PUT --data @#{filename}"\
-          " -H \"Content-Type:application/octet-stream\" -H \"Authorization: Bearer #{@user.token}\""\
+        "curl -X PUT --data @#{filename} -H \"Content-Type:application/octet-stream\""\
+          " -H \"Authorization: Bearer #{@user.token}\""\
           " \"#{synchronizer.computation_file_handle(filename)}\""
       else
         "cp #{filename} #{synchronizer.computation_file_handle('')}"
