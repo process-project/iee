@@ -26,6 +26,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.3.3
+
+### Fixed
+
+- A 404 error code is returned instead of the 500 code when copying/moving policy for a non-existent source policy (@dharezlak)
 
 ## 0.3.2
 
