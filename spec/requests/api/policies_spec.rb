@@ -279,6 +279,19 @@ RSpec.describe 'Policies API' do
     end
   end
 
+  it 'should return a not found code when source policy is not defined' do
+    wildcard_resource = create(:resource, service: service, path: '/a/resource/.*')
+    ResourceManager.create(user: user, resource: wildcard_resource)
+
+    post api_policies_path,
+         params: policy_post_params(path: '/a/resource/to/*', move_from: '/a/resource/from/*'),
+         headers: valid_auth_headers,
+         as: :json
+
+    expect(response.status).to eq(404)
+    expect(response.body).to include('Source policy does not exist for copying/moving')
+  end
+
   it 'should return a forbidden status when a user is not allowed to manage a given resource' do
     another_user = create(:approved_user, email: 'another@host.com')
 
