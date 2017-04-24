@@ -23,14 +23,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Left menu can be scrolled when high is small (@mkasztelnik)
 - Policy API filters policies according to the service identified by the passed id (@dharezlak)
+- A 404 error code is returned instead of the 500 code when copying/moving policy for a non-existent source policy (@dharezlak)
 
 ### Security
 
-## 0.3.3
-
-### Fixed
-
-- A 404 error code is returned instead of the 500 code when copying/moving policy for a non-existent source policy (@dharezlak)
 
 ## 0.3.2
 
@@ -44,6 +40,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 - Policy API filters policies according to the service identified by the passed id (@dharezlak)
+
 
 ## 0.3.0
 
