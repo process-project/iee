@@ -6,6 +6,9 @@ module Api
     before_action :validate_index_request, only: :index
 
     before_action :parse_and_validate_create_request, only: :create
+    before_action :check_existence, only: :create
+    before_action :check_source, only: :create
+    before_action :authorize_copy_move, only: :create, if: :copy_or_move_request?
 
     before_action :validate_destroy_request, only: :destroy
 
@@ -56,28 +59,17 @@ module Api
       schema = File.read(Rails.root.join('config', 'schemas', 'policy-schema.json'))
       @json = JSON.parse(request.body.read)
       api_error(status: :bad_request) unless JSON::Validator.validate(schema, @json)
-      return if check_existence
-      return if check_source
-      authorize_copy_move if copy_or_move_request?
     end
 
     def check_existence
       @resource = Resource.find_by(path: PathService.to_path(@json['path']))
-      if @resource && copy_or_move_request?
-        api_error(status: :bad_request, errors: I18n.t('api.destination_resource_exists'))
-        true
-      else
-        false
-      end
+      return unless @resource && copy_or_move_request?
+      api_error(status: :bad_request, errors: I18n.t('api.destination_resource_exists'))
     end
 
     def check_source
-      if copy_move_path && !Resource.find_by(path: PathService.to_path(copy_move_path))
-        api_error(status: :not_found, errors: I18n.t('api.source_policy_missing'))
-        true
-      else
-        false
-      end
+      return unless copy_move_path && !Resource.find_by(path: PathService.to_path(copy_move_path))
+      api_error(status: :not_found, errors: I18n.t('api.source_policy_missing'))
     end
 
     def authorize_copy_move
