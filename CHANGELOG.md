@@ -27,6 +27,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.3.3
+
+### Fixed
+- Data sets page url can be overwritten with an environment property (@dharezlak)
+
 
 ## 0.3.2
 
