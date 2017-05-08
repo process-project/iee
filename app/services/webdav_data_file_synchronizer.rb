@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'net/dav'
 
-# frozen_string_literal: true
 class WebdavDataFileSynchronizer
   include SynchronizerUtilities
 
   def initialize(patient, user)
-    @dav_client = Net::DAV.new(
+    @dav_client = Webdav.new(
       storage_url,
       headers: {
         'Authorization' => "Bearer #{user.try(:token)}"
