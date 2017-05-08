@@ -23,7 +23,11 @@ RSpec.describe Patient do
 
     it 'gets updated when appropriate data_files appear' do
       expect(subject.not_started?).to be_truthy
-      create(:data_file, data_type: 'ventricle_virtual_model', patient: subject)
+      create(:data_file, data_type: 'image', patient: subject)
+      expect(subject.reload.imaging_uploaded?).to be_truthy
+      create(:data_file, data_type: 'segmentation_result', patient: subject)
+      expect(subject.reload.segmentation_ready?).to be_truthy
+      create(:data_file, data_type: 'ventricle_virtual_model', patient: subject.reload)
       create(:data_file, data_type: 'fluid_virtual_model', patient: subject.reload)
       expect(subject.reload.virtual_model_ready?).to be_truthy
       create(:data_file, data_type: 'blood_flow_result', patient: subject)

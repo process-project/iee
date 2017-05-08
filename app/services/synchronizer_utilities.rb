@@ -45,6 +45,8 @@ module SynchronizerUtilities
   # rubocop:disable CyclomaticComplexity
   def recognize_data_type(name)
     case name
+    when /imaging_.*\.zip/ then 'image'
+    when /segmentation_.*\.zip/ then 'segmentation_result'
     when 'fluidFlow.cas' then 'fluid_virtual_model'
     when 'structural_vent.dat' then 'ventricle_virtual_model'
     when /fluidFlow.*.dat/ then 'blood_flow_result'
