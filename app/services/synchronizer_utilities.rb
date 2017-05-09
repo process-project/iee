@@ -6,6 +6,12 @@ module SynchronizerUtilities
     "#{url}patients/#{@patient.case_number}"
   end
 
+  def webdav_storage_url
+    Rails.configuration.constants['file_store']['web_dav_base_url'] +
+      Rails.configuration.constants['file_store']['web_dav_base_path'] +
+      "/#{Rails.env}/"
+  end
+
   def construct_handle(handle_url, filename)
     "#{case_directory(handle_url)}/#{filename}"
   end
