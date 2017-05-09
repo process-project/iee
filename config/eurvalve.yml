@@ -1,5 +1,5 @@
 defaults: &defaults
-  data_synchronizer: PlgridDataFileSynchronizer
+  data_synchronizer: WebdavDataFileSynchronizer
   rimrock:
     url: https://submit.plgrid.pl
     host: prometheus.cyfronet.pl
