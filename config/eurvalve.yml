@@ -5,6 +5,13 @@ defaults: &defaults
     host: prometheus.cyfronet.pl
     tag: vapor
   grant_id: <%= ENV['GRANT_ID'] || 'eurvalve3' %>
+  owncloud:
+    inputs_path: input
+    url: <%= ENV['OWNCLOUD_URL'] %>
+    user: <%= ENV['OWNCLOUD_USER'] %>
+    password: <%= ENV['OWNCLOUD_PASSWORD'] %>
+
+
 
 development:
   <<: *defaults
