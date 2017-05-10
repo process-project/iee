@@ -13,7 +13,11 @@ module Segmentation
 
     def build_remote_file_name
       separator = @remote_path.end_with?('/') ? '' : '/'
-      @remote_path + separator + strip_local_filename
+      @remote_path + separator + job_input_file_name
+    end
+
+    def job_input_file_name
+      "0_#{SecureRandom.uuid}_#{strip_local_filename}"
     end
   end
 end
