@@ -5,6 +5,7 @@ module Pipeline
 
     def initialize(patient, user)
       validate_procedure_status!(patient)
+      @patient = patient
       @computation = WebdavComputation.create(
         patient: patient,
         user: user,
