@@ -2,7 +2,7 @@
 
 require 'net/dav'
 
-class Webdav
+class WebdavClient
   def initialize(url, options = {})
     @verify_server = options.delete(:verify_server)
     @options = options

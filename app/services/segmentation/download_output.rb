@@ -6,7 +6,7 @@ module Segmentation
 
     def initialize(output_remote_path)
       @remote_path = output_remote_path
-      super(Webdav.new(owncloud_url, owncloud_options), @output_remote_path)
+      super(WebdavClient.new(owncloud_url, owncloud_options), @output_remote_path)
     end
   end
 end

@@ -5,7 +5,7 @@ module Segmentation
     include OwncloudUtils
 
     def initialize(file_path)
-      super(Webdav.new(owncloud_url, owncloud_options), file_path)
+      super(WebdavClient.new(owncloud_url, owncloud_options), file_path)
       @remote_path = Rails.application.config_for('eurvalve')['owncloud']['inputs_path']
     end
 
