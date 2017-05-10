@@ -6,12 +6,12 @@ module Pipeline
     def initialize(patient, user)
       validate_procedure_status!(patient)
       @patient = patient
-      @computation = WebdavComputation.create(
+      @computation = WebdavComputation.create!(
         patient: patient,
         user: user,
         pipeline_step: 'imaging_uploaded',
         input_path: input_path,
-        output_path: ''
+        output_path: 'change_me'
       )
     end
 
