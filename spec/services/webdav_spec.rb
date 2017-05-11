@@ -22,7 +22,7 @@ describe WebdavClient do
       WebdavClient.new(url, username: 'user', password: 'password')
     end
     it 'does not raise if JWT is used' do
-      WebdavClient.new(url, headers: {'Authorization' => 'Bearer token' })
+      WebdavClient.new(url, headers: { 'Authorization' => 'Bearer token' })
     end
   end
 end
