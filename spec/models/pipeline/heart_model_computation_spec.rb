@@ -7,6 +7,10 @@ RSpec.describe Pipeline::HeartModelCalculation do
   let(:user) { create(:user) }
   let(:patient) { create(:patient, procedure_status: :after_parameter_estimation) }
 
+  before do
+    allow(Rimrock::StartJob).to receive(:perform_later)
+  end
+
   it_behaves_like 'a Rimrock-based step'
 
   it_behaves_like 'a pipeline step'

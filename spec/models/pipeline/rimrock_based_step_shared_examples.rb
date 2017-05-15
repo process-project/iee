@@ -2,9 +2,6 @@
 require 'rails_helper'
 
 shared_examples 'a Rimrock-based step' do
-  # before do
-  #   allow(Rimrock::StartJob).to receive(:perform_later)
-  # end
 
   it 'creates RimrockComputation' do
     expect { described_class.new(patient, user) }.
