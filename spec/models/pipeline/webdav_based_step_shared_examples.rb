@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 shared_examples 'a Webdav-based step' do
-
   it 'creates WebdavComputation' do
     expect { described_class.new(patient, user) }.
       to change { WebdavComputation.count }.by(1)

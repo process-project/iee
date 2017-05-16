@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 shared_examples 'a pipeline step' do
-
   it 'associates created computation with user' do
     computation = described_class.new(patient, user).run
     expect(computation.patient).to eq patient

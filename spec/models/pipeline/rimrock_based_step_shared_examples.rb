@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 shared_examples 'a Rimrock-based step' do
-
   it 'creates RimrockComputation' do
     expect { described_class.new(patient, user) }.
       to change { RimrockComputation.count }.by(1)
