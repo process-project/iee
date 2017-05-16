@@ -9,6 +9,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # javascript
 gem 'animate-rails', '1.0.10'
+gem 'clipboard-rails' # copy text to clipboard
 gem 'coffee-rails', '~> 4.2'
 gem 'gravtastic'
 gem 'haml-rails'
@@ -18,7 +19,6 @@ gem 'jquery-turbolinks'
 gem 'nicescroll-rails'
 gem 'select2-rails' # jquery replacement for select boxes
 gem 'turbolinks', '~> 5.0'
-gem 'zeroclipboard-rails' # copy text to clipboard
 
 gem 'bootstrap-sass', '~> 3.3'
 gem 'font-awesome-sass', '~> 4.5'

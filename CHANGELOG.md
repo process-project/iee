@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Update rubocop into 0.47.1, fix new discovered offenses (@mkasztelnik)
 - JWT token expiration time extended to 6 hours (@mkasztelnik)
+- Change zeroclipboard into clipboard.js because support for flash is dropped (@mkasztelnik)
 
 ### Deprecated
 
