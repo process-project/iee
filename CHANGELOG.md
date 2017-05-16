@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Basic rack-attack configuration (@mkasztelnik)
+- Patient pipelines (@mkasztelnik)
 
 ### Changed
 - Update rubocop into 0.47.1, fix new discovered offenses (@mkasztelnik)

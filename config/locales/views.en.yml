@@ -44,6 +44,24 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
+    pipelines:
+      list:
+        title: Pipelines
+        new: Create new pipeline
+        id: Id
+        name: Name
+        status: Status
+      show:
+        subtitle: pipeline
+        back_to_index: Back to pipelines list
+        edit: Edit pipeline
+        delete: Remove pipeline
+      new:
+        title: Create new pipeline
+        back_to_index: Back to pipelines list
+      edit:
+        title: Edit pipeline
+        back_to_index: Back to pipelines list
 
   services:
     index:

@@ -23,7 +23,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :patients, except: [:edit, :update]
+  resources :patients, except: [:edit, :update] do
+    scope module: :patients do
+      resources :pipelines
+    end
+  end
 
   namespace :api do
     resources :pdp, only: :index
