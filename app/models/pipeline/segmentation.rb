@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 module Pipeline
   class Segmentation
-    include SynchronizerUtilities
-
     def initialize(patient, user)
       validate_procedure_status!(patient)
       @patient = patient
@@ -29,7 +27,7 @@ module Pipeline
     end
 
     def input_path
-      "#{case_directory(webdav_storage_url)}/imaging_#{@patient.case_number}.zip"
+      "/#{Rails.env}/patients/#{@patient.case_number}/imaging_#{@patient.case_number}.zip"
     end
   end
 end
