@@ -4,7 +4,7 @@ require 'net/dav'
 
 class WebdavClient
   def initialize(url, options = {})
-    @verify_server = options.delete(:verify_server)
+    @verify_server = options.delete(:verify_server) { true }
     @options = options
     validate_auth_options
 
@@ -12,7 +12,7 @@ class WebdavClient
       url,
       @options
     )
-    @dav_client.verify_server = @verify_server if @verify_server
+    @dav_client.verify_server = @verify_server
   end
 
   def get_file(remote_path, local_filename)
