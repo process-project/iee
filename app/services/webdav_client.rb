@@ -4,15 +4,9 @@ require 'net/dav'
 
 class WebdavClient
   def initialize(url, options = {})
-    @verify_server = options.delete(:verify_server) { true }
-    @options = options
+    parse_params(url, options)
     validate_auth_options
-
-    @dav_client = Net::DAV.new(
-      url,
-      @options
-    )
-    @dav_client.verify_server = @verify_server
+    init_dav_client
   end
 
   def get_file(remote_path, local_filename)
@@ -45,16 +39,31 @@ class WebdavClient
 
   protected
 
+  def parse_params(url, options)
+    @url = url
+    dav_options = options.dup
+    @verify_server = dav_options.delete(:verify_server) { true }
+    @username = dav_options.delete(:username)
+    @password = dav_options.delete(:password)
+    @dav_options = dav_options
+  end
+
   def validate_auth_options
     return if jwt_auth_enabled? ^ basic_auth_enabled?
     raise(ArgumentError, 'Provide either a :token or :user and :password')
   end
 
   def jwt_auth_enabled?
-    @options.include?(:headers) && @options[:headers]['Authorization'].start_with?('Bearer')
+    @dav_options.include?(:headers) && @dav_options[:headers]['Authorization'].start_with?('Bearer')
   end
 
   def basic_auth_enabled?
-    @options.include?(:username) && @options.include?(:password)
+    @username && @password
+  end
+
+  def init_dav_client
+    @dav_client = Net::DAV.new(@url, @dav_options)
+    @dav_client.credentials(@username, @password) if basic_auth_enabled?
+    @dav_client.verify_server = @verify_server
   end
 end
