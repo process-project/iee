@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :resource do
-    name { Faker::Name.name }
-    path { '/' + Faker::Internet.domain_word }
+    name { Faker::Name.unique.name }
+    path { '/' + Faker::Internet.unique.domain_word }
     resource_type :local
     service
 

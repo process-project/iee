@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :user do
-    email { Faker::Internet.email }
+    email { Faker::Internet.unique.email }
     password '12345678'
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
 
     trait :plgrid do
-      plgrid_login { Faker::Name.name }
+      plgrid_login { Faker::Name.unique.name }
     end
 
     trait :approved do
