@@ -6,6 +6,7 @@ class PatientsController < ApplicationController
 
   def show
     @patient = @patients.find(params[:id])
+    @pipelines = @patient.pipelines.order(:iid)
     @new_computation = Computation.new(
       pipeline_step: @patient.procedure_status
     )

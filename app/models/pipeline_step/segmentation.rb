@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-module Pipeline
+module PipelineStep
   class Segmentation
   end
 end

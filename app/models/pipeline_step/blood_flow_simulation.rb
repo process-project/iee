@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-module Pipeline
+module PipelineStep
   class BloodFlowSimulation
     def self.run(patient, user)
       validate_procedure_status!(patient)

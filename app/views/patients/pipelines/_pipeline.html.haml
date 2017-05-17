@@ -1,0 +1,6 @@
+%tr
+  %th= pipeline.iid
+  %th= link_to(pipeline.name, [pipeline.patient, pipeline])
+  %th
+    .progress.progress_sm
+      .progress-bar.bg-green(role="progressbar" style="width: 40%")

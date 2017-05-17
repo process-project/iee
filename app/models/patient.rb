@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 class Patient < ApplicationRecord
   PIPELINE = {
-    imaging_uploaded: Pipeline::Segmentation,
-    virtual_model_ready: Pipeline::BloodFlowSimulation,
-    after_parameter_estimation: Pipeline::HeartModelCalculation
+    imaging_uploaded: PipelineStep::Segmentation,
+    virtual_model_ready: PipelineStep::BloodFlowSimulation,
+    after_parameter_estimation: PipelineStep::HeartModelCalculation
   }.freeze
 
   enum procedure_status: [
@@ -17,6 +17,7 @@ class Patient < ApplicationRecord
 
   has_many :data_files, dependent: :destroy
   has_many :computations, dependent: :destroy
+  has_many :pipelines, dependent: :destroy
 
   validates :case_number, :procedure_status, presence: true
   validates :case_number, uniqueness: true

@@ -64,6 +64,15 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content I18n.t('patients.show.nothing')
     end
 
+    scenario 'shows pipelines list' do
+      pipeline = create(:pipeline, patient: patient, name: 'p1')
+
+      visit patient_path(patient)
+
+      expect(page).to have_link('p1',
+                                href: patient_pipeline_path(patient, pipeline))
+    end
+
     scenario 'lets the user to go back to the patients list' do
       visit patient_path(patient)
 

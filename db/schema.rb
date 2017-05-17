@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313131252) do
+ActiveRecord::Schema.define(version: 20170424124528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,19 @@ ActiveRecord::Schema.define(version: 20170313131252) do
     t.datetime "updated_at",                   null: false
     t.index ["case_number"], name: "index_patients_on_case_number", using: :btree
     t.index ["procedure_status"], name: "index_patients_on_procedure_status", using: :btree
+  end
+
+  create_table "pipelines", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "iid",        null: false
+    t.integer  "patient_id", null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["iid"], name: "index_pipelines_on_iid", using: :btree
+    t.index ["patient_id", "iid"], name: "index_pipelines_on_patient_id_and_iid", unique: true, using: :btree
+    t.index ["patient_id"], name: "index_pipelines_on_patient_id", using: :btree
+    t.index ["user_id"], name: "index_pipelines_on_user_id", using: :btree
   end
 
   create_table "resource_managers", force: :cascade do |t|

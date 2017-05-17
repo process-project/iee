@@ -1,0 +1,20 @@
+.row
+  .col-md-12.col-sm-12.col-xs-12
+    .x_panel
+      .x_title
+        %h2= t('.pipelines')
+        %span.pull-right
+          = link_to t('.new'), new_patient_pipeline_path(patient),
+            class: 'btn btn-success'
+        .clearfix
+      .x_content
+        %section.content
+          %table.table
+            %thead
+              %tr
+                %th.iid= t('.id')
+                %th= t('.name')
+                %th= t('.status')
+            %tbody
+              = render partial: 'patients/pipelines/pipeline',
+                collection: pipelines

@@ -1,0 +1,7 @@
+= simple_form_for [patient, pipeline] do |f|
+  = f.error_notification
+  = f.input :name
+  .ln_solid
+  .form-group
+    .col-md-6.col-md-offset-3
+      = f.button :submit, class: 'btn btn-success'
