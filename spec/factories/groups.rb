@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :group do
-    name { Faker::Name.name }
+    name { Faker::Name.unique.name }
 
     before(:create) do |group, _evaluator|
       unless group.user_groups.any?(&:owner)
