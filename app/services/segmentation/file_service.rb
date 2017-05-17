@@ -2,6 +2,8 @@
 
 module Segmentation
   class FileService
+    include Segmentation::FileUtils
+
     private
 
     def initialize(dav_client)

@@ -16,11 +16,7 @@ module Segmentation
     end
 
     def generate_unique_local_file_path
-      Dir.mktmpdir + '/' + strip_local_filename
-    end
-
-    def strip_local_filename
-      @remote_path.gsub(%r{.*\/}, '')
+      Dir.mktmpdir + '/' + strip_local_filename(@remote_path)
     end
   end
 end
