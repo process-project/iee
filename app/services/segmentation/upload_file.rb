@@ -12,9 +12,5 @@ module Segmentation
       super(dav_client)
       @file_path = file_path
     end
-
-    def strip_local_filename
-      @file_path.gsub(%r{.*\/}, '')
-    end
   end
 end
