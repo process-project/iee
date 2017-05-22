@@ -29,25 +29,32 @@ RSpec.describe Computation, type: :model do
     end
   end
 
-  describe '.active_rimrock' do
-    it 'returns active computations' do
-      create(:rimrock_computation)
-      expect(Computation.active_rimrock.collect(&:status)).to eq ['new']
-    end
-    it 'returns RimrockComputation' do
-      create(:rimrock_computation)
-      expect(Computation.active_rimrock.collect(&:type)).to all(eq 'RimrockComputation')
+  describe '.submitted' do
+    it 'returns only queued and running computations' do
+      create(:rimrock_computation, status: 'new')
+      queued = create(:rimrock_computation, status: 'queued')
+      running = create(:webdav_computation, status: 'running')
+      expect(Computation.submitted.collect(&:id)).to contain_exactly(queued.id, running.id)
     end
   end
 
-  describe '.active_webdav' do
-    it 'returns active computations' do
-      create(:webdav_computation)
-      expect(Computation.active_webdav.collect(&:status)).to eq ['new']
+  describe '.submitted_rimrock' do
+    it 'returns only queued and running rimrock-based computations' do
+      create(:webdav_computation, status: 'running')
+      create(:rimrock_computation, status: 'new')
+      queued = create(:rimrock_computation, status: 'queued')
+      running = create(:rimrock_computation, status: 'running')
+      expect(Computation.submitted_rimrock.collect(&:id)).to contain_exactly(queued.id, running.id)
     end
-    it 'returns WebdavComputation' do
-      create(:webdav_computation)
-      expect(Computation.active_webdav.collect(&:type)).to all(eq 'WebdavComputation')
+  end
+
+  describe '.submitted_webdav' do
+    it 'returns only queued and running webdav-based computations' do
+      create(:rimrock_computation, status: 'running')
+      create(:webdav_computation, status: 'new')
+      queued = create(:webdav_computation, status: 'queued')
+      running = create(:webdav_computation, status: 'running')
+      expect(Computation.submitted_webdav.collect(&:id)).to contain_exactly(queued.id, running.id)
     end
   end
 end
