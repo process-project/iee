@@ -28,4 +28,26 @@ RSpec.describe Computation, type: :model do
       expect(Computation.active).to be_empty
     end
   end
+
+  describe '.active_rimrock' do
+    it 'returns active computations' do
+      create(:rimrock_computation)
+      expect(Computation.active_rimrock.collect(&:status)).to eq ['new']
+    end
+    it 'returns RimrockComputation' do
+      create(:rimrock_computation)
+      expect(Computation.active_rimrock.collect(&:type)).to all(eq 'RimrockComputation')
+    end
+  end
+
+  describe '.active_webdav' do
+    it 'returns active computations' do
+      create(:webdav_computation)
+      expect(Computation.active_webdav.collect(&:status)).to eq ['new']
+    end
+    it 'returns WebdavComputation' do
+      create(:webdav_computation)
+      expect(Computation.active_webdav.collect(&:type)).to all(eq 'WebdavComputation')
+    end
+  end
 end

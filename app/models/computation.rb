@@ -8,6 +8,8 @@ class Computation < ApplicationRecord
   validates :pipeline_step, inclusion: { in: Patient::PIPELINE.keys.map(&:to_s) }
 
   scope :active, -> { where(status: %w(new queued running)) }
+  scope :active_rimrock, -> { active.where(type: 'RimrockComputation') }
+  scope :active_webdav, -> { active.where(type: 'WebdavComputation') }
   scope :for_patient_status, ->(status) { where(pipeline_step: status) }
 
   def active?

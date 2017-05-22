@@ -7,5 +7,16 @@ FactoryGirl.define do
 
     user
     patient
+
+    factory :webdav_computation do
+      type 'WebdavComputation'
+      input_path { '/inputs' }
+      output_path { '/outputs' }
+    end
+
+    factory :rimrock_computation do
+      type 'RimrockComputation'
+      script { 'SCRIPT' }
+    end
   end
 end
