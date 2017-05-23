@@ -7,7 +7,7 @@ defaults: &defaults
   grant_id: <%= ENV['GRANT_ID'] || 'eurvalve3' %>
   owncloud:
     inputs_path: input
-    outputs_path: remote.php/webdav/output
+    outputs_path: output
     url: <%= ENV['OWNCLOUD_URL'] %>
     user: <%= ENV['OWNCLOUD_USER'] %>
     password: <%= ENV['OWNCLOUD_PASSWORD'] %>
