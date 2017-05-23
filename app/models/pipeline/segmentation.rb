@@ -9,7 +9,7 @@ module Pipeline
         user: user,
         pipeline_step: 'imaging_uploaded',
         input_path: input_path,
-        output_path: 'change_me'
+        output_path: output_path
       )
     end
 
@@ -28,6 +28,10 @@ module Pipeline
 
     def input_path
       "/#{Rails.env}/patients/#{@patient.case_number}/imaging_#{@patient.case_number}.zip"
+    end
+
+    def output_path
+      "/#{Rails.env}/patients/#{@patient.case_number}/segmentation_#{@patient.case_number}.zip"
     end
   end
 end
