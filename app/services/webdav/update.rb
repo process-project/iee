@@ -28,7 +28,7 @@ module Webdav
       finish_job(computation) if @owncloud.exists? output_path(computation)
     end
 
-    def fjinish_job(computation)
+    def finish_job(computation)
       Segmentation::Finish.new(computation, @on_finish_callback).call
     end
   end
