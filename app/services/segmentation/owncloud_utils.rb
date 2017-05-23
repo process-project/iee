@@ -15,5 +15,13 @@ module Segmentation
         password: Rails.application.config_for('eurvalve')['owncloud']['password']
       }
     end
+
+    def outputs_path
+      Rails.application.config_for('eurvalve')['owncloud']['outputs_path']
+    end
+
+    def output_path(computation)
+      "#{outputs_path}/#{computation.working_file_name}"
+    end
   end
 end
