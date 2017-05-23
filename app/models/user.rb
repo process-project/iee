@@ -35,11 +35,12 @@ class User < ApplicationRecord
   scope :blocked, -> { where(state: :blocked) }
   scope :supervisors, -> { joins(:groups).where(groups: { name: 'supervisor' }) }
 
-  def self.with_submitted_computations
-    User.where(<<~SQL
-      id IN (SELECT DISTINCT(user_id) FROM computations WHERE status IN ('queued', 'running'))
+  def self.with_submitted_computations(computation_type)
+    condition = <<~SQL
+      id IN (SELECT DISTINCT(user_id) FROM computations
+              WHERE type = ? AND status IN ('queued', 'running'))
     SQL
-              )
+    User.where(condition, computation_type)
   end
 
   def self.from_plgrid_omniauth(auth)

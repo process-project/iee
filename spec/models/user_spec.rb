@@ -86,15 +86,28 @@ RSpec.describe User do
     end
   end
 
-  it 'returns users with active computations' do
+  it 'returns users with submitted Rimrock computations' do
     u1, u2, u3 = create_list(:user, 3)
 
-    create(:computation, status: 'new', user: u1)
-    create(:computation, status: 'finished', user: u1)
-    create(:computation, status: 'queued', user: u2)
-    create(:computation, status: 'running', user: u3)
+    create(:rimrock_computation, status: 'new', user: u1)
+    create(:rimrock_computation, status: 'finished', user: u1)
+    create(:rimrock_computation, status: 'queued', user: u2)
+    create(:rimrock_computation, status: 'running', user: u3)
+    create(:webdav_computation, status: 'running', user: u1)
 
-    expect(User.with_submitted_computations).to contain_exactly(u2, u3)
+    expect(User.with_submitted_computations('RimrockComputation')).to contain_exactly(u2, u3)
+  end
+
+  it 'returns users with submitted Webdav computations' do
+    u1, u2, u3 = create_list(:user, 3)
+
+    create(:webdav_computation, status: 'new', user: u1)
+    create(:webdav_computation, status: 'finished', user: u1)
+    create(:webdav_computation, status: 'queued', user: u2)
+    create(:webdav_computation, status: 'running', user: u3)
+    create(:rimrock_computation, status: 'running', user: u1)
+
+    expect(User.with_submitted_computations('WebdavComputation')).to contain_exactly(u2, u3)
   end
 
   it 'returns supervisors' do
