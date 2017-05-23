@@ -30,6 +30,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.3.4
+
+### Changed
+- Default Patient Case File Synchronizer changed into WebDav (@mkasztelnik)
+
 ## 0.3.3
 
 ### Fixed
