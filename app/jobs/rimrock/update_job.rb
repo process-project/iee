@@ -5,19 +5,7 @@ module Rimrock
 
     def perform(user)
       GuardedProxyExecutor.new(user).
-        call { Rimrock::Update.new(user, on_finish_callback: Updater).call }
-    end
-
-    class Updater
-      def initialize(computation)
-        @computation = computation
-      end
-
-      def call
-        patient = @computation.patient
-        user = @computation.user
-        patient && user && patient.execute_data_sync(user)
-      end
+        call { Rimrock::Update.new(user, on_finish_callback: PipelineUpdater).call }
     end
   end
 end
