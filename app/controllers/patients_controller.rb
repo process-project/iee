@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 class PatientsController < ApplicationController
   before_action :set_patients
+  before_action :find_and_authorize, only: [:show, :destroy]
 
   def index; end
 
   def show
-    @patient = @patients.find(params[:id])
     @pipelines = @patient.pipelines.order(:iid)
     @new_computation = Computation.new(
       pipeline_step: @patient.procedure_status
@@ -14,10 +14,14 @@ class PatientsController < ApplicationController
 
   def new
     @patient = Patient.new
+    authorize(@patient)
   end
 
   def create
-    @patient = Patient.create(create_params)
+    new_patient = Patient.new(permitted_attributes(Patient))
+    authorize(new_patient)
+
+    @patient = Patients::Create.new(current_user, new_patient).call
 
     if @patient.valid?
       @patient.execute_data_sync(current_user)
@@ -28,9 +32,7 @@ class PatientsController < ApplicationController
   end
 
   def destroy
-    @patient = Patient.find(params[:id])
-
-    if @patient.destroy
+    if Patients::Destroy.new(current_user, @patient).call
       redirect_to patients_path,
                   notice: I18n.t('patients.destroy.success',
                                  case_number: @patient.case_number)
@@ -44,12 +46,11 @@ class PatientsController < ApplicationController
   private
 
   def set_patients
-    # NOTE Here insert the code that decides what Patients the current_user
-    # is able to see.
-    @patients = Patient.all
+    @patients = policy_scope(Patient).all
   end
 
-  def create_params
-    params.require(:patient).permit(:case_number)
+  def find_and_authorize
+    @patient = @patients.find(params[:id])
+    authorize(@patient)
   end
 end

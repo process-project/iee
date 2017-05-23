@@ -3,6 +3,7 @@ require 'rails_helper'
 
 describe 'Patients controller' do
   include ProxySpecHelper
+  include WebDavSpecHelper
 
   context 'with no user signed in' do
     describe 'GET /patients' do
@@ -56,6 +57,8 @@ describe 'Patients controller' do
     end
 
     describe 'POST /patients' do
+      before { stub_webdav }
+
       it 'calls execute_data_sync on newly created patient' do
         expect_any_instance_of(Patient).
           to receive(:execute_data_sync)
