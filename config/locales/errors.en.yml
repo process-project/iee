@@ -53,6 +53,10 @@ en:
         resource:
           pretty_path:
             wildcard: Path may contain a single wildcard character at the end
+        patient:
+          create_dav403: Unable to create patient file structure in File Store
+        pipeline:
+          create_dav403: Unable to create pipeline file structure in File Store
   api:
     destination_resource_exists: Destination resource already exists
     source_policy_missing: Source policy does not exist for copying/moving

@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Patient altering' do
+  include WebDavSpecHelper
+
   let(:patient) { create(:patient) }
 
   context 'for every regular user' do
@@ -11,6 +13,8 @@ RSpec.feature 'Patient altering' do
     end
 
     context 'when registering a new patient' do
+      before { stub_webdav }
+
       scenario 'lets the user register a case with case number' do
         visit new_patient_path
 
