@@ -16,7 +16,7 @@ module Patients
     def create
       @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
 
-      if @pipeline.save
+      if Pipelines::Create.new(current_user, @pipeline).call
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
         render(:new)
@@ -38,8 +38,15 @@ module Patients
     end
 
     def destroy
-      @pipeline.destroy
-      redirect_to(patient_path(@patient))
+      if Pipelines::Destroy.new(current_user, @pipeline).call
+        redirect_to patient_path(@patient),
+                    notice: I18n.t('pipelines.destroy.success',
+                                   name: @pipeline.name)
+      else
+        render :show,
+               notice: I18n.t('pipelines.destroy.failure',
+                              name: @pipeline.name)
+      end
     end
 
     private

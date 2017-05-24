@@ -9,4 +9,7 @@ en:
         me: Cannot block yourself
         success: "%{user} state changed into %{state}"
         error: Unable to change user state
-
+  pipelines:
+    destroy:
+      success: Pipeline %{name} was removed.
+      destroy: Unable to remove pipeline %{name}.

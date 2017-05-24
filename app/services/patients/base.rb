@@ -2,52 +2,15 @@
 require 'net/dav'
 
 module Patients
-  class Base
+  class Base < PatientWebdav
     def initialize(user, patient, options = {})
-      @user = user
+      super(user, options)
       @patient = patient
-      @dav_client = options.fetch(:client) { create_dav_client }
     end
 
     def call
       Patient.transaction { internal_call }
       @patient
-    end
-
-    protected
-
-    def r_mkdir(path)
-      elements = path.split('/')
-
-      mkdir(elements[0])
-      elements[1..-1].inject(elements[0]) do |p, el|
-        "#{p}/#{el}".tap { |current_path| mkdir(current_path) }
-      end
-    end
-
-    def mkdir(path)
-      @dav_client.mkdir(path) unless @dav_client.exists?(path)
-    end
-
-    def delete(path)
-      @dav_client.delete(path) if @dav_client.exists?(path)
-    end
-
-    private
-
-    def create_dav_client
-      Net::DAV.new(
-        storage_url,
-        headers: {
-          'Authorization' => "Bearer #{@user.try(:token)}"
-        }
-      )
-    end
-
-    def storage_url
-      Rails.configuration.constants['file_store']['web_dav_base_url'] +
-        Rails.configuration.constants['file_store']['web_dav_base_path'] +
-        "/#{Rails.env}/patients/"
     end
   end
 end

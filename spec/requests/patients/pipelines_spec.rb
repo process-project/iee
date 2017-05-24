@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 describe 'Pipelines controller' do
+  include WebDavSpecHelper
+
   let(:patient) { create(:patient) }
 
   context 'with no user signed in' do
@@ -28,6 +30,8 @@ describe 'Pipelines controller' do
     end
 
     describe 'POST /patients/:id/pipelines' do
+      before { stub_webdav }
+
       it 'allow to create new pipeline to all logged in users' do
         expect do
           post patient_pipelines_path(patient),
@@ -44,6 +48,8 @@ describe 'Pipelines controller' do
     end
 
     describe 'DELETE /patients/:id/pipelines/:iid' do
+      before { stub_webdav }
+
       it 'can be performed by owner' do
         pipeline = create(:pipeline, patient: patient, user: user)
 
