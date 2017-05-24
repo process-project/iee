@@ -17,7 +17,7 @@ module Segmentation
     private
 
     def download_output
-      remote_path = output_path computation
+      remote_path = output_path @computation
       download = DownloadOutput.new(remote_path)
       @local_file_path = download.call
     end
