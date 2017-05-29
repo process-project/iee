@@ -2,7 +2,7 @@
 
 module Segmentation
   class Start
-    include FileUtils
+    include Segmentation::FileUtils
     def initialize(computation)
       @computation = computation
       @download_input = DownloadInput.new(computation.input_path, computation.user.token)
