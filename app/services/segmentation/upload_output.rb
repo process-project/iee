@@ -6,7 +6,8 @@ module Segmentation
 
     def initialize(file_path, remote_output_path, token)
       @token = token
-      @remote_output_path = remote_output_path
+      @remote_output_path = File.join(filestore_base_path, remote_output_path)
+
       super(WebdavClient.new(filestore_url, filestore_options), file_path)
     end
 
