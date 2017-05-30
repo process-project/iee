@@ -32,6 +32,7 @@ module Segmentation
     end
 
     def update_pipeline
+      @computation.update_attributes(status: 'finished')
       @updater.new(@computation).call
     end
   end

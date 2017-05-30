@@ -12,7 +12,7 @@ module Segmentation
     private
 
     def remote_path(input_remote_path)
-      filestore_base_path + '/' + input_remote_path
+      File.join(filestore_base_path, input_remote_path)
     end
   end
 end
