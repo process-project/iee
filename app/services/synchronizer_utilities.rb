@@ -6,6 +6,12 @@ module SynchronizerUtilities
     "#{url}patients/#{@patient.case_number}"
   end
 
+  def webdav_storage_url
+    Rails.configuration.constants['file_store']['web_dav_base_url'] +
+      Rails.configuration.constants['file_store']['web_dav_base_path'] +
+      "/#{Rails.env}/"
+  end
+
   def construct_handle(handle_url, filename)
     "#{case_directory(handle_url)}/#{filename}"
   end
@@ -45,6 +51,8 @@ module SynchronizerUtilities
   # rubocop:disable CyclomaticComplexity
   def recognize_data_type(name)
     case name
+    when /imaging_.*\.zip/ then 'image'
+    when /segmentation_.*\.zip/ then 'segmentation_result'
     when 'fluidFlow.cas' then 'fluid_virtual_model'
     when 'structural_vent.dat' then 'ventricle_virtual_model'
     when /fluidFlow.*.dat/ then 'blood_flow_result'

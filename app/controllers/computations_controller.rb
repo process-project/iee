@@ -9,7 +9,7 @@ class ComputationsController < ApplicationController
   end
 
   def create
-    @computation = computation_builder_for(patient.procedure_status).run(patient, current_user)
+    @computation = computation_builder_for(patient.procedure_status).new(patient, current_user).run
     redirect_to @computation.patient, notice: 'Computation submitted'
   end
 

@@ -53,7 +53,7 @@ module Rimrock
     end
 
     def active_computations
-      @ac ||= @user.computations.where(status: %w(queued running))
+      @ac ||= @user.computations.submitted_rimrock
     end
 
     def on_finish_callback(computation)

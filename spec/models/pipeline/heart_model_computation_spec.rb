@@ -16,13 +16,13 @@ RSpec.describe PipelineStep::HeartModelCalculation do
   it_behaves_like 'a pipeline step'
 
   it "runs the step only if patient's virtual model is ready" do
-    computation = PipelineStep::HeartModelCalculation.run(patient, user)
+    computation = PipelineStep::HeartModelCalculation.new(patient, user).run
     expect(computation).to be_truthy
   end
 
   it "raise error if patient's virtual model is not ready yet" do
     patient.not_started!
-    expect { PipelineStep::HeartModelCalculation.run(patient, user) }.to raise_error(
+    expect { PipelineStep::HeartModelCalculation.new(patient, user).run }.to raise_error(
       'Heart Model Computation can be run after parameter estimation'
     )
   end
@@ -30,7 +30,7 @@ RSpec.describe PipelineStep::HeartModelCalculation do
   it 'creates computation with script returned by generator' do
     script = 'HEART MODEL SCRIPT'
     allow(ScriptGenerator::HeartModel).to receive_message_chain(:new, :call) { script }
-    computation = PipelineStep::HeartModelCalculation.run(patient, user)
+    computation = PipelineStep::HeartModelCalculation.new(patient, user).run
     expect(computation.script).to eq script
   end
 end

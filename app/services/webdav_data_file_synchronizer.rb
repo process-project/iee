@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 require 'net/dav'
 
-# frozen_string_literal: true
 class WebdavDataFileSynchronizer
   include SynchronizerUtilities
 
   def initialize(patient, user)
-    @dav_client = Net::DAV.new(
-      storage_url,
+    @dav_client = WebdavClient.new(
+      webdav_storage_url,
       headers: {
         'Authorization' => "Bearer #{user.try(:token)}"
       }
@@ -30,13 +31,13 @@ class WebdavDataFileSynchronizer
   end
 
   def computation_file_handle(filename)
-    construct_handle(storage_url, filename)
+    construct_handle(webdav_storage_url, filename)
   end
 
   private
 
   def call_file_storage
-    parse_response(storage_url, remote_file_names)
+    parse_response(webdav_storage_url, remote_file_names)
   rescue Net::HTTPServerException => ex
     response = OpenStruct.new(code: ex.message.to_i, body: ex)
     report_problem(:request_failure, response: response) unless response.code == 404
@@ -46,15 +47,9 @@ class WebdavDataFileSynchronizer
 
   def remote_file_names
     remote_names = []
-    @dav_client.find(case_directory(storage_url), recursive: false) do |item|
+    @dav_client.find(case_directory(webdav_storage_url), recursive: false) do |item|
       remote_names << item.properties.displayname
     end
     remote_names
-  end
-
-  def storage_url
-    Rails.configuration.constants['file_store']['web_dav_base_url'] +
-      Rails.configuration.constants['file_store']['web_dav_base_path'] +
-      "/#{Rails.env}/"
   end
 end

@@ -9,6 +9,7 @@ class Patient < ApplicationRecord
   enum procedure_status: [
     :not_started,
     :imaging_uploaded,
+    :segmentation_ready,
     :virtual_model_ready,
     :after_blood_flow_simulation,
     :after_parameter_estimation,
@@ -33,6 +34,9 @@ class Patient < ApplicationRecord
 
   private
 
+  # rubocop:disable CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_procedure_status
     data_files.reload
     # This should go from the most advanced status to the least advanced one.
@@ -40,6 +44,8 @@ class Patient < ApplicationRecord
     elsif estimated_parameters_exist? then after_parameter_estimation!
     elsif blood_flow_result_and_model_exist? then after_blood_flow_simulation!
     elsif fluid_and_ventricle_virtual_models_exist? then virtual_model_ready!
+    elsif segmentation_output_exist? then segmentation_ready!
+    elsif segmentation_input_exist? then imaging_uploaded!
     else not_started!
     end
   end
@@ -60,5 +66,13 @@ class Patient < ApplicationRecord
 
   def heart_model_output_exist?
     data_files.reload.any?(&:heart_model_output?)
+  end
+
+  def segmentation_input_exist?
+    data_files.reload.any?(&:image?)
+  end
+
+  def segmentation_output_exist?
+    data_files.reload.any?(&:segmentation_result?)
   end
 end

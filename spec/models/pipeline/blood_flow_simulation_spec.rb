@@ -16,20 +16,20 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
   it_behaves_like 'a pipeline step'
 
   it "runs the step only if patient's virtual model is ready" do
-    computation = PipelineStep::BloodFlowSimulation.run(patient, user)
+    computation = PipelineStep::BloodFlowSimulation.new(patient, user).run
     expect(computation).to be_truthy
   end
 
   it "raise error if patient's virtual model is not ready yet" do
     patient.not_started!
-    expect { PipelineStep::BloodFlowSimulation.run(patient, user) }.
+    expect { PipelineStep::BloodFlowSimulation.new(patient, user).run }.
       to raise_error('Virtual model must be ready to run Blood Flow Simulation')
   end
 
   it 'creates computation with script returned by generator' do
     script = 'BLOOD FLOW SCRIPT'
     allow(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call) { script }
-    computation = PipelineStep::BloodFlowSimulation.run(patient, user)
+    computation = PipelineStep::BloodFlowSimulation.new(patient, user).run
     expect(computation.script).to eq script
   end
 end

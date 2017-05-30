@@ -4,6 +4,6 @@ require_relative '../config/environment'
 
 module Clockwork
   every(1.minute, 'updating.computations') do
-    Rimrock::TriggerUpdateJob.perform_later
+    TriggerUpdateJob.perform_later
   end
 end

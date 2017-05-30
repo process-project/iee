@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424124528) do
+ActiveRecord::Schema.define(version: 20170517101436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170424124528) do
 
   create_table "computations", force: :cascade do |t|
     t.string   "job_id"
-    t.text     "script",                            null: false
+    t.text     "script"
     t.string   "working_directory"
     t.string   "status",            default: "new", null: false
     t.string   "stdout_path"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20170424124528) do
     t.string   "input_path"
     t.string   "output_path"
     t.string   "pipeline_step"
+    t.string   "working_file_name"
     t.index ["patient_id"], name: "index_computations_on_patient_id", using: :btree
   end
 

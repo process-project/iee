@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Patient pipelines (@mkasztelnik)
 - Patient/Pipeline file store structure is created while creating/destroying
   patient/pipeline (@mkasztelnik)
+- Segmentation patient case pipeline step (@tbartynski)
 
 ### Changed
 - Update rubocop into 0.47.1, fix new discovered offenses (@mkasztelnik)
