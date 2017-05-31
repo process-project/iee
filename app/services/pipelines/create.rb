@@ -5,7 +5,7 @@ module Pipelines
 
     def internal_call
       @pipeline.save
-      r_mkdir(pipeline_path)
+      r_mkdir(@pipeline.working_dir)
     rescue Net::HTTPServerException
       @pipeline.errors.
         add(:name,

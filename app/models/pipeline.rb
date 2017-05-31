@@ -11,6 +11,10 @@ class Pipeline < ApplicationRecord
     iid.to_s
   end
 
+  def working_dir
+    File.join(patient.pipelines_dir, iid.to_s, '/')
+  end
+
   private
 
   def set_iid

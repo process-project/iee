@@ -6,12 +6,7 @@ class WebdavDataFileSynchronizer
   include SynchronizerUtilities
 
   def initialize(patient, user)
-    @dav_client = WebdavClient.new(
-      webdav_storage_url,
-      headers: {
-        'Authorization' => "Bearer #{user.try(:token)}"
-      }
-    )
+    @dav_client = Webdav::FileStore.new(user)
     @patient = patient
     @user = user
   end

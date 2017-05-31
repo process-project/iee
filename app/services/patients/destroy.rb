@@ -9,7 +9,7 @@ module Patients
 
     def internal_call
       @patient.destroy
-      delete(@patient.case_number)
+      delete(@patient.working_dir)
     rescue Net::HTTPServerException
       raise ActiveRecord::Rollback
     end

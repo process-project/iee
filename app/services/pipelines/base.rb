@@ -12,11 +12,5 @@ module Pipelines
       Pipeline.transaction { internal_call }
       @pipeline
     end
-
-    protected
-
-    def pipeline_path
-      "#{@pipeline.patient.case_number}/pipelines/#{@pipeline.iid}"
-    end
   end
 end

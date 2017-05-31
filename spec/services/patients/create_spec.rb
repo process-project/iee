@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 require 'rails_helper'
+require 'webdav/client'
 
 describe Patients::Create do
   let(:user) { create(:user) }
 
   it 'creates new patient in db' do
-    webdav = instance_double(Net::DAV)
-    allow(webdav).to receive(:exists?)
-    allow(webdav).to receive(:mkdir)
+    webdav = instance_double(Webdav::Client)
+    allow(webdav).to receive(:r_mkdir)
 
     expect { described_class.new(user, build(:patient), client: webdav).call }.
       to change { Patient.count }.by(1)
   end
 
   it 'creates patient webdav directory' do
-    webdav = instance_double(Net::DAV)
+    webdav = instance_double(Webdav::Client)
     new_patient = build(:patient)
 
-    allow(webdav).to receive(:exists?).and_return(false)
-    expect(webdav).to receive(:mkdir).with(new_patient.case_number).twice
-    expect(webdav).to receive(:mkdir).with("#{new_patient.case_number}/inputs")
-    expect(webdav).to receive(:mkdir).with("#{new_patient.case_number}/pipelines")
+    expect(webdav).to receive(:r_mkdir).
+      with("test/patients/#{new_patient.case_number}/inputs/")
+    expect(webdav).to receive(:r_mkdir).
+      with("test/patients/#{new_patient.case_number}/pipelines/")
 
     described_class.new(user, new_patient, client: webdav).call
   end
@@ -43,9 +43,8 @@ describe Patients::Create do
   end
 
   def web_dav_with_http_server_exception
-    instance_double(Net::DAV).tap do |webdav|
-      allow(webdav).to receive(:exists?).and_return(false)
-      allow(webdav).to receive(:mkdir).
+    instance_double(Webdav::Client).tap do |webdav|
+      allow(webdav).to receive(:r_mkdir).
         and_raise(Net::HTTPServerException.new(403, 'Error'))
     end
   end

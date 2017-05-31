@@ -32,6 +32,18 @@ class Patient < ApplicationRecord
     klass_name.constantize.new(self, user).call
   end
 
+  def working_dir
+    File.join(Rails.env, 'patients', case_number, '/')
+  end
+
+  def inputs_dir
+    File.join(working_dir, 'inputs', '/')
+  end
+
+  def pipelines_dir
+    File.join(working_dir, 'pipelines', '/')
+  end
+
   private
 
   # rubocop:disable CyclomaticComplexity
