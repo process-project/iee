@@ -186,30 +186,5 @@ RSpec.feature 'Patient browsing' do
         expect(page).not_to have_selector('body.not-reloaded')
       end
     end
-
-    context 'with plgrid file backend' do
-      scenario 'shows a table for present case data files with handles' do
-        allow(Rails.application).
-          to receive(:config_for).
-          with('eurvalve').
-          and_return(
-            'data_synchronizer' => 'PlgridDataFileSynchronizer',
-            'storage_url' => Rails.application.config_for('eurvalve')['storage_url'],
-            'handle_url' => Rails.application.config_for('eurvalve')['handle_url']
-          )
-
-        data_files = create_list(:data_file, 2, patient: patient)
-        data_files[0].update_attributes(handle: 'test_handle')
-
-        visit patient_path(patient)
-
-        expect(page).to have_content(data_files[0].name)
-        expect(page).to have_content(data_files[0].data_type)
-        expect(page).to have_content(data_files[1].name)
-        expect(page).to have_content(data_files[1].data_type)
-        expect(page).to have_content(I18n.t('patients.show.download_unavailable'))
-        expect(page).to have_selector "a[href='test_handle']"
-      end
-    end
   end
 end
