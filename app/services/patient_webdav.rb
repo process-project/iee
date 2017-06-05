@@ -7,5 +7,15 @@ class PatientWebdav
     @dav_client = options.fetch(:client) { Webdav::FileStore.new(user) }
   end
 
-  delegate :r_mkdir, :mkdir, :delete, to: :@dav_client
+  def r_mkdir(path)
+    @dav_client.r_mkdir(path) if webdav_enabled?
+  end
+
+  def delete(path)
+    @dav_client.delete(path) if webdav_enabled?
+  end
+
+  def webdav_enabled?
+    DataFile.synchronizer_class == WebdavDataFileSynchronizer
+  end
 end
