@@ -8,14 +8,10 @@ class PatientWebdav
   end
 
   def r_mkdir(path)
-    @dav_client.r_mkdir(path) if webdav_enabled?
+    @dav_client.r_mkdir(path)
   end
 
   def delete(path)
-    @dav_client.delete(path) if webdav_enabled?
-  end
-
-  def webdav_enabled?
-    DataFile.synchronizer_class == WebdavDataFileSynchronizer
+    @dav_client.delete(path)
   end
 end

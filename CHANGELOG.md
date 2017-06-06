@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Removed
 - PLGrid left menu removed since we are not showing any item there (@mkasztelnik)
+- PLGrid patient data synchronizer removed. FileStore is the only supported backend (@mkasztelnik)
 
 ### Fixed
 - Left menu can be scrolled when high is small (@mkasztelnik)
