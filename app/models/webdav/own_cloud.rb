@@ -10,20 +10,24 @@ module Webdav
       self.verify_server = false
     end
 
-    def self.inputs_path
-      Rails.application.config_for('eurvalve')['owncloud']['inputs_path']
-    end
+    class << self
+      def input_path(computation)
+        File.join(inputs_path, computation.working_file_name)
+      end
 
-    def self.outputs_path
-      Rails.application.config_for('eurvalve')['owncloud']['outputs_path']
-    end
+      def output_path(computation)
+        File.join(outputs_path, computation.working_file_name)
+      end
 
-    def self.input_path(computation)
-      File.join(inputs_path, computation.working_file_name)
-    end
+      private
 
-    def self.output_path(computation)
-      File.join(outputs_path, computation.working_file_name)
+      def inputs_path
+        Rails.application.config_for('eurvalve')['owncloud']['inputs_path']
+      end
+
+      def outputs_path
+        Rails.application.config_for('eurvalve')['owncloud']['outputs_path']
+      end
     end
 
     private
