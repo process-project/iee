@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - JWT token expiration time extended to 6 hours (@mkasztelnik)
 - Change zeroclipboard into clipboard.js because support for flash is dropped (@mkasztelnik)
 - Factories fields which should be unique use unique Faker methods (@mkasztelnik)
+- Simplify Webdav operations for FileStore and OwnCloud (@mkasztelnik)
 
 ### Deprecated
 

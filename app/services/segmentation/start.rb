@@ -2,10 +2,8 @@
 
 module Segmentation
   class Start
-    include Segmentation::FileUtils
     def initialize(computation)
       @computation = computation
-      @download_input = DownloadInput.new(computation.input_path, computation.user.token)
     end
 
     def call
@@ -17,15 +15,21 @@ module Segmentation
     private
 
     def download_input
-      @local_path = @download_input.call
+      @local_path = download_service.call { |f| "0_#{SecureRandom.uuid}_#{f}" }
+    end
+
+    def download_service
+      Webdav::DownloadFile.new(Webdav::FileStore.new(@computation.user),
+                               @computation.input_path)
     end
 
     def update_computation
-      @computation.update_attributes(working_file_name: strip_local_filename(@local_path))
+      @computation.update_attributes(working_file_name: File.basename(@local_path))
     end
 
     def upload_input
-      UploadInput.new(@local_path).call
+      Webdav::UploadFile.new(Webdav::OwnCloud.new, @local_path,
+                             Webdav::OwnCloud.input_path(@computation)).call
     end
   end
 end

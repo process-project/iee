@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 module Webdav
   class Update
-    include Segmentation::OwncloudUtils
     def initialize(user, options = {})
       @user = user
       @on_finish_callback = options[:on_finish_callback]
-      @owncloud = WebdavClient.new(owncloud_url, owncloud_options)
+      @owncloud = Webdav::OwnCloud.new
     end
 
     def call
@@ -25,7 +24,11 @@ module Webdav
     end
 
     def update_computation(computation)
-      finish_job(computation) if @owncloud.exists? output_path(computation)
+      finish_job(computation) if results_ready?(computation)
+    end
+
+    def results_ready?(computation)
+      @owncloud.exists?(Webdav::OwnCloud.output_path(computation))
     end
 
     def finish_job(computation)

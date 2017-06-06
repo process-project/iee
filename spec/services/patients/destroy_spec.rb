@@ -20,7 +20,7 @@ describe Patients::Destroy do
     webdav = instance_double(Net::DAV)
 
     allow(webdav).to receive(:exists?).and_return(true)
-    expect(webdav).to receive(:delete).with(patient.case_number)
+    expect(webdav).to receive(:delete).with("test/patients/#{patient.case_number}/")
 
     described_class.new(user, patient, client: webdav).call
   end

@@ -1,27 +1,25 @@
 # frozen_string_literal: true
 require 'rails_helper'
+require 'webdav/client'
 
 describe Pipelines::Create do
   let(:user) { create(:user) }
 
   it 'creates new pipeline in db' do
-    webdav = instance_double(Net::DAV)
-    allow(webdav).to receive(:exists?)
-    allow(webdav).to receive(:mkdir)
+    webdav = instance_double(Webdav::Client)
+    allow(webdav).to receive(:r_mkdir)
 
     expect { described_class.new(user, build(:pipeline), client: webdav).call }.
       to change { Pipeline.count }.by(1)
   end
 
   it 'creates pipeline webdav directory' do
-    webdav = instance_double(Net::DAV)
+    webdav = instance_double(Webdav::Client)
     patient = create(:patient)
     new_pipeline = build(:pipeline, patient: patient)
 
-    allow(webdav).to receive(:exists?).and_return(false)
-    expect(webdav).to receive(:mkdir).with(patient.case_number)
-    expect(webdav).to receive(:mkdir).with("#{patient.case_number}/pipelines")
-    expect(webdav).to receive(:mkdir).with("#{patient.case_number}/pipelines/1")
+    expect(webdav).to receive(:r_mkdir).
+      with("test/patients/#{patient.case_number}/pipelines/1/")
 
     described_class.new(user, new_pipeline, client: webdav).call
   end
@@ -44,9 +42,8 @@ describe Pipelines::Create do
   end
 
   def web_dav_with_http_server_exception
-    instance_double(Net::DAV).tap do |webdav|
-      allow(webdav).to receive(:exists?).and_return(false)
-      allow(webdav).to receive(:mkdir).
+    instance_double(Webdav::Client).tap do |webdav|
+      allow(webdav).to receive(:r_mkdir).
         and_raise(Net::HTTPServerException.new(403, 'Error'))
     end
   end

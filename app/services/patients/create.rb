@@ -5,8 +5,8 @@ module Patients
 
     def internal_call
       @patient.save
-      r_mkdir("#{@patient.case_number}/inputs")
-      r_mkdir("#{@patient.case_number}/pipelines")
+      r_mkdir(@patient.inputs_dir)
+      r_mkdir(@patient.pipelines_dir)
     rescue Net::HTTPServerException
       @patient.errors.
         add(:case_number,
