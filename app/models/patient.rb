@@ -28,8 +28,7 @@ class Patient < ApplicationRecord
   after_touch :update_procedure_status
 
   def execute_data_sync(user)
-    klass_name = Rails.application.config_for('eurvalve')['data_synchronizer']
-    klass_name.constantize.new(self, user).call
+    WebdavDataFileSynchronizer.new(self, user).call
   end
 
   private

@@ -16,7 +16,6 @@ class DataFile < ApplicationRecord
   validates :name, :data_type, :patient, presence: true
 
   def self.synchronizer_class
-    synchronizer_klass_name = Rails.application.config_for('eurvalve')['data_synchronizer']
-    @synchronizer = synchronizer_klass_name.constantize
+    WebdavDataFileSynchronizer
   end
 end

@@ -46,7 +46,7 @@ describe WebdavDataFileSynchronizer, files: true do
         with(I18n.t('data_file_synchronizer.no_fs_client')).
         and_call_original
       allow_any_instance_of(WebdavDataFileSynchronizer).
-        to receive(:storage_url) { 'http://total.rubbish/patients/' }
+        to receive(:webdav_storage_url) { 'http://total.rubbish/patients/' }
       expect { call(test_patient, user) }.not_to change { DataFile.count }
     end
 

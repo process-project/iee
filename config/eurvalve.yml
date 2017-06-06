@@ -1,5 +1,4 @@
 defaults: &defaults
-  data_synchronizer: WebdavDataFileSynchronizer
   rimrock:
     url: https://submit.plgrid.pl
     host: prometheus.cyfronet.pl
@@ -16,17 +15,9 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  data_synchronizer: WebdavDataFileSynchronizer
-  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/development/
-  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/development/
 
 test:
   <<: *defaults
-  data_synchronizer: WebdavDataFileSynchronizer
-  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/test/
-  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/test/
 
 production:
   <<: *defaults
-  storage_url: https://data.plgrid.pl/list/prometheus/net/archive/groups/plggeurvalve/production/
-  handle_url: https://data.plgrid.pl/files/prometheus/net/archive/groups/plggeurvalve/production/
