@@ -16,7 +16,7 @@ module Patients
     def create
       @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
 
-      if Pipelines::Create.new(current_user, @pipeline).call
+      if ::Pipelines::Create.new(@pipeline).call
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
         render(:new)
@@ -25,6 +25,12 @@ module Patients
 
     def show
       @pipeline = @patient.pipelines.find_by(iid: params[:id])
+      computation = @pipeline.computations.first
+
+      return unless computation
+      redirect_to(patient_pipeline_computation_path(@patient,
+                                                    @pipeline,
+                                                    computation))
     end
 
     def edit; end
@@ -38,7 +44,7 @@ module Patients
     end
 
     def destroy
-      if Pipelines::Destroy.new(current_user, @pipeline).call
+      if ::Pipelines::Destroy.new(@pipeline).call
         redirect_to patient_path(@patient),
                     notice: I18n.t('pipelines.destroy.success',
                                    name: @pipeline.name)

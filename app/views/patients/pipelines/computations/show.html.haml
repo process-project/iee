@@ -1,0 +1,16 @@
+= render 'patients/pipelines/show', patient: @patient, pipeline: @pipeline do
+  .col-xs-2
+    #ul.nav.nav-tabs.tabs-left
+      - @pipeline.computations.each do |c|
+        %li{class: [c == @computation && 'active']}
+          = link_to patient_pipeline_computation_path(@patient, @pipeline, c), data: { turbolinks: false } do
+            = run_status(c)
+            = t(".#{c.pipeline_step}.title")
+  .col-xs-10
+    .tab-content
+      - if @computation.runnable?
+        Tutaj będziemy to startować
+      - else
+        .alert.alert-warning= t(".#{@computation.pipeline_step}.cannot_start")
+
+

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
-require 'net/dav'
-
 module Pipelines
   class Base < PatientWebdav
-    def initialize(user, pipeline, options = {})
-      super(user, options)
+    def initialize(pipeline, options = {})
+      super(pipeline.user, options)
       @pipeline = pipeline
     end
 

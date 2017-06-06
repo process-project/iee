@@ -36,15 +36,6 @@ describe 'Patients controller' do
         get '/patients', params: { id: patient.id }
         expect(response).to be_success
       end
-
-      it 'shows proxy oudated warning for computations' do
-        user.update_attributes(proxy: outdated_proxy)
-        patient.update_attributes(procedure_status: :virtual_model_ready)
-
-        get patient_path(patient.id)
-
-        expect(response.body).to include(I18n.t('patients.show.proxy.invalid'))
-      end
     end
 
     describe 'DELETE /patient/:id' do

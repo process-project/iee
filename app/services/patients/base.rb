@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'net/dav'
-
 module Patients
   class Base < PatientWebdav
     def initialize(user, patient, options = {})

@@ -25,8 +25,12 @@ Rails.application.routes.draw do
 
   resources :patients, except: [:edit, :update] do
     scope module: :patients do
-      resources :pipelines
       resources :comparisons, only: [:show]
+      resources :pipelines do
+        scope module: :pipelines do
+          resources :computations, only: [:show]
+        end
+      end
     end
   end
 

@@ -5,24 +5,21 @@ require 'models/pipeline/step_shared_examples'
 
 RSpec.describe PipelineStep::Segmentation do
   let(:user) { create(:user) }
-  let(:patient) { create(:patient, procedure_status: :imaging_uploaded) }
+  let(:pipeline) { create(:pipeline, user: user) }
 
   before do
     allow(Webdav::StartJob).to receive(:perform_later)
   end
 
-  it_behaves_like 'a Webdav-based step'
-
   it_behaves_like 'a pipeline step'
 
-  it "runs the step only if patient's imaging is uploaded" do
-    computation = PipelineStep::Segmentation.new(patient, user).run
-    expect(computation).to be_truthy
+  context 'inputs are available' do
+    before { create(:data_file, data_type: :image, patient: pipeline.patient) }
+
+    it_behaves_like 'a Webdav-based ready to run step'
   end
 
-  it "raise error if patient's imaging is not uploaded yet" do
-    patient.not_started!
-    expect { PipelineStep::Segmentation.new(patient, user).run }.
-      to raise_error('Patient imaging must be uploaded to run Segmentation')
+  context 'inputs are not available' do
+    it_behaves_like 'not ready to run step'
   end
 end

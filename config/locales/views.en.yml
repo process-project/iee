@@ -23,7 +23,6 @@ en:
         imaging_uploaded: Run Segmentation
         virtual_model_ready: Run new Blood flow CFD simulation
         after_parameter_estimation: Run new 0D Heart Model computation
-      nothing: There are no files uploaded for this patient's case.
       download: Download
       download_unavailable: (download unavailable)
       submit: Execute simulation
@@ -57,6 +56,25 @@ en:
         back_to_index: Back to pipelines list
         edit: Edit pipeline
         delete: Remove pipeline
+        no_computations: No computations defined for this pipeline
+        segmentation:
+          title: Segmenation
+          cannot_start: |
+            Cannot start segmentation because required input file
+            (imaging_*.zip) cannot be found in patient inputs directory or
+            pipeline directory.
+        blood_flow_simulation:
+          title: Blood Flow Simulation
+          cannot_start: |
+            Cannot start blood flow simulation because required input files
+            (fluidFlow.cas and structural_vent.dat) cannot be found
+            in patient inputs directory or pipeline directory.
+        heart_model_calculation:
+          title: Heart Model Calculation
+          cannot_start: |
+            Cannot start heart model calculation because required input file
+            (0DModel_input.csv) cannot be found in patient inputs directory or
+            pipeline directory.
       new:
         title: Create new pipeline
         back_to_index: Back to pipelines list

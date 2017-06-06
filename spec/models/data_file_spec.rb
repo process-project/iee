@@ -54,4 +54,12 @@ RSpec.describe DataFile do
       expect(locales.any? { |l| l.include? 'translation missing' }).to be_falsey
     end
   end
+
+  it 'returns data file path relative to dav root' do
+    data_file = build(:data_file,
+                      patient: build(:patient, case_number: '123'),
+                      name: 'inputs/file.txt')
+
+    expect(data_file.path).to eq('test/patients/123/inputs/file.txt')
+  end
 end

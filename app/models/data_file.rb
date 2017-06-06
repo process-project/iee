@@ -16,6 +16,10 @@ class DataFile < ApplicationRecord
 
   validates :name, :data_type, :patient, presence: true
 
+  def path
+    File.join(patient.working_dir, name)
+  end
+
   def self.synchronizer_class
     WebdavDataFileSynchronizer
   end

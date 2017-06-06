@@ -2,7 +2,7 @@
   %th= pipeline.iid
   %th
     %input{ value: pipeline.iid, type: 'checkbox', name: 'pipeline_ids[]' }
-  %th= link_to(pipeline.name, [pipeline.patient, pipeline])
+  %th= link_to pipeline.name, [pipeline.patient, pipeline], data: { turbolinks: false }
   %th
     .progress.progress_sm
       .progress-bar.bg-green(role="progressbar" style="width: 40%")

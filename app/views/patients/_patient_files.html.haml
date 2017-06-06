@@ -1,9 +1,0 @@
--# requires the following local settings:
--# - browser_id - A page-wide unique identifier to identify the current file browser component
-- if patient.data_files.blank?
-  .alert.alert-info= t 'patients.show.nothing'
-
-- else
-  = render partial: 'file_store/file_browser_multi',
-           locals: { target_path: FileStore.patients_path + patient.case_number,
-                     element_id: browser_id }
