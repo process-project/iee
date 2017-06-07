@@ -1,8 +1,6 @@
 # frozen_string_literal: true
-
 module Segmentation
   class Finish
-    include Segmentation::OwncloudUtils
     def initialize(computation, updater)
       @computation = computation
       @updater = updater
@@ -17,18 +15,17 @@ module Segmentation
     private
 
     def download_output
-      remote_path = output_path @computation
-      download = DownloadOutput.new(remote_path)
-      @local_file_path = download.call
+      @local_file_path = download_service.call
+    end
+
+    def download_service
+      Webdav::DownloadFile.new(Webdav::OwnCloud.new,
+                               Webdav::OwnCloud.output_path(@computation))
     end
 
     def save_output
-      upload = UploadOutput.new(
-        @local_file_path,
-        @computation.output_path,
-        @computation.user.token
-      )
-      upload.call
+      Webdav::UploadFile.new(Webdav::FileStore.new(@computation.user),
+                             @local_file_path, @computation.output_path).call
     end
 
     def update_pipeline

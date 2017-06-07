@@ -14,7 +14,7 @@ module PipelineStep
     end
 
     def run
-      Webdav::StartJob.perform_later @computation
+      Webdav::StartJob.perform_later(@computation)
       @computation
     end
 
@@ -27,11 +27,11 @@ module PipelineStep
     end
 
     def input_path
-      "/#{Rails.env}/patients/#{@patient.case_number}/imaging_#{@patient.case_number}.zip"
+      File.join(@patient.working_dir, "imaging_#{@patient.case_number}.zip")
     end
 
     def output_path
-      "/#{Rails.env}/patients/#{@patient.case_number}/segmentation_#{@patient.case_number}.zip"
+      File.join(@patient.working_dir, "segmentation_#{@patient.case_number}.zip")
     end
   end
 end

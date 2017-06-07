@@ -45,8 +45,12 @@ describe WebdavDataFileSynchronizer, files: true do
       expect(Rails.logger).to receive(:warn).
         with(I18n.t('data_file_synchronizer.no_fs_client')).
         and_call_original
-      allow_any_instance_of(WebdavDataFileSynchronizer).
-        to receive(:webdav_storage_url) { 'http://total.rubbish/patients/' }
+      allow(Rails.configuration).to receive(:constants) do
+        { 'file_store' => {
+          'web_dav_base_url' => 'http://total.rubbish',
+          'web_dav_base_path' => 'patients'
+        } }
+      end
       expect { call(test_patient, user) }.not_to change { DataFile.count }
     end
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'rails_helper'
+require 'webdav/client'
 
 describe Pipelines::Destroy do
   include WebDavSpecHelper
@@ -8,8 +9,7 @@ describe Pipelines::Destroy do
   let!(:pipeline) { create(:pipeline) }
 
   it 'remove pipeline from db' do
-    webdav = instance_double(Net::DAV)
-    allow(webdav).to receive(:exists?)
+    webdav = instance_double(Webdav::Client)
     allow(webdav).to receive(:delete)
 
     expect { described_class.new(user, pipeline, client: webdav).call }.
@@ -17,18 +17,16 @@ describe Pipelines::Destroy do
   end
 
   it 'removes pipeline webdav directory' do
-    webdav = instance_double(Net::DAV)
+    webdav = instance_double(Webdav::Client)
 
-    allow(webdav).to receive(:exists?).and_return(true)
     expect(webdav).to receive(:delete).
-      with("#{pipeline.patient.case_number}/pipelines/1")
+      with("test/patients/#{pipeline.patient.case_number}/pipelines/1/")
 
     described_class.new(user, pipeline, client: webdav).call
   end
 
   it 'returns true when pipeline is removed' do
-    webdav = instance_double(Net::DAV)
-    allow(webdav).to receive(:exists?)
+    webdav = instance_double(Webdav::Client)
     allow(webdav).to receive(:delete)
 
     result = described_class.new(user, pipeline, client: webdav).call
@@ -52,8 +50,7 @@ describe Pipelines::Destroy do
   end
 
   def web_dav_with_http_server_exception
-    instance_double(Net::DAV).tap do |webdav|
-      allow(webdav).to receive(:exists?).and_return(true)
+    instance_double(Webdav::Client).tap do |webdav|
       allow(webdav).to receive(:delete).
         and_raise(Net::HTTPServerException.new(403, 'Error'))
     end

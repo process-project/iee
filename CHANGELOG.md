@@ -9,17 +9,33 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## 0.4.0
+
+### Added
 - Basic rack-attack configuration (@mkasztelnik)
 - Patient pipelines (@mkasztelnik)
 - Patient/Pipeline file store structure is created while creating/destroying
   patient/pipeline (@mkasztelnik)
 - Segmentation patient case pipeline step (@tbartynski)
+- User id was added into JWT token using `sub` key (@mkasztelnik)
 
 ### Changed
 - Update rubocop into 0.47.1, fix new discovered offenses (@mkasztelnik)
 - JWT token expiration time extended to 6 hours (@mkasztelnik)
 - Change zeroclipboard into clipboard.js because support for flash is dropped (@mkasztelnik)
 - Factories fields which should be unique use unique Faker methods (@mkasztelnik)
+- Simplify Webdav operations for FileStore and OwnCloud (@mkasztelnik)
 
 ### Deprecated
 
@@ -30,7 +46,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Left menu can be scrolled when high is small (@mkasztelnik)
 - Policy API filters policies according to the service identified by the passed id (@dharezlak)
-- A 404 error code is returned instead of the 500 code when copying/moving policy for a non-existent source policy (@dharezlak)
+- A 404 error code is returned instead of the 500 code when copying/moving policy
+  for a non-existent source policy (@dharezlak)
+- All user groups assignments are removed while user is deleted from the system (@mkasztelnik)
 
 ### Security
 
