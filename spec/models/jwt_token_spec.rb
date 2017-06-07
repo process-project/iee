@@ -8,7 +8,7 @@ RSpec.describe JwtToken do
   subject { described_class.new(user) }
 
   it 'includes issuer in token' do
-    expect(issuer_from_token(subject.generate)).
+    expect(key_from_token(subject.generate, 'iss')).
       to eq Vapor::Application.config.jwt.issuer
   end
 
@@ -16,15 +16,20 @@ RSpec.describe JwtToken do
     time_now = Time.zone.now
     allow(Time).to receive(:now).and_return(time_now)
 
-    expect(expiration_time_from_token(subject.generate)).
+    expect(key_from_token(subject.generate, 'exp')).
       to eq(time_now.to_i + Vapor::Application.config.jwt.expiration_time)
+  end
+
+  it 'includes sub in token' do
+    expect(key_from_token(subject.generate, 'sub')).
+      to eq user.id
   end
 
   it 'allows to create long tokens' do
     time_now = Time.zone.now
     allow(Time).to receive(:now).and_return(time_now)
 
-    expect(expiration_time_from_token(subject.generate(long_expiration_time))).
+    expect(key_from_token(subject.generate(long_expiration_time), 'exp')).
       to eq(time_now.to_i + long_expiration_time)
   end
 
@@ -41,12 +46,8 @@ RSpec.describe JwtToken do
 
   private
 
-  def issuer_from_token(enc_token)
-    decode_token(enc_token).detect { |el| el.key? 'iss' }.try(:[], 'iss')
-  end
-
-  def expiration_time_from_token(enc_token)
-    decode_token(enc_token).detect { |el| el.key? 'exp' }.try(:[], 'exp')
+  def key_from_token(enc_token, key)
+    decode_token(enc_token).detect { |el| el.key? key }.try(:[], key)
   end
 
   def decode_token(enc_token)
