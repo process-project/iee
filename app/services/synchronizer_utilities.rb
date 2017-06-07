@@ -16,35 +16,17 @@ module SynchronizerUtilities
     "#{case_directory(handle_url)}/#{filename}"
   end
 
-  def parse_response(handle_url, remote_names)
-    current_names = @patient.data_files.pluck(:name)
-
-    # Add DataFiles that are not yet present for @patient
-    remote_names.each do |remote_name|
-      data_type = recognize_data_type(remote_name)
-      next unless data_type
-      create_db_entry(handle_url, data_type, remote_name) unless current_names.include?(remote_name)
+  def parse_response(remote_names)
+    input_names(remote_names).each do |remote_name|
+      sync_file(remote_name)
     end
+    remove_obsolete_db_entries(input_names(remote_names))
 
-    remove_obsolete_db_entries(remote_names)
-  end
-
-  def create_db_entry(handle_url, data_type, remote_name)
-    DataFile.create(name: remote_name,
-                    data_type: data_type,
-                    handle: construct_handle(handle_url, remote_name),
-                    patient: @patient)
-  end
-
-  def remove_obsolete_db_entries(remote_names)
-    @patient.data_files.each do |data_file|
-      next if remote_names.include? data_file.name
-      data_file.destroy!
-      Rails.logger.info(
-        I18n.t('data_file_synchronizer.file_removed',
-               name: data_file.name,
-               patient: @patient.case_number)
-      )
+    @patient.pipelines.each do |pipeline|
+      pipeline_file_names(remote_names, pipeline).each do |remote_name|
+        sync_file(remote_name, pipeline)
+      end
+      remove_obsolete_db_entries(pipeline_file_names(remote_names, pipeline), pipeline)
     end
   end
 
@@ -79,5 +61,50 @@ module SynchronizerUtilities
       user: @user.try(:name),
       code: details[:response].try(:code)
     }
+  end
+
+  private
+
+  def current_names(pipeline)
+    @patient.data_files.where(pipeline: pipeline).pluck(:name)
+  end
+
+  def input_names(remote_names)
+    remote_names.select{ |rn| rn.split(@patient.inputs_dir).size > 1 }.map do |rn|
+      rn.split(@patient.inputs_dir)[1]
+    end
+  end
+
+  def pipeline_file_names(remote_names, pipeline)
+    remote_names.select{ |rn| rn.split(pipeline.working_dir).size > 1 }.map do |rn|
+      rn.split(pipeline.working_dir)[1]
+    end
+  end
+
+  def sync_file(remote_name, pipeline = nil)
+    data_type = recognize_data_type(remote_name)
+    if data_type && !current_names(pipeline).include?(remote_name)
+      create_db_entry(data_type, remote_name, pipeline)
+    end
+  end
+
+  def create_db_entry(data_type, remote_name, pipeline)
+    DataFile.create(name: remote_name,
+                    data_type: data_type,
+                    patient: @patient,
+                    pipeline: pipeline)
+  end
+
+  def remove_obsolete_db_entries(remote_names, pipeline = nil)
+    @patient.data_files.where(pipeline: pipeline).each do |data_file|
+      next if remote_names.include? data_file.name
+      data_file.destroy!
+      Rails.logger.info(
+        I18n.t('data_file_synchronizer.file_removed',
+               name: data_file.name,
+               patient: @patient.case_number,
+               pipeline: pipeline)
+      )
+    end
   end
 end

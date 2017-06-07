@@ -1,0 +1,26 @@
+= render 'patients/show', patient: @patient do
+  .x_panel
+    .x_title
+      %h2
+        = @pipelines.first.name
+        vs
+        = @pipelines.second.name
+        %small= t 'patients.comparisons.show.subtitle'
+
+      %ul.nav.navbar-right.panel_toolbox
+        %li
+          = link_to patient_path(@patient), class: 'back' do
+            = icon 'hand-o-left',
+              title: t('patients.pipelines.show.back_to_index')
+
+      .clearfix
+
+    .x_content
+      - @pipelines.first.data_files.each do |compared|
+        - compare_to = @pipelines.second.data_files.detect { |df| df[:data_type] == compared[:data_type] }
+        - if compare_to.present?
+          .diff_output{ data: { compared: compared,
+                                compare_to: compare_to,
+                                data_type: t("data_file.data_types.#{compared[:data_type]}"),
+                                compared_pipeline: @pipelines.first.name,
+                                compare_to_pipeline: @pipelines.second.name }}

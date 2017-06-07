@@ -12,6 +12,7 @@ class DataFile < ApplicationRecord
   ]
 
   belongs_to :patient, touch: true
+  belongs_to :pipeline, optional: true
 
   validates :name, :data_type, :patient, presence: true
 

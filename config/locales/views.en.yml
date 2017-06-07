@@ -51,6 +51,7 @@ en:
         id: Id
         name: Name
         status: Status
+        compare: Compare pipeline steps
       show:
         subtitle: pipeline
         back_to_index: Back to pipelines list
@@ -62,6 +63,10 @@ en:
       edit:
         title: Edit pipeline
         back_to_index: Back to pipelines list
+    comparisons:
+      show:
+        subtitle: pipelines comparison
+        invalid: Please select exactly two pipelines to compare.
 
   services:
     index:

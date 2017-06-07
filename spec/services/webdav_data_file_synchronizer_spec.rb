@@ -54,43 +54,85 @@ describe WebdavDataFileSynchronizer, files: true do
       expect { call(test_patient, user) }.not_to change { DataFile.count }
     end
 
-    it 'calls file storage and creates new related data_files' do
-      expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
-      expect(DataFile.all.map(&:data_type)).
-        to match_array %w(fluid_virtual_model ventricle_virtual_model)
-      expect(DataFile.all.map(&:handle)).
-        to include file_handle(test_patient.case_number, 'fluidFlow.cas')
+    context 'and there are patient inputs' do
+      it 'calls file storage and creates new input-related data_files' do
+        expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
+        expect(DataFile.all.map(&:data_type)).
+          to match_array %w(fluid_virtual_model ventricle_virtual_model)
+        expect(DataFile.all.map(&:pipeline_id).compact).to be_empty
+      end
+
+      it 'only creates input data_files not yet present' do
+        create(:data_file, name: 'structural_vent.dat',
+               data_type: 'ventricle_virtual_model',
+               patient: test_patient)
+        expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(1)
+        expect(DataFile.all.map(&:data_type)).
+          to match_array %w(fluid_virtual_model ventricle_virtual_model)
+        expect(DataFile.all.map(&:pipeline_id).compact).to be_empty
+      end
+
+      it 'recognizes files with regexps' do
+        expect { call(test_advanced_patient, correct_user) }.to change { DataFile.count }.by(1)
+        expect(DataFile.all.map(&:data_type)).to match_array ['blood_flow_result']
+        expect(DataFile.all.map(&:name)).to match_array ['fluidFlow-1-00002.dat']
+      end
+
+      it 'destroys data_files which are no longer stored in File Storage' do
+        create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
+        create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
+        create(:data_file, name: 'structural_vent.dat',
+               data_type: 'ventricle_virtual_model',
+               patient: test_patient)
+        create(:data_file, name: 'fluidFlow.cas',
+               data_type: 'fluid_virtual_model',
+               patient: test_patient)
+        expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
+        expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
+        expect(DataFile.all.map(&:data_type)).
+          to match_array %w(fluid_virtual_model ventricle_virtual_model)
+        expect(test_patient.reload.virtual_model_ready?).to be_truthy
+      end
     end
 
-    it 'only creates data_files not yet present' do
-      create(:data_file, name: 'structural_vent.dat',
-                         data_type: 'ventricle_virtual_model',
-                         patient: test_patient)
-      expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(1)
-      expect(DataFile.all.map(&:data_type)).
-        to match_array %w(fluid_virtual_model ventricle_virtual_model)
-    end
+    context 'for a given pipeline' do
+      let(:test_patient_with_pipeline) do
+        create(:patient, case_number: '9900')
+      end
 
-    it 'recognizes files with regexps' do
-      expect { call(test_advanced_patient, correct_user) }.to change { DataFile.count }.by(1)
-      expect(DataFile.all.map(&:data_type)).to match_array ['blood_flow_result']
-      expect(DataFile.all.map(&:name)).to match_array ['fluidFlow-1-00002.dat']
-    end
+      before(:each) { create(:pipeline, name: 'present', patient: test_patient_with_pipeline) }
 
-    it 'destroys data_files which are no longer stored in File Storage' do
-      create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
-      create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
-      create(:data_file, name: 'structural_vent.dat',
-                         data_type: 'ventricle_virtual_model',
-                         patient: test_patient)
-      create(:data_file, name: 'fluidFlow.cas',
-                         data_type: 'fluid_virtual_model',
-                         patient: test_patient)
-      expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
-      expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
-      expect(DataFile.all.map(&:data_type)).
-        to match_array %w(fluid_virtual_model ventricle_virtual_model)
-      expect(test_patient.reload.virtual_model_ready?).to be_truthy
+      it 'calls file storage and creates new pipeline-related data_files' do
+        expect { call(test_patient_with_pipeline, correct_user) }.
+          to change { DataFile.count }.by(1)
+        expect(DataFile.first.data_type).to eq 'blood_flow_result'
+        expect(DataFile.first.pipeline).to eq test_patient_with_pipeline.pipelines.first
+      end
+
+      it 'only creates data_files not yet present' do
+        create(:data_file, name: 'structural_vent.dat',
+               data_type: 'ventricle_virtual_model',
+               patient: test_patient)
+        expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(1)
+        expect(DataFile.all.map(&:data_type)).
+            to match_array %w(fluid_virtual_model ventricle_virtual_model)
+      end
+
+      it 'destroys data_files which are no longer stored in File Storage' do
+        create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
+        create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
+        create(:data_file, name: 'structural_vent.dat',
+               data_type: 'ventricle_virtual_model',
+               patient: test_patient)
+        create(:data_file, name: 'fluidFlow.cas',
+               data_type: 'fluid_virtual_model',
+               patient: test_patient)
+        expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
+        expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
+        expect(DataFile.all.map(&:data_type)).
+            to match_array %w(fluid_virtual_model ventricle_virtual_model)
+        expect(test_patient.reload.virtual_model_ready?).to be_truthy
+      end
     end
   end
 

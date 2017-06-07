@@ -18,3 +18,8 @@
             %tbody
               = render partial: 'patients/pipelines/pipeline',
                 collection: pipelines
+
+          - if @pipelines.count > 1
+            = link_to t('.compare'), patient_comparison_path(patient, pipeline_ids: @pipelines[0,2].map(&:iid)),
+              data: { turbolinks: false },
+              class: 'btn btn-success'
