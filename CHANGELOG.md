@@ -31,7 +31,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Left menu can be scrolled when high is small (@mkasztelnik)
 - Policy API filters policies according to the service identified by the passed id (@dharezlak)
-- A 404 error code is returned instead of the 500 code when copying/moving policy for a non-existent source policy (@dharezlak)
+- A 404 error code is returned instead of the 500 code when copying/moving policy
+  for a non-existent source policy (@dharezlak)
+- All user groups assignments are removed while user is deleted from the system (@mkasztelnik)
 
 ### Security
 
