@@ -21,6 +21,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.4.2
+
+### Changed
+- JWT token structure description updated (information about `sub` record)
+  in documentation (@mkasztelnik)
+
 ## 0.4.1
 
 ### Changed

@@ -16,8 +16,10 @@ When credentials are valid JWT token will be returned with basic information
 about the user:
 
 ```json
-{ "user": { "name": "John Doe", "email": "foo@bar", "token": "eyJ0eXAiOiJ..." } }
+{ "user": { "sub": "123", "name": "John Doe", "email": "foo@bar", "token": "eyJ0eXAiOiJ..." } }
 ```
+
+`sub` record is unique and cannot be changed for concrete user.
 
 ## JSON Web Token validation
 
