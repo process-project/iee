@@ -96,8 +96,7 @@ describe WebdavDataFileSynchronizer, files: true do
     end
 
     context 'for a given pipeline' do
-      let(:test_patient_with_pipeline) { create(:patient, case_number: '9900') }
-      before(:each) { create(:pipeline, name: 'present', patient: test_patient_with_pipeline) }
+      let(:test_patient_with_pipeline) { create(:patient, :with_pipeline) }
 
       it 'calls file storage and creates new pipeline-related data_files' do
         expect { call(test_patient_with_pipeline, correct_user) }.

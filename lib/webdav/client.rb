@@ -27,6 +27,13 @@ module Webdav
       end
     end
 
+    def get_file_to_memory(remote_path)
+      io = StringIO.new
+      get(remote_path) { |s| io.write(s) }
+      io.close
+      io.string
+    end
+
     def put_file(local_filename, remote_path)
       File.open(local_filename, 'r') do |file|
         put(remote_path, file, File.size(local_filename))

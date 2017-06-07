@@ -19,4 +19,12 @@ class DataFile < ApplicationRecord
   def self.synchronizer_class
     WebdavDataFileSynchronizer
   end
+
+  def handle
+    File.join(pipeline ? pipeline.working_dir : patient.inputs_dir, name)
+  end
+
+  def content(user)
+    Webdav::FileStore.new(user).get_file_to_memory(handle)
+  end
 end

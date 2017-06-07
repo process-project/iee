@@ -29,4 +29,22 @@ RSpec.describe DataFile do
       subject.destroy
     end
   end
+
+  describe '#content', files: true do
+    let(:correct_user) { build(:user, :file_store_user) }
+    let(:test_patient_with_pipeline) do
+      create(:patient, :with_pipeline).tap { |p| p.execute_data_sync(correct_user) }
+    end
+    let(:test_patient_with_input) do
+      create(:patient, case_number: '5678').tap { |p| p.execute_data_sync(correct_user) }
+    end
+
+    it 'downloads pipeline file content as a string' do
+      expect(test_patient_with_pipeline.data_files.first.content(correct_user)).to eq "fake\n"
+    end
+
+    it 'downloads patient input file content as a string' do
+      expect(test_patient_with_input.data_files.first.content(correct_user)).to eq "fake\n"
+    end
+  end
 end
