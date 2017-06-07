@@ -2,5 +2,6 @@
   .alert.alert-info= t 'patients.show.nothing'
 
 - else
-  = render partial: 'file_store/file_browser',
-           locals: { target_path: FileStore.patients_path + patient.case_number }
+  = render partial: 'file_store/file_browser_multi',
+           locals: { target_path: FileStore.patients_path + patient.case_number,
+                     element_id: 'patient_files' }
