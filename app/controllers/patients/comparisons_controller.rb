@@ -9,7 +9,9 @@ module Patients
                     alert: I18n.t('patients.comparisons.show.invalid')
       end
 
+      # FIXME NOTE: the following two lines are not needed when patient sync problem is solved
       @patient.execute_data_sync(current_user)
+      pipelines.reload
 
       @data = []
       pipelines.first.data_files.each do |compared|
