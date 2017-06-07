@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   enum state: [:new_account, :approved, :blocked]
 
-  has_many :user_groups
+  has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
   has_many :access_policies, dependent: :destroy
   has_many :resource_managers, dependent: :destroy
