@@ -39,8 +39,6 @@ describe WebdavDataFileSynchronizer, files: true do
   end
 
   context 'when patient directory exists and is accessible' do
-    let(:test_advanced_patient) { create(:patient, case_number: '5678') }
-
     it 'handles network errors gracefully' do
       expect(Rails.logger).to receive(:warn).
         with(I18n.t('data_file_synchronizer.no_fs_client')).
@@ -55,6 +53,8 @@ describe WebdavDataFileSynchronizer, files: true do
     end
 
     context 'and there are patient inputs' do
+      let(:test_advanced_patient) { create(:patient, case_number: '5678') }
+
       it 'calls file storage and creates new input-related data_files' do
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
         expect(DataFile.all.map(&:data_type)).
@@ -96,10 +96,7 @@ describe WebdavDataFileSynchronizer, files: true do
     end
 
     context 'for a given pipeline' do
-      let(:test_patient_with_pipeline) do
-        create(:patient, case_number: '9900')
-      end
-
+      let(:test_patient_with_pipeline) { create(:patient, case_number: '9900') }
       before(:each) { create(:pipeline, name: 'present', patient: test_patient_with_pipeline) }
 
       it 'calls file storage and creates new pipeline-related data_files' do
@@ -123,9 +120,9 @@ describe WebdavDataFileSynchronizer, files: true do
                patient: test_patient_with_pipeline,
                pipeline: test_patient_with_pipeline.pipelines.first)
         call(test_patient_with_pipeline, correct_user)
-        expect(test_patient_with_pipeline.reload.data_files.count).to eq 1
-        expect(test_patient_with_pipeline.pipelines.first.data_files.count).to eq 1
-        expect(test_patient_with_pipeline.data_files.data_type).to eq 'blood_flow_result'
+        expect(DataFile.count).to eq 1
+        expect(DataFile.first.data_type).to eq 'blood_flow_result'
+        expect(DataFile.first.pipeline).to eq test_patient_with_pipeline.pipelines.first
       end
     end
   end

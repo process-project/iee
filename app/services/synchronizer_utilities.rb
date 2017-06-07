@@ -63,8 +63,6 @@ module SynchronizerUtilities
     }
   end
 
-  private
-
   def current_names(pipeline)
     @patient.data_files.where(pipeline: pipeline).pluck(:name)
   end
