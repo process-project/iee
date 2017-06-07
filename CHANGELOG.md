@@ -20,6 +20,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.4.1
+
+### Changed
+- `sub` changed from integer into string (which is required by specification) (@mkasztelnik)
+
 ## 0.4.0
 
 ### Added

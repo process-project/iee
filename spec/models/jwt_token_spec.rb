@@ -22,7 +22,7 @@ RSpec.describe JwtToken do
 
   it 'includes sub in token' do
     expect(key_from_token(subject.generate, 'sub')).
-      to eq user.id
+      to eq user.id.to_s
   end
 
   it 'allows to create long tokens' do

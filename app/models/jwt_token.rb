@@ -23,7 +23,7 @@ class JwtToken
     {
       name: @user.name,
       email: @user.email,
-      sub: @user.id,
+      sub: @user.id.to_s,
       iss: Rails.configuration.jwt.issuer,
       exp: Time.now.to_i + (expiration_time_in_seconds ||
              Rails.configuration.jwt.expiration_time)
