@@ -1,0 +1,11 @@
+-# NOTE: Used to embed file browser component multiple times in a single web page
+-# requires the following local settings:
+-# - target_path - WebDAV directory the browser should list as the root element
+-# - element_id - id of the element in which the browser will be embedded (the element will be
+-#                created automatically)
+- content_for :extra_head do
+  :javascript
+    var onEmbedReady = function() {
+      #{content_for :embed_file_browser}
+    };
+  %script{ type: 'text/javascript', src: FileStore.file_store_embed_js_path }
