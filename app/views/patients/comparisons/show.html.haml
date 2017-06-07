@@ -16,11 +16,5 @@
       .clearfix
 
     .x_content
-      - @pipelines.first.data_files.each do |compared|
-        - compare_to = @pipelines.second.data_files.detect { |df| df[:data_type] == compared[:data_type] }
-        - if compare_to.present?
-          .diff_output{ data: { compared: compared,
-                                compare_to: compare_to,
-                                data_type: t("data_file.data_types.#{compared[:data_type]}"),
-                                compared_pipeline: @pipelines.first.name,
-                                compare_to_pipeline: @pipelines.second.name }}
+      - @data.each do |diff|
+        .diff_output{ data: diff }
