@@ -18,4 +18,11 @@ RSpec.feature 'Comparing two pipelines' do
     expect(all('table.diff td.replace').map(&:text)).
       to match_array ["0", "WRONG!", "0.965", "96.5"]
   end
+
+  scenario 'hides non-paired and noncomparable files', js: true do
+    visit patient_comparison_path(patient, id: patient.id, pipeline_ids: pipelines.map(&:iid))
+
+    expect(page).to have_content 'Result: Blood flow model. Not compared.'
+    expect(page).to have_css '.diff_output', count: 1
+  end
 end

@@ -14,9 +14,10 @@ module Patients
       pipelines.reload
 
       @data = []
+      @not_comparable = []
       pipelines.first.data_files.each do |compared|
         compare_to = pipelines.second.data_files.detect { |df| df.data_type == compared.data_type }
-        if compare_to.present?
+        if compared.comparable? && compare_to.present?
           @data << { data_type: t("data_file.data_types.#{compared.data_type}"),
                      compared: {
                        name: compared.name,
@@ -29,6 +30,8 @@ module Patients
                        pipeline: compare_to.pipeline.name
                      }
           }
+        elsif compare_to.present?
+          @not_comparable << t("data_file.data_types.#{compared.data_type}")
         end
       end
     end

@@ -27,4 +27,8 @@ class DataFile < ApplicationRecord
   def content(user)
     Webdav::FileStore.new(user).get_file_to_memory(handle)
   end
+
+  def comparable?
+    estimated_parameters? || heart_model_output?
+  end
 end
