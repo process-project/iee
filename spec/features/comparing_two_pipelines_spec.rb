@@ -10,7 +10,7 @@ RSpec.feature 'Comparing two pipelines' do
     login_as(user)
   end
 
-  scenario 'shows data file diffs', js: true do
+  scenario 'shows data file diffs', js: true, files: true do
     visit patient_comparison_path(patient, id: patient.id, pipeline_ids: pipelines.map(&:iid))
 
     expect(page).to have_content 'Result: Estimated parameters'
@@ -19,7 +19,7 @@ RSpec.feature 'Comparing two pipelines' do
       to match_array %w(0 WRONG! 0.965 96.5)
   end
 
-  scenario 'hides non-paired and noncomparable files', js: true do
+  scenario 'hides non-paired and noncomparable files', js: true, files: true do
     visit patient_comparison_path(patient, id: patient.id, pipeline_ids: pipelines.map(&:iid))
 
     expect(page).to have_content 'Result: Blood flow model. Not compared.'
