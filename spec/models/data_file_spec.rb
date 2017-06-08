@@ -47,4 +47,11 @@ RSpec.describe DataFile do
       expect(test_patient_with_input.data_files.first.content(correct_user)).to eq "fake\n"
     end
   end
+
+  describe '.data_type' do
+    it 'has all values localised' do
+      locales = DataFile.data_types.keys.map { |dt| I18n.t "data_file.data_types.#{dt}" }
+      expect(locales.any? { |l| l.include? 'translation missing' }).to be_falsey
+    end
+  end
 end
