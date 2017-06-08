@@ -16,9 +16,9 @@
       .clearfix
 
     .x_content
-      - @data.each do |diff|
+      - @data[:compared].each do |diff|
         .diff_output{ data: diff }
 
-      - @not_comparable.each do |noncomparable|
+      - @data[:not_comparable].each do |noncomparable|
         .noncomparable
           Result: #{noncomparable}. Not compared.

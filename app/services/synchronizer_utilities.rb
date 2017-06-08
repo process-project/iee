@@ -68,19 +68,20 @@ module SynchronizerUtilities
   end
 
   def input_names(remote_names)
-    remote_names.select{ |rn| rn.split(@patient.inputs_dir).size > 1 }.map do |rn|
+    remote_names.select { |rn| rn.split(@patient.inputs_dir).size > 1 }.map do |rn|
       rn.split(@patient.inputs_dir)[1]
     end
   end
 
   def pipeline_file_names(remote_names, pipeline)
-    remote_names.select{ |rn| rn.split(pipeline.working_dir).size > 1 }.map do |rn|
+    remote_names.select { |rn| rn.split(pipeline.working_dir).size > 1 }.map do |rn|
       rn.split(pipeline.working_dir)[1]
     end
   end
 
   def sync_file(remote_name, pipeline = nil)
     data_type = recognize_data_type(remote_name)
+    # rubocop:disable Style/GuardClause
     if data_type && !current_names(pipeline).include?(remote_name)
       create_db_entry(data_type, remote_name, pipeline)
     end

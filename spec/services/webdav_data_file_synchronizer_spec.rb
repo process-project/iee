@@ -64,8 +64,8 @@ describe WebdavDataFileSynchronizer, files: true do
 
       it 'only creates input data_files not yet present' do
         create(:data_file, name: 'structural_vent.dat',
-               data_type: 'ventricle_virtual_model',
-               patient: test_patient)
+                           data_type: 'ventricle_virtual_model',
+                           patient: test_patient)
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(1)
         expect(DataFile.all.map(&:data_type)).
           to match_array %w(fluid_virtual_model ventricle_virtual_model)
@@ -82,11 +82,11 @@ describe WebdavDataFileSynchronizer, files: true do
         create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
         create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
         create(:data_file, name: 'structural_vent.dat',
-               data_type: 'ventricle_virtual_model',
-               patient: test_patient)
+                           data_type: 'ventricle_virtual_model',
+                           patient: test_patient)
         create(:data_file, name: 'fluidFlow.cas',
-               data_type: 'fluid_virtual_model',
-               patient: test_patient)
+                           data_type: 'fluid_virtual_model',
+                           patient: test_patient)
         expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
         expect(DataFile.all.map(&:data_type)).
@@ -107,17 +107,17 @@ describe WebdavDataFileSynchronizer, files: true do
 
       it 'only creates pipeline data_files not yet present' do
         create(:data_file, name: 'fluidFlow-1-00002.dat',
-               data_type: 'blood_flow_result',
-               patient: test_patient_with_pipeline,
-               pipeline: test_patient_with_pipeline.pipelines.first)
+                           data_type: 'blood_flow_result',
+                           patient: test_patient_with_pipeline,
+                           pipeline: test_patient_with_pipeline.pipelines.first)
         expect { call(test_patient_with_pipeline, correct_user) }.to change { DataFile.count }.by(0)
       end
 
       it 'destroys pipeline data_files which are no longer stored in File Storage' do
         create(:data_file, name: 'structural_vent.dat',
-               data_type: 'ventricle_virtual_model',
-               patient: test_patient_with_pipeline,
-               pipeline: test_patient_with_pipeline.pipelines.first)
+                           data_type: 'ventricle_virtual_model',
+                           patient: test_patient_with_pipeline,
+                           pipeline: test_patient_with_pipeline.pipelines.first)
         call(test_patient_with_pipeline, correct_user)
         expect(DataFile.count).to eq 1
         expect(DataFile.first.data_type).to eq 'blood_flow_result'
