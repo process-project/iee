@@ -8,8 +8,9 @@ class DataSetsController < ApplicationController
 
   def build_url
     uri = URI(Rails.configuration.constants['data_sets']['url'])
-    uri.user = 'bearer'
-    uri.password = current_user.token
+    uri.query = URI.encode_www_form(
+      URI.decode_www_form(uri.query || '') << ['bearer', current_user.token]
+    )
     uri.to_s
   end
 end
