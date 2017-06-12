@@ -9,17 +9,16 @@
         .clearfix
       .x_content
         %section.content
-          %table.table
-            %thead
-              %tr
-                %th.iid= t('.id')
-                %th= t('.name')
-                %th= t('.status')
-            %tbody
-              = render partial: 'patients/pipelines/pipeline',
-                collection: pipelines
+          = form_tag(patient_comparison_path(patient), method: :get) do
+            %table.table
+              %thead
+                %tr
+                  %th.iid= t('.id')
+                  %th.select
+                  %th= t('.name')
+                  %th= t('.status')
+              %tbody
+                = render partial: 'patients/pipelines/pipeline',
+                         collection: pipelines
 
-          - if @pipelines.count > 1
-            = link_to t('.compare'), patient_comparison_path(patient, pipeline_ids: @pipelines[0,2].map(&:iid)),
-              data: { turbolinks: false },
-              class: 'btn btn-success'
+            = submit_tag(t('.compare'), class: 'btn btn-success')

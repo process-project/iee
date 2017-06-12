@@ -6,6 +6,12 @@
   color: whitesmoke;
 }
 
-th.iid {
-  width: 40px;
+th{
+  &.iid {
+    width: 40px;
+  }
+
+  &.select {
+    width: 10px;
+  }
 }
