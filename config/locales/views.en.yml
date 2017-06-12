@@ -51,7 +51,7 @@ en:
         id: Id
         name: Name
         status: Status
-        compare: Compare pipeline steps
+        compare: Compare pipelines
       show:
         subtitle: pipeline
         back_to_index: Back to pipelines list
@@ -67,6 +67,8 @@ en:
       show:
         subtitle: pipelines comparison
         invalid: Please select exactly two pipelines to compare.
+        no_data: Nothing to compare.
+        incomparable: "Result: %{noncomparable}. Not compared."
 
   services:
     index:

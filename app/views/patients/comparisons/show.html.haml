@@ -16,9 +16,12 @@
       .clearfix
 
     .x_content
+      - if (@data[:compared] + @data[:not_comparable]).empty?
+        = t 'patients.comparisons.show.no_data'
+
       - @data[:compared].each do |diff|
         .diff_output{ data: diff }
 
       - @data[:not_comparable].each do |noncomparable|
         .noncomparable
-          Result: #{noncomparable}. Not compared.
+          = t 'patients.comparisons.show.incomparable', noncomparable: noncomparable
