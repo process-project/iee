@@ -11,7 +11,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
-- JWT token passed as a URL query parameter for the data sets subpage (@dharezlak)
 
 ### Deprecated
 
@@ -20,6 +19,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 ### Security
+
+## 0.4.3
+
+### Fixed
+- JWT token passed as a URL query parameter for the data sets subpage (@dharezlak)
 
 ## 0.4.2
 
