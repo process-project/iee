@@ -11,13 +11,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- JWT token passed as a URL query parameter for the data sets subpage (@dharezlak)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- JWT token passed as a URL query parameter for the data sets subpage (@dharezlak)
 
 ### Security
 
