@@ -16,7 +16,10 @@
       policiesApiUrl: '#{FileStore.file_store_proxy_path}',
       onError: function(message) {
         toastr.error(message);
-      }
+      },
+      additionalJsResources: ['#{javascript_path 'application'}'],
+      additionalCssResources: ['#{stylesheet_path 'application'}'],
+      additionalCssOverrides: ['body { background: #ffffff; }']
     });
 
 .x_panel
