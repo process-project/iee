@@ -2,6 +2,7 @@
 class Pipeline < ApplicationRecord
   belongs_to :patient
   belongs_to :user
+  has_many :data_files
 
   validate :set_iid, on: :create
   validates :iid, presence: true, numericality: true

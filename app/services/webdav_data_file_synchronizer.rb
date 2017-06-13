@@ -32,7 +32,7 @@ class WebdavDataFileSynchronizer
   private
 
   def call_file_storage
-    parse_response(webdav_storage_url, remote_file_names)
+    parse_response(remote_file_names)
   rescue Net::HTTPServerException => ex
     response = OpenStruct.new(code: ex.message.to_i, body: ex)
     report_problem(:request_failure, response: response) unless response.code == 404
@@ -42,8 +42,8 @@ class WebdavDataFileSynchronizer
 
   def remote_file_names
     remote_names = []
-    @dav_client.find(case_directory(webdav_storage_url), recursive: false) do |item|
-      remote_names << item.properties.displayname
+    @dav_client.find(case_directory(webdav_storage_url), recursive: true) do |item|
+      remote_names << item.uri.to_s
     end
     remote_names
   end
