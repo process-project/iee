@@ -9,12 +9,16 @@
         .clearfix
       .x_content
         %section.content
-          %table.table
-            %thead
-              %tr
-                %th.iid= t('.id')
-                %th= t('.name')
-                %th= t('.status')
-            %tbody
-              = render partial: 'patients/pipelines/pipeline',
-                collection: pipelines
+          = form_tag(patient_comparison_path(patient), method: :get) do
+            %table.table
+              %thead
+                %tr
+                  %th.iid= t('.id')
+                  %th.select
+                  %th= t('.name')
+                  %th= t('.status')
+              %tbody
+                = render partial: 'patients/pipelines/pipeline',
+                         collection: pipelines
+
+            = submit_tag(t('.compare'), class: 'btn btn-success')

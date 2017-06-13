@@ -29,7 +29,7 @@ en:
     no_fs_client: |
       There were problems accessing the EurValve File Store service.
     file_removed: |
-      Removed %{name} file from patient %{patient} as no longer present in the
+      Removed %{name} file from patient %{patient} (pipeline %{pipeline}) as no longer present in the
       File Storage.
   rimrock:
     update:

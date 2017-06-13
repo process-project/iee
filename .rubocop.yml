@@ -34,3 +34,5 @@ Style/DotPosition:
   - leading
   - trailing
 
+Style/GuardClause:
+  Enabled: false
