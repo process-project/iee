@@ -1,5 +1,7 @@
 %tr
   %th= pipeline.iid
+  %th
+    %input{ value: pipeline.iid, type: 'checkbox', name: 'pipeline_ids[]' }
   %th= link_to(pipeline.name, [pipeline.patient, pipeline])
   %th
     .progress.progress_sm

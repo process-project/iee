@@ -9,17 +9,26 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Pipelines have own DataFiles which represent produced results (@Nuanda)
+- Pipelines comparison view which present differences between files of two Pipelines (@Nuanda)
 
 ### Changed
 - File browser template for multiple embed mode created (@dharezlak)
+- WebDAV synchronisation takes care for pipeline-related and patient input files (@Nuanda)
 
 ### Deprecated
 
 ### Removed
+- DataFile#handle removed since it is not going to be used anymore (@Nuanda)
 
 ### Fixed
 
 ### Security
+
+## 0.4.3
+
+### Fixed
+- JWT token passed as a URL query parameter for the data sets subpage (@dharezlak)
 
 ## 0.4.2
 
