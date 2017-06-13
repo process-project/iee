@@ -22,6 +22,8 @@ module Patients
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -38,12 +40,12 @@ module Patients
     end
 
     def check_pipelines
-      # rubocop:disable Style/GuardClause
       if pipelines.size != 2
         redirect_to patient_path(@patient), alert: I18n.t('patients.comparisons.show.invalid')
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def comparison_data(compared, compare_to)
       {
         data_type: t("data_file.data_types.#{compared.data_type}"),
@@ -59,5 +61,6 @@ module Patients
         }
       }
     end
+    # rubocop:enabled Metrics/MethodLength
   end
 end

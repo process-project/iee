@@ -28,10 +28,10 @@ module Webdav
     end
 
     def get_file_to_memory(remote_path)
-      io = StringIO.new
-      get(remote_path) { |s| io.write(s) }
-      io.close
-      io.string
+      StringIO.open do |io|
+        get(remote_path) { |s| io.write(s) }
+        io.string
+      end
     end
 
     def put_file(local_filename, remote_path)

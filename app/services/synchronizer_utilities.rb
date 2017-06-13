@@ -81,7 +81,6 @@ module SynchronizerUtilities
 
   def sync_file(remote_name, pipeline = nil)
     data_type = recognize_data_type(remote_name)
-    # rubocop:disable Style/GuardClause
     if data_type && !current_names(pipeline).include?(remote_name)
       create_db_entry(data_type, remote_name, pipeline)
     end
