@@ -25,6 +25,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.4.4
+
+### Changed
+- JWT token parameter name changed to access_token for the data sets subpage request URL (@dharezlak)
+
 ## 0.4.3
 
 ### Fixed
