@@ -5,8 +5,23 @@ module Patients
       before_action :find_and_authorize
 
       def show
-        @computations = @pipeline.computations
+        @computations = @pipeline.computations.order(:created_at)
+        @refresh = @computations.any?(&:active?)
       end
+
+      def update
+        if @computation.runnable?
+          @computation.run
+          redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
+                      notice: I18n.t('computations.update.started')
+        else
+          @computations = @pipeline.computations
+          render :show, status: :bad_request,
+                        notice: I18n.t('computations.update.not_runnable')
+        end
+      end
+
+      private
 
       def find_and_authorize
         @computation = Computation.

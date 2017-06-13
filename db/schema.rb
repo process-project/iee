@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607103017) do
+ActiveRecord::Schema.define(version: 20170613100317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170607103017) do
     t.string   "job_id"
     t.text     "script"
     t.string   "working_directory"
-    t.string   "status",            default: "new", null: false
+    t.string   "status",            default: "created", null: false
     t.string   "stdout_path"
     t.string   "stderr_path"
     t.text     "standard_output"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20170607103017) do
     t.string   "error_message"
     t.integer  "exit_code"
     t.integer  "user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "type"
     t.string   "input_path"
     t.string   "output_path"

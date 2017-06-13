@@ -57,30 +57,68 @@ en:
         edit: Edit pipeline
         delete: Remove pipeline
         no_computations: No computations defined for this pipeline
-        segmentation:
-          title: Segmenation
-          cannot_start: |
-            Cannot start segmentation because required input file
-            (imaging_*.zip) cannot be found in patient inputs directory or
-            pipeline directory.
-        blood_flow_simulation:
-          title: Blood Flow Simulation
-          cannot_start: |
-            Cannot start blood flow simulation because required input files
-            (fluidFlow.cas and structural_vent.dat) cannot be found
-            in patient inputs directory or pipeline directory.
-        heart_model_calculation:
-          title: Heart Model Calculation
-          cannot_start: |
-            Cannot start heart model calculation because required input file
-            (0DModel_input.csv) cannot be found in patient inputs directory or
-            pipeline directory.
       new:
         title: Create new pipeline
         back_to_index: Back to pipelines list
       edit:
         title: Edit pipeline
         back_to_index: Back to pipelines list
+      computations:
+        show:
+          segmentation:
+            title: Segmenation
+            start: Start segmentation
+            restart: Restart segmentation
+            cannot_start: |
+              Cannot start segmentation because required input file
+              (imaging_*.zip) cannot be found in patient inputs directory or
+              pipeline directory.
+            created: |
+              All required input files are available.
+              You can start segmentation for this patient.
+            new: Segmentation computation is running
+            running: Segmentation computation is running
+            error: There were an error while calculating segmentation
+            finished: |
+              Segmentation finished successfully, please take a look into
+              outputs directory for the results
+            aborted: Segmentation was aborted by the pipeline owner
+          blood_flow_simulation:
+            title: Blood Flow Simulation
+            start: Start blood floow simulation
+            restart: Restart blood floow simulation
+            cannot_start: |
+              Cannot start blood flow simulation because required input files
+              (fluidFlow.cas and structural_vent.dat) cannot be found
+              in patient inputs directory or pipeline directory.
+            created: |
+              All required input files are available.
+              You can start blood flow simulation for this patient.
+            new: Blood flow simulation computation is running
+            running: Blood flow simulation computation is running
+            error: There were an error while calculating blood flow simulation
+            finished: |
+              Blood flow simulation finished successfully, please take a look into
+              outputs directory for the results
+            aborted: Blood flow simulation was aborted by the pipeline owner
+          heart_model_calculation:
+            title: Heart Model Calculation
+            start: Start heart model calculation
+            restart: Restart heart model calculation
+            cannot_start: |
+              Cannot start heart model calculation because required input file
+              (0DModel_input.csv) cannot be found in patient inputs directory or
+              pipeline directory.
+            created: |
+              All required input files are available.
+              You can start heart model calculation for this patient.
+            new: Heart model calculation is running
+            running: Heart model calculation is running
+            error: There were an error while calculating patient heart model
+            finished: |
+              Heart model calculation finished successfully, please take a look into
+              outputs directory for the results
+            aborted: Segmentation was aborted by the pipeline owner
     comparisons:
       show:
         subtitle: pipelines comparison

@@ -22,4 +22,12 @@ shared_examples 'a Rimrock-based ready to run step' do
     expect(described_class.new(pipeline).runnable?).
       to be_truthy
   end
+
+  it 'changes computation status to :new' do
+    allow(Rimrock::StartJob).to receive(:perform_later)
+
+    computation = described_class.new(pipeline).run
+
+    expect(computation.status).to eq 'new'
+  end
 end

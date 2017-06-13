@@ -15,7 +15,7 @@ $ ->
             location.reload()
     , timeout
 
-  $('tr[data-refresh="true"]').each ->
+  $('div[data-refresh="true"]').each ->
     refreshComputation(this)
 
   $('.diff_output').each ->

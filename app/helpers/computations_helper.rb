@@ -15,7 +15,20 @@ module ComputationsHelper
     icon(clazz, class: additional_clazz)
   end
 
+  def alert_computation_class(computation)
+    "alert-#{alert_class_postfix(computation)}"
+  end
+
   private
+
+  def alert_class_postfix(computation)
+    case computation.status
+    when 'error' then 'danger'
+    when 'finished' then 'success'
+    when 'aborted' then 'warning'
+    else 'info'
+    end
+  end
 
   def runnable_run_status(computation)
     if computation.active?

@@ -4,7 +4,7 @@ class Computation < ApplicationRecord
   belongs_to :pipeline
 
   validates :status,
-            inclusion: { in: %w(new queued running error finished aborted) }
+            inclusion: { in: %w(created new queued running error finished aborted) }
 
   validates :pipeline_step,
             inclusion: { in: Pipeline::STEPS.map { |c| c::STEP_NAME } }
@@ -15,10 +15,14 @@ class Computation < ApplicationRecord
   scope :submitted_webdav, -> { submitted.where(type: 'WebdavComputation') }
   scope :for_patient_status, ->(status) { where(pipeline_step: status) }
 
-  delegate :runnable?, to: :runner
+  delegate :runnable?, :run, to: :runner
 
   def active?
     %w(new queued running).include? status
+  end
+
+  def finished?
+    %w(error finished aborted).include? status
   end
 
   def self.type_for_patient_status(status)

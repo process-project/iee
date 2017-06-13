@@ -10,9 +10,12 @@ module PipelineStep
 
     def run
       raise 'Required inputs are not available' unless runnable?
-      internal_run
 
-      computation
+      computation.tap do |c|
+        c.status = :new
+        internal_run
+        c.save!
+      end
     end
 
     def runnable?

@@ -28,7 +28,7 @@ Rails.application.routes.draw do
       resources :comparisons, only: [:show]
       resources :pipelines do
         scope module: :pipelines do
-          resources :computations, only: [:show]
+          resources :computations, only: [:show, :update]
         end
       end
     end
