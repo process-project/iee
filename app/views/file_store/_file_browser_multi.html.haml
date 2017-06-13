@@ -1,0 +1,26 @@
+-# NOTE: Used to embed file browser component multiple times in a single web page
+-# requires the following local settings:
+-# - target_path - WebDAV directory the browser should list as the root element
+-# - element_id - id of the element in which the browser will be embedded (the element will be
+-#                created automatically)
+- content_for :embed_file_browser do
+  :plain
+    eurvalve.filestore.Embed.embedFileBrowser({
+      resourceUrlBase: '#{FileStore.file_store_url}/',
+      elementId: '#{element_id}',
+      userLogin: '#{current_user.email}',
+      userToken: '#{current_user.token}',
+      userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
+      webDavBaseUrl: '#{FileStore.file_store_url}#{target_path}',
+      webDavBaseHref: '#{target_path}',
+      policiesApiUrl: '#{FileStore.file_store_proxy_path}',
+      onError: function(message) {
+        toastr.error(message);
+      },
+      additionalJsResources: ['#{javascript_path 'application'}'],
+      additionalCssResources: ['#{stylesheet_path 'application'}'],
+      additionalCssOverrides: ['body { background: #ffffff; }']
+    });
+
+.x_panel
+  .x_content{:id => "#{element_id}"}

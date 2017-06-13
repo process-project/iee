@@ -19,7 +19,8 @@
 
         %h3= t '.files'
         .row
-          = render partial: 'patients/patient_files', locals: { patient: patient }
+          = render partial: 'patients/patient_files', locals: { patient: patient, browser_id: '1' }
+        = render partial: 'file_store/file_browser_multi_include'
 
       - if patient.imaging_uploaded? || patient.virtual_model_ready? || patient.after_parameter_estimation?
         %h3= t '.computations'

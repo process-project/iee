@@ -1,0 +1,6 @@
+- content_for :extra_head do
+  :javascript
+    var onEmbedReady = function() {
+      #{content_for :embed_file_browser}
+    };
+  %script{ type: 'text/javascript', src: FileStore.file_store_embed_js_path }

@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipelines comparison view which present differences between files of two Pipelines (@Nuanda)
 
 ### Changed
+- File browser template for multiple embed mode created (@dharezlak)
 - WebDAV synchronisation takes care for pipeline-related and patient input files (@Nuanda)
 
 ### Deprecated
