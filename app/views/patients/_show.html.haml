@@ -1,17 +1,31 @@
 %br
-.col-md-12.col-sm-12.col-xs-12
-  .x_panel
-    .x_title
-      %h2
-        = @patient.case_number
-        %small= t '.subtitle'
-      %span.pull-right
-        = link_to t('.remove'), patient_path(patient), method: :delete,
-          data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
-        = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
-      .clearfix
+.x_panel
+  .x_title
+    %h2
+      = @patient.case_number
+      %small= t '.subtitle'
+    %span.pull-right
+      = link_to t('.remove'), patient_path(patient), method: :delete,
+        data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
+      = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
+    .clearfix
 
-    .x_content
-      %section.content
-        = render partial: 'file_store/file_browser',
-          locals: { target_path: patient.working_dir }
+.row
+  .col-xs-6
+    .x_panel
+      .x_title
+        %h3 Inputs
+      .x_content
+        %section.content
+          = render partial: 'file_store/file_browser_multi',
+            locals: { target_path: patient.inputs_dir, element_id: 'patient-inputs' }
+  .col-xs-6
+    .x_panel
+      .x_title
+        %h3 Outputs
+      .x_content
+        %section.content
+          = render partial: 'file_store/file_browser_multi',
+            locals: { target_path: patient.pipelines_dir, element_id: 'patient-outputs' }
+
+= render partial: 'file_store/file_browser_multi_include'
