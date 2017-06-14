@@ -7,6 +7,15 @@ module Patients
       def show
         @computations = @pipeline.computations.order(:created_at)
         @refresh = @computations.any?(&:active?)
+
+        if request.xhr?
+          render partial: 'patients/pipelines/computations/show', layout: false,
+                 locals: {
+                   patient: @patient, pipeline: @pipeline,
+                   computation: @computation, computations: @computations,
+                   refresh: @refresh
+                 }
+        end
       end
 
       def update

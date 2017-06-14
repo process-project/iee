@@ -19,6 +19,7 @@ RSpec.describe Computation, type: :model do
 
   describe '.active' do
     it 'returns only new, queued or running computations' do
+      subject.update(status: 'new')
       expect(Computation.active).to eq [subject]
       subject.update(status: 'queued')
       expect(Computation.active).to eq [subject]

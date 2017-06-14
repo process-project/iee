@@ -64,11 +64,20 @@ en:
         title: Edit pipeline
         back_to_index: Back to pipelines list
       computations:
+        run:
+          segmentation:
+            start: Start segmentation
+            restart: Restart segmentation
+          blood_flow_simulation:
+            start: Start blood floow simulation
+            restart: Restart blood floow simulation
+          heart_model_calculation:
+            start: Start heart model calculation
+            restart: Restart heart model calculation
+
         show:
           segmentation:
             title: Segmenation
-            start: Start segmentation
-            restart: Restart segmentation
             cannot_start: |
               Cannot start segmentation because required input file
               (imaging_*.zip) cannot be found in patient inputs directory or
@@ -85,8 +94,6 @@ en:
             aborted: Segmentation was aborted by the pipeline owner
           blood_flow_simulation:
             title: Blood Flow Simulation
-            start: Start blood floow simulation
-            restart: Restart blood floow simulation
             cannot_start: |
               Cannot start blood flow simulation because required input files
               (fluidFlow.cas and structural_vent.dat) cannot be found
@@ -103,8 +110,6 @@ en:
             aborted: Blood flow simulation was aborted by the pipeline owner
           heart_model_calculation:
             title: Heart Model Calculation
-            start: Start heart model calculation
-            restart: Restart heart model calculation
             cannot_start: |
               Cannot start heart model calculation because required input file
               (0DModel_input.csv) cannot be found in patient inputs directory or

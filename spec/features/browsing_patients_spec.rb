@@ -110,63 +110,63 @@ RSpec.feature 'Patient browsing' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
         Pipeline::STEPS.each do |s|
-          expect(page).
-            to have_content I18n.t("patients.pipelines.show.#{s::STEP_NAME}.title")
+          title = I18n.t("patients.pipelines.computations.show.#{s::STEP_NAME}.title")
+          expect(page).to have_content title
         end
       end
 
       scenario 'computation alert is displayed when no required input data' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
-        msg_key = "patients.pipelines.show.#{computation.pipeline_step}.cannot_start"
+        msg_key = "patients.pipelines.computations.show.#{computation.pipeline_step}.cannot_start"
 
         expect(page).to have_content I18n.t(msg_key)
       end
-    end
 
-    context 'when computing for patient\'s wellbeing' do
-      # scenario 'displays computation stdout and stderr' do
-      #   create(:computation, patient: patient,
-      #                        stdout_path: 'http://download/stdout.pl',
-      #                        stderr_path: 'http://download/stderr.pl')
-      #
-      #   patient.imaging_uploaded!
-      #   visit patient_path(patient)
-      #
-      #   expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
-      #   expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
-      # end
+      context 'when computing for patient\'s wellbeing' do
+        scenario 'displays computation stdout and stderr' do
+          allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+          computation.update_attributes(status: 'new',
+                                        stdout_path: 'http://download/stdout.pl',
+                                        stderr_path: 'http://download/stderr.pl')
 
-      # scenario 'periodically ajax-refreshes computation status', js: true do
-      #   computation = create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
-      #   patient.virtual_model_ready!
-      #
-      #   visit patient_path(patient)
-      #
-      #   expect(page).to have_content('New')
-      #
-      #   page.execute_script '$(document.body).addClass("not-reloaded")'
-      #   computation.update_attributes(status: 'running')
-      #   page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-      #
-      #   expect(page).to have_content('Running')
-      #   expect(page).to have_selector('body.not-reloaded')
-      # end
+          visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-      # scenario 'refreshes entire page when computation status turns finished', js: true do
-      #   computation = create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
-      #   patient.virtual_model_ready!
-      #
-      #   visit patient_path(patient)
-      #
-      #   expect(page).to have_content('New')
-      #
-      #   page.execute_script '$(document.body).addClass("not-reloaded")'
-      #   computation.update_attributes(status: 'finished')
-      #   page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
-      #
-      #   expect(page).to have_content('Finished')
-      #   expect(page).not_to have_selector('body.not-reloaded')
-      # end
+          expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
+          expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
+        end
+
+        scenario 'periodically ajax-refreshes computation status', js: true do
+          allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+          computation.update_attributes(status: 'new')
+
+          visit patient_pipeline_computation_path(patient, pipeline, computation)
+
+          expect(page).to have_content('New')
+
+          page.execute_script '$(document.body).addClass("not-reloaded")'
+          computation.update_attributes(status: 'running')
+          page.execute_script 'window.refreshComputation($(\'div[data-refresh="true"]\'), 2)'
+
+          expect(page).to have_content('Running')
+          expect(page).to have_selector('body.not-reloaded')
+        end
+
+        scenario 'refreshes entire page when computation status turns finished', js: true do
+          allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+          computation.update_attributes(status: 'new')
+
+          visit patient_pipeline_computation_path(patient, pipeline, computation)
+
+          expect(page).to have_content('New')
+
+          page.execute_script '$(document.body).addClass("not-reloaded")'
+          computation.update_attributes(status: 'finished')
+          page.execute_script 'window.refreshComputation($(\'div[data-refresh="true"]\'), 2)'
+
+          expect(page).to have_content('Finished')
+          expect(page).not_to have_selector('body.not-reloaded')
+        end
+      end
     end
   end
 end
