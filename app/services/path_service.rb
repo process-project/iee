@@ -5,6 +5,6 @@ class PathService
   end
 
   def self.to_path(pretty_path)
-    pretty_path.gsub(/\*$/, '.*')
+    URI.decode(pretty_path).gsub(/\*$/, '.*')
   end
 end

@@ -54,7 +54,7 @@ module Api
     end
 
     def uri
-      params[:uri]
+      params[:uri].nil? ? params[:uri] : URI.decode(params[:uri])
     end
 
     def access_method

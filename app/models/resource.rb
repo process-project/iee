@@ -42,7 +42,9 @@ class Resource < ApplicationRecord
   private
 
   def local_path_exclusion
-    return unless Resource.local_paths(path).exists?
+    return unless Resource.where(resource_type: :local).where('path ~ :path', path: path).where(
+      service_id: service_id
+    ).exists?
     errors.add(:path, 'local resource paths cannot overlap')
   end
 

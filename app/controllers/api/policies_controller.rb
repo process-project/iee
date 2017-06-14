@@ -62,7 +62,7 @@ module Api
     end
 
     def check_existence
-      @resource = Resource.find_by(path: PathService.to_path(@json['path']))
+      @resource = Resource.find_by(path: PathService.to_path(@json['path']), service: service)
       return unless @resource && copy_or_move_request?
       api_error(status: :bad_request, errors: I18n.t('api.destination_resource_exists'))
     end

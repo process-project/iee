@@ -118,13 +118,28 @@ RSpec.describe 'Policies API' do
     expect(Resource.last.path).to eq('/some/path')
   end
 
+  it 'should return a 201 status for a path with escaped characters' do
+    post  api_policies_path,
+          params: policy_post_params(
+            path: '/some/path%20with%20space/*',
+            permissions: [{ type: 'user_permission',
+                            entity_name: user.email,
+                            access_methods: ['get'] }]
+          ),
+          headers: valid_auth_headers,
+          as: :json
+
+    expect(response.status).to eq(201)
+    expect(Resource.last.path).to eq('/some/path with space/.*')
+  end
+
   it 'should return a 201 status code for an access method given in capital letters' do
     post  api_policies_path,
           params: policy_post_params(
             path: '/some/path',
             permissions: [{ type: 'user_permission',
                             entity_name: user.email,
-                            access_methods: ['get'] }]
+                            access_methods: ['GET'] }]
           ),
           headers: valid_auth_headers,
           as: :json
