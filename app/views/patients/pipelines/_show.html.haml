@@ -1,4 +1,5 @@
-= render 'patients/show', patient: patient
+= render 'patients/show', patient: patient do
+  = render 'patients/pipelines/outputs', pipeline: pipeline
 
 .x_panel
   .x_title
@@ -8,11 +9,13 @@
 
     %ul.nav.navbar-right.panel_toolbox
       %li
-        = link_to patient_path(patient), class: 'back' do
+        = link_to patient_path(patient),
+          class: 'back', data: { turbolinks: false } do
           = icon 'hand-o-left',
             title: t('patients.pipelines.show.back_to_index')
       %li
         = link_to edit_patient_pipeline_path(patient, pipeline),
+          data: { turbolinks: false },
           class: 'edit' do
           = icon 'edit',
             title: t('patients.pipelines.show.edit')

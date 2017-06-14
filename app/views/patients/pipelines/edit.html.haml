@@ -1,17 +1,21 @@
 = render 'patients/show', patient: @patient do
-  .x_panel
-    .x_title
-      %h2
-        = t 'patients.pipelines.edit.title'
+  = render 'patients/pipelines/outputs', pipeline: @pipeline
 
-      %ul.nav.navbar-right.panel_toolbox
-        %li
-          = link_to patient_pipeline_path(@patient, @pipeline), class: 'back' do
-            = icon 'hand-o-left',
-              title: t('patients.pipelines.edit.back_to_index')
-      .clearfix
+.x_panel
+  .x_title
+    %h2
+      = t 'patients.pipelines.edit.title'
 
-    .x_content
-      = render 'patients/pipelines/form',
-                patient: @patient, pipeline: @pipeline
+    %ul.nav.navbar-right.panel_toolbox
+      %li
+        = link_to patient_pipeline_path(@patient, @pipeline),
+          class: 'back',
+          data: { turbolinks: false } do
+          = icon 'hand-o-left',
+            title: t('patients.pipelines.edit.back_to_index')
+    .clearfix
+
+  .x_content
+    = render 'patients/pipelines/form',
+              patient: @patient, pipeline: @pipeline
 

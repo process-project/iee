@@ -1,2 +1,3 @@
-= render('patients/show', patient: @patient)
+= render('patients/show', patient: @patient) do
+  = render('patients/all_pipelines_outputs', patient: @patient)
 = render('patients/pipelines/list', patient: @patient, pipelines: @pipelines)

@@ -43,6 +43,8 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
+    all_pipelines_outputs:
+      title: All pipelines outputs
     pipelines:
       list:
         title: Pipelines
@@ -63,6 +65,8 @@ en:
       edit:
         title: Edit pipeline
         back_to_index: Back to pipelines list
+      outputs:
+        title: "%{name} pipeline outputs"
       computations:
         run:
           segmentation:
