@@ -4,7 +4,12 @@ module Patients
     class ComputationsController < ApplicationController
       before_action :find_and_authorize
 
+      # rubocop:disable Metrics/MethodLength
       def show
+        # TODO: FIXME the following two lines are not needed when patient sync problem is solved
+        #             can also enable the Metrics/MethodLength cop again, then
+        @patient.execute_data_sync(current_user)
+
         @computations = @pipeline.computations.order(:created_at)
         @refresh = @computations.any?(&:active?)
         @proxy = Proxy.new(current_user) unless current_user.proxy.blank?
@@ -17,6 +22,7 @@ module Patients
                  }
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def update
         if @computation.runnable?

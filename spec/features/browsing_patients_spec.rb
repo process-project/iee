@@ -7,6 +7,8 @@ RSpec.feature 'Patient browsing' do
   before(:each) do
     user = create(:user, :approved)
     login_as(user)
+
+    allow_any_instance_of(Patient).to receive(:execute_data_sync)
   end
 
   context 'in the context of the patients list' do
