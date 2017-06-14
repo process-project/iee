@@ -80,6 +80,9 @@ en:
             restart: Restart heart model calculation
 
         show:
+          proxy_invalid: |
+            To run this computation you need to have valid
+            PLGrid proxy certificate
           segmentation:
             title: Segmenation
             cannot_start: |

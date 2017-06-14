@@ -7,13 +7,13 @@ module Patients
       def show
         @computations = @pipeline.computations.order(:created_at)
         @refresh = @computations.any?(&:active?)
+        @proxy = Proxy.new(current_user) unless current_user.proxy.blank?
 
         if request.xhr?
           render partial: 'patients/pipelines/computations/show', layout: false,
                  locals: {
-                   patient: @patient, pipeline: @pipeline,
-                   computation: @computation, computations: @computations,
-                   refresh: @refresh
+                   patient: @patient, pipeline: @pipeline, refresh: @refresh,
+                   computation: @computation, computations: @computations, proxy: @proxy
                  }
         end
       end
