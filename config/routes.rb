@@ -59,7 +59,6 @@ Rails.application.routes.draw do
       resources :resource_managers, only: [:create, :destroy]
     end
   end
-  resources :computations, only: [:show, :create]
   resources :cloud_resources, only: :index
   resources :data_sets, only: :index
 

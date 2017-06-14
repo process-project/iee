@@ -1,8 +1,0 @@
-%tr{ data: { refresh: computation.active?.to_s, url: computation_path(computation) }}
-  %td= t "computation.for_procedure_status.#{computation.pipeline_step}"
-  %td= l(computation.created_at, format: :short)
-  %td= execution_time(computation)
-  %td
-    =safe_join([link_to_if(computation.stdout_path, t('computation.stdout_path'), infrastructure_file_path(computation.stdout_path)) { t('computation.stdout_path_missing') },
-                link_to_if(computation.stderr_path, t('computation.stderr_path'), infrastructure_file_path(computation.stderr_path)) { t('computation.stderr_path_missing') }], ', ')
-  %td= computation_status(computation.status)
