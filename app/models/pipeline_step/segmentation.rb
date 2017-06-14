@@ -24,16 +24,12 @@ module PipelineStep
 
     def internal_run
       computation.tap do |c|
-        c.update_attributes(input_path: image_data_file_path)
+        c.update_attributes(input_path: image_data_file.path)
         Webdav::StartJob.perform_later(c)
       end
     end
 
     private
-
-    def image_data_file_path
-      File.join(@pipeline.patient.working_dir, image_data_file.name)
-    end
 
     def image_data_file
       pipeline.data_file(:image)
