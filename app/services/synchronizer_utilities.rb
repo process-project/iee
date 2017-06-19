@@ -3,13 +3,11 @@ module SynchronizerUtilities
   private
 
   def case_directory(url)
-    "#{url}patients/#{@patient.case_number}"
+    File.join(url, 'patients', @patient.case_number)
   end
 
   def webdav_storage_url
-    Rails.configuration.constants['file_store']['web_dav_base_url'] +
-      Rails.configuration.constants['file_store']['web_dav_base_path'] +
-      "/#{Rails.env}/"
+    File.join(Webdav::FileStore.url, Webdav::FileStore.path, Rails.env, '/')
   end
 
   def parse_response(remote_names)

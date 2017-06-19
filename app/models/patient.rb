@@ -29,7 +29,7 @@ class Patient < ApplicationRecord
   end
 
   def working_url
-    File.join(FileStore.file_store_url, FileStore.file_store_path, working_dir)
+    File.join(Webdav::FileStore.url, Webdav::FileStore.path, working_dir)
   end
 
   def inputs_dir(prefix = working_dir)

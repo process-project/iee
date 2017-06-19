@@ -4,10 +4,9 @@
     var SletOverrides = {
       userLogin: '#{current_user.email}',
       userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
-      webDavBaseUrl: '#{FileStore.file_store_url}/#{FileStore.file_store_path}/#{target_path}',
-      webDavBaseHref: '#{FileStore.file_store_path}/#{target_path}',
-      webDavAuthUrl: '/api/auth',
-      policiesApiUrl: '#{FileStore.file_store_proxy_path}',
+      webDavBaseUrl: '#{File.join(Webdav::FileStore.url, Webdav::FileStore.path, target_path)}',
+      webDavBaseHref: '#{File.join(Webdav::FileStore.path, target_path)}',
+      policiesApiUrl: '#{File.join(Webdav::FileStore.url, Webdav::FileStore.proxy_path)}',
       token: '#{current_user.token}'
     };
     var fileStoreConfig = function() {
@@ -15,7 +14,7 @@
         toastr.error(message);
       });
     };
-  %script{ type: 'text/javascript', src: FileStore.file_store_js_path }
+  %script{ type: 'text/javascript', src: File.join(Webdav::FileStore.url, '/browser/browser.nocache.js') }
 
 .x_panel
   .x_content

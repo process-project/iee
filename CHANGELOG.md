@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - File browser template for multiple embed mode created (@dharezlak)
 - WebDAV synchronisation takes care for pipeline-related and patient input files (@Nuanda)
 - Computations are executed in the pipeline scope (@mkasztelnik)
+- Move FileStore configuration into one place (@mkasztelnik)
 
 ### Deprecated
 

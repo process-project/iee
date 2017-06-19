@@ -6,14 +6,14 @@
 - content_for :embed_file_browser do
   :plain
     eurvalve.filestore.Embed.embedFileBrowser({
-      resourceUrlBase: '#{FileStore.file_store_url}/',
+      resourceUrlBase: '#{File.join(Webdav::FileStore.url, '/')}',
       elementId: '#{element_id}',
       userLogin: '#{current_user.email}',
       userToken: '#{current_user.token}',
       userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
-      webDavBaseUrl: '#{FileStore.file_store_url}#{FileStore.file_store_path}/#{target_path}',
-      webDavBaseHref: '#{FileStore.file_store_path}/#{target_path}',
-      policiesApiUrl: '#{FileStore.file_store_proxy_path}',
+      webDavBaseUrl: '#{File.join(Webdav::FileStore.url, Webdav::FileStore.path, target_path)}',
+      webDavBaseHref: '#{File.join(Webdav::FileStore.path, target_path)}',
+      policiesApiUrl: '#{File.join(Webdav::FileStore.url, Webdav::FileStore.proxy_path)}',
       disableUpload: #{!!local_assigns[:disable_upload]},
       disableFolderCreation: #{!!local_assigns[:disable_mkdir]},
       onError: function(message) {
