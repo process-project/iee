@@ -301,7 +301,7 @@ RSpec.describe 'Policies API' do
 
       it 'should copy the resource' do
         post api_policies_path,
-             params: policy_post_params(path: '/another/path',
+             params: policy_post_params(path: '/another/path/*',
                                         copy_from: '/path%20with%20spaces/*'),
              headers: valid_auth_headers,
              as: :json
@@ -311,7 +311,7 @@ RSpec.describe 'Policies API' do
 
       it 'should move the resource' do
         post api_policies_path,
-             params: policy_post_params(path: '/another/path',
+             params: policy_post_params(path: '/another/path/*',
                                         move_from: '/path%20with%20spaces/*'),
              headers: valid_auth_headers,
              as: :json
