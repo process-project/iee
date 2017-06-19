@@ -292,6 +292,33 @@ RSpec.describe 'Policies API' do
         check_resource_existence('/another/path', '/another/path/sub')
       end
     end
+
+    context 'for a resource originating from an escaped path sequence' do
+      before do
+        resource = create(:resource, service: service, path: '/path with spaces/.*')
+        ResourceManager.create(user: user, resource: resource)
+      end
+
+      it 'should copy the resource' do
+        post api_policies_path,
+             params: policy_post_params(path: '/another/path',
+                                        copy_from: '/path%20with%20spaces/*'),
+             headers: valid_auth_headers,
+             as: :json
+
+        expect(response.status).to eq(201)
+      end
+
+      it 'should move the resource' do
+        post api_policies_path,
+             params: policy_post_params(path: '/another/path',
+                                        move_from: '/path%20with%20spaces/*'),
+             headers: valid_auth_headers,
+             as: :json
+
+        expect(response.status).to eq(201)
+      end
+    end
   end
 
   it 'should return a not found code when source policy is not defined' do
