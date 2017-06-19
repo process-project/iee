@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Policy management API handles paths with escaped characters well and limits path scope to a single service (@dharezlak)
 - Move and copy policy API calls handle well resources with escaped characters (@dharezlak)
+- Copy and move destinations for policy management API treated as pretty paths for proper processing (@dharezlak)
 
 ### Security
 
