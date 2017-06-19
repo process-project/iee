@@ -121,6 +121,7 @@ module Api
     end
 
     def normalize_paths
+      @json['path'] = URI.decode(@json['path'])
       @json['copy_from'] = URI.decode(@json['copy_from']) if @json['copy_from']
       @json['move_from'] = URI.decode(@json['move_from']) if @json['move_from']
     end
