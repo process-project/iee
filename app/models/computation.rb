@@ -25,14 +25,6 @@ class Computation < ApplicationRecord
     %w(error finished aborted).include? status
   end
 
-  def self.type_for_patient_status(status)
-    case status
-    when 'imaging_uploaded' then 'segmentation'
-    when 'virtual_model_ready' then 'blood_flow_simulation'
-    when 'after_parameter_estimation' then 'heart_model_computation'
-    end
-  end
-
   def to_param
     pipeline_step
   end
