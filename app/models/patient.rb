@@ -28,12 +28,24 @@ class Patient < ApplicationRecord
     File.join(Rails.env, 'patients', case_number, '/')
   end
 
-  def inputs_dir
-    File.join(working_dir, 'inputs', '/')
+  def working_url
+    File.join(FileStore.file_store_url, FileStore.file_store_path, working_dir)
   end
 
-  def pipelines_dir
-    File.join(working_dir, 'pipelines', '/')
+  def inputs_dir(prefix = working_dir)
+    File.join(prefix, 'inputs', '/')
+  end
+
+  def inputs_url
+    inputs_dir(working_url)
+  end
+
+  def pipelines_dir(prefix = working_dir)
+    File.join(prefix, 'pipelines', '/')
+  end
+
+  def pipelines_url
+    pipelines_dir(working_url)
   end
 
   private

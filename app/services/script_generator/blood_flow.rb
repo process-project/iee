@@ -25,8 +25,8 @@ module ScriptGenerator
         cp $PLG_GROUPS_STORAGE/plggeurvalve/template/* .
 
         ## Copy both fluid and structure files for the given case
-        #{stage_in_file 'fluidFlow.cas'}
-        #{stage_in_file 'structural_vent.dat'}
+        #{stage_in_file pipeline.data_file(:fluid_virtual_model), 'fluidFlow.cas'}
+        #{stage_in_file pipeline.data_file(:ventricle_virtual_model), 'structural_vent.dat'}
       STAGEIN
     end
 

@@ -11,8 +11,7 @@ module PipelineStep
       RimrockComputation.create(
         pipeline: pipeline,
         user: user,
-        pipeline_step: pipeline_step,
-        script: ScriptGenerator::HeartModel.new(pipeline.patient, user).call
+        pipeline_step: pipeline_step
       )
     end
 
@@ -23,6 +22,9 @@ module PipelineStep
     protected
 
     def internal_run
+      computation.script = ScriptGenerator::HeartModel.new(pipeline).call
+      computation.save!
+
       Rimrock::StartJob.perform_later computation
     end
   end

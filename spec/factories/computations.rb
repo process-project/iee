@@ -9,14 +9,15 @@ FactoryGirl.define do
     user
     pipeline
 
-    factory :webdav_computation do
-      type 'WebdavComputation'
+    factory :webdav_computation, class: 'WebdavComputation' do
       input_path { '/inputs' }
       output_path { '/outputs' }
+      script nil
     end
 
-    factory :rimrock_computation do
-      type 'RimrockComputation'
+    factory :rimrock_computation, class: 'RimrockComputation' do
+      input_path nil
+      output_path nil
       script { 'SCRIPT' }
     end
   end

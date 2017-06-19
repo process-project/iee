@@ -25,10 +25,6 @@ class WebdavDataFileSynchronizer
     end
   end
 
-  def computation_file_handle(filename)
-    construct_handle(webdav_storage_url, filename)
-  end
-
   private
 
   def call_file_storage
