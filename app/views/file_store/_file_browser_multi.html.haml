@@ -19,6 +19,13 @@
       onError: function(message) {
         toastr.error(message);
       },
+      onFileUploaded: function(path) {
+        console.log("uploaded %o", path);
+        $('div[data-computation="true"]').each(function() {
+          console.log("uploaded %o", path);
+          refreshComputation(this);
+        })
+      },
       additionalJsResources: ['#{javascript_path 'application'}'],
       additionalCssResources: ['#{stylesheet_path 'application'}'],
       additionalCssOverrides: ['body { background: #ffffff; }']
