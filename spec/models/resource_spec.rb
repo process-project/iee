@@ -52,8 +52,9 @@ RSpec.describe Resource do
   end
 
   it 'should not allow for a creation of a local resource which matches another local resource' do
-    create(:resource, path: '/path/.*', resource_type: :local)
-    another_resource = build(:resource, path: '/path.*')
+    service = create(:service, uri: 'https://test')
+    create(:resource, path: '/path/.*', resource_type: :local, service: service)
+    another_resource = build(:resource, path: '/path.*', service: service)
 
     expect(another_resource).not_to be_valid
   end

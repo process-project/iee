@@ -19,6 +19,16 @@ RSpec.describe 'PDP' do
       expect(response.status).to eq(200)
     end
 
+    it 'returns 200 for path with escaped characters' do
+      resource = create(:resource, service: service, path: '/path/with spaces')
+      create(:user_access_policy, user: user, resource: resource, access_method: access_method)
+
+      get api_pdp_index_path,
+          params: { uri: service.uri + '/path/with%20spaces', access_method: 'get' }
+
+      expect(response.status).to eq(200)
+    end
+
     it 'access method is case insensitive' do
       access_method = create(:access_method, name: 'GET')
       create(:user_access_policy, user: user, resource: resource, access_method: access_method)

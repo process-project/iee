@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - DataFile#handle removed since it is not going to be used anymore (@Nuanda)
 
 ### Fixed
+- Policy management API handles paths with escaped characters well and limits path scope to a single service (@dharezlak)
 
 ### Security
 
