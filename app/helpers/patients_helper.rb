@@ -24,10 +24,10 @@ module PatientsHelper
     when 'new', 'queued'
       '-'
     when 'running'
-      Time.at(Time.now - computation.created_at).utc.strftime('%Hh %Mm %Ss')
+      Time.at(Time.now - computation.started_at).utc.strftime('%Hh %Mm %Ss')
     else
       # TODO: FIXME If possible, use finish time from the computing job
-      Time.at(computation.updated_at - computation.created_at).utc.strftime('%Hh %Mm %Ss')
+      Time.at(computation.updated_at - computation.started_at).utc.strftime('%Hh %Mm %Ss')
     end
   end
 end

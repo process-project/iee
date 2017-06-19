@@ -16,6 +16,7 @@ RSpec.describe PipelineStep::HeartModelCalculation do
   context 'inputs are available' do
     before { create(:data_file, data_type: :estimated_parameters, patient: pipeline.patient) }
 
+    it_behaves_like 'ready to run step'
     it_behaves_like 'a Rimrock-based ready to run step'
 
     it 'creates computation with script returned by generator' do

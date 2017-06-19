@@ -1,4 +1,4 @@
-- if computation.status != 'created'
+- if computation.started_at
   %table.table.table-striped
     %thead
       %tr
@@ -8,7 +8,7 @@
         %th= t 'computation.status'
     %tbody
       %tr
-        %td= l(computation.created_at, format: :short)
+        %td= l(computation.started_at, format: :short)
         %td= execution_time(computation)
         %td
           = safe_join([link_to_if(computation.stdout_path, t('computation.stdout_path'), infrastructure_file_path(computation.stdout_path)) { t('computation.stdout_path_missing') },

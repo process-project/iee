@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613100317) do
+ActiveRecord::Schema.define(version: 20170619055603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20170613100317) do
     t.string   "pipeline_step"
     t.string   "working_file_name"
     t.integer  "pipeline_id"
+    t.datetime "started_at"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id", using: :btree
   end
 

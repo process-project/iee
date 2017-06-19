@@ -16,6 +16,7 @@ RSpec.describe PipelineStep::Segmentation do
   context 'inputs are available' do
     before { create(:data_file, data_type: :image, patient: pipeline.patient) }
 
+    it_behaves_like 'ready to run step'
     it_behaves_like 'a Webdav-based ready to run step'
   end
 

@@ -128,6 +128,7 @@ RSpec.feature 'Patient browsing' do
         scenario 'displays computation stdout and stderr' do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
           computation.update_attributes(status: 'new',
+                                        started_at: Time.current,
                                         stdout_path: 'http://download/stdout.pl',
                                         stderr_path: 'http://download/stderr.pl')
 
@@ -139,7 +140,7 @@ RSpec.feature 'Patient browsing' do
 
         scenario 'periodically ajax-refreshes computation status', js: true do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-          computation.update_attributes(status: 'new')
+          computation.update_attributes(status: 'new', started_at: Time.current)
 
           visit patient_pipeline_computation_path(patient, pipeline, computation)
 
@@ -155,7 +156,7 @@ RSpec.feature 'Patient browsing' do
 
         scenario 'refreshes entire page when computation status turns finished', js: true do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-          computation.update_attributes(status: 'new')
+          computation.update_attributes(status: 'new', started_at: Time.current)
 
           visit patient_pipeline_computation_path(patient, pipeline, computation)
 

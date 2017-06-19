@@ -19,6 +19,7 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
       create(:data_file, data_type: :ventricle_virtual_model, patient: pipeline.patient)
     end
 
+    it_behaves_like 'ready to run step'
     it_behaves_like 'a Rimrock-based ready to run step'
 
     it 'creates computation with script returned by generator' do

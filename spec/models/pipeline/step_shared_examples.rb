@@ -13,6 +13,25 @@ shared_examples 'a pipeline step' do
   end
 end
 
+shared_examples 'ready to run step' do
+  include ActiveSupport::Testing::TimeHelpers
+
+  it 'is runnable' do
+    expect(described_class.new(pipeline).runnable?).to be_truthy
+  end
+
+  it 'set computation start time to now' do
+    now = Time.zone.local(2017, 1, 2, 7, 21, 34)
+    travel_to now
+
+    computation = described_class.new(pipeline).run
+
+    expect(computation.started_at).to eq now
+
+    travel_back
+  end
+end
+
 shared_examples 'not ready to run step' do
   it "raise error if patient's virtual model is not ready yet" do
     expect { described_class.new(pipeline).run }.

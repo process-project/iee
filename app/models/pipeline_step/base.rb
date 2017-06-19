@@ -13,7 +13,10 @@ module PipelineStep
 
       computation.tap do |c|
         c.status = :new
+        c.started_at = Time.current
+
         internal_run
+
         c.save!
       end
     end
