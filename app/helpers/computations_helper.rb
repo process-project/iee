@@ -5,4 +5,43 @@ module ComputationsHelper
   def infrastructure_file_path(path)
     path&.gsub('download/', 'files/')
   end
+
+  def run_status(computation)
+    clazz = 'circle-o'
+    additional_clazz = nil
+
+    clazz, additional_clazz = runnable_run_status(computation) if computation.runnable?
+
+    title = I18n.t('patients.pipelines.computations.show.'\
+                   "#{computation.pipeline_step}.#{computation.status}")
+
+    icon(clazz, class: additional_clazz, title: title)
+  end
+
+  def alert_computation_class(computation)
+    "alert-#{alert_class_postfix(computation)}"
+  end
+
+  private
+
+  def alert_class_postfix(computation)
+    case computation.status
+    when 'error' then 'danger'
+    when 'finished' then 'success'
+    when 'aborted' then 'warning'
+    else 'info'
+    end
+  end
+
+  def runnable_run_status(computation)
+    if computation.active?
+      ['circle-o-notch', 'fa-spin']
+    elsif computation.status == 'finished'
+      ['check-circle-o', nil]
+    elsif computation.status == 'error'
+      ['times-circle-o', nil]
+    else
+      ['circle', nil]
+    end
+  end
 end

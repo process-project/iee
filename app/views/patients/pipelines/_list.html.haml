@@ -5,7 +5,7 @@
         %h2= t('.pipelines')
         %span.pull-right
           = link_to t('.new'), new_patient_pipeline_path(patient),
-            class: 'btn btn-success'
+            class: 'btn btn-success', data: { turbolinks: false }
         .clearfix
       .x_content
         %section.content

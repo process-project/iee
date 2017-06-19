@@ -25,7 +25,7 @@ module ScriptGenerator
         cp -r $PLG_GROUPS_STORAGE/plggeurvalve/0DModel/Linx64 .
 
         ## Copy estimated patient-specific parameters
-        #{stage_in_file '0DModel_input.csv'}
+        #{stage_in_file pipeline.data_file(:estimated_parameters), '0DModel_input.csv'}
       STAGEIN
     end
 

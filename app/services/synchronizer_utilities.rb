@@ -12,10 +12,6 @@ module SynchronizerUtilities
       "/#{Rails.env}/"
   end
 
-  def construct_handle(handle_url, filename)
-    "#{case_directory(handle_url)}/#{filename}"
-  end
-
   def parse_response(remote_names)
     input_names(remote_names).each do |remote_name|
       sync_file(remote_name)

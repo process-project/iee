@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Patients
-  class Create < Base
+  class Create < Patients::Base
     protected
 
     def internal_call

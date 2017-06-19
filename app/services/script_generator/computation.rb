@@ -5,10 +5,14 @@ module ScriptGenerator
       header + stage_in + job_script + stage_out
     end
 
-    def initialize(patient, user)
-      @patient = patient
-      @user = user
+    def initialize(pipeline)
+      @pipeline = pipeline
     end
+
+    protected
+
+    attr_reader :pipeline
+    delegate :user, to: :pipeline
 
     private
 
@@ -36,28 +40,15 @@ module ScriptGenerator
       Rails.application.config_for('eurvalve')['grant_id']
     end
 
-    def stage_in_file(filename)
-      if synchronizer.class == WebdavDataFileSynchronizer
-        "curl -H \"Authorization: Bearer #{@user.token}\""\
-          " \"#{synchronizer.computation_file_handle(filename)}\""\
-          " >> \"$SCRATCHDIR/#{filename}\""
-      else
-        "cp #{synchronizer.computation_file_handle(filename)} $SCRATCHDIR"
-      end
-    end
-
-    def synchronizer
-      @synchronizer ||= DataFile.synchronizer_class.new(@patient, @user)
+    def stage_in_file(data_file, filename)
+      "curl -H \"Authorization: Bearer #{user.token}\""\
+        " \"#{data_file.url}\" >> \"$SCRATCHDIR/#{filename}\""
     end
 
     def stage_out_file(filename)
-      if synchronizer.class == WebdavDataFileSynchronizer
-        "curl -X PUT --data @#{filename} -H \"Content-Type:application/octet-stream\""\
-          " -H \"Authorization: Bearer #{@user.token}\""\
-          " \"#{synchronizer.computation_file_handle(filename)}\""
-      else
-        "cp #{filename} #{synchronizer.computation_file_handle('')}"
-      end
+      "curl -X PUT --data @#{filename} -H \"Content-Type:application/octet-stream\""\
+        " -H \"Authorization: Bearer #{user.token}\""\
+        " \"#{File.join(pipeline.working_url, filename)}\""
     end
   end
 end

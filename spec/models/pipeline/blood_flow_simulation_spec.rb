@@ -5,31 +5,32 @@ require 'models/pipeline/step_shared_examples'
 
 RSpec.describe PipelineStep::BloodFlowSimulation do
   let(:user) { create(:user) }
-  let(:patient) { create(:patient, procedure_status: :virtual_model_ready) }
+  let(:pipeline) { create(:pipeline, user: user) }
 
   before do
     allow(Rimrock::StartJob).to receive(:perform_later)
   end
 
-  it_behaves_like 'a Rimrock-based step'
-
   it_behaves_like 'a pipeline step'
 
-  it "runs the step only if patient's virtual model is ready" do
-    computation = PipelineStep::BloodFlowSimulation.new(patient, user).run
-    expect(computation).to be_truthy
+  context 'inputs are available' do
+    before do
+      create(:data_file, data_type: :fluid_virtual_model, patient: pipeline.patient)
+      create(:data_file, data_type: :ventricle_virtual_model, patient: pipeline.patient)
+    end
+
+    it_behaves_like 'ready to run step'
+    it_behaves_like 'a Rimrock-based ready to run step'
+
+    it 'creates computation with script returned by generator' do
+      script = 'BLOOD FLOW SCRIPT'
+      allow(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call) { script }
+      computation = PipelineStep::BloodFlowSimulation.new(pipeline).run
+      expect(computation.script).to eq script
+    end
   end
 
-  it "raise error if patient's virtual model is not ready yet" do
-    patient.not_started!
-    expect { PipelineStep::BloodFlowSimulation.new(patient, user).run }.
-      to raise_error('Virtual model must be ready to run Blood Flow Simulation')
-  end
-
-  it 'creates computation with script returned by generator' do
-    script = 'BLOOD FLOW SCRIPT'
-    allow(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call) { script }
-    computation = PipelineStep::BloodFlowSimulation.new(patient, user).run
-    expect(computation.script).to eq script
+  context 'inputs are not available' do
+    it_behaves_like 'not ready to run step'
   end
 end

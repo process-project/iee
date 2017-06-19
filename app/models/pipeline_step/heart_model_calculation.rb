@@ -1,27 +1,31 @@
 # frozen_string_literal: true
 module PipelineStep
-  class HeartModelCalculation
-    def initialize(patient, user)
-      validate_procedure_status!(patient)
-      @computation = RimrockComputation.create(
-        patient: patient,
+  class HeartModelCalculation < Base
+    STEP_NAME = 'heart_model_calculation'
+
+    def initialize(pipeline)
+      super(pipeline, STEP_NAME)
+    end
+
+    def create
+      RimrockComputation.create(
+        pipeline: pipeline,
         user: user,
-        pipeline_step: 'after_parameter_estimation',
-        script: ScriptGenerator::HeartModel.new(patient, user).call
+        pipeline_step: pipeline_step
       )
     end
 
-    def run
-      Rimrock::StartJob.perform_later @computation
-      @computation
+    def runnable?
+      pipeline.data_file(:estimated_parameters)
     end
 
-    private_class_method
+    protected
 
-    def validate_procedure_status!(patient)
-      statuses = Patient.procedure_statuses
-      model_ready = statuses[patient.procedure_status] >= statuses['after_parameter_estimation']
-      raise('Heart Model Computation can be run after parameter estimation') unless model_ready
+    def internal_run
+      computation.script = ScriptGenerator::HeartModel.new(pipeline).call
+      computation.save!
+
+      Rimrock::StartJob.perform_later computation
     end
   end
 end

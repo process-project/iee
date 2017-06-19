@@ -1,0 +1,22 @@
+.div{ data: { computation: 'true', refresh: refresh.to_s, url: patient_pipeline_computation_path(patient, pipeline, computation) } }
+  .col-xs-2
+    #ul.nav.nav-tabs.tabs-left
+      - computations.each do |c|
+        %li{class: [c == computation && 'active']}
+          = link_to patient_pipeline_computation_path(patient, pipeline, c), data: { turbolinks: false } do
+            = run_status(c)
+            = t(".#{c.pipeline_step}.title")
+  .col-xs-10
+    .tab-content
+      - if computation.runnable?
+        .alert{class: alert_computation_class(computation)}
+          = t(".#{computation.pipeline_step}.#{computation.status}")
+        = render 'details', computation: computation
+        - if computation.type == 'RimrockComputation' && !proxy&.valid?
+          = render(partial: 'proxy/warning', locals: { msg: t('.proxy_invalid') })
+        - else
+          = render 'run', patient: patient, pipeline: pipeline, computation: computation
+
+      - else
+        .alert.alert-warning= t(".#{computation.pipeline_step}.cannot_start")
+

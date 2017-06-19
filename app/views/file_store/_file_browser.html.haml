@@ -4,8 +4,8 @@
     var SletOverrides = {
       userLogin: '#{current_user.email}',
       userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
-      webDavBaseUrl: '#{FileStore.file_store_url}#{target_path}',
-      webDavBaseHref: '#{target_path}',
+      webDavBaseUrl: '#{FileStore.file_store_url}/#{FileStore.file_store_path}/#{target_path}',
+      webDavBaseHref: '#{FileStore.file_store_path}/#{target_path}',
       webDavAuthUrl: '/api/auth',
       policiesApiUrl: '#{FileStore.file_store_proxy_path}',
       token: '#{current_user.token}'

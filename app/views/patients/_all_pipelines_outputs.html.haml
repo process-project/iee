@@ -1,0 +1,6 @@
+.x_title
+  %h3= t('.title')
+.x_content
+  %section.content
+    = render partial: 'file_store/file_browser_multi',
+      locals: { target_path: patient.pipelines_dir, element_id: 'patient-outputs', disable_mkdir: true, disable_upload: true }

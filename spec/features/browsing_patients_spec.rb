@@ -7,6 +7,8 @@ RSpec.feature 'Patient browsing' do
   before(:each) do
     user = create(:user, :approved)
     login_as(user)
+
+    allow_any_instance_of(Patient).to receive(:execute_data_sync)
   end
 
   context 'in the context of the patients list' do
@@ -58,21 +60,6 @@ RSpec.feature 'Patient browsing' do
   end
 
   context 'in the context of inspecting a given case' do
-    scenario 'shows proper notification for no-files case' do
-      visit patient_path(patient)
-
-      expect(page).to have_content I18n.t('patients.show.nothing')
-    end
-
-    scenario 'shows pipelines list' do
-      pipeline = create(:pipeline, patient: patient, name: 'p1')
-
-      visit patient_path(patient)
-
-      expect(page).to have_link('p1',
-                                href: patient_pipeline_path(patient, pipeline))
-    end
-
     scenario 'lets the user to go back to the patients list' do
       visit patient_path(patient)
 
@@ -83,107 +70,105 @@ RSpec.feature 'Patient browsing' do
       expect(current_path).to eq patients_path
     end
 
-    context 'when computing for patient\'s wellbeing' do
-      scenario 'displays computations related to the patient\'s state' do
-        create(:computation, patient: patient)
+    scenario 'shows pipelines list' do
+      pipeline = create(:pipeline, patient: patient, name: 'p1')
 
-        visit patient_path(patient)
+      visit patient_path(patient)
 
-        expect(page).not_to have_content('Computations')
+      expect(page).to have_link('p1',
+                                href: patient_pipeline_path(patient, pipeline))
+    end
+  end
 
-        patient.imaging_uploaded!
-        visit patient_path(patient)
+  context 'in the context of inspecting a given case pipeline' do
+    before do
+      file_store = instance_double(Webdav::FileStore)
+      allow(file_store).to receive(:r_mkdir)
+      allow(Webdav::FileStore).to receive(:new).and_return(file_store)
+    end
 
-        expect(page).to have_content('Computations')
-        expect(page).to have_content(I18n.t('computation.for_procedure_status.imaging_uploaded'))
-        expect(page).to have_content('New')
+    scenario 'shows alert when no computation defined' do
+      pipeline = create(:pipeline, patient: patient, name: 'p1')
+      visit patient_pipeline_path(patient, pipeline)
 
-        create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
-        patient.virtual_model_ready!
-        visit patient_path(patient)
+      expect(page).to have_content I18n.t('patients.pipelines.show.no_computations')
+    end
 
-        expect(page).to have_content('Computations')
-        expect(page).to have_content(I18n.t('computation.for_procedure_status.virtual_model_ready'))
-        expect(page).to have_content('New')
+    context 'with computations' do
+      let(:pipeline) do
+        pipeline = build(:pipeline, patient: patient, name: 'p1')
+        Pipelines::Create.new(pipeline).call
+      end
+      let(:computation) { pipeline.computations.first }
 
-        create(:computation, patient: patient, pipeline_step: 'after_parameter_estimation')
-        patient.after_parameter_estimation!
-        visit patient_path(patient)
+      scenario 'redirects into first defined computation' do
+        visit patient_pipeline_path(patient, pipeline)
 
-        expect(page).to have_content('Computations')
-        expect(page).to have_content(
-          I18n.t('computation.for_procedure_status.after_parameter_estimation')
-        )
-        expect(page).to have_content('New')
+        expect(current_path).
+          to eq patient_pipeline_computation_path(patient, pipeline, computation)
       end
 
-      scenario 'displays computation stdout and stderr' do
-        create(:computation, patient: patient,
-                             stdout_path: 'http://download/stdout.pl',
-                             stderr_path: 'http://download/stderr.pl')
+      scenario 'all possible computations are displayed' do
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-        patient.imaging_uploaded!
-        visit patient_path(patient)
-
-        expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
-        expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
+        Pipeline::STEPS.each do |s|
+          title = I18n.t("patients.pipelines.computations.show.#{s::STEP_NAME}.title")
+          expect(page).to have_content title
+        end
       end
 
-      scenario 'creates new computations of appropriate type' do
-        allow(Rimrock::StartJob).to receive(:perform_later) {}
-        allow_any_instance_of(ProxyHelper).to receive(:proxy_valid?) { true }
+      scenario 'computation alert is displayed when no required input data' do
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        msg_key = "patients.pipelines.computations.show.#{computation.pipeline_step}.cannot_start"
 
-        patient.virtual_model_ready!
-        visit patient_path(patient)
-
-        expect(page).to have_content('Computations')
-        expect(page).
-          to have_content(I18n.t('patients.show.new_computation.virtual_model_ready'))
-
-        expect { click_button 'Execute simulation' }.
-          to change { Computation.where(pipeline_step: 'virtual_model_ready').count }.by(1)
-
-        patient.after_parameter_estimation!
-        visit patient_path(patient)
-
-        expect(page).to have_content('Computations')
-        expect(page).
-          to have_content(I18n.t('patients.show.new_computation.after_parameter_estimation'))
-
-        expect { click_button 'Execute simulation' }.
-          to change { Computation.where(pipeline_step: 'after_parameter_estimation').count }.by(1)
+        expect(page).to have_content I18n.t(msg_key)
       end
 
-      scenario 'periodically ajax-refreshes computation status', js: true do
-        computation = create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
-        patient.virtual_model_ready!
+      context 'when computing for patient\'s wellbeing' do
+        scenario 'displays computation stdout and stderr' do
+          allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+          computation.update_attributes(status: 'new',
+                                        started_at: Time.current,
+                                        stdout_path: 'http://download/stdout.pl',
+                                        stderr_path: 'http://download/stderr.pl')
 
-        visit patient_path(patient)
+          visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-        expect(page).to have_content('New')
+          expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
+          expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
+        end
 
-        page.execute_script '$(document.body).addClass("not-reloaded")'
-        computation.update_attributes(status: 'running')
-        page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
+        scenario 'periodically ajax-refreshes computation status', js: true do
+          allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+          computation.update_attributes(status: 'new', started_at: Time.current)
 
-        expect(page).to have_content('Running')
-        expect(page).to have_selector('body.not-reloaded')
-      end
+          visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-      scenario 'refreshes entire page when computation status turns finished', js: true do
-        computation = create(:computation, patient: patient, pipeline_step: 'virtual_model_ready')
-        patient.virtual_model_ready!
+          expect(page).to have_content('New')
 
-        visit patient_path(patient)
+          page.execute_script '$(document.body).addClass("not-reloaded")'
+          computation.update_attributes(status: 'running')
+          page.execute_script 'window.refreshComputation($(\'div[data-refresh="true"]\'), 2)'
 
-        expect(page).to have_content('New')
+          expect(page).to have_content('Running')
+          expect(page).to have_selector('body.not-reloaded')
+        end
 
-        page.execute_script '$(document.body).addClass("not-reloaded")'
-        computation.update_attributes(status: 'finished')
-        page.execute_script 'window.refreshComputation($(\'tr[data-refresh="true"]\'), 2)'
+        scenario 'refreshes entire page when computation status turns finished', js: true do
+          allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+          computation.update_attributes(status: 'new', started_at: Time.current)
 
-        expect(page).to have_content('Finished')
-        expect(page).not_to have_selector('body.not-reloaded')
+          visit patient_pipeline_computation_path(patient, pipeline, computation)
+
+          expect(page).to have_content('New')
+
+          page.execute_script '$(document.body).addClass("not-reloaded")'
+          computation.update_attributes(status: 'finished')
+          page.execute_script 'window.refreshComputation($(\'div[data-refresh="true"]\'), 2)'
+
+          expect(page).to have_content('Finished')
+          expect(page).not_to have_selector('body.not-reloaded')
+        end
       end
     end
   end

@@ -43,10 +43,4 @@ RSpec.describe Patient do
       expect(subject.not_started?).to be_truthy
     end
   end
-
-  it 'properly maps patient procedure status to required computation' do
-    expect(Patient::PIPELINE[:imaging_uploaded]).to eq PipelineStep::Segmentation
-    expect(Patient::PIPELINE[:virtual_model_ready]).to eq PipelineStep::BloodFlowSimulation
-    expect(Patient::PIPELINE[:after_parameter_estimation]).to eq PipelineStep::HeartModelCalculation
-  end
 end

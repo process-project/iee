@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607103017) do
+ActiveRecord::Schema.define(version: 20170619055603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170607103017) do
     t.string   "job_id"
     t.text     "script"
     t.string   "working_directory"
-    t.string   "status",            default: "new", null: false
+    t.string   "status",            default: "created", null: false
     t.string   "stdout_path"
     t.string   "stderr_path"
     t.text     "standard_output"
@@ -49,15 +49,16 @@ ActiveRecord::Schema.define(version: 20170607103017) do
     t.string   "error_message"
     t.integer  "exit_code"
     t.integer  "user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.integer  "patient_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "type"
     t.string   "input_path"
     t.string   "output_path"
     t.string   "pipeline_step"
     t.string   "working_file_name"
-    t.index ["patient_id"], name: "index_computations_on_patient_id", using: :btree
+    t.integer  "pipeline_id"
+    t.datetime "started_at"
+    t.index ["pipeline_id"], name: "index_computations_on_pipeline_id", using: :btree
   end
 
   create_table "data_files", force: :cascade do |t|
@@ -189,7 +190,7 @@ ActiveRecord::Schema.define(version: 20170607103017) do
   end
 
   add_foreign_key "access_methods", "services"
-  add_foreign_key "computations", "patients"
+  add_foreign_key "computations", "pipelines"
   add_foreign_key "data_files", "patients"
   add_foreign_key "data_files", "pipelines"
   add_foreign_key "group_relationships", "groups", column: "child_id"

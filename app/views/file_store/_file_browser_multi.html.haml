@@ -11,16 +11,24 @@
       userLogin: '#{current_user.email}',
       userToken: '#{current_user.token}',
       userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
-      webDavBaseUrl: '#{FileStore.file_store_url}#{target_path}',
-      webDavBaseHref: '#{target_path}',
+      webDavBaseUrl: '#{FileStore.file_store_url}#{FileStore.file_store_path}/#{target_path}',
+      webDavBaseHref: '#{FileStore.file_store_path}/#{target_path}',
       policiesApiUrl: '#{FileStore.file_store_proxy_path}',
+      disableUpload: #{!!local_assigns[:disable_upload]},
+      disableFolderCreation: #{!!local_assigns[:disable_mkdir]},
       onError: function(message) {
         toastr.error(message);
+      },
+      onFileUploaded: function(path) {
+        console.log("uploaded %o", path);
+        $('div[data-computation="true"]').each(function() {
+          console.log("uploaded %o", path);
+          refreshComputation(this);
+        })
       },
       additionalJsResources: ['#{javascript_path 'application'}'],
       additionalCssResources: ['#{stylesheet_path 'application'}'],
       additionalCssOverrides: ['body { background: #ffffff; }']
     });
 
-.x_panel
-  .x_content{:id => "#{element_id}"}
+%div{:id => "#{element_id}"}

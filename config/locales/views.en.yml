@@ -23,7 +23,6 @@ en:
         imaging_uploaded: Run Segmentation
         virtual_model_ready: Run new Blood flow CFD simulation
         after_parameter_estimation: Run new 0D Heart Model computation
-      nothing: There are no files uploaded for this patient's case.
       download: Download
       download_unavailable: (download unavailable)
       submit: Execute simulation
@@ -44,6 +43,8 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
+    all_pipelines_outputs:
+      title: All pipelines outputs
     pipelines:
       list:
         title: Pipelines
@@ -57,12 +58,79 @@ en:
         back_to_index: Back to pipelines list
         edit: Edit pipeline
         delete: Remove pipeline
+        no_computations: No computations defined for this pipeline
       new:
         title: Create new pipeline
         back_to_index: Back to pipelines list
       edit:
         title: Edit pipeline
         back_to_index: Back to pipelines list
+      outputs:
+        title: "%{name} pipeline outputs"
+      computations:
+        run:
+          segmentation:
+            start: Start segmentation
+            restart: Restart segmentation
+          blood_flow_simulation:
+            start: Start blood floow simulation
+            restart: Restart blood floow simulation
+          heart_model_calculation:
+            start: Start heart model calculation
+            restart: Restart heart model calculation
+
+        show:
+          proxy_invalid: |
+            To run this computation you need to have valid
+            PLGrid proxy certificate
+          segmentation:
+            title: Segmenation
+            cannot_start: |
+              Cannot start segmentation because required input file
+              (imaging_*.zip) cannot be found in patient inputs directory or
+              pipeline directory.
+            created: |
+              All required input files are available.
+              You can start segmentation for this patient.
+            new: Segmentation computation is running
+            running: Segmentation computation is running
+            error: There were an error while calculating segmentation
+            finished: |
+              Segmentation finished successfully, please take a look into
+              outputs directory for the results
+            aborted: Segmentation was aborted by the pipeline owner
+          blood_flow_simulation:
+            title: Blood Flow Simulation
+            cannot_start: |
+              Cannot start blood flow simulation because required input files
+              (fluidFlow.cas and structural_vent.dat) cannot be found
+              in patient inputs directory or pipeline directory.
+            created: |
+              All required input files are available.
+              You can start blood flow simulation for this patient.
+            new: Blood flow simulation computation is running
+            running: Blood flow simulation computation is running
+            error: There were an error while calculating blood flow simulation
+            finished: |
+              Blood flow simulation finished successfully, please take a look into
+              outputs directory for the results
+            aborted: Blood flow simulation was aborted by the pipeline owner
+          heart_model_calculation:
+            title: Heart Model Calculation
+            cannot_start: |
+              Cannot start heart model calculation because required input file
+              (0DModel_input.csv) cannot be found in patient inputs directory or
+              pipeline directory.
+            created: |
+              All required input files are available.
+              You can start heart model calculation for this patient.
+            new: Heart model calculation is running
+            running: Heart model calculation is running
+            error: There were an error while calculating patient heart model
+            finished: |
+              Heart model calculation finished successfully, please take a look into
+              outputs directory for the results
+            aborted: Segmentation was aborted by the pipeline owner
     comparisons:
       show:
         subtitle: pipelines comparison

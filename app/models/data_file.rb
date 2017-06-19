@@ -16,16 +16,16 @@ class DataFile < ApplicationRecord
 
   validates :name, :data_type, :patient, presence: true
 
-  def self.synchronizer_class
-    WebdavDataFileSynchronizer
-  end
-
-  def handle
+  def path
     File.join(pipeline ? pipeline.working_dir : patient.inputs_dir, name)
   end
 
+  def url
+    File.join(pipeline ? pipeline.working_url : patient.inputs_url, name)
+  end
+
   def content(user)
-    Webdav::FileStore.new(user).get_file_to_memory(handle)
+    Webdav::FileStore.new(user).get_file_to_memory(path)
   end
 
   def comparable?

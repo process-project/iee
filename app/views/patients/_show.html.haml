@@ -1,58 +1,27 @@
 %br
-.col-md-12.col-sm-12.col-xs-12
-  .x_panel
-    .x_title
-      %h2
-        = @patient.case_number
-        %small= t '.subtitle'
-      %span.pull-right
-        = link_to t('.remove'), patient_path(patient), method: :delete,
-          data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
-        = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
-      .clearfix
+.x_panel
+  .x_title
+    %h2
+      = @patient.case_number
+      %small= t '.subtitle'
+    %span.pull-right
+      = link_to t('.remove'), patient_path(patient), method: :delete,
+        data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
+      = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
+    .clearfix
 
-    .x_content
-      %section.content
-        %span
-          %h3= t '.details'
-          = render partial: 'patients/progress', locals: { patient: patient }
+.row
+  .col-xs-6
+    .x_panel
+      .x_title
+        %h3 Inputs
+      .x_content
+        %section.content
+          = render partial: 'file_store/file_browser_multi',
+            locals: { target_path: patient.inputs_dir, element_id: 'patient-inputs', disable_mkdir: true }
 
-        %h3= t '.files'
-        .row
-          = render partial: 'patients/patient_files', locals: { patient: patient, browser_id: '1' }
-        = render partial: 'file_store/file_browser_multi_include'
+  .col-xs-6
+    .x_panel
+      = yield
 
-      - if patient.imaging_uploaded? || patient.virtual_model_ready? || patient.after_parameter_estimation?
-        %h3= t '.computations'
-
-        - computations = patient.computations.for_patient_status(patient.procedure_status)
-        - if computations.active.blank?
-          - unless proxy_valid?
-            = render partial: 'proxy/warning',
-                      locals: { msg: t('.proxy.invalid') }
-          - else
-            .row
-              .col-xs-12.table
-                = simple_form_for(@new_computation) do |f|
-                  %h4= t ".new_computation.#{@new_computation.pipeline_step}"
-                  = f.error_notification
-                  = f.hidden_field :patient_id, value: @patient.id
-                  %div
-                    %button.btn.btn-default.submit
-                      = t '.submit'
-
-        - if computations.present?
-          .row
-            .col-xs-12.table
-              %table.table.table-striped
-                %thead
-                  %tr
-                    %th
-                    %th= t 'computation.started_at'
-                    %th= t 'computation.execution_time'
-                    %th= t 'computation.outputs'
-                    %th= t 'computation.status'
-
-                %tbody
-                  = render partial: 'patients/computation', collection: computations
-  = yield
+= render partial: 'file_store/file_browser_multi_include'

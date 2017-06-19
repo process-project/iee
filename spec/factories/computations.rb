@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :computation do
-    pipeline_step { Patient::PIPELINE.keys.first.to_s }
+    pipeline_step { Pipeline::STEPS.first::STEP_NAME }
     script { Faker::Lorem.sentence }
     working_directory { Faker::Lorem.characters(10) }
+    started_at { Time.current }
 
     user
-    patient
+    pipeline
 
-    factory :webdav_computation do
-      type 'WebdavComputation'
+    factory :webdav_computation, class: 'WebdavComputation' do
       input_path { '/inputs' }
       output_path { '/outputs' }
+      script nil
     end
 
-    factory :rimrock_computation do
-      type 'RimrockComputation'
+    factory :rimrock_computation, class: 'RimrockComputation' do
+      input_path nil
+      output_path nil
       script { 'SCRIPT' }
     end
   end

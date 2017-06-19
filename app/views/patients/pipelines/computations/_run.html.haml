@@ -1,0 +1,6 @@
+- unless computation.active?
+  = simple_form_for(patient_pipeline_computation_path(patient, pipeline, computation), method: :put) do |f|
+    = f.error_notification
+    %div
+      %button.btn.btn-default.submit
+        = t(".#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start")
