@@ -58,6 +58,7 @@ module Api
     def parse_and_validate_create_request
       schema = File.read(Rails.root.join('config', 'schemas', 'policy-schema.json'))
       @json = JSON.parse(request.body.read)
+      normalize_paths
       api_error(status: :bad_request) unless JSON::Validator.validate(schema, @json)
     end
 
@@ -68,12 +69,14 @@ module Api
     end
 
     def check_source
-      return unless copy_move_path && !Resource.find_by(path: PathService.to_path(copy_move_path))
+      return unless copy_move_path && !service.resources.find_by(path: PathService.to_path(
+        copy_move_path
+      ))
       api_error(status: :not_found, errors: I18n.t('api.source_policy_missing'))
     end
 
     def authorize_copy_move
-      authorize(Resource.find_by(path: PathService.to_path(copy_move_path)), :copy_move?)
+      authorize(service.resources.find_by(path: PathService.to_path(copy_move_path)), :copy_move?)
     end
 
     def validate_destroy_request
@@ -115,6 +118,11 @@ module Api
       Policies::CreatePolicy.new(@json, service, current_user).call
 
       head :created
+    end
+
+    def normalize_paths
+      @json['copy_from'] = URI.decode(@json['copy_from']) if @json['copy_from']
+      @json['move_from'] = URI.decode(@json['move_from']) if @json['move_from']
     end
   end
 end
