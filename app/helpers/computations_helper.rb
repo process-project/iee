@@ -12,7 +12,10 @@ module ComputationsHelper
 
     clazz, additional_clazz = runnable_run_status(computation) if computation.runnable?
 
-    icon(clazz, class: additional_clazz)
+    title = I18n.t('patients.pipelines.computations.show.'\
+                   "#{computation.pipeline_step}.#{computation.status}")
+
+    icon(clazz, class: additional_clazz, title: title)
   end
 
   def alert_computation_class(computation)

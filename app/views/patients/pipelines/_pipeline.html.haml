@@ -4,5 +4,7 @@
     %input{ value: pipeline.iid, type: 'checkbox', name: 'pipeline_ids[]' }
   %th= link_to pipeline.name, [pipeline.patient, pipeline], data: { turbolinks: false }
   %th
-    .progress.progress_sm
-      .progress-bar.bg-green(role="progressbar" style="width: 40%")
+    - pipeline.computations.each do |c|
+      = link_to patient_pipeline_computation_path(pipeline.patient, pipeline, c),
+        data: { turbolinks: false } do
+        = run_status(c)
