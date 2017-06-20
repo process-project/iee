@@ -98,5 +98,14 @@ RSpec.describe Resource do
         pretty_path: ['Path may contain a single wildcard character at the end']
       )
     end
+
+    it 'should accept an escaped path, decode it and encode it' do
+      resource = build(:resource, pretty_path: '/path%20with%20spaces/*')
+      resource.validate
+
+      expect(resource.path).to eq('/path with spaces/.*')
+      expect(resource.pretty_path).to eq('/path%20with%20spaces/*')
+      expect(resource.uri).to eq(resource.service.uri + '/path%20with%20spaces/*')
+    end
   end
 end
