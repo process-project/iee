@@ -46,6 +46,9 @@ gem 'net_dav'
 gem 'clockwork'
 gem 'sidekiq'
 
+# File processing
+gem 'rubyzip', '>= 1.0.0'
+
 gem 'puma', '~> 3.0'
 
 group :development, :test do

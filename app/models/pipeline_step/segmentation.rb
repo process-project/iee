@@ -46,7 +46,7 @@ module PipelineStep
     end
 
     def output_path
-      File.join(@pipeline.working_dir, 'segmentation.zip')
+      @pipeline.working_dir
     end
   end
 end

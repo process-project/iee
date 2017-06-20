@@ -24,8 +24,8 @@ module Segmentation
     end
 
     def save_output
-      Webdav::UploadFile.new(Webdav::FileStore.new(@computation.user),
-                             @local_file_path, @computation.output_path).call
+      Webdav::UploadZipFile.new(Webdav::FileStore.new(@computation.user),
+                                @local_file_path, File.dirname(@computation.output_path)).call
     end
 
     def update_pipeline
