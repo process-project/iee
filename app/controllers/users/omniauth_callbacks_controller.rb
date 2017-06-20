@@ -18,6 +18,16 @@ module Users
 
     private
 
+    def after_sign_in_path_for(resource)
+      origin = request.env['omniauth.origin']
+
+      if origin == new_user_session_url
+        super
+      else
+        origin || stored_location_for(resource) || root_path
+      end
+    end
+
     def success(new_user)
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: 'PLGrid') if is_navigational_format?
