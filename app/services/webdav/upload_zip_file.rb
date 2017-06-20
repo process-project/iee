@@ -1,27 +1,21 @@
 # frozen_string_literal: true
 require 'zip'
-require 'fileutils'
+# require 'fileutils'
 
 module Webdav
   class UploadZipFile
-    def initialize(dav_client, local_path, remote_directory)
+    def initialize(dav_client, source_zip_path, target_dir)
       @dav_client = dav_client
-      @source_zip_path = local_path
-      @target_dir = remote_directory
+      @source_zip_path = source_zip_path
+      @target_dir = target_dir
     end
 
     def call
-      Dir.mktmpdir do |tmp_dir|
-
-        Zip::File.open(@source_zip_path) do |zip_file|
-          zip_file.each do |file|
-            local_path = File.join(tmp_dir, file.name)
-            zip_file.extract(file, local_path)
-
-            @dav_client.put_file(local_path, File.join(@target_dir, file.name))
-          end
+      Zip::File.open(@source_zip_path) do |zip_file|
+        zip_file.each do |file|
+          @dav_client.put(File.join(@target_dir, file.name),
+                          file.get_input_stream, file.size)
         end
-
       end
     end
   end
