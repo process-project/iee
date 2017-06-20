@@ -51,6 +51,17 @@ RSpec.feature 'PLGrid authentication' do
     expect(user.proxy_expired_notification_time).to be_blank
   end
 
+  scenario 'after connecting accounts user is redirected into previous page' do
+    user = create(:approved_user, plgrid_login: 'plglogin')
+    sign_in_as(user)
+    stub_oauth(:open_id, nickname: user.plgrid_login, email: user.email)
+
+    visit profile_plgrid_path
+    first('.alert').click_link 'Generate new proxy'
+
+    expect(current_path).to eq profile_plgrid_path
+  end
+
   scenario 'normal user account can connect to PLGrid no PLGRid section' do
     user = create(:approved_user)
 
