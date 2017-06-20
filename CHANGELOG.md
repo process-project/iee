@@ -11,7 +11,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Pipelines have own DataFiles which represent produced results (@Nuanda)
 - Pipelines comparison view which present differences between files of two Pipelines (@Nuanda)
-- Added a facility to automatically extract content from segmentation output files and upload it to FS (@nowakowski)
 - Segmentation output is unzipped into pipeline directory (@amber7b, @mkasztelnik)
 
 ### Changed
