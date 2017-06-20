@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - WebDAV synchronisation takes care for pipeline-related and patient input files (@Nuanda)
 - Computations are executed in the pipeline scope (@mkasztelnik)
 - Move FileStore configuration into one place (@mkasztelnik)
+- Make patient `case_number` factory field unique (@mkasztelnik)
 
 ### Deprecated
 
