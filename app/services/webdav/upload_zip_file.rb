@@ -17,7 +17,7 @@ module Webdav
         Zip::File.open(@local_path) do |zip_file|
           zip_file.each do |file|
             tmp_local_path = File.join(tmp_dir, file.name)
-            zip_file.extract(file, tmp_local_path) unless File.exist?(tmp_local_path)
+            zip_file.extract(file, tmp_local_path)
 
             # Construct remote path for this file
             @dav_client.put_file(tmp_local_path, File.join(@remote_directory, file.name))
