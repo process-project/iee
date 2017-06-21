@@ -18,7 +18,8 @@ class Resource < ApplicationRecord
   after_validation :copy_path_errors
 
   scope :local_paths,
-        ->(path) { where(resource_type: :local).where('path ~ :path', path: path) }
+        ->(path) { where(resource_type: :local).where('path ~* CONCAT(\'^\', CONCAT(:path, \'$\'))',
+                                                      path: path) }
 
   def uri
     uri = URI.parse(service.uri)
