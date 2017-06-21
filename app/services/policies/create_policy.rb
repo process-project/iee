@@ -10,8 +10,8 @@ module Policies
     def call
       Resource.transaction do
         resource = Resource.create!(service: @service,
-                                   pretty_path: @json_body['path'],
-                                   resource_type: :local)
+                                    pretty_path: @json_body['path'],
+                                    resource_type: :local)
         create_access_policies(resource)
         create_user_managers(resource)
         create_group_managers(resource)
