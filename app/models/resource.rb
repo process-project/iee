@@ -18,7 +18,7 @@ class Resource < ApplicationRecord
   after_validation :copy_path_errors
 
   scope :local_paths,
-        lambda(path) {
+        lambda { |path|
           where(resource_type: :local).where('path ~* CONCAT(\'^\', CONCAT(:path, \'$\'))',
                                              path: path)
         }
