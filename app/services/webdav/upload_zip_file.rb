@@ -13,7 +13,8 @@ module Webdav
     def call
       Zip::File.open(@source_zip_path) do |zip_file|
         zip_file.each do |file|
-          @dav_client.put(File.join(@target_dir, file.name),
+          file_name = block_given? ? yield(file.name) : file.name
+          @dav_client.put(File.join(@target_dir, file_name),
                           file.get_input_stream, file.size)
         end
       end
