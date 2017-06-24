@@ -34,6 +34,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Resource pretty path decodes and encodes values according to URI restrictions (@dharezlak)
 - Local path exclusion validation query fixed (@ddharezlak)
 - Proxy warning is shown only for active Rimrock computations (@mkasztelnik)
+- Correct computation tooltip text on pipelines list (@mkasztelnik)
 
 ### Security
 

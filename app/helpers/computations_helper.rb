@@ -12,10 +12,7 @@ module ComputationsHelper
 
     clazz, additional_clazz = runnable_run_status(computation) if computation.runnable?
 
-    title = I18n.t('patients.pipelines.computations.show.'\
-                   "#{computation.pipeline_step}.#{computation.status}")
-
-    icon(clazz, class: additional_clazz, title: title)
+    icon(clazz, class: additional_clazz, title: computation_tooltip_text(computation))
   end
 
   def alert_computation_class(computation)
@@ -42,6 +39,16 @@ module ComputationsHelper
       ['times-circle-o', nil]
     else
       ['circle', nil]
+    end
+  end
+
+  def computation_tooltip_text(computation)
+    if computation.runnable?
+      I18n.t('patients.pipelines.computations.show.'\
+             "#{computation.pipeline_step}.#{computation.status}")
+    else
+      I18n.t('patients.pipelines.computations.show.'\
+             "#{computation.pipeline_step}.cannot_start")
     end
   end
 end
