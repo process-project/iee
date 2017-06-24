@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - JS resources required for the OFF viewer are loaded in the file browser direct embed mode (@dharezlak)
 - Resource pretty path decodes and encodes values according to URI restrictions (@dharezlak)
 - Local path exclusion validation query fixed (@ddharezlak)
+- Correct computation tooltip text on pipelines list (@mkasztelnik)
 
 ### Security
 
