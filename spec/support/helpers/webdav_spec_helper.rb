@@ -6,4 +6,8 @@ module WebDavSpecHelper
     allow_any_instance_of(Net::DAV).to receive(:mkdir)
     allow_any_instance_of(Net::DAV).to receive(:delete)
   end
+
+  def expect_put(client, path, size)
+    expect(client).to receive(:put).with(path, anything, size)
+  end
 end

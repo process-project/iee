@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 module Segmentation
   class Finish
-    def initialize(computation, updater)
+    def initialize(computation, updater, options = {})
       @computation = computation
       @updater = updater
+      @own_cloud = options.fetch(:own_cloud) { Webdav::OwnCloud.new }
+      @file_store = options.fetch(:file_store) do
+        Webdav::FileStore.new(computation.user)
+      end
     end
 
     def call
@@ -19,13 +23,26 @@ module Segmentation
     end
 
     def download_service
-      Webdav::DownloadFile.new(Webdav::OwnCloud.new,
+      Webdav::DownloadFile.new(@own_cloud,
                                Webdav::OwnCloud.output_path(@computation))
     end
 
     def save_output
-      Webdav::UploadZipFile.new(Webdav::FileStore.new(@computation.user),
-                                @local_file_path, File.dirname(@computation.output_path)).call
+      Webdav::UploadZipFile.
+        new(@file_store,
+            @local_file_path,
+            @computation.output_path).
+        call { |f| without_prefix(f) }
+    end
+
+    def without_prefix(file_name)
+      prefixless = file_name.gsub(/^#{prefix}/, '')
+      prefixless =~ /^\..*/ ? file_name : prefixless
+    end
+
+    def prefix
+      @prefix ||= File.basename(@computation.working_file_name,
+                                File.extname(@computation.working_file_name))
     end
 
     def update_pipeline
