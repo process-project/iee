@@ -11,8 +11,10 @@ class Computation < ApplicationRecord
 
   scope :active, -> { where(status: %w(new queued running)) }
   scope :submitted, -> { where(status: %w(queued running)) }
-  scope :submitted_rimrock, -> { submitted.where(type: 'RimrockComputation') }
-  scope :submitted_webdav, -> { submitted.where(type: 'WebdavComputation') }
+  scope :rimrock, -> { where(type: 'RimrockComputation') }
+  scope :webdav, -> { where(type: 'WebdavComputation') }
+  scope :submitted_rimrock, -> { submitted.rimrock }
+  scope :submitted_webdav, -> { submitted.webdav }
   scope :for_patient_status, ->(status) { where(pipeline_step: status) }
 
   delegate :runnable?, :run, to: :runner
