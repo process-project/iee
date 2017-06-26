@@ -62,9 +62,9 @@ module Policies
 
     def create_prefix(pretty_path)
       if pretty_path.end_with?('*')
-        "#{PathService.to_path(pretty_path.gsub('*', '%'))}"
+        PathService.to_path(pretty_path.tr('*', '%'))
       else
-        "#{PathService.to_path(pretty_path)}" + (pretty_path.end_with?('/') ? '%' : '/%')
+        PathService.to_path(pretty_path) + (pretty_path.end_with?('/') ? '%' : '/%')
       end
     end
   end
