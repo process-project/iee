@@ -12,7 +12,7 @@ module Policies
       Resource.transaction do
         find_subresources(@move_from).each do |source_resource|
           source_resource.pretty_path = @move_to + sub_path(@move_from, source_resource.pretty_path)
-          source_resource.save
+          source_resource.save!
         end
       end
     end

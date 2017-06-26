@@ -58,7 +58,6 @@ module Api
     def parse_and_validate_create_request
       schema = File.read(Rails.root.join('config', 'schemas', 'policy-schema.json'))
       @json = JSON.parse(request.body.read)
-      normalize_paths
       api_error(status: :bad_request) unless JSON::Validator.validate(schema, @json)
     end
 
@@ -119,12 +118,6 @@ module Api
       Policies::CreatePolicy.new(@json, service, current_user).call
 
       head :created
-    end
-
-    def normalize_paths
-      @json['path'] = URI.decode(@json['path'])
-      @json['copy_from'] = URI.decode(@json['copy_from']) if @json['copy_from']
-      @json['move_from'] = URI.decode(@json['move_from']) if @json['move_from']
     end
   end
 end
