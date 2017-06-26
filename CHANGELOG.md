@@ -36,6 +36,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Local path exclusion validation query fixed (@ddharezlak)
 - Proxy warning is shown only for active Rimrock computations (@mkasztelnik)
 - Correct computation tooltip text on pipelines list (@mkasztelnik)
+- Show missing patient outputs on pipeline diff view (@mkasztelnik)
 
 ### Security
 

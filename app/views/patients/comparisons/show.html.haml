@@ -1,27 +1,29 @@
 = render 'patients/show', patient: @patient do
-  .x_panel
-    .x_title
-      %h2
-        = @pipelines.first.name
-        vs
-        = @pipelines.second.name
-        %small= t 'patients.comparisons.show.subtitle'
+  = render('patients/all_pipelines_outputs', patient: @patient)
 
-      %ul.nav.navbar-right.panel_toolbox
-        %li
-          = link_to patient_path(@patient), class: 'back' do
-            = icon 'hand-o-left',
-              title: t('patients.pipelines.show.back_to_index')
+.x_panel
+  .x_title
+    %h2
+      = @pipelines.first.name
+      vs
+      = @pipelines.second.name
+      %small= t 'patients.comparisons.show.subtitle'
 
-      .clearfix
+    %ul.nav.navbar-right.panel_toolbox
+      %li
+        = link_to patient_path(@patient), class: 'back' do
+          = icon 'hand-o-left',
+            title: t('patients.pipelines.show.back_to_index')
 
-    .x_content
-      - if (@data[:compared] + @data[:not_comparable]).empty?
-        = t 'patients.comparisons.show.no_data'
+    .clearfix
 
-      - @data[:compared].each do |diff|
-        .diff_output{ data: diff }
+  .x_content
+    - if (@data[:compared] + @data[:not_comparable]).empty?
+      = t 'patients.comparisons.show.no_data'
 
-      - @data[:not_comparable].each do |noncomparable|
-        .noncomparable
-          = t 'patients.comparisons.show.incomparable', noncomparable: noncomparable
+    - @data[:compared].each do |diff|
+      .diff_output{ data: diff }
+
+    - @data[:not_comparable].each do |noncomparable|
+      .noncomparable
+        = t 'patients.comparisons.show.incomparable', noncomparable: noncomparable
