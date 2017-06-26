@@ -6,7 +6,7 @@ module CheckExistenceConcern
     def exists_for_attribute?(attribute_name, values, additional_where = {})
       select(attribute_name).where(attribute_name + ' IN (?)', values).
         where(additional_where).
-        distinct.count >= values.uniq.length
+        distinct.count == values.uniq.length
     end
   end
 end
