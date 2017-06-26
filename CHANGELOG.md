@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipelines have own DataFiles which represent produced results (@Nuanda)
 - Pipelines comparison view which present differences between files of two Pipelines (@Nuanda)
 - Segmentation output is unzipped into pipeline directory (@amber7b, @mkasztelnik)
+- Store in FileStore heart model computation PNG results (@mkasztelnik).
 
 ### Changed
 - File browser template for multiple embed mode created (@dharezlak)

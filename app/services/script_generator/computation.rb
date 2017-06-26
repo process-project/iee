@@ -46,7 +46,7 @@ module ScriptGenerator
     end
 
     def stage_out_file(filename)
-      "curl -X PUT --data @#{filename} -H \"Content-Type:application/octet-stream\""\
+      "curl -X PUT --data-binary @#{filename} -H \"Content-Type:application/octet-stream\""\
         " -H \"Authorization: Bearer #{user.token}\""\
         " \"#{File.join(pipeline.working_url, filename)}\""
     end
