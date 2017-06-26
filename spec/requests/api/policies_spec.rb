@@ -223,8 +223,10 @@ RSpec.describe 'Policies API' do
       expect(resource.resource_managers.where(group: another_group)).to be_exist
     end
 
-    it 'should delete an access policy for a user' do
+    it 'should delete an access policy for a given user' do
       another_user = create(:approved_user, email: 'another@host.com')
+      access_method = create(:access_method, service: service)
+      create(:access_policy, user: user, access_method: access_method, resource: resource)
       create(:access_policy, user: another_user, access_method: access_method, resource: resource)
 
       expect do
@@ -243,7 +245,7 @@ RSpec.describe 'Policies API' do
     end
 
     it 'should delete only an access policy for the given access method leaving the rest intact' do
-      post_method = create(:access_method, name: 'post')
+      post_method = create(:access_method, name: 'post', service: service)
       create(:access_policy, user: user, access_method: post_method, resource: resource)
 
       expect do
@@ -444,6 +446,7 @@ RSpec.describe 'Policies API' do
       end
 
       it 'should delete a selected policy for a resource with a wildcard in the path' do
+        access_method = create(:access_method, service: service)
         create(:access_policy, user: user, access_method: access_method,
                                resource: wildcard_resource)
 
