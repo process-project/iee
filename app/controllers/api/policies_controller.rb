@@ -85,7 +85,8 @@ module Api
         Resource.exists_for_attribute?('path', resource_paths) &&
         User.exists_for_attribute?('email', extract_multiple_param(:user)) &&
         Group.exists_for_attribute?('name', extract_multiple_param(:group)) &&
-        AccessMethod.exists_for_attribute?('name', extract_multiple_param(:access_method))
+        AccessMethod.exists_for_attribute?('name', extract_multiple_param(:access_method),
+                                           service: service)
     end
 
     def resource_paths

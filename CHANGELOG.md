@@ -36,6 +36,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Local path exclusion validation query fixed (@ddharezlak)
 - Proxy warning is shown only for active Rimrock computations (@mkasztelnik)
 - Correct computation tooltip text on pipelines list (@mkasztelnik)
+- When removing policies via API access method existence check is scoped to a given service (@dharezlak)
 
 ### Security
 
