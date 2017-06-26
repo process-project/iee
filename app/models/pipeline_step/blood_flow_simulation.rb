@@ -22,6 +22,7 @@ module PipelineStep
 
     def internal_run
       computation.script = ScriptGenerator::BloodFlow.new(pipeline).call
+      computation.job_id = nil
       computation.save!
 
       Rimrock::StartJob.perform_later computation

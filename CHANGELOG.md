@@ -38,6 +38,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Proxy warning is shown only for active Rimrock computations (@mkasztelnik)
 - Correct computation tooltip text on pipelines list (@mkasztelnik)
 - When removing policies via API access method existence check is scoped to a given service (@dharezlak)
+- Set Rimrock computation job id to nil while restarting computation (@mkasztelnik)
 
 ### Security
 
