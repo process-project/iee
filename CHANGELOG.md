@@ -40,6 +40,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - When removing policies via API access method existence check is scoped to a given service (@dharezlak)
 - Set Rimrock computation job id to nil while restarting computation (@mkasztelnik)
 - Show missing patient outputs on pipeline diff view (@mkasztelnik)
+- Path processing fixed for policy move/copy operations invoked via API (@dharezlak)
 
 ### Security
 

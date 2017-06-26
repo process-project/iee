@@ -37,7 +37,9 @@ module Policies
     end
 
     def find_subresources(pretty_path)
-      @service.resources.where('path like :prefix', prefix: "#{PathService.to_path(pretty_path)}%")
+      @service.resources.where('path like :prefix OR path = :path',
+                               prefix: create_prefix(pretty_path),
+                               path: PathService.to_path(pretty_path))
     end
 
     def copy_managers(source_resource, target_resource)
@@ -54,6 +56,16 @@ module Policies
 
     def sub_path(root_path, sub_path)
       sub_path[root_path.length..-1]
+    end
+
+    private
+
+    def create_prefix(pretty_path)
+      if pretty_path.end_with?('*')
+        "#{PathService.to_path(pretty_path.gsub('*', '%'))}"
+      else
+        "#{PathService.to_path(pretty_path)}" + (pretty_path.end_with?('/') ? '%' : '/%')
+      end
     end
   end
 end

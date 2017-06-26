@@ -23,7 +23,7 @@ module Policies
     def duplicate(source_resource)
       target_resource = source_resource.dup
       target_resource.pretty_path = @copy_to + sub_path(@copy_from, source_resource.pretty_path)
-      target_resource.save
+      target_resource.save!
 
       target_resource
     end
