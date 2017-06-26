@@ -64,7 +64,7 @@ module Policies
       if pretty_path.end_with?('*')
         PathService.to_path(pretty_path.tr('*', '%'))
       else
-        PathService.to_path(pretty_path) + (pretty_path.end_with?('/') ? '%' : '/%')
+        File.join(PathService.to_path(pretty_path), '%')
       end
     end
   end
