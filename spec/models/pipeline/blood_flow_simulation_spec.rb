@@ -28,6 +28,16 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
       computation = PipelineStep::BloodFlowSimulation.new(pipeline).run
       expect(computation.script).to eq script
     end
+
+    it 'set job_id to null while restarting computation' do
+      service = described_class.new(pipeline)
+      computation = service.create
+      computation.update_attributes(job_id: 'some_id')
+
+      service.run
+
+      expect(computation.reload.job_id).to be_nil
+    end
   end
 
   context 'inputs are not available' do
