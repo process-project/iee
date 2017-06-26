@@ -36,8 +36,8 @@ module Segmentation
     end
 
     def without_prefix(file_name)
-      prefixless = file_name.gsub(/^#{prefix}/, '')
-      prefixless =~ /^\..*/ ? file_name : prefixless
+      prefixless = file_name.gsub(/^#{prefix}\.{0,1}/, '')
+      File.extname(prefixless).empty? ? file_name : prefixless
     end
 
     def prefix
