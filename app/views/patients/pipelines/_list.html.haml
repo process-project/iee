@@ -9,16 +9,9 @@
         .clearfix
       .x_content
         %section.content
-          = form_tag(patient_comparison_path(patient), method: :get) do
-            %table.table
-              %thead
-                %tr
-                  %th.iid= t('.id')
-                  %th.select
-                  %th= t('.name')
-                  %th= t('.status')
-              %tbody
-                = render partial: 'patients/pipelines/pipeline',
-                         collection: pipelines
-
-            = submit_tag(t('.compare'), class: 'btn btn-success')
+          - if pipelines.size > 1
+            = render partial: 'patients/pipelines/tab_compare',
+                     locals: { pipelines: pipelines, patient: patient }
+          - else
+            = render partial: 'patients/pipelines/tab',
+                     locals: { pipelines: pipelines }
