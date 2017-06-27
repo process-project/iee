@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipelines comparison view which present differences between files of two Pipelines (@Nuanda)
 - Segmentation output is unzipped into pipeline directory (@amber7b, @mkasztelnik)
 - Store in FileStore heart model computation PNG results (@mkasztelnik).
+- Integration tests (tag "files") are run by GitlabCI (@mkasztelnik)
 
 ### Changed
 - File browser template for multiple embed mode created (@dharezlak)
