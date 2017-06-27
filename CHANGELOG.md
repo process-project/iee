@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Make patient `case_number` factory field unique (@mkasztelnik)
 - Redirect user back to previous page after proxy is regenerated successfully (@mkasztelnik)
 - Prefix is removed from segmentation outputs (@mkasztelnik)
+- Show compare two pipelines button only when there is more than on pipeline (@mkasztelnik)
 
 ### Deprecated
 

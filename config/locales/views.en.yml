@@ -52,6 +52,7 @@ en:
         id: Id
         name: Name
         status: Status
+      tab_compare:
         compare: Compare pipelines
       show:
         subtitle: pipeline

@@ -78,6 +78,23 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_link('p1',
                                 href: patient_pipeline_path(patient, pipeline))
     end
+
+    scenario 'don\'t show compare button when only one pipeline' do
+      visit patient_path(patient)
+
+      expect(page).
+        to_not have_selector "input[value='#{I18n.t('patients.pipelines.tab_compare.compare')}']"
+    end
+
+    scenario 'show compare button when more than one pipeline' do
+      create(:pipeline, patient: patient)
+      create(:pipeline, patient: patient)
+
+      visit patient_path(patient)
+
+      expect(page).
+        to have_selector "input[value='#{I18n.t('patients.pipelines.tab_compare.compare')}']"
+    end
   end
 
   context 'in the context of inspecting a given case pipeline' do
