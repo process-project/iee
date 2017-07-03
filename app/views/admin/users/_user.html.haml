@@ -3,6 +3,7 @@
     - if user.blocked?
       = icon('ban', class: 'cred')
     = user.name
+    %span.small= "(#{user.email})"
     - if user.new_account?
       %span.label.label-info New
     - if user.admin?

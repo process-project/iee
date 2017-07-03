@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - rack-attack bans are logged to `log/rack-attack.log` (@mkasztelnik)
+- Show user email in admin users index view (@mkasztelnik)
 
 ### Changed
 
