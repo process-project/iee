@@ -4,7 +4,7 @@
     = t('.title')
     %span.fa.fa-chevron-down
   %ul.nav.child_menu
-    = nav_link controller: [:patients, :pipelines], active_class: 'current-page' do
+    = nav_link controller: [:patients, :pipelines, :computations], active_class: 'current-page' do
       = link_to patients_path do
         = icon('heart')
         = t('.patients')
