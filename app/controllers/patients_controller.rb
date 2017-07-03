@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   def index; end
 
   def show
-    @pipelines = @patient.pipelines.includes(:computations).
+    @pipelines = @patient.pipelines.includes(:computations, :patient).
                  order(:iid).order('computations.created_at')
   end
 
