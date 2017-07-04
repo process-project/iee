@@ -34,7 +34,7 @@ gem 'json-schema'
 gem 'github-markup'
 gem 'redcarpet'
 
-gem 'devise', '~> 4.2.0'
+gem 'devise', '~> 4.3.0'
 gem 'jwt'
 gem 'omniauth-openid'
 gem 'pundit'
@@ -44,7 +44,7 @@ gem 'net_dav'
 
 # Delayed jobs
 gem 'clockwork'
-gem 'sidekiq'
+gem 'sidekiq', '< 6'
 
 # File processing
 gem 'rubyzip', '>= 1.0.0'
@@ -70,7 +70,7 @@ group :development do
   # start app using `thin start --ssl
   gem 'thin'
 
-  gem 'rubocop', require: false
+  gem 'rubocop', '0.47.1', require: false
 end
 
 group :test do
