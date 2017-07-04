@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 sidekiq_connection = {
   url: Rails.application.config_for(:application)['redis_url']
 }

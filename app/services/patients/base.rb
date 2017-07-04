@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Patients
   class Base < PatientWebdav
     def initialize(user, patient, options = {})

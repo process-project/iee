@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :users do
   desc 'Generates users in DB for testing hierarchical groups performance'
   task generate: :environment do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module PipelineStep
   class BloodFlowSimulation < Base
     STEP_NAME = 'blood_flow_simulation'

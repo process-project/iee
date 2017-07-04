@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GroupsController < ApplicationController
   before_action :find_group_and_authorize,
                 only: [:destroy, :update]

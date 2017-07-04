@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GuardedProxyExecutor
   def initialize(user)
     @user = user

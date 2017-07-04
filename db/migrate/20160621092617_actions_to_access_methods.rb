@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ActionsToAccessMethods < ActiveRecord::Migration[4.2]
   def change
     rename_table :actions, :access_methods

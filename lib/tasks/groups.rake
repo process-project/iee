@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :groups do
   desc 'Generates groups in DB for testing hierarchical groups performance'
   task generate: :environment do

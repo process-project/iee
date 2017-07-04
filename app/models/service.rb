@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Service < ApplicationRecord
   has_many :resources, dependent: :destroy
   has_many :access_methods, dependent: :destroy
@@ -47,7 +48,7 @@ class Service < ApplicationRecord
   end
 
   def check_override(uri)
-    return false unless uri.present?
+    return false if uri.blank?
     sc = Service.where('uri LIKE ?', "#{uri}%").where.not(id: id)
 
     # Regexp used to eliminate false-positives for TLDs (e.g. .co vs .com)
@@ -97,7 +98,7 @@ class Service < ApplicationRecord
   end
 
   def check_uri_aliases_format
-    return unless uri_aliases.any? { |u| !(u =~ /\A#{URI.regexp}\z/) }
+    return unless uri_aliases.any? { |u| u !~ /\A#{URI.regexp}\z/ }
     errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.format'))
   end
 

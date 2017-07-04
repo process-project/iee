@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Patient < ApplicationRecord
   enum procedure_status: [
     :not_started,

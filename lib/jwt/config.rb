@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Jwt
   class Config
     attr_reader :key, :key_algorithm, :expiration_time, :issuer

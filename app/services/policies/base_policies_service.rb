@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Policies
   class BasePoliciesService
     def initialize(service)

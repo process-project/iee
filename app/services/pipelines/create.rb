@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Pipelines
   class Create < Pipelines::Base
     protected

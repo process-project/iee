@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Users management' do
@@ -25,7 +26,7 @@ RSpec.describe 'Users management' do
 
     it 'cannot block himself' do
       expect { put admin_user_path(supervisor, state: :blocked) }.
-        to_not change { supervisor.reload.state }
+        to_not(change { supervisor.reload.state })
       expect(flash[:alert]).to eq(I18n.t('admin.users.update.me'))
     end
 
@@ -33,7 +34,7 @@ RSpec.describe 'Users management' do
       user = create(:user)
 
       expect { delete admin_user_path(user) }.
-        to_not change { User.count }
+        to_not(change { User.count })
     end
   end
 
@@ -53,7 +54,7 @@ RSpec.describe 'Users management' do
 
     it 'cannot remove himself' do
       expect { delete admin_user_path(admin) }.
-        to_not change { User.count }
+        to_not(change { User.count })
       expect(flash[:alert]).to eq(I18n.t('admin.users.destroy.me'))
     end
   end

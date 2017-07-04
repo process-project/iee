@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ServicesController < ApplicationController
   before_action :find_and_authorize,
                 only: [:update, :destroy]

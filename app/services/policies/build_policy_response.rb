@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Policies
   class BuildPolicyResponse
     def initialize(resource_paths, service)

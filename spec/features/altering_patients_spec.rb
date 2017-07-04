@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.feature 'Patient altering' do
@@ -44,7 +45,7 @@ RSpec.feature 'Patient altering' do
         fill_in 'patient[case_number]', with: patient.case_number
 
         expect { click_button I18n.t('register') }.
-          not_to change { Patient.count }
+          not_to(change { Patient.count })
 
         expect(page).to have_selector "input[value='#{patient.case_number}']"
         expect(page).to have_content 'has already been taken'

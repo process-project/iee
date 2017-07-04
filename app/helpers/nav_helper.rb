@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module NavHelper
   # Navigation link helper
   #
