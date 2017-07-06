@@ -13,6 +13,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show user email in admin users index view (@mkasztelnik)
 
 ### Changed
+- Upgrade to ruby 2.4.1 (@mkasztelnik)
+- Upgrade dependencies (@mkasztelnik)
+- Upgrade to rails 5.1.2 (@mkasztelnik)
 
 ### Deprecated
 

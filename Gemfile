@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.1.0'
 
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
@@ -34,7 +34,7 @@ gem 'json-schema'
 gem 'github-markup'
 gem 'redcarpet'
 
-gem 'devise', '~> 4.2.0'
+gem 'devise', '~> 4.3.0'
 gem 'jwt'
 gem 'omniauth-openid'
 gem 'pundit'
@@ -44,16 +44,16 @@ gem 'net_dav'
 
 # Delayed jobs
 gem 'clockwork'
-gem 'sidekiq'
+gem 'sidekiq', '< 6'
 
 # File processing
 gem 'rubyzip', '>= 1.0.0'
 
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 3.7'
 
 group :development, :test do
   gem 'bullet'
-  gem 'byebug', platform: :mri
+  gem 'byebug', platform: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'faker'
@@ -62,15 +62,16 @@ group :development, :test do
 end
 
 group :development do
+  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console'
+  gem 'web-console', '>= 3.3.0'
 
   # PLG OpenId requires ssh even for development
   # start app using `thin start --ssl
   gem 'thin'
 
-  gem 'rubocop', require: false
+  gem 'rubocop', '0.47.1', require: false
 end
 
 group :test do

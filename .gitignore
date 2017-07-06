@@ -9,12 +9,16 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
+/tmp/*
 !/log/.keep
-/tmp
-/.project
-/.buildpath
+!/tmp/.keep
 
-# Ignore gemspecs
+/node_modules
+/yarn-error.log
+
+.byebug_history
+
+# Ignore gemsects
 .gems
 .rbenv-gemsets
 /.env
@@ -22,8 +26,10 @@
 # Ignore local puma configuration
 /config/puma.rb
 
-# Ignore Rubymine project files
+# Ignore editor project files
 /.idea
+/.project
+/.buildpath
 
 # Dont add production JWT key into git
 /config/jwt/prod.pem
