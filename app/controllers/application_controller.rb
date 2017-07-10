@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
                          email: current_user.email,
                          username: current_user.name)
     end
-    Raven.extra_context(params: params.to_h, url: request.url)
+    Raven.extra_context(params: params.permit!.to_h, url: request.url)
   end
 
   def sentry_enabled?
