@@ -21,11 +21,15 @@ module PipelineStep
     end
 
     def internal_run
-      computation.script = ScriptGenerator::BloodFlow.new(pipeline).call
+      computation.script = ScriptGenerator.new(pipeline, template).call
       computation.job_id = nil
       computation.save!
 
       Rimrock::StartJob.perform_later computation
+    end
+
+    def template
+      File.read(Rails.root.join('config', 'pipeline_steps', 'blood_flow.sh.erb'))
     end
   end
 end

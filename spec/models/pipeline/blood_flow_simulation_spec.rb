@@ -23,10 +23,8 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
     it_behaves_like 'a Rimrock-based ready to run step'
 
     it 'creates computation with script returned by generator' do
-      script = 'BLOOD FLOW SCRIPT'
-      allow(ScriptGenerator::BloodFlow).to receive_message_chain(:new, :call) { script }
       computation = PipelineStep::BloodFlowSimulation.new(pipeline).run
-      expect(computation.script).to eq script
+      expect(computation.script).to include 'run_coupled_bashscript.sh'
     end
 
     it 'set job_id to null while restarting computation' do

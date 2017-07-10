@@ -22,11 +22,15 @@ module PipelineStep
     protected
 
     def internal_run
-      computation.script = ScriptGenerator::HeartModel.new(pipeline).call
+      computation.script = ScriptGenerator.new(pipeline, template).call
       computation.job_id = nil
       computation.save!
 
       Rimrock::StartJob.perform_later computation
+    end
+
+    def template
+      File.read(Rails.root.join('config', 'pipeline_steps', 'heart_model.sh.erb'))
     end
   end
 end
