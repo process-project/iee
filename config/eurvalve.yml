@@ -4,6 +4,7 @@ defaults: &defaults
     host: prometheus.cyfronet.pl
     tag: vapor
   grant_id: <%= ENV['GRANT_ID'] || 'eurvalve3' %>
+  git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
   owncloud:
     inputs_path: input
     outputs_path: output
@@ -18,6 +19,7 @@ development:
 
 test:
   <<: *defaults
+  git_download_key: <%= Rails.root.join('spec', 'support', 'data_files', 'ssh_key') %>
 
 production:
   <<: *defaults

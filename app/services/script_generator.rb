@@ -19,6 +19,15 @@ class ScriptGenerator
     Rails.application.config_for('eurvalve')['grant_id']
   end
 
+  def ssh_download_key
+    File.read(Rails.application.config_for('eurvalve')['git_download_key'])
+  end
+
+  def revision
+    # TODO: should be taken from computation revision field
+    'master'
+  end
+
   def stage_in(data_file_type, filename = nil)
     data_file = pipeline.data_file(data_file_type)
     filename ||= data_file&.name
