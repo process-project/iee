@@ -20,10 +20,8 @@ RSpec.describe PipelineStep::HeartModelCalculation do
     it_behaves_like 'a Rimrock-based ready to run step'
 
     it 'creates computation with script returned by generator' do
-      script = 'HEART MODEL SCRIPT'
-      allow(ScriptGenerator::HeartModel).to receive_message_chain(:new, :call) { script }
       computation = described_class.new(pipeline).run
-      expect(computation.script).to eq script
+      expect(computation.script).to include '0DModel_input.csv'
     end
 
     it 'set job_id to null while restarting computation' do
