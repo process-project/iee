@@ -61,6 +61,24 @@ This task depends on _db:setup_ task so be aware that data present in database i
 
 Vapor uses a file store backend - the EurValve's internal WebDAV File Store.
 
+## ENV variables
+
+We are using ENV variables to keep secrets safe. To customize application you
+can set following ENV variables:
+
+  * `GRANT_ID` (optional) - grant id used to start slurm jobs on Prometheus
+    supercomputer
+  * `PIPELINE_SSH_KEY` - path to ssh key which allows to clone computations
+    gitlab repositories (such as Heart model or Blood flow)
+  * `OWNCLOUD_URL` - segmentation own cloud service url
+  * `OWNCLOUD_USER` - segmentation own cloud service username
+  * `OWNCLOUD_PASSWORD` - segmentation own cloud service password
+  * `JWT_KEY_PATH` (optional) - path to key used to generate user JWT tokens
+  * `REDIS_URL` (optional) - redis database url
+  * `WEB_DAV_BASE_URL` (optional) - FileStore web dav root URL
+  * `ATMOSPHERE_BASE_URL` (optional) - Atmosphere root URL
+  * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
+
 ## Testing
 
 Some tests require PnahtomJS installed. Please take a look at:
