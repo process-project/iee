@@ -30,6 +30,7 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
   * MRI 2.3.x
   * PostgreSQL
   * PostgreSQL citext extension (`sudo apt-get install postgresql-contrib`)
+  * Redis
 
 ## Installation
 
