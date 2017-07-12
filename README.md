@@ -30,6 +30,7 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
   * MRI 2.3.x
   * PostgreSQL
   * PostgreSQL citext extension (`sudo apt-get install postgresql-contrib`)
+  * Redis
 
 ## Installation
 
@@ -60,6 +61,24 @@ bundle exec rake dev:prime RAILS_ENV=development
 This task depends on _db:setup_ task so be aware that data present in database is erased.
 
 Vapor uses a file store backend - the EurValve's internal WebDAV File Store.
+
+## ENV variables
+
+We are using ENV variables to keep secrets safe. To customize the application
+you can set the following ENV variables:
+
+  * `GRANT_ID` (optional) - grant id used to start slurm jobs on Prometheus
+    supercomputer
+  * `PIPELINE_SSH_KEY` - path to ssh key which allows to clone computations
+    gitlab repositories (such as Heart model or Blood flow)
+  * `OWNCLOUD_URL` - segmentation own cloud service url
+  * `OWNCLOUD_USER` - segmentation own cloud service username
+  * `OWNCLOUD_PASSWORD` - segmentation own cloud service password
+  * `JWT_KEY_PATH` (optional) - path to key used to generate user JWT tokens
+  * `REDIS_URL` (optional) - redis database url
+  * `WEB_DAV_BASE_URL` (optional) - FileStore web dav root URL
+  * `ATMOSPHERE_BASE_URL` (optional) - Atmosphere root URL
+  * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
 
 ## Testing
 

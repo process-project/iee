@@ -41,4 +41,18 @@ describe ScriptGenerator do
     expect(script).to include '@dir/foo.txt'
     expect(script).to include File.join(pipeline.working_url, 'foo.txt')
   end
+
+  it 'inserts gitlab ssh download key payload' do
+    script = ScriptGenerator.new(build(:pipeline),
+                                 '<%= ssh_download_key %>').call
+
+    expect(script).to include 'SSH KEY'
+  end
+
+  it 'inserts repository sha to clone' do
+    script = ScriptGenerator.new(build(:pipeline),
+                                 '<%= revision %>').call
+
+    expect(script).to include 'master'
+  end
 end

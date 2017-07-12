@@ -12,6 +12,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - rack-attack bans are logged to `log/rack-attack.log` (@mkasztelnik)
 - Show user email in admin users index view (@mkasztelnik)
 - Pipeline step script generation uses ERB templates (@mkasztelnik)
+- Blood flow computation is self-contained - Ansys files are downloaded from git
+  repository (@mkasztelnik)
 
 ### Changed
 - Upgrade to ruby 2.4.1 (@mkasztelnik)
