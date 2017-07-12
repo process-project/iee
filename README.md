@@ -89,6 +89,15 @@ Use guard to execute tests connected with modified file:
 guard
 ```
 
+To execute Gitlab integration tests:
+1. Obtain a valid Gitlab user token with access to the eurvalve/blood-flow project
+2. Assign token payload to the GITLAB_API_PRIVATE_TOKEN environmental variable (e.g. by editing `.env`)
+3. Run rspec with gitlab tag on:
+
+```
+bundle exec rspec --tag gitlab
+```
+
 ## Using bullet to increase application perfromance
 [Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments.
 While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
