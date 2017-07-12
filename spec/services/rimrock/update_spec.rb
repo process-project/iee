@@ -69,4 +69,24 @@ RSpec.describe Rimrock::Update do
                         connection: connection,
                         on_finish_callback: callback).call
   end
+
+  it 'triggers update when status changed' do
+    c1 = create(:rimrock_computation, status: 'queued', job_id: 'job1', user: user)
+    create(:rimrock_computation, status: 'running', job_id: 'job2', user: user)
+
+    updater = double('updater')
+    updater_instance = double('updater instance')
+
+    stubs.get('api/jobs') do |_env|
+      [200, {}, '[{"job_id": "job1", "status": "RUNNING"},
+                  {"job_id": "job2", "status": "RUNNING"}]']
+    end
+
+    allow(updater).to receive(:new).with(computation: c1).and_return(updater_instance)
+    expect(updater_instance).to receive(:call)
+
+    described_class.new(user,
+                        connection: connection,
+                        updater: updater).call
+  end
 end

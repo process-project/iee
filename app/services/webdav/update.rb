@@ -5,6 +5,7 @@ module Webdav
     def initialize(user, options = {})
       @user = user
       @on_finish_callback = options[:on_finish_callback]
+      @updater = options[:updater]
       @owncloud = Webdav::OwnCloud.new
     end
 
@@ -34,6 +35,7 @@ module Webdav
 
     def finish_job(computation)
       Segmentation::Finish.new(computation, @on_finish_callback).call
+      @updater.new(computation: computation).call if @updater
     end
   end
 end
