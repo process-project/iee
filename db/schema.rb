@@ -10,183 +10,184 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619055603) do
+ActiveRecord::Schema.define(version: 20170712105051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
 
   create_table "access_methods", force: :cascade do |t|
-    t.citext   "name",       null: false
+    t.citext "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "service_id"
-    t.index ["service_id"], name: "index_access_methods_on_service_id", using: :btree
+    t.integer "service_id"
+    t.index ["service_id"], name: "index_access_methods_on_service_id"
   end
 
   create_table "access_policies", force: :cascade do |t|
-    t.integer  "group_id"
-    t.integer  "user_id"
-    t.integer  "access_method_id", null: false
-    t.integer  "resource_id",      null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["access_method_id"], name: "index_access_policies_on_access_method_id", using: :btree
-    t.index ["group_id"], name: "index_access_policies_on_group_id", using: :btree
-    t.index ["resource_id"], name: "index_access_policies_on_resource_id", using: :btree
-    t.index ["user_id"], name: "index_access_policies_on_user_id", using: :btree
+    t.integer "group_id"
+    t.integer "user_id"
+    t.integer "access_method_id", null: false
+    t.integer "resource_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_method_id"], name: "index_access_policies_on_access_method_id"
+    t.index ["group_id"], name: "index_access_policies_on_group_id"
+    t.index ["resource_id"], name: "index_access_policies_on_resource_id"
+    t.index ["user_id"], name: "index_access_policies_on_user_id"
   end
 
   create_table "computations", force: :cascade do |t|
-    t.string   "job_id"
-    t.text     "script"
-    t.string   "working_directory"
-    t.string   "status",            default: "created", null: false
-    t.string   "stdout_path"
-    t.string   "stderr_path"
-    t.text     "standard_output"
-    t.text     "error_output"
-    t.string   "error_message"
-    t.integer  "exit_code"
-    t.integer  "user_id"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.string   "type"
-    t.string   "input_path"
-    t.string   "output_path"
-    t.string   "pipeline_step"
-    t.string   "working_file_name"
-    t.integer  "pipeline_id"
+    t.string "job_id"
+    t.text "script"
+    t.string "working_directory"
+    t.string "status", default: "created", null: false
+    t.string "stdout_path"
+    t.string "stderr_path"
+    t.text "standard_output"
+    t.text "error_output"
+    t.string "error_message"
+    t.integer "exit_code"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.string "input_path"
+    t.string "output_path"
+    t.string "pipeline_step"
+    t.string "working_file_name"
+    t.integer "pipeline_id"
     t.datetime "started_at"
-    t.index ["pipeline_id"], name: "index_computations_on_pipeline_id", using: :btree
+    t.string "revision"
+    t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 
   create_table "data_files", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.integer  "data_type",   null: false
-    t.integer  "patient_id",  null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "pipeline_id"
-    t.index ["data_type"], name: "index_data_files_on_data_type", using: :btree
-    t.index ["patient_id"], name: "index_data_files_on_patient_id", using: :btree
-    t.index ["pipeline_id"], name: "index_data_files_on_pipeline_id", using: :btree
+    t.string "name", null: false
+    t.integer "data_type", null: false
+    t.integer "patient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "pipeline_id"
+    t.index ["data_type"], name: "index_data_files_on_data_type"
+    t.index ["patient_id"], name: "index_data_files_on_patient_id"
+    t.index ["pipeline_id"], name: "index_data_files_on_pipeline_id"
   end
 
   create_table "group_relationships", force: :cascade do |t|
-    t.integer  "parent_id",  null: false
-    t.integer  "child_id",   null: false
+    t.integer "parent_id", null: false
+    t.integer "child_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["child_id"], name: "index_group_relationships_on_child_id", using: :btree
-    t.index ["parent_id", "child_id"], name: "index_group_relationships_on_parent_id_and_child_id", unique: true, using: :btree
-    t.index ["parent_id"], name: "index_group_relationships_on_parent_id", using: :btree
+    t.index ["child_id"], name: "index_group_relationships_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_group_relationships_on_parent_id_and_child_id", unique: true
+    t.index ["parent_id"], name: "index_group_relationships_on_parent_id"
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "default",    default: false, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "default", default: false, null: false
   end
 
   create_table "patients", force: :cascade do |t|
-    t.string   "case_number",                  null: false
-    t.integer  "procedure_status", default: 0, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["case_number"], name: "index_patients_on_case_number", using: :btree
-    t.index ["procedure_status"], name: "index_patients_on_procedure_status", using: :btree
+    t.string "case_number", null: false
+    t.integer "procedure_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_number"], name: "index_patients_on_case_number"
+    t.index ["procedure_status"], name: "index_patients_on_procedure_status"
   end
 
   create_table "pipelines", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "iid",        null: false
-    t.integer  "patient_id", null: false
-    t.integer  "user_id",    null: false
+    t.string "name", null: false
+    t.integer "iid", null: false
+    t.integer "patient_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["iid"], name: "index_pipelines_on_iid", using: :btree
-    t.index ["patient_id", "iid"], name: "index_pipelines_on_patient_id_and_iid", unique: true, using: :btree
-    t.index ["patient_id"], name: "index_pipelines_on_patient_id", using: :btree
-    t.index ["user_id"], name: "index_pipelines_on_user_id", using: :btree
+    t.index ["iid"], name: "index_pipelines_on_iid"
+    t.index ["patient_id", "iid"], name: "index_pipelines_on_patient_id_and_iid", unique: true
+    t.index ["patient_id"], name: "index_pipelines_on_patient_id"
+    t.index ["user_id"], name: "index_pipelines_on_user_id"
   end
 
   create_table "resource_managers", force: :cascade do |t|
-    t.integer  "resource_id"
-    t.integer  "user_id"
-    t.integer  "group_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["group_id"], name: "index_resource_managers_on_group_id", using: :btree
-    t.index ["resource_id"], name: "index_resource_managers_on_resource_id", using: :btree
-    t.index ["user_id"], name: "index_resource_managers_on_user_id", using: :btree
+    t.integer "resource_id"
+    t.integer "user_id"
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_resource_managers_on_group_id"
+    t.index ["resource_id"], name: "index_resource_managers_on_resource_id"
+    t.index ["user_id"], name: "index_resource_managers_on_user_id"
   end
 
   create_table "resources", force: :cascade do |t|
-    t.string   "name"
-    t.citext   "path",                      null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "service_id",                null: false
-    t.integer  "resource_type", default: 0, null: false
-    t.index ["path"], name: "index_resources_on_path", using: :btree
-    t.index ["service_id"], name: "index_resources_on_service_id", using: :btree
+    t.string "name"
+    t.citext "path", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "service_id", null: false
+    t.integer "resource_type", default: 0, null: false
+    t.index ["path"], name: "index_resources_on_path"
+    t.index ["service_id"], name: "index_resources_on_service_id"
   end
 
   create_table "service_ownerships", force: :cascade do |t|
-    t.integer  "service_id", null: false
-    t.integer  "user_id",    null: false
+    t.integer "service_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["service_id"], name: "index_service_ownerships_on_service_id", using: :btree
-    t.index ["user_id", "service_id"], name: "index_service_ownerships_on_user_id_and_service_id", unique: true, using: :btree
-    t.index ["user_id"], name: "index_service_ownerships_on_user_id", using: :btree
+    t.index ["service_id"], name: "index_service_ownerships_on_service_id"
+    t.index ["user_id", "service_id"], name: "index_service_ownerships_on_user_id_and_service_id", unique: true
+    t.index ["user_id"], name: "index_service_ownerships_on_user_id"
   end
 
   create_table "services", force: :cascade do |t|
-    t.string   "uri",                      null: false
-    t.string   "token",                    null: false
-    t.string   "name"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.string   "uri_aliases", default: [],              array: true
-    t.index ["uri"], name: "index_services_on_uri", using: :btree
+    t.string "uri", null: false
+    t.string "token", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "uri_aliases", default: [], array: true
+    t.index ["uri"], name: "index_services_on_uri"
     t.index ["uri_aliases"], name: "index_services_on_uri_aliases", using: :gin
   end
 
   create_table "user_groups", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "group_id"
-    t.boolean  "owner",      default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["group_id"], name: "index_user_groups_on_group_id", using: :btree
-    t.index ["user_id"], name: "index_user_groups_on_user_id", using: :btree
+    t.integer "user_id"
+    t.integer "group_id"
+    t.boolean "owner", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_user_groups_on_group_id"
+    t.index ["user_id"], name: "index_user_groups_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                           default: "", null: false
-    t.string   "encrypted_password",              default: "", null: false
-    t.string   "reset_password_token"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                   default: 0,  null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.string   "plgrid_login"
-    t.string   "first_name",                                   null: false
-    t.string   "last_name",                                    null: false
-    t.text     "proxy"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "plgrid_login"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.text "proxy"
     t.datetime "proxy_expired_notification_time"
-    t.integer  "state",                           default: 0,  null: false
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["plgrid_login"], name: "index_users_on_plgrid_login", unique: true, using: :btree
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.integer "state", default: 0, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["plgrid_login"], name: "index_users_on_plgrid_login", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "access_methods", "services"
