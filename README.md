@@ -30,13 +30,27 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
   * MRI 2.3.x
   * PostgreSQL
   * PostgreSQL citext extension (`sudo apt-get install postgresql-contrib`)
-  * Redis
+  * Redis (`sudo apt-get install redis-server`)
+  * PostgreSQL libpq-dev (`sudo apt-get install libpq-dev`)
+  * NodeJS (`sudo apt-get install nodejs`)
+
+## DBMS Settings
+
+You need to create user/role for your account in PostgreSQL.
+At the moment Superuser privileges are required due to citext.
 
 ## Installation
 
 ```
 bin/setup
 ```
+
+## Configuration
+
+You need to:
+* copy config/puma.rb.example into config/puma.rb
+and edit as required (env, location, socket/tcp),
+* create required directories defined in the config in tmp (such as pids)
 
 ## Running
 

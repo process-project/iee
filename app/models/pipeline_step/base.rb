@@ -15,6 +15,7 @@ module PipelineStep
       computation.tap do |c|
         c.status = :new
         c.started_at = Time.current
+        c.revision ||= 'master'
 
         internal_run
 
