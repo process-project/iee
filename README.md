@@ -64,8 +64,8 @@ Vapor uses a file store backend - the EurValve's internal WebDAV File Store.
 
 ## ENV variables
 
-We are using ENV variables to keep secrets safe. To customize application you
-can set following ENV variables:
+We are using ENV variables to keep secrets safe. To customize the application
+you can set the following ENV variables:
 
   * `GRANT_ID` (optional) - grant id used to start slurm jobs on Prometheus
     supercomputer
