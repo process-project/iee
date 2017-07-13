@@ -49,6 +49,9 @@ gem 'sidekiq', '< 6'
 # File processing
 gem 'rubyzip', '>= 1.0.0'
 
+# Gitlab integration
+gem 'gitlab'
+
 gem 'puma', '~> 3.7'
 
 group :development, :test do

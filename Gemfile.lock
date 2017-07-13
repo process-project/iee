@@ -44,7 +44,7 @@ GEM
       rails
     arel (8.0.0)
     ast (2.3.0)
-    autoprefixer-rails (7.1.1.3)
+    autoprefixer-rails (7.1.2.2)
       execjs
     bcrypt (3.1.11)
     bindex (0.5.0)
@@ -100,7 +100,7 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
-    faker (1.7.3)
+    faker (1.8.3)
       i18n (~> 0.5)
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
@@ -109,6 +109,9 @@ GEM
       sass (>= 3.2)
     formatador (0.2.5)
     github-markup (1.6.0)
+    gitlab (4.1.0)
+      httparty
+      terminal-table
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     gravtastic (3.2.6)
@@ -135,13 +138,15 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    hashie (3.5.5)
+    hashie (3.5.6)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (0.8.4)
+    httparty (0.15.5)
+      multi_xml (>= 0.5.2)
+    i18n (0.8.6)
     icheck-rails (1.0.2.2)
       jquery-rails
       rails (>= 3.1.0)
@@ -173,6 +178,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.2.0)
     minitest (5.10.2)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     nenv (0.3.0)
     net_dav (0.5.1)
@@ -287,7 +293,7 @@ GEM
     ruby_parser (3.9.0)
       sexp_processor (~> 4.1)
     rubyzip (1.2.1)
-    sass (3.4.24)
+    sass (3.4.25)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
@@ -324,7 +330,9 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     temple (0.8.0)
-    thin (1.7.1)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
+    thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
@@ -372,6 +380,7 @@ DEPENDENCIES
   faker
   font-awesome-sass (~> 4.5)
   github-markup
+  gitlab
   gravtastic
   guard-rspec
   haml-rails
