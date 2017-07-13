@@ -16,6 +16,9 @@ module Gitlab
       Rails.logger.error("Requested file #{@filename} not found in branch/tag #{@version} "\
       "of project #{@project_name}")
       nil
+    rescue SocketError, Gitlab::Error::Parsing
+      Rails.logger.error('Unable to establish Gitlab connection. Check your gitlab host config.')
+      nil
     end
   end
 end
