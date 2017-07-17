@@ -58,6 +58,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
 
   config.filter_run_excluding files: true
+  config.filter_run_excluding gitlab: true
 
   config.after :each do
     Warden.test_reset!
