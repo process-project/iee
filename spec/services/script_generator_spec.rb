@@ -14,9 +14,10 @@ describe ScriptGenerator do
                                         name: 'foo.txt',
                                         data_type: :image)])
     pipeline = create(:pipeline, patient: patient)
+    computation = create(:rimrock_computation, pipeline: pipeline)
     data_file = pipeline.data_file(:image)
 
-    script = ScriptGenerator.new(pipeline,
+    script = ScriptGenerator.new(computation,
                                  '<%= stage_in :image, "out.txt" %>').call
 
     expect(script).to include data_file.url
@@ -24,33 +25,33 @@ describe ScriptGenerator do
   end
 
   it 'inserts download file curl' do
-    pipeline = create(:pipeline)
-    script = ScriptGenerator.new(pipeline,
+    computation = create(:rimrock_computation)
+    script = ScriptGenerator.new(computation,
                                  '<%= stage_out "foo.txt", "bar.txt" %>').call
 
     expect(script).to include '--data-binary'
     expect(script).to include '@foo.txt'
-    expect(script).to include File.join(pipeline.working_url, 'bar.txt')
+    expect(script).to include File.join(computation.pipeline.working_url, 'bar.txt')
   end
 
   it 'inserts download file curl with default target file name' do
-    pipeline = create(:pipeline)
-    script = ScriptGenerator.new(pipeline,
+    computation = create(:rimrock_computation)
+    script = ScriptGenerator.new(computation,
                                  '<%= stage_out "dir/foo.txt" %>').call
 
     expect(script).to include '@dir/foo.txt'
-    expect(script).to include File.join(pipeline.working_url, 'foo.txt')
+    expect(script).to include File.join(computation.pipeline.working_url, 'foo.txt')
   end
 
   it 'inserts gitlab ssh download key payload' do
-    script = ScriptGenerator.new(build(:pipeline),
+    script = ScriptGenerator.new(create(:rimrock_computation),
                                  '<%= ssh_download_key %>').call
 
     expect(script).to include 'SSH KEY'
   end
 
   it 'inserts repository sha to clone' do
-    script = ScriptGenerator.new(build(:pipeline),
+    script = ScriptGenerator.new(create(:rimrock_computation),
                                  '<%= revision %>').call
 
     expect(script).to include 'master'
