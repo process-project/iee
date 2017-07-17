@@ -79,6 +79,8 @@ you can set the following ENV variables:
   * `WEB_DAV_BASE_URL` (optional) - FileStore web dav root URL
   * `ATMOSPHERE_BASE_URL` (optional) - Atmosphere root URL
   * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
+  * `GITLAB_API_PRIVATE_TOKEN` - Gitlab access token used to fetch Rimrock
+    Computations slurm run template
 
 ## Testing
 
