@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'webdav/client'
 
@@ -27,7 +28,7 @@ describe Pipelines::Create do
     webdav = web_dav_with_http_server_exception
 
     expect { described_class.new(build(:pipeline, user: user), client: webdav).call }.
-      to_not change { Pipeline.count }
+      to_not(change { Pipeline.count })
   end
 
   it 'set error message when web dav dir cannot be created' do

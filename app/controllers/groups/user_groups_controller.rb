@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Groups
   class UserGroupsController < ApplicationController
     before_action :find_group_and_authorize

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module PipelineStep
   class HeartModelCalculation < Base
     STEP_NAME = 'heart_model_calculation'

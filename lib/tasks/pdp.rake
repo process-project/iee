@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :pdp do
   namespace :perf do
     desc 'Test performance of checking whether'\

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Group members' do
@@ -53,7 +54,7 @@ RSpec.describe 'Group members' do
       expect do
         post group_user_groups_path(group),
              params: { user_group: { user_id: [u.id], owner: false } }
-      end.not_to change { ug.reload.owner }
+      end.not_to(change { ug.reload.owner })
     end
 
     it 'does not allow to add new members by normal member' do
@@ -92,7 +93,7 @@ RSpec.describe 'Group members' do
       ug = group.user_groups.find_by(owner: true)
 
       expect { delete group_user_group_path(group, ug) }.
-        not_to change { UserGroup.count }
+        not_to(change { UserGroup.count })
     end
   end
 end

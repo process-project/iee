@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'models/pipeline/rimrock_based_step_shared_examples'
 require 'models/pipeline/step_shared_examples'

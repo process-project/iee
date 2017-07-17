@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DataSetsController < ApplicationController
   def index
     @url = build_url

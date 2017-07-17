@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 shared_examples 'a Webdav-based ready to run step' do

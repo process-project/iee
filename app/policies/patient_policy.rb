@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PatientPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::ApplicationScope
     def resolve

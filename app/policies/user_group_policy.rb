@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserGroupPolicy < ApplicationPolicy
   def destroy?
     group_owner?

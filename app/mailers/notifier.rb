@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Notifier < ApplicationMailer
   def user_registered(user)
     to = User.supervisors.pluck(:email)

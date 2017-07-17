@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ResourceManagersDecorator
   attr_accessor :resource, :resource_manager
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Policies
   class MovePolicy < Policies::BasePoliciesService
     def initialize(move_from, move_to, service, user)

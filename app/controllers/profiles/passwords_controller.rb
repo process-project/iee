@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Profiles
   class PasswordsController < ApplicationController
     def show; end

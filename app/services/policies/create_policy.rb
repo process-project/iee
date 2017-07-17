@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Policies
   class CreatePolicy < Policies::BasePoliciesService
     def initialize(json_body, service, user)

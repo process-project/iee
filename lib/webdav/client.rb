@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'net/dav'
 
 module Webdav

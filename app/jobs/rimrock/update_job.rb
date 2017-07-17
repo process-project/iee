@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Rimrock
   class UpdateJob < ApplicationJob
     queue_as :computation

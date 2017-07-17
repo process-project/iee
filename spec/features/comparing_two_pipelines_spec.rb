@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.feature 'Comparing two pipelines', files: true do
@@ -16,7 +17,7 @@ RSpec.feature 'Comparing two pipelines', files: true do
     expect(page).to have_content 'Result: Estimated parameters'
     expect(page).to have_css 'table.diff td.replace'
     expect(all('table.diff td.replace').map(&:text)).
-      to match_array %w(0 WRONG! 0.965 96.5)
+      to match_array %w[0 WRONG! 0.965 96.5]
   end
 
   scenario 'hides non-paired and noncomparable files', js: true do

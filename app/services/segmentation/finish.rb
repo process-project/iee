@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Segmentation
   class Finish
     def initialize(computation, updater, options = {})

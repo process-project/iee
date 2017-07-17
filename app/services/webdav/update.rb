@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Webdav
   class Update
     def initialize(user, options = {})

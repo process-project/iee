@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class SessionsController < Api::ApplicationController
     skip_before_action :authenticate_user!

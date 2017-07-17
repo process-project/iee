@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Services
   class LocalPoliciesController < Services::PoliciesController
     def resource_type

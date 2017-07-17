@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.1.0'
@@ -74,7 +75,7 @@ group :development do
   # start app using `thin start --ssl
   gem 'thin'
 
-  gem 'rubocop', '0.47.1', require: false
+  gem 'rubocop', '0.49.1', require: false
 end
 
 group :test do

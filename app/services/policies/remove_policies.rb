@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Policies
   class RemovePolicies
     def initialize(resource_paths, user_emails, group_names, access_method_names)

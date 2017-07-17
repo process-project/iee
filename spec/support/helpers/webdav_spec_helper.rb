@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module WebDavSpecHelper
   def stub_webdav
     require 'net/dav'

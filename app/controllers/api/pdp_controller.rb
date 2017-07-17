@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Api
   class PdpController < Api::ApplicationController
     before_action :setup_service_and_service_uri

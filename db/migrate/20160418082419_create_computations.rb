@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateComputations < ActiveRecord::Migration[4.2]
   def change
     create_table :computations do |t|

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Rimrock
   class Update < ProxyService
     def initialize(user, options = {})
