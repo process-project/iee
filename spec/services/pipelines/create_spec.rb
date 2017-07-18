@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'webdav/client'
 
 describe Pipelines::Create do
   let(:user) { create(:user) }
