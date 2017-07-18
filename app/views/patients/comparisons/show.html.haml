@@ -1,3 +1,15 @@
+- @data[:compared].each_with_index do |diff, index|
+  - if diff[:viewer] == 'off'
+    - content_for :embed_file_browser do
+      :plain
+        eurvalve.filestore.Embed.embedOffViewer({
+          elementId: 'off_#{index}',
+          userToken: '#{current_user.token}',
+          mainMeshUrl: '#{diff[:compared][:path]}',
+          compareMeshUrl: '#{diff[:compare_to][:path]}',
+          resourceUrlBase: '#{File.join(Webdav::FileStore.url, '/')}'
+        });
+
 = render 'patients/show', patient: @patient do
   = render('patients/all_pipelines_outputs', patient: @patient)
 
@@ -21,8 +33,14 @@
     - if (@data[:compared] + @data[:not_comparable]).empty?
       = t 'patients.comparisons.show.no_data'
 
-    - @data[:compared].each do |diff|
-      .diff_output{ data: diff }
+    - @data[:compared].each_with_index do |diff, index|
+      - if diff[:viewer] == 'text'
+        .diff_output{ data: diff }
+      - if diff[:viewer] == 'off'
+        .off-viewer-header.clearfix
+          %span.off-header-left= "#{diff[:compared][:name]} (#{diff[:compared][:pipeline]})"
+          %span.off-header-right= "#{diff[:compare_to][:name]} (#{diff[:compare_to][:pipeline]})"
+        .off-viewer-panel{id: "off_#{index}"}
 
     - @data[:not_comparable].each do |noncomparable|
       .noncomparable

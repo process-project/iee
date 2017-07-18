@@ -25,6 +25,7 @@ module SynchronizerUtilities
   end
 
   # rubocop:disable CyclomaticComplexity
+  # rubocop:disable MethodLength
   def recognize_data_type(name)
     case name
     when /imaging_.*\.zip/ then 'image'
@@ -35,8 +36,11 @@ module SynchronizerUtilities
     when /fluidFlow.*.cas/ then 'blood_flow_model'
     when '0DModel_input.csv' then 'estimated_parameters'
     when 'Outfile.csv' then 'heart_model_output'
+    when /.*off/ then 'off_mesh'
     end
   end
+  # rubocop:enable CyclomaticComplexity
+  # rubocop:enable MethodLength
 
   def report_problem(problem, details = {})
     details.merge!(extra_details(details))

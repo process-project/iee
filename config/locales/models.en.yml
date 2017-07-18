@@ -14,12 +14,13 @@ en:
     data_types:
       image: Image
       segmentation_result: Segmentation output
-      fluid_virtual_model: 3d heart model CFD input
+      fluid_virtual_model: 3D heart model CFD input
       ventricle_virtual_model: Ventricle model
-      blood_flow_result: 3d CFD output
+      blood_flow_result: 3D CFD output
       blood_flow_model: Blood flow model
       estimated_parameters: Estimated parameters
-      heart_model_output: 0d heart model output
+      heart_model_output: 0D heart model output
+      off_mesh: 3D mesh
 
   computation:
     started_at: Start time

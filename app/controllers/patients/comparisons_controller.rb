@@ -14,7 +14,7 @@ module Patients
 
       @data = { compared: [], not_comparable: [] }
       pipelines.first.data_files.each do |compared|
-        compare_to = pipelines.second.data_files.detect { |df| df.data_type == compared.data_type }
+        compare_to = pipelines.second.data_files.detect { |df| df.name == compared.name }
         if compared.comparable? && compare_to.present?
           @data[:compared] << comparison_data(compared, compare_to)
         elsif compare_to.present?
@@ -45,9 +45,30 @@ module Patients
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
     def comparison_data(compared, compare_to)
+      viewer = viewer(compared.data_type)
+
+      if viewer == 'text'
+        text_data('text', compared, compare_to)
+      elsif viewer == 'off'
+        off_data('off', compared, compare_to)
+      end
+    end
+
+    def viewer(data_type)
+      if %w(estimated_parameters heart_model_output).include? data_type
+        'text'
+      elsif 'off_mesh' == data_type
+        'off'
+      else
+        'unknown'
+      end
+    end
+
+    # rubocop:disable MethodLength
+    def text_data(viewer, compared, compare_to)
       {
+        viewer: viewer,
         data_type: t("data_file.data_types.#{compared.data_type}"),
         compared: {
           name: compared.name,
@@ -61,6 +82,14 @@ module Patients
         }
       }
     end
-    # rubocop:enabled Metrics/MethodLength
+    # rubocop:enable MethodLength
+
+    def off_data(viewer, compared, compare_to)
+      {
+        viewer: viewer,
+        compared: { name: compared.name, path: compared.url, pipeline: compared.pipeline.name },
+        compare_to: { name: compared.name, path: compare_to.url, pipeline: compared.pipeline.name }
+      }
+    end
   end
 end
