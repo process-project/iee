@@ -23,7 +23,7 @@ RSpec.describe Notifier do
     it 'assings new user @name' do
       create_supervisors
 
-      expect(mail.body.encoded).to match(user.name)
+      expect(mail.body.encoded).to match(ERB::Util.html_escape(user.name))
     end
 
     def create_supervisors(supervisors_count = 1)
