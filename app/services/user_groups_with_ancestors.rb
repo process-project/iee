@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserGroupsWithAncestors
   def initialize(user)
     @user = user

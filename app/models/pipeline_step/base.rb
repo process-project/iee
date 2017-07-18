@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module PipelineStep
   class Base
     attr_reader :pipeline, :user, :pipeline_step

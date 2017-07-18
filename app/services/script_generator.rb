@@ -3,11 +3,14 @@
 require 'erb'
 
 class ScriptGenerator
-  attr_reader :pipeline
-  delegate :user, to: :pipeline
+  attr_reader :computation
 
-  def initialize(pipeline, template)
-    @pipeline = pipeline
+  delegate :pipeline, to: :computation
+  delegate :user, to: :pipeline
+  delegate :revision, to: :computation
+
+  def initialize(computation, template)
+    @computation = computation
     @template = template
   end
 
@@ -21,11 +24,6 @@ class ScriptGenerator
 
   def ssh_download_key
     File.read(Rails.application.config_for('eurvalve')['git_download_key'])
-  end
-
-  def revision
-    # TODO: should be taken from computation revision field
-    'master'
   end
 
   def stage_in(data_file_type, filename = nil)

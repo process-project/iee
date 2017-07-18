@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Webdav
   class UpdateJob < ApplicationJob
     queue_as :computation

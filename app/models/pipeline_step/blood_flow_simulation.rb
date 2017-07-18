@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 module PipelineStep
   class BloodFlowSimulation < Base
     STEP_NAME = 'blood_flow_simulation'
 
-    def initialize(pipeline)
+    def initialize(pipeline, options = {})
       super(pipeline, STEP_NAME)
+      @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
     end
 
     def create
@@ -21,7 +23,7 @@ module PipelineStep
     end
 
     def internal_run
-      computation.script = ScriptGenerator.new(pipeline, template).call
+      computation.script = ScriptGenerator.new(computation, template).call
       computation.job_id = nil
       computation.save!
 
@@ -29,7 +31,9 @@ module PipelineStep
     end
 
     def template
-      File.read(Rails.root.join('config', 'pipeline_steps', 'blood_flow.sh.erb'))
+      @template_fetcher.new('eurvalve/blood-flow',
+                            'blood_flow.sh.erb',
+                            computation.revision).call
     end
   end
 end

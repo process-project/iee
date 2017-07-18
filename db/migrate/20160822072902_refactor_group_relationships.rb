@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RefactorGroupRelationships < ActiveRecord::Migration[5.0]
   def change
     create_table :group_relationships do |t|

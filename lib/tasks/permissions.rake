@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :permissions do
   desc 'Generates permission randomly associated with resources,'\
     ' action, groups and users'

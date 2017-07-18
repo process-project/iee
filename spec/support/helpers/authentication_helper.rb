@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module AuthenticationHelper
   def plgrid_sign_in_as(user)
     stub_oauth(

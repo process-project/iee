@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Patients::Destroy do
@@ -39,7 +40,7 @@ describe Patients::Destroy do
     webdav = web_dav_with_http_server_exception
 
     expect { described_class.new(user, patient, client: webdav).call }.
-      to_not change { Patient.count }
+      to_not(change { Patient.count })
   end
 
   it 'returns false when patient cannot be removed' do

@@ -15,12 +15,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Blood flow computation is self-contained - Ansys files are downloaded from git
   repository (@mkasztelnik)
 - Gitlab integration services (list branches/tags and download specific file) (@amber7b)
+- Fetch computation slurm start script from Gitlab (@mkasztelnik)
 - Pipeline comparison view uses OFF viewers to show to show 3D mesh differences (@dharezlak)
 
 ### Changed
 - Upgrade to ruby 2.4.1 (@mkasztelnik)
 - Upgrade dependencies (@mkasztelnik)
 - Upgrade to rails 5.1.2 (@mkasztelnik)
+- Update rubocop to 0.49.1 (@mkasztelnik)
+- Move `Webdav::Client` into `app/models` to avoid auto loading problems (@mkasztelnik)
 
 ### Deprecated
 
@@ -30,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Patient left menu focus when showing patient pipeline computation (@mkasztelnik)
 - Avoid n+1 queries in patient view (@mkasztelnik)
 - Disable turbolinks in links to cloud view (turbolinks does not work well with GWT) (@mkasztelnik)
+- Fix random failing test connected with html escaping user name in generated emails (@mkasztelnik)
 
 ### Security
 

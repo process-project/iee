@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'factory_girl/service_helper'
 
 FactoryGirl.define do

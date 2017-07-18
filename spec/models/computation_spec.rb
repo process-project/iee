@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Computation, type: :model do
@@ -9,7 +10,7 @@ RSpec.describe Computation, type: :model do
 
   it do
     should validate_inclusion_of(:status).
-      in_array(%w(new queued running error finished aborted))
+      in_array(%w[new queued running error finished aborted])
   end
 
   it do

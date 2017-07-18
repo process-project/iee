@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ResourceAccessPoliciesDecorator
   attr_accessor :resource, :access_policy, :service
 

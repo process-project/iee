@@ -1,6 +1,6 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
-require 'webdav/client'
 
 describe Pipelines::Destroy do
   include WebDavSpecHelper
@@ -38,7 +38,7 @@ describe Pipelines::Destroy do
     webdav = web_dav_with_http_server_exception
 
     expect { described_class.new(pipeline, client: webdav).call }.
-      to_not change { Patient.count }
+      to_not(change { Patient.count })
   end
 
   it 'returns false when pipeline cannot be removed' do

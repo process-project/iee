@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PatientWebdav
   def initialize(user, options = {})
     @user = user

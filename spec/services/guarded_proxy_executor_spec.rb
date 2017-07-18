@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe GuardedProxyExecutor do
@@ -18,7 +19,8 @@ describe GuardedProxyExecutor do
     end
 
     it 'does not send any emails' do
-      expect { subject.call }.to_not change { ActionMailer::Base.deliveries.count }
+      expect { subject.call }.
+        to_not(change { ActionMailer::Base.deliveries.count })
     end
   end
 

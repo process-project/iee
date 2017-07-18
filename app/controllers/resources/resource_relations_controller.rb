@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Resources
   class ResourceRelationsController < ApplicationController
     before_action :find_and_authorize

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PatientsController < ApplicationController
   before_action :set_patients
   before_action :find_and_authorize, only: [:show, :destroy]

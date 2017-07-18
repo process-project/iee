@@ -1,6 +1,6 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
-require 'webdav/client'
 
 describe Patients::Create do
   let(:user) { create(:user) }
@@ -29,7 +29,7 @@ describe Patients::Create do
     webdav = web_dav_with_http_server_exception
 
     expect { described_class.new(user, build(:patient), client: webdav).call }.
-      to_not change { Patient.count }
+      to_not(change { Patient.count })
   end
 
   it 'set error message when web dav dir cannot be created' do

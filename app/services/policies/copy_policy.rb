@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Policies
   class CopyPolicy < Policies::BasePoliciesService
     def initialize(copy_from, copy_to, service, user)

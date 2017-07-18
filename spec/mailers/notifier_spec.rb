@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Notifier do
@@ -9,7 +10,7 @@ RSpec.describe Notifier do
     let(:mail) { described_class.user_registered(user).deliver_now }
 
     it 'don\'t send email when no supervisors' do
-      expect { mail }.to_not change { ActionMailer::Base.deliveries.count }
+      expect { mail }.to_not(change { ActionMailer::Base.deliveries.count })
     end
 
     it 'send email to all supervisors' do
@@ -22,7 +23,7 @@ RSpec.describe Notifier do
     it 'assings new user @name' do
       create_supervisors
 
-      expect(mail.body.encoded).to match(user.name)
+      expect(mail.body.encoded).to match(ERB::Util.html_escape(user.name))
     end
 
     def create_supervisors(supervisors_count = 1)

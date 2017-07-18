@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 module PipelineStep
   class HeartModelCalculation < Base
     STEP_NAME = 'heart_model_calculation'
 
-    def initialize(pipeline)
+    def initialize(pipeline, options = {})
       super(pipeline, STEP_NAME)
+      @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
     end
 
     def create
@@ -22,7 +24,7 @@ module PipelineStep
     protected
 
     def internal_run
-      computation.script = ScriptGenerator.new(pipeline, template).call
+      computation.script = ScriptGenerator.new(computation, template).call
       computation.job_id = nil
       computation.save!
 
@@ -30,7 +32,9 @@ module PipelineStep
     end
 
     def template
-      File.read(Rails.root.join('config', 'pipeline_steps', 'heart_model.sh.erb'))
+      @template_fetcher.new('eurvalve/0dmodel',
+                            'heart_model.sh.erb',
+                            computation.revision).call
     end
   end
 end

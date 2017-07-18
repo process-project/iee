@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'webdav/client'
 
 module Webdav
   class OwnCloud < Webdav::Client

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     skip_before_action :verify_authenticity_token, only: [:open_id, :failure]

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Patients
   module Pipelines
     class ComputationsController < ApplicationController
@@ -12,7 +13,7 @@ module Patients
 
         @computations = @pipeline.computations.order(:created_at)
         @refresh = @computations.any?(&:active?)
-        @proxy = Proxy.new(current_user) unless current_user.proxy.blank?
+        @proxy = Proxy.new(current_user) if current_user.proxy.present?
 
         if request.xhr?
           render partial: 'patients/pipelines/computations/show', layout: false,

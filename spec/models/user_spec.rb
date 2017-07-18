@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User do
@@ -140,7 +141,7 @@ RSpec.describe User do
       user.groups << create(:group, name: 'child', parents: [parent])
 
       expect(user.all_groups.count).to eq 2
-      expect(user.all_groups.map(&:name)).to match_array(%w(parent child))
+      expect(user.all_groups.map(&:name)).to match_array(%w[parent child])
     end
 
     it 'should not contain a child group if user belongs to parent' do

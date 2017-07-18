@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Pipelines controller' do
@@ -61,7 +62,7 @@ describe 'Pipelines controller' do
         pipeline = create(:pipeline, patient: patient)
 
         expect { delete patient_pipeline_path(patient, pipeline) }.
-          to_not change { patient.pipelines.count }
+          to_not(change { patient.pipelines.count })
       end
     end
 

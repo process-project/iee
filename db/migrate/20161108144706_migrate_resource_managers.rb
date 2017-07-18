@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MigrateResourceManagers < ActiveRecord::Migration[5.0]
   def up
     manage_response = execute('SELECT id from access_methods WHERE name = \'manage\'')

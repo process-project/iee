@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Webdav
   class UploadFile
     def initialize(dav_client, local_path, remote_path)

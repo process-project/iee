@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Services
   class PoliciesController < ApplicationController
     before_action :load_service

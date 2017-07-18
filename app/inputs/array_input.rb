@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 class ArrayInput < SimpleForm::Inputs::StringInput
   include ActionView::Helpers::JavaScriptHelper
 

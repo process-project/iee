@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.feature 'User registration' do
@@ -18,7 +19,7 @@ RSpec.feature 'User registration' do
     visit new_user_registration_path
 
     expect { click_on 'Register' }.
-      to_not change { ActionMailer::Base.deliveries.count }
+      to_not(change { ActionMailer::Base.deliveries.count })
   end
 
   scenario 'new created user is added to default groups' do

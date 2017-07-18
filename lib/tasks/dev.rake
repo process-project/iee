@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if Rails.env.development? || Rails.env.test?
   require 'factory_girl'
 
@@ -40,7 +41,7 @@ if Rails.env.development? || Rails.env.test?
         end
         policy.save!
       end
-      %w(finished error new queued running).each_with_index do |status, idx|
+      %w[finished error new queued running].each_with_index do |status, idx|
         create(:computation, user: users[idx], status: status)
       end
     end

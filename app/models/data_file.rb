@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DataFile < ApplicationRecord
   enum data_type: [
     :image,

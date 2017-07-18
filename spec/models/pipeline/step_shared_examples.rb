@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 shared_examples 'a pipeline step' do
@@ -15,6 +16,12 @@ end
 
 shared_examples 'ready to run step' do
   include ActiveSupport::Testing::TimeHelpers
+  let(:generic_fetcher) do
+    fetcher = class_double(Gitlab::GetFile)
+    allow(fetcher).to receive_message_chain(:new, :call) { 'script' }
+
+    fetcher
+  end
 
   it 'is runnable' do
     expect(described_class.new(pipeline).runnable?).to be_truthy
@@ -24,7 +31,8 @@ shared_examples 'ready to run step' do
     now = Time.zone.local(2017, 1, 2, 7, 21, 34)
     travel_to now
 
-    computation = described_class.new(pipeline).run
+    computation = described_class.new(pipeline,
+                                      template_fetcher: generic_fetcher).run
 
     expect(computation.started_at).to eq now
 

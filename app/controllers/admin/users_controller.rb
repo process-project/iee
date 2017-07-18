@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Admin
   class UsersController < ApplicationController
     before_action :find_and_authorize_user, except: :index

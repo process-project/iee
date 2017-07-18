@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 module PipelineStep
   class Segmentation < PipelineStep::Base
     STEP_NAME = 'segmentation'
 
-    def initialize(pipeline)
+    def initialize(pipeline, _options = {})
       super(pipeline, STEP_NAME)
     end
 

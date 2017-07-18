@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe WebdavDataFileSynchronizer, files: true do
@@ -30,12 +31,12 @@ describe WebdavDataFileSynchronizer, files: true do
                   patient: test_patient.case_number,
                   code: 403)).
       and_call_original
-    expect { call(test_patient, user) }.not_to change { DataFile.count }
+    expect { call(test_patient, user) }.not_to(change { DataFile.count })
   end
 
   it 'does nothing if patient directory is absent' do
     expect(Rails.logger).not_to receive(:warn)
-    expect { call(null_patient, correct_user) }.not_to change { DataFile.count }
+    expect { call(null_patient, correct_user) }.not_to(change { DataFile.count })
   end
 
   context 'when patient directory exists and is accessible' do
@@ -49,7 +50,7 @@ describe WebdavDataFileSynchronizer, files: true do
           'web_dav_base_path' => 'patients'
         } }
       end
-      expect { call(test_patient, user) }.not_to change { DataFile.count }
+      expect { call(test_patient, user) }.not_to(change { DataFile.count })
     end
 
     context 'and there are patient inputs' do
@@ -58,7 +59,7 @@ describe WebdavDataFileSynchronizer, files: true do
       it 'calls file storage and creates new input-related data_files' do
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
         expect(DataFile.all.map(&:data_type)).
-          to match_array %w(fluid_virtual_model ventricle_virtual_model)
+          to match_array %w[fluid_virtual_model ventricle_virtual_model]
         expect(DataFile.all.map(&:pipeline_id).compact).to be_empty
       end
 
@@ -68,7 +69,7 @@ describe WebdavDataFileSynchronizer, files: true do
                            patient: test_patient)
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(1)
         expect(DataFile.all.map(&:data_type)).
-          to match_array %w(fluid_virtual_model ventricle_virtual_model)
+          to match_array %w[fluid_virtual_model ventricle_virtual_model]
         expect(DataFile.all.map(&:pipeline_id).compact).to be_empty
       end
 
@@ -90,7 +91,7 @@ describe WebdavDataFileSynchronizer, files: true do
         expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
         expect(DataFile.all.map(&:data_type)).
-          to match_array %w(fluid_virtual_model ventricle_virtual_model)
+          to match_array %w[fluid_virtual_model ventricle_virtual_model]
         expect(test_patient.reload.virtual_model_ready?).to be_truthy
       end
     end
