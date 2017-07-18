@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'webdav/client'
-
 module Webdav
   class FileStore < Webdav::Client
     class << self

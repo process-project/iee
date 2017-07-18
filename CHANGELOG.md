@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Upgrade dependencies (@mkasztelnik)
 - Upgrade to rails 5.1.2 (@mkasztelnik)
 - Update rubocop to 0.49.1 (@mkasztelnik)
+- Move `Webdav::Client` into `app/models` to avoid auto loading problems (@mkasztelnik)
 
 ### Deprecated
 
