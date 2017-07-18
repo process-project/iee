@@ -57,9 +57,9 @@ module Patients
     end
 
     def viewer(data_type)
-      if %w(estimated_parameters heart_model_output).include? data_type
+      if %w[estimated_parameters heart_model_output].include? data_type
         'text'
-      elsif 'off_mesh' == data_type
+      elsif data_type == 'off_mesh'
         'off'
       else
         'unknown'
