@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
   repository (@mkasztelnik)
 - Gitlab integration services (list branches/tags and download specific file) (@amber7b)
 - Fetch computation slurm start script from Gitlab (@mkasztelnik)
+- Pipeline comparison view uses OFF viewers to show 3D mesh differences (@dharezlak)
 
 ### Changed
 - Upgrade to ruby 2.4.1 (@mkasztelnik)

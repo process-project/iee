@@ -5,6 +5,12 @@ module Patients
     before_action :check_pipelines, only: [:show]
     before_action :find_and_authorize, only: [:show]
 
+    TYPES = {
+      'estimated_parameters' => 'text',
+      'heart_model_output' => 'text',
+      'off_mesh' => 'off'
+    }.freeze
+
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def show
@@ -15,7 +21,7 @@ module Patients
 
       @data = { compared: [], not_comparable: [] }
       pipelines.first.data_files.each do |compared|
-        compare_to = pipelines.second.data_files.detect { |df| df.data_type == compared.data_type }
+        compare_to = pipelines.second.data_files.detect { |df| df.similar?(compared) }
         if compared.comparable? && compare_to.present?
           @data[:compared] << comparison_data(compared, compare_to)
         elsif compare_to.present?
@@ -46,22 +52,45 @@ module Patients
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
     def comparison_data(compared, compare_to)
+      viewer = viewer(compared.data_type)
+
+      if viewer == 'text'
+        text_data(compared, compare_to)
+      elsif viewer == 'off'
+        off_data(compared, compare_to)
+      end
+    end
+
+    def viewer(data_type)
+      TYPES.fetch(data_type) { 'unknown' }
+    end
+
+    def text_data(compared, compare_to)
       {
+        viewer: 'text',
         data_type: t("data_file.data_types.#{compared.data_type}"),
-        compared: {
-          name: compared.name,
-          content: compared.content(current_user),
-          pipeline: compared.pipeline.name
-        },
-        compare_to: {
-          name: compare_to.name,
-          content: compare_to.content(current_user),
-          pipeline: compare_to.pipeline.name
-        }
+        compared: text_details(compared.name,
+                               compared.content(current_user), compared.pipeline.name),
+        compare_to: text_details(compare_to.name,
+                                 compare_to.content(current_user), compare_to.pipeline.name)
       }
     end
-    # rubocop:enabled Metrics/MethodLength
+
+    def off_data(compared, compare_to)
+      {
+        viewer: 'off',
+        compared: off_details(compared.name, compared.url, compared.pipeline.name),
+        compare_to: off_details(compare_to.name, compare_to.url, compare_to.pipeline.name)
+      }
+    end
+
+    def off_details(name, url, pipeline_name)
+      { name: name, path: url, pipeline: pipeline_name }
+    end
+
+    def text_details(name, content, pipeline_name)
+      { name: name, content: content, pipeline: pipeline_name }
+    end
   end
 end
