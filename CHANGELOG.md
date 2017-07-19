@@ -33,6 +33,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Avoid n+1 queries in patient view (@mkasztelnik)
 - Disable turbolinks in links to cloud view (turbolinks does not work well with GWT) (@mkasztelnik)
 - Fix random failing test connected with html escaping user name in generated emails (@mkasztelnik)
+- Turn on `files` integration tests (@mkasztelnik)
 
 ### Security
 
