@@ -29,7 +29,7 @@ class WebdavDataFileSynchronizer
 
   def call_file_storage
     parse_response(remote_file_names)
-  rescue Net::HTTPServerException => ex
+  rescue Net::HTTPServerException, Net::HTTPFatalError => ex
     response = OpenStruct.new(code: ex.message.to_i, body: ex)
     report_problem(:request_failure, response: response) unless response.code == 404
   rescue SocketError
