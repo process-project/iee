@@ -3,6 +3,18 @@
 module SynchronizerUtilities
   private
 
+  TYPE_PATTERNS = {
+    /^imaging_.*\.zip$/ => 'image',
+    /^segmentation_.*\.zip$/ => 'segmentation_result',
+    /^fluidFlow\.cas$/ => 'fluid_virtual_model',
+    /^structural_vent\.dat$/ => 'ventricle_virtual_model',
+    /^fluidFlow.*\.dat$/ => 'blood_flow_result',
+    /^fluidFlow.*\.cas$/ => 'blood_flow_model',
+    /^0DModel_input\.csv$/ => 'estimated_parameters',
+    /^Outfile\.csv$/ => 'heart_model_output',
+    /^.*\.off$/ => 'off_mesh'
+  }.freeze
+
   def case_directory(url)
     File.join(url, 'patients', @patient.case_number)
   end
@@ -25,23 +37,9 @@ module SynchronizerUtilities
     end
   end
 
-  # rubocop:disable CyclomaticComplexity
-  # rubocop:disable MethodLength
   def recognize_data_type(name)
-    case name
-    when /imaging_.*\.zip/ then 'image'
-    when /segmentation_.*\.zip/ then 'segmentation_result'
-    when 'fluidFlow.cas' then 'fluid_virtual_model'
-    when 'structural_vent.dat' then 'ventricle_virtual_model'
-    when /fluidFlow.*.dat/ then 'blood_flow_result'
-    when /fluidFlow.*.cas/ then 'blood_flow_model'
-    when '0DModel_input.csv' then 'estimated_parameters'
-    when 'Outfile.csv' then 'heart_model_output'
-    when /.*off/ then 'off_mesh'
-    end
+    TYPE_PATTERNS.detect { |k, _| name =~ k }&.[](1)
   end
-  # rubocop:enable CyclomaticComplexity
-  # rubocop:enable MethodLength
 
   def report_problem(problem, details = {})
     details.merge!(extra_details(details))

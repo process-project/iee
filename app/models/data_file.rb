@@ -33,4 +33,8 @@ class DataFile < ApplicationRecord
   def comparable?
     estimated_parameters? || heart_model_output? || off_mesh?
   end
+
+  def similar?(other_data_file)
+    name == other_data_file.name
+  end
 end
