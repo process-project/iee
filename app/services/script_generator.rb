@@ -38,7 +38,7 @@ class ScriptGenerator
     filename ||= File.basename(relative_path)
 
     "curl -X PUT --data-binary @#{relative_path} "\
-      '-H \"Content-Type:application/octet-stream\"'\
+      '-H "Content-Type:application/octet-stream"'\
       " -H \"Authorization: Bearer #{user.token}\""\
       " \"#{File.join(pipeline.working_url, filename)}\""
   end
