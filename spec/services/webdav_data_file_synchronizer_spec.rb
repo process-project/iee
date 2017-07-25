@@ -41,15 +41,14 @@ describe WebdavDataFileSynchronizer, files: true do
 
   context 'when patient directory exists and is accessible' do
     it 'handles network errors gracefully' do
-      expect(Rails.logger).to receive(:warn).
-        with(I18n.t('data_file_synchronizer.no_fs_client')).
-        and_call_original
       allow(Rails.configuration).to receive(:constants) do
         { 'file_store' => {
           'web_dav_base_url' => 'http://total.rubbish',
           'web_dav_base_path' => 'patients'
         } }
       end
+
+      expect(Rails.logger).to receive(:warn).with(/File Stor/).and_call_original
       expect { call(test_patient, user) }.not_to(change { DataFile.count })
     end
 

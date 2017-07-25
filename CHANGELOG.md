@@ -35,6 +35,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Disable turbolinks in links to cloud view (turbolinks does not work well with GWT) (@mkasztelnik)
 - Fix random failing test connected with html escaping user name in generated emails (@mkasztelnik)
 - Fix content type mismatch for file stage out (@mkasztelnik)
+- Turn on `files` integration tests (@mkasztelnik)
 
 ### Security
 

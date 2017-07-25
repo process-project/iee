@@ -55,7 +55,7 @@ integration:
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rake db:migrate RAILS_ENV=test
   - echo -e $PROD_DEV_PEM > config/jwt/dev.pem
-  - bundle exec rspec --tag file --tag gitlab
+  - bundle exec rspec --tag files --tag gitlab
 
 development:
   type: deploy
