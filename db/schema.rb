@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170712105051) do
     t.string "working_file_name"
     t.integer "pipeline_id"
     t.datetime "started_at"
+    t.string "revision"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 

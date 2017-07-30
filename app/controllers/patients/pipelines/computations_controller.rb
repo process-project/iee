@@ -3,6 +3,7 @@
 module Patients
   module Pipelines
     class ComputationsController < ApplicationController
+      before_action :lookup_repo
       before_action :find_and_authorize
 
       # rubocop:disable Metrics/MethodLength
@@ -26,6 +27,16 @@ module Patients
       # rubocop:enable Metrics/MethodLength
 
       def update
+        p = "/patients/#{params[:patient_id]}/pipelines/#{params[:pipeline_id]}"\
+            "/computations/#{params[:id]}"
+        @computation.revision = params[p][:revision]
+        @computation.save
+        run_computation
+      end
+
+      private
+
+      def run_computation
         if @computation.runnable?
           @computation.run
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
@@ -37,8 +48,6 @@ module Patients
         end
       end
 
-      private
-
       def find_and_authorize
         @computation = Computation.
                        joins(pipeline: :patient).
@@ -49,6 +58,10 @@ module Patients
         @patient = @pipeline.patient
 
         authorize(@pipeline)
+      end
+
+      def lookup_repo
+        @repo = Rails.application.config_for('eurvalve')['git_repos'][params[:id]]
       end
     end
   end

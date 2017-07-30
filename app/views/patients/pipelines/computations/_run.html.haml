@@ -1,6 +1,10 @@
 - unless computation.active?
   = simple_form_for(patient_pipeline_computation_path(patient, pipeline, computation), method: :put) do |f|
     = f.error_notification
-    %div
-      %button.btn.btn-default.submit
-        = t(".#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start")
+    .row.form-group
+      - unless @repo.nil?
+        .col-lg-7.col-xs-12
+          = f.select :revision, grouped_options_for_select(Gitlab::Versions.new(@repo).call), {}, {class: 'form-control'}
+      .col-lg-5.col-xs-12
+        %button.btn.btn-default.submit
+          = t(".#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start")
