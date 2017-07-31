@@ -15,7 +15,7 @@ class ScriptGenerator
   end
 
   def call
-    ERB.new(@template, nil, '-').result(binding)
+    @template && ERB.new(@template, nil, '-').result(binding)
   end
 
   def grant_id

@@ -25,8 +25,9 @@ shared_examples 'a Webdav-based ready to run step' do
   it 'changes computation status to :new' do
     allow(Webdav::StartJob).to receive(:perform_later)
 
-    computation = described_class.new(pipeline).run
+    service = described_class.new(pipeline)
+    service.run
 
-    expect(computation.status).to eq 'new'
+    expect(service.computation.status).to eq 'new'
   end
 end

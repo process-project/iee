@@ -23,7 +23,9 @@ shared_examples 'a Rimrock-based ready to run step' do
 
   it 'starts a Rimrock job' do
     expect(Rimrock::StartJob).to receive(:perform_later)
-    described_class.new(pipeline, template_fetcher: generic_fetcher).run
+    service = described_class.new(pipeline, template_fetcher: generic_fetcher)
+    service.computation.update_attributes(revision: 'master')
+    service.run
   end
 
   it 'is runnable' do
@@ -34,8 +36,11 @@ shared_examples 'a Rimrock-based ready to run step' do
   it 'changes computation status to :new' do
     allow(Rimrock::StartJob).to receive(:perform_later)
 
-    computation = described_class.new(pipeline,
-                                      template_fetcher: generic_fetcher).run
+    service = described_class.new(pipeline,
+                                  template_fetcher: generic_fetcher)
+
+    service.run
+    computation = service.computation
 
     expect(computation.status).to eq 'new'
   end

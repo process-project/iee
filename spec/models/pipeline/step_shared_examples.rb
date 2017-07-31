@@ -31,10 +31,15 @@ shared_examples 'ready to run step' do
     now = Time.zone.local(2017, 1, 2, 7, 21, 34)
     travel_to now
 
-    computation = described_class.new(pipeline,
-                                      template_fetcher: generic_fetcher).run
+    service = described_class.new(pipeline,
+                                  template_fetcher: generic_fetcher)
+    computation = service.computation
+    computation.update_attributes(revision: 'master')
 
-    expect(computation.started_at).to eq now
+    service.run
+    computation.reload
+
+    expect(service.computation.started_at).to eq now
 
     travel_back
   end

@@ -12,7 +12,7 @@ module PipelineStep
     def create
       RimrockComputation.create(
         pipeline: pipeline,
-        user: user,
+        user: pipeline.user,
         pipeline_step: pipeline_step
       )
     end
@@ -23,12 +23,13 @@ module PipelineStep
 
     protected
 
-    def internal_run
+    def pre_internal_run
       computation.script = ScriptGenerator.new(computation, template).call
       computation.job_id = nil
-      computation.save!
+    end
 
-      Rimrock::StartJob.perform_later computation
+    def internal_run
+      Rimrock::StartJob.perform_later computation if computation.valid?
     end
 
     def template

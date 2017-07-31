@@ -3,18 +3,13 @@
 module Patients
   module Pipelines
     class ComputationsController < ApplicationController
-      before_action :lookup_repo
       before_action :find_and_authorize
 
-      # rubocop:disable Metrics/MethodLength
       def show
-        # TODO: FIXME the following two lines are not needed when patient sync problem is solved
-        #             can also enable the Metrics/MethodLength cop again, then
+        # TODO: FIXME the following two lines are not needed when patient
+        #             sync problem is solved
         @patient.execute_data_sync(current_user)
-
-        @computations = @pipeline.computations.order(:created_at)
-        @refresh = @computations.any?(&:active?)
-        @proxy = Proxy.new(current_user) if current_user.proxy.present?
+        prepare_to_show_computation
 
         if request.xhr?
           render partial: 'patients/pipelines/computations/show', layout: false,
@@ -24,25 +19,20 @@ module Patients
                  }
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       def update
-        p = "/patients/#{params[:patient_id]}/pipelines/#{params[:pipeline_id]}"\
-            "/computations/#{params[:id]}"
-        @computation.revision = params[p][:revision]
-        @computation.save
+        @computation.update_attributes(permitted_attributes(@computation))
         run_computation
       end
 
       private
 
       def run_computation
-        if @computation.runnable?
-          @computation.run
+        if @computation.runnable? && @computation.run
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t('computations.update.started')
         else
-          @computations = @pipeline.computations
+          prepare_to_show_computation
           render :show, status: :bad_request,
                         notice: I18n.t('computations.update.not_runnable')
         end
@@ -60,8 +50,14 @@ module Patients
         authorize(@pipeline)
       end
 
-      def lookup_repo
-        @repo = Rails.application.config_for('eurvalve')['git_repos'][params[:id]]
+      def prepare_to_show_computation
+        @computations = @pipeline.computations.order(:created_at)
+        @refresh = @computations.any?(&:active?)
+        @proxy = Proxy.new(current_user)
+
+        repo = Rails.application.
+               config_for('eurvalve')['git_repos'][@computation.pipeline_step]
+        @versions = Gitlab::Versions.new(repo).call if repo
       end
     end
   end
