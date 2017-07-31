@@ -35,7 +35,7 @@ class Computation < ApplicationRecord
   private
 
   def runner
-    @runner ||= runner_class.new(pipeline)
+    @runner ||= runner_class.new(self)
   end
 
   def runner_class

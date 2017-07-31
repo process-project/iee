@@ -11,36 +11,33 @@ shared_examples 'a Rimrock-based ready to run step' do
   end
 
   it 'creates RimrockComputation' do
-    expect { described_class.new(pipeline).create }.
+    expect { described_class.create(pipeline) }.
       to change { RimrockComputation.count }.by(1)
   end
 
   it 'returns a RimrockComputation object' do
-    allow(Rimrock::StartJob).to receive(:perform_later)
-    computation = described_class.new(pipeline).create
+    computation = described_class.create(pipeline)
     expect(computation.class).to eq RimrockComputation
   end
 
   it 'starts a Rimrock job' do
     expect(Rimrock::StartJob).to receive(:perform_later)
-    service = described_class.new(pipeline, template_fetcher: generic_fetcher)
-    service.computation.update_attributes(revision: 'master')
+
+    computation.assign_attributes(revision: 'master')
+    service = described_class.new(computation, template_fetcher: generic_fetcher)
     service.run
   end
 
   it 'is runnable' do
-    expect(described_class.new(pipeline).runnable?).
+    expect(described_class.new(computation).runnable?).
       to be_truthy
   end
 
   it 'changes computation status to :new' do
     allow(Rimrock::StartJob).to receive(:perform_later)
 
-    service = described_class.new(pipeline,
-                                  template_fetcher: generic_fetcher)
-
-    service.run
-    computation = service.computation
+    described_class.new(computation,
+                        template_fetcher: generic_fetcher).run
 
     expect(computation.status).to eq 'new'
   end

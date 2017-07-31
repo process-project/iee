@@ -2,11 +2,11 @@
 
 module PipelineStep
   class Base
-    attr_reader :pipeline, :user, :pipeline_step
+    delegate :pipeline, :user, :pipeline_step, to: :computation
+    attr_reader :computation
 
-    def initialize(pipeline, pipeline_step)
-      @pipeline = pipeline
-      @pipeline_step = pipeline_step
+    def initialize(computation)
+      @computation = computation
     end
 
     def run
@@ -26,15 +26,7 @@ module PipelineStep
       raise 'This method should be implemented by descendent class'
     end
 
-    def computation
-      @computation ||= pipeline.computations.find_by(pipeline_step: pipeline_step) || create
-    end
-
     protected
-
-    def user
-      pipeline.user
-    end
 
     def pre_internal_run; end
 

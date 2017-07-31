@@ -4,16 +4,16 @@ module PipelineStep
   class BloodFlowSimulation < Base
     STEP_NAME = 'blood_flow_simulation'
 
-    def initialize(pipeline, options = {})
-      super(pipeline, STEP_NAME)
+    def initialize(computation, options = {})
+      super(computation)
       @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
     end
 
-    def create
+    def self.create(pipeline)
       RimrockComputation.create(
         pipeline: pipeline,
-        user: user,
-        pipeline_step: pipeline_step
+        user: pipeline.user,
+        pipeline_step: STEP_NAME
       )
     end
 
