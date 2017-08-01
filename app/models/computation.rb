@@ -32,6 +32,10 @@ class Computation < ApplicationRecord
     pipeline_step
   end
 
+  def rimrock?
+    type == 'RimrockComputation'
+  end
+
   private
 
   def runner

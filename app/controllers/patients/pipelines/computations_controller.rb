@@ -21,7 +21,7 @@ module Patients
       end
 
       def update
-        @computation.assign_attributes(permitted_attributes(@computation))
+        @computation.assign_attributes(permitted_attributes(@computation)) if @computation.rimrock?
         run_computation
       end
 
@@ -62,8 +62,7 @@ module Patients
       end
 
       def runnable?
-        @computation.runnable? &&
-          (@computation.type != 'RimrockComputation' || @proxy.valid?)
+        @computation.runnable? && (@computation.rimrock? || @proxy.valid?)
       end
     end
   end

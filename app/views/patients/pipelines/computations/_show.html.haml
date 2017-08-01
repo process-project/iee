@@ -12,7 +12,7 @@
         .alert{class: alert_computation_class(computation)}
           = t(".#{computation.pipeline_step}.#{computation.status}")
         = render 'details', computation: computation
-        - if computation.type == 'RimrockComputation' && !proxy&.valid?
+        - if computation.rimrock? && !proxy&.valid?
           = render(partial: 'proxy/warning', locals: { msg: t('.proxy_invalid') })
         - else
           = render 'run', patient: patient, pipeline: pipeline, computation: computation
