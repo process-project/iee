@@ -20,7 +20,7 @@ module Pipelines
 
     def create_computations
       Pipeline::STEPS.each do |builder_clazz|
-        builder_clazz.new(@pipeline).create
+        builder_clazz.create(@pipeline)
       end
     end
   end

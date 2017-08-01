@@ -7,6 +7,7 @@ require 'models/pipeline/step_shared_examples'
 RSpec.describe PipelineStep::Segmentation do
   let(:user) { create(:user) }
   let(:pipeline) { create(:pipeline, user: user) }
+  let(:computation) { described_class.create(pipeline) }
 
   before do
     allow(Webdav::StartJob).to receive(:perform_later)

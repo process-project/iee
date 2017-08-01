@@ -32,10 +32,14 @@ class Computation < ApplicationRecord
     pipeline_step
   end
 
+  def rimrock?
+    type == 'RimrockComputation'
+  end
+
   private
 
   def runner
-    @runner ||= runner_class.new(pipeline)
+    @runner ||= runner_class.new(self)
   end
 
   def runner_class

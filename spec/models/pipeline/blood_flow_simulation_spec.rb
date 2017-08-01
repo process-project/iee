@@ -7,6 +7,7 @@ require 'models/pipeline/step_shared_examples'
 RSpec.describe PipelineStep::BloodFlowSimulation do
   let(:user) { create(:user) }
   let(:pipeline) { create(:pipeline, user: user) }
+  let(:computation) { described_class.create(pipeline) }
 
   before do
     allow(Rimrock::StartJob).to receive(:perform_later)
@@ -33,20 +34,21 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
     end
 
     it 'creates computation with script returned by generator' do
-      computation = PipelineStep::BloodFlowSimulation.
-                    new(pipeline, template_fetcher: fetcher).run
+      service = described_class.new(computation, template_fetcher: fetcher)
+      computation.assign_attributes(revision: 'master')
+
+      service.run
 
       expect(computation.script).to include 'script payload'
     end
 
     it 'set job_id to null while restarting computation' do
-      service = described_class.new(pipeline, template_fetcher: fetcher)
-      computation = service.create
-      computation.update_attributes(job_id: 'some_id')
+      service = described_class.new(computation, template_fetcher: fetcher)
+      computation.update_attributes(job_id: 'some_id', revision: 'master')
 
       service.run
 
-      expect(computation.reload.job_id).to be_nil
+      expect(computation.job_id).to be_nil
     end
   end
 

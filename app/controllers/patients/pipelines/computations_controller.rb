@@ -5,15 +5,11 @@ module Patients
     class ComputationsController < ApplicationController
       before_action :find_and_authorize
 
-      # rubocop:disable Metrics/MethodLength
       def show
-        # TODO: FIXME the following two lines are not needed when patient sync problem is solved
-        #             can also enable the Metrics/MethodLength cop again, then
+        # TODO: FIXME the following two lines are not needed when patient
+        #             sync problem is solved
         @patient.execute_data_sync(current_user)
-
-        @computations = @pipeline.computations.order(:created_at)
-        @refresh = @computations.any?(&:active?)
-        @proxy = Proxy.new(current_user) if current_user.proxy.present?
+        prepare_to_show_computation
 
         if request.xhr?
           render partial: 'patients/pipelines/computations/show', layout: false,
@@ -23,21 +19,25 @@ module Patients
                  }
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       def update
-        if @computation.runnable?
-          @computation.run
+        @computation.assign_attributes(permitted_attributes(@computation)) if @computation.rimrock?
+        run_computation
+      end
+
+      private
+
+      def run_computation
+        if @computation.runnable? && @computation.run
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t('computations.update.started')
         else
-          @computations = @pipeline.computations
+          @computation.status = @computation.status_was
+          prepare_to_show_computation
           render :show, status: :bad_request,
                         notice: I18n.t('computations.update.not_runnable')
         end
       end
-
-      private
 
       def find_and_authorize
         @computation = Computation.
@@ -49,6 +49,20 @@ module Patients
         @patient = @pipeline.patient
 
         authorize(@pipeline)
+      end
+
+      def prepare_to_show_computation
+        @computations = @pipeline.computations.order(:created_at)
+        @refresh = @computations.any?(&:active?)
+        @proxy = Proxy.new(current_user)
+
+        repo = Rails.application.
+               config_for('eurvalve')['git_repos'][@computation.pipeline_step]
+        @versions = Gitlab::Versions.new(repo).call if runnable? && repo
+      end
+
+      def runnable?
+        @computation.runnable? && (@computation.rimrock? || @proxy.valid?)
       end
     end
   end

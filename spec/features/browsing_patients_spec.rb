@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.feature 'Patient browsing' do
   let(:patient) { create(:patient, case_number: '1234') }
+  let(:user) { create(:user, :approved) }
 
   before(:each) do
-    user = create(:user, :approved)
     login_as(user)
 
     allow_any_instance_of(Patient).to receive(:execute_data_sync)
@@ -114,7 +114,7 @@ RSpec.feature 'Patient browsing' do
 
     context 'with computations' do
       let(:pipeline) do
-        pipeline = build(:pipeline, patient: patient, name: 'p1')
+        pipeline = build(:pipeline, patient: patient, name: 'p1', user: user)
         Pipelines::Create.new(pipeline).call
       end
       let(:computation) { pipeline.computations.first }
@@ -133,6 +133,49 @@ RSpec.feature 'Patient browsing' do
           title = I18n.t("patients.pipelines.computations.show.#{s::STEP_NAME}.title")
           expect(page).to have_content title
         end
+      end
+
+      scenario 'start rimrock computation with selected version' do
+        computation = pipeline.computations.find_by(type: 'RimrockComputation')
+        mock_rimrock_computation_ready_to_run
+
+        expect(Rimrock::StartJob).to receive(:perform_later)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        select('bar')
+        click_button computation_run_text(computation)
+
+        computation.reload
+
+        expect(computation.revision).to eq 'bar'
+      end
+
+      scenario 'unable to start rimrock computation when version is not chosen' do
+        computation = pipeline.computations.find_by(type: 'RimrockComputation')
+        mock_rimrock_computation_ready_to_run
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        click_button computation_run_text(computation)
+
+        expect(page).to have_content 'can\'t be blank'
+      end
+
+      def mock_rimrock_computation_ready_to_run
+        mock_gitlab
+        allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+        allow_any_instance_of(PipelineStep::HeartModelCalculation).
+          to receive(:runnable?).and_return(true)
+        allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
+      end
+
+      def mock_gitlab
+        allow_any_instance_of(Gitlab::Versions).
+          to receive(:call).and_return(tags: %w[t1 t2], branches: %w[foo bar])
+        allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
+      end
+
+      def computation_run_text(c)
+        I18n.t("patients.pipelines.computations.run.#{c.pipeline_step}.start")
       end
 
       scenario 'computation alert is displayed when no required input data' do

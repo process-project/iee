@@ -2,24 +2,24 @@
 
 module PipelineStep
   class Base
-    attr_reader :pipeline, :user, :pipeline_step
+    delegate :pipeline, :user, :pipeline_step, to: :computation
+    attr_reader :computation
 
-    def initialize(pipeline, pipeline_step)
-      @pipeline = pipeline
-      @pipeline_step = pipeline_step
+    def initialize(computation)
+      @computation = computation
     end
 
     def run
       raise 'Required inputs are not available' unless runnable?
 
-      computation.tap do |c|
-        c.status = :new
-        c.started_at = Time.current
+      computation.status = :new
+      computation.started_at = Time.current
 
-        internal_run
+      pre_internal_run
+      saved = computation.save
+      internal_run
 
-        c.save!
-      end
+      saved
     end
 
     def runnable?
@@ -28,16 +28,10 @@ module PipelineStep
 
     protected
 
-    def user
-      pipeline.user
-    end
+    def pre_internal_run; end
 
     def internal_run
       raise 'This method should be implemented by descendent class'
-    end
-
-    def computation
-      @computation ||= pipeline.computations.find_by(pipeline_step: pipeline_step) || create
     end
   end
 end

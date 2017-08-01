@@ -4,16 +4,16 @@ module PipelineStep
   class BloodFlowSimulation < Base
     STEP_NAME = 'blood_flow_simulation'
 
-    def initialize(pipeline, options = {})
-      super(pipeline, STEP_NAME)
+    def initialize(computation, options = {})
+      super(computation)
       @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
     end
 
-    def create
+    def self.create(pipeline)
       RimrockComputation.create(
         pipeline: pipeline,
-        user: user,
-        pipeline_step: pipeline_step
+        user: pipeline.user,
+        pipeline_step: STEP_NAME
       )
     end
 
@@ -22,12 +22,13 @@ module PipelineStep
         pipeline.data_file(:ventricle_virtual_model)
     end
 
-    def internal_run
+    def pre_internal_run
       computation.script = ScriptGenerator.new(computation, template).call
       computation.job_id = nil
-      computation.save!
+    end
 
-      Rimrock::StartJob.perform_later computation
+    def internal_run
+      Rimrock::StartJob.perform_later computation if computation.valid?
     end
 
     def template

@@ -4,16 +4,16 @@ module PipelineStep
   class Segmentation < PipelineStep::Base
     STEP_NAME = 'segmentation'
 
-    def initialize(pipeline, _options = {})
-      super(pipeline, STEP_NAME)
+    def initialize(computation, _options = {})
+      super(computation)
     end
 
-    def create
+    def self.create(pipeline)
       WebdavComputation.create!(
         pipeline: pipeline,
-        user: user,
-        pipeline_step: pipeline_step,
-        output_path: output_path
+        user: pipeline.user,
+        pipeline_step: STEP_NAME,
+        output_path: pipeline.working_dir
       )
     end
 
@@ -44,10 +44,6 @@ module PipelineStep
 
     def input_path
       File.join(@patient.working_dir, "imaging_#{@patient.case_number}.zip")
-    end
-
-    def output_path
-      @pipeline.working_dir
     end
   end
 end

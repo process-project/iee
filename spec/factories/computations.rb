@@ -20,6 +20,7 @@ FactoryGirl.define do
       input_path nil
       output_path nil
       script { 'SCRIPT' }
+      revision 'master'
     end
   end
 end
