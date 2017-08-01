@@ -150,15 +150,15 @@ RSpec.feature 'Patient browsing' do
         expect(computation.revision).to eq 'bar'
       end
 
-      # scenario 'unable to start rimrock computation when version is not chosen' do
-      #   computation = pipeline.computations.find_by(type: 'RimrockComputation')
-      #   mock_rimrock_computation_ready_to_run
-      #
-      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
-      #   click_button computation_run_text(computation)
-      #
-      #   expect(page).to have_content 'can\'t be blank'
-      # end
+      scenario 'unable to start rimrock computation when version is not chosen' do
+        computation = pipeline.computations.find_by(type: 'RimrockComputation')
+        mock_rimrock_computation_ready_to_run
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        click_button computation_run_text(computation)
+
+        expect(page).to have_content 'can\'t be blank'
+      end
 
       def mock_rimrock_computation_ready_to_run
         mock_gitlab

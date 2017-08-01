@@ -21,7 +21,7 @@ module Patients
       end
 
       def update
-        @computation.update_attributes(permitted_attributes(@computation))
+        @computation.assign_attributes(permitted_attributes(@computation))
         run_computation
       end
 
@@ -32,6 +32,7 @@ module Patients
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t('computations.update.started')
         else
+          @computation.status = @computation.status_was
           prepare_to_show_computation
           render :show, status: :bad_request,
                         notice: I18n.t('computations.update.not_runnable')
