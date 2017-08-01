@@ -24,6 +24,7 @@ en:
 
   computation:
     started_at: Start time
+    revision: Model version
     execution_time: Execution time
     outputs: Outputs
     stdout_path: stdout
