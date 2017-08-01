@@ -10,7 +10,8 @@ class DataFile < ApplicationRecord
     :blood_flow_model,
     :estimated_parameters,
     :heart_model_output,
-    :off_mesh
+    :off_mesh,
+    :graphics
   ]
 
   belongs_to :patient, touch: true
@@ -31,7 +32,7 @@ class DataFile < ApplicationRecord
   end
 
   def comparable?
-    estimated_parameters? || heart_model_output? || off_mesh?
+    estimated_parameters? || heart_model_output? || off_mesh? || graphics?
   end
 
   def similar?(other_data_file)

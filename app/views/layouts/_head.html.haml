@@ -1,6 +1,8 @@
 %head
   %meta{charset: 'utf-8'}
   %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+  - if current_user
+    %meta{name: 'token', content: current_user.token}
   = favicon_link_tag
   %title= t('title')
 

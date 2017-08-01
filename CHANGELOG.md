@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Blood flow computation is self-contained - Ansys files are downloaded from git
   repository (@mkasztelnik)
 - Gitlab integration services (list branches/tags and download specific file) (@amber7b)
+- Comparison of image files in pipeline comparison view (@amber7b)
 - Fetch computation slurm start script from Gitlab (@mkasztelnik)
 - Pipeline comparison view uses OFF viewers to show 3D mesh differences (@dharezlak)
 - Enabled selection of rimrock computation version (@jmeizner, @mkasztelnik)

@@ -12,7 +12,8 @@ module SynchronizerUtilities
     /^fluidFlow.*\.cas$/ => 'blood_flow_model',
     /^0DModel_input\.csv$/ => 'estimated_parameters',
     /^Outfile\.csv$/ => 'heart_model_output',
-    /^.*\.off$/ => 'off_mesh'
+    /^.*\.off$/ => 'off_mesh',
+    /^.*\.\b(png|bmp|jpg)\b$/ => 'graphics'
   }.freeze
 
   def case_directory(url)

@@ -41,6 +41,18 @@
           %span.off-header-left= "#{diff[:compared][:name]} (#{diff[:compared][:pipeline]})"
           %span.off-header-right= "#{diff[:compare_to][:name]} (#{diff[:compare_to][:pipeline]})"
         .off-viewer-panel{id: "off_#{index}"}
+      - if diff[:viewer] == 'graphics'
+        %span
+          %div.row
+            %div.col-md-6
+              %h2 #{diff[:compared][:name]} (#{diff[:compared][:pipeline]})
+            %div.col-md-6
+              %h2 #{diff[:compare_to][:name]} (#{diff[:compare_to][:pipeline]})
+          %div.row
+            %div.col-md-6
+              %img.img-responsive{data: {'filestore-src' => diff[:compared][:url]}}
+            %div.col-md-6
+              %img.img-responsive{data: {'filestore-src' => diff[:compare_to][:url]}}
 
     - @data[:not_comparable].each do |noncomparable|
       .noncomparable

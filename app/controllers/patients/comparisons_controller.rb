@@ -8,7 +8,8 @@ module Patients
     TYPES = {
       'estimated_parameters' => 'text',
       'heart_model_output' => 'text',
-      'off_mesh' => 'off'
+      'off_mesh' => 'off',
+      'graphics' => 'graphics'
     }.freeze
 
     # rubocop:disable Metrics/MethodLength
@@ -59,6 +60,8 @@ module Patients
         text_data(compared, compare_to)
       elsif viewer == 'off'
         off_data(compared, compare_to)
+      elsif viewer == 'graphics'
+        graphics_data(compared, compare_to)
       end
     end
 
@@ -70,27 +73,49 @@ module Patients
       {
         viewer: 'text',
         data_type: t("data_file.data_types.#{compared.data_type}"),
-        compared: text_details(compared.name,
-                               compared.content(current_user), compared.pipeline.name),
-        compare_to: text_details(compare_to.name,
-                                 compare_to.content(current_user), compare_to.pipeline.name)
+        compared: text_details(compared),
+        compare_to: text_details(compare_to)
       }
     end
 
     def off_data(compared, compare_to)
       {
         viewer: 'off',
-        compared: off_details(compared.name, compared.url, compared.pipeline.name),
-        compare_to: off_details(compare_to.name, compare_to.url, compare_to.pipeline.name)
+        compared: off_details(compared),
+        compare_to: off_details(compare_to)
       }
     end
 
-    def off_details(name, url, pipeline_name)
-      { name: name, path: url, pipeline: pipeline_name }
+    def graphics_data(compared, compare_to)
+      {
+        viewer: 'graphics',
+        compared: img_details(compared),
+        compare_to: img_details(compare_to)
+      }
     end
 
-    def text_details(name, content, pipeline_name)
-      { name: name, content: content, pipeline: pipeline_name }
+    def off_details(payload)
+      {
+        name: payload.name,
+        path: payload.url,
+        pipeline: payload.pipeline.name
+      }
+    end
+
+    def text_details(payload)
+      {
+        name: payload.name,
+        content: payload.content(current_user),
+        pipeline: payload.pipeline.name
+      }
+    end
+
+    def img_details(payload)
+      {
+        name: payload.name,
+        url: payload.url,
+        pipeline: payload.pipeline.name
+      }
     end
   end
 end
