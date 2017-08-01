@@ -58,7 +58,12 @@ module Patients
 
         repo = Rails.application.
                config_for('eurvalve')['git_repos'][@computation.pipeline_step]
-        @versions = Gitlab::Versions.new(repo).call if repo
+        @versions = Gitlab::Versions.new(repo).call if runnable? && repo
+      end
+
+      def runnable?
+        @computation.runnable? &&
+          (@computation.type != 'RimrockComputation' || @proxy.valid?)
       end
     end
   end
