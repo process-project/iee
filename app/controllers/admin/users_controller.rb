@@ -8,7 +8,7 @@ module Admin
       authorize(User)
 
       @users = policy_scope(User)
-      @users = case params[:state]
+      @users = case state
                when 'active' then @users.approved
                when 'new' then @users.new_accounts
                when 'blocked' then @users.blocked
@@ -29,7 +29,7 @@ module Admin
     def update
       if block_yourself?
         redirect_to(admin_users_path, alert: t('me'))
-      elsif @user.update_attributes(state: params[:state])
+      elsif @user.update_attributes(state: state)
         redirect_to(admin_users_path, notice: state_changed_msg)
       else
         redirect_to(admin_users_path, alert: t('error'))
@@ -38,8 +38,12 @@ module Admin
 
     private
 
+    def state
+      params[:state]
+    end
+
     def state_changed_msg
-      t('success', user: @user.name, state: params[:state])
+      t('success', user: @user.name, state: state)
     end
 
     def t(key, hsh = {})
@@ -57,10 +61,6 @@ module Admin
     def find_and_authorize_user
       @user = User.find(params[:id])
       authorize(@user)
-    end
-
-    def user_params
-      params.required(:user).permitted(:state)
     end
   end
 end
