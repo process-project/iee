@@ -1,0 +1,15 @@
+.row
+  .col-xs-6
+    .x_panel
+      .x_title
+        %h3 Inputs
+      .x_content
+        %section.content
+          = render partial: 'file_store/file_browser_multi',
+            locals: { target_path: patient.inputs_dir, element_id: 'patient-inputs', disable_mkdir: true }
+
+  .col-xs-6
+    .x_panel
+      = yield
+
+= render partial: 'file_store/file_browser_multi_include'
