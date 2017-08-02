@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 module Api
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ActionController::API
     include Pundit
 
-    protect_from_forgery with: :null_session
     before_action :authenticate_user!
     before_action :destroy_session
     rescue_from Pundit::NotAuthorizedError, with: :forbidden
