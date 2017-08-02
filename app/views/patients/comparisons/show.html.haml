@@ -2,6 +2,7 @@
   - if diff[:viewer] == 'off'
     - content_for :embed_file_browser do
       :plain
+        $('#off_#{index}').height($('#off_#{index}').width() / 2);
         eurvalve.filestore.Embed.embedOffViewer({
           elementId: 'off_#{index}',
           userToken: '#{current_user.token}',
@@ -40,7 +41,7 @@
         .off-viewer-header.clearfix
           %span.off-header-left= "#{diff[:compared][:name]} (#{diff[:compared][:pipeline]})"
           %span.off-header-right= "#{diff[:compare_to][:name]} (#{diff[:compare_to][:pipeline]})"
-        .off-viewer-panel{id: "off_#{index}"}
+        %div{id: "off_#{index}"}
       - if diff[:viewer] == 'graphics'
         %span
           %div.row
