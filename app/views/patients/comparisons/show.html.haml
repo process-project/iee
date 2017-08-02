@@ -11,9 +11,6 @@
           resourceUrlBase: '#{File.join(Webdav::FileStore.url, '/')}'
         });
 
-= render 'patients/show', patient: @patient do
-  = render('patients/all_pipelines_outputs', patient: @patient)
-
 .x_panel
   .x_title
     %h2
@@ -58,3 +55,6 @@
     - @data[:not_comparable].each do |noncomparable|
       .noncomparable
         = t 'patients.comparisons.show.incomparable', noncomparable: noncomparable
+
+= render('patients/file_browsers', patient: @patient) do
+  = render('patients/all_pipelines_outputs', patient: @patient)

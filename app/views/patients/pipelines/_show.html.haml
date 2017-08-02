@@ -1,5 +1,4 @@
-= render 'patients/show', patient: patient do
-  = render 'patients/pipelines/outputs', pipeline: pipeline
+= render 'patients/show', patient: patient
 
 .x_panel
   .x_title
@@ -29,3 +28,6 @@
 
   .x_content
     = yield
+
+= render('patients/file_browsers', patient: @patient) do
+  = render 'patients/pipelines/outputs', pipeline: pipeline
