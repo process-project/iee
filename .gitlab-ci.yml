@@ -85,3 +85,11 @@ rubocop:
     - gem install bundler --no-ri --no-rdoc
     - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
     - bundle exec rubocop
+
+brakeman:
+  script:
+    - ruby -v
+    - which ruby
+    - gem install bundler --no-ri --no-rdoc
+    - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
+    - bundle exec brakeman -z
