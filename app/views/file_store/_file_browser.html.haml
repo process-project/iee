@@ -3,7 +3,7 @@
   :javascript
     var SletOverrides = {
       userLogin: '#{current_user.email}',
-      userGroups: #{sanitize(current_user.all_groups.map(&:name).to_s)},
+      userGroups: #{sanitize(current_user.all_group_names)},
       webDavBaseUrl: '#{File.join(Webdav::FileStore.url, Webdav::FileStore.path, target_path)}',
       webDavBaseHref: '#{File.join(Webdav::FileStore.path, target_path)}',
       policiesApiUrl: '#{File.join(Webdav::FileStore.url, Webdav::FileStore.proxy_path)}',

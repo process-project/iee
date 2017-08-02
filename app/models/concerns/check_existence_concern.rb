@@ -5,7 +5,8 @@ module CheckExistenceConcern
 
   module ClassMethods
     def exists_for_attribute?(attribute_name, values, additional_where = {})
-      select(attribute_name).where(attribute_name + ' IN (?)', values).
+      clause = "#{connection.quote_column_name(attribute_name)} IN (?)"
+      select(attribute_name).where(clause, values).
         where(additional_where).
         distinct.count == values.uniq.length
     end
