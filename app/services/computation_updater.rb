@@ -23,17 +23,16 @@ class ComputationUpdater
 
   def broadcast_to(to)
     PipelineChannel.broadcast_to(to,
-                                 menu: menu,
+                                 menu: menu(to),
                                  reload_step: to.id == computation.id,
                                  reload_files: reload?)
   end
 
-  def menu
-    @menu ||= ApplicationController.
-              render(partial: 'patients/pipelines/computations/menu',
-                     locals: { patient: patient, pipeline: pipeline,
-                               computation: computation,
-                               computations: computations })
+  def menu(to)
+    ApplicationController.
+      render(partial: 'patients/pipelines/computations/menu',
+             locals: { patient: patient, pipeline: pipeline,
+                       computation: to, computations: computations })
   end
 
   def reload?
