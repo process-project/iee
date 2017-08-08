@@ -8,7 +8,8 @@ class DataSetsController < ApplicationController
   private
 
   def build_url
-    uri = URI(Rails.configuration.constants['data_sets']['url'])
+    uri = URI(Rails.configuration.constants['data_sets']['url'] +
+      Rails.configuration.constants['data_sets']['site_path'])
     uri.query = URI.encode_www_form(
       URI.decode_www_form(uri.query || '') << ['access_token', current_user.token]
     )
