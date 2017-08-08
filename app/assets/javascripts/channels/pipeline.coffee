@@ -26,7 +26,7 @@
 
         if data.reload_files
           console.log("reloading output files")
-          # TODO: reload output files using refreshFileBrowser(elementId)
+          eurvalve.filestore.Embed.refreshFileBrowser("patient-outputs")
   else if App.pipeline
     App.pipeline.unsubscribe
     App.pipeline = null
