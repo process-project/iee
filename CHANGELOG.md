@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipeline comparison view uses OFF viewers to show 3D mesh differences (@dharezlak)
 - Enabled selection of rimrock computation version (@jmeizner, @mkasztelnik)
 - Brakeman security errors check is executed by Gitlab CI (@mkasztelnik)
+- Use action cable (web sockets) to refresh computation (@mkasztelnik)
 
 ### Changed
 - Upgrade to ruby 2.4.1 (@mkasztelnik)
