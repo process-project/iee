@@ -2,12 +2,15 @@
   pipeline = document.getElementById("pipeline")
 
   if pipeline
-    App.pipeline = App.cable.subscriptions.create {
-        channel: "PipelineChannel",
+    App.computation = App.cable.subscriptions.create {
+        channel: "ComputationChannel",
         patient: pipeline.dataset.patient,
         pipeline: pipeline.dataset.pipeline,
         computation: pipeline.dataset.computation
       },
+      connected: ->
+        console.log("ws connected")
+
       received: (data) ->
         if data.reload_step
           @reloadStep()
@@ -31,6 +34,6 @@
       reloadOutputs: ->
         eurvalve.filestore.Embed.refreshFileBrowser("patient-outputs")
 
-  else if App.pipeline
-    App.pipeline.unsubscribe
-    App.pipeline = null
+  else if App.computation
+    App.computation.unsubscribe
+    App.computation = null

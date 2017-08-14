@@ -8,11 +8,11 @@ describe ComputationUpdater do
   let!(:c2) { create(:webdav_computation, pipeline: pipeline, status: 'finished') }
 
   it 'broadcast computation change' do
-    expect(PipelineChannel).
+    expect(ComputationChannel).
       to receive(:broadcast_to).
       with(c1, hash_including(reload_step: true, reload_files: false))
 
-    expect(PipelineChannel).
+    expect(ComputationChannel).
       to receive(:broadcast_to).
       with(c2, hash_including(reload_step: false, reload_files: false))
 
@@ -20,11 +20,11 @@ describe ComputationUpdater do
   end
 
   it 'broadcast output reload after finish' do
-    expect(PipelineChannel).
+    expect(ComputationChannel).
       to receive(:broadcast_to).
       with(c1, hash_including(reload_step: false, reload_files: true))
 
-    expect(PipelineChannel).
+    expect(ComputationChannel).
       to receive(:broadcast_to).
       with(c2, hash_including(reload_step: true, reload_files: true))
 

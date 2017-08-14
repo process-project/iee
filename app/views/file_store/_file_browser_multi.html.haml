@@ -20,9 +20,9 @@
         toastr.error(message);
       },
       onFileUploaded: function(path) {
-        if (App.pipeline) {
+        if (App.computation) {
           console.log("uploaded %o", path);
-          App.pipeline.send({ new_input: true })
+          App.computation.send({ new_input: true })
         }
       },
       additionalJsResources: ['#{javascript_path 'application'}'],

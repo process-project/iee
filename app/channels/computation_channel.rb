@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PipelineChannel < ApplicationCable::Channel
+class ComputationChannel < ApplicationCable::Channel
   def subscribed
     stream_for computation
   end

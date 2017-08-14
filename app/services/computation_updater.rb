@@ -19,10 +19,10 @@ class ComputationUpdater
   private
 
   def broadcast_to(to)
-    PipelineChannel.broadcast_to(to,
-                                 menu: menu(to),
-                                 reload_step: to.id == computation.id,
-                                 reload_files: reload?)
+    ComputationChannel.broadcast_to(to,
+                                    menu: menu(to),
+                                    reload_step: to.id == computation.id,
+                                    reload_files: reload?)
   end
 
   def menu(to)
