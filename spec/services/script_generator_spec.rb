@@ -52,9 +52,9 @@ describe ScriptGenerator do
   end
 
   it 'inserts repository sha to clone' do
-    script = ScriptGenerator.new(create(:rimrock_computation),
+    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
                                  '<%= revision %>').call
 
-    expect(script).to include 'master'
+    expect(script).to include 'rev'
   end
 end

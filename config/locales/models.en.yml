@@ -25,7 +25,8 @@ en:
 
   computation:
     started_at: Start time
-    revision: Model version
+    revision: Revision
+    tag_or_branch: Model version
     execution_time: Execution time
     outputs: Outputs
     stdout_path: stdout

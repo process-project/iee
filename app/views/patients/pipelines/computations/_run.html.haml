@@ -4,7 +4,7 @@
     .row.form-group
       - if @versions
         .col-lg-7.col-xs-12
-          = f.input :revision,
+          = f.input :tag_or_branch,
             as: :grouped_select,
             collection: @versions,
             group_method: :last
