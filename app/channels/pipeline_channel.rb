@@ -8,7 +8,7 @@ class PipelineChannel < ApplicationCable::Channel
   def receive(data)
     if data['new_input']
       data_sync!
-      ComputationUpdater.new(computation: computation).call
+      ComputationUpdater.new(computation).call
     end
   end
 

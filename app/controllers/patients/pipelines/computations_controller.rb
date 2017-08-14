@@ -29,7 +29,7 @@ module Patients
 
       def run_computation
         if @computation.runnable? && @computation.run
-          ComputationUpdater.new(computation: @computation, only_other: true).call
+          ComputationUpdater.new(@computation).call
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t('computations.update.started')
         else

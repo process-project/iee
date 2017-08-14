@@ -16,7 +16,7 @@ describe ComputationUpdater do
       to receive(:broadcast_to).
       with(c2, hash_including(reload_step: false, reload_files: false))
 
-    described_class.new(computation: c1).call
+    described_class.new(c1).call
   end
 
   it 'broadcast output reload after finish' do
@@ -28,6 +28,6 @@ describe ComputationUpdater do
       to receive(:broadcast_to).
       with(c2, hash_including(reload_step: true, reload_files: true))
 
-    described_class.new(computation: c2).call
+    described_class.new(c2).call
   end
 end

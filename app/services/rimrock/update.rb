@@ -67,7 +67,7 @@ module Rimrock
     end
 
     def update(computation)
-      @updater.new(computation: computation).call if @updater
+      @updater.new(computation).call if @updater
     end
   end
 end

@@ -210,7 +210,7 @@ RSpec.feature 'Patient browsing' do
         #   expect(page).to have_content('New')
         #
         #   computation.update_attributes(status: 'running')
-        #   ComputationUpdater.new(computation: computation).call
+        #   ComputationUpdater.new(computation).call
         #
         #   expect(page).to have_content('Running')
         # end
@@ -224,7 +224,7 @@ RSpec.feature 'Patient browsing' do
         #   expect(page).to have_content('New')
         #
         #   computation.update_attributes(status: 'finished')
-        #   ComputationUpdater.new(computation: computation).call
+        #   ComputationUpdater.new(computation).call
         #
         #   expect(page).to have_content('Finished')
         # end

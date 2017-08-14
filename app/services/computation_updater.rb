@@ -3,20 +3,17 @@
 class ComputationUpdater
   attr_reader :computation, :computations, :pipeline, :patient
 
-  def initialize(computation:, only_other: false)
+  def initialize(computation)
     @computation = computation
     @computations = Computation.
                     where(pipeline_id: computation.pipeline_id).
                     order(:created_at)
     @pipeline = computation.pipeline
     @patient = pipeline.patient
-    @only_other = only_other
   end
 
   def call
-    computations.
-      reject { |c| only_other? && c.id == computation.id }.
-      each { |c| broadcast_to(c) }
+    computations.each { |c| broadcast_to(c) }
   end
 
   private
@@ -37,9 +34,5 @@ class ComputationUpdater
 
   def reload?
     computation.status == 'finished'
-  end
-
-  def only_other?
-    @only_other
   end
 end

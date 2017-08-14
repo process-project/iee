@@ -82,7 +82,7 @@ RSpec.describe Rimrock::Update do
                   {"job_id": "job2", "status": "RUNNING"}]']
     end
 
-    allow(updater).to receive(:new).with(computation: c1).and_return(updater_instance)
+    allow(updater).to receive(:new).with(c1).and_return(updater_instance)
     expect(updater_instance).to receive(:call)
 
     described_class.new(user,
