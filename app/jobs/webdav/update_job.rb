@@ -5,7 +5,9 @@ module Webdav
     queue_as :computation
 
     def perform(user)
-      Webdav::Update.new(user, on_finish_callback: PipelineUpdater).call
+      Webdav::Update.new(user,
+                         on_finish_callback: PipelineUpdater,
+                         updater: ComputationUpdater).call
     end
   end
 end

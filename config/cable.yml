@@ -1,10 +1,14 @@
+redis: &redis
+  adapter: redis
+  url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
+
+production:
+  <<: *redis
+  channel_prefix: vapor_production
+
 development:
-  adapter: async
+  <<: *redis
+  channel_prefix: vapor_development
 
 test:
   adapter: async
-
-production:
-  adapter: redis
-  url: redis://localhost:6379/1
-  channel_prefix: vapor_production

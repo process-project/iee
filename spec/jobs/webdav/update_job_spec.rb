@@ -10,7 +10,7 @@ RSpec.describe Webdav::UpdateJob do
     expect(update).to receive(:call)
     allow(Webdav::Update).
       to receive(:new).
-      with(user, on_finish_callback: PipelineUpdater).
+      with(user, on_finish_callback: PipelineUpdater, updater: ComputationUpdater).
       and_return(update)
 
     described_class.perform_now(user)

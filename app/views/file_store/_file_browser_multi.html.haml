@@ -20,11 +20,10 @@
         toastr.error(message);
       },
       onFileUploaded: function(path) {
-        console.log("uploaded %o", path);
-        $('div[data-computation="true"]').each(function() {
+        if (App.computation) {
           console.log("uploaded %o", path);
-          refreshComputation(this);
-        })
+          App.computation.send({ new_input: true })
+        }
       },
       additionalJsResources: ['#{javascript_path 'application'}'],
       additionalCssResources: ['#{stylesheet_path 'application'}'],

@@ -9,6 +9,7 @@ module Rimrock
 
       @user = user
       @on_finish_callback = options[:on_finish_callback]
+      @updater = options[:updater]
     end
 
     def call
@@ -38,8 +39,12 @@ module Rimrock
 
     def update_computation(computation, new_status)
       if new_status
-        computation.update_attributes(status: new_status['status'].downcase)
+        current_status = computation.status
+        updated_status = new_status['status'].downcase
+
+        computation.update_attributes(status: updated_status)
         on_finish_callback(computation) if computation.status == 'finished'
+        update(computation) if current_status != updated_status
       else
         computation.update_attributes(status: 'error', error_message: 'Job cannot be found')
       end
@@ -59,6 +64,10 @@ module Rimrock
 
     def on_finish_callback(computation)
       @on_finish_callback.new(computation).call if @on_finish_callback
+    end
+
+    def update(computation)
+      @updater.new(computation).call if @updater
     end
   end
 end

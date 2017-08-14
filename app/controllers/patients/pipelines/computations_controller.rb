@@ -29,6 +29,7 @@ module Patients
 
       def run_computation
         if @computation.runnable? && @computation.run
+          ComputationUpdater.new(@computation).call
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t('computations.update.started')
         else
@@ -53,7 +54,6 @@ module Patients
 
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
-        @refresh = @computations.any?(&:active?)
         @proxy = Proxy.new(current_user)
 
         repo = Rails.application.
