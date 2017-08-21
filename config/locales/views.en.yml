@@ -110,6 +110,7 @@ en:
               All required input files are available.
               You can start blood flow simulation for this patient.
             new: Blood flow simulation computation is running
+            queued: Blood flow simulation computation is queued
             running: Blood flow simulation computation is running
             error: There were an error while calculating blood flow simulation
             finished: |
@@ -126,6 +127,7 @@ en:
               All required input files are available.
               You can start heart model calculation for this patient.
             new: Heart model calculation is running
+            queued: Heart model calculation is queued
             running: Heart model calculation is running
             error: There were an error while calculating patient heart model
             finished: |
