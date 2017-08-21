@@ -38,6 +38,14 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
 
 You need to create user/role for your account in PostgreSQL.
 At the moment Superuser privileges are required due to citext.
+You may also manually activate the citext extension as shown below -
+in which case normal privileges would be sufficient.
+
+### Manual activation of the citext extention
+
+1. Create the databases (at least for the development and test environments). You may run `bin/setup` (and allow it to fail due to insufficient privileges, but after DBs were created) or create the them manually with an unprivileged user as the owner.
+2. As the PostgreSQL superuser run the `CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;` query on all databases (dev, test, ...) to activate the extension.
+
 
 ## Installation
 
