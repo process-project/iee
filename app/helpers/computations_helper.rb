@@ -20,6 +20,18 @@ module ComputationsHelper
     "alert-#{alert_class_postfix(computation)}"
   end
 
+  def source_comparison_link(compared_computation, compare_to_computation)
+    repo = Rails.application.config_for('eurvalve')['git_repos']['heart_model_calculation']
+    link_text = I18n.t(
+      'patients.comparisons.show.source_comparison_link',
+      computation_step: t("patients.pipelines.computations.show.#{compared_computation.pipeline_step}.title"),
+      compared_revision: "#{compared_computation.tag_or_branch}:#{compared_computation.revision}",
+      compare_to_revision: "#{compare_to_computation.tag_or_branch}:#{compare_to_computation.revision}"
+    )
+    link_url = "https://gitlab.com/#{repo}/compare/#{compared_computation.revision}...#{compare_to_computation.revision}"
+    link_to link_text, link_url, target: '_blank'
+  end
+
   private
 
   def alert_class_postfix(computation)

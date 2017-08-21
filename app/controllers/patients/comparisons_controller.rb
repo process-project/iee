@@ -20,6 +20,17 @@ module Patients
       @patient.execute_data_sync(current_user)
       pipelines.reload
 
+      @sources = []
+      pipelines.first.computations.select(&:revision).each do |compared_computation|
+        compare_to_computation = pipelines.
+          second.
+          computations.
+          select(&:revision).
+          detect { |c| c.pipeline_step == compared_computation.pipeline_step }
+
+        @sources << [compared_computation, compare_to_computation] if compare_to_computation
+      end
+
       @data = { compared: [], not_comparable: [] }
       pipelines.first.data_files.each do |compared|
         compare_to = pipelines.second.data_files.detect { |df| df.similar?(compared) }
@@ -36,7 +47,7 @@ module Patients
     private
 
     def pipelines
-      @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).includes(:data_files)
+      @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).includes(:data_files, :computations)
     end
 
     def patient
