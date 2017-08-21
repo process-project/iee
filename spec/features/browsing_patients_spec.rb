@@ -147,7 +147,7 @@ RSpec.feature 'Patient browsing' do
 
         computation.reload
 
-        expect(computation.revision).to eq 'bar'
+        expect(computation.tag_or_branch).to eq 'bar'
       end
 
       scenario 'unable to start rimrock computation when version is not chosen' do

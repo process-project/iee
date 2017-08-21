@@ -2,6 +2,6 @@
 
 class RimrockComputationPolicy < ApplicationPolicy
   def permitted_attributes
-    [:revision]
+    [:tag_or_branch]
   end
 end

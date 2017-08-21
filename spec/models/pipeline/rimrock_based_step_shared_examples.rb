@@ -4,9 +4,15 @@ require 'rails_helper'
 
 # rubocop:disable BlockLength
 shared_examples 'a Rimrock-based ready to run step' do
-  let(:generic_fetcher) do
+  let(:generic_template_fetcher) do
     class_double(Gitlab::GetFile).tap do |fetcher|
       allow(fetcher).to receive_message_chain(:new, :call) { 'script' }
+    end
+  end
+
+  let(:generic_revision_fetcher) do
+    class_double(Gitlab::Revision).tap do |fetcher|
+      allow(fetcher).to receive_message_chain(:new, :call) { 'rev' }
     end
   end
 
@@ -23,8 +29,10 @@ shared_examples 'a Rimrock-based ready to run step' do
   it 'starts a Rimrock job' do
     expect(Rimrock::StartJob).to receive(:perform_later)
 
-    computation.assign_attributes(revision: 'master')
-    service = described_class.new(computation, template_fetcher: generic_fetcher)
+    computation.assign_attributes(tag_or_branch: 'master')
+    service = described_class.new(computation,
+                                  template_fetcher: generic_template_fetcher,
+                                  revision_fetcher: generic_revision_fetcher)
     service.run
   end
 
@@ -37,7 +45,8 @@ shared_examples 'a Rimrock-based ready to run step' do
     allow(Rimrock::StartJob).to receive(:perform_later)
 
     described_class.new(computation,
-                        template_fetcher: generic_fetcher).run
+                        template_fetcher: generic_template_fetcher,
+                        revision_fetcher: generic_revision_fetcher).run
 
     expect(computation.status).to eq 'new'
   end

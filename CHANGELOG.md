@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Brakeman security errors check is executed by Gitlab CI (@mkasztelnik)
 - Data sets API reference added to the Help section as a separate entry (@dharezlak)
 - Use action cable (web sockets) to refresh computation (@mkasztelnik)
+- Computation stores information about selected tag/branch and revision (@mkasztelnik)
 
 ### Changed
 - Upgrade to ruby 2.4.1 (@mkasztelnik)

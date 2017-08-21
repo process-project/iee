@@ -24,7 +24,7 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
     it_behaves_like 'ready to run step'
     it_behaves_like 'a Rimrock-based ready to run step'
 
-    let(:fetcher) do
+    let(:template_fetcher) do
       fetcher = class_double(Gitlab::GetFile)
       allow(fetcher).to receive(:new).
         with('eurvalve/blood-flow', 'blood_flow.sh.erb', anything).
@@ -33,9 +33,20 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
       fetcher
     end
 
+    let(:revision_fetcher) do
+      fetcher = class_double(Gitlab::Revision)
+      allow(fetcher).to receive(:new).
+        with('eurvalve/blood-flow', anything).
+        and_return(double(call: 'rev'))
+
+      fetcher
+    end
+
     it 'creates computation with script returned by generator' do
-      service = described_class.new(computation, template_fetcher: fetcher)
-      computation.assign_attributes(revision: 'master')
+      service = described_class.new(computation,
+                                    template_fetcher: template_fetcher,
+                                    revision_fetcher: revision_fetcher)
+      computation.assign_attributes(revision: 'revision')
 
       service.run
 
@@ -43,7 +54,9 @@ RSpec.describe PipelineStep::BloodFlowSimulation do
     end
 
     it 'set job_id to null while restarting computation' do
-      service = described_class.new(computation, template_fetcher: fetcher)
+      service = described_class.new(computation,
+                                    template_fetcher: template_fetcher,
+                                    revision_fetcher: revision_fetcher)
       computation.update_attributes(job_id: 'some_id', revision: 'master')
 
       service.run

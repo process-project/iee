@@ -4,6 +4,7 @@
       %tr
         %th= t 'computation.started_at'
         - if computation.rimrock?
+          %th= t 'computation.tag_or_branch'
           %th= t 'computation.revision'
         %th= t 'computation.execution_time'
         %th= t 'computation.outputs'
@@ -12,6 +13,7 @@
       %tr
         %td= l(computation.started_at, format: :short)
         - if computation.rimrock?
+          %td= computation.tag_or_branch
           %td= computation.revision
         %td= execution_time(computation)
         %td
