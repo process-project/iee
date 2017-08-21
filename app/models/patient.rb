@@ -16,6 +16,7 @@ class Patient < ApplicationRecord
 
   validates :case_number, :procedure_status, presence: true
   validates :case_number, uniqueness: true
+  validates :case_number, format: { with: /\A[a-zA-Z0-9~!^*()_+-<>{}|]+\z/ }
 
   default_scope { order('case_number asc') }
 
@@ -26,7 +27,7 @@ class Patient < ApplicationRecord
   end
 
   def working_dir
-    File.join(Rails.env, 'patients', case_number, '/')
+    File.join(Rails.env, 'patients', safe_case_number, '/')
   end
 
   def working_url
@@ -47,6 +48,10 @@ class Patient < ApplicationRecord
 
   def pipelines_url
     pipelines_dir(working_url)
+  end
+
+  def safe_case_number
+    CGI.escape(case_number)
   end
 
   private

@@ -31,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Update rubocop to 0.49.1 (@mkasztelnik)
 - Move `Webdav::Client` into `app/models` to avoid auto loading problems (@mkasztelnik)
 - OFF viewer's height in pipeline's compare mode takes half of the available width (@dharezlak)
+- Patient case_number is checked for unsafe characters (@Nuanda)
 
 ### Deprecated
 
@@ -43,6 +44,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix random failing test connected with html escaping user name in generated emails (@mkasztelnik)
 - Fix content type mismatch for file stage out (@mkasztelnik)
 - Turn on `files` integration tests (@mkasztelnik)
+- Better handling of URL-unsafe characters in patient case_number (@Nuanda)
 
 ### Security
 

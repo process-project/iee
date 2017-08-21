@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe Patients::Create do
   let(:user) { create(:user) }
+  let(:stranger) { build(:patient, case_number: '{ &*^%$#@![]":;.,<>/?\a stranger in the night}') }
 
   it 'creates new patient in db' do
     webdav = instance_double(Webdav::Client)
@@ -25,11 +26,19 @@ describe Patients::Create do
     described_class.new(user, new_patient, client: webdav).call
   end
 
-  it 'don\'t create db patient when web dav dir cannot be created' do
+  it 'does not create db patient when web dav dir cannot be created' do
     webdav = web_dav_with_http_server_exception
 
     expect { described_class.new(user, build(:patient), client: webdav).call }.
       to_not(change { Patient.count })
+  end
+
+  it 'does not create webdav dir if db patient is invalid' do
+    webdav = instance_double(Webdav::Client)
+    expect(webdav).not_to receive(:r_mkdir)
+
+    expect(stranger).not_to be_valid
+    described_class.new(user, stranger, client: webdav).call
   end
 
   it 'set error message when web dav dir cannot be created' do

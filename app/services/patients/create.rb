@@ -5,9 +5,10 @@ module Patients
     protected
 
     def internal_call
-      @patient.save
-      r_mkdir(@patient.inputs_dir)
-      r_mkdir(@patient.pipelines_dir)
+      if @patient.save
+        r_mkdir(@patient.inputs_dir)
+        r_mkdir(@patient.pipelines_dir)
+      end
     rescue Net::HTTPServerException
       @patient.errors.
         add(:case_number,
