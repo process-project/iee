@@ -21,7 +21,7 @@ module ComputationsHelper
   end
 
   def source_comparison_link(compared_computation, compare_to_computation)
-    repo = Rails.application.config_for('eurvalve')['git_repos']['heart_model_calculation']
+    repo = Rails.application.config_for('eurvalve')['git_repos'][compared_computation.pipeline_step]
     link_text = I18n.t(
       'patients.comparisons.show.source_comparison_link',
       computation_step: t("patients.pipelines.computations.show.#{compared_computation.pipeline_step}.title"),

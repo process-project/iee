@@ -29,20 +29,13 @@
 
   .x_content
     - if @sources.present?
-      %h4= t('.sources_comparison')
+      %h3= t('.sources_comparison')
       %ul
         - @sources.each do |compared_computation, compare_to_computation|
           %li
             = source_comparison_link compared_computation, compare_to_computation
-            -#- repo = Rails.application.config_for('eurvalve')['git_repos']['heart_model_calculation']
-            -#= link_to t('.source_comparison_link',
-            -#            computation_step: t("patients.pipelines.computations.show.#{compared_computation.pipeline_step}.title"),
-            -#            compared_revision: "#{compared_computation.tag_or_branch}:#{compared_computation.revision}",
-            -#            compare_to_revision: "#{compare_to_computation.tag_or_branch}:#{compare_to_computation.revision}"),
-            -#          "https://gitlab.com/#{repo}/compare/#{compared_computation.revision}...#{compare_to_computation.revision}",
-            -#          target: '_blank'
 
-    %h4= t('.data_comparison')
+    %h3= t('.data_comparison')
     - if (@data[:compared] + @data[:not_comparable]).empty?
       = t 'patients.comparisons.show.no_data'
 
