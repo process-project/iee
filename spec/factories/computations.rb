@@ -21,6 +21,7 @@ FactoryGirl.define do
       output_path nil
       script { 'SCRIPT' }
       tag_or_branch 'master'
+      revision '1234'
     end
   end
 end
