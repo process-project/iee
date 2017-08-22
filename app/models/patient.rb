@@ -16,6 +16,7 @@ class Patient < ApplicationRecord
 
   validates :case_number, :procedure_status, presence: true
   validates :case_number, uniqueness: true
+  validates :case_number, format: { with: /\A[a-zA-Z0-9~_\-.]+\z/ }
 
   default_scope { order('case_number asc') }
 

@@ -32,6 +32,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Update rubocop to 0.49.1 (@mkasztelnik)
 - Move `Webdav::Client` into `app/models` to avoid auto loading problems (@mkasztelnik)
 - OFF viewer's height in pipeline's compare mode takes half of the available width (@dharezlak)
+- Patient case_number is checked for unsafe characters (@Nuanda)
 
 ### Deprecated
 
@@ -45,6 +46,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix content type mismatch for file stage out (@mkasztelnik)
 - Turn on `files` integration tests (@mkasztelnik)
 - Fix missing tooltip messages for queued computation state (@mkasztelnik)
+- Preventing WebDAV folder creation for patients with incorrect case_number (@Nuanda)
 
 ### Security
 

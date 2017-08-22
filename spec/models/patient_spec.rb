@@ -8,6 +8,8 @@ RSpec.describe Patient do
   it { should validate_presence_of(:case_number) }
   it { should validate_uniqueness_of(:case_number) }
   it { should validate_presence_of(:procedure_status) }
+  it { should allow_value('pn4-~_.').for(:case_number) }
+  it { should_not allow_value("'{}&%$@#").for(:case_number) }
 
   it 'is setup with proper defaults' do
     expect(subject.procedure_status).to eq 'not_started'
