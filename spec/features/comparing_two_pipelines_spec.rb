@@ -32,4 +32,22 @@ RSpec.feature 'Comparing two pipelines', files: true do
 
     expect(current_path).to eq patient_path(patient)
   end
+
+  scenario 'shows link to sources comparison when enough data is available' do
+    visit patient_comparison_path(patient, id: patient.id, pipeline_ids: pipelines.map(&:iid))
+
+    expect(page).not_to have_content 'Sources comparison'
+
+    pipelines[0].computations << create(:rimrock_computation)
+    pipelines[1].computations << create(:rimrock_computation,
+                                        tag_or_branch: 'fixes',
+                                        revision: '5678')
+
+    visit patient_comparison_path(patient, id: patient.id, pipeline_ids: pipelines.map(&:iid))
+
+    expect(page).to have_content 'Sources comparison'
+    step = pipelines[0].computations[0].pipeline_step
+    step = I18n.t("patients.pipelines.computations.menu.#{step}")
+    expect(page).to have_content "#{step}, rev. master:1234 vs rev. fixes:5678"
+  end
 end

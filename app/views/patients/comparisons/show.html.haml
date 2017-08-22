@@ -28,6 +28,14 @@
     .clearfix
 
   .x_content
+    - if @sources.present?
+      %h3= t('.sources_comparison')
+      %ul
+        - @sources.each do |compared_computation, compare_to_computation|
+          %li
+            = source_comparison_link compared_computation, compare_to_computation
+
+    %h3= t('.data_comparison')
     - if (@data[:compared] + @data[:not_comparable]).empty?
       = t 'patients.comparisons.show.no_data'
 

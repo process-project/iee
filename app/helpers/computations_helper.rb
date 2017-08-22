@@ -20,7 +20,23 @@ module ComputationsHelper
     "alert-#{alert_class_postfix(computation)}"
   end
 
+  def source_comparison_link(from_comp, to_comp)
+    repo = Rails.application.config_for('eurvalve')['git_repos'][from_comp.pipeline_step]
+    link_to source_comparison_link_text(from_comp, to_comp),
+            "https://gitlab.com/#{repo}/compare/#{from_comp.revision}...#{to_comp.revision}",
+            target: '_blank'
+  end
+
   private
+
+  def source_comparison_link_text(from_comp, to_comp)
+    I18n.t(
+      'patients.comparisons.show.source_comparison_link',
+      computation_step: t("patients.pipelines.computations.show.#{from_comp.pipeline_step}.title"),
+      compared_revision: "#{from_comp.tag_or_branch}:#{from_comp.revision}",
+      compare_to_revision: "#{to_comp.tag_or_branch}:#{to_comp.revision}"
+    )
+  end
 
   def alert_class_postfix(computation)
     case computation.status
