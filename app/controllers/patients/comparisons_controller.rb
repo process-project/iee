@@ -21,14 +21,11 @@ module Patients
       pipelines.reload
 
       @sources = []
-      pipelines.first.computations.select(&:revision).each do |compared_computation|
-        compare_to_computation = pipelines.
-          second.
-          computations.
-          select(&:revision).
-          detect { |c| c.pipeline_step == compared_computation.pipeline_step }
+      pipelines.first.computations.select(&:revision).each do |compared_comp|
+        compare_to_comp = pipelines.second.computations.select(&:revision).
+                          detect { |c| c.pipeline_step == compared_comp.pipeline_step }
 
-        @sources << [compared_computation, compare_to_computation] if compare_to_computation
+        @sources << [compared_comp, compare_to_comp] if compare_to_comp
       end
 
       @data = { compared: [], not_comparable: [] }
@@ -47,7 +44,8 @@ module Patients
     private
 
     def pipelines
-      @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).includes(:data_files, :computations)
+      @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).
+                     includes(:data_files, :computations)
     end
 
     def patient
