@@ -17,7 +17,7 @@ module SynchronizerUtilities
   }.freeze
 
   def case_directory(url)
-    File.join(url, 'patients', @patient.safe_case_number)
+    File.join(url, 'patients', @patient.case_number)
   end
 
   def webdav_storage_url

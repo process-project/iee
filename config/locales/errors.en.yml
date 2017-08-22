@@ -57,7 +57,7 @@ en:
           create_dav403: Unable to create patient file structure in File Store
           attributes:
             case_number:
-              invalid: "contains illegal characters, correct characters are letters, digits and ~!^*()_+-<>{}|"
+              invalid: "contains illegal characters, correct characters are letters, digits and ~_-."
         pipeline:
           create_dav403: Unable to create pipeline file structure in File Store
   api:
