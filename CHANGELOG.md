@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## 0.6.0
 
 ### Added
 - rack-attack bans are logged to `log/rack-attack.log` (@mkasztelnik)
