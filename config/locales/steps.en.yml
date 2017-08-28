@@ -1,0 +1,10 @@
+en:
+  steps:
+    segmentation:
+      title: Segmenation
+    blood_flow_simulation:
+      title: Blood Flow Simulation
+    heart_model_calculation:
+      title: Heart Model Calculation
+    parameter_extraction:
+      title: Parameter extraction

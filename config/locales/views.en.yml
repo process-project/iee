@@ -165,10 +165,6 @@ en:
               Heart model calculation finished successfully, please take a look into
               outputs directory for the results
             aborted: Segmentation was aborted by the pipeline owner
-        menu:
-          segmentation: Segmenation
-          blood_flow_simulation: Blood Flow Simulation
-          heart_model_calculation: Heart Model Calculation
 
     comparisons:
       show:

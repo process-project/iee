@@ -4,4 +4,4 @@
       = link_to patient_pipeline_computation_path(patient, pipeline, c),
         data: { turbolinks: false } do
         = run_status(c)
-        = t(".#{c.pipeline_step}")
+        = t("steps.#{c.pipeline_step}.title")

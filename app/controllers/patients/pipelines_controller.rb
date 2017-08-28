@@ -13,12 +13,14 @@ module Patients
     def new
       @pipeline = Pipeline.new(owners)
       authorize(@pipeline)
+
+      pipeline_steps_form if request.xhr?
     end
 
     def create
       @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
 
-      if ::Pipelines::Create.new(@pipeline).call
+      if ::Pipelines::Create.new(@pipeline, params.require(:pipeline)).call
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
@@ -59,6 +61,22 @@ module Patients
     end
 
     private
+
+    def pipeline_steps_form
+      if params[:mode] == 'automatic'
+        render partial: 'patients/pipelines/computations_form_automatic',
+               locals: { steps_config: steps_config },
+               layout: false
+      else
+        render partial: 'patients/pipelines/computations_form_manual',
+               layout: false
+      end
+    end
+
+    def steps_config
+      ::Pipelines::StepsConfig.
+        new(params[:flow], force_reload: params[:force_reload]).call
+    end
 
     def owners
       { patient: @patient, user: current_user }
