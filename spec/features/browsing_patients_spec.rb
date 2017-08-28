@@ -150,6 +150,20 @@ RSpec.feature 'Patient browsing' do
         expect(computation.tag_or_branch).to eq 'bar'
       end
 
+      scenario 'show started rimrock computation source link' do
+        computation = pipeline.computations.
+                      find_by(pipeline_step: 'heart_model_calculation')
+        mock_rimrock_computation_ready_to_run
+        computation.update_attributes(revision: 'my-revision',
+                                      started_at: Time.zone.now)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+
+        expect(page).to have_link 'my-revision'
+        expect(page).
+          to have_link href: 'https://gitlab.com/eurvalve/0dmodel/tree/my-revision'
+      end
+
       scenario 'unable to start rimrock computation when version is not chosen' do
         computation = pipeline.computations.find_by(type: 'RimrockComputation')
         mock_rimrock_computation_ready_to_run
