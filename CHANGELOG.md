@@ -21,6 +21,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.6.1
+
+## Fixed
+- Fix segmentation status update after WebDav computation finished (@mkasztelnik)
+
 ## 0.6.0
 
 ### Added
