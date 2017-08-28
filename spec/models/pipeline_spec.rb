@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Pipeline, type: :model do
+  subject { create(:pipeline) }
+
   it { should belong_to(:patient) }
   it { should belong_to(:user) }
   it { should have_many(:computations).dependent(:destroy) }
@@ -31,5 +33,10 @@ RSpec.describe Pipeline, type: :model do
       PipelineStep::BloodFlowSimulation,
       PipelineStep::HeartModelCalculation
     )
+  end
+
+  it do
+    should validate_inclusion_of(:pipeline_type).
+      in_array(%w[full_body_scan partial_body_scan something_else])
   end
 end
