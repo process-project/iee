@@ -55,7 +55,7 @@ en:
       tab_compare:
         compare: Compare pipelines
       show:
-        subtitle: pipeline
+        subtitle: (%{mode} pipeline)
         back_to_index: Back to pipelines list
         edit: Edit pipeline
         delete: Remove pipeline

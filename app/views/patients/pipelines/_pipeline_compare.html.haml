@@ -2,7 +2,9 @@
   %th= pipeline.iid
   %th
     %input{ value: pipeline.iid, type: 'checkbox', name: 'pipeline_ids[]' }
-  %th= link_to pipeline.name, [pipeline.patient, pipeline], data: { turbolinks: false }
+  %th
+    = link_to  [pipeline.patient, pipeline], data: { turbolinks: false } do
+      = pipeline_title(pipeline)
   %th
     - pipeline.computations.each do |c|
       = link_to patient_pipeline_computation_path(pipeline.patient, pipeline, c),

@@ -25,7 +25,11 @@ class PipelinePolicy < ApplicationPolicy
     user.admin? || owned?
   end
 
-  def permitted_attributes
+  def permitted_attributes_for_create
+    [:name, :mode]
+  end
+
+  def permitted_attributes_for_edit
     [:name]
   end
 

@@ -7,6 +7,8 @@ class Pipeline < ApplicationRecord
     PipelineStep::HeartModelCalculation
   ].freeze
 
+  enum mode: [:automatic, :manual]
+
   belongs_to :patient
   belongs_to :user
   has_many :data_files
@@ -15,6 +17,7 @@ class Pipeline < ApplicationRecord
   validate :set_iid, on: :create
   validates :iid, presence: true, numericality: true
   validates :name, presence: true
+  validates :mode, presence: true
 
   def to_param
     iid.to_s
