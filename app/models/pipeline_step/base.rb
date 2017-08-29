@@ -5,8 +5,9 @@ module PipelineStep
     delegate :pipeline, :user, :pipeline_step, to: :computation
     attr_reader :computation
 
-    def initialize(computation)
+    def initialize(computation, options)
       @computation = computation
+      @updater = options.fetch(:updater) { ComputationUpdater }
     end
 
     def run
@@ -18,6 +19,7 @@ module PipelineStep
       pre_internal_run
       saved = computation.save
       internal_run
+      @updater.new(computation).call if saved
 
       saved
     end

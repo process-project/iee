@@ -14,11 +14,19 @@ shared_examples 'a pipeline step' do
   end
 end
 
+# rubocop:disable Metrics/BlockLength
 shared_examples 'ready to run step' do
   include ActiveSupport::Testing::TimeHelpers
-  let(:generic_fetcher) do
+  let(:template_fetcher) do
     fetcher = class_double(Gitlab::GetFile)
     allow(fetcher).to receive_message_chain(:new, :call) { 'script' }
+
+    fetcher
+  end
+
+  let(:revision_fetcher) do
+    fetcher = class_double(Gitlab::Revision)
+    allow(fetcher).to receive_message_chain(:new, :call) { 'revision' }
 
     fetcher
   end
@@ -32,7 +40,8 @@ shared_examples 'ready to run step' do
     travel_to now
 
     service = described_class.new(computation,
-                                  template_fetcher: generic_fetcher)
+                                  template_fetcher: template_fetcher,
+                                  revision_fetcher: revision_fetcher)
     computation.assign_attributes(revision: 'master')
 
     service.run
@@ -41,7 +50,21 @@ shared_examples 'ready to run step' do
 
     travel_back
   end
+
+  it 'sent notification after computation is started' do
+    computation.update_attributes(tag_or_branch: 'master')
+    updater = instance_double(ComputationUpdater)
+    service = described_class.new(computation,
+                                  template_fetcher: template_fetcher,
+                                  revision_fetcher: revision_fetcher,
+                                  updater: double(new: updater))
+
+    expect(updater).to receive(:call)
+
+    service.run
+  end
 end
+# rubocop:enable Metrics/MethodLength
 
 shared_examples 'not ready to run step' do
   it "raise error if patient's virtual model is not ready yet" do

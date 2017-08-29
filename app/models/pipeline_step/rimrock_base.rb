@@ -3,7 +3,7 @@
 module PipelineStep
   class RimrockBase < Base
     def initialize(computation, repo_name, filename, options = {})
-      super(computation)
+      super(computation, options)
       @repo_name = repo_name
       @filename = filename
       @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }

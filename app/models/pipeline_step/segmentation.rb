@@ -4,8 +4,8 @@ module PipelineStep
   class Segmentation < PipelineStep::Base
     STEP_NAME = 'segmentation'
 
-    def initialize(computation, _options = {})
-      super(computation)
+    def initialize(computation, options = {})
+      super(computation, options)
     end
 
     def self.create(pipeline)
