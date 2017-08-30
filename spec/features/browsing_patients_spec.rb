@@ -12,6 +12,12 @@ RSpec.feature 'Patient browsing' do
     allow_any_instance_of(Patient).to receive(:execute_data_sync)
   end
 
+  before do
+    file_store = instance_double(Webdav::FileStore)
+    allow(file_store).to receive(:r_mkdir)
+    allow(Webdav::FileStore).to receive(:new).and_return(file_store)
+  end
+
   context 'in the context of the patients list' do
     scenario 'has left-hand menu provide a link to patients index' do
       visit root_path
@@ -96,15 +102,45 @@ RSpec.feature 'Patient browsing' do
       expect(page).
         to have_selector "input[value='#{I18n.t('patients.pipelines.tab_compare.compare')}']"
     end
+
+    scenario 'user can create new manual pipeline' do
+      expect(Pipelines::StartRunnable).to_not receive(:new)
+      expect do
+        visit patient_path(patient)
+        click_link 'Create new pipeline'
+        fill_in 'Name', with: 'my new manual pipeline'
+        select 'manual', from: 'Mode'
+        click_on 'Create Pipeline'
+      end.to change { Pipeline.count }.by(1)
+
+      pipeline = Pipeline.last
+
+      expect(pipeline.patient).to eq patient
+      expect(pipeline.name).to eq 'my new manual pipeline'
+      expect(pipeline).to be_manual
+    end
+
+    scenario 'user can create automatic pipeline, which as automatically started' do
+      expect(Pipelines::StartRunnable).
+        to receive(:new).and_return(double(call: true))
+
+      expect do
+        visit patient_path(patient)
+        click_link 'Create new pipeline'
+        fill_in 'Name', with: 'my new automatic pipeline'
+        select 'automatic', from: 'Mode'
+        click_on 'Create Pipeline'
+      end.to change { Pipeline.count }.by(1)
+
+      pipeline = Pipeline.last
+
+      expect(pipeline.patient).to eq patient
+      expect(pipeline.name).to eq 'my new automatic pipeline'
+      expect(pipeline).to be_automatic
+    end
   end
 
   context 'in the context of inspecting a given case pipeline' do
-    before do
-      file_store = instance_double(Webdav::FileStore)
-      allow(file_store).to receive(:r_mkdir)
-      allow(Webdav::FileStore).to receive(:new).and_return(file_store)
-    end
-
     scenario 'shows alert when no computation defined' do
       pipeline = create(:pipeline, patient: patient, name: 'p1')
       visit patient_pipeline_path(patient, pipeline)
