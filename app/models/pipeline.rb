@@ -16,7 +16,7 @@ class Pipeline < ApplicationRecord
   validates :iid, presence: true, numericality: true
   validates :name, presence: true
 
-  validates :pipeline_type,
+  validates :pipeline_flow,
             inclusion: { in: %w[full_body_scan partial_body_scan something_else] }
 
   def to_param
