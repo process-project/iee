@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show started rimrock computation source link (@mkasztelnik)
 
 ### Changed
+- Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
 
 ### Deprecated
 
