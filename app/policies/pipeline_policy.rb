@@ -29,7 +29,7 @@ class PipelinePolicy < ApplicationPolicy
     [:name, :mode]
   end
 
-  def permitted_attributes_for_edit
+  def permitted_attributes_for_update
     [:name]
   end
 
