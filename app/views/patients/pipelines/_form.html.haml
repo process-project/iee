@@ -1,5 +1,7 @@
 = simple_form_for [patient, pipeline] do |f|
   = f.error_notification
+  = f.input :flow, disabled: !pipeline.new_record?,
+    collection: Pipeline::FLOWS.map(&:to_sym), include_blank: false
   = f.input :name
   .ln_solid
   .form-group

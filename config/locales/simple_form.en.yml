@@ -66,6 +66,12 @@ en:
         pretty_path: |
           Path must start with '/' and will be appended to the service URL.
           It may contain a wildcard character '*' at the end to match any occurences.
+    options:
+      pipeline:
+        flow:
+          full_body_scan: Full body scan
+          partial_body_scan: Partial body scan
+          something_else: Something else
     # Examples
     # labels:
     #   defaults:

@@ -36,7 +36,7 @@ RSpec.describe Pipeline, type: :model do
   end
 
   it do
-    should validate_inclusion_of(:pipeline_flow).
-      in_array(%w[full_body_scan partial_body_scan something_else])
+    should validate_inclusion_of(:flow).
+      in_array(Pipeline::FLOWS)
   end
 end
