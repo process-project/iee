@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
+- Default segmentation run mode changed into 3 (@mkasztelnik)
 
 ### Deprecated
 

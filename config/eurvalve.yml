@@ -15,7 +15,7 @@ defaults: &defaults
     blood_flow_simulation: <%= ENV['PIPELINE_R_BFS'] || 'eurvalve/blood-flow' %>
     heart_model_calculation: <%= ENV['PIPELINE_R_HMS'] || 'eurvalve/0dmodel' %>
   segmentation:
-    mode: <%= ENV['SEGMENTATION_MODE'] || 0 %>
+    mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
 
 
 development:
