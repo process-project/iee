@@ -3,11 +3,6 @@
 .x_panel
   .x_title
     %h2
-      -# = pipeline_icon(pipeline)
-      -# = pipeline.name
-      -# %small
-      -#   = pipeline.mode
-      -#   = t 'patients.pipelines.show.subtitle'
       = pipeline_title(pipeline)
 
     %ul.nav.navbar-right.panel_toolbox
