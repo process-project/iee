@@ -7,6 +7,8 @@ class Pipeline < ApplicationRecord
     PipelineStep::HeartModelCalculation
   ].freeze
 
+  FLOWS = %w[full_body_scan partial_body_scan something_else].freeze
+
   belongs_to :patient
   belongs_to :user
   has_many :data_files
@@ -15,6 +17,9 @@ class Pipeline < ApplicationRecord
   validate :set_iid, on: :create
   validates :iid, presence: true, numericality: true
   validates :name, presence: true
+
+  validates :flow,
+            inclusion: { in: Pipeline::FLOWS }
 
   def to_param
     iid.to_s
