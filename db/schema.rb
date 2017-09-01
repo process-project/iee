@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20170828115153) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "flow", default: Pipeline::FLOWS.first, null: false
+    t.string "flow", default: 'full_body_scan', null: false
     t.index ["iid"], name: "index_pipelines_on_iid"
     t.index ["patient_id", "iid"], name: "index_pipelines_on_patient_id_and_iid", unique: true
     t.index ["patient_id"], name: "index_pipelines_on_patient_id"
