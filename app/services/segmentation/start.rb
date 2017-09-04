@@ -15,12 +15,17 @@ module Segmentation
     private
 
     def download_input
-      @local_path = download_service.call { |f| "0_#{SecureRandom.uuid}_#{f}" }
+      @local_path = download_service.
+                    call { |f| "#{mode}_#{SecureRandom.uuid}_#{f}" }
     end
 
     def download_service
       Webdav::DownloadFile.new(Webdav::FileStore.new(@computation.user),
                                @computation.input_path)
+    end
+
+    def mode
+      Rails.application.config_for('eurvalve')['segmentation']['mode']
     end
 
     def update_computation
