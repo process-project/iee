@@ -17,12 +17,13 @@ module PatientsHelper
 
   def computation_status(status)
     label_class = STATUS_MAP[status] || 'default'
-    content_tag :div, status.humanize, class: "label label-#{label_class}"
+    content_tag :div, I18n.t("computation.status_description.#{status}"),
+                class: "label label-#{label_class}"
   end
 
   def execution_time(computation)
     case computation.status
-    when 'new', 'queued'
+    when 'created', 'new', 'queued'
       '-'
     when 'running'
       Time.at(Time.now - computation.started_at).utc.strftime('%Hh %Mm %Ss')
@@ -30,5 +31,9 @@ module PatientsHelper
       # TODO: FIXME If possible, use finish time from the computing job
       Time.at(computation.updated_at - computation.started_at).utc.strftime('%Hh %Mm %Ss')
     end
+  end
+
+  def start_time(computation)
+    computation.started_at ? l(computation.started_at, format: :short) : '-'
   end
 end

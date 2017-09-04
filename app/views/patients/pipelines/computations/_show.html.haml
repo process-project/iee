@@ -16,4 +16,5 @@
 
       - else
         .alert.alert-warning= t(".#{computation.pipeline_step}.cannot_start")
+        = render 'details', computation: computation
 
