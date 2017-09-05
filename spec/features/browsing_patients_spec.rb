@@ -196,7 +196,7 @@ RSpec.feature 'Patient browsing' do
       scenario 'all possible computations are displayed' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-        Pipeline::STEPS.each do |s|
+        Pipeline::FLOWS[pipeline.flow.to_sym].each do |s|
           title = I18n.t("patients.pipelines.computations.show.#{s::STEP_NAME}.title")
           expect(page).to have_content title
         end

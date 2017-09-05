@@ -8,7 +8,7 @@ class Computation < ApplicationRecord
             inclusion: { in: %w[created new queued running error finished aborted] }
 
   validates :pipeline_step,
-            inclusion: { in: Pipeline::STEPS.map { |c| c::STEP_NAME } }
+            inclusion: { in: Pipeline::FLOWS.values.flatten.uniq.map { |c| c::STEP_NAME } }
 
   scope :active, -> { where(status: %w[new queued running]) }
   scope :submitted, -> { where(status: %w[queued running]) }
@@ -46,6 +46,7 @@ class Computation < ApplicationRecord
   end
 
   def runner_class
-    Pipeline::STEPS.find { |s| s::STEP_NAME == pipeline_step }
+    return nil if pipeline.nil?
+    Pipeline::FLOWS[pipeline.flow.to_sym].find { |s| s::STEP_NAME == pipeline_step }
   end
 end

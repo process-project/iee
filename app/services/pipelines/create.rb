@@ -19,7 +19,7 @@ module Pipelines
     private
 
     def create_computations
-      Pipeline::STEPS.each do |builder_clazz|
+      Pipeline::FLOWS[@pipeline.flow.to_sym].each do |builder_clazz|
         builder_clazz.create(@pipeline)
       end
     end
