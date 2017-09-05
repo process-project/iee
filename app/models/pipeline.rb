@@ -1,14 +1,23 @@
 # frozen_string_literal: true
 
 class Pipeline < ApplicationRecord
-  STEPS = [
-    PipelineStep::Segmentation,
-    PipelineStep::ParameterExtraction,
-    PipelineStep::BloodFlowSimulation,
-    PipelineStep::HeartModelCalculation
-  ].freeze
-
-  FLOWS = %w[full_body_scan partial_body_scan something_else].freeze
+  FLOWS = {
+    full_body_scan: [
+      PipelineStep::Segmentation,
+      PipelineStep::ParameterExtraction,
+      PipelineStep::BloodFlowSimulation,
+      PipelineStep::HeartModelCalculation
+    ],
+    partial_body_scan: [
+      PipelineStep::Segmentation,
+      PipelineStep::BloodFlowSimulation,
+      PipelineStep::HeartModelCalculation
+    ],
+    something_else: [
+      PipelineStep::Segmentation,
+      PipelineStep::ParameterExtraction
+    ]
+  }.freeze
 
   enum mode: [:automatic, :manual]
 
@@ -25,7 +34,7 @@ class Pipeline < ApplicationRecord
   scope :automatic, -> { where(mode: :automatic) }
 
   validates :flow,
-            inclusion: { in: Pipeline::FLOWS }
+            inclusion: { in: Pipeline::FLOWS.keys.map(&:to_s) }
 
   def to_param
     iid.to_s

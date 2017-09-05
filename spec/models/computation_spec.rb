@@ -15,7 +15,7 @@ RSpec.describe Computation, type: :model do
 
   it do
     should validate_inclusion_of(:pipeline_step).
-      in_array(Pipeline::STEPS.map { |s| s::STEP_NAME })
+      in_array(Pipeline::FLOWS.values.flatten.uniq.map { |s| s::STEP_NAME })
   end
 
   describe '.active' do

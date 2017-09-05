@@ -43,9 +43,9 @@ describe Pipelines::Create do
   it 'creates computations for all pipeline steps' do
     pipeline = described_class.new(build(:pipeline, user: user), client: webdav).call
 
-    expect(pipeline.computations.count).to eq Pipeline::STEPS.size
-    expect(pipeline.computations.where(pipeline_step: step_names).count).
-      to eq Pipeline::STEPS.size
+    expect(pipeline.computations.count).to eq Pipeline::FLOWS[pipeline.flow.to_sym].size
+    expect(pipeline.computations.where(pipeline_step: step_names(pipeline.flow.to_sym)).count).
+      to eq Pipeline::FLOWS[pipeline.flow.to_sym].size
   end
 
   private
@@ -57,7 +57,7 @@ describe Pipelines::Create do
     end
   end
 
-  def step_names
-    Pipeline::STEPS.map { |c| c::STEP_NAME }
+  def step_names(fl)
+    Pipeline::FLOWS[fl].map { |c| c::STEP_NAME }
   end
 end
