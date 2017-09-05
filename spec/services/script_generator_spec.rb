@@ -9,20 +9,50 @@ describe ScriptGenerator do
     expect(script).to eq Rails.application.config_for('eurvalve')['grant_id']
   end
 
-  it 'inserts upload file curl' do
-    patient = create(:patient,
-                     data_files: [build(:data_file,
-                                        name: 'foo.txt',
-                                        data_type: :image)])
-    pipeline = create(:pipeline, patient: patient)
-    computation = create(:rimrock_computation, pipeline: pipeline)
-    data_file = pipeline.data_file(:image)
+  context 'when generating curls' do
+    let(:patient) do
+      create(
+        :patient,
+        data_files: [build(
+          :data_file,
+          name: 'foo.txt',
+          data_type: :image
+        )]
+      )
+    end
+    let(:pipeline) { create(:pipeline, patient: patient) }
+    let(:computation) { create(:rimrock_computation, pipeline: pipeline) }
+    let(:data_file) { pipeline.data_file(:image) }
 
-    script = ScriptGenerator.new(computation,
-                                 '<%= stage_in :image, "out.txt" %>').call
+    it 'inserts upload file curl for file type' do
+      script = ScriptGenerator.new(
+        computation,
+        '<%= stage_in data_file_type: :image, filename: "out.txt" %>'
+      ).call
 
-    expect(script).to include data_file.url
-    expect(script).to include '$SCRATCHDIR/out.txt'
+      expect(script).to include data_file.url
+      expect(script).to include '$SCRATCHDIR/out.txt'
+    end
+
+    it 'inserts upload file curl for file path' do
+      script = ScriptGenerator.new(
+        computation,
+        '<%= stage_in path: "path/to/foo.gif", filename: "out.gif" %>'
+      ).call
+
+      expected_url = File.join(Webdav::FileStore.url, Webdav::FileStore.path, 'path/to/foo.gif')
+      expect(script).to include expected_url
+      expect(script).to include '$SCRATCHDIR/out.gif'
+    end
+
+    it 'throws ArgumentException on malformed request' do
+      generator = ScriptGenerator.new(
+        computation,
+        '<%= stage_in filename: "out.gif" %>'
+      )
+
+      expect { generator.call }.to raise_error(ArgumentError)
+    end
   end
 
   it 'inserts download file curl' do

@@ -105,6 +105,7 @@ you can set the following ENV variables:
     Computations slurm run template
   * `PIPELINE_R_BFS` - Overrides default project name in Gitlab for Blood Flow Simutalion
   * `PIPELINE_R_HMS` - Overrides default project name in Gitlab for Heart Model Simulation
+  * `PIPELINE_R_PE` - Overrides default project name in Gitlab for Parameter Extraction
   * `SEGMENTATION_MODE` - Overrides default segmentation run mode
 
 ## Testing

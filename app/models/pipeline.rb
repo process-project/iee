@@ -3,6 +3,7 @@
 class Pipeline < ApplicationRecord
   STEPS = [
     PipelineStep::Segmentation,
+    PipelineStep::ParameterExtraction,
     PipelineStep::BloodFlowSimulation,
     PipelineStep::HeartModelCalculation
   ].freeze
