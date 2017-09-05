@@ -33,6 +33,12 @@ module Users
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: 'PLGrid') if is_navigational_format?
       Users::AddToDefaultGroups.new(user).call if new_user
+      start_computations
+    end
+
+    def start_computations
+      Pipeline.automatic.where(user: user).
+        each { |p| Pipelines::StartRunnable.new(p).call }
     end
 
     def email_error

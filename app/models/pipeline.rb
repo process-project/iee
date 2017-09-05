@@ -19,6 +19,8 @@ class Pipeline < ApplicationRecord
   validates :name, presence: true
   validates :mode, presence: true
 
+  scope :automatic, -> { where(mode: :automatic) }
+
   def to_param
     iid.to_s
   end
