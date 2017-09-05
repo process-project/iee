@@ -181,9 +181,12 @@ RSpec.feature 'Patient browsing' do
                          name: 'p1', user: user, mode: :manual)
         Pipelines::Create.new(pipeline).call
       end
-      let(:computation) { pipeline.computations.first }
+      let(:computation) do
+        pipeline.computations.find_by(pipeline_step: 'heart_model_calculation')
+      end
 
       scenario 'redirects into first defined computation' do
+        computation = pipeline.computations.first
         visit patient_pipeline_path(patient, pipeline)
 
         expect(current_path).
@@ -200,7 +203,6 @@ RSpec.feature 'Patient browsing' do
       end
 
       scenario 'start rimrock computation with selected version' do
-        computation = pipeline.computations.find_by(type: 'RimrockComputation')
         mock_rimrock_computation_ready_to_run
 
         expect(Rimrock::StartJob).to receive(:perform_later)
@@ -215,7 +217,6 @@ RSpec.feature 'Patient browsing' do
       end
 
       scenario 'unable to start rimrock computation when version is not chosen' do
-        computation = pipeline.computations.find_by(type: 'RimrockComputation')
         mock_rimrock_computation_ready_to_run
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
@@ -242,8 +243,7 @@ RSpec.feature 'Patient browsing' do
       context 'when computing for patient\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-          computation.update_attributes(status: 'new',
-                                        started_at: Time.current,
+          computation.update_attributes(started_at: Time.current,
                                         stdout_path: 'http://download/stdout.pl',
                                         stderr_path: 'http://download/stderr.pl')
 
