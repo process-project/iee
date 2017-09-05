@@ -73,6 +73,9 @@ en:
           segmentation:
             start: Start segmentation
             restart: Restart segmentation
+          parameter_extraction:
+            start: Start parameter extraction
+            restart: Restart parameter extraction
           blood_flow_simulation:
             start: Start blood floow simulation
             restart: Restart blood floow simulation
@@ -93,13 +96,29 @@ en:
             created: |
               All required input files are available.
               You can start segmentation for this patient.
-            new: Segmentation computation is running
+            new: Segmentation computation is being submitted
             running: Segmentation computation is running
             error: There were an error while calculating segmentation
             finished: |
               Segmentation finished successfully, please take a look into
               outputs directory for the results
             aborted: Segmentation was aborted by the pipeline owner
+          parameter_extraction:
+            title: Parameter Extraction
+            cannot_start: |
+              Cannot start parameter extraction because the required input files
+              (OFF mesh) cannot be found in the patient input directory or pipeline directory.
+            created: |
+              All required input files are available.
+              You can start parameter extraction for this patient.
+            new: Parameter extraction is being submitted
+            queued: Parameter extraction is queued
+            running: Parameter extraction is running
+            error: There were an error while extracting simulation parameters
+            finished: |
+              Parameter extraction finished successfully, results stored in
+              outputs directory.
+            aborted: Parameter extraction was aborted by the pipeline owner
           blood_flow_simulation:
             title: Blood Flow Simulation
             cannot_start: |
@@ -109,7 +128,7 @@ en:
             created: |
               All required input files are available.
               You can start blood flow simulation for this patient.
-            new: Blood flow simulation computation is running
+            new: Blood flow simulation computation is being submitted
             queued: Blood flow simulation computation is queued
             running: Blood flow simulation computation is running
             error: There were an error while calculating blood flow simulation
@@ -126,7 +145,7 @@ en:
             created: |
               All required input files are available.
               You can start heart model calculation for this patient.
-            new: Heart model calculation is running
+            new: Heart model calculation is being submitted
             queued: Heart model calculation is queued
             running: Heart model calculation is running
             error: There were an error while calculating patient heart model

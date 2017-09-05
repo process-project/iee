@@ -30,6 +30,7 @@ RSpec.describe Pipeline, type: :model do
   it 'contains pipeline steps' do
     expect(described_class::STEPS).to contain_exactly(
       PipelineStep::Segmentation,
+      PipelineStep::ParameterExtraction,
       PipelineStep::BloodFlowSimulation,
       PipelineStep::HeartModelCalculation
     )
