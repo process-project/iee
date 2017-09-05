@@ -12,6 +12,12 @@ RSpec.feature 'Patient browsing' do
     allow_any_instance_of(Patient).to receive(:execute_data_sync)
   end
 
+  before do
+    file_store = instance_double(Webdav::FileStore)
+    allow(file_store).to receive(:r_mkdir)
+    allow(Webdav::FileStore).to receive(:new).and_return(file_store)
+  end
+
   context 'in the context of the patients list' do
     scenario 'has left-hand menu provide a link to patients index' do
       visit root_path
@@ -96,15 +102,45 @@ RSpec.feature 'Patient browsing' do
       expect(page).
         to have_selector "input[value='#{I18n.t('patients.pipelines.tab_compare.compare')}']"
     end
+
+    scenario 'user can create new manual pipeline' do
+      expect(Pipelines::StartRunnable).to_not receive(:new)
+      expect do
+        visit patient_path(patient)
+        click_link 'Create new pipeline'
+        fill_in 'Name', with: 'my new manual pipeline'
+        select 'manual', from: 'Mode'
+        click_on 'Create Pipeline'
+      end.to change { Pipeline.count }.by(1)
+
+      pipeline = Pipeline.last
+
+      expect(pipeline.patient).to eq patient
+      expect(pipeline.name).to eq 'my new manual pipeline'
+      expect(pipeline).to be_manual
+    end
+
+    scenario 'user can create automatic pipeline, which as automatically started' do
+      expect(Pipelines::StartRunnable).
+        to receive(:new).and_return(double(call: true))
+
+      expect do
+        visit patient_path(patient)
+        click_link 'Create new pipeline'
+        fill_in 'Name', with: 'my new automatic pipeline'
+        select 'automatic', from: 'Mode'
+        click_on 'Create Pipeline'
+      end.to change { Pipeline.count }.by(1)
+
+      pipeline = Pipeline.last
+
+      expect(pipeline.patient).to eq patient
+      expect(pipeline.name).to eq 'my new automatic pipeline'
+      expect(pipeline).to be_automatic
+    end
   end
 
   context 'in the context of inspecting a given case pipeline' do
-    before do
-      file_store = instance_double(Webdav::FileStore)
-      allow(file_store).to receive(:r_mkdir)
-      allow(Webdav::FileStore).to receive(:new).and_return(file_store)
-    end
-
     scenario 'shows alert when no computation defined' do
       pipeline = create(:pipeline, patient: patient, name: 'p1')
       visit patient_pipeline_path(patient, pipeline)
@@ -112,14 +148,45 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content I18n.t('patients.pipelines.show.no_computations')
     end
 
-    context 'with computations' do
+    context 'with automatic computations' do
       let(:pipeline) do
-        pipeline = build(:pipeline, patient: patient, name: 'p1', user: user)
+        pipeline = build(:pipeline,
+                         patient: patient,
+                         name: 'p1', user: user, mode: :automatic)
         Pipelines::Create.new(pipeline).call
       end
-      let(:computation) { pipeline.computations.first }
+
+      let(:computation) { pipeline.computations.rimrock.first }
+
+      scenario 'user can set computation tag_or_branch and start runnable computations' do
+        mock_gitlab
+
+        expect(Pipelines::StartRunnable).to receive_message_chain(:new, :call)
+        expect_any_instance_of(Computation).to_not receive(:run)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        select('t1')
+        click_button computation_run_text(computation)
+
+        computation.reload
+
+        expect(computation.tag_or_branch).to eq('t1')
+      end
+    end
+
+    context 'with manual computations' do
+      let(:pipeline) do
+        pipeline = build(:pipeline,
+                         patient: patient,
+                         name: 'p1', user: user, mode: :manual)
+        Pipelines::Create.new(pipeline).call
+      end
+      let(:computation) do
+        pipeline.computations.find_by(pipeline_step: 'heart_model_calculation')
+      end
 
       scenario 'redirects into first defined computation' do
+        computation = pipeline.computations.first
         visit patient_pipeline_path(patient, pipeline)
 
         expect(current_path).
@@ -136,7 +203,6 @@ RSpec.feature 'Patient browsing' do
       end
 
       scenario 'start rimrock computation with selected version' do
-        computation = pipeline.computations.find_by(type: 'RimrockComputation')
         mock_rimrock_computation_ready_to_run
 
         expect(Rimrock::StartJob).to receive(:perform_later)
@@ -165,7 +231,6 @@ RSpec.feature 'Patient browsing' do
       end
 
       scenario 'unable to start rimrock computation when version is not chosen' do
-        computation = pipeline.computations.find_by(type: 'RimrockComputation')
         mock_rimrock_computation_ready_to_run
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
@@ -183,16 +248,6 @@ RSpec.feature 'Patient browsing' do
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
 
-      def mock_gitlab
-        allow_any_instance_of(Gitlab::Versions).
-          to receive(:call).and_return(tags: %w[t1 t2], branches: %w[foo bar])
-        allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
-      end
-
-      def computation_run_text(c)
-        I18n.t("patients.pipelines.computations.run.#{c.pipeline_step}.start")
-      end
-
       scenario 'computation alert is displayed when no required input data' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
         msg_key = "patients.pipelines.computations.show.#{computation.pipeline_step}.cannot_start"
@@ -203,8 +258,7 @@ RSpec.feature 'Patient browsing' do
       context 'when computing for patient\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-          computation.update_attributes(status: 'new',
-                                        started_at: Time.current,
+          computation.update_attributes(started_at: Time.current,
                                         stdout_path: 'http://download/stdout.pl',
                                         stderr_path: 'http://download/stderr.pl')
 
@@ -244,6 +298,16 @@ RSpec.feature 'Patient browsing' do
         #   expect(page).to have_content('Finished')
         # end
       end
+    end
+
+    def mock_gitlab
+      allow_any_instance_of(Gitlab::Versions).
+        to receive(:call).and_return(tags: %w[t1 t2], branches: %w[foo bar])
+      allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
+    end
+
+    def computation_run_text(c)
+      I18n.t("patients.pipelines.computations.run.#{c.pipeline_step}.start_#{c.mode}")
     end
   end
 end

@@ -18,6 +18,7 @@ module Patients
       @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
 
       if ::Pipelines::Create.new(@pipeline).call
+        ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
         render(:new)

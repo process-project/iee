@@ -9,6 +9,7 @@ class ComputationChannel < ApplicationCable::Channel
     if data['new_input']
       data_sync!
       ComputationUpdater.new(computation).call
+      Pipelines::StartRunnable.new(computation.pipeline).call
     end
   end
 

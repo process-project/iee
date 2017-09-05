@@ -3,6 +3,7 @@
   = f.input :flow, disabled: !pipeline.new_record?,
     collection: Pipeline::FLOWS.map(&:to_sym), include_blank: false
   = f.input :name
+  = f.input :mode, disabled: !pipeline.new_record?, collection: Pipeline.modes.keys
   .ln_solid
   .form-group
     .col-md-6.col-md-offset-3

@@ -55,7 +55,7 @@ en:
       tab_compare:
         compare: Compare pipelines
       show:
-        subtitle: pipeline
+        subtitle: (%{mode} pipeline)
         back_to_index: Back to pipelines list
         edit: Edit pipeline
         delete: Remove pipeline
@@ -71,17 +71,20 @@ en:
       computations:
         run:
           segmentation:
-            start: Start segmentation
-            restart: Restart segmentation
+            start_manual: Start segmentation
+            restart_manual: Restart segmentation
           parameter_extraction:
-            start: Start parameter extraction
+            start_automatic: Save parameter extraction version
+            start_manual: Start parameter extraction
             restart: Restart parameter extraction
           blood_flow_simulation:
-            start: Start blood floow simulation
-            restart: Restart blood floow simulation
+            start_automatic: Save blood flow simulation version
+            start_manual: Start blood floow simulation
+            restart_manual: Restart blood floow simulation
           heart_model_calculation:
-            start: Start heart model calculation
-            restart: Restart heart model calculation
+            start_automatic: Save heart model calculation version
+            start_manual: Start heart model calculation
+            restart_manual: Restart heart model calculation
 
         show:
           proxy_invalid: |

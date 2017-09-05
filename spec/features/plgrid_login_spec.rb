@@ -100,4 +100,17 @@ RSpec.feature 'PLGrid authentication' do
 
     expect(user.groups.count).to eq(0)
   end
+
+  scenario 'Start automatic computations after proxy is regenerated' do
+    user = create(:approved_user)
+    automatic_pipeline = create(:pipeline, user: user, mode: :automatic)
+    manual_pipeline = create(:pipeline, user: user, mode: :manual)
+
+    expect(Pipelines::StartRunnable).
+      to receive(:new).with(automatic_pipeline).and_return(double(call: true))
+    expect(Pipelines::StartRunnable).
+      to_not receive(:new).with(manual_pipeline)
+
+    plgrid_sign_in_as(user)
+  end
 end

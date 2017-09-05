@@ -14,29 +14,34 @@ module Patients
         if request.xhr?
           render partial: 'patients/pipelines/computations/show', layout: false,
                  locals: {
-                   patient: @patient, pipeline: @pipeline, refresh: @refresh,
-                   computation: @computation, computations: @computations, proxy: @proxy
+                   patient: @patient, pipeline: @pipeline,
+                   computation: @computation, computations: @computations
                  }
         end
       end
 
       def update
         @computation.assign_attributes(permitted_attributes(@computation)) if @computation.rimrock?
-        run_computation
-      end
-
-      private
-
-      def run_computation
-        if @computation.runnable? && @computation.run
-          ComputationUpdater.new(@computation).call
+        if run_computation
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
-                      notice: I18n.t('computations.update.started')
+                      notice: I18n.t("computations.update.started_#{@computation.mode}")
         else
           @computation.status = @computation.status_was
           prepare_to_show_computation
           render :show, status: :bad_request,
                         notice: I18n.t('computations.update.not_runnable')
+        end
+      end
+
+      private
+
+      def run_computation
+        if @computation.manual?
+          @computation.run
+        else
+          @computation.save.tap do |success|
+            ::Pipelines::StartRunnable.new(@pipeline).call if success
+          end
         end
       end
 
@@ -49,20 +54,22 @@ module Patients
         @pipeline = @computation.pipeline
         @patient = @pipeline.patient
 
-        authorize(@pipeline)
+        authorize(@computation)
       end
 
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
-        @proxy = Proxy.new(current_user)
 
-        repo = Rails.application.
-               config_for('eurvalve')['git_repos'][@computation.pipeline_step]
-        @versions = Gitlab::Versions.new(repo).call if runnable? && repo
+        @versions = Gitlab::Versions.new(repo).call if load_versions?
       end
 
-      def runnable?
-        @computation.runnable? && (@computation.rimrock? || @proxy.valid?)
+      def repo
+        @repo ||= Rails.application.
+                  config_for('eurvalve')['git_repos'][@computation.pipeline_step]
+      end
+
+      def load_versions?
+        repo && policy(@computation).update?
       end
     end
   end

@@ -15,6 +15,8 @@ en:
       destroy: Unable to remove pipeline %{name}.
   computations:
     update:
-      not_runnable: |
+      not_runnable_manual: |
         Required input files needed to run this computation cannot be found
-      started: Computation subbmitted successfully
+      not_runnable_automatic: Error while updating computation
+      started_manual: Computation subbmitted successfully
+      started_automatic: Computation was updated successfully

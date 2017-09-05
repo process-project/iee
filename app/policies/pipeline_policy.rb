@@ -26,7 +26,7 @@ class PipelinePolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:name, :flow]
+    [:name, :flow, :mode]
   end
 
   def permitted_attributes_for_update

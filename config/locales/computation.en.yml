@@ -1,0 +1,10 @@
+en:
+  computation:
+    status_description:
+      created: Waiting for inputs
+      new: Starting computation
+      queued: Queued
+      running: Running
+      error: Error
+      finished: Finished
+      aborted: Aborted
