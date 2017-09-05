@@ -8,13 +8,11 @@
       - if computation.runnable?
         .alert{class: alert_computation_class(computation)}
           = t(".#{computation.pipeline_step}.#{computation.status}")
-        = render 'details', computation: computation
-        - if computation.rimrock? && !proxy&.valid?
-          = render(partial: 'proxy/warning', locals: { msg: t('.proxy_invalid') })
-        - else
-          = render 'run', patient: patient, pipeline: pipeline, computation: computation
-
       - else
         .alert.alert-warning= t(".#{computation.pipeline_step}.cannot_start")
-        = render 'details', computation: computation
 
+      = render 'details', computation: computation
+      - if policy(computation).need_proxy?
+        = render(partial: 'proxy/warning', locals: { msg: t('.proxy_invalid') })
+      - if policy(computation).update?
+        = render 'run', patient: patient, pipeline: pipeline, computation: computation

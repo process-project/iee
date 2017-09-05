@@ -71,14 +71,16 @@ en:
       computations:
         run:
           segmentation:
-            start: Start segmentation
-            restart: Restart segmentation
+            start_manual: Start segmentation
+            restart_manual: Restart segmentation
           blood_flow_simulation:
-            start: Start blood floow simulation
-            restart: Restart blood floow simulation
+            start_automatic: Save blood flow simulation version
+            start_manual: Start blood floow simulation
+            restart_manual: Restart blood floow simulation
           heart_model_calculation:
-            start: Start heart model calculation
-            restart: Restart heart model calculation
+            start_automatic: Save heart model calculation version
+            start_manual: Start heart model calculation
+            restart_manual: Restart heart model calculation
 
         show:
           proxy_invalid: |

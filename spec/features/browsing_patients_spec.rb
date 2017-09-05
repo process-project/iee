@@ -148,9 +148,37 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content I18n.t('patients.pipelines.show.no_computations')
     end
 
-    context 'with computations' do
+    context 'with automatic computations' do
       let(:pipeline) do
-        pipeline = build(:pipeline, patient: patient, name: 'p1', user: user)
+        pipeline = build(:pipeline,
+                         patient: patient,
+                         name: 'p1', user: user, mode: :automatic)
+        Pipelines::Create.new(pipeline).call
+      end
+
+      let(:computation) { pipeline.computations.rimrock.first }
+
+      scenario 'user can set computation tag_or_branch and start runnable computations' do
+        mock_gitlab
+
+        expect(Pipelines::StartRunnable).to receive_message_chain(:new, :call)
+        expect_any_instance_of(Computation).to_not receive(:run)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        select('t1')
+        click_button computation_run_text(computation)
+
+        computation.reload
+
+        expect(computation.tag_or_branch).to eq('t1')
+      end
+    end
+
+    context 'with manual computations' do
+      let(:pipeline) do
+        pipeline = build(:pipeline,
+                         patient: patient,
+                         name: 'p1', user: user, mode: :manual)
         Pipelines::Create.new(pipeline).call
       end
       let(:computation) { pipeline.computations.first }
@@ -204,16 +232,6 @@ RSpec.feature 'Patient browsing' do
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
 
-      def mock_gitlab
-        allow_any_instance_of(Gitlab::Versions).
-          to receive(:call).and_return(tags: %w[t1 t2], branches: %w[foo bar])
-        allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
-      end
-
-      def computation_run_text(c)
-        I18n.t("patients.pipelines.computations.run.#{c.pipeline_step}.start")
-      end
-
       scenario 'computation alert is displayed when no required input data' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
         msg_key = "patients.pipelines.computations.show.#{computation.pipeline_step}.cannot_start"
@@ -265,6 +283,16 @@ RSpec.feature 'Patient browsing' do
         #   expect(page).to have_content('Finished')
         # end
       end
+    end
+
+    def mock_gitlab
+      allow_any_instance_of(Gitlab::Versions).
+        to receive(:call).and_return(tags: %w[t1 t2], branches: %w[foo bar])
+      allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
+    end
+
+    def computation_run_text(c)
+      I18n.t("patients.pipelines.computations.run.#{c.pipeline_step}.start_#{c.mode}")
     end
   end
 end

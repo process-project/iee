@@ -21,6 +21,7 @@ class Computation < ApplicationRecord
   scope :for_patient_status, ->(status) { where(pipeline_step: status) }
 
   delegate :runnable?, :run, to: :runner
+  delegate :mode, :manual?, :automatic?, to: :pipeline
 
   def active?
     %w[new queued running].include? status

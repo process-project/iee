@@ -10,5 +10,5 @@
             group_method: :last
       .col-lg-5.col-xs-12
         = f.button :submit,
-          t(".#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start"),
+          t(".#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
           class: 'btn btn-default'
