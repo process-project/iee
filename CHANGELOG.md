@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Output from one pipeline is not taken as different pipeline input (@mkasztelnik)
 
 ### Security
 

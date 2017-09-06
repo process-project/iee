@@ -49,7 +49,8 @@ class Pipeline < ApplicationRecord
   end
 
   def data_file(data_type)
-    patient.data_files.find_by(data_type: data_type)
+    DataFile.find_by(patient: patient,
+                     pipeline: [nil, self], data_type: data_type)
   end
 
   private
