@@ -28,9 +28,11 @@ module ComputationsHelper
   end
 
   def source_link(computation)
-    repo = computation_repo(computation)
-    link_to computation.revision,
-            "https://gitlab.com/#{repo}/tree/#{computation.revision}"
+    if computation.revision
+      repo = computation_repo(computation)
+      link_to computation.revision,
+              "https://gitlab.com/#{repo}/tree/#{computation.revision}"
+    end
   end
 
   private
