@@ -48,8 +48,8 @@ module Patients
       def find_and_authorize
         @computation = Computation.
                        joins(pipeline: :patient).
-                       find_by(pipelines: { patient_id: params[:patient_id],
-                                            iid: params[:pipeline_id] },
+                       find_by(patients: { case_number: params[:patient_id] },
+                               pipelines: { iid: params[:pipeline_id] },
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
         @patient = @pipeline.patient

@@ -49,7 +49,7 @@ class PatientsController < ApplicationController
   end
 
   def find_and_authorize
-    @patient = @patients.find(params[:id])
+    @patient = @patients.where(case_number: params[:id]).take
     authorize(@patient)
   end
 end

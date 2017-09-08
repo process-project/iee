@@ -43,7 +43,7 @@ describe 'Patients controller' do
       it 'calls set_patients to prevent any data leak' do
         expect_any_instance_of(PatientsController).
           to receive(:set_patients).and_call_original
-        delete "/patients/#{patient.id}"
+        delete "/patients/#{patient.case_number}"
         expect(response).to redirect_to patients_path
       end
     end

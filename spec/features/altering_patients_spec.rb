@@ -44,7 +44,7 @@ RSpec.feature 'Patient altering' do
       scenario 'lets the user register a case with uncommon characters' do
         visit new_patient_path
 
-        fill_in 'patient[case_number]', with: '-_.~'
+        fill_in 'patient[case_number]', with: '-_.'
 
         expect { click_button I18n.t('register') }.
           to change { Patient.count }.by(1)
