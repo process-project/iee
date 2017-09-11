@@ -64,7 +64,7 @@ module Patients
     end
 
     def load_patient
-      @patient = Patient.find(params[:patient_id])
+      @patient = Patient.find_by!(case_number: params[:patient_id])
     end
 
     def find_and_authorize
