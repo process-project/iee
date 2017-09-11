@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Parameter extraction pipeline step (@amber7b)
 - Automatic and manual pipeline execution mode (@mkasztelnik)
 - Pipeline flows (pipeline with different steps) (@jmeizner)
+- Configure redis based cache (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)

@@ -47,6 +47,9 @@ gem 'net_dav'
 gem 'clockwork'
 gem 'sidekiq', '< 6'
 
+# Cache store
+gem 'redis-rails'
+
 # File processing
 gem 'rubyzip', '>= 1.0.0'
 
