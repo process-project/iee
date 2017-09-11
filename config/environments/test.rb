@@ -50,4 +50,6 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
   end
+
+  config.cache_store = :memory_store, { expires_in: 10.minutes }
 end
