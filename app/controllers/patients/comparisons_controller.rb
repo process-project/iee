@@ -49,7 +49,7 @@ module Patients
     end
 
     def patient
-      @patient ||= Patient.where(case_number: params[:patient_id]).take
+      @patient ||= Patient.find_by!(case_number: params[:patient_id])
     end
 
     def find_and_authorize

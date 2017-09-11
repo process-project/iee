@@ -17,7 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
 - Default segmentation run mode changed into 3 (@mkasztelnik)
-- Patient.case_number now used as patient ID in CURL requests (@amber7b)
+- Patient.case_number now used as patient ID in HTTP requests (@amber7b)
 
 ### Deprecated
 
