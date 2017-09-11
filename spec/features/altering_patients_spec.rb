@@ -109,13 +109,13 @@ RSpec.feature 'Patient altering' do
       scenario 'automatically synchronizes data_files and updates status for strange case number' do
         visit new_patient_path
 
-        fill_in 'patient[case_number]', with: '-_.~'
+        fill_in 'patient[case_number]', with: '-_.'
 
         expect { click_button I18n.t('register') }.to change { Patient.count }.by(1)
 
         expect(current_path).to eq patient_path(Patient.first)
         expect(Patient.first.data_files.count).to eq 1
-        expect(page).to have_content '-_.~'
+        expect(page).to have_content '-_.'
       end
     end
   end
