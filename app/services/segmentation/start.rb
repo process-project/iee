@@ -2,14 +2,18 @@
 
 module Segmentation
   class Start
-    def initialize(computation)
+    def initialize(computation, updater: ComputationUpdater)
       @computation = computation
+      @updater = updater
     end
 
     def call
       download_input
       update_computation
       upload_input
+
+      @computation.update_attributes(status: 'running')
+      @updater.new(@computation).call if @updater
     end
 
     private
