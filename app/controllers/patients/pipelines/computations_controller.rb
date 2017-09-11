@@ -60,7 +60,10 @@ module Patients
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
 
-        @versions = Gitlab::Versions.new(repo).call if load_versions?
+        if load_versions?
+          @versions = Gitlab::Versions.
+                      new(repo, force_reload: params[:force_reload]).call
+        end
       end
 
       def repo
