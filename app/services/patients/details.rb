@@ -19,7 +19,7 @@ module Patients
       to_details(JSON.parse(make_the_call(patient_id, token).body)['queryCSVResponse'])
     rescue StandardError => e
       Rails.logger.error("Could not fetch patient details with unknown error: #{e.message}")
-      { status: :error, message: e.messsage }
+      { status: :error, message: e.message }
     end
 
     def payload(patient_id)
