@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Parameter extraction pipeline step (@amber7b)
 - Automatic and manual pipeline execution mode (@mkasztelnik)
 - Pipeline flows (pipeline with different steps) (@jmeizner)
+- Patient details are fetched from the external data set service and shown in the patient page (@dharezlak)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)

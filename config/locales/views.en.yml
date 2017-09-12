@@ -30,6 +30,12 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore and thus you are not
           able to start computation on PLGrid infrastructure.
+      no_details: Patient details are not available
+      gender: Gender
+      birth_year: Birth year
+      age: Age
+      weight: Weight
+      height: Height
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case

@@ -8,7 +8,7 @@ describe 'Patients controller' do
 
   context 'with no user signed in' do
     describe 'GET /patients' do
-      it 'is redirects to signin url' do
+      it 'redirects to sign-in url' do
         get '/patients'
         expect(response).to redirect_to new_user_session_path
       end
@@ -58,6 +58,28 @@ describe 'Patients controller' do
           post '/patients/', params: { patient: { case_number: '5555' } }
         end.to change { Patient.count }.by(1)
         expect(response).to redirect_to Patient.first
+      end
+    end
+
+    describe 'external data sets service with patient details' do
+      it 'is called and returns empty result set' do
+        expect_any_instance_of(Patients::Details).to receive(:call).and_return(nil)
+        get "/patients/#{patient.id}"
+        expect(response.body).to include(I18n.t('patients.show.no_details'))
+      end
+
+      it 'is called and returns valid results' do
+        expect_any_instance_of(Patients::Details).to receive(:call).and_return(gender: 'Male',
+                                                                               birth_year: 1970,
+                                                                               age: 47,
+                                                                               height: 170,
+                                                                               weight: 45)
+        get "/patients/#{patient.id}"
+        expect(response.body).to include("#{I18n.t('patients.show.gender')}: Male")
+        expect(response.body).to include("#{I18n.t('patients.show.birth_year')}: 1970")
+        expect(response.body).to include("#{I18n.t('patients.show.age')}: 47")
+        expect(response.body).to include("#{I18n.t('patients.show.height')}: 170")
+        expect(response.body).to include("#{I18n.t('patients.show.weight')}: 45")
       end
     end
   end
