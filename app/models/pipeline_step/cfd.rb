@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Cfd
+module PipelineStep
   class Cfd < RimrockBase
     STEP_NAME = 'cfd'
 

@@ -70,6 +70,8 @@ en:
       pipeline:
         flow:
           full_body_scan: Full body scan
+          full_body_scan_with_rom: Full body scan with ROM analysis
+          full_body_scan_with_cfd: Full body scan with CFD analysis
           partial_body_scan: Partial body scan
           something_else: Something else
     # Examples
