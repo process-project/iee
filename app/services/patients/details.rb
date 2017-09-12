@@ -27,7 +27,6 @@ module Patients
     end
 
     def payload(patient_id)
-      patient_id = 'Test'
       File.read(Rails.root.join('config', 'data_sets', 'payloads', 'patient_details.json')).
         gsub('{patient_id}', patient_id)
     end
@@ -53,7 +52,7 @@ module Patients
         method: :post,
         url: url,
         payload: payload(patient_id),
-        headers: { content_type: :json, accept: :json, cookie: "access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiRGFuaWVsIEhhcsSZxbxsYWsiLCJlbWFpbCI6ImQuaGFyZXpsYWtAY3lmcm9uZXQucGwiLCJzdWIiOiIxIiwiaXNzIjoiRXVyVmFsdmUgUG9ydGFsIiwiZXhwIjoxNTA1MjE2MzM2fQ._d4K6oA5Zj_fTxGBwWRhBgr0BMKLv1yqBCEZAW8pqKbvTozTY5vV0ToGaNxv7Krw7jN-9zQTOZaig8kqYEdZaA" },
+        headers: { content_type: :json, accept: :json, cookie: "access_token=#{token}" },
         ssl_ca_file: Rails.root.join('config', 'data_sets', 'quovadis_root_ca.pem').to_s
       )
     end
@@ -63,7 +62,7 @@ module Patients
         gender: csv_value(csv, 'gender_value'),
         birth_year: csv_value(csv, 'year_of_birth_value'),
         age: csv_value(csv, 'age_value'),
-        current_age: Time.new.year - csv_value(csv, 'year_of_birth_value').to_i,
+        current_age: Time.current.year - csv_value(csv, 'year_of_birth_value').to_i,
         height: csv_value(csv, 'ds_height_value'),
         weight: csv_value(csv, 'ds_weight_value'),
         bpprs: 130,
