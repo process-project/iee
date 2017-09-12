@@ -2,33 +2,33 @@
 .x_panel
   .x_title
     %h2
-      = @patient.case_number
+      = patient.case_number
       %small= t '.subtitle'
     %span.pull-right
       = link_to t('.remove'), patient_path(patient), method: :delete,
         data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
       = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
     .clearfix
-  - if @details
+  - if details
     %ul.list-inline
       %li
-        #{t('.gender')}: #{@details[:gender]}
+        #{t('.gender')}: #{details[:gender]}
         %span.label.label-info
           real
       %li
-        #{t('.birth_year')}: #{@details[:birth_year]}
+        #{t('.birth_year')}: #{details[:birth_year]}
         %span.label.label-info
           real
       %li
-        #{t('.age')}: #{@details[:age]}
+        #{t('.age')}: #{details[:age]}
         %span.label.label-info
           real
       %li
-        #{t('.weight')}: #{@details[:weight]}
+        #{t('.weight')}: #{details[:weight]}
         %span.label.label-info
           real
       %li
-        #{t('.height')}: #{@details[:height]}
+        #{t('.height')}: #{details[:height]}
         %span.label.label-warning
           inferred
   - else

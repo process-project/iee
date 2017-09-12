@@ -1,4 +1,4 @@
-= render('patients/show', patient: @patient)
+= render('patients/show', patient: @patient, details: @details)
 = render('patients/pipelines/list', patient: @patient, pipelines: @pipelines)
 = render('patients/file_browsers', patient: @patient) do
   = render('patients/all_pipelines_outputs', patient: @patient)

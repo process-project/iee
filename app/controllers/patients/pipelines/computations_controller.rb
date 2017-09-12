@@ -53,6 +53,7 @@ module Patients
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
         @patient = @pipeline.patient
+        @details = Patients::Details.new(@patient.case_number, current_user.token).call
 
         authorize(@computation)
       end
