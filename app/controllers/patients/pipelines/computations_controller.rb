@@ -52,8 +52,7 @@ module Patients
                                             iid: params[:pipeline_id] },
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
-        @patient = @pipeline.patient
-        @details = Patients::Details.new(@patient.case_number, current_user.token).call
+        add_patient_with_details
 
         authorize(@computation)
       end
@@ -71,6 +70,11 @@ module Patients
 
       def load_versions?
         repo && policy(@computation).update?
+      end
+
+      def add_patient_with_details
+        @patient = @pipeline.patient
+        @details = Patients::Details.new(@patient.case_number, current_user.token).call
       end
     end
   end
