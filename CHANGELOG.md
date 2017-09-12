@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Configure redis based cache (@mkasztelnik)
 - Add cache for repositories tags and versions (@mkasztelnik)
 - Manual gitlab-ci push master to production step (@mkasztelnik)
+- Patient details are fetched from the external data set service and shown in the patient page (@dharezlak)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)

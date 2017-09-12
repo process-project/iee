@@ -59,6 +59,7 @@ module Patients
 
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
+        @details = Patients::Details.new(@patient.case_number, current_user).call
 
         if load_versions?
           @versions = Gitlab::Versions.
