@@ -27,7 +27,6 @@ module Patients
     end
 
     def payload(patient_id)
-      patient_id = 'Test'
       File.read(Rails.root.join('config', 'data_sets', 'payloads', 'patient_details.json')).
         gsub('{patient_id}', patient_id)
     end
@@ -53,7 +52,7 @@ module Patients
         method: :post,
         url: url,
         payload: payload(patient_id),
-        headers: { content_type: :json, accept: :json, cookie: "access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiRGFuaWVsIEhhcsSZxbxsYWsiLCJlbWFpbCI6ImQuaGFyZXpsYWtAY3lmcm9uZXQucGwiLCJzdWIiOiIxIiwiaXNzIjoiRXVyVmFsdmUgUG9ydGFsIiwiZXhwIjoxNTA1MjExMzA0fQ.L--k6Hze0MpEdvAQjsfgu1Zphxak1Wo2NCg_0UyF1MSWvekmOELiclBtpV8da81-XoTFrD2gz2woRhxSGSH9xA" },
+        headers: { content_type: :json, accept: :json, cookie: "access_token=#{token}" },
         ssl_ca_file: Rails.root.join('config', 'data_sets', 'quovadis_root_ca.pem').to_s
       )
     end
