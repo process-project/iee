@@ -65,7 +65,7 @@ describe 'Patients controller' do
       it 'is called and returns empty result set' do
         expect_any_instance_of(Patients::Details).to receive(:call).and_return(nil)
 
-        get "/patients/#{patient.id}"
+        get "/patients/#{patient.case_number}"
 
         expect(response.body).to include(I18n.t('patients.show.no_details'))
       end
@@ -80,7 +80,7 @@ describe 'Patients controller' do
                                                                                bpprs: 20,
                                                                                bpprd: 30)
 
-        get "/patients/#{patient.id}"
+        get "/patients/#{patient.case_number}"
 
         expect(response.body).to include("#{I18n.t('patients.show.gender')}: Male")
         expect(response.body).to include("#{I18n.t('patients.show.birth_year')}: 1970")
