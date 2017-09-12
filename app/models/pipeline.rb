@@ -3,10 +3,10 @@
 class Pipeline < ApplicationRecord
   FLOWS = {
     full_body_scan: [
-       PipelineStep::Segmentation,
-       PipelineStep::ParameterExtraction,
-       PipelineStep::BloodFlowSimulation,
-       PipelineStep::HeartModelCalculation
+      PipelineStep::Segmentation,
+      PipelineStep::ParameterExtraction,
+      PipelineStep::BloodFlowSimulation,
+      PipelineStep::HeartModelCalculation
     ],
     full_body_scan_with_rom: [
       PipelineStep::Segmentation,
