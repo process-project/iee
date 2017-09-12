@@ -3,14 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Webdav::StartJob do
-  it 'sets computation status to running if succeeded' do
-    allow(Segmentation::Start).to receive_message_chain('new.call')
-    computation = create(:computation)
-    described_class.perform_now(computation)
-    computation.reload
-    expect(computation.status).to eq 'running'
-  end
-
   it 'sets computation status to error if failed' do
     allow(Segmentation::Start).to receive_message_chain('new.call').and_raise
     computation = create(:computation)

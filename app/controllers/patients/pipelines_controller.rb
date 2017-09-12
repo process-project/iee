@@ -64,7 +64,7 @@ module Patients
     end
 
     def load_patient_with_details
-      @patient = Patient.find(params[:patient_id])
+      @patient = Patient.find_by!(case_number: params[:patient_id])
       @details = Patients::Details.new(@patient.case_number, current_user.token).call
     end
 
