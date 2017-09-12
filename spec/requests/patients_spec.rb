@@ -63,22 +63,30 @@ describe 'Patients controller' do
 
     describe 'external data sets service with patient details' do
       it 'is called and returns empty result set' do
-        expect_any_instance_of(Patients::Details).to receive(:call).and_return(nil)
+        expect_any_instance_of(Patients::Details).to receive(:call).and_return(
+          status: :error,
+          message: 'reason'
+        )
 
         get "/patients/#{patient.case_number}"
 
-        expect(response.body).to include(I18n.t('patients.show.no_details'))
+        expect(response.body).to include(I18n.t('patients.show.no_details', details: 'reason'))
       end
 
       it 'is called and returns valid results' do
-        expect_any_instance_of(Patients::Details).to receive(:call).and_return(gender: 'Male',
-                                                                               birth_year: 1970,
-                                                                               age: 47,
-                                                                               current_age: 50,
-                                                                               height: 170,
-                                                                               weight: 45,
-                                                                               bpprs: 20,
-                                                                               bpprd: 30)
+        expect_any_instance_of(Patients::Details).to receive(:call).and_return(
+          status: :ok,
+          payload: [
+            { name: 'gender', value: 'Male', type: 'real', style: 'default' },
+            { name: 'birth_year', value: 1970, type: 'real', style: 'default' },
+            { name: 'age', value: 47, type: 'real', style: 'default' },
+            { name: 'current_age', value: 50, type: 'computed', style: 'success' },
+            { name: 'height', value: 170, type: 'real', style: 'default' },
+            { name: 'weight', value: 45, type: 'real', style: 'real' },
+            { name: 'bpprs', value: 20, type: 'inferred', style: 'warning' },
+            { name: 'bpprd', value: 30, type: 'inferred', style: 'warning' }
+          ]
+        )
 
         get "/patients/#{patient.case_number}"
 

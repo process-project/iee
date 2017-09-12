@@ -9,39 +9,12 @@
         data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
       = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
     .clearfix
-  - if details
+  - if details[:status] == :ok
     %ul.list-inline
-      %li
-        #{t('.gender')}: #{details[:gender]}
-        %span.label.label-info
-          real
-      %li
-        #{t('.birth_year')}: #{details[:birth_year]}
-        %span.label.label-info
-          real
-      %li
-        #{t('.age')}: #{details[:age]}
-        %span.label.label-info
-          real
-      %li
-        #{t('.current_age')}: #{details[:current_age]}
-        %span.label.label-success
-          computed
-      %li
-        #{t('.weight')}: #{details[:weight]}
-        %span.label.label-info
-          real
-      %li
-        #{t('.height')}: #{details[:height]}
-        %span.label.label-info
-          real
-      %li
-        #{t('.bpprs')}: #{details[:bpprs]}
-        %span.label.label-warning
-          inferred
-      %li
-        #{t('.bpprd')}: #{details[:bpprd]}
-        %span.label.label-warning
-          inferred
+      - details[:payload].each do |value|
+        %li
+          #{t(".#{value[:name]}")}: #{value[:value]}
+          %span(class = "label label-#{value[:style]}")
+            = value[:type]
   - else
-    %div.label.label-danger= t '.no_details'
+    %div.label.label-danger= t('.no_details', details: details[:message])

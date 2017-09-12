@@ -9,7 +9,7 @@ class PatientsController < ApplicationController
   def show
     @pipelines = @patient.pipelines.includes(:computations, :patient).
                  order(:iid).order('computations.created_at')
-    @details = Patients::Details.new(@patient.case_number, current_user.token).call
+    @details = Patients::Details.new(@patient.case_number, current_user).call
   end
 
   def new

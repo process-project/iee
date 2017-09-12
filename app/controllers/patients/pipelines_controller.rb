@@ -2,7 +2,8 @@
 
 module Patients
   class PipelinesController < ApplicationController
-    before_action :load_patient_with_details
+    before_action :load_patient
+    before_action :load_patient_details, only: [:show, :new, :edit]
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -63,9 +64,12 @@ module Patients
       { patient: @patient, user: current_user }
     end
 
-    def load_patient_with_details
+    def load_patient
       @patient = Patient.find_by!(case_number: params[:patient_id])
-      @details = Patients::Details.new(@patient.case_number, current_user.token).call
+    end
+
+    def load_patient_details
+      @details = Patients::Details.new(@patient.case_number, current_user).call
     end
 
     def find_and_authorize

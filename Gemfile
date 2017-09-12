@@ -56,8 +56,6 @@ gem 'rubyzip', '>= 1.0.0'
 # Gitlab integration
 gem 'gitlab'
 
-gem 'rest-client'
-
 gem 'puma', '~> 3.7'
 
 group :development, :test do

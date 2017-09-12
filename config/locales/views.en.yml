@@ -30,10 +30,10 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore and thus you are not
           able to start computation on PLGrid infrastructure.
-      no_details: Patient details are not available
+      no_details: Patient details are not available (%{details})
       gender: Gender
       birth_year: Birth year
-      age: Check age
+      age: Visit age
       current_age: Current age
       weight: Weight
       height: Height

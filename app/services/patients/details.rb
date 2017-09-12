@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rest-client'
+require 'faraday'
 
 module Patients
   class Details
-    def initialize(patient_case, token)
+    def initialize(patient_case, user)
       @patient_case = patient_case
-      @token = token
+      @token = user.token
     end
 
     def call
@@ -17,13 +17,9 @@ module Patients
 
     def invoke_service(patient_id, token)
       to_details(JSON.parse(make_the_call(patient_id, token).body)['queryCSVResponse'])
-    rescue RestClient::ExceptionWithResponse => e
-      Rails.logger.error("Could not fetch patient details for patient #{patient_id} with "\
-        "status code #{e.response.code}")
-      nil
     rescue StandardError => e
       Rails.logger.error("Could not fetch patient details with unknown error: #{e.message}")
-      nil
+      { status: :error, message: e.messsage }
     end
 
     def payload(patient_id)
@@ -43,35 +39,58 @@ module Patients
         create_details(csv)
       else
         Rails.logger.warn("Data set result did not contain any value: #{csv_value}")
-        nil
+        { status: :error, message: I18n.t('errors.patient_details.empty_result') }
       end
     end
 
     def make_the_call(patient_id, token)
-      RestClient::Request.execute(
-        method: :post,
+      Faraday::Connection.new(
         url: url,
-        payload: payload(patient_id),
-        headers: { content_type: :json, accept: :json, cookie: "access_token=#{token}" },
-        ssl_ca_file: Rails.root.join('config', 'data_sets', 'quovadis_root_ca.pem').to_s
-      )
+        ssl: { ca_file: Rails.root.join('config', 'data_sets', 'quovadis_root_ca.pem').to_s }
+      ).post do |request|
+        request.headers['Content-Type'] = 'application/json'
+        request.headers['Accept'] = 'application/json'
+        request.headers['Cookie'] = "access_token=#{token}"
+        request.body = payload(patient_id)
+      end
     end
 
     def create_details(csv)
       {
-        gender: csv_value(csv, 'gender_value'),
-        birth_year: csv_value(csv, 'year_of_birth_value'),
-        age: csv_value(csv, 'age_value'),
-        current_age: Time.current.year - csv_value(csv, 'year_of_birth_value').to_i,
-        height: csv_value(csv, 'ds_height_value'),
-        weight: csv_value(csv, 'ds_weight_value'),
-        bpprs: 130,
-        bpprd: 85
+        status: :ok,
+        payload: patient_details(csv)
       }
+    end
+
+    def patient_details(csv)
+      first_values(csv).concat(last_values(csv))
+    end
+
+    def entry(name, value, type, style)
+      { name: name, value: value, type: type, style: style }
     end
 
     def csv_value(csv, field)
       csv[1][csv[0].index(field)]
+    end
+
+    def first_values(csv)
+      [
+        entry('gender', csv_value(csv, 'gender_value'), 'real', 'default'),
+        entry('birth_year', csv_value(csv, 'year_of_birth_value'), 'real', 'default'),
+        entry('age', csv_value(csv, 'age_value'), 'real', 'default'),
+        entry('current_age', Time.current.year - csv_value(csv, 'year_of_birth_value').to_i,
+              'computed', 'success')
+      ]
+    end
+
+    def last_values(csv)
+      [
+        entry('height', csv_value(csv, 'ds_height_value'), 'real', 'default'),
+        entry('weight', csv_value(csv, 'ds_weight_value'), 'real', 'default'),
+        entry('bpprs', 130, 'inferred', 'warning'),
+        entry('bpprd', 85, 'inferred', 'warning')
+      ]
     end
   end
 end

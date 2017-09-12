@@ -52,13 +52,14 @@ module Patients
                                pipelines: { iid: params[:pipeline_id] },
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
-        add_patient_with_details
+        @patient = @pipeline.patient
 
         authorize(@computation)
       end
 
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
+        @details = Patients::Details.new(@patient.case_number, current_user).call
 
         if load_versions?
           @versions = Gitlab::Versions.
@@ -73,11 +74,6 @@ module Patients
 
       def load_versions?
         repo && policy(@computation).update?
-      end
-
-      def add_patient_with_details
-        @patient = @pipeline.patient
-        @details = Patients::Details.new(@patient.case_number, current_user.token).call
       end
     end
   end

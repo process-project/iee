@@ -11,6 +11,8 @@ en:
       description: We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.
     user_groups:
       last_owner: Cannot remove last group owner
+    patient_details:
+      empty_result: empty result set returned from the Data Set repository
   data_file_synchronizer:
     timed_out: |
       Time out when contacting File Storage for patient %{patient} and
