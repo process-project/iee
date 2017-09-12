@@ -29,4 +29,23 @@ RSpec.describe Segmentation::Finish do
 
     expect(computation.status).to eq 'finished'
   end
+
+  it 'push broken results into FileStore' do
+    computation = create(:computation,
+                         working_file_name: 'prefix.zip',
+                         output_path: 'output')
+
+    expect(own_cloud).to receive(:get_file) do |remote_path, local_file_path|
+      expect(remote_path).to eq 'output/prefix.zip'
+      FileUtils.cp('spec/support/data_files/bad.zip',
+                   local_file_path)
+    end
+
+    described_class.new(computation, updater,
+                        own_cloud: own_cloud, file_store: file_store).call
+
+    expect(computation.status).to eq 'error'
+    expect(computation.error_message).not_to be_nil
+    expect(computation.error_message).not_to be_empty
+  end
 end
