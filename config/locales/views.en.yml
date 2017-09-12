@@ -34,8 +34,11 @@ en:
       gender: Gender
       birth_year: Birth year
       age: Age
+      current_age: Current age
       weight: Weight
       height: Height
+      bpprd: BPprD
+      bpprs: BPprS
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case

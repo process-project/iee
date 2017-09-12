@@ -24,11 +24,23 @@
         %span.label.label-info
           real
       %li
+        #{t('.current_age')}: #{details[:current_age]}
+        %span.label.label-success
+          computed
+      %li
         #{t('.weight')}: #{details[:weight]}
         %span.label.label-info
           real
       %li
         #{t('.height')}: #{details[:height]}
+        %span.label.label-info
+          real
+      %li
+        #{t('.bpprs')}: #{details[:bpprs]}
+        %span.label.label-warning
+          inferred
+      %li
+        #{t('.bpprd')}: #{details[:bpprd]}
         %span.label.label-warning
           inferred
   - else

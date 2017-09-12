@@ -64,7 +64,9 @@ describe 'Patients controller' do
     describe 'external data sets service with patient details' do
       it 'is called and returns empty result set' do
         expect_any_instance_of(Patients::Details).to receive(:call).and_return(nil)
+
         get "/patients/#{patient.id}"
+
         expect(response.body).to include(I18n.t('patients.show.no_details'))
       end
 
@@ -72,14 +74,22 @@ describe 'Patients controller' do
         expect_any_instance_of(Patients::Details).to receive(:call).and_return(gender: 'Male',
                                                                                birth_year: 1970,
                                                                                age: 47,
+                                                                               current_age: 50,
                                                                                height: 170,
-                                                                               weight: 45)
+                                                                               weight: 45,
+                                                                               bpprs: 20,
+                                                                               bpprd: 30)
+
         get "/patients/#{patient.id}"
+
         expect(response.body).to include("#{I18n.t('patients.show.gender')}: Male")
         expect(response.body).to include("#{I18n.t('patients.show.birth_year')}: 1970")
         expect(response.body).to include("#{I18n.t('patients.show.age')}: 47")
+        expect(response.body).to include("#{I18n.t('patients.show.current_age')}: 50")
         expect(response.body).to include("#{I18n.t('patients.show.height')}: 170")
         expect(response.body).to include("#{I18n.t('patients.show.weight')}: 45")
+        expect(response.body).to include("#{I18n.t('patients.show.bpprs')}: 20")
+        expect(response.body).to include("#{I18n.t('patients.show.bpprd')}: 30")
       end
     end
   end
