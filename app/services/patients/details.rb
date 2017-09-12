@@ -66,8 +66,8 @@ module Patients
         current_age: Time.new.year - csv_value(csv, 'year_of_birth_value').to_i,
         height: csv_value(csv, 'ds_height_value'),
         weight: csv_value(csv, 'ds_weight_value'),
-        bpprs: 20,
-        bpprd: 30
+        bpprs: 130,
+        bpprd: 85
       }
     end
 
