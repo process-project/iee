@@ -30,6 +30,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Output from one pipeline is not taken as different pipeline input (@mkasztelnik)
 - Change step status after segmentation is submitted (@mkasztelnik)
+- Error when deleting a pipeline which has data files (@jmeizner)
 
 ### Security
 
