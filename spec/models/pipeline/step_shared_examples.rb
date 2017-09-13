@@ -4,12 +4,12 @@ require 'rails_helper'
 
 shared_examples 'a pipeline step' do
   it 'associates created computation with pipeline' do
-    computation = described_class.create(pipeline)
+    computation = described_class.create(pipeline, {})
     expect(computation.pipeline).to eq pipeline
   end
 
   it 'associates created computation with user' do
-    computation = described_class.create(pipeline)
+    computation = described_class.create(pipeline, {})
     expect(computation.user).to eq pipeline.user
   end
 end

@@ -30,6 +30,15 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore and thus you are not
           able to start computation on PLGrid infrastructure.
+      no_details: Patient details are not available (%{details})
+      gender: Gender
+      birth_year: Birth year
+      age: Visit age
+      current_age: Current age
+      weight: Weight
+      height: Height
+      bpprd: BPprD
+      bpprs: BPprS
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case
@@ -46,6 +55,16 @@ en:
     all_pipelines_outputs:
       title: All pipelines outputs
     pipelines:
+      pipeline_steps_form:
+        title: Pipeline steps
+        refresh: Refresh all tags and branches
+        loading: Loading pipeline seps configuration...
+      computations_form_automatic:
+        blank: Postpone selection until execution
+        empty_configuration: No configuration needed
+        tag_or_branch: Tag or branch
+      computations_form_manual:
+        description: Manual piepeline steps can be configured directly before start
       list:
         title: Pipelines
         new: Create new pipeline
@@ -198,10 +217,10 @@ en:
             new: Blood flow simulation computation is being submitted
             queued: Blood flow simulation computation is queued
             running: Blood flow simulation computation is running
-            error: There was an error while calculating blood flow simulation
+            error: There were an error while calculating blood flow simulation
             finished: |
-              Blood flow simulation finished successfully, please take a look in
-              outputs directory for results
+              Blood flow simulation finished successfully, please take a look into
+              outputs directory for the results
             aborted: Blood flow simulation was aborted by the pipeline owner
           heart_model_calculation:
             title: Heart Model Calculation
@@ -215,10 +234,10 @@ en:
             new: Heart model calculation is being submitted
             queued: Heart model calculation is queued
             running: Heart model calculation is running
-            error: There was an error while calculating patient heart model
+            error: There were an error while calculating patient heart model
             finished: |
-              Heart model calculation finished successfully, please take a look in
-              outputs directory for results
+              Heart model calculation finished successfully, please take a look into
+              outputs directory for the results
             aborted: Segmentation was aborted by the pipeline owner
           0d_scenarios:
             title: 0D Scenario Sequence
@@ -254,10 +273,6 @@ en:
               PV visualization finished successfully, please take a look in
               the outputs directory for results
             aborted: PV visualization was aborted by the pipeline owner
-        menu:
-          segmentation: Segmenation
-          blood_flow_simulation: Blood Flow Simulation
-          heart_model_calculation: Heart Model Calculation
 
     comparisons:
       show:

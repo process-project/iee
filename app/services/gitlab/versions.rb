@@ -2,13 +2,22 @@
 
 module Gitlab
   class Versions
-    def initialize(project_name)
+    def initialize(project_name, force_reload: false, gitlab_client: Gitlab)
       @project_name = project_name
+      @force_reload = force_reload
+      @gitlab_client = gitlab_client
     end
 
     def call
-      branches = Gitlab.branches(@project_name).collect(&:name)
-      tags = Gitlab.tags(@project_name).collect(&:name)
+      Rails.cache.fetch("gitlab-versions/#{@project_name}",
+                        force: @force_reload) { fetch }
+    end
+
+    private
+
+    def fetch
+      branches = @gitlab_client.branches(@project_name).collect(&:name)
+      tags = @gitlab_client.tags(@project_name).collect(&:name)
       return { branches: branches, tags: tags }
     rescue Gitlab::Error::MissingCredentials
       Rails.logger.error('Gitlab operation invoked with no valid credentials. '\

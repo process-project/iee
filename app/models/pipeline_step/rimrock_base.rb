@@ -14,6 +14,10 @@ module PipelineStep
       false
     end
 
+    def self.tag_or_branch(params)
+      params.fetch(:tag_or_branch) { nil }
+    end
+
     protected
 
     def pre_internal_run

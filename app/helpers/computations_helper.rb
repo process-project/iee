@@ -8,11 +8,7 @@ module ComputationsHelper
   end
 
   def run_status(computation)
-    clazz = 'circle-o'
-    additional_clazz = nil
-
-    clazz, additional_clazz = runnable_run_status(computation) if computation.runnable?
-
+    clazz, additional_clazz = runnable_run_status(computation)
     icon(clazz, class: additional_clazz, title: computation_tooltip_text(computation))
   end
 
@@ -59,8 +55,13 @@ module ComputationsHelper
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def runnable_run_status(computation)
-    if computation.active?
+    if need_configuration?(computation)
+      ['wrench', nil]
+    elsif !computation.runnable?
+      ['circle-o', nil]
+    elsif computation.active?
       ['circle-o-notch', 'fa-spin']
     elsif computation.status == 'finished'
       ['check-circle-o', nil]
@@ -69,6 +70,13 @@ module ComputationsHelper
     else
       ['circle', nil]
     end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def need_configuration?(computation)
+    computation.rimrock? &&
+      computation.pipeline.automatic? &&
+      computation.tag_or_branch.nil?
   end
 
   def computation_tooltip_text(computation)

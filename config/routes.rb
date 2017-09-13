@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :patients, except: [:edit, :update] do
+  resources :patients, except: [:edit, :update], constraints: { id: /.+/ } do
     scope module: :patients do
       resources :comparisons, only: [:show]
       resources :pipelines do

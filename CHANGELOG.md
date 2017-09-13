@@ -13,10 +13,17 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Parameter extraction pipeline step (@amber7b)
 - Automatic and manual pipeline execution mode (@mkasztelnik)
 - Pipeline flows (pipeline with different steps) (@jmeizner)
+- Configure redis based cache (@mkasztelnik)
+- Add cache for repositories tags and versions (@mkasztelnik)
+- Manual gitlab-ci push master to production step (@mkasztelnik)
+- Patient details are fetched from the external data set service and shown in the patient page (@dharezlak)
+- Possibility to configure automatic pipeline steps during pipeline creation (@mkasztelnik)
+- Wrench automatic pipeline step icon when configuration is needed (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
 - Default segmentation run mode changed into 3 (@mkasztelnik)
+- Patient.case_number now used as patient ID in HTTP requests (@amber7b)
 
 ### Deprecated
 
@@ -24,6 +31,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Output from one pipeline is not taken as different pipeline input (@mkasztelnik)
+- Change step status after segmentation is submitted (@mkasztelnik)
+- Error when deleting a pipeline which has data files (@jmeizner)
+- Set segmentation status to failure when zip cannot be unzipped (@jmeizner)
 
 ### Security
 

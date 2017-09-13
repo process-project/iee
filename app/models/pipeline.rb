@@ -39,7 +39,7 @@ class Pipeline < ApplicationRecord
 
   belongs_to :patient
   belongs_to :user
-  has_many :data_files
+  has_many :data_files, dependent: :destroy
   has_many :computations, dependent: :destroy
 
   validate :set_iid, on: :create

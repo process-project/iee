@@ -153,7 +153,7 @@ RSpec.feature 'Patient browsing' do
         pipeline = build(:pipeline,
                          patient: patient,
                          name: 'p1', user: user, mode: :automatic)
-        Pipelines::Create.new(pipeline).call
+        Pipelines::Create.new(pipeline, {}).call
       end
 
       let(:computation) { pipeline.computations.rimrock.first }
@@ -179,7 +179,7 @@ RSpec.feature 'Patient browsing' do
         pipeline = build(:pipeline,
                          patient: patient,
                          name: 'p1', user: user, mode: :manual)
-        Pipelines::Create.new(pipeline).call
+        Pipelines::Create.new(pipeline, {}).call
       end
       let(:computation) do
         pipeline.computations.find_by(pipeline_step: 'heart_model_calculation')
@@ -197,7 +197,7 @@ RSpec.feature 'Patient browsing' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
         Pipeline::FLOWS[pipeline.flow.to_sym].each do |s|
-          title = I18n.t("patients.pipelines.computations.show.#{s::STEP_NAME}.title")
+          title = I18n.t("steps.#{s::STEP_NAME}.title")
           expect(page).to have_content title
         end
       end

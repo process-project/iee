@@ -9,6 +9,7 @@ class PatientsController < ApplicationController
   def show
     @pipelines = @patient.pipelines.includes(:computations, :patient).
                  order(:iid).order('computations.created_at')
+    @details = Patients::Details.new(@patient.case_number, current_user).call
   end
 
   def new
@@ -49,7 +50,7 @@ class PatientsController < ApplicationController
   end
 
   def find_and_authorize
-    @patient = @patients.find(params[:id])
+    @patient = @patients.find_by!(case_number: params[:id])
     authorize(@patient)
   end
 end

@@ -27,5 +27,17 @@ module Vapor
     config.constants = config_for(:application)
 
     config.jwt = Jwt::Config.new(config.constants['jwt'])
+
+    redis_url_string = config.constants['redis_url']
+
+    # Redis::Store does not handle Unix sockets well, so let's do it for them
+    redis_config_hash = Redis::Store::Factory.
+                        extract_host_options_from_uri(redis_url_string)
+    redis_uri = URI.parse(redis_url_string)
+    redis_config_hash[:path] = redis_uri.path if redis_uri.scheme == 'unix'
+
+    redis_config_hash[:namespace] = 'cache:vapor'
+    redis_config_hash[:expires_in] = 90.minutes # Cache should not grow forever
+    config.cache_store = :redis_store, redis_config_hash
   end
 end

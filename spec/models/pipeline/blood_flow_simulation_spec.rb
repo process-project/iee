@@ -7,7 +7,7 @@ require 'models/pipeline/step_shared_examples'
 RSpec.describe PipelineStep::BloodFlowSimulation do
   let(:user) { create(:user) }
   let(:pipeline) { create(:pipeline, user: user) }
-  let(:computation) { described_class.create(pipeline) }
+  let(:computation) { described_class.create(pipeline, {}) }
 
   before do
     allow(Rimrock::StartJob).to receive(:perform_later)

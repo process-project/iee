@@ -3,6 +3,7 @@
 module Patients
   class PipelinesController < ApplicationController
     before_action :load_patient
+    before_action :load_patient_details, only: [:show, :new, :edit]
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -12,12 +13,14 @@ module Patients
     def new
       @pipeline = Pipeline.new(owners)
       authorize(@pipeline)
+
+      pipeline_steps_form if request.xhr?
     end
 
     def create
       @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
 
-      if ::Pipelines::Create.new(@pipeline).call
+      if ::Pipelines::Create.new(@pipeline, params.require(:pipeline)).call
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
@@ -59,12 +62,32 @@ module Patients
 
     private
 
+    def pipeline_steps_form
+      if params[:mode] == 'automatic'
+        render partial: 'patients/pipelines/computations_form_automatic',
+               locals: { steps_config: steps_config },
+               layout: false
+      else
+        render partial: 'patients/pipelines/computations_form_manual',
+               layout: false
+      end
+    end
+
+    def steps_config
+      ::Pipelines::StepsConfig.
+        new(params[:flow], force_reload: params[:force_reload]).call
+    end
+
     def owners
       { patient: @patient, user: current_user }
     end
 
     def load_patient
-      @patient = Patient.find(params[:patient_id])
+      @patient = Patient.find_by!(case_number: params[:patient_id])
+    end
+
+    def load_patient_details
+      @details = Patients::Details.new(@patient.case_number, current_user).call
     end
 
     def find_and_authorize

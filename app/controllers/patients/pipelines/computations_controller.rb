@@ -48,8 +48,8 @@ module Patients
       def find_and_authorize
         @computation = Computation.
                        joins(pipeline: :patient).
-                       find_by(pipelines: { patient_id: params[:patient_id],
-                                            iid: params[:pipeline_id] },
+                       find_by(patients: { case_number: params[:patient_id] },
+                               pipelines: { iid: params[:pipeline_id] },
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
         @patient = @pipeline.patient
@@ -59,8 +59,12 @@ module Patients
 
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
+        @details = Patients::Details.new(@patient.case_number, current_user).call
 
-        @versions = Gitlab::Versions.new(repo).call if load_versions?
+        if load_versions?
+          @versions = Gitlab::Versions.
+                      new(repo, force_reload: params[:force_reload]).call
+        end
       end
 
       def repo
