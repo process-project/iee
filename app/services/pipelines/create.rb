@@ -2,6 +2,11 @@
 
 module Pipelines
   class Create < Pipelines::Base
+    def initialize(pipeline, params, options = {})
+      super(pipeline, options)
+      @params = params
+    end
+
     protected
 
     def internal_call
@@ -19,9 +24,13 @@ module Pipelines
     private
 
     def create_computations
-      Pipeline::FLOWS[@pipeline.flow.to_sym].each do |builder_clazz|
-        builder_clazz.create(@pipeline)
+      Pipeline::FLOWS[@pipeline.flow.to_sym].each do |builder_class|
+        builder_class.create(@pipeline, step_params(builder_class))
       end
+    end
+
+    def step_params(builder_class)
+      @params.fetch(builder_class::STEP_NAME) { {} }
     end
   end
 end

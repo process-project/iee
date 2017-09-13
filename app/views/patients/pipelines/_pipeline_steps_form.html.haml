@@ -1,0 +1,45 @@
+- if pipeline.new_record?
+  %div
+    %h2
+      = t('.title')
+      #pipeline-steps-reload.pull-right
+        #a.btn.btn-default{ href: '#', onclick: 'updatePipelineSteps(true);' }
+          = t('.refresh')
+    %hr
+    #pipeline-steps
+  :javascript
+    $(document).ready(function() {
+      $("#pipeline_flow").change(function() {
+        updatePipelineSteps(false)
+      })
+      $("#pipeline_mode").change(function() {
+        updatePipelineSteps(false)
+      })
+
+      window.updatePipelineSteps = function(forceReload) {
+        mode = $("#pipeline_mode").find(":selected").val()
+        flow = $("#pipeline_flow").find(":selected").val()
+
+        requestData = { mode: mode, flow: flow }
+        if (forceReload) {
+          requestData['force_reload'] = true
+        }
+
+        if (mode == "automatic") {
+          $("#pipeline-steps-reload").show()
+        } else {
+          $("#pipeline-steps-reload").hide()
+        }
+
+        $("#pipeline-steps").html('<i class="fa fa-spinner fa-spin"></i> <span>#{t(".loading")}</span>')
+        $.ajax({
+          data: requestData,
+          success: function(data) {
+            $("#pipeline-steps").html(data)
+          }
+        })
+
+      }
+
+      updatePipelineSteps(false)
+    })

@@ -55,6 +55,16 @@ en:
     all_pipelines_outputs:
       title: All pipelines outputs
     pipelines:
+      pipeline_steps_form:
+        title: Pipeline steps
+        refresh: Refresh all tags and branches
+        loading: Loading pipeline seps configuration...
+      computations_form_automatic:
+        blank: Postpone selection until execution
+        empty_configuration: No configuration needed
+        tag_or_branch: Tag or branch
+      computations_form_manual:
+        description: Manual piepeline steps can be configured directly before start
       list:
         title: Pipelines
         new: Create new pipeline
@@ -165,10 +175,6 @@ en:
               Heart model calculation finished successfully, please take a look into
               outputs directory for the results
             aborted: Segmentation was aborted by the pipeline owner
-        menu:
-          segmentation: Segmenation
-          blood_flow_simulation: Blood Flow Simulation
-          heart_model_calculation: Heart Model Calculation
 
     comparisons:
       show:

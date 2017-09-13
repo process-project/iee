@@ -4,6 +4,8 @@
     collection: Pipeline::FLOWS.keys, include_blank: false
   = f.input :name
   = f.input :mode, disabled: !pipeline.new_record?, collection: Pipeline.modes.keys
+  = render 'pipeline_steps_form', patient: patient, pipeline: pipeline
+
   .ln_solid
   .form-group
     .col-md-6.col-md-offset-3

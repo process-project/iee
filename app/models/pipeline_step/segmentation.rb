@@ -8,7 +8,7 @@ module PipelineStep
       super(computation, options)
     end
 
-    def self.create(pipeline)
+    def self.create(pipeline, _params)
       WebdavComputation.create!(
         pipeline: pipeline,
         user: pipeline.user,

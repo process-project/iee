@@ -47,7 +47,7 @@ RSpec.feature 'Comparing two pipelines', files: true do
 
     expect(page).to have_content 'Sources comparison'
     step = pipelines[0].computations[0].pipeline_step
-    step = I18n.t("patients.pipelines.computations.menu.#{step}")
+    step = I18n.t("steps.#{step}.title")
     expect(page).to have_content "#{step}, rev. master:1234 vs rev. fixes:5678"
   end
 end
