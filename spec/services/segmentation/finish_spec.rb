@@ -30,7 +30,7 @@ RSpec.describe Segmentation::Finish do
     expect(computation.status).to eq 'finished'
   end
 
-  it 'push broken results into FileStore' do
+  it 'sets status to error while result upload failed' do
     computation = create(:computation,
                          working_file_name: 'prefix.zip',
                          output_path: 'output')
