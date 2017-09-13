@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module PipelineStep
-  class ParameterOptimization < RimrockBase
-    STEP_NAME = 'parameter_optimization'
+  class ZeroDScenarios < RimrockBase
+    STEP_NAME = '0d_scenarios'
 
     def initialize(computation, options = {})
       super(computation,
             'eurvalve/0dmodel',
-            'parameter_optimization.sh.erb',
+            '0d_scenarios.sh.erb',
             options)
     end
 
@@ -20,7 +20,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:pressure_drops)
+      pipeline.data_file(:parameter_optimization_result)
     end
   end
 end

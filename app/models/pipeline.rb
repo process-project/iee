@@ -12,14 +12,16 @@ class Pipeline < ApplicationRecord
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
-      PipelineStep::HeartModelCalculation,
+      PipelineStep::ZeroDScenarios,
+      PipelineStep::PressureVolumeDisplay,
       PipelineStep::UncertaintyAnalysis
     ],
     full_body_scan_with_cfd: [
       PipelineStep::Segmentation,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
-      PipelineStep::HeartModelCalculation,
+      PipelineStep::ZeroDScenarios,
+      PipelineStep::PressureVolumeDisplay,
       PipelineStep::UncertaintyAnalysis
     ],
     partial_body_scan: [

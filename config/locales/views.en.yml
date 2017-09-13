@@ -126,7 +126,7 @@ en:
             title: Computational Fluid Dynamics simulation
             cannot_start: |
               Cannot start CFD simulation because the required input files
-              (OFF mesh) cannot be found in the patient input directory or pipeline directory.
+              (*Trunc.off) cannot be found in the patient input directory or pipeline directory.
             created: |
               All required input files are available.
               You can start CFD simulation for this patient.
@@ -142,7 +142,7 @@ en:
             title: Reduced Order Model analysis
             cannot_start: |
               Cannot start ROM analysis because the required input files
-              (OFF mesh) cannot be found in the patient input directory or pipeline directory.
+              (*.dxrom) cannot be found in the patient input directory or pipeline directory.
             created: |
               All required input files are available.
               You can start ROM analysis for this patient.
@@ -158,7 +158,7 @@ en:
             title: Parameter Optimization
             cannot_start: |
               Cannot start parameter optimization because the required input files
-              (OFF mesh) cannot be found in the patient input directory or pipeline directory.
+              (ValveChar.csv) cannot be found in the patient input directory or pipeline directory.
             created: |
               All required input files are available.
               You can start parameter optimization for this patient.
@@ -200,8 +200,8 @@ en:
             running: Blood flow simulation computation is running
             error: There was an error while calculating blood flow simulation
             finished: |
-              Blood flow simulation finished successfully, please take a look into
-              outputs directory for the results
+              Blood flow simulation finished successfully, please take a look in
+              outputs directory for results
             aborted: Blood flow simulation was aborted by the pipeline owner
           heart_model_calculation:
             title: Heart Model Calculation
@@ -217,9 +217,43 @@ en:
             running: Heart model calculation is running
             error: There was an error while calculating patient heart model
             finished: |
-              Heart model calculation finished successfully, please take a look into
-              outputs directory for the results
+              Heart model calculation finished successfully, please take a look in
+              outputs directory for results
             aborted: Segmentation was aborted by the pipeline owner
+          0d_scenarios:
+            title: 0D Scenario Sequence
+            cannot_start: |
+              Cannot start 0D scenarios because required input files
+              (OutFileGA.csv) cannot be found in patient inputs directory or
+              pipeline directory.
+            created: |
+              All required input files are available.
+              You can start 0D scenario sequence for this patient.
+            new: 0D scenarios are being submitted
+            queued: 0D scenarios are queued
+            running: 0D scenarios are running
+            error: There was an error while calculating 0D scenarios
+            finished: |
+              0D scenario sequence finished successfully, please take a look in
+              outputs directory for results
+            aborted: 0D scenario sequence was aborted by the pipeline owner
+          pressure_volume_display:
+            title: Pressure-Volume Display
+            cannot_start: |
+              Cannot start PV visualization because required input files
+              (OutSeries1.csv, OutSeries2.csv, OutSeries3.csv, OutSeries4.csv)
+              cannot be found in patient inputs directory or pipeline directory.
+            created: |
+              All required input files are available.
+              You can start PV visualization for this patient.
+            new: PV visualization is being submitted
+            queued: PV visualization is queued
+            running: PV visualization is running
+            error: There was an error while calculating PV visualization
+            finished: |
+              PV visualization finished successfully, please take a look in
+              the outputs directory for results
+            aborted: PV visualization was aborted by the pipeline owner
         menu:
           segmentation: Segmenation
           blood_flow_simulation: Blood Flow Simulation

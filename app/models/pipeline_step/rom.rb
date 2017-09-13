@@ -20,7 +20,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:off_mesh)
+      pipeline.data_file(:response_surface)
     end
   end
 end

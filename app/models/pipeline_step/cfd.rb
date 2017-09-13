@@ -20,7 +20,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:off_mesh)
+      pipeline.data_file(:truncated_off_mesh)
     end
   end
 end
