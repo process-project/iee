@@ -1,10 +1,10 @@
 - if pipeline.new_record?
   %div
     %h2
-      Pipeline steps
+      = t('.title')
       #pipeline-steps-reload.pull-right
         #a.btn.btn-default{ href: '#', onclick: 'updatePipelineSteps(true);' }
-          Refresh all tags and branches
+          = t('.refresh')
     %hr
     #pipeline-steps
   :javascript
@@ -31,7 +31,7 @@
           $("#pipeline-steps-reload").hide()
         }
 
-        $("#pipeline-steps").html('<i class="fa fa-spinner fa-spin"></i> <span>Loading pipeline seps configuration...</span>')
+        $("#pipeline-steps").html('<i class="fa fa-spinner fa-spin"></i> <span>#{t(".loading")}</span>')
         $.ajax({
           data: requestData,
           success: function(data) {

@@ -2,15 +2,12 @@
   %h4= t("steps.#{step}.title")
   .form-group
     - if config[:tags_and_branches]
-      %label.col-sm-3.control-label.select{ for: "pipeline_#{step}_branch_or_version" } Tag or branch
+      %label.col-sm-3.control-label.select{ for: "pipeline_#{step}_branch_or_version" }= t('.tag_or_branch')
       .col-sm-6
         = select_tag "pipeline_#{step}_branch_or_version",
           grouped_options_for_select(config[:tags_and_branches]),
-          include_blank: true,
+          include_blank: t('.blank'),
           class: "form-control",
           name: "pipeline[#{step}][tag_or_branch]"
     - else
-      .alert.alert-success.col-sm-6.col-sm-offset-3
-        No configuration needed
-
-
+      .alert.alert-success.col-sm-6.col-sm-offset-3= t('.empty_configuration')
