@@ -14,7 +14,10 @@ module Segmentation
     def call
       download_output
       save_output
-      update_pipeline
+      update_computation(status: 'finished')
+    rescue => e
+      Rails.logger.error(e)
+      update_computation(status: 'error', error_message: e.message)
     end
 
     private
@@ -46,8 +49,8 @@ module Segmentation
                                 File.extname(@computation.working_file_name))
     end
 
-    def update_pipeline
-      @computation.update_attributes(status: 'finished')
+    def update_computation(attrs)
+      @computation.update_attributes(attrs)
       @updater.new(@computation).call
     end
   end
