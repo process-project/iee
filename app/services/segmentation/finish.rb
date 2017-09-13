@@ -16,9 +16,9 @@ module Segmentation
       save_output
     rescue => e
       Rails.logger.error(e)
-      update_pipeline'error', e
+      update_pipeline 'error', e
     else
-      update_pipeline'finished'
+      update_pipeline 'finished'
     end
 
     private
