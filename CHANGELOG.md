@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Manual gitlab-ci push master to production step (@mkasztelnik)
 - Patient details are fetched from the external data set service and shown in the patient page (@dharezlak)
 - Possibility to configure automatic pipeline steps during pipeline creation (@mkasztelnik)
+- Wrench automatic pipeline step icon when configuration is needed (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
