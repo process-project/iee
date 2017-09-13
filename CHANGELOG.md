@@ -21,7 +21,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
 - Default segmentation run mode changed into 3 (@mkasztelnik)
 - Patient.case_number now used as patient ID in HTTP requests (@amber7b)
-- Set segmentation status to failure when zip cannot be unzipped (@jmeizner)
 
 ### Deprecated
 
@@ -30,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Output from one pipeline is not taken as different pipeline input (@mkasztelnik)
 - Change step status after segmentation is submitted (@mkasztelnik)
+- Set segmentation status to failure when zip cannot be unzipped (@jmeizner)
 
 ### Security
 
