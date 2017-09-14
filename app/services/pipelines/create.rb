@@ -10,9 +10,7 @@ module Pipelines
     protected
 
     def internal_call
-      @pipeline.save
-      r_mkdir(@pipeline.working_dir)
-      create_computations
+      @pipeline.save.tap { |saved| post_save if saved }
     rescue Net::HTTPServerException
       @pipeline.errors.
         add(:name,
@@ -22,6 +20,11 @@ module Pipelines
     end
 
     private
+
+    def post_save
+      r_mkdir(@pipeline.working_dir)
+      create_computations
+    end
 
     def create_computations
       Pipeline::FLOWS[@pipeline.flow.to_sym].each do |builder_class|
