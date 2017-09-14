@@ -42,6 +42,14 @@ describe Pipelines::Create do
     end.to_not(change { Pipeline.count })
   end
 
+  it 'don\t create webdav structure when pipeline cannot be created' do
+    bad_pipeline = build(:pipeline, user: user, name: nil)
+
+    expect(webdav).to_not receive(:r_mkdir)
+
+    described_class.new(bad_pipeline, {}, client: webdav).call
+  end
+
   it 'set error message when web dav dir cannot be created' do
     webdav = web_dav_with_http_server_exception
     new_pipeline = build(:pipeline, user: user)

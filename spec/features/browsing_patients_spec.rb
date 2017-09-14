@@ -138,6 +138,14 @@ RSpec.feature 'Patient browsing' do
       expect(pipeline.name).to eq 'my new automatic pipeline'
       expect(pipeline).to be_automatic
     end
+
+    scenario 'error deatils are displayed when pipeline cannot be created' do
+      visit patient_path(patient)
+      click_link 'Create new pipeline'
+      click_on 'Create Pipeline'
+
+      expect(page).to have_content('can\'t be blank')
+    end
   end
 
   context 'in the context of inspecting a given case pipeline' do

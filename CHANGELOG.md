@@ -34,6 +34,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change step status after segmentation is submitted (@mkasztelnik)
 - Error when deleting a pipeline which has data files (@jmeizner)
 - Set segmentation status to failure when zip cannot be unzipped (@jmeizner)
+- Don't create webdav structure when pipeline cannot be created (@mkasztelnik)
+- Show error details when pipeline cannot be created (@mkasztelnik)
 
 ### Security
 

@@ -18,12 +18,13 @@ module Patients
     end
 
     def create
-      @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
+      @pipeline = create_pipeline
 
-      if ::Pipelines::Create.new(@pipeline, params.require(:pipeline)).call
+      if @pipeline.valid?
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
+        load_patient_details
         render(:new)
       end
     end
@@ -61,6 +62,11 @@ module Patients
     end
 
     private
+
+    def create_pipeline
+      @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
+      ::Pipelines::Create.new(@pipeline, params.require(:pipeline)).call
+    end
 
     def pipeline_steps_form
       if params[:mode] == 'automatic'

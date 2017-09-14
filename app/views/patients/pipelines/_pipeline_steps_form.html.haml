@@ -33,6 +33,7 @@
 
         $("#pipeline-steps").html('<i class="fa fa-spinner fa-spin"></i> <span>#{t(".loading")}</span>')
         $.ajax({
+          url: "#{new_patient_pipeline_path(patient)}",
           data: requestData,
           success: function(data) {
             $("#pipeline-steps").html(data)
