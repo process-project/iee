@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module PipelineStep
-  class ZeroDScenarios < RimrockBase
-    STEP_NAME = '0d_scenarios'
+  class ZeroDModels < RimrockBase
+    STEP_NAME = '0d_models'
 
     def initialize(computation, options = {})
       super(computation,
@@ -11,10 +11,11 @@ module PipelineStep
             options)
     end
 
-    def self.create(pipeline)
+    def self.create(pipeline, params)
       RimrockComputation.create(
         pipeline: pipeline,
         user: pipeline.user,
+        tag_or_branch: tag_or_branch(params),
         pipeline_step: STEP_NAME
       )
     end

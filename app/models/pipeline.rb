@@ -12,7 +12,7 @@ class Pipeline < ApplicationRecord
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDScenarios,
+      PipelineStep::ZeroDModels,
       PipelineStep::PressureVolumeDisplay,
       PipelineStep::UncertaintyAnalysis
     ],
@@ -20,7 +20,7 @@ class Pipeline < ApplicationRecord
       PipelineStep::Segmentation,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDScenarios,
+      PipelineStep::ZeroDModels,
       PipelineStep::PressureVolumeDisplay,
       PipelineStep::UncertaintyAnalysis
     ],

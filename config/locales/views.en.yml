@@ -239,23 +239,23 @@ en:
               Heart model calculation finished successfully, please take a look into
               outputs directory for the results
             aborted: Segmentation was aborted by the pipeline owner
-          0d_scenarios:
-            title: 0D Scenario Sequence
+          0d_models:
+            title: 0D Model Sequence
             cannot_start: |
-              Cannot start 0D scenarios because required input files
+              Cannot run 0D models because required input files
               (OutFileGA.csv) cannot be found in patient inputs directory or
               pipeline directory.
             created: |
               All required input files are available.
-              You can start 0D scenario sequence for this patient.
-            new: 0D scenarios are being submitted
-            queued: 0D scenarios are queued
-            running: 0D scenarios are running
-            error: There was an error while calculating 0D scenarios
+              You can start 0D model sequence for this patient.
+            new: 0D models are being submitted
+            queued: 0D models are queued
+            running: 0D models are running
+            error: There was an error while running 0D models
             finished: |
-              0D scenario sequence finished successfully, please take a look in
+              0D model sequence finished successfully, please take a look in
               outputs directory for results
-            aborted: 0D scenario sequence was aborted by the pipeline owner
+            aborted: 0D model sequence was aborted by the pipeline owner
           pressure_volume_display:
             title: Pressure-Volume Display
             cannot_start: |

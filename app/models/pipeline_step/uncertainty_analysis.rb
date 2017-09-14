@@ -11,16 +11,17 @@ module PipelineStep
             options)
     end
 
-    def self.create(pipeline)
+    def self.create(pipeline, params)
       RimrockComputation.create(
         pipeline: pipeline,
         user: pipeline.user,
+        tag_or_branch: tag_or_branch(params),
         pipeline_step: STEP_NAME
       )
     end
 
     def runnable?
-      pipeline.data_file(:off_mesh)
+      pipeline.data_file(:data_series_1)
     end
   end
 end
