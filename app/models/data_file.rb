@@ -11,7 +11,16 @@ class DataFile < ApplicationRecord
     :estimated_parameters,
     :heart_model_output,
     :off_mesh,
-    :graphics
+    :graphics,
+    :truncated_off_mesh,
+    :response_surface,
+    :pressure_drops,
+    :parameter_optimization_result,
+    :data_series_1,
+    :data_series_2,
+    :data_series_3,
+    :data_series_4
+
   ]
 
   belongs_to :patient, touch: true

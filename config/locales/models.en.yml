@@ -22,6 +22,14 @@ en:
       estimated_parameters: Estimated parameters
       heart_model_output: 0D heart model output
       off_mesh: 3D mesh
+      truncated_off_mesh: truncated 3D mesh
+      response_surface: Response surface
+      pressure_drops: Pressure drops
+      parameter_optimization_result: Parameter optimization result
+      data_series_1: Data series 1
+      data_series_2: Data series 2
+      data_series_3: Data series 3
+      data_series_4: Data series 4
 
   computation:
     started_at: Start time

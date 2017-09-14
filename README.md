@@ -106,6 +106,12 @@ you can set the following ENV variables:
   * `PIPELINE_R_BFS` - Overrides default project name in Gitlab for Blood Flow Simutalion
   * `PIPELINE_R_HMS` - Overrides default project name in Gitlab for Heart Model Simulation
   * `PIPELINE_R_PE` - Overrides default project name in Gitlab for Parameter Extraction
+  * `PIPELINE_R_CFD` - Overrides default project name in Gitlab for CFD Simulation
+  * `PIPELINE_R_ROM` - Overrides default project name in Gitlab for Reduced Order Model Analysis
+  * `PIPELINE_R_PO` - Overrides default project name in Gitlab for Parameter Optimization
+  * `PIPELINE_R_U` - Overrides default project name in Gitlab for Uncertainty Analysis
+  * `PIPELINE_R_0D` - Overrides default project name in Gitlab for 0D Model Sequence
+  * `PIPELINE_R_PV` - Overrides default project name in Gitlab for Pressure-Volume Visualization
   * `SEGMENTATION_MODE` - Overrides default segmentation run mode
 
 ## Testing

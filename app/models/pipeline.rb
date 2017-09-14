@@ -8,6 +8,22 @@ class Pipeline < ApplicationRecord
       PipelineStep::BloodFlowSimulation,
       PipelineStep::HeartModelCalculation
     ],
+    full_body_scan_with_rom: [
+      PipelineStep::Segmentation,
+      PipelineStep::Rom,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::ZeroDModels,
+      PipelineStep::PressureVolumeDisplay,
+      PipelineStep::UncertaintyAnalysis
+    ],
+    full_body_scan_with_cfd: [
+      PipelineStep::Segmentation,
+      PipelineStep::Cfd,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::ZeroDModels,
+      PipelineStep::PressureVolumeDisplay,
+      PipelineStep::UncertaintyAnalysis
+    ],
     partial_body_scan: [
       PipelineStep::Segmentation,
       PipelineStep::BloodFlowSimulation,
