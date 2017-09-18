@@ -4,7 +4,7 @@ en:
       title: Segmenation
       cannot_start: |
         Cannot start segmentation because required input file
-        (imaging_*.zip) cannot be found in patient inputs directory or
+        (imaging_*.zip) cannot be found in the patient input directory or
         pipeline directory.
       created: |
         All required input files are available.
@@ -13,8 +13,8 @@ en:
       running: Segmentation computation is running
       error: There was an error while calculating segmentation
       finished: |
-        Segmentation finished successfully, please take a look into
-        outputs directory for the results
+        Segmentation finished successfully, results stored in
+        the output directory for the results
       aborted: Segmentation was aborted by the pipeline owner
       start_manual: Start segmentation
       restart_manual: Restart segmentation
@@ -32,7 +32,7 @@ en:
       error: There was an error while extracting simulation parameters
       finished: |
         Parameter extraction finished successfully, results stored in
-        outputs directory.
+        the output directory.
       aborted: Parameter extraction was aborted by the pipeline owner
       start_automatic: Save parameter extraction version
       start_manual: Start parameter extraction
@@ -51,7 +51,7 @@ en:
       error: There was an error while running CFD simulation
       finished: |
         CFD simulation finished successfully, results stored in
-        outputs directory.
+        the output directory.
       aborted: CFD simulation was aborted by the pipeline owner
       start_automatic: Save CFD simulation version
       start_manual: Start CFD simulation
@@ -70,7 +70,7 @@ en:
       error: There was an error while running ROM analysis
       finished: |
         ROM analysis finished successfully, results stored in
-        outputs directory.
+        the output directory.
       aborted: ROM analysiswas aborted by the pipeline owner
       start_automatic: Save ROM analysis version
       start_manual: Start ROM analysis
@@ -89,7 +89,7 @@ en:
       error: There was an error while running parameter optimization
       finished: |
         Parameter optimization finished successfully, results stored in
-        outputs directory.
+        the output directory.
       aborted: Parameter optimization was aborted by the pipeline owner
       start_automatic: Save parameter optimization version
       start_manual: Start parameter optimization
@@ -108,7 +108,7 @@ en:
       error: There was an error while running uncertainty analysis
       finished: |
         Uncertainty analysis finished successfully, results stored in
-        outputs directory.
+        the output directory.
       aborted: Uncertainty analysis was aborted by the pipeline owner
       start_automatic: Save uncertainty analysis version
       start_manual: Start uncertainty analysis
@@ -118,7 +118,7 @@ en:
       cannot_start: |
         Cannot start blood flow simulation because required input files
         (fluidFlow.cas and structural_vent.dat) cannot be found
-        in patient inputs directory or pipeline directory.
+        in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start blood flow simulation for this patient.
@@ -127,8 +127,8 @@ en:
       running: Blood flow simulation computation is running
       error: There were an error while calculating blood flow simulation
       finished: |
-        Blood flow simulation finished successfully, please take a look into
-        outputs directory for the results
+        Blood flow simulation finished successfully, results stored in
+        the output directory for the results
       aborted: Blood flow simulation was aborted by the pipeline owner
       start_automatic: Save blood flow simulation version
       start_manual: Start blood floow simulation
@@ -137,7 +137,7 @@ en:
       title: Heart Model Calculation
       cannot_start: |
         Cannot start heart model calculation because required input file
-        (0DModel_input.csv) cannot be found in patient inputs directory or
+        (0DModel_input.csv) cannot be found in the patient input directory or
         pipeline directory.
       created: |
         All required input files are available.
@@ -147,8 +147,8 @@ en:
       running: Heart model calculation is running
       error: There were an error while calculating patient heart model
       finished: |
-        Heart model calculation finished successfully, please take a look into
-        outputs directory for the results
+        Heart model calculation finished successfully, results stored in
+        the output directory for the results
       aborted: Segmentation was aborted by the pipeline owner
       start_automatic: Save heart model calculation version
       start_manual: Start heart model calculation
@@ -157,7 +157,7 @@ en:
       title: 0D Model Sequence
       cannot_start: |
         Cannot run 0D models because required input files
-        (OutFileGA.csv) cannot be found in patient inputs directory or
+        (OutFileGA.csv) cannot be found in the patient input directory or
         pipeline directory.
       created: |
         All required input files are available.
@@ -167,8 +167,8 @@ en:
       running: 0D models are running
       error: There was an error while running 0D models
       finished: |
-        0D model sequence finished successfully, please take a look in
-        outputs directory for results
+        0D model sequence finished successfully, results stored in
+        the output directory for results
       aborted: 0D model sequence was aborted by the pipeline owner
       start_automatic: Save 0D model sequence version
       start_manual: Start 0D model sequence
@@ -178,7 +178,7 @@ en:
       cannot_start: |
         Cannot start PV visualization because required input files
         (OutSeries1.csv, OutSeries2.csv, OutSeries3.csv, OutSeries4.csv)
-        cannot be found in patient inputs directory or pipeline directory.
+        cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start PV visualization for this patient.
@@ -187,8 +187,8 @@ en:
       running: PV visualization is running
       error: There was an error while calculating PV visualization
       finished: |
-        PV visualization finished successfully, please take a look in
-        the outputs directory for results
+        PV visualization finished successfully, results stored in
+        the output directory for results
       aborted: PV visualization was aborted by the pipeline owner
       start_automatic: Save PV visualization version
       start_manual: Start PV visualization
