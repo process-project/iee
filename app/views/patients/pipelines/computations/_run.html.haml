@@ -10,9 +10,9 @@
             group_method: :last
       .col-lg-5.col-xs-12
         = f.button :submit,
-          t(".#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
+          t("steps.#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
           class: 'btn btn-default'
-        = link_to 'Reload tags and branches',
+        = link_to t('.reload'),
                   patient_pipeline_computation_path(patient, pipeline, computation, force_reload: true),
                   class: 'btn btn-default',
                   data: { turbolinks: false }
