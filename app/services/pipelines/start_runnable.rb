@@ -4,6 +4,7 @@ module Pipelines
   class StartRunnable
     def initialize(pipeline)
       @pipeline = pipeline
+      @user_proxy = Proxy.new(pipeline.user)
     end
 
     def call
@@ -13,7 +14,12 @@ module Pipelines
     private
 
     def internal_call
-      @pipeline.computations.created.each { |c| c.run if c.runnable? }
+      @pipeline.computations.created.each { |c| c.run if runnable?(c) }
+    end
+
+    def runnable?(computation)
+      computation.runnable? &&
+        (!computation.rimrock? || @user_proxy.valid?)
     end
   end
 end
