@@ -267,7 +267,7 @@ RSpec.feature 'Patient browsing' do
 
       scenario 'computation alert is displayed when no required input data' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
-        msg_key = "patients.pipelines.computations.show.#{computation.pipeline_step}.cannot_start"
+        msg_key = "steps.#{computation.pipeline_step}.cannot_start"
 
         expect(page).to have_content I18n.t(msg_key)
       end
@@ -324,7 +324,7 @@ RSpec.feature 'Patient browsing' do
     end
 
     def computation_run_text(c)
-      I18n.t("patients.pipelines.computations.run.#{c.pipeline_step}.start_#{c.mode}")
+      I18n.t("steps.#{c.pipeline_step}.start_#{c.mode}")
     end
   end
 end
