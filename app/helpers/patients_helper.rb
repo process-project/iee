@@ -15,7 +15,8 @@ module PatientsHelper
     "#{status_number.to_f / (Patient.procedure_statuses.size - 1).to_f * 100}%"
   end
 
-  def computation_status(status)
+  def computation_status(computation)
+    status = runnable?(computation) ? 'runnable' : computation.status
     label_class = STATUS_MAP[status] || 'default'
     content_tag :div, I18n.t("computation.status_description.#{status}"),
                 class: "label label-#{label_class}"
@@ -35,5 +36,11 @@ module PatientsHelper
 
   def start_time(computation)
     computation.started_at ? l(computation.started_at, format: :short) : '-'
+  end
+
+  private
+
+  def runnable?(computation)
+    computation.status == 'created' && computation.runnable?
   end
 end

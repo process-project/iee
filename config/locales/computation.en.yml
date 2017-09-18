@@ -2,6 +2,7 @@ en:
   computation:
     status_description:
       created: Waiting for inputs
+      runnable: Waiting for execution
       new: Starting computation
       queued: Queued
       running: Running
