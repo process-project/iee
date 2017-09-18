@@ -81,11 +81,9 @@ module ComputationsHelper
 
   def computation_tooltip_text(computation)
     if computation.runnable?
-      I18n.t('patients.pipelines.computations.show.'\
-             "#{computation.pipeline_step}.#{computation.status}")
+      I18n.t("steps.#{computation.pipeline_step}.#{computation.status}")
     else
-      I18n.t('patients.pipelines.computations.show.'\
-             "#{computation.pipeline_step}.cannot_start")
+      I18n.t("steps.#{computation.pipeline_step}.cannot_start")
     end
   end
 end
