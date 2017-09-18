@@ -40,7 +40,7 @@ module ComputationsHelper
   def source_comparison_link_text(from_comp, to_comp)
     I18n.t(
       'patients.comparisons.show.source_comparison_link',
-      computation_step: t("patients.pipelines.computations.show.#{from_comp.pipeline_step}.title"),
+      computation_step: t("steps.#{from_comp.pipeline_step}.title"),
       compared_revision: "#{from_comp.tag_or_branch}:#{from_comp.revision}",
       compare_to_revision: "#{to_comp.tag_or_branch}:#{to_comp.revision}"
     )
