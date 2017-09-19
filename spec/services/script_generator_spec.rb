@@ -54,7 +54,7 @@ describe ScriptGenerator do
       expect { generator.call }.to raise_error(ArgumentError)
     end
 
-    it 'inserts patient id' do
+    it 'inserts case number of the patient' do
       script = ScriptGenerator.new(computation, '<%= patient.case_number %>').call
 
       expect(script).to include(patient.case_number)
