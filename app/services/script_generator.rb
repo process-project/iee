@@ -8,6 +8,7 @@ class ScriptGenerator
   delegate :pipeline, to: :computation
   delegate :user, to: :pipeline
   delegate :revision, to: :computation
+  delegate :patient, to: :pipeline
 
   def initialize(computation, template)
     @computation = computation

@@ -29,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Patient.case_number now used as patient ID in HTTP requests (@amber7b)
 - Computation update interval changed into 30 seconds (@mkasztelnik)
 - Load patient details only when needed (@mkasztelnik)
+- Patient's case number is now easily available in the script generator (@dharezlak)
 
 ### Deprecated
 
