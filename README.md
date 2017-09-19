@@ -102,6 +102,7 @@ you can set the following ENV variables:
   * `ATMOSPHERE_BASE_URL` (optional) - Atmosphere root URL
   * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
   * `GITLAB_API_PRIVATE_TOKEN` - Gitlab access token used to fetch Rimrock
+  * `CLOCK_UPDATE` - Computations update period
     Computations slurm run template
   * `PIPELINE_R_BFS` - Overrides default project name in Gitlab for Blood Flow Simutalion
   * `PIPELINE_R_HMS` - Overrides default project name in Gitlab for Heart Model Simulation
