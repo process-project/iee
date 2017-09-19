@@ -76,7 +76,7 @@ module ComputationsHelper
   def need_configuration?(computation)
     computation.rimrock? &&
       computation.pipeline.automatic? &&
-      computation.tag_or_branch.nil?
+      computation.tag_or_branch.empty?
   end
 
   def computation_tooltip_text(computation)
