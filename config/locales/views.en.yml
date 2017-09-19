@@ -94,6 +94,8 @@ en:
             PLGrid proxy certificate
         run:
           reload: Reload tags and branches
+        computations_form_manual:
+          steps: "Pipeline steps:"
 
     comparisons:
       show:

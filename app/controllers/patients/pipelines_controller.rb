@@ -76,6 +76,7 @@ module Patients
                layout: false
       else
         render partial: 'patients/pipelines/computations_form_manual',
+               locals: { steps_config: steps_config },
                layout: false
       end
     end
