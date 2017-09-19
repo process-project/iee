@@ -21,6 +21,7 @@ module Patients
       @pipeline = create_pipeline
 
       if @pipeline.valid?
+        @patient.execute_data_sync(current_user)
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
@@ -64,8 +65,8 @@ module Patients
     private
 
     def create_pipeline
-      @pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
-      ::Pipelines::Create.new(@pipeline, params.require(:pipeline)).call
+      pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
+      ::Pipelines::Create.new(pipeline, params.require(:pipeline)).call
     end
 
     def pipeline_steps_form

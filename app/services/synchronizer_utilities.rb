@@ -18,10 +18,10 @@ module SynchronizerUtilities
     /^.*\.dxrom$/ => 'response_surface',
     /^ValveChar\.csv$/ => 'pressure_drops',
     /^OutFileGA\.csv$/ => 'parameter_optimization_result',
-    /^Outseries1\.csv$/ => 'data_series_1',
-    /^Outseries2\.csv$/ => 'data_series_2',
-    /^Outseries3\.csv$/ => 'data_series_3',
-    /^Outseries4\.csv$/ => 'data_series_4'
+    /^OutSeries1\.csv$/ => 'data_series_1',
+    /^OutSeries2\.csv$/ => 'data_series_2',
+    /^OutSeries3\.csv$/ => 'data_series_3',
+    /^OutSeries4\.csv$/ => 'data_series_4'
   }.freeze
 
   def case_directory(url)
