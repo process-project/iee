@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Wrench automatic pipeline step icon when configuration is needed (@mkasztelnik)
 - Add extra pipeline steps for CFD, ROM, 0D, PV visualization and uncertainty analysis (@amber7b)
 - Computation update interval can be configured using ENV variable (@mkasztelnik)
+- Add loading indicator when reloading current pipeline step (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
