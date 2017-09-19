@@ -11,7 +11,7 @@ class RimrockComputationPolicy < ApplicationPolicy
 
   def update?
     record.user == user && !record.active? &&
-      (record.manual? ? record.runnable? : record.tag_or_branch.empty?)
+      (record.manual? ? record.runnable? : record.tag_or_branch.blank?)
   end
 
   def need_proxy?
