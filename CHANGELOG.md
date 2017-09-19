@@ -20,11 +20,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Possibility to configure automatic pipeline steps during pipeline creation (@mkasztelnik)
 - Wrench automatic pipeline step icon when configuration is needed (@mkasztelnik)
 - Add extra pipeline steps for CFD, ROM, 0D, PV visualization and uncertainty analysis (@amber7b)
+- Computation update interval can be configured using ENV variable (@mkasztelnik)
+- Add loading indicator when reloading current pipeline step (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
 - Default segmentation run mode changed into 3 (@mkasztelnik)
 - Patient.case_number now used as patient ID in HTTP requests (@amber7b)
+- Computation update interval changed into 30 seconds (@mkasztelnik)
 - Patient's case number is now easily available in the script generator (@dharezlak)
 
 ### Deprecated

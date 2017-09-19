@@ -17,6 +17,8 @@ defaults: &defaults
     site_path: '/eurvalve/WebQuery/site.html?dataset=eurvalve&host=eurvalve.shef.ac.uk'
     api_doc_path: '/eurvalve/WebQuery/api.png'
     api_url_path: '/WebQuery/api/JsonQuery/'
+  clock:
+    update: <%= ENV['CLOCK_UPDATE'] || 30 %> #seconds
 
 development:
   <<: *defaults

@@ -4,7 +4,7 @@
       patient: patient, pipeline: pipeline,
       computation: computation, computations: computations
   .col-xs-10
-    .tab-content
+    #pipeline-content.tab-content
       - if computation.runnable?
         .alert{class: alert_computation_class(computation)}
           = t("steps.#{computation.pipeline_step}.#{computation.status}")

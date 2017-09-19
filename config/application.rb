@@ -27,6 +27,8 @@ module Vapor
     config.constants = config_for(:application)
 
     config.jwt = Jwt::Config.new(config.constants['jwt'])
+    config.clock = Struct.new(:update).
+                   new((config.constants['clock']['update'] || 30).seconds)
 
     redis_url_string = config.constants['redis_url']
 
