@@ -19,12 +19,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Patient details are fetched from the external data set service and shown in the patient page (@dharezlak)
 - Possibility to configure automatic pipeline steps during pipeline creation (@mkasztelnik)
 - Wrench automatic pipeline step icon when configuration is needed (@mkasztelnik)
-- Add extra pipeline steps for CFD, ROM, 0D, PV visualization and uncertainty analysis (@amber7b) 
+- Add extra pipeline steps for CFD, ROM, 0D, PV visualization and uncertainty analysis (@amber7b)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
 - Default segmentation run mode changed into 3 (@mkasztelnik)
 - Patient.case_number now used as patient ID in HTTP requests (@amber7b)
+- Load patient details only when needed (@mkasztelnik)
 
 ### Deprecated
 
