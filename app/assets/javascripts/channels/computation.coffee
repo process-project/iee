@@ -21,6 +21,8 @@
           @reloadOutputs()
 
       reloadStep: ->
+        document.getElementById("pipeline-content").
+          innerHTML = '<center><i class="fa fa-spinner fa-spin"></i> Reloading...</center>'
         $.ajax
           method: 'get'
           url: window.location.href
