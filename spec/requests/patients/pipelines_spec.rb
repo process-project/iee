@@ -33,7 +33,7 @@ describe 'Pipelines controller' do
     describe 'POST /patients/:id/pipelines' do
       before { stub_webdav }
 
-      it 'allow to create new pipeline to all logged in users' do
+      it 'allow to run pipelines for all logged in users' do
         expect do
           post patient_pipelines_path(patient),
                params: { pipeline: { name: 'my pipeline' } }

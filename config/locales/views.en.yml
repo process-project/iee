@@ -66,7 +66,7 @@ en:
         description: Manual piepeline steps can be configured directly before start
       list:
         title: Pipelines
-        new: Create new pipeline
+        new: Run pipeline
         id: Id
         name: Name
         status: Status
@@ -79,7 +79,7 @@ en:
         delete: Remove pipeline
         no_computations: No computations defined for this pipeline
       new:
-        title: Create new pipeline
+        title: Run pipeline
         back_to_index: Back to pipelines list
       edit:
         title: Edit pipeline
