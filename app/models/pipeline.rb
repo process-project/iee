@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable ClassLength
 class Pipeline < ApplicationRecord
   FLOWS = {
     inference_variants: [
@@ -111,6 +112,10 @@ class Pipeline < ApplicationRecord
       PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
       PipelineStep::PvLoopComparison
+    ],
+    not_used_steps: [
+      PipelineStep::HeartModelCalculation,
+      PipelineStep::BloodFlowSimulation
     ]
   }.freeze
 
@@ -154,3 +159,4 @@ class Pipeline < ApplicationRecord
     self.iid = patient.pipelines.maximum(:iid).to_i + 1 if iid.blank?
   end
 end
+# rubocop:enabled ClassLength

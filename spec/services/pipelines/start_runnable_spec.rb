@@ -15,12 +15,12 @@ describe Pipelines::StartRunnable do
 
     it 'starts created runnable pipeline step' do
       create(:rimrock_computation,
-             status: 'created', pipeline_step: 'blood_flow_simulation',
+             status: 'created', pipeline_step: '0d_models',
              pipeline: pipeline)
 
       runner = double(runnable?: true)
 
-      allow(PipelineStep::BloodFlowSimulation).to receive(:new).and_return(runner)
+      allow(PipelineStep::ZeroDModels).to receive(:new).and_return(runner)
       expect(runner).to receive(:run)
 
       described_class.new(pipeline).call
@@ -28,22 +28,22 @@ describe Pipelines::StartRunnable do
 
     it 'does not start already started pipeline step' do
       create(:rimrock_computation,
-             status: 'running', pipeline_step: 'blood_flow_simulation',
+             status: 'running', pipeline_step: '0d_models',
              pipeline: pipeline)
 
-      expect(PipelineStep::BloodFlowSimulation).to_not receive(:new)
+      expect(PipelineStep::ZeroDModels).to_not receive(:new)
 
       described_class.new(pipeline).call
     end
 
     it 'does not start not runnable pipeline step' do
       create(:rimrock_computation,
-             status: 'created', pipeline_step: 'blood_flow_simulation',
+             status: 'created', pipeline_step: '0d_models',
              pipeline: pipeline)
 
       runner = double(runnable?: false)
 
-      allow(PipelineStep::BloodFlowSimulation).to receive(:new).and_return(runner)
+      allow(PipelineStep::ZeroDModels).to receive(:new).and_return(runner)
       expect(runner).to_not receive(:run)
 
       described_class.new(pipeline).call
@@ -55,12 +55,12 @@ describe Pipelines::StartRunnable do
 
     it 'runnable rimrock computations are not started' do
       create(:rimrock_computation,
-             status: 'created', pipeline_step: 'blood_flow_simulation',
+             status: 'created', pipeline_step: '0d_models',
              pipeline: pipeline)
 
       runner = double(runnable?: true)
 
-      allow(PipelineStep::BloodFlowSimulation).to receive(:new).and_return(runner)
+      allow(PipelineStep::ZeroDModels).to receive(:new).and_return(runner)
       expect(runner).to_not receive(:run)
 
       described_class.new(pipeline).call

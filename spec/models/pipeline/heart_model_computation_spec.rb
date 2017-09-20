@@ -6,7 +6,7 @@ require 'models/pipeline/step_shared_examples'
 
 RSpec.describe PipelineStep::HeartModelCalculation do
   let(:user) { create(:user) }
-  let(:pipeline) { create(:pipeline, user: user) }
+  let(:pipeline) { create(:pipeline, user: user, flow: 'not_used_steps') }
   let(:computation) { described_class.create(pipeline, {}) }
 
   before do

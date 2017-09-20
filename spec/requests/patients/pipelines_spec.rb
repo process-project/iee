@@ -36,13 +36,17 @@ describe 'Pipelines controller' do
       it 'allow to run pipelines for all logged in users' do
         expect do
           post patient_pipelines_path(patient),
-               params: { pipeline: { name: 'my pipeline' } }
+               params: { pipeline: { name: 'my pipeline',
+                                     flow: 'avr_from_scan_rom',
+                                     mode: 'manual' } }
         end.to change { patient.pipelines.count }.by(1)
       end
 
       it 'current user becomes pipeline owner' do
         post patient_pipelines_path(patient),
-             params: { pipeline: { name: 'my pipeline' } }
+             params: { pipeline: { name: 'my pipeline',
+                                   flow: 'avr_from_scan_rom',
+                                   mode: 'manual' } }
 
         expect(Pipeline.last.user).to eq(user)
       end
