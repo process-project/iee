@@ -2,36 +2,115 @@
 
 class Pipeline < ApplicationRecord
   FLOWS = {
-    full_body_scan: [
-      PipelineStep::Segmentation,
-      PipelineStep::ParameterExtraction,
-      PipelineStep::BloodFlowSimulation,
-      PipelineStep::HeartModelCalculation
+    inference_variants: [
+      PipelineStep::RuleSelection,
+      PipelineStep::InferenceWeighting,
+      PipelineStep::PatientDbSelection,
+      PipelineStep::IterationControl,
+      PipelineStep::ResultsPresentation
     ],
-    full_body_scan_with_rom: [
+    avr_surgical_preparation: [
+      PipelineStep::Inference,
+      PipelineStep::Segmentation,
+      PipelineStep::Rom
+    ],
+    avr_from_scan_rom: [
+      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
-      PipelineStep::PressureVolumeDisplay,
-      PipelineStep::UncertaintyAnalysis
+      PipelineStep::PressureVolumeDisplay
     ],
-    full_body_scan_with_cfd: [
+    avr_from_scan_cfd: [
+      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
-      PipelineStep::PressureVolumeDisplay,
-      PipelineStep::UncertaintyAnalysis
+      PipelineStep::HaemodynamicComparison
     ],
-    partial_body_scan: [
+    avr_tavi_cfd: [
+      PipelineStep::Inference,
       PipelineStep::Segmentation,
-      PipelineStep::BloodFlowSimulation,
-      PipelineStep::HeartModelCalculation
+      PipelineStep::ValveSizing,
+      PipelineStep::ProstheticGeometries,
+      PipelineStep::ValvePlacement,
+      PipelineStep::Cfd,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::ZeroDModels,
+      PipelineStep::HaemodynamicComparison
     ],
-    something_else: [
+    avr_valve_selection: [
+      PipelineStep::Inference,
       PipelineStep::Segmentation,
-      PipelineStep::ParameterExtraction
+      PipelineStep::ValveSizing,
+      PipelineStep::ProstheticGeometries,
+      PipelineStep::ValvePlacement,
+      PipelineStep::Cfd,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::ZeroDModels,
+      PipelineStep::HaemodynamicComparison
+    ],
+    avr_intervention_timing: [
+      PipelineStep::Inference,
+      PipelineStep::Segmentation,
+      PipelineStep::Rom,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::ProgressionModel,
+      PipelineStep::ResultsComparison
+    ],
+    av_classification: [
+      PipelineStep::Inference,
+      PipelineStep::Segmentation,
+      PipelineStep::Rom,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::SeverityModel,
+      PipelineStep::ResultsComparison
+    ],
+    avr_risk_benefit: [
+      PipelineStep::Inference,
+      PipelineStep::Segmentation,
+      PipelineStep::Rom,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::EconomicsAlgorithm,
+      PipelineStep::ResultsComparison
+    ],
+    prosthetic_angle_tilt: [
+      PipelineStep::Inference,
+      PipelineStep::Segmentation,
+      PipelineStep::ValveSizing,
+      PipelineStep::ProstheticGeometries,
+      PipelineStep::ValvePlacementX12,
+      PipelineStep::CfdX12,
+      PipelineStep::ResultsComparison
+    ],
+    avr_long_term_post_op: [
+      PipelineStep::Inference,
+      PipelineStep::Segmentation,
+      PipelineStep::Rom,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::ZeroDModels,
+      PipelineStep::AgeingModelX2,
+      PipelineStep::Cfd,
+      PipelineStep::ResultsComparison
+    ],
+    mvr_from_scan_rom: [
+      PipelineStep::Inference,
+      PipelineStep::MvSegmentation,
+      PipelineStep::Rom,
+      PipelineStep::ParameterOptimization,
+      PipelineStep::UncertaintyAnalysis,
+      PipelineStep::ZeroDModels,
+      PipelineStep::PvLoopComparison
     ]
   }.freeze
 

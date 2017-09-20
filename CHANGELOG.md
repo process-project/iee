@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add loading indicator when reloading current pipeline step (@mkasztelnik)
 - Show manual pipeline steps during pipeline creation (@mkasztelnik)
 - External data set service is called to fetch patient's inferred details (@dharezlak)
+- Additional mocked pipelines and pipelines steps (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)

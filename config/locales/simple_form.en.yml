@@ -71,11 +71,18 @@ en:
     options:
       pipeline:
         flow:
-          full_body_scan: Full body scan
-          full_body_scan_with_rom: Full body scan with ROM analysis
-          full_body_scan_with_cfd: Full body scan with CFD analysis
-          partial_body_scan: Partial body scan
-          something_else: Something else
+          inference_variants: Inference variants
+          avr_surgical_preparation: AVR surgical prep
+          avr_from_scan_rom: AVR from Scan (ROM)
+          avr_from_scan_cfd: AVR from Scan (CFD)
+          avr_tavi_cfd: AVR/TAVI (CFD)
+          avr_valve_selection: AVR Valve selection
+          avr_intervention_timing: AVR Intervention Timing
+          av_classification: AV Classification
+          avr_risk_benefit: AVR Risk/Benefit
+          prosthetic_angle_tilt: Prosthetic angle/tilt
+          avr_long_term_post_op: AVR long term post-op
+          mvr_from_scan_rom: MVR from scan (ROM)
     # Examples
     # labels:
     #   defaults:
