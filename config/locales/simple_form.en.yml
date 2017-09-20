@@ -7,6 +7,8 @@ en:
         create: Add users to group
       resource_manager:
         create: Add manager
+      pipeline:
+        create: Run pipeline
   simple_form:
     "yes": 'Yes'
     "no": 'No'

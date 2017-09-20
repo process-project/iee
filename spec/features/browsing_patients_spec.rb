@@ -107,10 +107,10 @@ RSpec.feature 'Patient browsing' do
       expect(Pipelines::StartRunnable).to_not receive(:new)
       expect do
         visit patient_path(patient)
-        click_link 'Create new pipeline'
+        click_link 'Run pipeline'
         fill_in 'Name', with: 'my new manual pipeline'
         select 'manual', from: 'Mode'
-        click_on 'Create Pipeline'
+        click_on 'Run pipeline'
       end.to change { Pipeline.count }.by(1)
 
       pipeline = Pipeline.last
@@ -126,10 +126,10 @@ RSpec.feature 'Patient browsing' do
 
       expect do
         visit patient_path(patient)
-        click_link 'Create new pipeline'
+        click_link 'Run pipeline'
         fill_in 'Name', with: 'my new automatic pipeline'
         select 'automatic', from: 'Mode'
-        click_on 'Create Pipeline'
+        click_on 'Run pipeline'
       end.to change { Pipeline.count }.by(1)
 
       pipeline = Pipeline.last
@@ -141,8 +141,8 @@ RSpec.feature 'Patient browsing' do
 
     scenario 'error deatils are displayed when pipeline cannot be created' do
       visit patient_path(patient)
-      click_link 'Create new pipeline'
-      click_on 'Create Pipeline'
+      click_link 'Run pipeline'
+      click_on 'Run pipeline'
 
       expect(page).to have_content('can\'t be blank')
     end
