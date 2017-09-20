@@ -83,8 +83,7 @@ describe 'Patients controller' do
             { name: 'current_age', value: 50, type: 'computed', style: 'success' },
             { name: 'height', value: 170, type: 'real', style: 'default' },
             { name: 'weight', value: 45, type: 'real', style: 'real' },
-            { name: 'bpprs', value: 20, type: 'inferred', style: 'warning' },
-            { name: 'bpprd', value: 30, type: 'inferred', style: 'warning' }
+            { name: 'elvmin', value: 0.5, type: 'inferred', style: 'warning' }
           ]
         )
 
@@ -96,8 +95,7 @@ describe 'Patients controller' do
         expect(response.body).to include("#{I18n.t('patients.show.current_age')}: 50")
         expect(response.body).to include("#{I18n.t('patients.show.height')}: 170")
         expect(response.body).to include("#{I18n.t('patients.show.weight')}: 45")
-        expect(response.body).to include("#{I18n.t('patients.show.bpprs')}: 20")
-        expect(response.body).to include("#{I18n.t('patients.show.bpprd')}: 30")
+        expect(response.body).to include("#{I18n.t('patients.show.elvmin')}: 0.5")
       end
     end
   end

@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Computation update interval can be configured using ENV variable (@mkasztelnik)
 - Add loading indicator when reloading current pipeline step (@mkasztelnik)
 - Show manual pipeline steps during pipeline creation (@mkasztelnik)
+- External data set service is called to fetch patient's inferred details (@dharezlak)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
