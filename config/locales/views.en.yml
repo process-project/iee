@@ -37,8 +37,7 @@ en:
       current_age: Current age
       weight: Weight
       height: Height
-      bpprd: BPprD
-      bpprs: BPprS
+      elvmin: Elastance-LVmin
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case
