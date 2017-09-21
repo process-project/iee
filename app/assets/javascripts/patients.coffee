@@ -16,3 +16,15 @@ $ ->
       contextSize: 3
       viewType: 0
     ))
+  $('div[data-patient-details]').each ->
+    div = $(this)
+    patientUrl = div.data('patient-details')
+    console.log("patient id %o", patientUrl)
+    $.ajax
+      method: 'get'
+      url: patientUrl
+      cache: false
+      success: (response) ->
+        console.log("response %o", response)
+        console.log("div %o", div)
+        div.replaceWith(response)

@@ -9,7 +9,12 @@ class PatientsController < ApplicationController
   def show
     @pipelines = @patient.pipelines.includes(:computations, :patient).
                  order(:iid).order('computations.created_at')
-    @details = Patients::Details.new(@patient.case_number, current_user).call
+
+    if request.xhr?
+      @details = Patients::Details.new(@patient.case_number, current_user).call
+      render partial: 'patients/details', layout: false,
+             locals: { patient: @patient, details: @details }
+    end
   end
 
   def new

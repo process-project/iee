@@ -30,6 +30,8 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore and thus you are not
           able to start computation on PLGrid infrastructure.
+      loading_patient_details: Loading patient details...
+    details:
       no_details: Patient details are not available (%{details})
       gender: Gender
       birth_year: Birth year
