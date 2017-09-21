@@ -36,6 +36,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fetch patient details timeout set to 2 seconds (@mkasztelnik)
 - Patient details loaded using ajax (@mkasztelnik)
 - Don't show run segmentation button when segmentation is active (@mkasztelnik)
+- Don't show blank option for pipeline mode (@mkasztelnik)
 
 ### Deprecated
 
