@@ -7,6 +7,12 @@ RSpec.feature 'Patient altering' do
 
   let(:patient) { create(:patient) }
 
+  before(:each) do
+    allow_any_instance_of(Patients::Details).
+      to receive(:call).
+      and_return(details: [])
+  end
+
   context 'for every regular user' do
     before(:each) do
       user = create(:user, :approved)

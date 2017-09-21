@@ -7,8 +7,10 @@ class Computation < ApplicationRecord
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
 
-  validates :pipeline_step,
-            inclusion: { in: Pipeline::FLOWS.values.flatten.uniq.map { |c| c::STEP_NAME } }
+  # Disabled untill we will be able to deal with the steps, which are there
+  # but right now not used in any pipeline
+  # validates :pipeline_step,
+  #           inclusion: { in: Pipeline::FLOWS.values.flatten.uniq.map { |c| c::STEP_NAME } }
 
   scope :active, -> { where(status: %w[new queued running]) }
   scope :submitted, -> { where(status: %w[queued running]) }

@@ -10,6 +10,9 @@ RSpec.feature 'Patient browsing' do
     login_as(user)
 
     allow_any_instance_of(Patient).to receive(:execute_data_sync)
+    allow_any_instance_of(Patients::Details).
+      to receive(:call).
+      and_return(details: [])
   end
 
   before do
@@ -186,11 +189,12 @@ RSpec.feature 'Patient browsing' do
       let(:pipeline) do
         pipeline = build(:pipeline,
                          patient: patient,
+                         flow: 'avr_from_scan_rom',
                          name: 'p1', user: user, mode: :manual)
         Pipelines::Create.new(pipeline, {}).call
       end
       let(:computation) do
-        pipeline.computations.find_by(pipeline_step: 'heart_model_calculation')
+        pipeline.computations.find_by(type: 'RimrockComputation')
       end
 
       scenario 'redirects into first defined computation' do
@@ -226,7 +230,7 @@ RSpec.feature 'Patient browsing' do
 
       scenario 'show started rimrock computation source link for started step' do
         computation = pipeline.computations.
-                      find_by(pipeline_step: 'heart_model_calculation')
+                      find_by(pipeline_step: '0d_models')
         computation.update_attributes(revision: 'my-revision',
                                       started_at: Time.zone.now)
 
@@ -239,7 +243,7 @@ RSpec.feature 'Patient browsing' do
 
       scenario 'rimrock computation source link is not shown when no revision' do
         computation = pipeline.computations.
-                      find_by(pipeline_step: 'heart_model_calculation')
+                      find_by(pipeline_step: '0d_models')
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 

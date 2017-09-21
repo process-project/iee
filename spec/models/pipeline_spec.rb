@@ -27,30 +27,6 @@ RSpec.describe Pipeline, type: :model do
     expect(pipeline.working_dir).to eq 'test/patients/abc/pipelines/123/'
   end
 
-  it 'contains pipeline steps for full_body_scan' do
-    expect(described_class::FLOWS[:full_body_scan]).to contain_exactly(
-      PipelineStep::Segmentation,
-      PipelineStep::ParameterExtraction,
-      PipelineStep::BloodFlowSimulation,
-      PipelineStep::HeartModelCalculation
-    )
-  end
-
-  it 'contains pipeline steps for partial_body_scan' do
-    expect(described_class::FLOWS[:partial_body_scan]).to contain_exactly(
-      PipelineStep::Segmentation,
-      PipelineStep::BloodFlowSimulation,
-      PipelineStep::HeartModelCalculation
-    )
-  end
-
-  it 'contains pipeline steps for something_else' do
-    expect(described_class::FLOWS[:something_else]).to contain_exactly(
-      PipelineStep::Segmentation,
-      PipelineStep::ParameterExtraction
-    )
-  end
-
   it do
     should validate_inclusion_of(:flow).
       in_array(Pipeline::FLOWS.keys.map(&:to_s))

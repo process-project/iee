@@ -9,9 +9,9 @@ describe Pipelines::StepsConfig do
       to receive_message_chain(:new, :call).
       and_return(versions)
 
-    config = described_class.new('full_body_scan').call
+    config = described_class.new('avr_from_scan_rom').call
 
-    expect(config['heart_model_calculation']).to eq(tags_and_branches: versions)
+    expect(config['rom']).to eq(tags_and_branches: versions)
     expect(config['segmentation']).to eq(tags_and_branches: nil)
   end
 end

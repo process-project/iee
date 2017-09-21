@@ -1,7 +1,7 @@
 en:
   steps:
     segmentation:
-      title: Segmenation
+      title: AV Segmenation
       cannot_start: |
         Cannot start segmentation because required input file
         (imaging_*.zip) cannot be found in the patient input directory or
@@ -154,7 +154,7 @@ en:
       start_manual: Start heart model calculation
       restart_manual: Restart heart model calculation
     0d_models:
-      title: 0D Model Sequence
+      title: 0D Model x4
       cannot_start: |
         Cannot run 0D models because required input files
         (OutFileGA.csv) cannot be found in the patient input directory or
@@ -174,7 +174,7 @@ en:
       start_manual: Start 0D model sequence
       restart_manual: Restart 0D model sequence
     pressure_volume_display:
-      title: Pressure-Volume Display
+      title: PV Loop Comparison
       cannot_start: |
         Cannot start PV visualization because required input files
         (OutSeries1.csv, OutSeries2.csv, OutSeries3.csv, OutSeries4.csv)
@@ -193,3 +193,328 @@ en:
       start_automatic: Save PV visualization version
       start_manual: Start PV visualization
       restart_manual: Restart PV visualization
+
+    # Mocked steps
+    haemodynamic_comparison:
+      title: Haemodynamic comparison
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    inference:
+      title: Inference
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    inference_weighting:
+      title: Inference weighting
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    iteration_control:
+      title: Iteration control
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    patient_db_selection:
+      title: Patient database selection
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    prosthetic_geometries:
+      title: Prosthetic geometries
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    results_presentation:
+      title: Results presentation
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    rule_selection:
+      title: Rule selection
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    valve_placement:
+      title: Valve placement
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    valve_sizing:
+      title: Valve sizing (EndoSize)
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    progression_model:
+      title: Progression model
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    severity_model:
+      title: Severity model
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    economics_algorithm:
+      title: Economics algorithm
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    results_comparison:
+      title: Results comparison
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    valve_placement_x12:
+      title: Valve placement (variants x12)
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    cfd_x12:
+      title: CFD x12
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    ageing_model_x2:
+      title: Ageing model x2
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    pv_loop_comparison:
+      title: PV Loop Comparison
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
+    mv_segmentation:
+      title: MV Segmenatation
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart

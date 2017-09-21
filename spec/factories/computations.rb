@@ -11,12 +11,14 @@ FactoryGirl.define do
     pipeline
 
     factory :webdav_computation, class: 'WebdavComputation' do
+      pipeline_step 'segmentation'
       input_path { '/inputs' }
       output_path { '/outputs' }
       script nil
     end
 
     factory :rimrock_computation, class: 'RimrockComputation' do
+      pipeline_step '0d_models'
       input_path nil
       output_path nil
       script { 'SCRIPT' }
