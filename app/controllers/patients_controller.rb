@@ -7,7 +7,7 @@ class PatientsController < ApplicationController
   def index; end
 
   def show
-    @pipelines = @patient.pipelines.includes(:computations, :patient).
+    @pipelines = @patient.pipelines.includes(:computations, :patient, :user).
                  order(:iid).order('computations.created_at')
 
     if request.xhr?
