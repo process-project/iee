@@ -34,6 +34,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Load patient details only when needed (@mkasztelnik)
 - Patient's case number is now easily available in the script generator (@dharezlak)
 - Fetch patient details timeout set to 2 seconds (@mkasztelnik)
+- Patient details loaded using ajax (@mkasztelnik)
 
 ### Deprecated
 

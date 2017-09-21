@@ -68,9 +68,9 @@ describe 'Patients controller' do
           message: 'reason'
         )
 
-        get "/patients/#{patient.case_number}"
+        get patient_path(patient), xhr: true
 
-        expect(response.body).to include(I18n.t('patients.show.no_details', details: 'reason'))
+        expect(response.body).to include(I18n.t('patients.details.no_details', details: 'reason'))
       end
 
       it 'is called and returns valid results' do
@@ -87,15 +87,15 @@ describe 'Patients controller' do
           ]
         )
 
-        get "/patients/#{patient.case_number}"
+        get patient_path(patient), xhr: true
 
-        expect(response.body).to include("#{I18n.t('patients.show.gender')}: Male")
-        expect(response.body).to include("#{I18n.t('patients.show.birth_year')}: 1970")
-        expect(response.body).to include("#{I18n.t('patients.show.age')}: 47")
-        expect(response.body).to include("#{I18n.t('patients.show.current_age')}: 50")
-        expect(response.body).to include("#{I18n.t('patients.show.height')}: 170")
-        expect(response.body).to include("#{I18n.t('patients.show.weight')}: 45")
-        expect(response.body).to include("#{I18n.t('patients.show.elvmin')}: 0.5")
+        expect(response.body).to include("#{I18n.t('patients.details.gender')}: Male")
+        expect(response.body).to include("#{I18n.t('patients.details.birth_year')}: 1970")
+        expect(response.body).to include("#{I18n.t('patients.details.age')}: 47")
+        expect(response.body).to include("#{I18n.t('patients.details.current_age')}: 50")
+        expect(response.body).to include("#{I18n.t('patients.details.height')}: 170")
+        expect(response.body).to include("#{I18n.t('patients.details.weight')}: 45")
+        expect(response.body).to include("#{I18n.t('patients.details.elvmin')}: 0.5")
       end
     end
   end

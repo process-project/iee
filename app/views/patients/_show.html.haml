@@ -9,12 +9,7 @@
         data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
       = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
     .clearfix
-  - if details[:status] == :ok
-    %ul.list-inline
-      - details[:payload].each do |value|
-        %li
-          #{t(".#{value[:name]}")}: #{value[:value]}
-          %span(class = "label label-#{value[:style]}")
-            = value[:type]
-  - else
-    %div.label.label-danger= t('.no_details', details: details[:message])
+  .x_content{ data: { 'patient-details' => patient_path(@patient) } }
+    %center
+      = icon 'spinner', class: 'fa-spin'
+      = t('.loading_patient_details')

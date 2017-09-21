@@ -3,7 +3,6 @@
 module Patients
   class PipelinesController < ApplicationController
     before_action :load_patient
-    before_action :load_patient_details, only: [:show, :new, :edit]
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -25,7 +24,6 @@ module Patients
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
-        load_patient_details
         render(:new)
       end
     end
@@ -92,10 +90,6 @@ module Patients
 
     def load_patient
       @patient = Patient.find_by!(case_number: params[:patient_id])
-    end
-
-    def load_patient_details
-      @details = Patients::Details.new(@patient.case_number, current_user).call
     end
 
     def find_and_authorize
