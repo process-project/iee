@@ -7,6 +7,8 @@
 
     %ul.nav.navbar-right.panel_toolbox
       %li
+        = pipeline_owner(pipeline)
+      %li
         = link_to patient_path(patient),
           class: 'back', data: { turbolinks: false } do
           = icon 'hand-o-left',

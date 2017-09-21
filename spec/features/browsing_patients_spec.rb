@@ -87,6 +87,8 @@ RSpec.feature 'Patient browsing' do
 
       expect(page).to have_link('p1',
                                 href: patient_pipeline_path(patient, pipeline))
+      expect(page).to have_content I18n.t("simple_form.options.pipeline.flow.#{pipeline.flow}")
+      expect(page).to have_content pipeline.user.name
     end
 
     scenario 'don\'t show compare button when only one pipeline' do
@@ -152,6 +154,15 @@ RSpec.feature 'Patient browsing' do
   end
 
   context 'in the context of inspecting a given case pipeline' do
+    scenario 'displays basic info about a pipeline' do
+      pipeline = create(:pipeline, patient: patient)
+      visit patient_pipeline_path(patient, pipeline)
+
+      expect(page).to have_content pipeline.name
+      expect(page).to have_content I18n.t("simple_form.options.pipeline.flow.#{pipeline.flow}")
+      expect(page).to have_content pipeline.user.name
+    end
+
     scenario 'shows alert when no computation defined' do
       pipeline = create(:pipeline, patient: patient, name: 'p1')
       visit patient_pipeline_path(patient, pipeline)

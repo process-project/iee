@@ -72,10 +72,20 @@ en:
         id: Id
         name: Name
         status: Status
+      tab:
+        id: Id
+        name: Name
+        user: Owner
+        status: Status
       tab_compare:
+        id: Id
+        name: Name
+        user: Owner
+        status: Status
         compare: Compare pipelines
       show:
         subtitle: (%{mode} pipeline)
+        owner: "Owner: %{owner}"
         back_to_index: Back to pipelines list
         edit: Edit pipeline
         delete: Remove pipeline
