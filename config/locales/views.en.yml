@@ -59,7 +59,7 @@ en:
       pipeline_steps_form:
         title: Pipeline steps
         refresh: Refresh all tags and branches
-        loading: Loading pipeline seps configuration...
+        loading: Loading pipeline steps configuration...
       computations_form_automatic:
         blank: Postpone selection until execution
         empty_configuration: No configuration needed
