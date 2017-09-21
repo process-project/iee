@@ -60,11 +60,6 @@ module Patients
       def prepare_to_show_computation
         @computations = @pipeline.computations.order(:created_at)
 
-        unless request.xhr?
-          @details = Patients::Details.
-                     new(@patient.case_number, current_user).call
-        end
-
         if load_versions?
           @versions = Gitlab::Versions.
                       new(repo, force_reload: params[:force_reload]).call
