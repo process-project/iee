@@ -6,6 +6,8 @@
     = link_to  [pipeline.patient, pipeline], data: { turbolinks: false } do
       = pipeline_title(pipeline)
   %th
+    = pipeline.user.name
+  %th
     - pipeline.computations.each do |c|
       = link_to patient_pipeline_computation_path(pipeline.patient, pipeline, c),
         data: { turbolinks: false } do
