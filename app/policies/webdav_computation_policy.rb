@@ -10,7 +10,7 @@ class WebdavComputationPolicy < ApplicationPolicy
   end
 
   def update?
-    record.manual? && record.runnable?
+    record.manual? && record.runnable? && !record.active?
   end
 
   def need_proxy?
