@@ -47,6 +47,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Set segmentation status to failure when zip cannot be unzipped (@jmeizner)
 - Don't create webdav structure when pipeline cannot be created (@mkasztelnik)
 - Show error details when pipeline cannot be created (@mkasztelnik)
+- Don't show run button when manual pipeline and proxy is not valid (@mkasztelnik)
 
 ### Security
 
