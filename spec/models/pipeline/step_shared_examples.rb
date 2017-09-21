@@ -64,7 +64,7 @@ shared_examples 'ready to run step' do
     service.run
   end
 end
-# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/BlockLength
 
 shared_examples 'not ready to run step' do
   it "raise error if patient's virtual model is not ready yet" do
