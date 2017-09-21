@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show manual pipeline steps during pipeline creation (@mkasztelnik)
 - External data set service is called to fetch patient's inferred details (@dharezlak)
 - Additional mocked pipelines and pipelines steps (@mkasztelnik)
+- Links to 4 EurValve datasets query interfaces (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
