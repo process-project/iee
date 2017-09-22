@@ -18,16 +18,16 @@ class Pipeline < ApplicationRecord
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::PressureVolumeDisplay
     ],
     avr_from_scan_cfd: [
       PipelineStep::Segmentation,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::HaemodynamicComparison
     ],
     avr_tavi_cfd: [
@@ -37,8 +37,8 @@ class Pipeline < ApplicationRecord
       PipelineStep::ValvePlacement,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::HaemodynamicComparison
     ],
     avr_valve_selection: [
@@ -48,8 +48,8 @@ class Pipeline < ApplicationRecord
       PipelineStep::ValvePlacement,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::HaemodynamicComparison
     ],
     avr_intervention_timing: [
@@ -88,8 +88,8 @@ class Pipeline < ApplicationRecord
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::AgeingModelX2,
       PipelineStep::Cfd,
       PipelineStep::ResultsComparison
@@ -98,8 +98,8 @@ class Pipeline < ApplicationRecord
       PipelineStep::MvSegmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
       PipelineStep::ZeroDModels,
+      PipelineStep::UncertaintyAnalysis,
       PipelineStep::PvLoopComparison
     ],
     not_used_steps: [
