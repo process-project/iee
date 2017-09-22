@@ -5,6 +5,8 @@
       #pipeline-steps-reload.pull-right
         #a.btn.btn-default{ href: '#', onclick: 'updatePipelineSteps(true);' }
           = t('.refresh')
+        #button.btn.btn-default{ disabled: 'disabled' }
+          Design new pipeline
     %hr
     #pipeline-steps
   :javascript
