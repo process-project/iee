@@ -48,6 +48,8 @@ en:
         default: All new registered users will be added to this group
       resource:
         pretty_path: Path
+      pipeline:
+        flow: Select pipeline
 
     placeholders:
       patient:
