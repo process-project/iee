@@ -51,6 +51,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Don't create webdav structure when pipeline cannot be created (@mkasztelnik)
 - Show error details when pipeline cannot be created (@mkasztelnik)
 - Fix proxy expired email title (@mkasztelnik)
+- JSON query requesting inferred patient details updated to comply with data set service's new API (@dharezlak)
 
 ### Security
 

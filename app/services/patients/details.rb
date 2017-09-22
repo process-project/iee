@@ -44,7 +44,7 @@ module Patients
 
     def inferred_values(csv)
       create_details(
-        [entry('elvmin', csv_value(csv, 'dataset_com_elvmin_value'), 'inferred', 'warning')]
+        [entry('elvmin', csv_value(csv, 'com_elvmin_value'), 'inferred', 'warning')]
       )
     end
 
