@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - External data set service is called to fetch patient's inferred details (@dharezlak)
 - Additional mocked pipelines and pipelines steps (@mkasztelnik)
 - Show pipeline details (flow and owner) (@Nuanda)
+- Design new pipeline disabled button (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
