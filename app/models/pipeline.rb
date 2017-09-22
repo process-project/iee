@@ -11,12 +11,10 @@ class Pipeline < ApplicationRecord
       PipelineStep::ResultsPresentation
     ],
     avr_surgical_preparation: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom
     ],
     avr_from_scan_rom: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
@@ -25,7 +23,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::PressureVolumeDisplay
     ],
     avr_from_scan_cfd: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Cfd,
       PipelineStep::ParameterOptimization,
@@ -34,7 +31,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::HaemodynamicComparison
     ],
     avr_tavi_cfd: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::ValveSizing,
       PipelineStep::ProstheticGeometries,
@@ -46,7 +42,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::HaemodynamicComparison
     ],
     avr_valve_selection: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::ValveSizing,
       PipelineStep::ProstheticGeometries,
@@ -58,7 +53,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::HaemodynamicComparison
     ],
     avr_intervention_timing: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
@@ -67,7 +61,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::ResultsComparison
     ],
     av_classification: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
@@ -76,7 +69,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::ResultsComparison
     ],
     avr_risk_benefit: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
@@ -85,7 +77,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::ResultsComparison
     ],
     prosthetic_angle_tilt: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::ValveSizing,
       PipelineStep::ProstheticGeometries,
@@ -94,7 +85,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::ResultsComparison
     ],
     avr_long_term_post_op: [
-      PipelineStep::Inference,
       PipelineStep::Segmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
@@ -105,7 +95,6 @@ class Pipeline < ApplicationRecord
       PipelineStep::ResultsComparison
     ],
     mvr_from_scan_rom: [
-      PipelineStep::Inference,
       PipelineStep::MvSegmentation,
       PipelineStep::Rom,
       PipelineStep::ParameterOptimization,
