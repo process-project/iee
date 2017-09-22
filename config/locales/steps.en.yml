@@ -1,7 +1,7 @@
 en:
   steps:
     segmentation:
-      title: AV Segmenation
+      title: AV Segmentation
       cannot_start: |
         Cannot start segmentation because required input file
         (imaging_*.zip) cannot be found in the patient input directory or

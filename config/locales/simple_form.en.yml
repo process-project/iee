@@ -8,7 +8,7 @@ en:
       resource_manager:
         create: Add manager
       pipeline:
-        create: Run pipeline
+        create: Set up new pipeline
   simple_form:
     "yes": 'Yes'
     "no": 'No'

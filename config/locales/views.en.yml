@@ -68,7 +68,7 @@ en:
         description: Manual piepeline steps can be configured directly before start
       list:
         title: Pipelines
-        new: Run pipeline
+        new: Set up new pipeline
         id: Id
         name: Name
         status: Status
