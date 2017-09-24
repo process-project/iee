@@ -14,7 +14,7 @@ defaults: &defaults
     cloud_facade_path: '/api/v1/'
   data_sets:
     url: <%= ENV['DATA_SETS_BASE_URL'] || 'https://eurvalve.shef.ac.uk' %>
-    site_path: '/eurvalve/WebQuery/site.html?dataset=eurvalve&host=eurvalve.shef.ac.uk'
+    site_path: '/eurvalve/WebQuery/site.html'
     api_doc_path: '/eurvalve/WebQuery/api.png'
     api_url_path: '/WebQuery/api/JsonQuery/'
   clock:

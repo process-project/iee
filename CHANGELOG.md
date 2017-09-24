@@ -27,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Additional mocked pipelines and pipelines steps (@mkasztelnik)
 - Show pipeline details (flow and owner) (@Nuanda)
 - Design new pipeline disabled button (@mkasztelnik)
+- Links to 4 EurValve datasets query interfaces (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
