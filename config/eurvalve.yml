@@ -8,7 +8,9 @@ defaults: &defaults
   owncloud:
     inputs_path: input
     outputs_path: output
+    status_path: status
     url: <%= ENV['OWNCLOUD_URL'] %>
+    ui_url: <%= ENV['OWNCLOUD_UI_URL'] %>
     user: <%= ENV['OWNCLOUD_USER'] %>
     password: <%= ENV['OWNCLOUD_PASSWORD'] %>
   git_repos:
