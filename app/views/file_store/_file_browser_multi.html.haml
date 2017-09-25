@@ -2,7 +2,9 @@
 -# requires the following local settings:
 -# - target_path - WebDAV directory the browser should list as the root element
 -# - element_id - id of the element in which the browser will be embedded (the element will be
--#                created automatically)
+-#                created automatically),
+-# - sortingField - name of the field to sort tree elements by ('name' or 'date'),
+-# - sortingOrder - sorting order of tree elements ('ascending' or 'descending')
 - content_for :embed_file_browser do
   :plain
     eurvalve.filestore.Embed.embedFileBrowser({
@@ -27,7 +29,9 @@
       },
       additionalJsResources: ['#{javascript_path 'application'}'],
       additionalCssResources: ['#{stylesheet_path 'application'}'],
-      additionalCssOverrides: ['body { background: #ffffff; }']
+      additionalCssOverrides: ['body { background: #ffffff; }'],
+      sortingField: '#{defined?(sortingField) ? sortingField : 'name'}',
+      sortingOrder: '#{defined?(sortingOrder) ? sortingOrder : 'ascending'}'
     });
 
 %div{:id => "#{element_id}"}

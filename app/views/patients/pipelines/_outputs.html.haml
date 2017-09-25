@@ -3,4 +3,4 @@
 .x_content
   %section.content
     = render partial: 'file_store/file_browser_multi',
-      locals: { target_path: pipeline.working_dir, element_id: 'patient-outputs', disable_mkdir: true, disable_upload: true }
+      locals: { target_path: pipeline.working_dir, element_id: 'patient-outputs', disable_mkdir: true, disable_upload: true, sortingField: 'date', sortingOrder: 'descending' }
