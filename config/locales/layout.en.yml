@@ -25,7 +25,7 @@ en:
         data_sets: Data sets
       data_sets:
         title: Data sets
-        real: Real data set
+        real: Clinical data set
         inferred: Inferred data set
         simulated: Simulated data set
-        virtual: Virtual data set
+        virtual: Integrated collection
