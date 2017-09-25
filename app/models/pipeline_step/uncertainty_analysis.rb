@@ -21,7 +21,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:data_series_1)
+      pipeline.data_file(:parameter_optimization_result)
     end
   end
 end
