@@ -84,7 +84,7 @@ module Patients
         entry('gender', csv_value(csv, 'gender_value'), 'real', 'default'),
         entry('birth_year', csv_value(csv, 'year_of_birth_value'), 'real', 'default'),
         entry('age', csv_value(csv, 'age_value'), 'real', 'default'),
-        entry('current_age', Time.current.year - csv_value(csv, 'year_of_birth_value').to_i + 1,
+        entry('current_age', Time.current.year - csv_value(csv, 'year_of_birth_value').to_i,
               'computed', 'success')
       ]
     end
