@@ -29,7 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Design new pipeline disabled button (@mkasztelnik)
 - Links to 4 EurValve datasets query interfaces (@mkasztelnik)
 - Add possibility to configure data sets site path though ENV variable (@mkasztelnik)
-- Add link to segmentation statuses output directory (@mkasztelnik)
+- Add link to segmentation status output directory (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)
