@@ -19,7 +19,8 @@ module PatientsHelper
     status = runnable?(computation) ? 'runnable' : computation.status
     label_class = STATUS_MAP[status] || 'default'
     content_tag :div, I18n.t("computation.status_description.#{status}"),
-                class: "label label-#{label_class}"
+                class: "label label-#{label_class}",
+                title: computation.error_message
   end
 
   def execution_time(computation)
