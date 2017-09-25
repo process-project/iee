@@ -6,7 +6,7 @@
       .x_content
         %section.content
           = render partial: 'file_store/file_browser_multi',
-            locals: { target_path: patient.inputs_dir, element_id: 'patient-inputs', disable_mkdir: true }
+            locals: { target_path: patient.inputs_dir, element_id: 'patient-inputs', disable_mkdir: true, sortingField: 'date', sortingOrder: 'descending' }
 
   .col-xs-6
     .x_panel

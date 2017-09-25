@@ -44,6 +44,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Don't show run segmentation button when segmentation is active (@mkasztelnik)
 - Don't show blank option for pipeline mode (@mkasztelnik)
 - Patient age inferred value expressions changed to conform with values coming from real data sets (@dharezlak)
+- File browsers embedded in the pipeline views sort contents by date descendingly (@dharezlak)
 
 ### Deprecated
 
