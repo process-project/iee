@@ -19,7 +19,7 @@ module ComputationsHelper
   def source_comparison_link(from_comp, to_comp)
     repo = computation_repo(from_comp)
     link_to source_comparison_link_text(from_comp, to_comp),
-            "https://gitlab.com/#{repo}/compare/#{from_comp.revision}...#{to_comp.revision}",
+            "https://#{gitlab_host}/#{repo}/compare/#{from_comp.revision}...#{to_comp.revision}",
             target: '_blank'
   end
 
@@ -27,7 +27,7 @@ module ComputationsHelper
     if computation.revision
       repo = computation_repo(computation)
       link_to computation.revision,
-              "https://gitlab.com/#{repo}/tree/#{computation.revision}"
+              "https://#{gitlab_host}/#{repo}/tree/#{computation.revision}"
     end
   end
 
@@ -35,6 +35,10 @@ module ComputationsHelper
 
   def computation_repo(computation)
     Rails.application.config_for('eurvalve')['git_repos'][computation.pipeline_step]
+  end
+
+  def gitlab_host
+    Rails.application.config_for('application')['gitlab']['host']
   end
 
   def source_comparison_link_text(from_comp, to_comp)
