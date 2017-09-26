@@ -20,7 +20,7 @@ defaults: &defaults
   clock:
     update: <%= ENV['CLOCK_UPDATE'] || 30 %> #seconds
   gitlab:
-    clone: <%= "git@#{ENV['GITLAB_HOST'] || 'gitlab.com'}" %>
+    clone_url: <%= "git@#{ENV['GITLAB_HOST'] || 'gitlab.com'}" %>
 
 development:
   <<: *defaults
