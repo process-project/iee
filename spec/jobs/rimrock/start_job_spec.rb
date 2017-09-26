@@ -12,9 +12,17 @@ RSpec.describe Rimrock::StartJob do
     user = User.new(proxy: outdated_proxy)
     computation = double(user: user)
     start = instance_double(Rimrock::Start)
+    updater = instance_double(ComputationUpdater)
+
+    allow(Rimrock::Start).
+      to receive(:new).
+      with(computation).and_return(start)
+    allow(ComputationUpdater).
+      to receive(:new).
+      with(computation).and_return(updater)
 
     expect(start).to receive(:call)
-    allow(Rimrock::Start).to receive(:new).with(computation).and_return(start)
+    expect(updater).to receive(:call)
 
     described_class.perform_now(computation)
     travel_back

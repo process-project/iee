@@ -61,6 +61,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix proxy expired email title (@mkasztelnik)
 - JSON query requesting inferred patient details updated to comply with data set service's new API (@dharezlak)
 - Don't show run button when manual pipeline and proxy is not valid (@mkasztelnik)
+- Update computation status after computation is started (@mkasztelnik)
 
 ### Security
 
