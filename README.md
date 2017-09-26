@@ -104,7 +104,7 @@ you can set the following ENV variables:
   * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
   * `GITLAB_HOST' - Gitlab host (without https, e.g. gitlab.com)
   * `GITLAB_API_PRIVATE_TOKEN` - Gitlab access token used to fetch Rimrock
-  * `CLOCK_UPDATE` - Computations update period
+  * `CLOCK_UPDATE` - Computations update period (in seconds)
     Computations slurm run template
   * `PIPELINE_R_BFS` - Overrides default project name in Gitlab for Blood Flow Simutalion
   * `PIPELINE_R_HMS` - Overrides default project name in Gitlab for Heart Model Simulation
