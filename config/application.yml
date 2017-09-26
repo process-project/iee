@@ -19,12 +19,16 @@ defaults: &defaults
     api_url_path: '/WebQuery/api/JsonQuery/'
   clock:
     update: <%= ENV['CLOCK_UPDATE'] || 30 %> #seconds
+  gitlab:
+    clone: <%= "git@#{ENV['GITLAB_HOST'] || 'gitlab.com'}" %>
 
 development:
   <<: *defaults
 
 test:
   <<: *defaults
+  gitlab:
+    clone_url: git@gitlab-test.com
 
 production:
   <<: *defaults

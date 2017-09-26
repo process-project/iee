@@ -32,6 +32,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add link to segmentation status output directory (@mkasztelnik)
 - Show computation error message (@mkasztelnik)
 - Gitlab endpoint can be configured using ENV variable (@mkasztelnik)
+- Gitlab clone url can be configured though ENV variable (@mkasztelnik)
+- Add `clone_repo(repo)` script generator helper (@mkasztelnik)
 
 ### Changed
 - Segmentation run mode can be configured using yaml or ENV variable (@mkasztelnik)

@@ -93,4 +93,19 @@ describe ScriptGenerator do
 
     expect(script).to include 'rev'
   end
+
+  it 'inserts gitlab clone url' do
+    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+                                 'git clone <%= gitlab_clone_url %>:org/repo.git').call
+
+    expect(script).to include 'git clone git@gitlab-test.com:org/repo.git'
+  end
+
+  it 'inserts clone repo command' do
+    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+                                 '<%= clone_repo("org/repo.git") %>').call
+
+    expect(script).to include 'export SSH_DOWNLOAD_KEY="SSH KEY'
+    expect(script).to include 'git clone git@gitlab-test.com:org/repo.git'
+  end
 end

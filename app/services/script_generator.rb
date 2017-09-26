@@ -50,6 +50,19 @@ class ScriptGenerator
       " \"#{File.join(pipeline.working_url, filename)}\""
   end
 
+  def gitlab_clone_url
+    Rails.application.config_for('application')['gitlab']['clone_url']
+  end
+
+  def clone_repo(repo)
+    <<~CODE
+      export SSH_DOWNLOAD_KEY="#{ssh_download_key}"
+      ssh-agent bash -c '
+        ssh-add <(echo "$SSH_DOWNLOAD_KEY");
+        git clone #{gitlab_clone_url}:#{repo}'
+    CODE
+  end
+
   private
 
   def extract_request_data_for_type(options)
