@@ -67,11 +67,8 @@ en:
       computations_form_manual:
         description: Manual piepeline steps can be configured directly before start
       list:
-        title: Pipelines
+        title: Pipelines for this Subject
         new: Set up new pipeline
-        id: Id
-        name: Name
-        status: Status
       tab:
         id: Id
         name: Name
@@ -82,7 +79,7 @@ en:
         name: Name
         user: Owner
         status: Status
-        compare: Compare pipelines
+        compare: Compare Existing Results
       show:
         subtitle: (%{mode} pipeline)
         owner: "Owner: %{owner}"

@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Labels for pipelines list view improved (@mkasztelnik)
 
 ### Deprecated
 
