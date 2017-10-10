@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Labels for pipelines list view improved (@mkasztelnik)
 - Segmentation temp file is removed from local disc after it is transferred into
   segmentation Philips service (@mkasztelnik)
+- Use stages instead of types in Gitlab CI yml (@mkasztelnik)
 
 ### Deprecated
 
