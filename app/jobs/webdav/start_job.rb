@@ -10,6 +10,7 @@ module Webdav
       Rails.logger.error(e)
       computation.update_attributes(status: 'error',
                                     error_message: e.message)
+    ensure
       ComputationUpdater.new(computation).call
     end
   end

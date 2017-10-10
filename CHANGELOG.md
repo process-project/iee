@@ -10,6 +10,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Reload pipeline step status on patient view (@mkasztelnik)
+- Reload segmentation status after it is started (@mkasztelnik)
+- Proper handling for rimrock computation start failure (@mkasztelnik)
 
 ### Changed
 - Labels for pipelines list view improved (@mkasztelnik)
