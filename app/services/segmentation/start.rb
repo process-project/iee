@@ -10,6 +10,7 @@ module Segmentation
       download_input
       update_computation
       upload_input
+      cleanup
 
       @computation.update_attributes(status: 'running')
     end
@@ -51,6 +52,10 @@ module Segmentation
 
     def own_cloud
       @own_cloud ||= Rails.application.config_for('eurvalve')['owncloud']
+    end
+
+    def cleanup
+      File.delete(@local_path) if File.exist?(@local_path)
     end
   end
 end
