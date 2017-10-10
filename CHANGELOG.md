@@ -9,6 +9,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Reload segmentation status after it is started (@mkasztelnik)
+- Proper handling for rimrock computation start failure (@mkasztelnik)
 
 ### Changed
 
