@@ -13,12 +13,13 @@ class ComputationUpdater
   end
 
   def call
-    computations.each { |c| broadcast_to(c) }
+    computations.each { |c| broadcast_to_computation(c) }
+    broadcast_to_patient(patient)
   end
 
   private
 
-  def broadcast_to(to)
+  def broadcast_to_computation(to)
     ComputationChannel.broadcast_to(to,
                                     menu: menu(to),
                                     reload_step: to.id == computation.id,
@@ -30,6 +31,21 @@ class ComputationUpdater
       render(partial: 'patients/pipelines/computations/menu',
              locals: { patient: patient, pipeline: pipeline,
                        computation: to, computations: computations })
+  end
+
+  def broadcast_to_patient(to)
+    PatientChannel.broadcast_to(to, list: list(to))
+  end
+
+  def list(patient)
+    ApplicationController.
+      render(partial: 'patients/pipelines/list',
+             locals: { patient: patient, pipelines: pipelines })
+  end
+
+  def pipelines
+    patient.pipelines.includes(:computations).
+      order(:iid).order('computations.created_at')
   end
 
   def reload?
