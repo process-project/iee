@@ -6,17 +6,13 @@
   %ul.nav.child_menu
     = nav_tab :id, 'eurvalve', active_class: 'current-page' do
       = link_to data_set_path(id: 'eurvalve') do
-        = icon('database')
         = t('.real')
     = nav_tab :id, 'inferred', active_class: 'current-page' do
       = link_to data_set_path(id: 'inferred') do
-        = icon('database')
         = t('.inferred')
     = nav_tab :id, 'simulated', active_class: 'current-page' do
       = link_to data_set_path(id: 'simulated') do
-        = icon('database')
         = t('.simulated')
     = nav_tab :id, 'eurvalveVirtual', active_class: 'current-page' do
       = link_to data_set_path(id: 'eurvalveVirtual') do
-        = icon('database')
         = t('.virtual')
