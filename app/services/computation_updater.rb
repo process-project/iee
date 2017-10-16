@@ -6,6 +6,7 @@ class ComputationUpdater
   def initialize(computation)
     @computation = computation
     @computations = Computation.
+                    includes(:pipeline).
                     where(pipeline_id: computation.pipeline_id).
                     order(:created_at)
     @pipeline = computation.pipeline
