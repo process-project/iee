@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Remove n+1 query when updating computation status (@mkasztelnik)
 - Sidebar's hamburger button is operational properly toggling the left menu (@dharezlak)
 
 ### Security
