@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Reload pipeline step status on patient view (@mkasztelnik)
 - Reload segmentation status after it is started (@mkasztelnik)
 - Proper handling for rimrock computation start failure (@mkasztelnik)
+- Execution time updated each second for active computation (@mkasztelnik)
 
 ### Changed
 - Labels for pipelines list view improved (@mkasztelnik)
@@ -26,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Remove n+1 query when updating computation status (@mkasztelnik)
 - Sidebar's hamburger button is operational properly toggling the left menu (@dharezlak)
+- Fix patient web socket unsubscribe (@mkasztelnik)
 
 ### Security
 

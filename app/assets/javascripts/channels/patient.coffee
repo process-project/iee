@@ -18,6 +18,6 @@
       reloadPipelines: (list) ->
         document.getElementById("pipelines").outerHTML = list
 
-  else if App.computation
+  else if App.patient
     App.patient.unsubscribe
     App.patient = null
