@@ -19,6 +19,11 @@ stages:
 test:
   stage: test
   script:
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+  - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+  - apt-get update -qy
+  - apt-get install -y google-chrome-stable
+  - google-chrome --version
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc
@@ -31,6 +36,11 @@ test:
 integration:
   stage: test
   script:
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+  - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+  - apt-get update -qy
+  - apt-get install -y google-chrome-stable
+  - google-chrome --version
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc

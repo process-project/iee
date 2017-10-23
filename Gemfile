@@ -87,10 +87,11 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'poltergeist'
   gem 'rspec-json_expectations'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
 end
 
