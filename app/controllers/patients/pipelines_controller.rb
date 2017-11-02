@@ -19,7 +19,7 @@ module Patients
     def create
       @pipeline = create_pipeline
 
-      if @pipeline.valid?
+      if @pipeline.errors.empty?
         @patient.execute_data_sync(current_user)
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(patient_pipeline_path(@patient, @pipeline))
