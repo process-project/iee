@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Patient and pipline creation silent failures (@jmeizner)
 
 ### Security
 
