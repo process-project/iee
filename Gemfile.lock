@@ -384,6 +384,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable (~> 2.5)
   animate-rails (= 1.0.10)
   bootstrap-sass (~> 3.3)
   brakeman

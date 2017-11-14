@@ -53,6 +53,9 @@ gem 'redis-rails'
 # File processing
 gem 'rubyzip', '>= 1.0.0'
 
+# URL validation
+gem 'addressable', '~> 2.5'
+
 # Gitlab integration
 gem 'gitlab'
 
