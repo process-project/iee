@@ -28,6 +28,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove n+1 query when updating computation status (@mkasztelnik)
 - Sidebar's hamburger button is operational properly toggling the left menu (@dharezlak)
 - Fix patient web socket unsubscribe (@mkasztelnik)
+- Patient and pipeline creation silent failures (@jmeizner)
 
 ### Security
 

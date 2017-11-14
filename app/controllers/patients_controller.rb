@@ -28,7 +28,7 @@ class PatientsController < ApplicationController
 
     @patient = Patients::Create.new(current_user, new_patient).call
 
-    if @patient.valid?
+    if @patient.errors.empty?
       @patient.execute_data_sync(current_user)
       redirect_to @patient, notice: I18n.t('patients.create.success')
     else
