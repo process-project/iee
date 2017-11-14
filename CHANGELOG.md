@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Segmentation temp file is removed from local disc after it is transferred into
   segmentation Philips service (@mkasztelnik)
 - Use stages instead of types in Gitlab CI yml (@mkasztelnik)
+- Upgrade to rubocop 0.51.0
 
 ### Deprecated
 

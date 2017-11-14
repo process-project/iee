@@ -3,7 +3,9 @@
 class Group < ApplicationRecord
   include CheckExistenceConcern
 
-  has_many :user_groups, autosave: true
+  has_many :user_groups,
+           autosave: true,
+           dependent: :destroy
   has_many :users, through: :user_groups
   has_many :access_policies, dependent: :destroy
   has_many :resource_managers, dependent: :destroy

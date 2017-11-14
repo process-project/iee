@@ -4,7 +4,7 @@ class Proxy < OpenSSL::X509::Certificate
   def initialize(user)
     super(user&.proxy)
     @valid = true
-  rescue
+  rescue StandardError
     @valid = false
   end
 

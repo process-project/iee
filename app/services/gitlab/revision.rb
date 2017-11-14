@@ -15,7 +15,7 @@ module Gitlab
 
     def revision(type)
       Gitlab.send(type, @project_name, @branch_or_tag_name)&.commit&.id
-    rescue
+    rescue StandardError
       nil
     end
   end

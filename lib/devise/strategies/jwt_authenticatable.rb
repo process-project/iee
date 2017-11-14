@@ -12,7 +12,7 @@ module Devise
       def authenticate!
         resource = User.from_token(token)
         resource ? success!(resource) : fail(:invalid_credentials)
-      rescue
+      rescue StandardError
         fail(:invalid_credentials)
       end
 
@@ -25,7 +25,7 @@ module Devise
       def bearer_token
         pattern = /^Bearer /
         header  = request.env['HTTP_AUTHORIZATION']
-        header.gsub(pattern, '') if header && header.match(pattern)
+        header.gsub(pattern, '') if header&.match(pattern)
       end
     end
   end

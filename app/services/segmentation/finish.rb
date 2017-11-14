@@ -15,7 +15,7 @@ module Segmentation
       download_output
       save_output
       update_computation(status: 'finished')
-    rescue => e
+    rescue StandardError => e
       Rails.logger.error(e)
       update_computation(status: 'error', error_message: e.message)
     end

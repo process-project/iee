@@ -79,7 +79,7 @@ group :development do
   # start app using `thin start --ssl
   gem 'thin'
 
-  gem 'rubocop', '0.49.1', require: false
+  gem 'rubocop', '0.51.0', require: false
 end
 
 group :test do

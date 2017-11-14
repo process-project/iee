@@ -63,11 +63,11 @@ module Rimrock
     end
 
     def on_finish_callback(computation)
-      @on_finish_callback.new(computation).call if @on_finish_callback
+      @on_finish_callback&.new(computation)&.call
     end
 
     def update(computation)
-      @updater.new(computation).call if @updater
+      @updater&.new(computation)&.call
     end
   end
 end
