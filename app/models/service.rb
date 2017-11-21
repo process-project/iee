@@ -98,7 +98,7 @@ class Service < ApplicationRecord
   end
 
   def check_uri_aliases_format
-    return unless uri_aliases.any? { |u| u !~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/ }
+    return unless uri_aliases.any? { |u| u !~ /\A#{URI.parser.make_regexp}\z/ }
     errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.format'))
   end
 
