@@ -9,7 +9,7 @@ class Service < ApplicationRecord
   validates :uri,
             presence: true,
             uniqueness: true,
-            format: { with: /\A#{URI.regexp}\z/ }
+            format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp}\z/ }
   validates :users,
             presence: true
   validate :uri_does_not_end_with_slash
@@ -98,7 +98,7 @@ class Service < ApplicationRecord
   end
 
   def check_uri_aliases_format
-    return unless uri_aliases.any? { |u| u !~ /\A#{URI.regexp}\z/ }
+    return unless uri_aliases.any? { |u| u !~ /\A#{URI.parser.make_regexp}\z/ }
     errors.add(:uri_aliases, I18n.t('activerecord.errors.models.service.uri_aliases.format'))
   end
 

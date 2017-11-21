@@ -55,7 +55,7 @@ module Api
     end
 
     def uri
-      params[:uri] && URI.decode(params[:uri])
+      params[:uri] && Addressable::URI.unescape(params[:uri])
     end
 
     def access_method

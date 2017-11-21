@@ -20,8 +20,8 @@ class Resource < ApplicationRecord
 
   scope :local_paths,
         lambda { |path|
-          where(resource_type: :local).where('path ~* CONCAT(\'^\', CONCAT(:path, \'$\'))',
-                                             path: path)
+          where(resource_type: :local).
+            where('path ~* CONCAT(\'^\', CONCAT(:path, \'$\'))', path: path)
         }
 
   def uri
@@ -56,7 +56,7 @@ class Resource < ApplicationRecord
   end
 
   def pretty_path_asterisk_at_the_end
-    if pretty_path && pretty_path.include?('*') &&
+    if pretty_path&.include?('*') &&
        (pretty_path.match(/\*$/).nil? || pretty_path.count('*') > 1)
       errors.add(:pretty_path, I18n.t('activerecord.errors.models.resource.pretty_path.wildcard'))
     end

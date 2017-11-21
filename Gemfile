@@ -53,6 +53,9 @@ gem 'redis-rails'
 # File processing
 gem 'rubyzip', '>= 1.0.0'
 
+# URL validation
+gem 'addressable', '~> 2.5'
+
 # Gitlab integration
 gem 'gitlab'
 
@@ -79,7 +82,7 @@ group :development do
   # start app using `thin start --ssl
   gem 'thin'
 
-  gem 'rubocop', '0.49.1', require: false
+  gem 'rubocop', '0.51.0', require: false
 end
 
 group :test do
