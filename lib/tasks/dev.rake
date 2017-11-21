@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 if Rails.env.development? || Rails.env.test?
-  require 'factory_girl'
+  require 'factory_bot'
 
   namespace :dev do
     desc 'Sample data for local development environment'
     task prime: 'db:setup' do
-      include FactoryGirl::Syntax::Methods
+      include FactoryBot::Syntax::Methods
       create(:approved_user, email: 'first@cyf.pl', password: 'FirstPassword')
       create(:approved_user, email: 'second@cyf.pl', password: 'SecondPassword')
       create(:approved_user, email: 'third@cyf.pl', password: 'ThirdPassword')

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module FactoryGirl
+module FactoryBot
   module ServiceHelper
     class << self
       def uniq_uri(*exclude_uris)

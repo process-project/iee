@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Upgrade to rubocop 0.51.0
 - Use addressable gem to parse URLs
 - Upgraded rails into 5.1.4 and other gems into latest supported versions (@mkasztelnik)
+- Change factory_girl into factory_bot (@mkasztelnik)
 
 ### Deprecated
 
