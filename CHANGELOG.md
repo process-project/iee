@@ -19,8 +19,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Segmentation temp file is removed from local disc after it is transferred into
   segmentation Philips service (@mkasztelnik)
 - Use stages instead of types in Gitlab CI yml (@mkasztelnik)
-- Upgrade to rubocop 0.51.0
-- Use addressable gem to parse URLs
+- Upgrade to rubocop 0.51.0 (@mkasztelnik)
+- Use addressable gem to parse URLs (@mkasztelnik)
+- Use preconfigured docker image for builds (@mkasztelnik)
 
 ### Deprecated
 

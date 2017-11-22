@@ -1,4 +1,4 @@
-image: ruby:2.4.1
+image: cyfronet/ruby-2.4.1-node-phantomjs-2.1
 
 services:
   - postgres
@@ -19,20 +19,9 @@ stages:
 test:
   stage: test
   script:
-  - apt-get update -qy
-  - apt-get install -y nodejs
-  - apt-get install -y postgresql-contrib
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc
-  - mkdir ~/tmp
-  - pushd ~/tmp
-  - wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2
-  - tar xf phantomjs-2.1.1-linux-x86_64.tar.bz2
-  - mv phantomjs-2.1.1-linux-x86_64 phantomjs
-  - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
-  - phantomjs --version
-  - popd
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
@@ -42,20 +31,9 @@ test:
 integration:
   stage: test
   script:
-  - apt-get update -qy
-  - apt-get install -y nodejs
-  - apt-get install -y postgresql-contrib
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc
-  - mkdir ~/tmp
-  - pushd ~/tmp
-  - wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2
-  - tar xf phantomjs-2.1.1-linux-x86_64.tar.bz2
-  - mv phantomjs-2.1.1-linux-x86_64 phantomjs
-  - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
-  - phantomjs --version
-  - popd
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
