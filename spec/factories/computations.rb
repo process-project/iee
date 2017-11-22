@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :computation do
     pipeline_step { Pipeline::FLOWS.values.first.first::STEP_NAME }
     script { Faker::Lorem.sentence }
