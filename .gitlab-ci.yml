@@ -1,4 +1,4 @@
-image: cyfronet/ruby-2.4.1-node-phantomjs-2.1
+image: cyfronet/ruby-2.4.1-node-chrome
 
 services:
   - postgres
@@ -19,10 +19,6 @@ stages:
 test:
   stage: test
   script:
-  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-  - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-  - apt-get update -qy
-  - apt-get install -y google-chrome-stable
   - google-chrome --version
   - ruby -v
   - which ruby
@@ -36,10 +32,6 @@ test:
 integration:
   stage: test
   script:
-  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-  - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-  - apt-get update -qy
-  - apt-get install -y google-chrome-stable
   - google-chrome --version
   - ruby -v
   - which ruby
