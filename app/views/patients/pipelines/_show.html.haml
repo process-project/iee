@@ -30,5 +30,5 @@
   .x_content
     = yield
 
-= render('patients/file_browsers', patient: patient) do
-  = render 'patients/pipelines/outputs', pipeline: pipeline
+= render('patients/pipelines/file_browsers',
+  patient: patient, pipeline: pipeline)
