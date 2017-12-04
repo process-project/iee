@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Upgraded rails into 5.1.4 and other gems into latest supported versions (@mkasztelnik)
 - Change `factory_girl` into `factory_bot` (@mkasztelnik)
 - Use preconfigured docker image for builds (@mkasztelnik)
+- Lock redis version into 3.x (@mkasztelnik)
 
 ### Deprecated
 

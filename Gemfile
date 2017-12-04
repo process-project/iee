@@ -60,6 +60,7 @@ gem 'addressable', '~> 2.5'
 gem 'gitlab'
 
 gem 'puma', '~> 3.7'
+gem 'redis', '~> 3.0'
 
 group :development, :test do
   gem 'bullet'
