@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'faraday'
-
 module Patients
   class Details
     def initialize(patient_case, user)
@@ -25,14 +23,14 @@ module Patients
 
     def service_calls
       [
-        fetch_details(payload('patient_details.json'), :real_values),
-        fetch_details(payload('patient_details_inferred.json'), :inferred_values)
+        fetch_details('patient_details.json', :real_values),
+        fetch_details('patient_details_inferred.json', :inferred_values)
       ]
     end
 
-    def fetch_details(payload, extraction)
-      csv_value = JSON.parse(call_data_set_service(payload).body)['queryCSVResponse']
-      method(extraction).call(to_csv(csv_value))
+    def fetch_details(payload_file, extraction)
+      client = DataSets::Client.new(@token, payload_file, '{case_number}' => @patient_case)
+      method(extraction).call(client.call)
     rescue StandardError => e
       Rails.logger.error("Could not fetch patient details with unknown error: #{e.message}")
       { status: :error, message: e.message }
@@ -46,37 +44,6 @@ module Patients
       create_details(
         [entry('elvmin', csv_value(csv, 'com_elvmin_value'), 'inferred', 'warning')]
       )
-    end
-
-    def url
-      Rails.configuration.constants['data_sets']['url'] +
-        Rails.configuration.constants['data_sets']['api_url_path']
-    end
-
-    # rubocop:disable Metrics/MethodLength
-    def call_data_set_service(payload)
-      Faraday::Connection.new(
-        url: url,
-        ssl: { ca_file: Rails.root.join('config', 'data_sets', 'quovadis_root_ca.pem').to_s }
-      ).post do |request|
-        request.headers['Content-Type'] = 'application/json'
-        request.headers['Accept'] = 'application/json'
-        request.headers['Cookie'] = "access_token=#{@token}"
-        request.options.timeout = 2
-        request.options.open_timeout = 2
-        request.body = payload
-      end
-    end
-    # rubocop:enable Metrics/MethodLength
-
-    def to_csv(csv_value)
-      csv = CSV.parse(csv_value)
-
-      if csv.length > 1
-        csv
-      else
-        raise StandardError, I18n.t('errors.patient_details.empty_result')
-      end
     end
 
     def first_values(csv)
@@ -109,11 +76,6 @@ module Patients
 
     def csv_value(csv, field)
       csv[1][csv[0].index(field)]
-    end
-
-    def payload(payload_file)
-      File.read(Rails.root.join('config', 'data_sets', 'payloads', payload_file)).
-        gsub('{case_number}', @patient_case)
     end
   end
 end
