@@ -22,6 +22,7 @@ module Pipelines
     private
 
     def post_save
+      r_mkdir(@pipeline.inputs_dir)
       r_mkdir(@pipeline.working_dir)
       create_computations
     end

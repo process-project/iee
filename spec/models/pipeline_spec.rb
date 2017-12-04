@@ -24,7 +24,8 @@ RSpec.describe Pipeline, type: :model do
                      iid: 123,
                      patient: build(:patient, case_number: 'abc'))
 
-    expect(pipeline.working_dir).to eq 'test/patients/abc/pipelines/123/'
+    expect(pipeline.inputs_dir).to eq 'test/patients/abc/pipelines/123/inputs/'
+    expect(pipeline.working_dir).to eq 'test/patients/abc/pipelines/123/outputs/'
   end
 
   it do
