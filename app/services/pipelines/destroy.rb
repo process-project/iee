@@ -10,7 +10,7 @@ module Pipelines
 
     def internal_call
       @pipeline.destroy
-      delete(@pipeline.working_dir)
+      delete(@pipeline.root_dir)
     rescue Net::HTTPServerException
       raise ActiveRecord::Rollback
     end

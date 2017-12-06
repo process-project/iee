@@ -70,7 +70,7 @@ module SynchronizerUtilities
   end
 
   def current_names(pipeline)
-    @patient.data_files.where(pipeline: pipeline).pluck(:name)
+    @patient.data_files.where(output_pipeline: pipeline).pluck(:name)
   end
 
   def input_names(remote_names)
@@ -96,11 +96,11 @@ module SynchronizerUtilities
     DataFile.create(name: remote_name,
                     data_type: data_type,
                     patient: @patient,
-                    pipeline: pipeline)
+                    output_pipeline: pipeline)
   end
 
   def remove_obsolete_db_entries(remote_names, pipeline = nil)
-    @patient.data_files.where(pipeline: pipeline).each do |data_file|
+    @patient.data_files.where(output_pipeline: pipeline).each do |data_file|
       next if remote_names.include? data_file.name
       data_file.destroy!
       Rails.logger.info(
