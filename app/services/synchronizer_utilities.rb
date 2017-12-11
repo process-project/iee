@@ -33,17 +33,24 @@ module SynchronizerUtilities
   end
 
   def parse_response(remote_names)
-    input_names(remote_names).each do |remote_name|
-      sync_file(remote_name)
-    end
-    remove_obsolete_db_entries(input_names(remote_names))
-
+    sync_dir(remote_names, @patient.inputs_dir)
     @patient.pipelines.each do |pipeline|
-      pipeline_file_names(remote_names, pipeline).each do |remote_name|
-        sync_file(remote_name, pipeline)
-      end
-      remove_obsolete_db_entries(pipeline_file_names(remote_names, pipeline), pipeline)
+      sync_dir(remote_names, pipeline.inputs_dir, input_pipeline: pipeline)
+      sync_dir(remote_names, pipeline.working_dir, output_pipeline: pipeline)
     end
+  end
+
+  def sync_dir(remote_names, prefix, input_pipeline: nil, output_pipeline: nil)
+    file_names = names(remote_names, prefix)
+
+    file_names.each do |remote_name|
+      sync_file(remote_name,
+                input_pipeline: input_pipeline,
+                output_pipeline: output_pipeline)
+    end
+    remove_obsolete_db_entries(file_names,
+                               input_pipeline: input_pipeline,
+                               output_pipeline: output_pipeline)
   end
 
   def recognize_data_type(name)
@@ -69,45 +76,41 @@ module SynchronizerUtilities
     }
   end
 
-  def current_names(pipeline)
-    @patient.data_files.where(output_pipeline: pipeline).pluck(:name)
-  end
-
-  def input_names(remote_names)
-    remote_names.select { |rn| rn.split(@patient.inputs_dir).size > 1 }.map do |rn|
-      rn.split(@patient.inputs_dir)[1]
+  def names(remote_names, prefix)
+    remote_names.select { |rn| rn.split(prefix).size > 1 }.map do |rn|
+      rn.split(prefix)[1]
     end
   end
 
-  def pipeline_file_names(remote_names, pipeline)
-    remote_names.select { |rn| rn.split(pipeline.working_dir).size > 1 }.map do |rn|
-      rn.split(pipeline.working_dir)[1]
-    end
-  end
-
-  def sync_file(remote_name, pipeline = nil)
+  def sync_file(remote_name, input_pipeline: nil, output_pipeline: nil)
     data_type = recognize_data_type(remote_name)
-    if data_type && !current_names(pipeline).include?(remote_name)
-      create_db_entry(data_type, remote_name, pipeline)
+    if data_type && !current_names(input_pipeline, output_pipeline).include?(remote_name)
+      create_db_entry(data_type, remote_name, input_pipeline, output_pipeline)
     end
   end
 
-  def create_db_entry(data_type, remote_name, pipeline)
+  def current_names(input_pipeline, output_pipeline)
+    @patient.data_files.where(input_pipeline: input_pipeline,
+                              output_pipeline: output_pipeline).pluck(:name)
+  end
+
+  def create_db_entry(data_type, remote_name, input_pipeline, output_pipeline)
     DataFile.create(name: remote_name,
                     data_type: data_type,
                     patient: @patient,
-                    output_pipeline: pipeline)
+                    input_pipeline: input_pipeline,
+                    output_pipeline: output_pipeline)
   end
 
-  def remove_obsolete_db_entries(remote_names, pipeline = nil)
-    @patient.data_files.where(output_pipeline: pipeline).each do |data_file|
+  def remove_obsolete_db_entries(remote_names, input_pipeline: nil, output_pipeline: nil)
+    @patient.data_files.where(input_pipeline: input_pipeline,
+                              output_pipeline: output_pipeline).each do |data_file|
       next if remote_names.include? data_file.name
       data_file.destroy!
+      pipeline = input_pipeline || output_pipeline
       Rails.logger.info(
         I18n.t('data_file_synchronizer.file_removed',
-               name: data_file.name,
-               patient: @patient.case_number,
-               pipeline: pipeline)
+               name: data_file.name, patient: @patient.case_number, pipeline: pipeline)
       )
     end
   end
