@@ -9,6 +9,7 @@ defaults: &defaults
     web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve.cyfronet.pl' %>
     web_dav_base_path: '/webdav'
     web_dav_policy_proxy_path: '/portal-proxy'
+    prospective_images_path: 'ProspectiveImaging/'
   cloud:
     atmosphere_url: <%= ENV['ATMOSPHERE_BASE_URL'] || 'https://vph.cyfronet.pl' %>
     cloud_facade_path: '/api/v1/'
@@ -17,6 +18,7 @@ defaults: &defaults
     site_path: <%= ENV['DATA_SETS_SITE_PATH'] || '/eurvalve/WebQuery/site.html' %>
     api_doc_path: '/eurvalve/WebQuery/api.png'
     api_url_path: '/WebQuery/api/JsonQuery/'
+    sync_user_email: <%= ENV['SYNC_USER_EMAIL'] || 'lucky.luke@old.west' %>
   clock:
     update: <%= ENV['CLOCK_UPDATE'] || 30 %> #seconds
   gitlab:
@@ -28,6 +30,11 @@ development:
 
 test:
   <<: *defaults
+  file_store:
+    web_dav_base_url: 'https://files.valve-dev.cyfronet.pl'
+    web_dav_base_path: '/webdav'
+    web_dav_policy_proxy_path: '/portal-proxy'
+    prospective_images_path: 'test/ProspectiveImagingTest/'
   gitlab:
     host: <%= ENV['GITLAB_HOST'] || 'gitlab.com' %>
     clone_url: git@gitlab-test.com
