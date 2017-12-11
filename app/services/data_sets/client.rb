@@ -4,7 +4,7 @@ require 'faraday'
 
 module DataSets
   class Client
-    def initialize(user_token, payload_file, interpolation = nil)
+    def initialize(user_token, payload_file, interpolation = {})
       @interpolation = interpolation
       @token = user_token
       @payload_file = payload_file
