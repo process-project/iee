@@ -32,7 +32,6 @@ module Patients
       Webdav::UploadFile.
         new(@dav_client, local_path, "#{@patient.inputs_dir}/#{new_image_name}").
         call
-
     rescue Net::HTTPServerException => e
       Rails.logger.error e
       raise StandardError, "Problem moving patient (#{@patient.case_number}) image file #{modality}"
