@@ -36,7 +36,7 @@ module SynchronizerUtilities
     sync_dir(remote_names, @patient.inputs_dir)
     @patient.pipelines.each do |pipeline|
       sync_dir(remote_names, pipeline.inputs_dir, input_pipeline: pipeline)
-      sync_dir(remote_names, pipeline.working_dir, output_pipeline: pipeline)
+      sync_dir(remote_names, pipeline.outputs_dir, output_pipeline: pipeline)
     end
   end
 

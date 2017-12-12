@@ -140,12 +140,12 @@ class Pipeline < ApplicationRecord
     iid.to_s
   end
 
-  def working_dir(prefix = patient.pipelines_dir)
+  def outputs_dir(prefix = patient.pipelines_dir)
     File.join(root_dir(prefix), 'outputs', '/')
   end
 
   def working_url
-    working_dir(patient.pipelines_url)
+    outputs_dir(patient.pipelines_url)
   end
 
   def inputs_dir(prefix = patient.pipelines_dir)

@@ -60,7 +60,7 @@ class DataFile < ApplicationRecord
   private
 
   def root_path
-    output_pipeline&.working_dir ||
+    output_pipeline&.outputs_dir ||
       input_pipeline&.inputs_dir ||
       patient.inputs_dir
   end
