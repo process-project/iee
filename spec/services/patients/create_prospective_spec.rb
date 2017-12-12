@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Patients::CreateProspective do
+describe Patients::CreateProspective, files: true do
   let(:user) { build(:user, email: Rails.configuration.constants['data_sets']['sync_user_email']) }
   let(:patient) { build(:patient, case_number: 'cs') }
   let(:patient_x) { build(:patient, case_number: 'patient_x') }
