@@ -16,6 +16,7 @@ namespace :patients do
       new_user.password_confirmation = passwd
       new_user.state = :approved
       new_user.groups = [group_eurvalve_research, group_cyfronet]
+      Users::AddToDefaultGroups.new(new_user).call
     end
     raise 'Unable to find or create update user' unless user.persisted?
 
