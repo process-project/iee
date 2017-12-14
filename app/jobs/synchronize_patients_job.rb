@@ -4,6 +4,6 @@ class SynchronizePatientsJob < ApplicationJob
   queue_as :computation
 
   def perform
-    Patients::PatientSynchronizer.new.call
+    Patients::Synchronizer.new.call
   end
 end

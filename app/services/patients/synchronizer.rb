@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Patients
-  class PatientSynchronizer
+  class Synchronizer
     def call
       all_cases = query_ready_patients
 

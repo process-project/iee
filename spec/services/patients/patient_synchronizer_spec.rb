@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Patients::PatientSynchronizer, files: true do
+describe Patients::Synchronizer, files: true do
   let(:user) { build(:user, email: Rails.configuration.constants['data_sets']['sync_user_email']) }
   let(:patient) { build(:patient, case_number: 'cs') }
   let(:patient_x) { build(:patient, case_number: 'patient_x') }
@@ -14,10 +14,10 @@ describe Patients::PatientSynchronizer, files: true do
     Patients::Create.new(user, patient_x).call
     expect(file_store.exists?(patient_x.inputs_dir)).to be_truthy
 
-    patient_synchronizer = described_class.new
-    expect(patient_synchronizer).to receive(:query_ready_patients).and_return [%w[patient_x CT]]
+    synchronizer = described_class.new
+    expect(synchronizer).to receive(:query_ready_patients).and_return [%w[patient_x CT]]
 
-    patient_synchronizer.call
+    synchronizer.call
     expect(
       file_store.exists?("#{patient_x.inputs_dir}/imaging_patient_x_CT_init.zip")
     ).to be_falsey
