@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PatientsController < ApplicationController
-  before_action :set_patients
+  before_action :set_patients, only: [:index]
   before_action :find_and_authorize, only: [:show, :destroy]
 
   def index; end
@@ -51,11 +51,11 @@ class PatientsController < ApplicationController
   private
 
   def set_patients
-    @patients = policy_scope(Patient).all
+    @patients = policy_scope(Patient).includes(:pipelines).all
   end
 
   def find_and_authorize
-    @patient = @patients.find_by!(case_number: params[:id])
+    @patient = policy_scope(Patient).find_by!(case_number: params[:id])
     authorize(@patient)
   end
 end
