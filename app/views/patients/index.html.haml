@@ -8,17 +8,26 @@
 .row.top_tiles
 
   - @patients.each do |patient|
-    .col-lg-3.col-md-3.col-sm-6.col-xs-12
-      .tile-stats
-        = link_to patient, data: { turbolinks: false } do
-          .icon
+    .col-md-3.col-xs-12.widget.widget_tally_box.tile-patient
+      .x_panel.fixed_height_320
+        .x_title
+          %h2
             %i.fa.fa-heart
-          .count= patient.case_number
+            = link_to patient, data: { turbolinks: false } do
+              = patient.case_number
+          .clearfix
 
-          %h3= "#{t '.files'}: #{patient.data_files.count}"
-          = render partial: 'progress', locals: { patient: patient }
+        .x_content
 
-  .col-lg-3.col-md-3.col-sm-6.col-xs-12
+          %h5= "#{t '.files'}: #{patient.data_files.count}"
+
+          %h5= t patient.pipelines.present? ? '.latest_pipelines' : '.no_pipelines'
+          %ul.list-inline.widget_tally
+            - patient.pipelines.latest.each do |pipeline|
+              %li
+                = render partial: 'progress', locals: { pipeline: pipeline }
+
+  .col-md-3.col-xs-12.widget
     .tile-stats.tile-new-patient.bg-blue
       = link_to new_patient_path do
         .icon

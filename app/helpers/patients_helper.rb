@@ -2,22 +2,28 @@
 
 module PatientsHelper
   STATUS_MAP = {
-    'new' => 'primary',
-    'queued' => 'info',
-    'running' => 'warning',
-    'error' => 'danger',
-    'finished' => 'success',
-    'aborted' => 'default'
+    created: { type: 'primary', bgcolor: 'bg-blue' },
+    new: { type: 'primary', bgcolor: 'bg-blue' },
+    runnable: { type: 'primary', bgcolor: 'bg-blue' },
+    queued: { type: 'info', bgcolor: 'bg-blue-sky' },
+    running: { type: 'warning', bgcolor: 'bg-orange' },
+    error: { type: 'danger', bgcolor: 'bg-red' },
+    finished: { type: 'success', bgcolor: 'bg-green' },
+    aborted: { type: 'default', bgcolor: 'bg-purple' }
   }.freeze
 
-  def procedure_progress(patient)
-    status_number = Patient.procedure_statuses[patient.procedure_status] || 0
-    "#{status_number.to_f / (Patient.procedure_statuses.size - 1).to_f * 100}%"
+  def computation_progress(computation, i)
+    slice = (1.0 / computation.pipeline.computations.count.to_f) * 100.0
+    offset = i.to_f * slice
+    tag.div(class: "progress-bar #{status_color(computation)}",
+            role: 'progressbar',
+            title: I18n.t("steps.#{computation.pipeline_step}.title"),
+            style: "width: #{slice}%; margin-left: #{offset}%")
   end
 
   def computation_status(computation)
     status = runnable?(computation) ? 'runnable' : computation.status
-    label_class = STATUS_MAP[status] || 'default'
+    label_class = STATUS_MAP[status.to_sym][:type] || 'default'
     content_tag :div, I18n.t("computation.status_description.#{status}"),
                 class: "label label-#{label_class}",
                 title: computation.error_message
@@ -43,5 +49,9 @@ module PatientsHelper
 
   def runnable?(computation)
     computation.status == 'created' && computation.runnable?
+  end
+
+  def status_color(computation)
+    STATUS_MAP[computation.status.to_sym][:bgcolor]
   end
 end

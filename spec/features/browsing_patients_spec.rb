@@ -67,6 +67,43 @@ RSpec.feature 'Patient browsing' do
 
       expect(current_path).to eq patient_path(patient)
     end
+
+    scenario 'does not fret when there are no pipelines' do
+      patient
+
+      visit patients_path
+
+      expect(page).to have_content I18n.t('patients.index.no_pipelines')
+    end
+
+    scenario 'lists pipeline steps in correct flow order' do
+      create(:pipeline, :with_computations, patient: patient)
+
+      visit patients_path
+
+      expect(page).to have_selector(
+        ".progress a:nth-child(1) #{bar_selector('segmentation')}"
+      )
+      expect(page).to have_selector(
+        ".progress a:nth-child(2) #{bar_selector('rom')}"
+      )
+      expect(page).to have_selector(
+        ".progress a:nth-child(3) #{bar_selector('parameter_optimization')}"
+      )
+      expect(page).to have_selector(
+        ".progress a:nth-child(4) #{bar_selector('0d_models')}"
+      )
+      expect(page).to have_selector(
+        ".progress a:nth-child(5) #{bar_selector('uncertainty_analysis')}"
+      )
+      expect(page).to have_selector(
+        ".progress a:nth-child(6) #{bar_selector('pressure_volume_display')}"
+      )
+    end
+
+    def bar_selector(step_name)
+      ".progress-bar[title='#{I18n.t("steps.#{step_name}.title")}']"
+    end
   end
 
   context 'in the context of inspecting a given case' do
@@ -144,7 +181,7 @@ RSpec.feature 'Patient browsing' do
       expect(pipeline).to be_automatic
     end
 
-    scenario 'error deatils are displayed when pipeline cannot be created' do
+    scenario 'error details are displayed when pipeline cannot be created' do
       visit patient_path(patient)
       click_link 'Set up new pipeline'
       click_on 'Set up new pipeline'
@@ -161,6 +198,31 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content pipeline.name
       expect(page).to have_content I18n.t("simple_form.options.pipeline.flow.#{pipeline.flow}")
       expect(page).to have_content pipeline.user.name
+    end
+
+    scenario 'lists pipeline steps in correct flow order' do
+      pipeline = create(:pipeline, :with_computations, patient: patient)
+
+      visit patient_pipeline_path(patient, pipeline)
+
+      expect(page).to have_selector(
+        '#computations li:nth-child(1) a', text: I18n.t('steps.segmentation.title')
+      )
+      expect(page).to have_selector(
+        '#computations li:nth-child(2) a', text: I18n.t('steps.rom.title')
+      )
+      expect(page).to have_selector(
+        '#computations li:nth-child(3) a', text: I18n.t('steps.parameter_optimization.title')
+      )
+      expect(page).to have_selector(
+        '#computations li:nth-child(4) a', text: I18n.t('steps.0d_models.title')
+      )
+      expect(page).to have_selector(
+        '#computations li:nth-child(5) a', text: I18n.t('steps.uncertainty_analysis.title')
+      )
+      expect(page).to have_selector(
+        '#computations li:nth-child(6) a', text: I18n.t('steps.pressure_volume_display.title')
+      )
     end
 
     scenario 'shows alert when no computation defined' do
