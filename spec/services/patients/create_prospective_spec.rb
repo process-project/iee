@@ -10,7 +10,9 @@ describe Patients::CreateProspective, files: true do
   it 'checks modality existence in FileStore' do
     webdav = instance_double(Webdav::Client)
     allow(webdav).to receive(:r_mkdir)
-    expect(webdav).to receive(:exists?).with('test/ProspectiveImagingTest/cs/Initial_MRI/file.zip')
+    expect(webdav).
+      to receive(:exists?).with('test/ProspectiveImagingTest/cs/Initial_MRI/file.zip').
+      and_return(false)
 
     expect { described_class.new(user, patient, %w[MRI], client: webdav).call }.
       to raise_error StandardError, 'None of modalities (["MRI"]) exist for patient (cs)'
