@@ -107,7 +107,7 @@ module Patients
       {
         name: payload.name,
         path: payload.url,
-        pipeline: payload.output_pipeline.name
+        pipeline: payload.output_of.name
       }
     end
 
@@ -115,7 +115,7 @@ module Patients
       {
         name: payload.name,
         content: payload.content(current_user),
-        pipeline: payload.output_pipeline.name
+        pipeline: payload.output_of.name
       }
     end
 
@@ -123,7 +123,7 @@ module Patients
       {
         name: payload.name,
         url: payload.url,
-        pipeline: payload.output_pipeline.name
+        pipeline: payload.output_of.name
       }
     end
   end

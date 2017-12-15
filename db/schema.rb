@@ -69,11 +69,11 @@ ActiveRecord::Schema.define(version: 20171205134547) do
     t.integer "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "output_pipeline_id"
-    t.bigint "input_pipeline_id"
+    t.integer "output_of_id"
+    t.bigint "input_of_id"
     t.index ["data_type"], name: "index_data_files_on_data_type"
-    t.index ["input_pipeline_id"], name: "index_data_files_on_input_pipeline_id"
-    t.index ["output_pipeline_id"], name: "index_data_files_on_output_pipeline_id"
+    t.index ["input_of_id"], name: "index_data_files_on_input_of_id"
+    t.index ["output_of_id"], name: "index_data_files_on_output_of_id"
     t.index ["patient_id"], name: "index_data_files_on_patient_id"
   end
 
@@ -198,8 +198,8 @@ ActiveRecord::Schema.define(version: 20171205134547) do
   add_foreign_key "access_methods", "services"
   add_foreign_key "computations", "pipelines"
   add_foreign_key "data_files", "patients"
-  add_foreign_key "data_files", "pipelines", column: "input_pipeline_id"
-  add_foreign_key "data_files", "pipelines", column: "output_pipeline_id"
+  add_foreign_key "data_files", "pipelines", column: "input_of_id"
+  add_foreign_key "data_files", "pipelines", column: "output_of_id"
   add_foreign_key "group_relationships", "groups", column: "child_id"
   add_foreign_key "group_relationships", "groups", column: "parent_id"
 end

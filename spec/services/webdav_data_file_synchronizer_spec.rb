@@ -59,7 +59,7 @@ describe WebdavDataFileSynchronizer, files: true do
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
         expect(DataFile.all.map(&:data_type)).
           to match_array %w[fluid_virtual_model ventricle_virtual_model]
-        expect(DataFile.all.map(&:output_pipeline_id).compact).to be_empty
+        expect(DataFile.all.map(&:output_of_id).compact).to be_empty
       end
 
       it 'only creates input data_files not yet present' do
@@ -69,7 +69,7 @@ describe WebdavDataFileSynchronizer, files: true do
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(1)
         expect(DataFile.all.map(&:data_type)).
           to match_array %w[fluid_virtual_model ventricle_virtual_model]
-        expect(DataFile.all.map(&:output_pipeline_id).compact).to be_empty
+        expect(DataFile.all.map(&:output_of_id).compact).to be_empty
       end
 
       it 'recognizes files with regexps' do
@@ -110,11 +110,11 @@ describe WebdavDataFileSynchronizer, files: true do
         create(:data_file, name: 'structural_vent.dat',
                            data_type: 'ventricle_virtual_model',
                            patient: test_patient_with_pipeline,
-                           input_pipeline: pipeline)
+                           input_of: pipeline)
         create(:data_file, name: 'fluidFlow-1-00002.dat',
                            data_type: 'blood_flow_result',
                            patient: test_patient_with_pipeline,
-                           output_pipeline: pipeline)
+                           output_of: pipeline)
 
         expect { call(test_patient_with_pipeline, correct_user) }.to change { DataFile.count }.by(0)
       end
@@ -123,11 +123,11 @@ describe WebdavDataFileSynchronizer, files: true do
         create(:data_file, name: 'structural_vent1.dat',
                            data_type: 'ventricle_virtual_model',
                            patient: test_patient_with_pipeline,
-                           input_pipeline: pipeline)
+                           input_of: pipeline)
         create(:data_file, name: 'structural_vent2.dat',
                            data_type: 'ventricle_virtual_model',
                            patient: test_patient_with_pipeline,
-                           output_pipeline: pipeline)
+                           output_of: pipeline)
 
         call(test_patient_with_pipeline, correct_user)
 

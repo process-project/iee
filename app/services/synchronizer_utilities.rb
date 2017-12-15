@@ -90,21 +90,21 @@ module SynchronizerUtilities
   end
 
   def current_names(input_pipeline, output_pipeline)
-    @patient.data_files.where(input_pipeline: input_pipeline,
-                              output_pipeline: output_pipeline).pluck(:name)
+    @patient.data_files.where(input_of: input_pipeline,
+                              output_of: output_pipeline).pluck(:name)
   end
 
   def create_db_entry(data_type, remote_name, input_pipeline, output_pipeline)
     DataFile.create(name: remote_name,
                     data_type: data_type,
                     patient: @patient,
-                    input_pipeline: input_pipeline,
-                    output_pipeline: output_pipeline)
+                    input_of: input_pipeline,
+                    output_of: output_pipeline)
   end
 
   def remove_obsolete_db_entries(remote_names, input_pipeline: nil, output_pipeline: nil)
-    @patient.data_files.where(input_pipeline: input_pipeline,
-                              output_pipeline: output_pipeline).each do |data_file|
+    @patient.data_files.where(input_of: input_pipeline,
+                              output_of: output_pipeline).each do |data_file|
       next if remote_names.include? data_file.name
       data_file.destroy!
       pipeline = input_pipeline || output_pipeline

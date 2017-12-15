@@ -38,16 +38,16 @@ RSpec.describe Pipeline, type: :model do
     p1, p2 = create_list(:pipeline, 2, patient: patient)
 
     create(:data_file,
-           patient: patient, output_pipeline: p1,
+           patient: patient, output_of: p1,
            data_type: :image, name: 'p1 image output')
     create(:data_file,
-           patient: patient, output_pipeline: p2,
+           patient: patient, output_of: p2,
            data_type: :image, name: 'p2 image output')
     create(:data_file,
-           patient: patient, input_pipeline: p1,
+           patient: patient, input_of: p1,
            data_type: :off_mesh, name: 'p1 off mesh output')
     create(:data_file,
-           patient: patient, input_pipeline: p2,
+           patient: patient, input_of: p2,
            data_type: :graphics, name: 'p2 graphics output')
     create(:data_file,
            patient: patient,
@@ -71,11 +71,11 @@ RSpec.describe Pipeline, type: :model do
              data_type: :image, name: 'patient file')
       create(:data_file,
              patient: patient,
-             input_pipeline: pipeline,
+             input_of: pipeline,
              data_type: :image, name: 'pipeline input file')
       create(:data_file,
              patient: patient,
-             output_pipeline: pipeline,
+             output_of: pipeline,
              data_type: :image, name: 'pipeline output file')
 
       expect(pipeline.data_file(:image).name).to eq('pipeline output file')
@@ -90,7 +90,7 @@ RSpec.describe Pipeline, type: :model do
              data_type: :image, name: 'patient file')
       create(:data_file,
              patient: patient,
-             input_pipeline: pipeline,
+             input_of: pipeline,
              data_type: :image, name: 'pipeline input file')
 
       expect(pipeline.data_file(:image).name).to eq('pipeline input file')

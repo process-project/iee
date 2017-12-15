@@ -25,12 +25,12 @@ class DataFile < ApplicationRecord
 
   belongs_to :patient, touch: true
 
-  belongs_to :output_pipeline,
+  belongs_to :output_of,
              optional: true,
              inverse_of: :outputs,
              class_name: 'Pipeline'
 
-  belongs_to :input_pipeline,
+  belongs_to :input_of,
              optional: true,
              inverse_of: :inputs,
              class_name: 'Pipeline'
@@ -60,14 +60,14 @@ class DataFile < ApplicationRecord
   private
 
   def root_path
-    output_pipeline&.outputs_dir ||
-      input_pipeline&.inputs_dir ||
+    output_of&.outputs_dir ||
+      input_of&.inputs_dir ||
       patient.inputs_dir
   end
 
   def root_url
-    output_pipeline&.working_url ||
-      input_pipeline&.inputs_url ||
+    output_of&.working_url ||
+      input_of&.inputs_url ||
       patient.inputs_url
   end
 end

@@ -115,12 +115,12 @@ class Pipeline < ApplicationRecord
 
   has_many :inputs,
            class_name: 'DataFile',
-           foreign_key: 'input_pipeline_id',
+           foreign_key: 'input_of_id',
            dependent: :destroy
 
   has_many :outputs,
            class_name: 'DataFile',
-           foreign_key: 'output_pipeline_id',
+           foreign_key: 'output_of_id',
            dependent: :destroy
 
   has_many :computations,
@@ -163,10 +163,10 @@ class Pipeline < ApplicationRecord
   def data_file(data_type)
     DataFile.
       where(patient: patient,
-            output_pipeline: [nil, self],
-            input_pipeline: [nil, self],
+            output_of: [nil, self],
+            input_of: [nil, self],
             data_type: data_type).
-      order(:output_pipeline_id, :input_pipeline_id).
+      order(:output_of_id, :input_of_id).
       first
   end
 
