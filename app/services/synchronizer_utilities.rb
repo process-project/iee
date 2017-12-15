@@ -49,8 +49,7 @@ module SynchronizerUtilities
       sync_file(remote_name, input_pipeline: input_pipeline, output_pipeline: output_pipeline)
     end
     remove_obsolete_db_entries(file_names,
-                               input_pipeline: input_pipeline,
-                               output_pipeline: output_pipeline)
+                               input_pipeline: input_pipeline, output_pipeline: output_pipeline)
   end
 
   def validate_only_one_pipeline!(input_pipeline, output_pipeline)
@@ -103,11 +102,8 @@ module SynchronizerUtilities
   end
 
   def create_db_entry(data_type, remote_name, input_pipeline, output_pipeline)
-    DataFile.create(name: remote_name,
-                    data_type: data_type,
-                    patient: @patient,
-                    input_of: input_pipeline,
-                    output_of: output_pipeline)
+    DataFile.create(name: remote_name, data_type: data_type, patient: @patient,
+                    input_of: input_pipeline, output_of: output_pipeline)
   end
 
   def remove_obsolete_db_entries(remote_names, input_pipeline: nil, output_pipeline: nil)
