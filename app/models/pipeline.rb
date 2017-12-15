@@ -113,6 +113,7 @@ class Pipeline < ApplicationRecord
   belongs_to :patient
   belongs_to :user
 
+  # Inputs and outputs relation stores pipeline specific data files
   has_many :inputs,
            class_name: 'DataFile',
            foreign_key: 'input_of_id',
