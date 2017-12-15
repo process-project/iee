@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828115153) do
+ActiveRecord::Schema.define(version: 20171205134547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,10 +69,12 @@ ActiveRecord::Schema.define(version: 20170828115153) do
     t.integer "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "pipeline_id"
+    t.integer "output_of_id"
+    t.bigint "input_of_id"
     t.index ["data_type"], name: "index_data_files_on_data_type"
+    t.index ["input_of_id"], name: "index_data_files_on_input_of_id"
+    t.index ["output_of_id"], name: "index_data_files_on_output_of_id"
     t.index ["patient_id"], name: "index_data_files_on_patient_id"
-    t.index ["pipeline_id"], name: "index_data_files_on_pipeline_id"
   end
 
   create_table "group_relationships", id: :serial, force: :cascade do |t|
@@ -196,7 +198,8 @@ ActiveRecord::Schema.define(version: 20170828115153) do
   add_foreign_key "access_methods", "services"
   add_foreign_key "computations", "pipelines"
   add_foreign_key "data_files", "patients"
-  add_foreign_key "data_files", "pipelines"
+  add_foreign_key "data_files", "pipelines", column: "input_of_id"
+  add_foreign_key "data_files", "pipelines", column: "output_of_id"
   add_foreign_key "group_relationships", "groups", column: "child_id"
   add_foreign_key "group_relationships", "groups", column: "parent_id"
 end

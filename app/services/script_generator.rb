@@ -47,7 +47,7 @@ class ScriptGenerator
     "curl -X PUT --data-binary @#{relative_path} "\
       '-H "Content-Type:application/octet-stream"'\
       " -H \"Authorization: Bearer #{user.token}\""\
-      " \"#{File.join(pipeline.working_url, filename)}\""
+      " \"#{File.join(pipeline.outputs_url, filename)}\""
   end
 
   def gitlab_clone_url

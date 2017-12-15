@@ -24,16 +24,25 @@ class DataFile < ApplicationRecord
   ]
 
   belongs_to :patient, touch: true
-  belongs_to :pipeline, optional: true
+
+  belongs_to :output_of,
+             optional: true,
+             inverse_of: :outputs,
+             class_name: 'Pipeline'
+
+  belongs_to :input_of,
+             optional: true,
+             inverse_of: :inputs,
+             class_name: 'Pipeline'
 
   validates :name, :data_type, :patient, presence: true
 
   def path
-    File.join(pipeline ? pipeline.working_dir : patient.inputs_dir, name)
+    File.join(root_path, name)
   end
 
   def url
-    File.join(pipeline ? pipeline.working_url : patient.inputs_url, name)
+    File.join(root_url, name)
   end
 
   def content(user)
@@ -46,5 +55,19 @@ class DataFile < ApplicationRecord
 
   def similar?(other_data_file)
     name == other_data_file.name
+  end
+
+  private
+
+  def root_path
+    output_of&.outputs_dir ||
+      input_of&.inputs_dir ||
+      patient.inputs_dir
+  end
+
+  def root_url
+    output_of&.outputs_url ||
+      input_of&.inputs_url ||
+      patient.inputs_url
   end
 end

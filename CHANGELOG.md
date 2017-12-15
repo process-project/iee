@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Reload segmentation status after it is started (@mkasztelnik)
 - Proper handling for rimrock computation start failure (@mkasztelnik)
 - Execution time updated each second for active computation (@mkasztelnik)
+- Pipeline specific input (@mkasztelnik)
 - First version of automatic patient synchronization machinery (@Nuanda)
 
 ### Changed
@@ -27,6 +28,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Use preconfigured docker image for builds (@mkasztelnik)
 - Extracted DataSets::Client from Patients::Details for reusability (@Nuanda)
 - Lock redis version into 3.x (@mkasztelnik)
+- New patient case widget to reflect new developments in pipelining (@Nuanda)
 
 ### Deprecated
 

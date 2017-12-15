@@ -68,7 +68,7 @@ describe ScriptGenerator do
 
     expect(script).to include '--data-binary'
     expect(script).to include '@foo.txt'
-    expect(script).to include File.join(computation.pipeline.working_url, 'bar.txt')
+    expect(script).to include File.join(computation.pipeline.outputs_url, 'bar.txt')
   end
 
   it 'inserts download file curl with default target file name' do
@@ -77,7 +77,7 @@ describe ScriptGenerator do
                                  '<%= stage_out "dir/foo.txt" %>').call
 
     expect(script).to include '@dir/foo.txt'
-    expect(script).to include File.join(computation.pipeline.working_url, 'foo.txt')
+    expect(script).to include File.join(computation.pipeline.outputs_url, 'foo.txt')
   end
 
   it 'inserts gitlab ssh download key payload' do

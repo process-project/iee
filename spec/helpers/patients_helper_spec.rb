@@ -3,22 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe PatientsHelper do
-  describe '#procedure_progress' do
-    let(:patient) { build(:patient) }
-
-    it 'shows 0 progress for strange status values' do
-      allow(patient).to receive(:procedure_status).and_return('wrong')
-      expect(procedure_progress(patient)).to eq '0.0%'
+  describe '#computation_progress' do
+    let(:pipeline) { create(:pipeline) }
+    let(:computation) do
+      create_list(:computation, 4, pipeline: pipeline)[1]
     end
 
-    it 'shows first (default) status as 0 progress' do
-      expect(procedure_progress(patient)).to eq '0.0%'
-    end
-
-    it 'cant get higher than 100 percent' do
-      max_status = Patient.procedure_statuses.max_by(&:second)[0]
-      patient.procedure_status = max_status
-      expect(procedure_progress(patient)).to eq '100.0%'
+    it 'correctly computes progress bar offset and width' do
+      tag = computation_progress(computation, 1)
+      expect(tag).to include 'width: 25.0%'
+      expect(tag).to include 'margin-left: 25.0%'
     end
   end
 end

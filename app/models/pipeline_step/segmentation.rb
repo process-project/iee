@@ -13,7 +13,7 @@ module PipelineStep
         pipeline: pipeline,
         user: pipeline.user,
         pipeline_step: STEP_NAME,
-        output_path: pipeline.working_dir
+        output_path: pipeline.outputs_dir
       )
     end
 

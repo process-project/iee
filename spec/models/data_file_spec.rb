@@ -42,9 +42,17 @@ RSpec.describe DataFile do
     it 'returns relative path for patient pipeline output' do
       patient = build(:patient, case_number: '123')
       pipeline = build(:pipeline, iid: '1', patient: patient)
-      input = build(:data_file, patient: patient, pipeline: pipeline, name: 'foo')
+      input = build(:data_file, patient: patient, output_of: pipeline, name: 'foo')
 
-      expect(input.path).to eq 'test/patients/123/pipelines/1/foo'
+      expect(input.path).to eq 'test/patients/123/pipelines/1/outputs/foo'
+    end
+
+    it 'returns relative path for patient pipeline input' do
+      patient = build(:patient, case_number: '123')
+      pipeline = build(:pipeline, iid: '1', patient: patient)
+      input = build(:data_file, patient: patient, input_of: pipeline, name: 'foo')
+
+      expect(input.path).to eq 'test/patients/123/pipelines/1/inputs/foo'
     end
   end
 

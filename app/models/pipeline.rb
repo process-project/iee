@@ -112,8 +112,20 @@ class Pipeline < ApplicationRecord
 
   belongs_to :patient
   belongs_to :user
-  has_many :data_files, dependent: :destroy
-  has_many :computations, dependent: :destroy
+
+  # Inputs and outputs relation stores pipeline specific data files
+  has_many :inputs,
+           class_name: 'DataFile',
+           foreign_key: 'input_of_id',
+           dependent: :destroy
+
+  has_many :outputs,
+           class_name: 'DataFile',
+           foreign_key: 'output_of_id',
+           dependent: :destroy
+
+  has_many :computations,
+           dependent: :destroy
 
   validate :set_iid, on: :create
   validates :iid, presence: true, numericality: true
@@ -121,6 +133,7 @@ class Pipeline < ApplicationRecord
   validates :mode, presence: true
 
   scope :automatic, -> { where(mode: :automatic) }
+  scope :latest, -> { order(created_at: :desc).limit(3) }
 
   validates :flow,
             inclusion: { in: Pipeline::FLOWS.keys.map(&:to_s) }
@@ -129,17 +142,34 @@ class Pipeline < ApplicationRecord
     iid.to_s
   end
 
-  def working_dir(prefix = patient.pipelines_dir)
+  def outputs_dir(prefix = patient.pipelines_dir)
+    File.join(root_dir(prefix), 'outputs', '/')
+  end
+
+  def outputs_url
+    outputs_dir(patient.pipelines_url)
+  end
+
+  def inputs_dir(prefix = patient.pipelines_dir)
+    File.join(root_dir(prefix), 'inputs', '/')
+  end
+
+  def inputs_url
+    inputs_dir(patient.pipelines_url)
+  end
+
+  def root_dir(prefix = patient.pipelines_dir)
     File.join(prefix, iid.to_s, '/')
   end
 
-  def working_url
-    working_dir(patient.pipelines_url)
-  end
-
   def data_file(data_type)
-    DataFile.find_by(patient: patient,
-                     pipeline: [nil, self], data_type: data_type)
+    DataFile.
+      where(patient: patient,
+            output_of: [nil, self],
+            input_of: [nil, self],
+            data_type: data_type).
+      order(:output_of_id, :input_of_id).
+      first
   end
 
   private
