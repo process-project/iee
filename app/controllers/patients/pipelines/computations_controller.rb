@@ -58,7 +58,7 @@ module Patients
       end
 
       def prepare_to_show_computation
-        @computations = @pipeline.computations.order(:created_at)
+        @computations = @pipeline.computations.flow_ordered
 
         if load_versions?
           @versions = Gitlab::Versions.

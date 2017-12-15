@@ -8,9 +8,12 @@ en:
       title: Patients
       nothing: There are no patients to be shown.
       new: New
-      add: Add a new case
+      add: Add a new patient
       files: Files
+      pipelines: Pipelines
       progress: Procedure progress
+      latest_pipelines: "Latest pipelines:"
+      no_pipelines: No pipelines.
     show:
       subtitle: A patient case in EurValve project
       remove: Delete this case

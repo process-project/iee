@@ -121,6 +121,7 @@ class Pipeline < ApplicationRecord
   validates :mode, presence: true
 
   scope :automatic, -> { where(mode: :automatic) }
+  scope :latest, -> { order(created_at: :desc).limit(3) }
 
   validates :flow,
             inclusion: { in: Pipeline::FLOWS.keys.map(&:to_s) }

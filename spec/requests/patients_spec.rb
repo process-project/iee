@@ -31,18 +31,18 @@ describe 'Patients controller' do
     end
 
     describe 'SHOW /patient/:id' do
-      it 'calls set_patients to prevent any data leak' do
+      it 'calls find_and_authorize to prevent any data leak' do
         expect_any_instance_of(PatientsController).
-          to receive(:set_patients).and_call_original
-        get '/patients', params: { id: patient.id }
+          to receive(:find_and_authorize).and_call_original
+        get "/patients/#{patient.case_number}"
         expect(response).to be_success
       end
     end
 
     describe 'DELETE /patient/:id' do
-      it 'calls set_patients to prevent any data leak' do
+      it 'calls find_and_authorize to prevent any data leak' do
         expect_any_instance_of(PatientsController).
-          to receive(:set_patients).and_call_original
+          to receive(:find_and_authorize).and_call_original
         delete "/patients/#{patient.case_number}"
         expect(response).to redirect_to patients_path
       end

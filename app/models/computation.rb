@@ -7,8 +7,8 @@ class Computation < ApplicationRecord
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
 
-  # Disabled untill we will be able to deal with the steps, which are there
-  # but right now not used in any pipeline
+  # Disabled until we are able to deal with the steps which are there
+  # but are not used in any pipeline right now
   # validates :pipeline_step,
   #           inclusion: { in: Pipeline::FLOWS.values.flatten.uniq.map { |c| c::STEP_NAME } }
 
@@ -39,6 +39,14 @@ class Computation < ApplicationRecord
 
   def rimrock?
     type == 'RimrockComputation'
+  end
+
+  def self.flow_ordered
+    where(nil).sort_by(&:flow_index)
+  end
+
+  def flow_index
+    Pipeline::FLOWS[pipeline.flow.to_sym].map { |s| s::STEP_NAME }.index(pipeline_step)
   end
 
   private
