@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Reload segmentation status after it is started (@mkasztelnik)
 - Proper handling for rimrock computation start failure (@mkasztelnik)
 - Execution time updated each second for active computation (@mkasztelnik)
+- Pipeline specific input (@mkasztelnik)
 
 ### Changed
 - Labels for pipelines list view improved (@mkasztelnik)

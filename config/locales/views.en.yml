@@ -56,8 +56,9 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
-    all_pipelines_outputs:
-      title: All pipelines outputs
+    file_browsers:
+      patient_inputs: "%{name} patient inputs"
+      pipelines_files: All pipelines files
     pipelines:
       pipeline_steps_form:
         title: Pipeline steps
@@ -107,6 +108,10 @@ en:
           reload: Reload tags and branches
         computations_form_manual:
           steps: "Pipeline steps:"
+      file_browsers:
+        patient_inputs: "%{name} patient inputs"
+        pipeline_inputs: "%{name} pipeline inputs"
+        pipeline_outputs: "%{name} pipeline outputs"
 
     comparisons:
       show:

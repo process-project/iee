@@ -29,8 +29,8 @@ module Patients
       end
 
       @data = { compared: [], not_comparable: [] }
-      pipelines.first.data_files.each do |compared|
-        compare_to = pipelines.second.data_files.detect { |df| df.similar?(compared) }
+      pipelines.first.outputs.each do |compared|
+        compare_to = pipelines.second.outputs.detect { |df| df.similar?(compared) }
         if compared.comparable? && compare_to.present?
           @data[:compared] << comparison_data(compared, compare_to)
         elsif compare_to.present?
@@ -45,7 +45,7 @@ module Patients
 
     def pipelines
       @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).
-                     includes(:data_files, :computations)
+                     includes(:outputs, :computations)
     end
 
     def patient
@@ -107,7 +107,7 @@ module Patients
       {
         name: payload.name,
         path: payload.url,
-        pipeline: payload.pipeline.name
+        pipeline: payload.output_of.name
       }
     end
 
@@ -115,7 +115,7 @@ module Patients
       {
         name: payload.name,
         content: payload.content(current_user),
-        pipeline: payload.pipeline.name
+        pipeline: payload.output_of.name
       }
     end
 
@@ -123,7 +123,7 @@ module Patients
       {
         name: payload.name,
         url: payload.url,
-        pipeline: payload.pipeline.name
+        pipeline: payload.output_of.name
       }
     end
   end
