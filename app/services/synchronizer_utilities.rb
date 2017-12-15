@@ -41,16 +41,24 @@ module SynchronizerUtilities
   end
 
   def sync_dir(remote_names, prefix, input_pipeline: nil, output_pipeline: nil)
+    validate_only_one_pipeline!(input_pipeline, output_pipeline)
+
     file_names = names(remote_names, prefix)
 
     file_names.each do |remote_name|
-      sync_file(remote_name,
-                input_pipeline: input_pipeline,
-                output_pipeline: output_pipeline)
+      sync_file(remote_name, input_pipeline: input_pipeline, output_pipeline: output_pipeline)
     end
     remove_obsolete_db_entries(file_names,
                                input_pipeline: input_pipeline,
                                output_pipeline: output_pipeline)
+  end
+
+  def validate_only_one_pipeline!(input_pipeline, output_pipeline)
+    if input_pipeline && output_pipeline
+      raise ArgumentError(
+        'Arguments input_pipeline and output_pipeline should be mutually exclusive'
+      )
+    end
   end
 
   def recognize_data_type(name)
