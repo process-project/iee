@@ -19,7 +19,9 @@
 
         .x_content
 
-          %h5= "#{t '.files'}: #{patient.data_files.count}"
+          %h5
+            %span= "#{t '.files'}: #{patient.data_files.count}"
+            %span.right= "#{t '.pipelines'}: #{patient.pipelines.count}"
 
           %h5= t patient.pipelines.present? ? '.latest_pipelines' : '.no_pipelines'
           %ul.list-inline.widget_tally

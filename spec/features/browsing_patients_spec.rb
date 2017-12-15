@@ -56,6 +56,14 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content "#{I18n.t 'patients.index.files'}: 2"
     end
 
+    scenario 'gives the pipeline number for each patient case' do
+      create(:pipeline, patient: patient)
+
+      visit patients_path
+
+      expect(page).to have_content "#{I18n.t 'patients.index.pipelines'}: 1"
+    end
+
     scenario 'lets navigate to a given patient case' do
       patient
 

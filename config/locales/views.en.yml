@@ -10,6 +10,7 @@ en:
       new: New
       add: Add a new patient
       files: Files
+      pipelines: Pipelines
       progress: Procedure progress
       latest_pipelines: "Latest pipelines:"
       no_pipelines: No pipelines.
