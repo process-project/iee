@@ -66,7 +66,7 @@ class DataFile < ApplicationRecord
   end
 
   def root_url
-    output_of&.working_url ||
+    output_of&.outputs_url ||
       input_of&.inputs_url ||
       patient.inputs_url
   end

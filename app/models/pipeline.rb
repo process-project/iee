@@ -144,7 +144,7 @@ class Pipeline < ApplicationRecord
     File.join(root_dir(prefix), 'outputs', '/')
   end
 
-  def working_url
+  def outputs_url
     outputs_dir(patient.pipelines_url)
   end
 
