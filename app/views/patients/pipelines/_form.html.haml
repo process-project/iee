@@ -1,7 +1,7 @@
 = simple_form_for [patient, pipeline] do |f|
   = f.error_notification
   = f.input :flow, disabled: !pipeline.new_record?,
-    collection: Pipeline::flows, include_blank: false
+    collection: Flow::types, include_blank: false
   = f.input :name
   = f.input :mode, disabled: !pipeline.new_record?,
     collection: Pipeline.modes.keys, include_blank: false
