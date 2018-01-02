@@ -131,12 +131,22 @@ class Pipeline < ApplicationRecord
   validates :iid, presence: true, numericality: true
   validates :name, presence: true
   validates :mode, presence: true
+  validates :flow, inclusion: { in: Pipeline::FLOWS.keys.map(&:to_s) }
 
   scope :automatic, -> { where(mode: :automatic) }
   scope :latest, -> { order(created_at: :desc).limit(3) }
 
-  validates :flow,
-            inclusion: { in: Pipeline::FLOWS.keys.map(&:to_s) }
+  def self.flows
+    FLOWS.keys
+  end
+
+  def self.steps(flow)
+    FLOWS[flow.to_sym] || []
+  end
+
+  def steps
+    Pipeline.steps(flow)
+  end
 
   def to_param
     iid.to_s
