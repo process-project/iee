@@ -9,7 +9,7 @@ FactoryBot.define do
 
     trait :with_computations do
       after(:build) do |pipeline|
-        Pipeline::FLOWS[pipeline.flow.to_sym].each do |builder_class|
+        pipeline.steps.each do |builder_class|
           builder_class.create(pipeline, {})
         end
       end

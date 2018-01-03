@@ -30,7 +30,7 @@ RSpec.describe Pipeline, type: :model do
 
   it do
     should validate_inclusion_of(:flow).
-      in_array(Pipeline::FLOWS.keys.map(&:to_s))
+      in_array(Flow.types.map(&:to_s))
   end
 
   it 'returns data file scoped into pipeline' do

@@ -28,7 +28,7 @@ module Pipelines
     end
 
     def create_computations
-      Pipeline::FLOWS[@pipeline.flow.to_sym].each do |builder_class|
+      @pipeline.steps.each do |builder_class|
         builder_class.create(@pipeline, step_params(builder_class))
       end
     end
