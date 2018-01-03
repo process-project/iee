@@ -29,6 +29,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Lock redis version into 3.x (@mkasztelnik)
 - New patient case widget to reflect new developments in pipelining (@Nuanda)
 - Flow model class which stores information about pipeline flow steps (@mkasztelnik)
+- Switch from PhantomJS into Chrome headless (@mkasztelnik)
 
 ### Deprecated
 
