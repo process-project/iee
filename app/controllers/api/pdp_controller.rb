@@ -17,12 +17,14 @@ module Api
     def permit?
       return false if access_method.blank? || uri.blank? || service.nil?
 
-      resources = service.resources.
-                  joins(access_policies: :access_method).
-                  where(':path ~* CONCAT(\'^\', CONCAT(path, \'$\'))', path: path).
-                  where(access_methods: { name: access_method })
-
       every_resource_permitted?(resources)
+    end
+
+    def resources
+      service.resources.
+        joins(access_policies: :access_method).
+        where(':path ~* CONCAT(\'^\', CONCAT(path, \'$\'))', path: path).
+        where(access_methods: { name: access_method }).uniq
     end
 
     def setup_service_and_service_uri
