@@ -30,6 +30,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - New patient case widget to reflect new developments in pipelining (@Nuanda)
 - Flow model class which stores information about pipeline flow steps (@mkasztelnik)
 - Switch from PhantomJS into Chrome headless (@mkasztelnik)
+- Add escaping in the documentation pdp curl example (@mkasztelnik)
 
 ### Deprecated
 
