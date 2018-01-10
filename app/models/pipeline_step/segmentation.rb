@@ -8,13 +8,8 @@ module PipelineStep
       super(computation, options)
     end
 
-    def self.create(pipeline, _params)
-      WebdavComputation.create!(
-        pipeline: pipeline,
-        user: pipeline.user,
-        pipeline_step: STEP_NAME,
-        output_path: pipeline.outputs_dir
-      )
+    def self.create(pipeline, params)
+      PipelineSteps::Webdav::Builder.new(pipeline, STEP_NAME, params).call
     end
 
     def runnable?

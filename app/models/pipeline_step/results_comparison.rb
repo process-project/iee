@@ -12,12 +12,7 @@ module PipelineStep
     end
 
     def self.create(pipeline, params)
-      RimrockComputation.create(
-        pipeline: pipeline,
-        user: pipeline.user,
-        tag_or_branch: tag_or_branch(params),
-        pipeline_step: STEP_NAME
-      )
+      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
     end
 
     def runnable?
