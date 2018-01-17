@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-class RimrockStep
-  attr_reader :name, :repo, :file
+class RimrockStep < Step
+  attr_reader :repo, :file
 
   def initialize(name, repo, file)
-    @name = name
+    super(name)
+
     @repo = repo
     @file = file
   end
