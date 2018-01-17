@@ -2,17 +2,14 @@
 
 module PipelineStep
   class Rom < RimrockBase
-    STEP_NAME = 'rom'
+    DEF = RimrockStep.new('rom', 'eurvalve/cfd', 'rom.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/cfd',
-            'rom.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

@@ -2,17 +2,16 @@
 
 module PipelineStep
   class ValvePlacement < RimrockBase
-    STEP_NAME = 'valve_placement'
+    DEF = RimrockStep.new('valve_placement',
+                          'eurvalve/mock-step',
+                          'mock.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/mock-step',
-            'mock.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

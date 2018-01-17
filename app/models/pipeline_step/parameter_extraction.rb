@@ -2,17 +2,16 @@
 
 module PipelineStep
   class ParameterExtraction < RimrockBase
-    STEP_NAME = 'parameter_extraction'
+    DEF = RimrockStep.new('parameter_extraction',
+                          'eurvalve/parameter-extraction',
+                          'parameter_extraction.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/parameter-extraction',
-            'parameter_extraction.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

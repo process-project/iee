@@ -34,7 +34,7 @@ module Pipelines
     end
 
     def step_params(builder_class)
-      @params.fetch(builder_class::STEP_NAME) { {} }
+      @params.fetch(builder_class::DEF.name) { {} }
     end
   end
 end

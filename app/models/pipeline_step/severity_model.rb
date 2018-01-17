@@ -2,17 +2,16 @@
 
 module PipelineStep
   class SeverityModel < RimrockBase
-    STEP_NAME = 'severity_model'
+    DEF = RimrockStep.new('severity_model',
+                          'eurvalve/mock-step',
+                          'mock.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/mock-step',
-            'mock.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

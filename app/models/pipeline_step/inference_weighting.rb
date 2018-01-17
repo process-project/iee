@@ -2,17 +2,16 @@
 
 module PipelineStep
   class InferenceWeighting < RimrockBase
-    STEP_NAME = 'inference_weighting'
+    DEF = RimrockStep.new('inference_weighting',
+                          'eurvalve/mock-step',
+                          'mock.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/mock-step',
-            'mock.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

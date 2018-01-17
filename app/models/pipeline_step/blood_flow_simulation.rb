@@ -2,14 +2,16 @@
 
 module PipelineStep
   class BloodFlowSimulation < RimrockBase
-    STEP_NAME = 'blood_flow_simulation'
+    DEF = RimrockStep.new('blood_flow_simulation',
+                          'eurvalve/blood-flow',
+                          'blood_flow.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation, 'eurvalve/blood-flow', 'blood_flow.sh.erb', options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

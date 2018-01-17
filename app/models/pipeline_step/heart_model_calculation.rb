@@ -2,17 +2,16 @@
 
 module PipelineStep
   class HeartModelCalculation < RimrockBase
-    STEP_NAME = 'heart_model_calculation'
+    DEF = RimrockStep.new('heart_model_calculation',
+                          'eurvalve/0dmodel',
+                          'heart_model.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/0dmodel',
-            'heart_model.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

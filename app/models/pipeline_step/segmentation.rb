@@ -2,14 +2,14 @@
 
 module PipelineStep
   class Segmentation < PipelineStep::Base
-    STEP_NAME = 'segmentation'
+    DEF = WebdavStep.new('segmentation')
 
     def initialize(computation, options = {})
       super(computation, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Webdav::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

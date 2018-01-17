@@ -2,17 +2,16 @@
 
 module PipelineStep
   class ParameterOptimization < RimrockBase
-    STEP_NAME = 'parameter_optimization'
+    DEF = RimrockStep.new('parameter_optimization',
+                          'eurvalve/0dmodel',
+                          'parameter_optimization.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/0dmodel',
-            'parameter_optimization.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

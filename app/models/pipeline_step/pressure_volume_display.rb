@@ -2,17 +2,16 @@
 
 module PipelineStep
   class PressureVolumeDisplay < RimrockBase
-    STEP_NAME = 'pressure_volume_display'
+    DEF = RimrockStep.new('pressure_volume_display',
+                          'eurvalve/0dmodel',
+                          'pv_display.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/0dmodel',
-            'pv_display.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

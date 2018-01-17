@@ -2,17 +2,16 @@
 
 module PipelineStep
   class PvLoopComparison < RimrockBase
-    STEP_NAME = 'pv_loop_comparison'
+    DEF = RimrockStep.new('pv_loop_comparison',
+                          'eurvalve/mock-step',
+                          'mock.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/mock-step',
-            'mock.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

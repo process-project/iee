@@ -2,17 +2,16 @@
 
 module PipelineStep
   class UncertaintyAnalysis < RimrockBase
-    STEP_NAME = 'uncertainty_analysis'
+    DEF = RimrockStep.new('uncertainty_analysis',
+                          'eurvalve/0dmodel',
+                          'uncertainty_analysis.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation,
-            'eurvalve/0dmodel',
-            'uncertainty_analysis.sh.erb',
-            options)
+      super(computation, DEF, options)
     end
 
     def self.create(pipeline, params)
-      PipelineSteps::Rimrock::Builder.new(pipeline, STEP_NAME, params).call
+      DEF.builder_for(pipeline, params).call
     end
 
     def runnable?

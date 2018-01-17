@@ -46,7 +46,7 @@ class Computation < ApplicationRecord
   end
 
   def flow_index
-    pipeline.steps.map { |s| s::STEP_NAME }.index(pipeline_step)
+    pipeline.steps.map { |s| s::DEF.name }.index(pipeline_step)
   end
 
   private
@@ -57,6 +57,6 @@ class Computation < ApplicationRecord
 
   def runner_class
     return nil if pipeline.nil?
-    pipeline.steps.find { |s| s::STEP_NAME == pipeline_step }
+    pipeline.steps.find { |s| s::DEF.name == pipeline_step }
   end
 end
