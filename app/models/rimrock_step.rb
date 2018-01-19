@@ -13,4 +13,8 @@ class RimrockStep < Step
   def builder_for(pipeline, params)
     PipelineSteps::Rimrock::Builder.new(pipeline, name, params)
   end
+
+  def runner_for(computation, options = {})
+    PipelineSteps::Rimrock::Runner.new(computation, @repo, @file, options)
+  end
 end

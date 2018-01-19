@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module PipelineStep
-  class HaemodynamicComparison < RimrockBase
+  class HaemodynamicComparison < Base
     DEF = RimrockStep.new('haemodynamic_comparison',
                           'eurvalve/mock-step',
                           'mock.sh.erb')
 
     def initialize(computation, options = {})
-      super(computation, DEF, options)
+      super(computation, options)
     end
 
     def self.create(pipeline, params)
@@ -16,6 +16,12 @@ module PipelineStep
 
     def runnable?
       DEF.runnable_for?(computation)
+    end
+
+    protected
+
+    def runner
+      DEF.runner_for(computation, options)
     end
   end
 end

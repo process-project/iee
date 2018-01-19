@@ -344,9 +344,7 @@ RSpec.feature 'Patient browsing' do
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
         allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-        PipelineStep::RimrockBase.subclasses.each do |klass|
-          allow_any_instance_of(klass).to receive(:runnable?).and_return(true)
-        end
+        allow_any_instance_of(RimrockStep).to receive(:runnable_for?).and_return(true)
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
 

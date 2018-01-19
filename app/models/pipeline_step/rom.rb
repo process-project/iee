@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module PipelineStep
-  class Rom < RimrockBase
+  class Rom < Base
     DEF = RimrockStep.new('rom',
                           'eurvalve/cfd',
                           'rom.sh.erb',
                           [:response_surface])
 
     def initialize(computation, options = {})
-      super(computation, DEF, options)
+      super(computation, options)
     end
 
     def self.create(pipeline, params)
@@ -17,6 +17,12 @@ module PipelineStep
 
     def runnable?
       DEF.runnable_for?(computation)
+    end
+
+    protected
+
+    def runner
+      DEF.runner_for(computation, options)
     end
   end
 end

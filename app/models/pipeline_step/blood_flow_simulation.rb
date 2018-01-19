@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineStep
-  class BloodFlowSimulation < RimrockBase
+  class BloodFlowSimulation < Base
     DEF = RimrockStep.new('blood_flow_simulation',
                           'eurvalve/blood-flow',
                           'blood_flow.sh.erb',
@@ -9,7 +9,7 @@ module PipelineStep
                            :ventricle_virtual_model])
 
     def initialize(computation, options = {})
-      super(computation, DEF, options)
+      super(computation, options)
     end
 
     def self.create(pipeline, params)
@@ -18,6 +18,12 @@ module PipelineStep
 
     def runnable?
       DEF.runnable_for?(computation)
+    end
+
+    protected
+
+    def runner
+      DEF.runner_for(computation, options)
     end
   end
 end
