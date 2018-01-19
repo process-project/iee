@@ -31,12 +31,6 @@ module PipelineStep
       pipeline.data_file(:image)
     end
 
-    def validate_procedure_status!(patient)
-      statuses = Patient.procedure_statuses
-      imaging_uploaded = statuses[patient.procedure_status] >= statuses['imaging_uploaded']
-      raise('Patient imaging must be uploaded to run Segmentation') unless imaging_uploaded
-    end
-
     def input_path
       File.join(@patient.working_dir, "imaging_#{@patient.case_number}.zip")
     end
