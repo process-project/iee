@@ -2,7 +2,10 @@
 
 module PipelineStep
   class Cfd < RimrockBase
-    DEF = RimrockStep.new('cfd', 'eurvalve/cfd', 'cfd.sh.erb')
+    DEF = RimrockStep.new('cfd',
+                          'eurvalve/cfd',
+                          'cfd.sh.erb',
+                          [:truncated_off_mesh])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -13,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:truncated_off_mesh)
+      DEF.runnable_for?(computation)
     end
   end
 end

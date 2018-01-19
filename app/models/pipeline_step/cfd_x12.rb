@@ -15,7 +15,7 @@ module PipelineStep
     end
 
     def runnable?
-      true
+      DEF.runnable_for?(computation)
     end
   end
 end

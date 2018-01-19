@@ -4,7 +4,8 @@ module PipelineStep
   class UncertaintyAnalysis < RimrockBase
     DEF = RimrockStep.new('uncertainty_analysis',
                           'eurvalve/0dmodel',
-                          'uncertainty_analysis.sh.erb')
+                          'uncertainty_analysis.sh.erb',
+                          [:parameter_optimization_result])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -15,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:parameter_optimization_result)
+      DEF.runnable_for?(computation)
     end
   end
 end

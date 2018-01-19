@@ -2,7 +2,7 @@
 
 module PipelineStep
   class Segmentation < PipelineStep::Base
-    DEF = WebdavStep.new('segmentation')
+    DEF = WebdavStep.new('segmentation', [:image])
 
     def initialize(computation, options = {})
       super(computation, options)
@@ -13,7 +13,7 @@ module PipelineStep
     end
 
     def runnable?
-      image_data_file
+      DEF.runnable_for?(computation)
     end
 
     protected

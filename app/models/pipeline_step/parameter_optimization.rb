@@ -4,7 +4,8 @@ module PipelineStep
   class ParameterOptimization < RimrockBase
     DEF = RimrockStep.new('parameter_optimization',
                           'eurvalve/0dmodel',
-                          'parameter_optimization.sh.erb')
+                          'parameter_optimization.sh.erb',
+                          [:pressure_drops])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -15,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:pressure_drops)
+      DEF.runnable_for?(computation)
     end
   end
 end

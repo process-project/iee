@@ -2,7 +2,9 @@
 
 module PipelineStep
   class Inference < RimrockBase
-    DEF = RimrockStep.new('inference', 'eurvalve/mock-step', 'mock.sh.erb')
+    DEF = RimrockStep.new('inference',
+                          'eurvalve/mock-step',
+                          'mock.sh.erb')
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -13,7 +15,7 @@ module PipelineStep
     end
 
     def runnable?
-      true
+      DEF.runnable_for?(computation)
     end
   end
 end

@@ -4,7 +4,8 @@ module PipelineStep
   class ZeroDModels < RimrockBase
     DEF = RimrockStep.new('0d_models',
                           'eurvalve/0dmodel',
-                          '0d_scenarios.sh.erb')
+                          '0d_scenarios.sh.erb',
+                          [:parameter_optimization_result])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -15,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:parameter_optimization_result)
+      DEF.runnable_for?(computation)
     end
   end
 end

@@ -2,7 +2,10 @@
 
 module PipelineStep
   class Rom < RimrockBase
-    DEF = RimrockStep.new('rom', 'eurvalve/cfd', 'rom.sh.erb')
+    DEF = RimrockStep.new('rom',
+                          'eurvalve/cfd',
+                          'rom.sh.erb',
+                          [:response_surface])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -13,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:response_surface)
+      DEF.runnable_for?(computation)
     end
   end
 end

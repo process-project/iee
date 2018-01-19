@@ -4,7 +4,8 @@ module PipelineStep
   class ParameterExtraction < RimrockBase
     DEF = RimrockStep.new('parameter_extraction',
                           'eurvalve/parameter-extraction',
-                          'parameter_extraction.sh.erb')
+                          'parameter_extraction.sh.erb',
+                          [:off_mesh])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -15,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:off_mesh)
+      DEF.runnable_for?(computation)
     end
   end
 end

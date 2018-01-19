@@ -4,7 +4,11 @@ module PipelineStep
   class PressureVolumeDisplay < RimrockBase
     DEF = RimrockStep.new('pressure_volume_display',
                           'eurvalve/0dmodel',
-                          'pv_display.sh.erb')
+                          'pv_display.sh.erb',
+                          [:data_series_1,
+                           :data_series_2,
+                           :data_series_3,
+                           :data_series_4])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -15,10 +19,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:data_series_1) &&
-        pipeline.data_file(:data_series_2) &&
-        pipeline.data_file(:data_series_3) &&
-        pipeline.data_file(:data_series_4)
+      DEF.runnable_for?(computation)
     end
   end
 end

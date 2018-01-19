@@ -4,7 +4,8 @@ module PipelineStep
   class HeartModelCalculation < RimrockBase
     DEF = RimrockStep.new('heart_model_calculation',
                           'eurvalve/0dmodel',
-                          'heart_model.sh.erb')
+                          'heart_model.sh.erb',
+                          [:estimated_parameters])
 
     def initialize(computation, options = {})
       super(computation, DEF, options)
@@ -15,7 +16,7 @@ module PipelineStep
     end
 
     def runnable?
-      pipeline.data_file(:estimated_parameters)
+      DEF.runnable_for?(computation)
     end
   end
 end
