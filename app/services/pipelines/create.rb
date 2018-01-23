@@ -28,13 +28,13 @@ module Pipelines
     end
 
     def create_computations
-      @pipeline.steps.each do |builder_class|
-        builder_class.create(@pipeline, step_params(builder_class))
+      @pipeline.steps.map { |s| s::DEF }.each do |step_def|
+        step_def.builder_for(@pipeline, step_params(step_def.name)).call
       end
     end
 
-    def step_params(builder_class)
-      @params.fetch(builder_class::DEF.name) { {} }
+    def step_params(step_name)
+      @params.fetch(step_name) { {} }
     end
   end
 end

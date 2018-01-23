@@ -8,10 +8,6 @@ module PipelineStep
       super(computation, options)
     end
 
-    def self.create(pipeline, params)
-      DEF.builder_for(pipeline, params).call
-    end
-
     def runnable?
       DEF.runnable_for?(computation)
     end

@@ -7,13 +7,11 @@ require 'models/pipeline/step_shared_examples'
 RSpec.describe PipelineStep::Segmentation do
   let(:user) { create(:user) }
   let(:pipeline) { create(:pipeline, user: user) }
-  let(:computation) { described_class.create(pipeline, {}) }
+  let(:computation) { described_class::DEF.builder_for(pipeline, {}).call }
 
   before do
     allow(Webdav::StartJob).to receive(:perform_later)
   end
-
-  it_behaves_like 'a pipeline step'
 
   context 'inputs are available' do
     before { create(:data_file, data_type: :image, patient: pipeline.patient) }

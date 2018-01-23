@@ -7,13 +7,11 @@ require 'models/pipeline/step_shared_examples'
 RSpec.describe PipelineStep::BloodFlowSimulation do
   let(:user) { create(:user) }
   let(:pipeline) { create(:pipeline, user: user, flow: 'not_used_steps') }
-  let(:computation) { described_class.create(pipeline, {}) }
+  let(:computation) { described_class::DEF.builder_for(pipeline, {}).call }
 
   before do
     allow(Rimrock::StartJob).to receive(:perform_later)
   end
-
-  it_behaves_like 'a pipeline step'
 
   context 'inputs are available' do
     before do

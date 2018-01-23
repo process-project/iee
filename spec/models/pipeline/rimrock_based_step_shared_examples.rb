@@ -17,17 +17,19 @@ shared_examples 'a Rimrock-based ready to run step' do
   end
 
   it 'creates RimrockComputation' do
-    expect { described_class.create(pipeline, {}) }.
+    expect { described_class::DEF.builder_for(pipeline, {}).call }.
       to change { RimrockComputation.count }.by(1)
   end
 
   it 'get tag or branch from params' do
-    computation = described_class.create(pipeline, tag_or_branch: 'my-tag')
+    computation = described_class::DEF.
+                  builder_for(pipeline, tag_or_branch: 'my-tag').call
+
     expect(computation.tag_or_branch).to eq('my-tag')
   end
 
   it 'returns a RimrockComputation object' do
-    computation = described_class.create(pipeline, {})
+    computation = described_class::DEF.builder_for(pipeline, {}).call
     expect(computation.class).to eq RimrockComputation
   end
 

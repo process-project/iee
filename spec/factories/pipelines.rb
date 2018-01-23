@@ -10,7 +10,7 @@ FactoryBot.define do
     trait :with_computations do
       after(:build) do |pipeline|
         pipeline.steps.each do |builder_class|
-          builder_class.create(pipeline, {})
+          builder_class::DEF.builder_for(pipeline, {}).call
         end
       end
     end

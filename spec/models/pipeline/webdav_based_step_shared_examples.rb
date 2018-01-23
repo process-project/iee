@@ -4,14 +4,14 @@ require 'rails_helper'
 
 shared_examples 'a Webdav-based ready to run step' do
   it 'creates WebdavComputation' do
-    expect { described_class.create(pipeline, {}) }.
+    expect { described_class::DEF.builder_for(pipeline, {}).call }.
       to change { WebdavComputation.count }.by(1)
   end
 
   it 'returns a WebdavComputation object' do
     allow(Webdav::StartJob).to receive(:perform_later)
 
-    computation = described_class.create(pipeline, {})
+    computation = described_class::DEF.builder_for(pipeline, {}).call
 
     expect(computation.class).to eq WebdavComputation
   end
