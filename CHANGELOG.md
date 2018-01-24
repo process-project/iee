@@ -31,6 +31,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Flow model class which stores information about pipeline flow steps (@mkasztelnik)
 - Switch from PhantomJS into Chrome headless (@mkasztelnik)
 - Add escaping in the documentation pdp curl example (@mkasztelnik)
+- Unique while fetching resources in pdp (@mkasztelnik)
 
 ### Deprecated
 
