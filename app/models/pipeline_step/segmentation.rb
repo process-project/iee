@@ -9,7 +9,7 @@ module PipelineStep
     end
 
     def runnable?
-      DEF.runnable_for?(computation)
+      DEF.runnable_for?(pipeline)
     end
 
     protected

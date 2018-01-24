@@ -8,8 +8,7 @@ class Step
     @required_files = required_files || []
   end
 
-  def runnable_for?(computation)
-    pipeline = computation.pipeline
+  def runnable_for?(pipeline)
     @required_files.map { |rf| pipeline.data_file(rf) }.all?
   end
 end
