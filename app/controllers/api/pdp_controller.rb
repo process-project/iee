@@ -23,7 +23,7 @@ module Api
     def resources
       service.resources.
         joins(access_policies: :access_method).
-        where(':path ~* CONCAT(\'^\', CONCAT(path, \'$\'))', path: path).
+        where(':path ~* CONCAT(\'^\', path, \'$\')', path: path).
         where(access_methods: { name: access_method }).uniq
     end
 
