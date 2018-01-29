@@ -9,6 +9,7 @@ RSpec.describe PipelineSteps::Webdav::Builder do
     computation = described_class.new(pipeline, 'webdav').call
 
     expect(computation).to be_instance_of WebdavComputation
+    expect(computation).to be_persisted
     expect(computation.pipeline_step).to eq 'webdav'
     expect(computation.pipeline).to eq pipeline
     expect(computation.output_path).to eq pipeline.outputs_dir
