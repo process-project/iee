@@ -3,7 +3,7 @@
 module Pipelines
   class StepsConfig
     def initialize(flow, force_reload: false)
-      @steps = Flow.steps(flow)&.map { |clazz| clazz::DEF.name }
+      @steps = Flow.steps(flow)&.map(&:name)
       @force_reload = force_reload
     end
 

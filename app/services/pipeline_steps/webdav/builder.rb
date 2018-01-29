@@ -3,7 +3,7 @@
 module PipelineSteps
   module Webdav
     class Builder
-      def initialize(pipeline, name, _params)
+      def initialize(pipeline, name, _params = {})
         @pipeline = pipeline
         @name = name
       end

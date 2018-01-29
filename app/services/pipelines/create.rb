@@ -28,8 +28,8 @@ module Pipelines
     end
 
     def create_computations
-      @pipeline.steps.map { |s| s::DEF }.each do |step_def|
-        step_def.builder_for(@pipeline, step_params(step_def.name)).call
+      @pipeline.steps.each do |step|
+        step.builder_for(@pipeline, step_params(step.name)).call
       end
     end
 

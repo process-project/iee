@@ -289,8 +289,8 @@ RSpec.feature 'Patient browsing' do
       scenario 'all possible computations are displayed' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-        pipeline.steps.each do |s|
-          title = I18n.t("steps.#{s::DEF.name}.title")
+        pipeline.steps.each do |step|
+          title = I18n.t("steps.#{step.name}.title")
           expect(page).to have_content title
         end
       end
