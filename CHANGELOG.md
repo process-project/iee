@@ -32,6 +32,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Switch from PhantomJS into Chrome headless (@mkasztelnik)
 - Add escaping in the documentation pdp curl example (@mkasztelnik)
 - Unique while fetching resources in pdp (@mkasztelnik)
+- Change comparison `show` method to `index` (@mkasztelnik)
 
 ### Deprecated
 

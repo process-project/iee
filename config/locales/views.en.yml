@@ -114,7 +114,7 @@ en:
         pipeline_outputs: "%{name} pipeline outputs"
 
     comparisons:
-      show:
+      index:
         subtitle: pipelines comparison
         sources_comparison: Sources comparison
         data_comparison: Data comparison

@@ -17,7 +17,7 @@
       = @pipelines.first.name
       vs
       = @pipelines.second.name
-      %small= t 'patients.comparisons.show.subtitle'
+      %small= t '.subtitle'
 
     %ul.nav.navbar-right.panel_toolbox
       %li
@@ -37,7 +37,7 @@
 
     %h3= t('.data_comparison')
     - if (@data[:compared] + @data[:not_comparable]).empty?
-      = t 'patients.comparisons.show.no_data'
+      = t '.no_data'
 
     - @data[:compared].each_with_index do |diff, index|
       - if diff[:viewer] == 'text'
@@ -62,7 +62,7 @@
 
     - @data[:not_comparable].each do |noncomparable|
       .noncomparable
-        = t 'patients.comparisons.show.incomparable', noncomparable: noncomparable
+        = t '.incomparable', noncomparable: noncomparable
 
 = render('patients/file_browsers', patient: @patient) do
   = render('patients/all_pipelines_outputs', patient: @patient)
