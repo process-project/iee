@@ -121,7 +121,7 @@ en:
         source_comparison_link: "%{computation_step}, rev. %{compared_revision} vs rev. %{compare_to_revision}"
         invalid: Please select exactly two pipelines to compare.
         no_data: Nothing to compare.
-        incomparable: "Result: %{noncomparable}. Not compared."
+        noncomparable: "Result: %{noncomparable}. Not compared."
 
   services:
     index:

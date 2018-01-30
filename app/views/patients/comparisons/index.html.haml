@@ -62,7 +62,7 @@
 
     - @data[:not_comparable].each do |noncomparable|
       .noncomparable
-        = t '.incomparable', noncomparable: noncomparable
+        = t '.noncomparable', noncomparable: noncomparable
 
 = render('patients/file_browsers', patient: @patient) do
   = render('patients/all_pipelines_outputs', patient: @patient)
