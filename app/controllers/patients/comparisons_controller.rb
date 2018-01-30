@@ -2,8 +2,8 @@
 
 module Patients
   class ComparisonsController < ApplicationController
-    before_action :check_pipelines, only: [:show]
-    before_action :find_and_authorize, only: [:show]
+    before_action :check_pipelines, only: [:index]
+    before_action :find_and_authorize, only: [:index]
 
     TYPES = {
       'estimated_parameters' => 'text',
@@ -14,7 +14,7 @@ module Patients
 
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
-    def show
+    def index
       # TODO: FIXME the following two lines are not needed when patient sync problem is solved
       #             can also enable the Metrics/MethodLength cop again, then
       @patient.execute_data_sync(current_user)
@@ -58,7 +58,7 @@ module Patients
 
     def check_pipelines
       if pipelines.size != 2
-        redirect_to patient_path(@patient), alert: I18n.t('patients.comparisons.show.invalid')
+        redirect_to patient_path(@patient), alert: I18n.t('patients.comparisons.index.invalid')
       end
     end
 

@@ -10,7 +10,7 @@ RSpec.feature 'Comparing two pipelines images', files: true do
     patient = create(:patient, case_number: '7900')
     create_list(:pipeline, 2, patient: patient)
 
-    visit patient_comparison_path(patient, id: patient.case_number, pipeline_ids: [1, 2])
+    visit patient_comparisons_path(patient, pipeline_ids: [1, 2])
 
     expect(page).to_not have_content 'portal6.png'
     expect(page).to have_content 'heart.bmp'
