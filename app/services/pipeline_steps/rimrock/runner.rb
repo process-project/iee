@@ -3,9 +3,9 @@
 module PipelineSteps
   module Rimrock
     class Runner < PipelineSteps::RunnerBase
-      def initialize(computation, repo, file, options = {})
+      def initialize(computation, repository, file, options = {})
         super(computation, options)
-        @repo = repo
+        @repository = repository
         @file = file
         @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
         @revision_fetcher = options.fetch(:revision_fetcher) { Gitlab::Revision }
@@ -28,11 +28,11 @@ module PipelineSteps
       end
 
       def template
-        @template_fetcher.new(@repo, @file, computation.revision).call
+        @template_fetcher.new(@repository, @file, computation.revision).call
       end
 
       def revision
-        @revision_fetcher.new(@repo, computation.tag_or_branch).call
+        @revision_fetcher.new(@repository, computation.tag_or_branch).call
       end
     end
   end
