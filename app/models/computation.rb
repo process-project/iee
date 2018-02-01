@@ -53,7 +53,7 @@ class Computation < ApplicationRecord
   end
 
   def runnable?
-    step.runnable_for?(pipeline)
+    step.input_present_for?(pipeline)
   end
 
   private

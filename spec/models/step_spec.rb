@@ -8,7 +8,7 @@ RSpec.describe Step do
       pipeline = create(:pipeline)
       step = Step.new('no-req-files')
 
-      expect(step.runnable_for?(pipeline)).to be_truthy
+      expect(step.input_present_for?(pipeline)).to be_truthy
     end
 
     it 'returns true if all requied files are present' do
@@ -23,7 +23,7 @@ RSpec.describe Step do
              patient: patient)
       step = Step.new('req-files', [:image, :segmentation_result])
 
-      expect(step.runnable_for?(pipeline)).to be_truthy
+      expect(step.input_present_for?(pipeline)).to be_truthy
     end
 
     it 'returns false if any required file is missing' do
@@ -35,7 +35,7 @@ RSpec.describe Step do
              patient: patient)
       step = Step.new('req-files', [:image, :segmentation_result])
 
-      expect(step.runnable_for?(pipeline)).to be_falsy
+      expect(step.input_present_for?(pipeline)).to be_falsy
     end
   end
 end
