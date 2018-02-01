@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module PipelineStep
-  class Base
+module PipelineSteps
+  class RunnerBase
     delegate :pipeline, :user, :pipeline_step, to: :computation
     attr_reader :computation
 
@@ -10,9 +10,7 @@ module PipelineStep
       @updater = options.fetch(:updater) { ComputationUpdater }
     end
 
-    def run
-      raise 'Required inputs are not available' unless runnable?
-
+    def call
       computation.status = :new
       computation.started_at = Time.current
 
@@ -22,10 +20,6 @@ module PipelineStep
       @updater.new(computation).call if saved
 
       saved
-    end
-
-    def runnable?
-      raise 'This method should be implemented by descendent class'
     end
 
     protected

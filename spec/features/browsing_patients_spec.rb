@@ -289,8 +289,8 @@ RSpec.feature 'Patient browsing' do
       scenario 'all possible computations are displayed' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
-        pipeline.steps.each do |s|
-          title = I18n.t("steps.#{s::STEP_NAME}.title")
+        pipeline.steps.each do |step|
+          title = I18n.t("steps.#{step.name}.title")
           expect(page).to have_content title
         end
       end
@@ -344,9 +344,8 @@ RSpec.feature 'Patient browsing' do
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
         allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-        PipelineStep::RimrockBase.subclasses.each do |klass|
-          allow_any_instance_of(klass).to receive(:runnable?).and_return(true)
-        end
+        allow_any_instance_of(RimrockStep).
+          to receive(:input_present_for?).and_return(true)
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
 

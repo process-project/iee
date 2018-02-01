@@ -80,6 +80,6 @@ describe Pipelines::Create do
   end
 
   def step_names(pipeline)
-    pipeline.steps.map { |c| c::STEP_NAME }
+    pipeline.steps.map(&:name)
   end
 end
