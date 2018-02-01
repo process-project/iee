@@ -34,6 +34,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unique while fetching resources in pdp (@mkasztelnik)
 - Change comparison `show` method to `index` (@mkasztelnik)
 - Pipeline steps definition refactored and generalized (@mkasztelnik)
+- Change defaults for data sets (@mkasztelnik)
 
 ### Deprecated
 
