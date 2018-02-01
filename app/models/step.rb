@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Step
-  attr_reader :name
+  attr_reader :name, :required_files
 
   def initialize(name, required_files = [])
     @name = name

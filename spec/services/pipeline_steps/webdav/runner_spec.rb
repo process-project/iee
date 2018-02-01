@@ -8,12 +8,12 @@ RSpec.describe PipelineSteps::Webdav::Runner do
   let(:computation) { create(:webdav_computation, pipeline_step: 'segmentation') }
 
   subject do
-    described_class.new(computation,
+    described_class.new(computation, :image,
                         updater: double(new: updater))
   end
 
   context 'inputs are available' do
-    before do
+    let!(:input_file) do
       create(:data_file,
              patient: computation.pipeline.patient,
              data_type: :image)
@@ -31,6 +31,13 @@ RSpec.describe PipelineSteps::Webdav::Runner do
       subject.call
 
       expect(computation.status).to eq 'new'
+    end
+
+    it 'sets input path to first required file' do
+      subject.call
+      computation.reload
+
+      expect(computation.input_path).to eq input_file.path
     end
   end
 end

@@ -3,27 +3,24 @@
 module PipelineSteps
   module Webdav
     class Runner < PipelineSteps::RunnerBase
-      def initialize(computation, options = {})
+      def initialize(computation, input_data_file_type, options = {})
         super(computation, options)
+        @input_data_file_type = input_data_file_type
       end
 
       protected
 
       def internal_run
         computation.tap do |c|
-          c.update_attributes(input_path: image_data_file.path)
+          c.update_attributes(input_path: input_data_file.path)
           ::Webdav::StartJob.perform_later(c)
         end
       end
 
       private
 
-      def image_data_file
-        pipeline.data_file(:image)
-      end
-
-      def input_path
-        File.join(@patient.working_dir, "imaging_#{@patient.case_number}.zip")
+      def input_data_file
+        pipeline.data_file(@input_data_file_type)
       end
     end
   end

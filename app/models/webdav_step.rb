@@ -6,6 +6,6 @@ class WebdavStep < Step
   end
 
   def runner_for(computation, options = {})
-    PipelineSteps::Webdav::Runner.new(computation, options)
+    PipelineSteps::Webdav::Runner.new(computation, required_files.first, options)
   end
 end
