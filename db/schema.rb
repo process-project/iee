@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205134547) do
+ActiveRecord::Schema.define(version: 20180202100140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,16 @@ ActiveRecord::Schema.define(version: 20171205134547) do
     t.string "uri_aliases", default: [], array: true
     t.index ["uri"], name: "index_services_on_uri"
     t.index ["uri_aliases"], name: "index_services_on_uri_aliases", using: :gin
+  end
+
+  create_table "user_audits", force: :cascade do |t|
+    t.string "ip"
+    t.string "user_agent"
+    t.string "accept_language"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_audits_on_user_id"
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|

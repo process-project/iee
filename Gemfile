@@ -62,6 +62,9 @@ gem 'gitlab'
 gem 'puma', '~> 3.7'
 gem 'redis', '~> 3.0'
 
+# GeoIP check based on MaxMind DB (incl. free Lite set)
+gem 'maxminddb'
+
 group :development, :test do
   gem 'bullet'
   gem 'byebug', platform: [:mri, :mingw, :x64_mingw]
