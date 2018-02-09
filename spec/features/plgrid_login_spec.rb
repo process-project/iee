@@ -76,6 +76,7 @@ RSpec.feature 'PLGrid authentication' do
     user = create(:plgrid_user)
 
     plgrid_sign_in_as(user)
+    visit profile_path
 
     expect(page).to_not have_content('Connect to PLGrid')
     expect(page).to have_selector('a', text: 'PLGrid', match: :prefer_exact)
