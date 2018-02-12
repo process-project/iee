@@ -4,7 +4,7 @@ class UserAudit < ApplicationRecord
   validates :ip, presence: true
 
   def ip_cc
-    db = MaxMindDB.new('db/GeoLite2-Country.mmdb')
+    db = MaxMindDB.new(Rails.application.config_for('eurvalve')['maxmind']['db'])
 
     unless db.nil?
       l = db.lookup self.ip

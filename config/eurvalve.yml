@@ -48,6 +48,9 @@ defaults: &defaults
   segmentation:
     mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
 
+  maxmind:
+    db: <%= ENV['MAXMIND_DB'] || 'db/GeoLite2-Country.mmdb' %>
+
 
 development:
   <<: *defaults

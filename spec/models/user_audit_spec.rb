@@ -9,7 +9,8 @@ RSpec.describe UserAudit, type: :model do
   it { should_not validate_presence_of(:accept_language) }
 
   it 'calculates proper CC for the IP' do
-    l = MaxMindDB.new('db/GeoLite2-Country.mmdb').lookup subject.ip
+    mm_db = MaxMindDB.new(Rails.application.config_for('eurvalve')['maxmind']['db'])
+    l = mm_db.lookup subject.ip
 
     if l.found?
       expect(subject.ip_cc).to eq l.country.iso_code
