@@ -7,18 +7,23 @@ require 'securerandom'
 module Cloud
   class Client
     def initialize(user_token, atmosphere_url)
-#      @user_token = user_token
-       @user_token = 'eyJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiUGlvdHIgTm93YWtvd3NraSIsImVtYWlsIjoieW1ub3dha29AY3lmLWtyLmVkdS5wbCIsInN1YiI6IjEzIiwiaXNzIjoiRXVyVmFsdmUgUG9ydGFsIiwiZXhwIjoxNTE4MTg0ODg1fQ.0cELGgveGQlvXFezev4awn8zY5POI0NBi-bPUeoyk-engEtcRGji33D5YE8Bg_2t_PugDDXrwzRFn7BjJz90NQ'
-#      @user_token = 'eyJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiUGlvdHIgTm93YWtvd3NraSIsImVtYWlsIjoieW1ub3dha29AY3lmLWtyLmVkdS5wbCIsInN1YiI6IjEzIiwiaXNzIjoiRXVyVmFsdmUgUG9ydGFsIiwiZXhwIjoxNTE4MTgwNDU3fQ.Vy36tTgBgCtYwKclOamsB_etMsFQ4gMyG8fg7k76PUKl7xmL_OIK80iZJmYmkNh-FYwhyXufQsVadGfP1fW0UA'
-#      @user_token = 'eyJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiUGlvdHIgTm93YWtvd3NraSIsImVtYWlsIjoieW1ub3dha29AY3lmLWtyLmVkdS5wbCIsInN1YiI6IjEzIiwiaXNzIjoiRXVyVmFsdmUgUG9ydGFsIiwiZXhwIjoxNTE3NTgyNDM1fQ.wN9gymf57Uih6VxaRt_b4_6Ub-39bM2FzssUmtR4gzv8Zp2MFdp6L7B0SGZMUQXzuuApk588iFd3piw-kGcgnw'
-#      @user_token = 'eyJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiUGlvdHIgTm93YWtvd3NraSIsImVtYWlsIjoieW1ub3dha29AY3lmLWtyLmVkdS5wbCIsInN1YiI6IjEzIiwiaXNzIjoiRXVyVmFsdmUgUG9ydGFsIiwiZXhwIjoxNTE3NTc4NDY0fQ.YpvEseIlfxVokbE38WHkA_RztN6fkCiQrMsq3RjMUf4sTACiDukga3MERD2gUD136ajePHD-fbcacZOzytOtNA'
+      if user_token.blank?
+        Rails.logger.warn("WARNING! BLANK USER TOKEN PASSED!")
+#        @user_token = 'eyJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiUGlvdHIgTm93YWtvd3NraSIsImVtYWlsIjoieW1ub3dha29AY3lmLWtyLmVkdS5wbCIsInN1YiI6IjEiLCJpc3MiOiJFdXJWYWx2ZSBQb3J0YWwiLCJleHAiOjE1MTg1NDY4NTF9.3uwT-PexZ1D4afyHBOTrIQ7oDqEitsBF0kBvZwX2PrDpEQEvt8lJ4PC7-N8plzwkYSevtbTVRa5g0Nb-dSGccw'
+      else
+#        @user_token = user_token
+        @user_token = user_token
+      end
       @atmosphere_url = atmosphere_url
-      @appliance_type_id = 882 # TODO: parameterize
+      @appliance_type_id = 884 # TODO: parameterize
     end
 
     def register_initial_config(username, payload)
-      # config = "username=#{username};password=#{@user_token};script=#{payload}"
-      config = "username=#{username};password=#{@user_token};script=echo 'it works!' > /mnt/filestore/cloud_pipeline_test/result_123.txt"
+      if payload.present?
+        config = "username=#{username};password=Pi314159;script=#{payload}"
+      else
+        config = "username=#{username};password=Pi314159;script=echo 'it works!' > /mnt/filestore/cloud_pipeline_test/result_123.txt"
+      end
 
       puts config
 

@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= t 'computation.started_at'
-      - if computation.rimrock?
+      - if computation.rimrock? || computation.cloud?
         %th= t 'computation.tag_or_branch'
         %th= t 'computation.revision'
       %th= t 'computation.execution_time'
@@ -11,7 +11,7 @@
   %tbody
     %tr
       %td= start_time(computation)
-      - if computation.rimrock?
+      - if computation.rimrock? || computation.cloud?
         %td= computation.tag_or_branch
         %td= source_link(computation)
 

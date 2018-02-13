@@ -17,9 +17,11 @@ class Computation < ApplicationRecord
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
+  scope :cloud, -> { where(type: 'CloudComputation') }
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
+  scope :submitted_cloud, -> { submitted.cloud }
   scope :for_patient_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline
@@ -38,6 +40,10 @@ class Computation < ApplicationRecord
 
   def rimrock?
     type == 'RimrockComputation'
+  end
+
+  def cloud?
+    type == 'CloudComputation'
   end
 
   def self.flow_ordered

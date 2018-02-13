@@ -3,9 +3,9 @@
 module PipelineSteps
   module Cloud
     class Builder
-      def initialize(pipeline, atmosphere_url, name, params = {})
+      def initialize(pipeline, name, params = {})
         @pipeline = pipeline
-        @atmosphere_url = atmosphere_url
+        @atmosphere_url = Rails.configuration.constants['cloud']['atmosphere_url']
         @name = name
         @tag_or_branch = params[:tag_or_branch]
       end

@@ -50,6 +50,7 @@ class Flow
       mv_segmentation rom parameter_optimization 0d_models
       uncertainty_analysis pv_loop_comparison
     ],
+    cloud_test: %w[sample_cloud_step],
     not_used_steps: %w[heart_model_calculation blood_flow_simulation]
   }.freeze
 
@@ -98,7 +99,8 @@ class Flow
     RimrockStep.new('valve_sizing', 'eurvalve/mock-step', 'mock.sh.erb'),
     RimrockStep.new('0d_models',
                     'eurvalve/0dmodel', '0d_scenarios.sh.erb',
-                    [:parameter_optimization_result])
+                    [:parameter_optimization_result]),
+    CloudStep.new('sample_cloud_step', 'eurvalve/mock-step', 'cloud_mock.sh.erb')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]

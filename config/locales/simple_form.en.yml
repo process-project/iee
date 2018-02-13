@@ -86,6 +86,7 @@ en:
           avr_long_term_post_op: AVR long term post-op
           mvr_from_scan_rom: MVR from scan (ROM)
           not_used_steps: Additional computations
+          cloud_test: Sample cloud-based pipeline
     # Examples
     # labels:
     #   defaults:

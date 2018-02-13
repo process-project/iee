@@ -44,6 +44,7 @@ defaults: &defaults
     ageing_model_x2: 'eurvalve/mock-step'
     pv_loop_comparison: 'eurvalve/mock-step'
     mv_segmentation: 'eurvalve/mock-step'
+    sample_cloud_step: 'eurvalve/mock-step'
 
   segmentation:
     mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>

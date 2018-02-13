@@ -518,3 +518,20 @@ en:
       start_automatic: Save step version
       start_manual: Start
       restart_manual: Restart
+    sample_cloud_step:
+      title: Cloud-based computation
+      cannot_start: Cannot start this step
+      created: |
+        All required input files are available.
+        You can start this step.
+      new: Step is being submitted
+      queued: Step is queued
+      running: Step is running
+      error: There was an error while calculating step
+      finished: |
+        Step finished successfully, results stored in
+        the output directory for results
+      aborted: Step was aborted by the pipeline owner
+      start_automatic: Save step version
+      start_manual: Start
+      restart_manual: Restart
