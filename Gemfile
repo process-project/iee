@@ -65,6 +65,9 @@ gem 'redis', '~> 3.0'
 # GeoIP check based on MaxMind DB (incl. free Lite set)
 gem 'maxminddb'
 
+# Extract browser (e.g. User Agent) details
+gem 'browser'
+
 group :development, :test do
   gem 'bullet'
   gem 'byebug', platform: [:mri, :mingw, :x64_mingw]

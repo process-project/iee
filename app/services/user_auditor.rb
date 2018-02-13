@@ -3,12 +3,12 @@
 class UserAuditor
 
   class MailNotifier
-    def initialize(user)
-      @user = user
+    def initialize(user_audit)
+      @user_audit = user_audit
     end
 
     def notify
-
+      Notifier.audit_failed(@user_audit).deliver_later
     end
   end
 
@@ -16,7 +16,7 @@ class UserAuditor
     @user = user
 
     if notifier.nil?
-      @notifier = MailNotifier.new(user)
+      @notifier = MailNotifier.new(user.user_audits.last)
     else
       @notifier = notifier
     end

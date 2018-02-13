@@ -55,4 +55,14 @@ RSpec.describe Notifier do
       expect(mail.body.encoded).to match('proxy certificate has expired')
     end
   end
+
+  describe 'audit failed' do
+    it 'sends email to account owner' do
+      user_audit = build(:user_audit)
+
+      mail = described_class.audit_failed(user_audit).deliver_now
+
+      expect(mail.body.encoded).to match('detected unusual authentication')
+    end
+  end
 end

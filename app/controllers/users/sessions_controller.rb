@@ -12,7 +12,7 @@ module Users
                        accept_language: request.env['HTTP_ACCEPT_LANGUAGE'],
                        user: u)
 
-      # FIXME: !!! Call
+      UserAuditor.new(u).call
     end
 
     private
