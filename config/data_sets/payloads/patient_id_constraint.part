@@ -1,0 +1,1 @@
+{\"field\": {\"dbPublishAddress\": \"eurvalve.sheffield.ac.uk\", \"dbName\": \"eurvalve\", \"tableName\": \"roottable\", \"columnName\": \"patient_id_text\", \"columnDisplayName\": \"patient_id$text\", \"columnType\": \"string\", \"annoDisplay\": \"Subject Identifier\", \"columnEnum\": \"\"}, \"operation\": \"=\", \"values\": [\"{case_number}\"]}
