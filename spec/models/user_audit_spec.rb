@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe UserAudit, type: :model do
@@ -17,11 +19,9 @@ RSpec.describe UserAudit, type: :model do
     else
       expect(subject.ip_cc).to be_nil
     end
-
   end
 
   it 'CC is nil for unknown IP (like local)' do
     expect(create(:user_audit, ip: '127.0.0.1').ip_cc).to be_nil
   end
-
 end

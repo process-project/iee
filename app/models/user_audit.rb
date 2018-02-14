@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserAudit < ApplicationRecord
   belongs_to :user
 
@@ -7,7 +9,7 @@ class UserAudit < ApplicationRecord
     db = MaxMindDB.new(Rails.application.config_for('eurvalve')['maxmind']['db'])
 
     unless db.nil?
-      l = db.lookup self.ip
+      l = db.lookup ip
       return l.country.iso_code if l.found?
     end
 
