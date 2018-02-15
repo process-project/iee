@@ -39,23 +39,23 @@ $ ->
         console.log("response %o", response)
         $(this).find('.patient_stats .count').html(response['count'])
         $(this).find('.patient_stats .count_bottom').html(
-          "and <i class='green'>" + response['test'] + "</i> test entries"
+          "and <i class='green'>#{response['test']}</i> test entries"
         )
         $(this).find('.patient_site_stats .count').html(
-          response['berlin'] + " | " + response['eindhoven'] + " | " + response['sheffield']
+          "#{response['berlin']} | #{response['eindhoven']} | #{response['sheffield']}"
         )
         $(this).find('.patient_site_stats .count_bottom').html(
-          "<i class='green'>" + response['no_site'] + "</i> from unknown site"
+          "<i class='green'>#{response['no_site']}</i> from unknown site"
         )
         $(this).find('.patient_gender_stats .count').html(
-          response['females'] + " | " + response['males']
+          "#{response['females']} | #{response['males']}"
         )
         $(this).find('.patient_gender_stats .count_bottom').html(
-          "<i class='green'>" + response['no_gender'] + "</i> of unknown gender"
+          "<i class='green'>#{response['no_gender']}</i> of unknown gender"
         )
         $(this).find('.patient_state_stats .count').html(
-          response['preop'] + " | " + response['postop']
+          "#{response['preop']} | #{response['postop']}"
         )
         $(this).find('.patient_state_stats .count_bottom').html(
-          "<i class='red'>" + response['no_state'] + "</i> of unknown state"
+          "<i class='red'>#{response['no_state']}</i> of unknown state"
         )

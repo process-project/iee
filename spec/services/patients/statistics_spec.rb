@@ -17,12 +17,19 @@ describe Patients::Statistics do
     end
 
     it 'tolerates empty input' do
-      expect { subject.send(:create_details, nil) }.
-        not_to raise_error
+      allow_any_instance_of(DataSets::Client).
+        to receive(:call).
+        and_return(nil)
+
+      expect { subject.call }.not_to raise_error
     end
 
     it 'computes gender, site and state ratios based on clinical data report' do
-      stats = subject.send(:create_details, sample)
+      allow_any_instance_of(DataSets::Client).
+        to receive(:call).
+        and_return(sample)
+
+      stats = subject.call
 
       expect(stats[:females]).to eq 1
       expect(stats[:males]).to eq 1
@@ -38,8 +45,12 @@ describe Patients::Statistics do
     end
 
     it 'assumes testing cases as all that have no information in clinical data report' do
+      allow_any_instance_of(DataSets::Client).
+        to receive(:call).
+        and_return(sample)
+
       subject = described_class.new(create_list(:patient, 4), user)
-      expect(subject.send(:create_details, sample)[:test]).to eq 1
+      expect(subject.call[:test]).to eq 1
     end
   end
 end
