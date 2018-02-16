@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## 0.8.0
 
 ### Added
 - Reload pipeline step status on patient view (@mkasztelnik)
@@ -15,7 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Execution time updated each second for active computation (@mkasztelnik)
 - Pipeline specific input (@mkasztelnik)
 - Patient clinical details now includes patient's state (preop/postop) (@Nuanda)
-- New statistics about the current state of EurValve's prospective cohort (@Nuanda) 
+- New statistics about the current state of EurValve's prospective cohort (@Nuanda)
 
 ### Changed
 - Labels for pipelines list view improved (@mkasztelnik)
