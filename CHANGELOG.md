@@ -36,6 +36,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipeline steps definition refactored and generalized (@mkasztelnik)
 - Change defaults for data sets (@mkasztelnik)
 - Change the default root path to patients index (@Nuanda)
+- Renamed `not_used_flow` into `unused_steps` (@mkasztelnik)
 
 ### Deprecated
 
