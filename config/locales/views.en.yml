@@ -14,6 +14,12 @@ en:
       progress: Procedure progress
       latest_pipelines: "Latest pipelines:"
       no_pipelines: No pipelines.
+      stats:
+        total: Total cohort patients
+        sites: "Berlin | Eindhoven | Sheffield"
+        females: Females
+        males: Males
+        states: "Pre-op | Post-op"
     show:
       subtitle: A patient case in EurValve project
       remove: Delete this case
