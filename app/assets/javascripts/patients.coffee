@@ -1,4 +1,4 @@
-$ ->
+$(document).on 'turbolinks:load', ->
   $('.diff_output').each ->
     $diff = $(this)
     data = $diff.data()
@@ -52,6 +52,12 @@ $ ->
         )
         $(this).find('.patient_gender_stats .count_bottom').html(
           "<i class='green'>#{response['no_gender']}</i> of unknown gender"
+        )
+        $(this).find('.patient_disease_stats .count').html(
+          "#{response['aortic']} | #{response['mitral']}"
+        )
+        $(this).find('.patient_disease_stats .count_bottom').html(
+          "<i class='green'>#{response['no_diagnosis']}</i> with unknown diagnosis"
         )
         $(this).find('.patient_state_stats .count').html(
           "#{response['preop']} | #{response['postop']}"

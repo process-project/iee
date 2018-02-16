@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Added AVD/MVD ratio to patients' statistics (@Nuanda)
 
 ### Changed
 
@@ -17,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Patients' statistics work correctly when turbolink-loaded (@Nuanda)
 
 ### Security
 
