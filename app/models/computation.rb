@@ -22,7 +22,6 @@ class Computation < ApplicationRecord
   scope :submitted_webdav, -> { submitted.webdav }
   scope :for_patient_status, ->(status) { where(pipeline_step: status) }
 
-  delegate :runnable?, :run, to: :runner
   delegate :mode, :manual?, :automatic?, to: :pipeline
 
   def active?
@@ -46,17 +45,25 @@ class Computation < ApplicationRecord
   end
 
   def flow_index
-    Pipeline::FLOWS[pipeline.flow.to_sym].map { |s| s::STEP_NAME }.index(pipeline_step)
+    pipeline.steps.map(&:name).index(pipeline_step)
+  end
+
+  def run
+    runner.call
+  end
+
+  def runnable?
+    step.input_present_for?(pipeline)
   end
 
   private
 
   def runner
-    @runner ||= runner_class.new(self)
+    @runner ||= step.runner_for(self)
   end
 
-  def runner_class
+  def step
     return nil if pipeline.nil?
-    Pipeline::FLOWS[pipeline.flow.to_sym].find { |s| s::STEP_NAME == pipeline_step }
+    pipeline.steps.find { |step| step.name == pipeline_step }
   end
 end

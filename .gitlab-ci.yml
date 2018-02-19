@@ -1,4 +1,4 @@
-image: cyfronet/ruby-2.4.1-node-phantomjs-2.1
+image: cyfronet/ruby-2.4.1-node-chrome
 
 services:
   - postgres
@@ -19,6 +19,7 @@ stages:
 test:
   stage: test
   script:
+  - google-chrome --version
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc
@@ -31,6 +32,7 @@ test:
 integration:
   stage: test
   script:
+  - google-chrome --version
   - ruby -v
   - which ruby
   - gem install bundler --no-ri --no-rdoc

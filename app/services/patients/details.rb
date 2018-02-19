@@ -48,6 +48,7 @@ module Patients
 
     def first_values(csv)
       [
+        entry('state', csv_value(csv, 'state_value'), 'real', 'default'),
         entry('gender', csv_value(csv, 'gender_value'), 'real', 'default'),
         entry('birth_year', csv_value(csv, 'year_of_birth_value'), 'real', 'default'),
         entry('age', csv_value(csv, 'age_value'), 'real', 'default'),

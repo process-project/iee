@@ -14,6 +14,12 @@ en:
       progress: Procedure progress
       latest_pipelines: "Latest pipelines:"
       no_pipelines: No pipelines.
+      stats:
+        total: Total cohort patients
+        sites: "Berlin | Eindhoven | Sheffield"
+        females: Females
+        males: Males
+        states: "Pre-op | Post-op"
     show:
       subtitle: A patient case in EurValve project
       remove: Delete this case
@@ -114,14 +120,14 @@ en:
         pipeline_outputs: "%{name} pipeline outputs"
 
     comparisons:
-      show:
+      index:
         subtitle: pipelines comparison
         sources_comparison: Sources comparison
         data_comparison: Data comparison
         source_comparison_link: "%{computation_step}, rev. %{compared_revision} vs rev. %{compare_to_revision}"
         invalid: Please select exactly two pipelines to compare.
         no_data: Nothing to compare.
-        incomparable: "Result: %{noncomparable}. Not compared."
+        noncomparable: "Result: %{noncomparable}. Not compared."
 
   services:
     index:

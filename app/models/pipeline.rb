@@ -1,113 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable ClassLength
 class Pipeline < ApplicationRecord
-  FLOWS = {
-    inference_variants: [
-      PipelineStep::RuleSelection,
-      PipelineStep::InferenceWeighting,
-      PipelineStep::PatientDbSelection,
-      PipelineStep::IterationControl,
-      PipelineStep::ResultsPresentation
-    ],
-    avr_surgical_preparation: [
-      PipelineStep::Segmentation,
-      PipelineStep::Rom
-    ],
-    avr_from_scan_rom: [
-      PipelineStep::Segmentation,
-      PipelineStep::Rom,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDModels,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::PressureVolumeDisplay
-    ],
-    avr_from_scan_cfd: [
-      PipelineStep::Segmentation,
-      PipelineStep::Cfd,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDModels,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::HaemodynamicComparison
-    ],
-    avr_tavi_cfd: [
-      PipelineStep::Segmentation,
-      PipelineStep::ValveSizing,
-      PipelineStep::ProstheticGeometries,
-      PipelineStep::ValvePlacement,
-      PipelineStep::Cfd,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDModels,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::HaemodynamicComparison
-    ],
-    avr_valve_selection: [
-      PipelineStep::Segmentation,
-      PipelineStep::ValveSizing,
-      PipelineStep::ProstheticGeometries,
-      PipelineStep::ValvePlacement,
-      PipelineStep::Cfd,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDModels,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::HaemodynamicComparison
-    ],
-    avr_intervention_timing: [
-      PipelineStep::Segmentation,
-      PipelineStep::Rom,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::ProgressionModel,
-      PipelineStep::ResultsComparison
-    ],
-    av_classification: [
-      PipelineStep::Segmentation,
-      PipelineStep::Rom,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::SeverityModel,
-      PipelineStep::ResultsComparison
-    ],
-    avr_risk_benefit: [
-      PipelineStep::Segmentation,
-      PipelineStep::Rom,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::EconomicsAlgorithm,
-      PipelineStep::ResultsComparison
-    ],
-    prosthetic_angle_tilt: [
-      PipelineStep::Segmentation,
-      PipelineStep::ValveSizing,
-      PipelineStep::ProstheticGeometries,
-      PipelineStep::ValvePlacementX12,
-      PipelineStep::CfdX12,
-      PipelineStep::ResultsComparison
-    ],
-    avr_long_term_post_op: [
-      PipelineStep::Segmentation,
-      PipelineStep::Rom,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDModels,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::AgeingModelX2,
-      PipelineStep::Cfd,
-      PipelineStep::ResultsComparison
-    ],
-    mvr_from_scan_rom: [
-      PipelineStep::MvSegmentation,
-      PipelineStep::Rom,
-      PipelineStep::ParameterOptimization,
-      PipelineStep::ZeroDModels,
-      PipelineStep::UncertaintyAnalysis,
-      PipelineStep::PvLoopComparison
-    ],
-    not_used_steps: [
-      PipelineStep::HeartModelCalculation,
-      PipelineStep::BloodFlowSimulation
-    ]
-  }.freeze
-
   enum mode: [:automatic, :manual]
 
   belongs_to :patient
@@ -131,12 +24,14 @@ class Pipeline < ApplicationRecord
   validates :iid, presence: true, numericality: true
   validates :name, presence: true
   validates :mode, presence: true
+  validates :flow, inclusion: { in: Flow.types.map(&:to_s) }
 
   scope :automatic, -> { where(mode: :automatic) }
   scope :latest, -> { order(created_at: :desc).limit(3) }
 
-  validates :flow,
-            inclusion: { in: Pipeline::FLOWS.keys.map(&:to_s) }
+  def steps
+    Flow.steps(flow)
+  end
 
   def to_param
     iid.to_s
@@ -178,4 +73,3 @@ class Pipeline < ApplicationRecord
     self.iid = patient.pipelines.maximum(:iid).to_i + 1 if iid.blank?
   end
 end
-# rubocop:enabled ClassLength

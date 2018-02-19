@@ -43,8 +43,12 @@ in which case normal privileges would be sufficient.
 
 ### Manual activation of the citext extention
 
-1. Create the databases (at least for the development and test environments). You may run `bin/setup` (and allow it to fail due to insufficient privileges, but only after the DBs are created) or create them manually with an unprivileged user as the owner.
-2. As the PostgreSQL superuser, run the `CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;` on all databases (dev, test, ...) to activate the extension.
+1. Create the databases (at least for the development and test environments).
+   You may run `bin/setup` (and allow it to fail due to insufficient privileges,
+   but only after the DBs are created) or create them manually with an
+   unprivileged user as the owner.
+2. As the PostgreSQL superuser, run the `CREATE EXTENSION IF NOT EXISTS citext
+   WITH SCHEMA public;` on all databases (dev, test, ...) to activate the extension.
 
 
 ## Installation
@@ -57,7 +61,7 @@ bin/setup
 
 You need to:
 * copy config/puma.rb.example into config/puma.rb
-and edit as required (env, location, socket/tcp),
+  and edit as required (env, location, socket/tcp),
 * create required directories defined in the config in tmp (such as pids)
 
 ## Running
@@ -120,9 +124,17 @@ you can set the following ENV variables:
 
 ## Testing
 
-Some tests require PnahtomJS installed. Please take a look at:
-https://github.com/teampoltergeist/poltergeist#installing-phantomjs for manual
-how to install it on your machine.
+Some tests require Chrome headless installed. Please take a look at:
+https://developers.google.com/web/updates/2017/04/headless-chrome for manual. To
+install chrome on your debian based machine use following snippet:
+
+```
+curl -sS -L https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+
+apt-get update -q
+apt-get install -y google-chrome-stable
+```
 
 To execute all tests run:
 

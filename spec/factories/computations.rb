@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :computation do
-    pipeline_step { Pipeline::FLOWS.values.first.first::STEP_NAME }
+    pipeline_step 'rule_selection'
     script { Faker::Lorem.sentence }
     working_directory { Faker::Lorem.characters(10) }
     started_at { Time.current }

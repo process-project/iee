@@ -15,7 +15,7 @@ describe Pipelines::Create do
 
   it 'pass step version into rimrock based computations' do
     pipeline = build(:pipeline, user: user)
-    config = Hash[step_names(pipeline.flow.to_sym).map { |n| [n, { tag_or_branch: "#{n}-v1" }] }]
+    config = Hash[step_names(pipeline).map { |n| [n, { tag_or_branch: "#{n}-v1" }] }]
 
     described_class.new(pipeline, config, client: webdav).call
 
@@ -65,9 +65,9 @@ describe Pipelines::Create do
   it 'creates computations for all pipeline steps' do
     pipeline = described_class.new(build(:pipeline, user: user), {}, client: webdav).call
 
-    expect(pipeline.computations.count).to eq Pipeline::FLOWS[pipeline.flow.to_sym].size
-    expect(pipeline.computations.where(pipeline_step: step_names(pipeline.flow.to_sym)).count).
-      to eq Pipeline::FLOWS[pipeline.flow.to_sym].size
+    expect(pipeline.computations.count).to eq pipeline.steps.size
+    expect(pipeline.computations.where(pipeline_step: step_names(pipeline)).count).
+      to eq pipeline.steps.size
   end
 
   private
@@ -79,7 +79,7 @@ describe Pipelines::Create do
     end
   end
 
-  def step_names(fl)
-    Pipeline::FLOWS[fl].map { |c| c::STEP_NAME }
+  def step_names(pipeline)
+    pipeline.steps.map(&:name)
   end
 end

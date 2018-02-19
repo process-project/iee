@@ -1,0 +1,38 @@
+.row.tile_count{ data: { 'patient-statistics' => patients_path } }
+  .col-md-2.col-sm-4.col-xs-6.tile_stats_count.patient_stats
+    %span.count_top
+      %i.fa.fa-heart
+      = t 'patients.index.stats.total'
+    .count.green
+      = icon 'spinner', class: 'fa-spin'
+    %span.count_bottom
+      %i= t('patients.show.loading_patient_details')
+
+  .col-md-2.col-sm-4.col-xs-6.tile_stats_count.patient_site_stats
+    %span.count_top
+      %i.fa.fa-globe
+      = t 'patients.index.stats.sites'
+    .count.green
+      = icon 'spinner', class: 'fa-spin'
+    %span.count_bottom
+      %i= t('patients.show.loading_patient_details')
+
+  .col-md-2.col-sm-4.col-xs-6.tile_stats_count.patient_gender_stats
+    %span.count_top
+      %i.fa.fa-female
+      = "#{t 'patients.index.stats.females'} |"
+      %i.fa.fa-male
+      = t 'patients.index.stats.males'
+    .count.green
+      = icon 'spinner', class: 'fa-spin'
+    %span.count_bottom
+      %i= t('patients.show.loading_patient_details')
+
+  .col-md-2.col-sm-4.col-xs-6.tile_stats_count.patient_state_stats
+    %span.count_top
+      %i.fa.fa-hospital-o
+      = t 'patients.index.stats.states'
+    .count.green
+      = icon 'spinner', class: 'fa-spin'
+    %span.count_bottom
+      %i= t('patients.show.loading_patient_details')

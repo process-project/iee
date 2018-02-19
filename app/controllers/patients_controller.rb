@@ -4,7 +4,12 @@ class PatientsController < ApplicationController
   before_action :set_patients, only: [:index]
   before_action :find_and_authorize, only: [:show, :destroy]
 
-  def index; end
+  def index
+    if request.xhr?
+      @stats = Patients::Statistics.new(@patients, current_user).call
+      render json: @stats, layout: false
+    end
+  end
 
   def show
     @pipelines = @patient.pipelines.includes(:computations, :patient, :user).
