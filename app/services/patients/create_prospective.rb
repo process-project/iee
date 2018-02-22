@@ -22,16 +22,7 @@ module Patients
 
     def move_imaging_file(modality)
       new_image_name = "imaging_#{@patient.case_number}_#{modality}_init.zip"
-
-      # TODO: WebDAV COPY version, preferred, if Webbs#123 is fixed
-      # @dav_client.copy(modality_path(modality), "#{@patient.inputs_dir}/#{new_image_name}")
-
-      # TODO: WebDAV Download/Upload brute force method, less optimal but working
-      local_path = Webdav::DownloadFile.new(@dav_client, modality_path(modality)).
-                   call { new_image_name }
-      Webdav::UploadFile.
-        new(@dav_client, local_path, "#{@patient.inputs_dir}/#{new_image_name}").
-        call
+      @dav_client.copy(modality_path(modality), "#{@patient.inputs_dir}/#{new_image_name}")
     rescue Net::HTTPServerException => e
       Rails.logger.error e
       raise StandardError, "Problem moving patient (#{@patient.case_number}) image file #{modality}"
