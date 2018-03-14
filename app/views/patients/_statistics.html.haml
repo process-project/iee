@@ -28,6 +28,15 @@
     %span.count_bottom
       %i= t('patients.show.loading_patient_details')
 
+  .col-md-2.col-sm-4.col-xs-6.tile_stats_count.patient_disease_stats
+    %span.count_top
+      %i.fa.fa-heart-o
+      = t 'patients.index.stats.disease'
+    .count.green
+      = icon 'spinner', class: 'fa-spin'
+    %span.count_bottom
+      %i= t('patients.show.loading_patient_details')
+
   .col-md-2.col-sm-4.col-xs-6.tile_stats_count.patient_state_stats
     %span.count_top
       %i.fa.fa-hospital-o

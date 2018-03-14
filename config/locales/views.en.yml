@@ -20,6 +20,7 @@ en:
         females: Females
         males: Males
         states: "Pre-op | Post-op"
+        disease: "Aortic VD | Mitral VD"
     show:
       subtitle: A patient case in EurValve project
       remove: Delete this case
