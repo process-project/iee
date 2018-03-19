@@ -1,8 +1,9 @@
-.pipeline-name
-  = link_to [pipeline.patient, pipeline], data: { turbolinks: false } do
-    = pipeline.name
-.progress.progress_sm
-  - pipeline.computations.flow_ordered.each_with_index do |computation, i|
-    = link_to patient_pipeline_computation_path(pipeline.patient, pipeline, computation),
-      data: { turbolinks: false } do
-      = computation_progress(computation, i)
+.pipeline-progress
+  .pipeline-name
+    = link_to [patient, pipeline], data: { turbolinks: false } do
+      = pipeline.name
+  .progress.progress_sm
+    - pipeline.computations.flow_ordered.each_with_index do |computation, i|
+      = link_to patient_pipeline_computation_path(patient, pipeline, computation),
+        data: { turbolinks: false } do
+        = computation_progress(computation, i)

@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Added AVD/MVD ratio to patients' statistics (@Nuanda)
+- Colors for patient tile connected with last pipeline status (@mkasztelnik)
 
 ### Changed
 

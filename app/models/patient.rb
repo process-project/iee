@@ -12,7 +12,9 @@ class Patient < ApplicationRecord
   ]
 
   has_many :data_files, dependent: :destroy
-  has_many :pipelines, dependent: :destroy
+  has_many :pipelines,
+           -> { order(iid: :asc) },
+           dependent: :destroy
 
   validates :case_number, :procedure_status, presence: true
   validates :case_number, uniqueness: true
@@ -52,6 +54,10 @@ class Patient < ApplicationRecord
 
   def pipelines_url
     pipelines_dir(working_url)
+  end
+
+  def status
+    pipelines.last&.status
   end
 
   private
