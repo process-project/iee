@@ -6,7 +6,7 @@ module Webdav
       @user = user
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
-      @owncloud = Webdav::OwnCloud.new
+      @segmentation = Webdav::Segmentation.new
     end
 
     def call
@@ -30,7 +30,7 @@ module Webdav
     end
 
     def results_ready?(computation)
-      @owncloud.exists?(Webdav::OwnCloud.output_path(computation))
+      @segmentation.exists?(Webdav::Segmentation.output_path(computation))
     end
 
     def finish_job(computation)
