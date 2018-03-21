@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Added AVD/MVD ratio to patients' statistics (@Nuanda)
+- Profile link for left avatar picture and user name (@mkasztelnik)
 
 ### Changed
 
