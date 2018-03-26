@@ -74,14 +74,13 @@ class Pipeline < ApplicationRecord
   private
 
   def calculate_status
-    statuses = computations.pluck(:status)
-    if statuses.all? { |v| v == 'finished' }
+    if computations.all?(&:success?)
       :success
-    elsif statuses.any? { |v| v == 'error' }
+    elsif computations.any?(&:error?)
       :error
-    elsif statuses.any? { |v| %w[new queued running].include?(v) }
+    elsif computations.any?(&:active?)
       :running
-    elsif computations.any? { |v| !v.runnable? }
+    elsif computations.any?(&:waiting?)
       :waiting
     end
   end
