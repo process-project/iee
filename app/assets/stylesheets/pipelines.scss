@@ -1,0 +1,83 @@
+.pipeline {
+  &.waiting {
+    // @extend tr.active
+  }
+
+  &.running {
+    @extend tr.info;
+  }
+
+  &.error {
+    @extend tr.danger;
+  }
+
+  &.success {
+    @extend tr.success;
+  }
+
+  .fa-wrench {
+    color: $waiting;
+  }
+
+  .fa-circle-o {
+    color: $waiting;
+  }
+
+  .fa-circle {
+    color: $waiting;
+  }
+
+  .fa-circle-o-notch {
+    color: $running;
+  }
+
+  .fa-check-circle-o {
+    color: $success;
+  }
+
+  .fa-times-circle-o {
+    color: $error;
+  }
+}
+
+@mixin pipeline-progress-bar($color) {
+  background: $color;
+  border: 1px solid $color !important;
+}
+
+
+.pipeline-progress {
+  .progress-bar {
+    &.waiting {
+      @include pipeline-progress-bar($waiting);
+    }
+
+    &.running {
+      @include pipeline-progress-bar($running);
+    }
+
+    &.error {
+      @include pipeline-progress-bar($error);
+    }
+
+    &.success {
+      @include pipeline-progress-bar($success);
+    }
+  }
+
+  &.waiting a {
+    color: $waiting;
+  }
+
+  &.running a {
+    color: $running;
+  }
+
+  &.error a {
+    color: $error;
+  }
+
+  &.success a {
+    color: $success;
+  }
+}

@@ -80,7 +80,7 @@ class Pipeline < ApplicationRecord
       :error
     elsif computations.any?(&:active?)
       :running
-    elsif computations.any?(&:waiting?)
+    else
       :waiting
     end
   end

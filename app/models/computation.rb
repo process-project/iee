@@ -68,6 +68,18 @@ class Computation < ApplicationRecord
     !runnable?
   end
 
+  def computed_status
+    if success?
+      :success
+    elsif error?
+      :error
+    elsif active?
+      :running
+    else
+      :waiting
+    end
+  end
+
   private
 
   def runner

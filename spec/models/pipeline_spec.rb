@@ -156,14 +156,5 @@ RSpec.describe Pipeline, type: :model do
 
       expect(pipeline.status).to eq :waiting
     end
-
-    it 'is nil otherwise' do
-      pipeline = create(:pipeline, flow: :avr_long_term_post_op)
-      create(:computation,
-             status: :created, pipeline: pipeline,
-             pipeline_step: 'ageing_model_x2')
-
-      expect(pipeline.status).to be_nil
-    end
   end
 end
