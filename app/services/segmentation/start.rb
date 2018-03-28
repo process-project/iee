@@ -28,7 +28,7 @@ module Segmentation
     end
 
     def mode
-      Rails.application.config_for('eurvalve')['seg_service']['mode']
+      Rails.application.config_for('eurvalve')['segmentation']['mode']
     end
 
     def update_computation
@@ -51,7 +51,7 @@ module Segmentation
     end
 
     def segmentation
-      @segmentation ||= Rails.application.config_for('eurvalve')['seg_service']
+      @segmentation ||= Rails.application.config_for('eurvalve')['segmentation']
     end
 
     def cleanup

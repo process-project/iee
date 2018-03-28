@@ -34,7 +34,7 @@ module Webdav
     end
 
     def finish_job(computation)
-      Segmentation::Finish.new(computation, @on_finish_callback).call
+      ::Segmentation::Finish.new(computation, @on_finish_callback).call
       @updater&.new(computation)&.call
     end
   end

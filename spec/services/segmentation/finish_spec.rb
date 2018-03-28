@@ -12,17 +12,17 @@ RSpec.describe Segmentation::Finish do
   it 'push results into FileStore' do
     computation = create(:computation,
                          working_file_name: 'prefix.zip',
-                         output_path: 'output')
+                         output_path: 'segmentation/output')
 
     expect(segmentation).to receive(:get_file) do |remote_path, local_file_path|
-      expect(remote_path).to eq 'output/prefix.zip'
+      expect(remote_path).to eq 'segmentation/output/prefix.zip'
       FileUtils.cp('spec/support/data_files/segmentation-output.zip',
                    local_file_path)
     end
 
-    expect_put(file_store, 'output/prefix.txt', 5)
-    expect_put(file_store, 'output/bar.txt', 4)
-    expect_put(file_store, 'output/secondprefix.txt', 4)
+    expect_put(file_store, 'segmentation/output/prefix.txt', 5)
+    expect_put(file_store, 'segmentation/output/bar.txt', 4)
+    expect_put(file_store, 'segmentation/output/secondprefix.txt', 4)
 
     described_class.new(computation, updater,
                         segmentation: segmentation, file_store: file_store).call
@@ -33,10 +33,10 @@ RSpec.describe Segmentation::Finish do
   it 'sets status to error while result upload failed' do
     computation = create(:computation,
                          working_file_name: 'prefix.zip',
-                         output_path: 'output')
+                         output_path: 'segmentation/output')
 
     expect(segmentation).to receive(:get_file) do |remote_path, local_file_path|
-      expect(remote_path).to eq 'output/prefix.zip'
+      expect(remote_path).to eq 'segmentation/output/prefix.zip'
       FileUtils.cp('spec/support/data_files/bad.zip',
                    local_file_path)
     end
