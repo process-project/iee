@@ -9,11 +9,29 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Added AVD/MVD ratio to patients' statistics (@Nuanda)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Patients' statistics work correctly when turbolink-loaded (@Nuanda)
+
+### Security
+
+## 0.8.0
+
+### Added
 - Reload pipeline step status on patient view (@mkasztelnik)
 - Reload segmentation status after it is started (@mkasztelnik)
 - Proper handling for rimrock computation start failure (@mkasztelnik)
 - Execution time updated each second for active computation (@mkasztelnik)
 - Pipeline specific input (@mkasztelnik)
+- Patient clinical details now includes patient's state (preop/postop) (@Nuanda)
+- New statistics about the current state of EurValve's prospective cohort (@Nuanda)
 
 ### Changed
 - Labels for pipelines list view improved (@mkasztelnik)
@@ -35,6 +53,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Change comparison `show` method to `index` (@mkasztelnik)
 - Pipeline steps definition refactored and generalized (@mkasztelnik)
 - Change defaults for data sets (@mkasztelnik)
+- Change the default root path to patients index (@Nuanda)
+- Renamed `not_used_flow` into `unused_steps` (@mkasztelnik)
 
 ### Deprecated
 

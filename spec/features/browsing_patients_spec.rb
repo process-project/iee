@@ -22,6 +22,27 @@ RSpec.feature 'Patient browsing' do
   end
 
   context 'in the context of the patients list' do
+    let(:stats) do
+      {
+        status: :ok,
+        count: 4,
+        test: 1,
+        berlin: 2,
+        sheffield: 1,
+        eindhoven: 1,
+        no_site: 0,
+        aortic: 2,
+        mitral: 2,
+        no_diagnosis: 0,
+        females: 2,
+        males: 1,
+        no_gender: 1,
+        preop: 3,
+        postop: 0,
+        no_state: 1
+      }
+    end
+
     scenario 'has left-hand menu provide a link to patients index' do
       visit root_path
 
@@ -46,6 +67,30 @@ RSpec.feature 'Patient browsing' do
       visit patients_path
 
       expect(page).to have_content I18n.t('patients.index.nothing')
+    end
+
+    scenario 'shows statistics on patient cohort', js: true do
+      allow_any_instance_of(Patients::Statistics).
+        to receive(:call).
+        and_return(stats)
+
+      visit patients_path
+
+      expect(page).to have_content I18n.t('patients.index.stats.total')
+      expect(page).to have_content 4
+      expect(page).to have_content 'and 1 test entries'
+      expect(page).to have_content I18n.t('patients.index.stats.sites')
+      expect(page).to have_content '2 | 1 | 1'
+      expect(page).to have_content '0 from unknown site'
+      expect(page).to have_content '2 | 2'
+      expect(page).to have_content '0 with unknown diagnosis'
+      expect(page).to have_content I18n.t('patients.index.stats.females')
+      expect(page).to have_content I18n.t('patients.index.stats.males')
+      expect(page).to have_content '2 | 1'
+      expect(page).to have_content '1 of unknown gender'
+      expect(page).to have_content I18n.t('patients.index.stats.states')
+      expect(page).to have_content '3 | 0'
+      expect(page).to have_content '1 of unknown state'
     end
 
     scenario 'gives the file number for each patient case' do
@@ -115,6 +160,20 @@ RSpec.feature 'Patient browsing' do
   end
 
   context 'in the context of inspecting a given case' do
+    let(:details) do
+      {
+        status: :ok,
+        payload: [
+          {
+            name: 'state',
+            value: 'Pre-op',
+            style: 'default',
+            type: 'real'
+          }
+        ]
+      }
+    end
+
     scenario 'lets the user to go back to the patients list' do
       visit patient_path(patient)
 
@@ -123,6 +182,16 @@ RSpec.feature 'Patient browsing' do
       click_link I18n.t('patients.show.back')
 
       expect(current_path).to eq patients_path
+    end
+
+    scenario 'shows patient\'s clinical data', js: true do
+      allow_any_instance_of(Patients::Details).
+        to receive(:call).
+        and_return(details)
+
+      visit patient_path(patient)
+
+      expect(page).to have_content 'Pre-op'
     end
 
     scenario 'shows pipelines list' do
@@ -170,7 +239,7 @@ RSpec.feature 'Patient browsing' do
       expect(pipeline).to be_manual
     end
 
-    scenario 'user can create automatic pipeline, which as automatically started' do
+    scenario 'user can create automatic pipeline, which is automatically started' do
       expect(Pipelines::StartRunnable).
         to receive(:new).and_return(double(call: true))
 
