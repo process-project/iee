@@ -54,19 +54,6 @@ module Cloud
 
     def spawn_appliance(appliance_type_id)
 
-#
-#      appliance : {configuration_template_id: "1284", appliance_set_id: "102958", params: {}, name: "foo_deleteme",…}
-#      appliance_set_id : "102958"
-#      compute_site_ids : ["3"]
-#      configuration_template_id : "1284"
-#      dev_mode_property_set : {preference_cpu: "0", preference_memory: "0", preference_disk: "0"}
-#      preference_cpu : "0"
-#      preference_disk : "0"
-#      preference_memory : "0"
-#      name : "foo_deleteme"
-#      params : {}
-#      user_key_id : "122"
-
       if @appliance_set_id && @template_id
 
         request = {}
@@ -95,16 +82,6 @@ module Cloud
       else
         # Not enough data - do nothing
       end
-
-      # url = URI.parse(@atmosphere_url+'/api/v1/appliance_types')
-      # req = Net::HTTP::Get.new(url.to_s)
-      # req['Authorization'] = "Bearer #{@user_token}"
-      #
-      # res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
-      #   http.request(req)
-      # }
-      # puts res.body
-
     end
 
     def spawn_appliance_set
