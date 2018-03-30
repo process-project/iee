@@ -3,9 +3,10 @@
 module PipelineSteps
   module Rimrock
     class Builder
-      def initialize(pipeline, name, params = {})
+      def initialize(pipeline, name, deployment, params = {})
         @pipeline = pipeline
         @name = name
+        @deployment = deployment
         @tag_or_branch = params[:tag_or_branch]
       end
 

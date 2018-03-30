@@ -14,6 +14,7 @@ FactoryBot.define do
       pipeline_step 'segmentation'
       input_path { '/inputs' }
       output_path { '/outputs' }
+      deployment 'service'
       script nil
     end
 
@@ -23,6 +24,7 @@ FactoryBot.define do
       output_path nil
       script { 'SCRIPT' }
       tag_or_branch 'master'
+      deployment 'cluster'
       revision '1234'
     end
   end

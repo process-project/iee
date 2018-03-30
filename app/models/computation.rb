@@ -7,6 +7,9 @@ class Computation < ApplicationRecord
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
 
+  validates :deployment,
+            inclusion: { in: %w[cluster cloud service] }
+
   # Disabled until we are able to deal with the steps which are there
   # but are not used in any pipeline right now
   # validates :pipeline_step,
@@ -17,7 +20,7 @@ class Computation < ApplicationRecord
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
-  scope :cloud, -> { where(type: 'CloudComputation') }
+  scope :cloud, -> { where(deployment: 'cloud') }
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
@@ -43,7 +46,7 @@ class Computation < ApplicationRecord
   end
 
   def cloud?
-    type == 'CloudComputation'
+    deployment == 'cloud'
   end
 
   def self.flow_ordered

@@ -6,7 +6,7 @@ RSpec.describe PipelineSteps::Rimrock::Builder do
   let(:pipeline) { create(:pipeline) }
 
   it 'creates webdav computation' do
-    computation = described_class.new(pipeline, 'rimrock',
+    computation = described_class.new(pipeline, 'rimrock', 'cluster',
                                       tag_or_branch: 'my-branch').call
 
     expect(computation).to be_instance_of RimrockComputation
