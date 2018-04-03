@@ -5,10 +5,12 @@
 
 .profile
   .profile_pic
-    = image_tag current_user.gravatar_url(size: 56), class: 'img-circle profile_img'
+    = link_to profile_path do
+      = image_tag current_user.gravatar_url(size: 56), class: 'img-circle profile_img'
   .profile_info
     %span= t('welcome')
-    %h2= current_user.name
+    %h2
+      = link_to current_user.name, profile_path
 .clearfix
 %br
 
