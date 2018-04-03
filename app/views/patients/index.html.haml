@@ -11,10 +11,10 @@
 
   - @patients.each do |patient|
     .col-md-3.col-xs-12.widget.widget_tally_box.tile-patient
-      .x_panel.fixed_height_320
+      .x_panel.fixed_height_320{ class: patient.status }
         .x_title
           %h2
-            %i.fa.fa-heart
+            = icon 'heart'
             = link_to patient, data: { turbolinks: false } do
               = patient.case_number
           .clearfix
@@ -29,13 +29,13 @@
           %ul.list-inline.widget_tally
             - patient.pipelines.latest.each do |pipeline|
               %li
-                = render partial: 'progress', locals: { pipeline: pipeline }
+                = render partial: 'progress', locals: { pipeline: pipeline, patient: patient }
 
   .col-md-3.col-xs-12.widget
     .tile-stats.tile-new-patient.bg-blue
       = link_to new_patient_path do
         .icon
-          %i.fa.fa-plus
+          = icon 'plus'
         .count= t '.new'
 
         %h3= t '.add'

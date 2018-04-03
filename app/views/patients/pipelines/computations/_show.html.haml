@@ -1,4 +1,4 @@
-#pipeline{ data: { pipeline: pipeline.iid, patient: patient.id, computation: computation.pipeline_step } }
+#pipeline.pipeline{ data: { pipeline: pipeline.iid, patient: patient.id, computation: computation.pipeline_step } }
   .col-xs-2
     = render 'patients/pipelines/computations/menu',
       patient: patient, pipeline: pipeline,

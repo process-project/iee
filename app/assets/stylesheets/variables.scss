@@ -1,1 +1,6 @@
 $hover: #D9EDF7;
+
+$waiting: darken($table-bg-active, 40%);
+$running: darken($state-info-bg, 40%);
+$error: darken($state-danger-bg, 40%);
+$success: darken($state-success-bg, 40%);

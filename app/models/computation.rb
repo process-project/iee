@@ -56,6 +56,26 @@ class Computation < ApplicationRecord
     step.input_present_for?(pipeline)
   end
 
+  def success?
+    status == 'finished'
+  end
+
+  def error?
+    status == 'error'
+  end
+
+  def computed_status
+    if success?
+      :success
+    elsif error?
+      :error
+    elsif active?
+      :running
+    else
+      :waiting
+    end
+  end
+
   private
 
   def runner
