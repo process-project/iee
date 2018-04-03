@@ -64,10 +64,6 @@ class Computation < ApplicationRecord
     status == 'error'
   end
 
-  def waiting?
-    !runnable?
-  end
-
   def computed_status
     if success?
       :success
