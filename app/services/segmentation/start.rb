@@ -43,7 +43,10 @@ module Segmentation
     end
 
     def status_dir_path
-      "#{segmentation['ui_url']}?dir=/status/#{local_path_dir_name}"
+      # TODO: reintegrate stdout_path (requires FileStore support)
+      # "#{segmentation['ui_url']}?dir=/status/#{local_path_dir_name}"
+
+      nil
     end
 
     def local_path_dir_name
