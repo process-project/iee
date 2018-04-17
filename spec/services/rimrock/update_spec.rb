@@ -14,7 +14,7 @@ RSpec.describe Rimrock::Update do
   let(:user) { create(:user, proxy: 'proxy') }
 
   it 'do nothing when user does not have active jobs' do
-    create(:rimrock_computation, status: 'finished', user: user)
+    create(:scripted_computation, status: 'finished', user: user)
 
     expect(connection).to_not receive(:get)
 
@@ -22,9 +22,9 @@ RSpec.describe Rimrock::Update do
   end
 
   it 'asks about jobs when user has active computations' do
-    create(:rimrock_computation, status: 'finished', user: user)
-    c1 = create(:rimrock_computation, status: 'queued', job_id: 'job1', user: user)
-    c2 = create(:rimrock_computation, status: 'queued', job_id: 'job2', user: user)
+    create(:scripted_computation, status: 'finished', user: user)
+    c1 = create(:scripted_computation, status: 'queued', job_id: 'job1', user: user)
+    c2 = create(:scripted_computation, status: 'queued', job_id: 'job2', user: user)
 
     stubs.get('api/jobs') do |_env|
       [200, {}, '[{"job_id": "job1", "status": "FINISHED"},
@@ -40,7 +40,7 @@ RSpec.describe Rimrock::Update do
   end
 
   it 'logs when error updating computations' do
-    create(:rimrock_computation, status: 'queued', job_id: 'job1', user: user)
+    create(:scripted_computation, status: 'queued', job_id: 'job1', user: user)
 
     stubs.get('api/jobs') do |_env|
       [500, {}, 'error details']
@@ -54,7 +54,7 @@ RSpec.describe Rimrock::Update do
   end
 
   it 'triggers callback after computation is finished' do
-    create(:rimrock_computation, status: 'queued', job_id: 'job1', user: user)
+    create(:scripted_computation, status: 'queued', job_id: 'job1', user: user)
     callback = double('callback')
     callback_instance = double('callback instance')
 
@@ -71,8 +71,8 @@ RSpec.describe Rimrock::Update do
   end
 
   it 'triggers update when status changed' do
-    c1 = create(:rimrock_computation, status: 'queued', job_id: 'job1', user: user)
-    create(:rimrock_computation, status: 'running', job_id: 'job2', user: user)
+    c1 = create(:scripted_computation, status: 'queued', job_id: 'job1', user: user)
+    create(:scripted_computation, status: 'running', job_id: 'job2', user: user)
 
     updater = double('updater')
     updater_instance = double('updater instance')

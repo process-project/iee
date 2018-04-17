@@ -5,7 +5,7 @@ require 'rails_helper'
 describe ComputationUpdater do
   let(:patient) { create(:patient) }
   let(:pipeline) { create(:pipeline, patient: patient) }
-  let!(:c1) { create(:rimrock_computation, pipeline: pipeline, status: 'new') }
+  let!(:c1) { create(:scripted_computation, pipeline: pipeline, status: 'new', deployment: 'cluster') }
   let!(:c2) { create(:webdav_computation, pipeline: pipeline, status: 'finished') }
 
   it 'broadcast computation change' do

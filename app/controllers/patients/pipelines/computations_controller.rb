@@ -21,7 +21,7 @@ module Patients
       end
 
       def update
-        @computation.assign_attributes(permitted_attributes(@computation)) if @computation.rimrock? || @computation.cloud?
+        @computation.assign_attributes(permitted_attributes(@computation)) if @computation.scripted?
         if run_computation
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t("computations.update.started_#{@computation.mode}")

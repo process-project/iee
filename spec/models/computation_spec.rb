@@ -35,20 +35,20 @@ RSpec.describe Computation, type: :model do
 
   describe '.submitted' do
     it 'returns only queued and running computations' do
-      create(:rimrock_computation, status: 'new')
-      queued = create(:rimrock_computation, status: 'queued')
+      create(:scripted_computation, status: 'new')
+      queued = create(:scripted_computation, status: 'queued')
       running = create(:webdav_computation, status: 'running')
       expect(Computation.submitted.pluck(:id)).
         to contain_exactly(queued.id, running.id)
     end
   end
 
-  describe '.submitted_rimrock' do
-    it 'returns only queued and running rimrock-based computations' do
+  describe '.submitted_scripted' do
+    it 'returns only queued and running scripted computations' do
       create(:webdav_computation, status: 'running')
-      create(:rimrock_computation, status: 'new')
-      queued = create(:rimrock_computation, status: 'queued')
-      running = create(:rimrock_computation, status: 'running')
+      create(:scripted_computation, status: 'new')
+      queued = create(:scripted_computation, status: 'queued')
+      running = create(:scripted_computation, status: 'running')
       expect(Computation.submitted_rimrock.pluck(:id)).
         to contain_exactly(queued.id, running.id)
     end
@@ -56,7 +56,7 @@ RSpec.describe Computation, type: :model do
 
   describe '.submitted_webdav' do
     it 'returns only queued and running webdav-based computations' do
-      create(:rimrock_computation, status: 'running')
+      create(:scripted_computation, status: 'running')
       create(:webdav_computation, status: 'new')
       queued = create(:webdav_computation, status: 'queued')
       running = create(:webdav_computation, status: 'running')

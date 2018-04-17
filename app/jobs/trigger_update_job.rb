@@ -11,13 +11,13 @@ class TriggerUpdateJob < ApplicationJob
   private
 
   def trigger_rimrock_jobs_update
-    User.with_submitted_computations('RimrockComputation').each do |user|
+    User.with_submitted_computations('cluster').each do |user|
       Rimrock::UpdateJob.perform_later(user)
     end
   end
 
   def trigger_webdav_jobs_update
-    User.with_submitted_computations('WebdavComputation').each do |user|
+    User.with_submitted_computations('service').each do |user|
       Webdav::UpdateJob.perform_later(user)
     end
   end

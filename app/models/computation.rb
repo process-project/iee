@@ -19,7 +19,8 @@ class Computation < ApplicationRecord
   scope :submitted, -> { where(status: %w[queued running]) }
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
-  scope :rimrock, -> { where(type: 'RimrockComputation') }
+  scope :scripted, -> { where(type: 'ScriptedComputation') }
+  scope :rimrock, -> { where(deployment: 'cluster') }
   scope :cloud, -> { where(deployment: 'cloud') }
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
@@ -41,8 +42,12 @@ class Computation < ApplicationRecord
     pipeline_step
   end
 
+  def scripted?
+    type == 'ScriptedComputation'
+  end
+
   def rimrock?
-    type == 'RimrockComputation'
+    deployment == 'cluster'
   end
 
   def cloud?

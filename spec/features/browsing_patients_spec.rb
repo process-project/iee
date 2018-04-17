@@ -317,7 +317,7 @@ RSpec.feature 'Patient browsing' do
         Pipelines::Create.new(pipeline, {}).call
       end
 
-      let(:computation) { pipeline.computations.rimrock.first }
+      let(:computation) { pipeline.computations.scripted.first }
 
       scenario 'user can set computation tag_or_branch and start runnable computations' do
         mock_gitlab
@@ -344,7 +344,7 @@ RSpec.feature 'Patient browsing' do
         Pipelines::Create.new(pipeline, {}).call
       end
       let(:computation) do
-        pipeline.computations.find_by(type: 'RimrockComputation')
+        pipeline.computations.find_by(type: 'ScriptedComputation')
       end
 
       scenario 'redirects into first defined computation' do
@@ -364,7 +364,7 @@ RSpec.feature 'Patient browsing' do
         end
       end
 
-      scenario 'start rimrock computation with selected version' do
+      scenario 'start scripted computation with selected version' do
         mock_rimrock_computation_ready_to_run
 
         expect(Rimrock::StartJob).to receive(:perform_later)
@@ -378,7 +378,7 @@ RSpec.feature 'Patient browsing' do
         expect(computation.tag_or_branch).to eq 'bar'
       end
 
-      scenario 'show started rimrock computation source link for started step' do
+      scenario 'show started scripted computation source link for started step' do
         computation = pipeline.computations.
                       find_by(pipeline_step: '0d_models')
         computation.update_attributes(revision: 'my-revision',
@@ -391,7 +391,7 @@ RSpec.feature 'Patient browsing' do
           to have_link href: 'https://gitlab.com/eurvalve/0dmodel/tree/my-revision'
       end
 
-      scenario 'rimrock computation source link is not shown when no revision' do
+      scenario 'scripted computation source link is not shown when no revision' do
         computation = pipeline.computations.
                       find_by(pipeline_step: '0d_models')
 
@@ -401,7 +401,7 @@ RSpec.feature 'Patient browsing' do
           to_not have_link href: 'https://gitlab.com/eurvalve/0dmodel/tree'
       end
 
-      scenario 'unable to start rimrock computation when version is not chosen' do
+      scenario 'unable to start scripted computation when version is not chosen' do
         mock_rimrock_computation_ready_to_run
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
@@ -413,7 +413,7 @@ RSpec.feature 'Patient browsing' do
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
         allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-        allow_any_instance_of(RimrockStep).
+        allow_any_instance_of(ScriptedStep).
           to receive(:input_present_for?).and_return(true)
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Pipelines::StepsConfig do
-  it 'loads tags and branches for every rimrock computation' do
+  it 'loads tags and branches for every scripted computation' do
     versions = { branches: %w[b1 b2], tags: %w[t1] }
     allow(Gitlab::Versions).
       to receive_message_chain(:new, :call).

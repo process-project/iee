@@ -78,7 +78,7 @@ module ComputationsHelper
   # rubocop:enable Metrics/MethodLength
 
   def need_configuration?(computation)
-    computation.rimrock? &&
+    computation.scripted? &&
       computation.pipeline.automatic? &&
       computation.tag_or_branch.blank?
   end

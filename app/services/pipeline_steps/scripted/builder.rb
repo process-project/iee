@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module Rimrock
+  module Scripted
     class Builder
       def initialize(pipeline, name, deployment, params = {})
         @pipeline = pipeline
@@ -11,11 +11,12 @@ module PipelineSteps
       end
 
       def call
-        RimrockComputation.create(
+        ScriptedComputation.create(
           pipeline: @pipeline,
           user: @pipeline.user,
           tag_or_branch: @tag_or_branch,
-          pipeline_step: @name
+          pipeline_step: @name,
+          deployment: @deployment
         )
       end
     end

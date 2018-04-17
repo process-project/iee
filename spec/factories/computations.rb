@@ -18,7 +18,7 @@ FactoryBot.define do
       script nil
     end
 
-    factory :rimrock_computation, class: 'RimrockComputation' do
+    factory :scripted_computation, class: 'ScriptedComputation' do
       pipeline_step '0d_models'
       input_path nil
       output_path nil

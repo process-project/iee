@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'services/pipeline_steps/runner_shared_examples'
 
-RSpec.describe PipelineSteps::Rimrock::Runner do
+RSpec.describe PipelineSteps::Scripted::RimrockRunner do
   let(:template_fetcher) do
     fetcher = class_double(Gitlab::GetFile)
     allow(fetcher).to receive(:new).
@@ -22,7 +22,7 @@ RSpec.describe PipelineSteps::Rimrock::Runner do
 
   let(:updater) { instance_double(ComputationUpdater, call: true) }
 
-  let(:computation) { create(:rimrock_computation, pipeline_step: '0d_models') }
+  let(:computation) { create(:scripted_computation, pipeline_step: '0d_models', deployment: 'cluster') }
 
   subject do
     described_class.new(computation, 'repo', 'file',

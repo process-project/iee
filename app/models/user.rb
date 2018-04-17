@@ -39,7 +39,7 @@ class User < ApplicationRecord
   def self.with_submitted_computations(computation_type)
     condition = <<~SQL
       id IN (SELECT DISTINCT(user_id) FROM computations
-              WHERE type = ? AND status IN ('queued', 'running'))
+              WHERE deployment = ? AND status IN ('queued', 'running'))
     SQL
     User.where(condition, computation_type)
   end

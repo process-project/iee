@@ -6,9 +6,9 @@ RSpec.describe Rimrock::TriggerUpdateJob do
   it 'triggers update for all users with active jobs' do
     u1, u2 = create_list(:user, 2)
 
-    create(:rimrock_computation, status: 'running', user: u1)
+    create(:scripted_computation, status: 'running', user: u1)
     create(:webdav_computation, status: 'new', user: u1)
-    create(:rimrock_computation, status: 'finished', user: u2)
+    create(:scripted_computation, status: 'finished', user: u2)
     create(:webdav_computation, status: 'running', user: u2)
 
     expect(Rimrock::UpdateJob).to receive(:perform_later).with(u1)

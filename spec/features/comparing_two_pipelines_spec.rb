@@ -38,10 +38,11 @@ RSpec.feature 'Comparing two pipelines', files: true do
 
     expect(page).not_to have_content 'Sources comparison'
 
-    pipelines[0].computations << create(:rimrock_computation)
-    pipelines[1].computations << create(:rimrock_computation,
+    pipelines[0].computations << create(:scripted_computation)
+    pipelines[1].computations << create(:scripted_computation,
                                         tag_or_branch: 'fixes',
-                                        revision: '5678')
+                                        revision: '5678',
+                                        deployment: 'cluster')
 
     visit patient_comparisons_path(patient, pipeline_ids: pipelines.map(&:iid))
 

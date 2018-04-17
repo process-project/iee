@@ -11,7 +11,7 @@
       = f.button :submit,
         t("steps.#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
         class: 'btn btn-default'
-      - if computation.rimrock? || computation.cloud?
+      - if computation.scripted?
         = link_to t('.reload'),
                   patient_pipeline_computation_path(patient, pipeline, computation, force_reload: true),
                   class: 'btn btn-default',

@@ -21,7 +21,7 @@ describe ScriptGenerator do
       )
     end
     let(:pipeline) { create(:pipeline, patient: patient) }
-    let(:computation) { create(:rimrock_computation, pipeline: pipeline) }
+    let(:computation) { create(:scripted_computation, pipeline: pipeline, deployment: 'cluster') }
     let(:data_file) { pipeline.data_file(:image) }
 
     it 'inserts upload file curl for file type' do
@@ -62,7 +62,7 @@ describe ScriptGenerator do
   end
 
   it 'inserts download file curl' do
-    computation = create(:rimrock_computation)
+    computation = create(:scripted_computation)
     script = ScriptGenerator.new(computation,
                                  '<%= stage_out "foo.txt", "bar.txt" %>').call
 
@@ -72,7 +72,7 @@ describe ScriptGenerator do
   end
 
   it 'inserts download file curl with default target file name' do
-    computation = create(:rimrock_computation)
+    computation = create(:scripted_computation)
     script = ScriptGenerator.new(computation,
                                  '<%= stage_out "dir/foo.txt" %>').call
 
@@ -81,28 +81,28 @@ describe ScriptGenerator do
   end
 
   it 'inserts gitlab ssh download key payload' do
-    script = ScriptGenerator.new(create(:rimrock_computation),
+    script = ScriptGenerator.new(create(:scripted_computation),
                                  '<%= ssh_download_key %>').call
 
     expect(script).to include 'SSH KEY'
   end
 
   it 'inserts repository sha to clone' do
-    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+    script = ScriptGenerator.new(create(:scripted_computation, revision: 'rev'),
                                  '<%= revision %>').call
 
     expect(script).to include 'rev'
   end
 
   it 'inserts gitlab clone url' do
-    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+    script = ScriptGenerator.new(create(:scripted_computation, revision: 'rev'),
                                  'git clone <%= gitlab_clone_url %>:org/repo.git').call
 
     expect(script).to include 'git clone git@gitlab-test.com:org/repo.git'
   end
 
   it 'inserts clone repo command' do
-    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+    script = ScriptGenerator.new(create(:scripted_computation, revision: 'rev'),
                                  '<%= clone_repo("org/repo.git") %>').call
 
     expect(script).to include 'export SSH_DOWNLOAD_KEY="SSH KEY'

@@ -8,15 +8,15 @@ RSpec.describe ProxyHelper do
   let(:current_user) { build(:user) }
 
   describe `#require_new_proxy?` do
-    it 'is true when active rimrock computation and proxy is empty' do
-      create(:rimrock_computation, status: 'new', user: current_user)
+    it 'is true when active scripted computation and proxy is empty' do
+      create(:scripted_computation, status: 'new', user: current_user, deployment: 'cluster')
       current_user.proxy = nil
 
       expect(require_new_proxy?).to be_truthy
     end
 
-    it 'is true when active rimrock computation and proxy is outdated' do
-      create(:rimrock_computation, status: 'new', user: current_user)
+    it 'is true when active scripted computation and proxy is outdated' do
+      create(:scripted_computation, status: 'new', user: current_user, deployment: 'cluster')
       current_user.proxy = outdated_proxy
 
       expect(require_new_proxy?).to be_truthy

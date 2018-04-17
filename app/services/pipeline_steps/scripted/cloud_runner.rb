@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module Rimrock
-    class Runner < PipelineSteps::RunnerBase
+  module Scripted
+    class CloudRunner < PipelineSteps::RunnerBase
       def initialize(computation, repository, file, options = {})
         super(computation, options)
+        @atmosphere_url = Rails.configuration.constants['cloud']['atmosphere_url']
+        @appliance_type_id = 884 # Temporary - cloud pipeline step template v05
         @repository = repository
         @file = file
         @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
         @revision_fetcher = options.fetch(:revision_fetcher) { Gitlab::Revision }
+        @atmosphere_client = ::Cloud::Client.new(computation.user.token, @atmosphere_url)
       end
 
       def self.tag_or_branch(params)
@@ -24,7 +27,13 @@ module PipelineSteps
       end
 
       def internal_run
-        ::Rimrock::StartJob.perform_later computation if computation.valid?
+        if computation.valid?
+          @atmosphere_client.register_initial_config(computation.user.email, computation.script)
+          @atmosphere_client.spawn_appliance_set
+          @atmosphere_client.spawn_appliance(884) # TODO: parameterize
+          computation.status = 'running'
+          computation.save
+        end
       end
 
       def template

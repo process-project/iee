@@ -20,23 +20,23 @@ describe Pipelines::StartRunnable do
                data_type: :parameter_optimization_result)
       end
       it 'starts created runnable pipeline step' do
-        create(:rimrock_computation,
+        create(:scripted_computation,
                status: 'created', pipeline_step: '0d_models',
                pipeline: pipeline)
-        runner = instance_double(PipelineSteps::Rimrock::Runner)
+        runner = instance_double(PipelineSteps::Scripted::RimrockRunner)
 
-        allow(PipelineSteps::Rimrock::Runner).to receive(:new).and_return(runner)
+        allow(PipelineSteps::Scripted::RimrockRunner).to receive(:new).and_return(runner)
         expect(runner).to receive(:call)
 
         described_class.new(pipeline).call
       end
 
       it 'does not start already started pipeline step' do
-        create(:rimrock_computation,
+        create(:scripted_computation,
                status: 'running', pipeline_step: '0d_models',
                pipeline: pipeline)
 
-        expect(PipelineSteps::Rimrock::Runner).to_not receive(:new)
+        expect(PipelineSteps::Scripted::RimrockRunner).to_not receive(:new)
 
         described_class.new(pipeline).call
       end
@@ -44,13 +44,13 @@ describe Pipelines::StartRunnable do
 
     context 'and without required input' do
       it 'does not start not runnable pipeline step' do
-        create(:rimrock_computation,
+        create(:scripted_computation,
                status: 'created', pipeline_step: '0d_models',
                pipeline: pipeline)
 
         runner = double(runnable?: false)
 
-        allow(PipelineSteps::Rimrock::Runner).to receive(:new).and_return(runner)
+        allow(PipelineSteps::Scripted::RimrockRunner).to receive(:new).and_return(runner)
         expect(runner).to_not receive(:run)
 
         described_class.new(pipeline).call
@@ -61,8 +61,8 @@ describe Pipelines::StartRunnable do
   context 'with invalid user proxy' do
     before { allow(proxy).to receive(:valid?).and_return(false) }
 
-    it 'runnable rimrock computations are not started' do
-      create(:rimrock_computation,
+    it 'runnable scripted computations are not started' do
+      create(:scripted_computation,
              status: 'created', pipeline_step: '0d_models',
              pipeline: pipeline)
       create(:data_file,
@@ -71,7 +71,7 @@ describe Pipelines::StartRunnable do
 
       runner = double(runnable?: true)
 
-      allow(PipelineSteps::Rimrock::Runner).to receive(:new).and_return(runner)
+      allow(PipelineSteps::Scripted::RimrockRunner).to receive(:new).and_return(runner)
       expect(runner).to_not receive(:call)
 
       described_class.new(pipeline).call

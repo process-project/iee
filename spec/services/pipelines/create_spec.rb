@@ -13,15 +13,15 @@ describe Pipelines::Create do
       to change { Pipeline.count }.by(1)
   end
 
-  it 'pass step version into rimrock based computations' do
+  it 'pass step version into scripted based computations' do
     pipeline = build(:pipeline, user: user)
     config = Hash[step_names(pipeline).map { |n| [n, { tag_or_branch: "#{n}-v1" }] }]
 
     described_class.new(pipeline, config, client: webdav).call
 
-    rimrock_step = pipeline.computations.find_by(type: 'RimrockComputation')
+    scripted_step = pipeline.computations.find_by(type: 'ScriptedComputation')
 
-    expect(rimrock_step.tag_or_branch).to eq("#{rimrock_step.pipeline_step}-v1")
+    expect(scripted_step.tag_or_branch).to eq("#{scripted_step.pipeline_step}-v1")
   end
 
   it 'creates pipeline webdav directory' do
