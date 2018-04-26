@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Webdav
-  class OwnCloud < Webdav::Client
+  class Segmentation < Webdav::Client
     def initialize
       super(storage_url)
-      credentials(Rails.application.config_for('eurvalve')['owncloud']['user'],
-                  Rails.application.config_for('eurvalve')['owncloud']['password'])
+      credentials(Rails.application.config_for('eurvalve')['segmentation']['user'],
+                  Rails.application.config_for('eurvalve')['segmentation']['password'])
       self.verify_server = false
     end
 
@@ -21,18 +21,18 @@ module Webdav
       private
 
       def inputs_path
-        Rails.application.config_for('eurvalve')['owncloud']['inputs_path']
+        Rails.application.config_for('eurvalve')['segmentation']['inputs_path']
       end
 
       def outputs_path
-        Rails.application.config_for('eurvalve')['owncloud']['outputs_path']
+        Rails.application.config_for('eurvalve')['segmentation']['outputs_path']
       end
     end
 
     private
 
     def storage_url
-      Rails.application.config_for('eurvalve')['owncloud']['url']
+      Rails.application.config_for('eurvalve')['segmentation']['url']
     end
   end
 end

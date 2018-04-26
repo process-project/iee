@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Colors for patient tile connected with last pipeline status (@mkasztelnik)
 
 ### Changed
+- Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
 
 ### Deprecated
 
