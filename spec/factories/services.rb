@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-require 'factory_bot/service_helper'
-
 FactoryBot.define do
   factory :service do
-    uri { FactoryBot::ServiceHelper.uniq_uri }
+    sequence(:uri) { |n| "http://service#{n}.uri.pl" }
 
-    uri_aliases do
-      uri_alias1 = FactoryBot::ServiceHelper.uniq_uri(uri)
-      uri_alias2 = FactoryBot::ServiceHelper.uniq_uri(uri, uri_alias1)
-      [uri_alias1, uri_alias2]
+    sequence(:uri_aliases) do |n|
+      ["http://service#{n}.first.alias.pl",
+       "http://service#{n}.second.alias.pl"]
     end
 
     users { [create(:user)] }

@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Remove `faker` gem and replace it with `factory_bot` sequences (@mkasztelnik)
 
 ### Fixed
 - Patients' statistics work correctly when turbolink-loaded (@Nuanda)

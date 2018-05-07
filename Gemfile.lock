@@ -108,8 +108,6 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faker (1.8.4)
-      i18n (~> 0.5)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
@@ -408,7 +406,6 @@ DEPENDENCIES
   devise (~> 4.3.0)
   dotenv-rails
   factory_bot_rails
-  faker
   font-awesome-sass (~> 4.5)
   github-markup
   gitlab
@@ -453,4 +450,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

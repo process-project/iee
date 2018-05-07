@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :access_method do
-    name { Faker::Lorem.unique.word }
+    sequence(:name) { |n| "access_method_#{n}" }
 
     trait :service_scoped do
       service
