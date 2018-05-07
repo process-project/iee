@@ -8,7 +8,8 @@ class Computation < ApplicationRecord
             inclusion: { in: %w[created new queued running error finished aborted] }
 
   validates :deployment,
-            inclusion: { in: %w[cluster cloud service] }
+            inclusion: { in: %w[cluster cloud service] },
+            allow_blank: true
 
   # Disabled until we are able to deal with the steps which are there
   # but are not used in any pipeline right now
@@ -78,6 +79,8 @@ class Computation < ApplicationRecord
 
   def step
     return nil if pipeline.nil?
-    pipeline.steps.find { |step| step.name == pipeline_step }
+    ps = pipeline.steps.find { |step| step.name == pipeline_step }
+    Rails.logger.debug("Step runner found this step: #{ps.inspect}")
+    ps
   end
 end

@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class Step
-  attr_reader :name, :required_files, :deployment
+  attr_reader :name, :required_files
 
-  def initialize(name, required_files = [], deployment = 'cluster')
+  def initialize(name, required_files = [])
     @name = name
     @required_files = required_files || []
-    @deployment = deployment
   end
 
   def input_present_for?(pipeline)

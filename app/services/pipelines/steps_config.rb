@@ -15,7 +15,10 @@ module Pipelines
 
     def config(step)
       # Can be extended by other step types
-      { tags_and_branches: tags_and_branches(step) }
+      {
+        tags_and_branches: tags_and_branches(step),
+        deployment: ['cluster', 'cloud']
+      }
     end
 
     def tags_and_branches(step)

@@ -6,7 +6,7 @@ RSpec.describe PipelineSteps::Scripted::Builder do
   let(:pipeline) { create(:pipeline) }
 
   it 'creates webdav computation' do
-    computation = described_class.new(pipeline, 'scripted', 'cluster',
+    computation = described_class.new(pipeline, 'scripted',
                                       tag_or_branch: 'my-branch').call
 
     expect(computation).to be_instance_of ScriptedComputation

@@ -3,21 +3,29 @@
 module PipelineSteps
   module Scripted
     class Builder
-      def initialize(pipeline, name, deployment, params = {})
+      def initialize(pipeline, name, params = {})
         @pipeline = pipeline
         @name = name
-        @deployment = deployment
+        @deployment = params[:deployment]
         @tag_or_branch = params[:tag_or_branch]
       end
 
       def call
-        ScriptedComputation.create(
+
+        Rails.logger.debug("Attempting to create ScriptedComputation...")
+
+        sc = ScriptedComputation.create(
           pipeline: @pipeline,
           user: @pipeline.user,
           tag_or_branch: @tag_or_branch,
           pipeline_step: @name,
           deployment: @deployment
         )
+
+        Rails.logger.debug(sc.errors.inspect)
+
+        sc
+
       end
     end
   end

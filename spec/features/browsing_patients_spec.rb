@@ -370,7 +370,8 @@ RSpec.feature 'Patient browsing' do
         expect(Rimrock::StartJob).to receive(:perform_later)
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
-        select('bar')
+        select 'bar'
+        select 'cluster'
         click_button computation_run_text(computation)
 
         computation.reload
@@ -405,6 +406,7 @@ RSpec.feature 'Patient browsing' do
         mock_rimrock_computation_ready_to_run
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
+        select 'cluster'
         click_button computation_run_text(computation)
 
         expect(page).to have_content 'can\'t be blank'
@@ -412,7 +414,8 @@ RSpec.feature 'Patient browsing' do
 
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
-        allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
+        allow_any_instance_of(ScriptedComputation).
+          to receive(:runnable?).and_return(true)
         allow_any_instance_of(ScriptedStep).
           to receive(:input_present_for?).and_return(true)
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)

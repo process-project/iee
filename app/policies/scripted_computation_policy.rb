@@ -2,7 +2,7 @@
 
 class ScriptedComputationPolicy < ApplicationPolicy
   def permitted_attributes
-    [:tag_or_branch]
+    [:tag_or_branch, :deployment]
   end
 
   def show?

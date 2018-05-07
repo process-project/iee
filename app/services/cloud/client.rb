@@ -73,8 +73,6 @@ module Cloud
           http.request(req)
         }
 
-        puts res.body
-
         res_hash = JSON.parse(res.body)
 
         # Obtain ID from body
@@ -110,7 +108,6 @@ module Cloud
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
         http.request(req)
       }
-      puts res.body
 
       res_hash = JSON.parse(res.body)
 
@@ -146,9 +143,7 @@ module Cloud
         res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
           http.request(req)
         }
-        puts res.body
       end
     end
-
   end
 end
