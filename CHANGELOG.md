@@ -9,15 +9,20 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Added AVD/MVD ratio to patients' statistics (@Nuanda)
+- Profile link for left avatar picture and user name (@mkasztelnik)
+- Colors for patient tile connected with last pipeline status (@mkasztelnik)
 - First version of automatic patient synchronization machinery (@Nuanda)
 
 ### Changed
+- Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Patients' statistics work correctly when turbolink-loaded (@Nuanda)
 
 ### Security
 

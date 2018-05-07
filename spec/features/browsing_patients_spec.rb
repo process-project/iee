@@ -31,6 +31,9 @@ RSpec.feature 'Patient browsing' do
         sheffield: 1,
         eindhoven: 1,
         no_site: 0,
+        aortic: 2,
+        mitral: 2,
+        no_diagnosis: 0,
         females: 2,
         males: 1,
         no_gender: 1,
@@ -79,6 +82,8 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content I18n.t('patients.index.stats.sites')
       expect(page).to have_content '2 | 1 | 1'
       expect(page).to have_content '0 from unknown site'
+      expect(page).to have_content '2 | 2'
+      expect(page).to have_content '0 with unknown diagnosis'
       expect(page).to have_content I18n.t('patients.index.stats.females')
       expect(page).to have_content I18n.t('patients.index.stats.males')
       expect(page).to have_content '2 | 1'
