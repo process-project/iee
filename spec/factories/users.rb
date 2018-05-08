@@ -2,13 +2,13 @@
 
 FactoryBot.define do
   factory :user do
-    email { Faker::Internet.unique.email }
+    sequence(:email) { |n| "johndoe#{n}@email.pl" }
+    sequence(:first_name) { |n| "John#{n}" }
+    sequence(:last_name) { |n| "Doe#{n}" }
     password '12345678'
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
 
     trait :plgrid do
-      plgrid_login { Faker::Name.unique.name }
+      plgrid_login { |n| "plgjohndoe#{n}" }
     end
 
     trait :approved do
@@ -34,8 +34,8 @@ FactoryBot.define do
     end
 
     factory :approved_user, traits: [:approved]
-    factory :plgrid_user, parent: :approved_user, traits: [:plgrid]
-    factory :supervisor_user, parent: :approved_user, traits: [:supervisor]
-    factory :admin, parent: :approved_user, traits: [:admin]
+    factory :plgrid_user, traits: [:approved, :plgrid]
+    factory :supervisor_user, traits: [:approved, :supervisor]
+    factory :admin, traits: [:approved, :admin]
   end
 end

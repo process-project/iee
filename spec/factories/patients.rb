@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :patient do
-    case_number { 'c' + Faker::Number.unique.number(6).to_s }
+    sequence(:case_number) { |n| "c#{n}" }
 
     trait :with_pipeline do
       case_number '9900'
