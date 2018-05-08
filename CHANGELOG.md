@@ -22,6 +22,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Patients' statistics work correctly when turbolink-loaded (@Nuanda)
+- Fix `GITLAB_HOST` markup formatting in `README.md` (@mkasztelnik)
 
 ### Security
 
