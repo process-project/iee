@@ -9,23 +9,17 @@ module Cloud
     def initialize(user_token, atmosphere_url)
       if user_token.blank?
         Rails.logger.warn("WARNING! BLANK USER TOKEN PASSED!")
-#        @user_token = 'eyJhbGciOiJFUzI1NiJ9.eyJuYW1lIjoiUGlvdHIgTm93YWtvd3NraSIsImVtYWlsIjoieW1ub3dha29AY3lmLWtyLmVkdS5wbCIsInN1YiI6IjEiLCJpc3MiOiJFdXJWYWx2ZSBQb3J0YWwiLCJleHAiOjE1MTg1NDY4NTF9.3uwT-PexZ1D4afyHBOTrIQ7oDqEitsBF0kBvZwX2PrDpEQEvt8lJ4PC7-N8plzwkYSevtbTVRa5g0Nb-dSGccw'
       else
-#        @user_token = user_token
         @user_token = user_token
       end
       @atmosphere_url = atmosphere_url
-      @appliance_type_id = 884 # TODO: parameterize
+      @appliance_type_id = Rails.configuration.constants['cloud']['computation_appliance_type']
     end
 
     def register_initial_config(username, payload)
       if payload.present?
-        config = "username=#{username};password=Pi314159;script=#{payload}"
-      else
-        config = "username=#{username};password=Pi314159;script=echo 'it works!' > /mnt/filestore/cloud_pipeline_test/result_123.txt"
+        config = "username=#{username};password=_placeholder_;script=#{payload}"
       end
-
-      puts config
 
       request = {}
       request[:appliance_configuration_template] = {
@@ -33,8 +27,6 @@ module Cloud
           payload: config,
           appliance_type_id: @appliance_type_id
       }
-
-      puts request.to_json
 
       url = URI.parse(@atmosphere_url+'/api/v1/appliance_configuration_templates')
       req = Net::HTTP::Post.new(url.to_s)
@@ -77,6 +69,9 @@ module Cloud
 
         # Obtain ID from body
         @appliance_id = res_hash['appliance']['id']
+
+        # Return appliance id
+        return @appliance_id.to_s
       else
         # Not enough data - do nothing
       end
@@ -95,9 +90,6 @@ module Cloud
       simple_req[:appliance_set] = {
         appliance_set_type: 'workflow'
       }
-
-      puts request.to_json
-      puts simple_req.to_json
 
       url = URI.parse(@atmosphere_url+'/api/v1/appliance_sets')
       req = Net::HTTP::Post.new(url.to_s)
@@ -130,7 +122,6 @@ module Cloud
         res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
           http.request(req)
         }
-        puts res.body
       end
     end
 

@@ -54,6 +54,9 @@ class Flow
       sample_cloud_step
       sample_cluster_step
     ],
+    cloud_test_2: %w[
+      rom
+    ],
     unused_steps: %w[heart_model_calculation blood_flow_simulation]
   }.freeze
 

@@ -11,21 +11,13 @@ module PipelineSteps
       end
 
       def call
-
-        Rails.logger.debug("Attempting to create ScriptedComputation...")
-
-        sc = ScriptedComputation.create(
+        ScriptedComputation.create(
           pipeline: @pipeline,
           user: @pipeline.user,
           tag_or_branch: @tag_or_branch,
           pipeline_step: @name,
           deployment: @deployment
         )
-
-        Rails.logger.debug(sc.errors.inspect)
-
-        sc
-
       end
     end
   end

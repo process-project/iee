@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180329174011) do
     t.string "revision"
     t.string "tag_or_branch"
     t.string "deployment", default: "cluster"
+    t.string "appliance_id"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 

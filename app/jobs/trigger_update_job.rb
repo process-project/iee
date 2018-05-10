@@ -6,6 +6,7 @@ class TriggerUpdateJob < ApplicationJob
   def perform
     trigger_rimrock_jobs_update
     trigger_webdav_jobs_update
+    trigger_cloud_jobs_update
   end
 
   private
@@ -19,6 +20,12 @@ class TriggerUpdateJob < ApplicationJob
   def trigger_webdav_jobs_update
     User.with_submitted_computations('service').each do |user|
       Webdav::UpdateJob.perform_later(user)
+    end
+  end
+
+  def trigger_cloud_jobs_update
+    User.with_submitted_computations('cloud').each do |user|
+      Cloud::UpdateJob.perform_later(user)
     end
   end
 end

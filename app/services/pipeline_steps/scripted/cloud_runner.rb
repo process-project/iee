@@ -6,7 +6,7 @@ module PipelineSteps
       def initialize(computation, repository, file, options = {})
         super(computation, options)
         @atmosphere_url = Rails.configuration.constants['cloud']['atmosphere_url']
-        @appliance_type_id = 884 # Temporary - cloud pipeline step template v05
+        @appliance_type_id = Rails.configuration.constants['cloud']['computation_appliance_type']
         @repository = repository
         @file = file
         @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
@@ -30,8 +30,8 @@ module PipelineSteps
         if computation.valid?
           @atmosphere_client.register_initial_config(computation.user.email, computation.script)
           @atmosphere_client.spawn_appliance_set
-          @atmosphere_client.spawn_appliance(884) # TODO: parameterize
-          computation.status = 'running'
+          computation.appliance_id = @atmosphere_client.spawn_appliance(@appliance_type_id)
+          computation.status = 'created'
           computation.save
         end
       end
