@@ -22,7 +22,9 @@ RSpec.describe PipelineSteps::Scripted::RimrockRunner do
 
   let(:updater) { instance_double(ComputationUpdater, call: true) }
 
-  let(:computation) { create(:scripted_computation, pipeline_step: '0d_models', deployment: 'cluster') }
+  let(:computation) do
+    create(:scripted_computation, pipeline_step: '0d_models', deployment: 'cluster')
+  end
 
   subject do
     described_class.new(computation, 'repo', 'file',

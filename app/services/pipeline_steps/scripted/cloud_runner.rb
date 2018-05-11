@@ -30,7 +30,7 @@ module PipelineSteps
         if computation.valid?
           @atmosphere_client.register_initial_config(computation.user.email, computation.script)
           @atmosphere_client.spawn_appliance_set
-          computation.appliance_id = @atmosphere_client.spawn_appliance(@appliance_type_id)
+          computation.appliance_id = @atmosphere_client.spawn_appliance
           computation.status = 'created'
           computation.save
         end

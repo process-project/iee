@@ -17,7 +17,7 @@ module Pipelines
       # Can be extended by other step types
       {
         tags_and_branches: tags_and_branches(step),
-        deployment: ['cluster', 'cloud']
+        deployment: %w[cluster cloud]
       }
     end
 

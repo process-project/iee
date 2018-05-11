@@ -62,32 +62,45 @@ class Flow
 
   STEPS = [
     ScriptedStep.new('ageing_model_x2', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    ScriptedStep.new('blood_flow_simulation',
-                    'eurvalve/blood-flow', 'blood_flow.sh.erb',
-                    [:fluid_virtual_model, :ventricle_virtual_model]),
+    ScriptedStep.new(
+      'blood_flow_simulation',
+      'eurvalve/blood-flow',
+      'blood_flow.sh.erb',
+      [:fluid_virtual_model, :ventricle_virtual_model]
+    ),
     ScriptedStep.new('cfd', 'eurvalve/cfd', 'cfd.sh.erb', [:truncated_off_mesh]),
     ScriptedStep.new('cfd_x12', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('economics_algorithm', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('haemodynamic_comparison', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    ScriptedStep.new('heart_model_calculation',
-                    'eurvalve/0dmodel', 'heart_model.sh.erb',
-                    [:estimated_parameters]),
+    ScriptedStep.new(
+      'heart_model_calculation',
+      'eurvalve/0dmodel',
+      'heart_model.sh.erb',
+      [:estimated_parameters]
+    ),
     ScriptedStep.new('inference', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('inference_weighting', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('iteration_control', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('mv_segmentation', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    ScriptedStep.new('parameter_extraction',
-                    'eurvalve/parameter-extraction',
-                    'parameter_extraction.sh.erb',
-                    [:off_mesh]),
-    ScriptedStep.new('parameter_optimization',
-                    'eurvalve/0dmodel', 'parameter_optimization.sh.erb',
-                    [:pressure_drops]),
+    ScriptedStep.new(
+      'parameter_extraction',
+      'eurvalve/parameter-extraction',
+      'parameter_extraction.sh.erb',
+      [:off_mesh]
+    ),
+    ScriptedStep.new(
+      'parameter_optimization',
+      'eurvalve/0dmodel',
+      'parameter_optimization.sh.erb',
+      [:pressure_drops]
+    ),
     ScriptedStep.new('patient_db_selection', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    ScriptedStep.new('pressure_volume_display',
-                    'eurvalve/0dmodel', 'pv_display.sh.erb',
-                    [:data_series_1, :data_series_2,
-                     :data_series_3, :data_series_4]),
+    ScriptedStep.new(
+      'pressure_volume_display',
+      'eurvalve/0dmodel',
+      'pv_display.sh.erb',
+      [:data_series_1, :data_series_2, :data_series_3, :data_series_4]
+    ),
     ScriptedStep.new('progression_model', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('prosthetic_geometries', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('pv_loop_comparison', 'eurvalve/mock-step', 'mock.sh.erb', []),
@@ -97,15 +110,21 @@ class Flow
     ScriptedStep.new('rule_selection', 'eurvalve/mock-step', 'mock.sh.erb', []),
     WebdavStep.new('segmentation', [:image]),
     ScriptedStep.new('severity_model', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    ScriptedStep.new('uncertainty_analysis',
-                    'eurvalve/0dmodel', 'uncertainty_analysis.sh.erb',
-                    [:parameter_optimization_result]),
+    ScriptedStep.new(
+      'uncertainty_analysis',
+      'eurvalve/0dmodel',
+      'uncertainty_analysis.sh.erb',
+      [:parameter_optimization_result]
+    ),
     ScriptedStep.new('valve_placement', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('valve_placement_x12', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('valve_sizing', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    ScriptedStep.new('0d_models',
-                    'eurvalve/0dmodel', '0d_scenarios.sh.erb',
-                    [:parameter_optimization_result]),
+    ScriptedStep.new(
+      '0d_models',
+      'eurvalve/0dmodel',
+      '0d_scenarios.sh.erb',
+      [:parameter_optimization_result]
+    ),
     ScriptedStep.new('sample_cloud_step', 'eurvalve/mock-step', 'cloud_mock.sh.erb', []),
     ScriptedStep.new('sample_cluster_step', 'eurvalve/mock-step', 'mock.sh.erb', [])
   ].freeze

@@ -11,7 +11,7 @@ describe Pipelines::StepsConfig do
 
     config = described_class.new('avr_from_scan_rom').call
 
-    expect(config['rom']).to eq({tags_and_branches: versions, deployment: ['cluster','cloud']})
-    expect(config['segmentation']).to eq({tags_and_branches: nil, deployment: ['cluster','cloud']})
+    expect(config['rom']).to eq(tags_and_branches: versions, deployment: %w[cluster cloud])
+    expect(config['segmentation']).to eq(tags_and_branches: nil, deployment: %w[cluster cloud])
   end
 end
