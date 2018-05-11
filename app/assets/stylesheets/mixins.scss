@@ -1,0 +1,8 @@
+@mixin panel-border($color) {
+  border-color: $color;
+
+  .x_title {
+    border-color: $color;
+  }
+}
+

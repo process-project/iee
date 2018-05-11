@@ -11,15 +11,22 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Added AVD/MVD ratio to patients' statistics (@Nuanda)
 - Support for execution of pipeline steps on cloud vms (@nowakowski)
+- Profile link for left avatar picture and user name (@mkasztelnik)
+- Colors for patient tile connected with last pipeline status (@mkasztelnik)
 
 ### Changed
+- Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
+- Remove `brakeman` from `Gemfile` and use latest version while executing
+  `gitab-ci` checks (@mkasztelnik)
 
 ### Deprecated
 
 ### Removed
+- Remove `faker` gem and replace it with `factory_bot` sequences (@mkasztelnik)
 
 ### Fixed
 - Patients' statistics work correctly when turbolink-loaded (@Nuanda)
+- Fix `GITLAB_HOST` markup formatting in `README.md` (@mkasztelnik)
 
 ### Security
 

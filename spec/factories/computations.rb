@@ -2,9 +2,7 @@
 
 FactoryBot.define do
   factory :computation do
-    pipeline_step 'rule_selection'
-    script { Faker::Lorem.sentence }
-    working_directory { Faker::Lorem.characters(10) }
+    sequence(:working_directory) { |n| "working_dir_#{n}" }
     started_at { Time.current }
 
     user

@@ -5,10 +5,10 @@
  *= require_tree ./gentelella
  *= require_tree ../../../vendor/assets/stylesheets/.
  */
-@import "variables";
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "variables";
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
@@ -17,9 +17,11 @@
 
 @import "animate";
 
+@import "mixins";
 @import "common";
 @import "logo";
 @import "patients";
+@import "pipelines";
 @import "list";
 
 .aaa-background {

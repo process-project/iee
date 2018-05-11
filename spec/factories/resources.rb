@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :resource do
-    name { Faker::Name.unique.name }
-    path { '/' + Faker::Internet.unique.domain_word }
+    sequence(:name) { |n| "resource_#{n}" }
+    sequence(:path) { |n| "/resource/path/#{n}" }
     resource_type :local
     service
 

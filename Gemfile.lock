@@ -53,7 +53,6 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
-    brakeman (4.0.1)
     builder (3.2.3)
     bullet (5.6.1)
       activesupport (>= 3.0.0)
@@ -85,7 +84,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
-    crass (1.0.3)
+    crass (1.0.4)
     daemons (1.2.5)
     database_cleaner (1.6.2)
     devise (4.3.0)
@@ -108,8 +107,6 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faker (1.8.4)
-      i18n (~> 0.5)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
@@ -177,7 +174,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.1.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
@@ -196,7 +193,7 @@ GEM
     nicescroll-rails (3.5.4.1)
       railties (>= 3.1)
     nio4r (2.1.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -245,8 +242,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (5.1.4)
       actionpack (= 5.1.4)
       activesupport (= 5.1.4)
@@ -396,7 +393,6 @@ DEPENDENCIES
   addressable (~> 2.5)
   animate-rails (= 1.0.10)
   bootstrap-sass (~> 3.3)
-  brakeman
   bullet
   byebug
   capybara
@@ -408,7 +404,6 @@ DEPENDENCIES
   devise (~> 4.3.0)
   dotenv-rails
   factory_bot_rails
-  faker
   font-awesome-sass (~> 4.5)
   github-markup
   gitlab
@@ -453,4 +448,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

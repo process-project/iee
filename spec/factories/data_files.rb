@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :data_file do
-    name { Faker::Lorem.sentence }
+    sequence(:name) { |n| "data_file_#{n}" }
     data_type 0
     patient
   end

@@ -5,14 +5,15 @@ defaults: &defaults
     tag: vapor
   grant_id: <%= ENV['GRANT_ID'] || 'eurvalve3' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
-  owncloud:
-    inputs_path: input
-    outputs_path: output
+  segmentation:
+    inputs_path: segmentation/input
+    outputs_path: segmentation/output
     status_path: status
-    url: <%= ENV['OWNCLOUD_URL'] %>
-    ui_url: <%= ENV['OWNCLOUD_UI_URL'] %>
-    user: <%= ENV['OWNCLOUD_USER'] %>
-    password: <%= ENV['OWNCLOUD_PASSWORD'] %>
+    url: <%= ENV['SEGMENTATION_URL'] %>
+    ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
+    user: <%= ENV['SEGMENTATION_USER'] %>
+    password: <%= ENV['SEGMENTATION_PASSWORD'] %>
+    mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
   git_repos:
     blood_flow_simulation: <%= ENV['PIPELINE_R_BFS'] || 'eurvalve/blood-flow' %>
     heart_model_calculation: <%= ENV['PIPELINE_R_HMS'] || 'eurvalve/0dmodel' %>
@@ -46,9 +47,6 @@ defaults: &defaults
     mv_segmentation: 'eurvalve/mock-step'
     sample_cloud_step: 'eurvalve/mock-step'
     sample_cluster_step: 'eurvalve/mock-step'
-
-  segmentation:
-    mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
 
 
 development:

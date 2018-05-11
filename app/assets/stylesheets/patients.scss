@@ -32,6 +32,22 @@
       box-shadow:inset 0px 0px 0px 1px #fff;
     }
   }
+
+  .running {
+    @include panel-border($running)
+  }
+
+  .error {
+    @include panel-border($error)
+  }
+
+  .success {
+    @include panel-border($success)
+  }
+
+  .waiting {
+    @include panel-border($waiting)
+  }
 }
 
 th {
@@ -49,15 +65,15 @@ th {
 }
 
 .off-viewer-header {
-	margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .off-viewer-header .off-header-left {
-	color: red;
-	float: left;
+  color: red;
+  float: left;
 }
 
 .off-viewer-header .off-header-right {
-	color: green;
-	float: right;
+  color: green;
+  float: right;
 }

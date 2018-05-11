@@ -13,7 +13,7 @@ class PatientsController < ApplicationController
 
   def show
     @pipelines = @patient.pipelines.includes(:computations, :patient, :user).
-                 order(:iid).order('computations.created_at')
+                 order('computations.created_at')
 
     if request.xhr?
       @details = Patients::Details.new(@patient.case_number, current_user).call
@@ -56,7 +56,7 @@ class PatientsController < ApplicationController
   private
 
   def set_patients
-    @patients = policy_scope(Patient).includes(:pipelines).all
+    @patients = policy_scope(Patient).includes(pipelines: :computations).all
   end
 
   def find_and_authorize
