@@ -49,7 +49,7 @@ defaults: &defaults
     mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
 
   maxmind:
-    db: <%= ENV['MAXMIND_DB'] || 'db/GeoLite2-Country.mmdb' %>
+    db: <%= ENV['MAXMIND_DB'] || '/usr/share/GeoIP/GeoLite2-Country.mmdb' %>
 
 
 development:

@@ -19,6 +19,9 @@ stages:
 test:
   stage: test
   script:
+  - add-apt-repository ppa:maxmind/ppa
+  - apt-get update -qy
+  - apt-get install -y geoipupdate
   - google-chrome --version
   - ruby -v
   - which ruby
@@ -32,6 +35,9 @@ test:
 integration:
   stage: test
   script:
+  - add-apt-repository ppa:maxmind/ppa
+  - apt-get update -qy
+  - apt-get install -y geoipupdate
   - google-chrome --version
   - ruby -v
   - which ruby
