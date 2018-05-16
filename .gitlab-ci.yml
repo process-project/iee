@@ -19,9 +19,13 @@ stages:
 test:
   stage: test
   script:
-  - add-apt-repository ppa:maxmind/ppa
+  - apt-get update -qy
+  - apt-get install software-properties-common python-software-properties
+  - add-apt-repository -y ppa:maxmind/ppa
+  - sed -i 's/jessie/trusty/g' /etc/apt/sources.list.d/maxmind-ppa-jessie.list
   - apt-get update -qy
   - apt-get install -y geoipupdate
+  - geoipupdate
   - google-chrome --version
   - ruby -v
   - which ruby
@@ -35,9 +39,13 @@ test:
 integration:
   stage: test
   script:
-  - add-apt-repository ppa:maxmind/ppa
+  - apt-get update -qy
+  - apt-get install software-properties-common python-software-properties
+  - add-apt-repository -y ppa:maxmind/ppa
+  - sed -i 's/jessie/trusty/g' /etc/apt/sources.list.d/maxmind-ppa-jessie.list
   - apt-get update -qy
   - apt-get install -y geoipupdate
+  - geoipupdate
   - google-chrome --version
   - ruby -v
   - which ruby
