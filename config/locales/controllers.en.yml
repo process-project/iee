@@ -2,11 +2,11 @@ en:
   admin:
     users:
       destroy:
-        me: Cannot remove yourself
+        self: Cannot remove yourself
         success: "%{user} account was removed successfully"
         error: Unable to remove user account
       update:
-        me: Cannot block yourself
+        block_self: Cannot block yourself
         success: "%{user} state changed into %{state}"
         error: Unable to change user state
   pipelines:
