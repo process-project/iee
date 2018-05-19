@@ -5,13 +5,12 @@ module PipelineSteps
     class CloudRunner < PipelineSteps::RunnerBase
       def initialize(computation, repository, file, options = {})
         super(computation, options)
-        @atmosphere_url = Rails.configuration.constants['cloud']['atmosphere_url']
         @appliance_type_id = Rails.configuration.constants['cloud']['computation_appliance_type']
         @repository = repository
         @file = file
         @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
         @revision_fetcher = options.fetch(:revision_fetcher) { Gitlab::Revision }
-        @atmosphere_client = ::Cloud::Client.new(computation.user.token, @atmosphere_url)
+        @atmosphere_client = ::Cloud::Client.new(computation.user.token)
       end
 
       def self.tag_or_branch(params)

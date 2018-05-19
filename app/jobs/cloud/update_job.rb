@@ -5,9 +5,7 @@ module Cloud
     queue_as :computation
 
     def perform(user)
-      GuardedProxyExecutor.new(user).call do
-        Cloud::Update.new(user).call
-      end
+      Cloud::Update.new(user).call
     end
   end
 end

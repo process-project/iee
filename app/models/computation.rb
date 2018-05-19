@@ -99,8 +99,6 @@ class Computation < ApplicationRecord
 
   def step
     return nil if pipeline.nil?
-    ps = pipeline.steps.find { |step| step.name == pipeline_step }
-    Rails.logger.debug("Step runner found this step: #{ps.inspect}")
-    ps
+    pipeline.steps.find { |step| step.name == pipeline_step }
   end
 end
