@@ -25,19 +25,19 @@ module Cloud
         config = "username=#{username};password=_placeholder_;script=#{payload}"
       end
 
-      request = {}
-      request[:appliance_configuration_template] = {
-        name: "template_#{SecureRandom.hex}",
-        payload: config,
-        appliance_type_id: @appliance_type_id
+      body = {
+        appliance_configuration_template: {
+          name: "template_#{SecureRandom.hex}",
+          payload: config,
+          appliance_type_id: @appliance_type_id
+        }
       }
 
-      url = URI.parse("#{@atmosphere_url}/api/v1/appliance_configuration_templates")
-      req = Net::HTTP::Post.new(url.to_s)
-      req['Authorization'] = "Bearer #{@user_token}"
-      req['Content-Type'] = 'application/json'
-      req.body = request.to_json
-
+      req = create_request(
+        :post,
+        "#{@atmosphere_url}/api/v1/appliance_configuration_templates",
+        body
+      )
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
@@ -51,7 +51,7 @@ module Cloud
     def spawn_appliance
       if @appliance_set_id && @template_id
 
-        request = {
+        body = {
           appliance: {
             appliance_set_id: @appliance_set_id,
             name: "cloud_step_#{SecureRandom.hex}",
@@ -59,12 +59,7 @@ module Cloud
           }
         }
 
-        url = URI.parse(@atmosphere_url + '/api/v1/appliances')
-        req = Net::HTTP::Post.new(url.to_s)
-        req['Authorization'] = "Bearer #{@user_token}"
-        req['Content-Type'] = 'application/json'
-        req.body = request.to_json
-
+        req = create_request(:post, "#{@atmosphere_url}/api/v1/appliances", body)
         res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
           http.request(req)
         end
@@ -88,15 +83,14 @@ module Cloud
         optimization_policy: 'manual',
         appliances: []
       }
-      simple_req = {}
-      simple_req[:appliance_set] = { appliance_set_type: 'workflow' }
 
-      url = URI.parse(@atmosphere_url + '/api/v1/appliance_sets')
-      req = Net::HTTP::Post.new(url.to_s)
-      req['Authorization'] = "Bearer #{@user_token}"
-      req['Content-Type'] = 'application/json'
-      req.body = simple_req.to_json
+      body = {
+        appliance_set: {
+          appliance_set_type: 'workflow'
+        }
+      }
 
+      req = create_request(:post, "#{@atmosphere_url}/api/v1/appliance_sets", body)
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
@@ -108,11 +102,7 @@ module Cloud
     end
 
     def update_computation(c)
-      url = URI.parse(@atmosphere_url + "/api/v1/appliance/#{c.appliance_id}")
-      req = Net::HTTP::Get.new(url.to_s)
-      req['Authorization'] = "Bearer #{@user_token}"
-      req['Content-Type'] = 'application/json'
-      req.body = request.to_json
+      req = create_request(:get, "#{@atmosphere_url}/api/v1/appliance/#{c.appliance_id}")
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
@@ -126,12 +116,7 @@ module Cloud
     end
 
     def query_vm(c, vm)
-      url = URI.parse(@atmosphere_url + "/api/v1/virtual_machine/#{vm}")
-      req = Net::HTTP::Get.new(url.to_s)
-      req['Authorization'] = "Bearer #{@user_token}"
-      req['Content-Type'] = 'application/json'
-      req.body = request.to_json
-
+      req = create_request(:get, "#{@atmosphere_url}/api/v1/virtual_machine/#{vm}")
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
@@ -163,12 +148,31 @@ module Cloud
 
     private
 
-    def delete_appliance_set
-      if @appliance_set_id
-        url = URI.parse(@atmosphere_url + '/api/v1/appliance_sets' + @appliance_set_id.to_s)
+    def create_request(type, path, body = '')
+      url = URI.parse(path)
+      case type
+      when :post
+        req = Net::HTTP::Post.new(url.to_s)
+        req['Authorization'] = "Bearer #{@user_token}"
+        req['Content-Type'] = 'application/json'
+        req.body = body.to_json
+      when :get
+        req = Net::HTTP::Get.new(url.to_s)
+        req['Authorization'] = "Bearer #{@user_token}"
+        req['Content-Type'] = 'application/json'
+      when :delete
         req = Net::HTTP::Delete.new(url.to_s)
         req['Authorization'] = "Bearer #{@user_token}"
+      end
+      req
+    end
 
+    def delete_appliance_set
+      if @appliance_set_id
+        req = create_request(
+          :delete,
+          "#{@atmosphere_url}/api/v1/appliance_sets/#{@appliance_set_id}"
+        )
         Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
           http.request(req)
         end
@@ -177,12 +181,10 @@ module Cloud
 
     def delete_config_template
       if @template_id
-        url = URI.parse(
-          @atmosphere_url + '/api/v1/appliance_configuration_templates' + @template_id.to_s
+        req = create_request(
+          :delete,
+          "#{@atmosphere_url}/api/v1/appliance_configuration_templates/#{@template_id}"
         )
-        req = Net::HTTP::Delete.new(url.to_s)
-        req['Authorization'] = "Bearer #{@user_token}"
-
         Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
           http.request(req)
         end
