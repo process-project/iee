@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Added AVD/MVD ratio to patients' statistics (@Nuanda)
 - Profile link for left avatar picture and user name (@mkasztelnik)
 - Colors for patient tile connected with last pipeline status (@mkasztelnik)
+- Instruction how to remove concrete IP from rack-attack fail2ban list (@mkasztelnik)
 
 ### Changed
 - Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
