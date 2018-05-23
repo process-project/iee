@@ -3,6 +3,7 @@
 module Cloud
   class Update
     def initialize(user, options = {})
+      @user = user
       @user_token = user.token
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]

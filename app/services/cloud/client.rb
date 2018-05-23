@@ -33,7 +33,7 @@ module Cloud
         }
       }
 
-      req = create_request(
+      url, req = create_request(
         :post,
         "#{@atmosphere_url}/api/v1/appliance_configuration_templates",
         body
@@ -59,7 +59,7 @@ module Cloud
           }
         }
 
-        req = create_request(:post, "#{@atmosphere_url}/api/v1/appliances", body)
+        url, req = create_request(:post, "#{@atmosphere_url}/api/v1/appliances", body)
         res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
           http.request(req)
         end
@@ -68,7 +68,7 @@ module Cloud
 
         # Obtain ID from body
         @appliance_id = res_hash['appliance']['id']
-
+        Rails.logger.debug("Got appliance id: #{@appliance_id}")
         # Return appliance id
         @appliance_id.to_s
       end
@@ -90,7 +90,7 @@ module Cloud
         }
       }
 
-      req = create_request(:post, "#{@atmosphere_url}/api/v1/appliance_sets", body)
+      url, req = create_request(:post, "#{@atmosphere_url}/api/v1/appliance_sets", body)
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
@@ -102,21 +102,28 @@ module Cloud
     end
 
     def update_computation(c)
-      req = create_request(:get, "#{@atmosphere_url}/api/v1/appliance/#{c.appliance_id}")
+      url, req = create_request(:get, "#{@atmosphere_url}/api/v1/appliances/#{c.appliance_id}")
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
 
       res_hash = JSON.parse(res.body)
-
       # Obtain vm ids from body
-      res_hash['virtual_machine']['virtual_machine_ids'].each do |vm|
-        query_vm(c, vm)
+      res_hash['appliance']['virtual_machine_ids'].each do |vm|
+        if query_vm(c, vm)
+          # We're done - clean up
+          config_instance_id = res_hash['appliance']['appliance_configuration_instance_id']
+          appliance_set_id = res_hash['appliance']['appliance_set_id']
+          delete_config_template(config_instance_id)
+          delete_appliance_set(appliance_set_id)
+        else
+          next
+        end
       end
     end
 
     def query_vm(c, vm)
-      req = create_request(:get, "#{@atmosphere_url}/api/v1/virtual_machine/#{vm}")
+      url, req = create_request(:get, "#{@atmosphere_url}/api/v1/virtual_machines/#{vm}")
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
       end
@@ -124,26 +131,25 @@ module Cloud
       res_hash = JSON.parse(res.body)
 
       # Obtain state from body
-      status res_hash['virtual_machine']['state']
+      status = res_hash['virtual_machine']['state']
 
-      Rails.logger.debug "VM QUERY: #{res_hash.inspect}"
+      done = false
 
       # TODO: need more robust status handling (esp. for error states)
-      case state
+      case status
       when 'build'
         c.update_attributes(status: 'queued')
       when 'active'
         c.update_attributes(status: 'running')
       when 'shutoff'
         c.update_attributes(status: 'finished')
+        done = true
       when 'error'
         c.update_attributes(status: 'error')
+        done = true
       end
-    end
 
-    def cleanup
-      delete_appliance_set
-      delete_config_template
+      done
     end
 
     private
@@ -164,30 +170,36 @@ module Cloud
         req = Net::HTTP::Delete.new(url.to_s)
         req['Authorization'] = "Bearer #{@user_token}"
       end
-      req
+      [url, req]
     end
 
-    def delete_appliance_set
-      if @appliance_set_id
-        req = create_request(
-          :delete,
-          "#{@atmosphere_url}/api/v1/appliance_sets/#{@appliance_set_id}"
-        )
-        Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-          http.request(req)
-        end
+    def delete_appliance_set(appliance_set_id)
+      url, req = create_request(
+        :delete,
+        "#{@atmosphere_url}/api/v1/appliance_sets/#{appliance_set_id}"
+      )
+      Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
+        http.request(req)
       end
     end
 
-    def delete_config_template
-      if @template_id
-        req = create_request(
-          :delete,
-          "#{@atmosphere_url}/api/v1/appliance_configuration_templates/#{@template_id}"
-        )
-        Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-          http.request(req)
-        end
+    def delete_config_template(config_instance_id)
+      url, req = create_request(
+        :get,
+        "#{@atmosphere_url}/api/v1/appliance_configuration_instances/#{config_instance_id}"
+      )
+      res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
+        http.request(req)
+      end
+
+      res_hash = JSON.parse(res.body)
+      tmpl_id = res_hash['appliance_configuration_instance']['appliance_configuration_template_id']
+      url, req = create_request(
+        :delete,
+        "#{@atmosphere_url}/api/v1/appliance_configuration_templates/#{tmpl_id}"
+      )
+      Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
+        http.request(req)
       end
     end
   end
