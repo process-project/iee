@@ -47,10 +47,14 @@ RSpec.describe Computation, type: :model do
     it 'returns only queued and running scripted computations' do
       create(:webdav_computation, status: 'running')
       create(:scripted_computation, status: 'new')
-      queued = create(:scripted_computation, status: 'queued')
-      running = create(:scripted_computation, status: 'running')
+      queued_r = create(:scripted_computation, status: 'queued', deployment: 'cluster')
+      running_r = create(:scripted_computation, status: 'running', deployment: 'cluster')
+      queued_c = create(:scripted_computation, status: 'queued', deployment: 'cloud')
+      running_c = create(:scripted_computation, status: 'running', deployment: 'cloud')
       expect(Computation.submitted_rimrock.pluck(:id)).
-        to contain_exactly(queued.id, running.id)
+        to contain_exactly(queued_r.id, running_r.id)
+      expect(Computation.submitted_cloud.pluck(:id)).
+          to contain_exactly(queued_c.id, running_c.id)
     end
   end
 
