@@ -157,4 +157,22 @@ RSpec.describe Pipeline, type: :model do
       expect(pipeline.status).to eq :waiting
     end
   end
+
+  context 'pipeline creator' do
+    it 'returns creator name' do
+      user = create(:user, first_name: 'John', last_name: 'Rambo')
+      pipeline = create(:pipeline, user: user)
+
+      expect(pipeline.owner_name).to eq('John Rambo')
+    end
+
+    it 'returns information about deleted user when owner is nil' do
+      user = create(:user, first_name: 'John', last_name: 'Rambo')
+      pipeline = create(:pipeline, user: user)
+      user.destroy!
+      pipeline.reload
+
+      expect(pipeline.owner_name).to eq('(deleted user)')
+    end
+  end
 end
