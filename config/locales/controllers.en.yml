@@ -3,10 +3,12 @@ en:
     users:
       destroy:
         self: Cannot remove yourself
+        last_group_owner: Unable to remove last group owner
         success: "%{user} account was removed successfully"
         error: Unable to remove user account
       update:
-        block_self: Cannot block yourself
+        self: Cannot block yourself
+        last_group_owner: Unable to block last group owner
         success: "%{user} state changed into %{state}"
         error: Unable to change user state
   pipelines:

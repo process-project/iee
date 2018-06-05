@@ -27,7 +27,7 @@ RSpec.describe 'Users management' do
     it 'cannot block himself' do
       expect { put admin_user_path(supervisor, state: :blocked) }.
         to_not(change { supervisor.reload.state })
-      expect(flash[:alert]).to eq(I18n.t('admin.users.update.block_self'))
+      expect(flash[:alert]).to eq(I18n.t('admin.users.update.self'))
     end
 
     it 'cannot remove user' do
