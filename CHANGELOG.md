@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
 - Remove `brakeman` from `Gemfile` and use latest version while executing
   `gitab-ci` checks (@mkasztelnik)
+- Trigger segmentation start after whole input file is uploaded (@mkasztelnik)
 
 ### Deprecated
 

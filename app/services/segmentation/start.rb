@@ -38,8 +38,20 @@ module Segmentation
     end
 
     def upload_input
-      Webdav::UploadFile.new(Webdav::Segmentation.new, @local_path,
-                             Webdav::Segmentation.input_path(@computation)).call
+      Webdav::UploadFile.new(client, @local_path, input_path_with_prefix).call
+      Webdav::MoveFile.new(client, input_path_with_prefix, input_path).call
+    end
+
+    def client
+      @client ||= Webdav::Segmentation.new
+    end
+
+    def input_path
+      Webdav::Segmentation.input_path(@computation)
+    end
+
+    def input_path_with_prefix
+      Webdav::Segmentation.input_path(@computation, 'tmp-')
     end
 
     def status_dir_path
