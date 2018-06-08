@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202100140) do
+ActiveRecord::Schema.define(version: 20180608112509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,14 @@ ActiveRecord::Schema.define(version: 20180202100140) do
     t.boolean "default", default: false, null: false
   end
 
+  create_table "ips", force: :cascade do |t|
+    t.string "address"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_ips_on_user_id"
+  end
+
   create_table "patients", id: :serial, force: :cascade do |t|
     t.string "case_number", null: false
     t.integer "procedure_status", default: 0, null: false
@@ -161,14 +169,13 @@ ActiveRecord::Schema.define(version: 20180202100140) do
     t.index ["uri_aliases"], name: "index_services_on_uri_aliases", using: :gin
   end
 
-  create_table "audits", force: :cascade do |t|
-    t.string "ip"
-    t.string "user_agent"
+  create_table "user_agents", force: :cascade do |t|
+    t.string "name"
     t.string "accept_language"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_audits_on_user_id"
+    t.index ["user_id"], name: "index_user_agents_on_user_id"
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|

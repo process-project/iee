@@ -26,7 +26,8 @@ class User < ApplicationRecord
   has_many :computations, dependent: :destroy
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
-  has_many :audits, dependent: :destroy
+  has_many :ips, dependent: :destroy
+  has_many :user_agents, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
