@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_audit do
+  factory :audit do
     ip { Faker::Internet.public_ip_v4_address }
     user_agent { Faker::Internet.user_agent }
     accept_language do

@@ -58,9 +58,9 @@ RSpec.describe Notifier do
 
   describe 'audit failed' do
     it 'sends email to account owner' do
-      user_audit = build(:user_audit)
+      audit = build(:audit)
 
-      mail = described_class.audit_failed(user_audit).deliver_now
+      mail = described_class.audit_failed(audit).deliver_now
 
       expect(mail.body.encoded).to match('detected unusual authentication')
     end

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe UserAudit, type: :model do
-  subject { create(:user_audit) }
+RSpec.describe Audit, type: :model do
+  subject { create(:audit) }
 
   it { should belong_to(:user) }
   it { should validate_presence_of(:ip) }
@@ -22,6 +22,6 @@ RSpec.describe UserAudit, type: :model do
   end
 
   it 'CC is nil for unknown IP (like local)' do
-    expect(create(:user_audit, ip: '127.0.0.1').ip_cc).to be_nil
+    expect(create(:audit, ip: '127.0.0.1').ip_cc).to be_nil
   end
 end

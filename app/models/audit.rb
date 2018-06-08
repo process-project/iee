@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserAudit < ApplicationRecord
+class Audit < ApplicationRecord
   belongs_to :user
 
   validates :ip, presence: true

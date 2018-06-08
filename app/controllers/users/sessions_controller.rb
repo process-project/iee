@@ -7,9 +7,9 @@ module Users
 
       u = user
 
-      UserAudit.create(ip: request.remote_ip, user_agent: request.user_agent,
-                       accept_language: request.env['HTTP_ACCEPT_LANGUAGE'],
-                       user: u)
+      Audit.create(ip: request.remote_ip, user_agent: request.user_agent,
+                   accept_language: request.env['HTTP_ACCEPT_LANGUAGE'],
+                   user: u)
 
       UserAuditor.new(u).call
     end

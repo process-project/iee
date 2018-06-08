@@ -1,6 +1,6 @@
-class CreateUserAudits < ActiveRecord::Migration[5.1]
+class CreateAudits < ActiveRecord::Migration[5.1]
   def change
-    create_table :user_audits do |t|
+    create_table :audits do |t|
       t.string :ip
       t.string :user_agent
       t.string :accept_language

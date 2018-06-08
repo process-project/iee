@@ -161,14 +161,14 @@ ActiveRecord::Schema.define(version: 20180202100140) do
     t.index ["uri_aliases"], name: "index_services_on_uri_aliases", using: :gin
   end
 
-  create_table "user_audits", force: :cascade do |t|
+  create_table "audits", force: :cascade do |t|
     t.string "ip"
     t.string "user_agent"
     t.string "accept_language"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_user_audits_on_user_id"
+    t.index ["user_id"], name: "index_audits_on_user_id"
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|
