@@ -6,6 +6,66 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## 0.8.0
+
+### Added
+- Reload pipeline step status on patient view (@mkasztelnik)
+- Reload segmentation status after it is started (@mkasztelnik)
+- Proper handling for rimrock computation start failure (@mkasztelnik)
+- Execution time updated each second for active computation (@mkasztelnik)
+- Pipeline specific input (@mkasztelnik)
+- Patient clinical details now includes patient's state (preop/postop) (@Nuanda)
+- New statistics about the current state of EurValve's prospective cohort (@Nuanda)
+
+### Changed
+- Labels for pipelines list view improved (@mkasztelnik)
+- Segmentation temp file is removed from local disc after it is transferred into
+  segmentation Philips service (@mkasztelnik)
+- Use stages instead of types in Gitlab CI yml (@mkasztelnik)
+- Upgrade to rubocop 0.51.0 (@mkasztelnik)
+- Use addressable gem to parse URLs (@mkasztelnik)
+- Upgraded rails into 5.1.4 and other gems into latest supported versions (@mkasztelnik)
+- Change `factory_girl` into `factory_bot` (@mkasztelnik)
+- Use preconfigured docker image for builds (@mkasztelnik)
+- Extracted DataSets::Client from Patients::Details for reusability (@Nuanda)
+- Lock redis version into 3.x (@mkasztelnik)
+- New patient case widget to reflect new developments in pipelining (@Nuanda)
+- Flow model class which stores information about pipeline flow steps (@mkasztelnik)
+- Switch from PhantomJS into Chrome headless (@mkasztelnik)
+- Add escaping in the documentation pdp curl example (@mkasztelnik)
+- Unique while fetching resources in pdp (@mkasztelnik)
+- Change comparison `show` method to `index` (@mkasztelnik)
+- Pipeline steps definition refactored and generalized (@mkasztelnik)
+- Change defaults for data sets (@mkasztelnik)
+- Change the default root path to patients index (@Nuanda)
+- Renamed `not_used_flow` into `unused_steps` (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Remove n+1 query when updating computation status (@mkasztelnik)
+- Sidebar's hamburger button is operational properly toggling the left menu (@dharezlak)
+- Fix patient web socket unsubscribe (@mkasztelnik)
+- Patient and pipeline creation silent failures (@jmeizner)
+
+### Security
+
 ## 0.9.0
 
 ### Added
