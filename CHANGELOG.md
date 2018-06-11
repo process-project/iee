@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## 0.9.0
 
 ### Added
 - Added AVD/MVD ratio to patients' statistics (@Nuanda)
