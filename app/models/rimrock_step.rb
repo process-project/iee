@@ -17,4 +17,8 @@ class RimrockStep < Step
   def runner_for(computation, options = {})
     PipelineSteps::Rimrock::Runner.new(computation, @repository, @file, options)
   end
+
+  def aborter_for(computation, options = {})
+    Rimrock::Abort.new(computation, PipelineUpdater, options)
+  end
 end

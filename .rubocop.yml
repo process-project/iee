@@ -28,6 +28,10 @@ Metrics/BlockLength:
     - "**/factories/**"
     - "**/tasks/**"
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"
+
 Layout/DotPosition:
   Description: Checks the position of the dot in multi-line method calls.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#consistent-multi-line-chains

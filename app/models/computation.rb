@@ -52,6 +52,10 @@ class Computation < ApplicationRecord
     runner.call
   end
 
+  def abort!
+    aborter.call
+  end
+
   def runnable?
     step.input_present_for?(pipeline)
   end
@@ -80,6 +84,10 @@ class Computation < ApplicationRecord
 
   def runner
     @runner ||= step.runner_for(self)
+  end
+
+  def aborter
+    @aborter ||= step.aborter_for(self)
   end
 
   def step
