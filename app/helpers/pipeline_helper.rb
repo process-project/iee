@@ -13,7 +13,7 @@ module PipelineHelper
 
   def pipeline_owner(pipeline)
     content_tag(:div,
-                I18n.t('patients.pipelines.show.owner', owner: pipeline.user.name),
+                I18n.t('patients.pipelines.show.owner', owner: pipeline.owner_name),
                 class: 'label label-primary owner-label')
   end
 

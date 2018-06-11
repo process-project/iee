@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Instruction how to remove concrete IP from rack-attack fail2ban list (@mkasztelnik)
 - User cannot be removed or blocked when she/he owns exclusively group (@mkasztelnik)
 - Button to minimize left menu is visible always (@mkasztelnik)
+- Dedicated information about deleted pipeline owner (@mkasztelnik)
 
 ### Changed
 - Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
