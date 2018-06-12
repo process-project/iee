@@ -3,13 +3,13 @@
 class Ip < ApplicationRecord
   belongs_to :user
 
-  validates :name, presence: true
+  validates :address, presence: true
 
-  def ip_cc
+  def cc
     db = MaxMindDB.new(Rails.application.config_for('eurvalve')['maxmind']['db'])
 
     unless db.nil?
-      l = db.lookup ip
+      l = db.lookup address
       return l.country.iso_code if l.found?
     end
 

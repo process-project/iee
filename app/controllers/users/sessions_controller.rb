@@ -5,13 +5,15 @@ module Users
     def create
       super
 
-      u = user
+      # FIXME: Move to service -> split Audit -> Ip + UA
 
-      Audit.create(ip: request.remote_ip, user_agent: request.user_agent,
-                   accept_language: request.env['HTTP_ACCEPT_LANGUAGE'],
-                   user: u)
-
-      UserAuditor.new(u).call
+      # u = user
+      #
+      # Audit.create(ip: request.remote_ip, user_agent: request.user_agent,
+      #              accept_language: request.env['HTTP_ACCEPT_LANGUAGE'],
+      #              user: u)
+      #
+      # UserAuditor.new(u).call
     end
 
     private

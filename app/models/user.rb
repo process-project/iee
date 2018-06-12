@@ -120,7 +120,7 @@ class User < ApplicationRecord
     all_groups.map(&:name)
   end
 
-  def last_audit
-    user_audits.last
+  def last_ip
+    ips.last
   end
 end

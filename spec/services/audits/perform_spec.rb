@@ -2,33 +2,42 @@
 
 require 'rails_helper'
 
-describe UserAuditor do
+describe Audits::Perform do
   let(:user) { create(:user) }
 
   subject { described_class.new(user) }
 
-  it 'do not notify when nothing changes' do
-    a1 = create(:user_audit, user: user)
+  it 'do not notify when ip is the same' do
+    ip1 = create(:ip, user: user)
 
-    create(:user_audit,
+    create(:ip,
            user: user,
-           ip: a1.ip,
-           user_agent: a1.user_agent,
-           accept_language: a1.accept_language)
+           address: ip1.address)
 
     expect { subject.call }.
      to_not(change { ActionMailer::Base.deliveries.count })
   end
 
-  it 'notify when only browser vendor changes' do
-    a1 = create(:user_audit,
-                user: user,
-                user_agent: Faker::Internet.user_agent(:chrome))
+  it 'do not notify when user agent is the same' do
+    a1 = create(:user_agent, user: user)
 
-    create(:user_audit,
+    create(:user_agent,
            user: user,
-           ip: a1.ip,
-           user_agent: Faker::Internet.user_agent(:firefox),
+           name: a1.name,
+           accept_language: a1.accept_language)
+
+    expect { subject.call }.
+        to_not(change { ActionMailer::Base.deliveries.count })
+  end
+
+  it 'notify when only browser vendor changes' do
+    a1 = create(:user_agent,
+                user: user,
+                name: Faker::Internet.user_agent(:chrome))
+
+    create(:user_agent,
+           user: user,
+           name: Faker::Internet.user_agent(:firefox),
            accept_language: a1.accept_language)
 
     expect { subject.call }.
@@ -36,14 +45,13 @@ describe UserAuditor do
   end
 
   it 'do not notify when only browser version changes' do
-    a1 = create(:user_audit,
+    a1 = create(:user_agent,
                 user: user,
-                user_agent: Faker::Internet.user_agent(:chrome))
+                name: Faker::Internet.user_agent(:chrome))
 
-    create(:user_audit,
+    create(:user_agent,
            user: user,
-           ip: a1.ip,
-           user_agent: Faker::Internet.user_agent(:chrome),
+           name: Faker::Internet.user_agent(:chrome),
            accept_language: a1.accept_language)
 
     expect { subject.call }.
@@ -51,13 +59,11 @@ describe UserAuditor do
   end
 
   it 'do not notify when only ip changes' do
-    a1 = create(:user_audit, user: user)
+    create(:ip, user: user)
 
-    create(:user_audit,
+    create(:ip,
            user: user,
-           ip: Faker::Internet.public_ip_v4_address,
-           user_agent: a1.user_agent,
-           accept_language: a1.accept_language)
+           address: Faker::Internet.public_ip_v4_address)
 
     expect { subject.call }.
         to_not(change { ActionMailer::Base.deliveries.count })
@@ -65,16 +71,14 @@ describe UserAuditor do
 
   it 'do not notify when only ip\'s country changes' do
     # Cyfronet (PL)
-    a1 = create(:user_audit,
-                user: user,
-                ip: '149.156.11.38')
+    create(:ip,
+           user: user,
+           address: '149.156.11.38')
 
     # Google (US)
-    create(:user_audit,
+    create(:ip,
            user: user,
-           ip: '8.8.8.8',
-           user_agent: a1.user_agent,
-           accept_language: a1.accept_language)
+           address: '8.8.8.8')
 
     expect { subject.call }.
         to_not(change { ActionMailer::Base.deliveries.count })
@@ -90,16 +94,22 @@ describe UserAuditor do
            ' Chrome/41.0.2229.0 Safari/537.36'
 
     # Cyfronet (PL)
-    a1 = create(:user_audit,
+    create(:ip,
+          user: user,
+          ip: '149.156.11.38')
+
+    a1 = create(:user_agent,
                 user: user,
-                user_agent: b_v1,
-                ip: '149.156.11.38')
+                name: b_v1)
 
     # Google (US)
-    create(:user_audit,
+    create(:ip,
            user: user,
-           user_agent: b_v2,
-           ip: '8.8.8.8',
+           ip: '8.8.8.8')
+
+    create(:user_agent,
+           user: user,
+           name: b_v2,
            accept_language: a1.accept_language)
 
     expect { subject.call }.
@@ -118,15 +128,14 @@ describe UserAuditor do
     l1 = 'pl-PL,pl;q=0.5'
     l2 = 'en-US,en;q=0.5'
 
-    a1 = create(:user_audit,
+    a1 = create(:user_agent,
                 user: user,
-                user_agent: b_v1,
+                name: b_v1,
                 accept_language: l1)
 
-    create(:user_audit,
+    create(:user_agent,
            user: user,
-           ip: a1.ip,
-           user_agent: b_v2,
+           name: b_v2,
            accept_language: l2)
 
     expect { subject.call }.
@@ -137,14 +146,13 @@ describe UserAuditor do
     l1 = 'pl-PL,pl;q=0.5'
     l2 = 'en-US,en;q=0.5'
 
-    a1 = create(:user_audit,
+    a1 = create(:user_agent,
                 user: user,
                 accept_language: l1)
 
-    create(:user_audit,
+    create(:user_agent,
            user: user,
-           ip: a1.ip,
-           user_agent: a1.user_agent,
+           name: a1.name,
            accept_language: l2)
 
     expect { subject.call }.

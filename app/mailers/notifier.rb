@@ -15,10 +15,10 @@ class Notifier < ApplicationMailer
     mail(to: user.email, subject: I18n.t('emails.account_approved.subject'))
   end
 
-  def audit_failed(user_audit)
-    @user_audit = user_audit
+  def audit_failed(ip)
+    @ip = ip
 
-    mail(to: user_audit.user.email, subject: I18n.t('emails.audit_failed.subject'))
+    mail(to: ip.user.email, subject: I18n.t('emails.audit_failed.subject'))
   end
 
   def proxy_expired(user)

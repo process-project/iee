@@ -3,10 +3,16 @@
 module Audits
   class Perform
 
-    def call
-      fetch_audit_data
+    def initialize(user)
+      @user = user
+    end
 
-      Notifier.audit_failed(user.last_audit).deliver_later unless ok?
+    def call
+      # fetch_audit_data
+      #
+      # Notifier.audit_failed(user.last_ip).deliver_later unless ok?
+
+
     end
 
     private
