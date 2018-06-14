@@ -46,7 +46,7 @@ describe Pipelines::StartRunnable do
       it 'does not start not runnable pipeline step' do
         create(:scripted_computation,
                status: 'created', pipeline_step: '0d_models',
-               pipeline: pipeline)
+               pipeline: pipeline, deployment: 'cluster')
 
         runner = double(runnable?: false)
 

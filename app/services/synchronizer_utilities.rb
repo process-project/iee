@@ -34,7 +34,7 @@ module SynchronizerUtilities
 
   def parse_response(remote_names)
     sync_dir(remote_names, @patient.inputs_dir)
-    @patient.pipelines.each do |pipeline|
+    @patient.pipelines.includes(:patient).each do |pipeline|
       sync_dir(remote_names, pipeline.inputs_dir, input_pipeline: pipeline)
       sync_dir(remote_names, pipeline.outputs_dir, output_pipeline: pipeline)
     end

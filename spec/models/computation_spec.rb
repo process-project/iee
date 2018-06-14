@@ -54,7 +54,7 @@ RSpec.describe Computation, type: :model do
       expect(Computation.submitted_rimrock.pluck(:id)).
         to contain_exactly(queued_r.id, running_r.id)
       expect(Computation.submitted_cloud.pluck(:id)).
-          to contain_exactly(queued_c.id, running_c.id)
+        to contain_exactly(queued_c.id, running_c.id)
     end
   end
 

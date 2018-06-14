@@ -48,6 +48,8 @@ RSpec.describe PipelineSteps::Scripted::CloudRunner do
 
     it 'creates computation with script returned by generator' do
       computation.assign_attributes(revision: 'revision')
+      expect_any_instance_of(Cloud::Client).to receive(:register_initial_config)
+      expect_any_instance_of(Cloud::Client).to receive(:spawn_appliance)
 
       subject.call
 

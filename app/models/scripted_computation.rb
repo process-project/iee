@@ -7,9 +7,7 @@ class ScriptedComputation < Computation
   validates :deployment, presence: true, unless: :created?
 
   def runnable?
-    step.input_present_for?(pipeline) &&
-      tag_or_branch.present? &&
-      deployment.present?
+    step.input_present_for?(pipeline)
   end
 
   private

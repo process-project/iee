@@ -80,7 +80,10 @@ module ComputationsHelper
   def need_configuration?(computation)
     computation.scripted? &&
       computation.pipeline.automatic? &&
-      computation.tag_or_branch.blank?
+      (
+        computation.tag_or_branch.blank? ||
+        computation.deployment.blank?
+      )
   end
 
   def computation_tooltip_text(computation)

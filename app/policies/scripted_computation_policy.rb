@@ -15,7 +15,7 @@ class ScriptedComputationPolicy < ApplicationPolicy
   end
 
   def need_proxy?
-    !(record.finished? || Proxy.new(user)&.valid?)
+    !(record.finished? || record.cloud? || Proxy.new(user)&.valid?)
   end
 
   private

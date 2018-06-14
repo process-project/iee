@@ -11,6 +11,8 @@ class Computation < ApplicationRecord
             inclusion: { in: %w[cluster cloud service] },
             allow_blank: true
 
+  before_save :default_values
+
   # Disabled until we are able to deal with the steps which are there
   # but are not used in any pipeline right now
   # validates :pipeline_step,
@@ -55,6 +57,10 @@ class Computation < ApplicationRecord
     deployment == 'cloud'
   end
 
+  def webdav?
+    type == 'WebdavComputation'
+  end
+
   def self.flow_ordered
     where(nil).sort_by(&:flow_index)
   end
@@ -92,6 +98,10 @@ class Computation < ApplicationRecord
   end
 
   private
+
+  def default_values
+    self.deployment ||= 'cluster'
+  end
 
   def runner
     @runner ||= step.runner_for(self)
