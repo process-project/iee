@@ -27,7 +27,7 @@ test:
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rake db:migrate RAILS_ENV=test
-  - bundle exec rspec
+  - bundle exec rspec --order=random
 
 integration:
   stage: test
