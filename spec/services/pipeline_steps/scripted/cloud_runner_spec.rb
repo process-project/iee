@@ -41,19 +41,29 @@ RSpec.describe PipelineSteps::Scripted::CloudRunner do
     end
 
     it 'submits a cloud request' do
-      expect_any_instance_of(Cloud::Client).to receive(:register_initial_config)
-      expect_any_instance_of(Cloud::Client).to receive(:spawn_appliance)
+      client = client_double
+      expect(client).to receive(:register_initial_config)
+      expect(client).to receive(:spawn_appliance_set)
+      expect(client).to receive(:spawn_appliance)
       subject.call
     end
 
     it 'creates computation with script returned by generator' do
+      client_double
       computation.assign_attributes(revision: 'revision')
-      expect_any_instance_of(Cloud::Client).to receive(:register_initial_config)
-      expect_any_instance_of(Cloud::Client).to receive(:spawn_appliance)
-
       subject.call
-
       expect(computation.script).to include 'script payload'
     end
+  end
+
+  private
+
+  def client_double
+    client = double(Cloud::Client)
+    allow(Cloud::Client).to receive(:new).and_return(client)
+    allow(client).to receive_messages(
+      register_initial_config: 1, spawn_appliance_set: 2, spawn_appliance: 3
+    )
+    client
   end
 end
