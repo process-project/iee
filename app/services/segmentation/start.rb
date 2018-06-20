@@ -19,7 +19,7 @@ module Segmentation
 
     def download_input
       @local_path = download_service.
-                    call { |f| "#{mode}_#{SecureRandom.uuid}_#{f}" }
+                    call { |f| "#{run_mode}_#{SecureRandom.uuid}_#{f}" }
     end
 
     def download_service
@@ -27,8 +27,8 @@ module Segmentation
                                @computation.input_path)
     end
 
-    def mode
-      Rails.application.config_for('eurvalve')['segmentation']['mode']
+    def run_mode
+      @computation.run_mode
     end
 
     def update_computation

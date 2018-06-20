@@ -13,7 +13,6 @@ defaults: &defaults
     ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
     user: <%= ENV['SEGMENTATION_USER'] %>
     password: <%= ENV['SEGMENTATION_PASSWORD'] %>
-    mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
   git_repos:
     blood_flow_simulation: <%= ENV['PIPELINE_R_BFS'] || 'eurvalve/blood-flow' %>
     heart_model_calculation: <%= ENV['PIPELINE_R_HMS'] || 'eurvalve/0dmodel' %>

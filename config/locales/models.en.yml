@@ -35,6 +35,7 @@ en:
     started_at: Start time
     revision: Revision
     tag_or_branch: Model version
+    run_mode: Run mode
     execution_time: Execution time
     outputs: Outputs
     stdout_path: stdout

@@ -10,7 +10,7 @@ module PipelineSteps
       end
 
       def call
-        RimrockComputation.create(
+        RimrockComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           tag_or_branch: @tag_or_branch,
