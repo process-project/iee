@@ -4,6 +4,7 @@ module AuthenticationHelper
   def plgrid_sign_in_as(user)
     stub_oauth(
       :open_id,
+      name: "#{user.first_name} #{user.last_name}",
       nickname: user.plgrid_login,
       email: user.email
     )

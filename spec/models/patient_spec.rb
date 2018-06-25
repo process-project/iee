@@ -46,4 +46,16 @@ RSpec.describe Patient do
       expect(subject.not_started?).to be_truthy
     end
   end
+
+  describe '#status' do
+    it 'returns last pipeline status' do
+      patient = create(:patient)
+      p1 = create(:pipeline, patient: patient)
+      create(:computation, status: :error, pipeline: p1)
+      p2 = create(:pipeline, patient: patient)
+      create(:computation, status: :finished, pipeline: p2)
+
+      expect(patient.status).to eq :success
+    end
+  end
 end

@@ -38,20 +38,35 @@ module Segmentation
     end
 
     def upload_input
-      Webdav::UploadFile.new(Webdav::OwnCloud.new, @local_path,
-                             Webdav::OwnCloud.input_path(@computation)).call
+      Webdav::UploadFile.new(client, @local_path, input_path_with_prefix).call
+      Webdav::MoveFile.new(client, input_path_with_prefix, input_path).call
+    end
+
+    def client
+      @client ||= Webdav::Segmentation.new
+    end
+
+    def input_path
+      Webdav::Segmentation.input_path(@computation)
+    end
+
+    def input_path_with_prefix
+      Webdav::Segmentation.input_path(@computation, 'tmp-')
     end
 
     def status_dir_path
-      "#{own_cloud['ui_url']}?dir=/status/#{local_path_dir_name}"
+      # TODO: reintegrate stdout_path (requires FileStore support)
+      # "#{segmentation['ui_url']}?dir=/status/#{local_path_dir_name}"
+
+      nil
     end
 
     def local_path_dir_name
       File.basename(@local_path, File.extname(@local_path))
     end
 
-    def own_cloud
-      @own_cloud ||= Rails.application.config_for('eurvalve')['owncloud']
+    def segmentation
+      @segmentation ||= Rails.application.config_for('eurvalve')['segmentation']
     end
 
     def cleanup

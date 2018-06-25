@@ -4,11 +4,16 @@ class PatientsController < ApplicationController
   before_action :set_patients, only: [:index]
   before_action :find_and_authorize, only: [:show, :destroy]
 
-  def index; end
+  def index
+    if request.xhr?
+      @stats = Patients::Statistics.new(@patients, current_user).call
+      render json: @stats, layout: false
+    end
+  end
 
   def show
     @pipelines = @patient.pipelines.includes(:computations, :patient, :user).
-                 order(:iid).order('computations.created_at')
+                 order('computations.created_at')
 
     if request.xhr?
       @details = Patients::Details.new(@patient.case_number, current_user).call
@@ -51,7 +56,7 @@ class PatientsController < ApplicationController
   private
 
   def set_patients
-    @patients = policy_scope(Patient).includes(:pipelines).all
+    @patients = policy_scope(Patient).includes(pipelines: :computations).all
   end
 
   def find_and_authorize

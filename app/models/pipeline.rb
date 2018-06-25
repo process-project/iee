@@ -27,7 +27,7 @@ class Pipeline < ApplicationRecord
   validates :flow, inclusion: { in: Flow.types.map(&:to_s) }
 
   scope :automatic, -> { where(mode: :automatic) }
-  scope :latest, -> { order(created_at: :desc).limit(3) }
+  scope :latest, ->(nr = 3) { reorder(created_at: :desc).limit(nr) }
 
   def steps
     Flow.steps(flow)
@@ -67,7 +67,27 @@ class Pipeline < ApplicationRecord
       first
   end
 
+  def status
+    @status ||= calculate_status
+  end
+
+  def owner_name
+    user&.name || '(deleted user)'
+  end
+
   private
+
+  def calculate_status
+    if computations.all?(&:success?)
+      :success
+    elsif computations.any?(&:error?)
+      :error
+    elsif computations.any?(&:active?)
+      :running
+    else
+      :waiting
+    end
+  end
 
   def set_iid
     self.iid = patient.pipelines.maximum(:iid).to_i + 1 if iid.blank?

@@ -13,8 +13,8 @@ defaults: &defaults
     atmosphere_url: <%= ENV['ATMOSPHERE_BASE_URL'] || 'https://vph.cyfronet.pl' %>
     cloud_facade_path: '/api/v1/'
   data_sets:
-    url: <%= ENV['DATA_SETS_BASE_URL'] || 'https://eurvalve.shef.ac.uk' %>
-    site_path: <%= ENV['DATA_SETS_SITE_PATH'] || '/eurvalve/WebQuery/site.html' %>
+    url: <%= ENV['DATA_SETS_BASE_URL'] || 'https://eurvalve.sheffield.ac.uk' %>
+    site_path: <%= ENV['DATA_SETS_SITE_PATH'] || '/WebQuery/site.html' %>
     api_doc_path: '/eurvalve/WebQuery/api.png'
     api_url_path: '/WebQuery/api/JsonQuery/'
   clock:

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get 'resources/index'
 
-  root to: 'home#index'
+  root to: redirect(path: '/patients')
 
   devise_for :users,
              controllers: {

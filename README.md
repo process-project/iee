@@ -97,16 +97,16 @@ you can set the following ENV variables:
     supercomputer
   * `PIPELINE_SSH_KEY` - path to ssh key which allows to clone computations
     gitlab repositories (such as Heart model or Blood flow)
-  * `OWNCLOUD_URL` - segmentation own cloud service url
-  * `OWNCLOUD_UI_URL` - segmentation own cloud UI url
-  * `OWNCLOUD_USER` - segmentation own cloud service username
-  * `OWNCLOUD_PASSWORD` - segmentation own cloud service password
+  * `SEGMENTATION_URL` - segmentation own cloud service url
+  * `SEGMENTATION_UI_URL` - segmentation own cloud UI url
+  * `SEGMENTATION_USER` - segmentation own cloud service username
+  * `SEGMENTATION_PASSWORD` - segmentation own cloud service password
   * `JWT_KEY_PATH` (optional) - path to key used to generate user JWT tokens
   * `REDIS_URL` (optional) - redis database url
   * `WEB_DAV_BASE_URL` (optional) - FileStore web dav root URL
   * `ATMOSPHERE_BASE_URL` (optional) - Atmosphere root URL
   * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
-  * `GITLAB_HOST' - Gitlab host (without https, e.g. gitlab.com)
+  * `GITLAB_HOST` - Gitlab host (without https, e.g. gitlab.com)
   * `GITLAB_API_PRIVATE_TOKEN` - Gitlab access token used to fetch Rimrock
   * `CLOCK_UPDATE` - Computations update period (in seconds)
     Computations slurm run template

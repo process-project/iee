@@ -27,7 +27,7 @@ RSpec.describe 'Users management' do
     it 'cannot block himself' do
       expect { put admin_user_path(supervisor, state: :blocked) }.
         to_not(change { supervisor.reload.state })
-      expect(flash[:alert]).to eq(I18n.t('admin.users.update.me'))
+      expect(flash[:alert]).to eq(I18n.t('admin.users.update.self'))
     end
 
     it 'cannot remove user' do
@@ -55,7 +55,7 @@ RSpec.describe 'Users management' do
     it 'cannot remove himself' do
       expect { delete admin_user_path(admin) }.
         to_not(change { User.count })
-      expect(flash[:alert]).to eq(I18n.t('admin.users.destroy.me'))
+      expect(flash[:alert]).to eq(I18n.t('admin.users.destroy.self'))
     end
   end
 

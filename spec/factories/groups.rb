@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :group do
-    name { Faker::Name.unique.name }
+    sequence(:name) { |n| "group_#{n}" }
 
     before(:create) do |group, _evaluator|
       unless group.user_groups.any?(&:owner)

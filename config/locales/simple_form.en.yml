@@ -85,7 +85,7 @@ en:
           prosthetic_angle_tilt: Prosthetic angle/tilt
           avr_long_term_post_op: AVR long term post-op
           mvr_from_scan_rom: MVR from scan (ROM)
-          not_used_steps: Additional computations
+          unused_steps: Additional computations
     # Examples
     # labels:
     #   defaults:

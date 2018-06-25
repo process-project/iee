@@ -107,4 +107,72 @@ RSpec.describe Pipeline, type: :model do
       expect(pipeline.data_file(:image).name).to eq('patient file')
     end
   end
+
+  context 'pipeline status' do
+    it 'is success when all steps are completed with success' do
+      pipeline = create(:pipeline)
+      create_list(:computation, 2,
+                  status: :finished, pipeline: pipeline,
+                  pipeline_step: 'ageing_model_x2')
+
+      expect(pipeline.status).to eq :success
+    end
+
+    it 'is error when any step finished with error' do
+      pipeline = create(:pipeline)
+      create(:computation,
+             status: :finished, pipeline: pipeline,
+             pipeline_step: 'ageing_model_x2')
+      create(:computation,
+             status: :error, pipeline: pipeline,
+             pipeline_step: 'ageing_model_x2')
+
+      expect(pipeline.status).to eq :error
+    end
+
+    it 'is running when any step is running' do
+      pipeline = create(:pipeline)
+      create(:computation,
+             status: :finished, pipeline: pipeline,
+             pipeline_step: 'ageing_model_x2')
+
+      running = create(:computation,
+                       status: :running, pipeline: pipeline,
+                       pipeline_step: 'ageing_model_x2')
+      expect(pipeline.status).to eq :running
+
+      running.update_attributes(status: :new)
+      expect(pipeline.status).to eq :running
+
+      running.update_attributes(status: :queued)
+      expect(pipeline.status).to eq :running
+    end
+
+    it 'is waiting when is not running and any step is waiting for input' do
+      pipeline = create(:pipeline, flow: :avr_surgical_preparation)
+      create(:computation,
+             status: :created, pipeline: pipeline,
+             pipeline_step: 'rom')
+
+      expect(pipeline.status).to eq :waiting
+    end
+  end
+
+  context 'pipeline creator' do
+    it 'returns creator name' do
+      user = create(:user, first_name: 'John', last_name: 'Rambo')
+      pipeline = create(:pipeline, user: user)
+
+      expect(pipeline.owner_name).to eq('John Rambo')
+    end
+
+    it 'returns information about deleted user when owner is nil' do
+      user = create(:user, first_name: 'John', last_name: 'Rambo')
+      pipeline = create(:pipeline, user: user)
+      user.destroy!
+      pipeline.reload
+
+      expect(pipeline.owner_name).to eq('(deleted user)')
+    end
+  end
 end

@@ -1,10 +1,10 @@
-%tr
+%tr.pipeline{ class: pipeline.status }
   %th= pipeline.iid
   %th
     = link_to [pipeline.patient, pipeline], data: { turbolinks: false } do
       = pipeline_title(pipeline)
   %th
-    = pipeline.user.name
+    = pipeline.owner_name
   %th
     - pipeline.computations.each do |c|
       = link_to patient_pipeline_computation_path(pipeline.patient, pipeline, c),

@@ -5,7 +5,7 @@ module Segmentation
     def initialize(computation, updater, options = {})
       @computation = computation
       @updater = updater
-      @own_cloud = options.fetch(:own_cloud) { Webdav::OwnCloud.new }
+      @segmentation = options.fetch(:segmentation) { Webdav::Segmentation.new }
       @file_store = options.fetch(:file_store) do
         Webdav::FileStore.new(computation.user)
       end
@@ -27,8 +27,8 @@ module Segmentation
     end
 
     def download_service
-      Webdav::DownloadFile.new(@own_cloud,
-                               Webdav::OwnCloud.output_path(@computation))
+      Webdav::DownloadFile.new(@segmentation,
+                               Webdav::Segmentation.output_path(@computation))
     end
 
     def save_output
