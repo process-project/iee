@@ -123,4 +123,8 @@ class User < ApplicationRecord
   def last_ip
     ips.last
   end
+
+  def last_agent
+    user_agents.last
+  end
 end

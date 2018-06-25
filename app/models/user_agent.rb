@@ -3,5 +3,5 @@
 class UserAgent < ApplicationRecord
   belongs_to :user
 
-  #FIXME: validate at least name
+  validates :name, presence: true
 end

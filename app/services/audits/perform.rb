@@ -8,79 +8,33 @@ module Audits
     end
 
     def call
-      # fetch_audit_data
-      #
-      # Notifier.audit_failed(user.last_ip).deliver_later unless ok?
+      puts "[DEBUG][Audit::Perform] call() for #{@user.email}"
 
-
+      Notifier.audit_failed(@user.last_ip).deliver_later unless ok?
     end
 
     private
 
-    def fetch_audit_data
-      @audits_count = @user.user_audits.count
-      @a_current = @user.user_audits[@audits_count - 1]
-      @b_current = Browser.new(@a_current.user_agent, accept_language: @a_current.accept_language)
-      @a_previous = @user.user_audits[@audits_count - 2]
-      @b_previous = Browser.new(@a_previous.user_agent, accept_language: @a_previous.accept_language)
+    def ok?
+      browser_ok? && ip_ok?
     end
 
-    def ok?
-      return true if @audits_count < 2
+    def browser_ok?
+      return true if @user.user_agents.count < 2
 
-      score = 0
-      score += browser_score
-      score += language_score
-      score += ip_score
+      @user.user_agents.where(name: @user.last_agent.name).count > 1
+    end
 
-      # Score: 5 -> e.g. browser change or IPs country and browser (minor) version changed
-      return true if score < 5
+    def ip_ok?
+      return true if @user.ips.count < 2
+
+      return true if @user.ips.where(address: @user.last_ip.address).count > 1
+
+      @user.ips.each do |ip|
+        return true if ip.address != @user.last_ip.address and ip.cc == @user.last_ip.cc
+      end
 
       false
-    end
-
-    def browser_score
-      score = 0
-
-      # Different browser - smelly ;)...
-      score += 10 if @b_current.name != @b_previous.name
-      # Different major version - looks OK - but bump score
-      score += 2 if @b_current.version != @b_previous.version
-      # Different minor version - minimum impact (common)
-      score += 1 if @b_current.full_version != @b_previous.full_version
-
-      score
-    end
-
-    def language_score
-      score = 0
-
-      al_current = @b_current.accept_language.first
-      al_previous = @b_previous.accept_language.first
-
-      unless al_current.nil? || al_previous.nil?
-        # Different browser language - not so common
-        score += 3 if al_current.region != al_previous.region
-      end
-
-      score
-    end
-
-    def ip_score
-      score = 0
-
-      ip_cc_current = @a_current.ip_cc
-      ip_cc_previous = @a_previous.ip_cc
-
-      unless ip_cc_current.nil? || ip_cc_previous.nil?
-        # IP from another country - travel or fraud
-        score += 3 if ip_cc_current != ip_cc_previous
-      end
-
-      # IP change - very common (dynamic IPs) - low impact
-      score += 1 if @a_current.ip != @a_previous.ip
-
-      score
     end
   end
 end

@@ -8,6 +8,7 @@ describe Audits::Perform do
   subject { described_class.new(user) }
 
   it 'do not notify when ip is the same' do
+    create(:user_agent, user: user)
     ip1 = create(:ip, user: user)
 
     create(:ip,
@@ -19,6 +20,7 @@ describe Audits::Perform do
   end
 
   it 'do not notify when user agent is the same' do
+    create(:ip, user: user)
     a1 = create(:user_agent, user: user)
 
     create(:user_agent,
@@ -30,7 +32,8 @@ describe Audits::Perform do
         to_not(change { ActionMailer::Base.deliveries.count })
   end
 
-  it 'notify when only browser vendor changes' do
+  it 'notify when browser changes' do
+    create(:ip, user: user)
     a1 = create(:user_agent,
                 user: user,
                 name: Faker::Internet.user_agent(:chrome))
@@ -44,32 +47,44 @@ describe Audits::Perform do
      to change { ActionMailer::Base.deliveries.count }.by(1)
   end
 
-  it 'do not notify when only browser version changes' do
+  it 'do not notify when browser was previously used' do
+    create(:ip, user: user)
     a1 = create(:user_agent,
                 user: user,
                 name: Faker::Internet.user_agent(:chrome))
 
     create(:user_agent,
            user: user,
-           name: Faker::Internet.user_agent(:chrome),
+           name: Faker::Internet.user_agent(:firefox),
+           accept_language: a1.accept_language)
+
+    create(:user_agent,
+           user: user,
+           name: a1.name,
            accept_language: a1.accept_language)
 
     expect { subject.call }.
         to_not(change { ActionMailer::Base.deliveries.count })
   end
 
-  it 'do not notify when only ip changes' do
-    create(:ip, user: user)
-
+  it 'do not notify when ip\'s country is the same' do
+    create(:user_agent, user: user)
+    # Cyfronet (PL)
     create(:ip,
            user: user,
-           address: Faker::Internet.public_ip_v4_address)
+           address: '149.156.11.38')
+
+    # Cyfronet - other IP, same country as .38 (PL)
+    create(:ip,
+           user: user,
+           address: '149.156.11.37')
 
     expect { subject.call }.
         to_not(change { ActionMailer::Base.deliveries.count })
   end
 
-  it 'do not notify when only ip\'s country changes' do
+  it 'notify when ip\'s country changes' do
+    create(:user_agent, user: user)
     # Cyfronet (PL)
     create(:ip,
            user: user,
@@ -81,79 +96,25 @@ describe Audits::Perform do
            address: '8.8.8.8')
 
     expect { subject.call }.
-        to_not(change { ActionMailer::Base.deliveries.count })
+        to change { ActionMailer::Base.deliveries.count }.by(1)
   end
 
-  it 'notify when ip\'s country and minor browser version changes' do
-    b_v1 = 'Mozilla/5.0 (Windows NT 6.1)'\
-           ' AppleWebKit/537.36 (KHTML, like Gecko)'\
-           ' Chrome/41.0.2228.0 Safari/537.36'
-
-    b_v2 = 'Mozilla/5.0 (Windows NT 6.1)'\
-           ' AppleWebKit/537.36 (KHTML, like Gecko)'\
-           ' Chrome/41.0.2229.0 Safari/537.36'
-
+  it 'do not notify when ip\'s country was previously used' do
+    create(:user_agent, user: user)
     # Cyfronet (PL)
     create(:ip,
-          user: user,
-          ip: '149.156.11.38')
-
-    a1 = create(:user_agent,
-                user: user,
-                name: b_v1)
+           user: user,
+           address: '149.156.11.38')
 
     # Google (US)
     create(:ip,
            user: user,
-           ip: '8.8.8.8')
+           address: '8.8.8.8')
 
-    create(:user_agent,
+    # Cyfronet - other IP, same country as .38 (PL)
+    create(:ip,
            user: user,
-           name: b_v2,
-           accept_language: a1.accept_language)
-
-    expect { subject.call }.
-        to change { ActionMailer::Base.deliveries.count }.by(1)
-  end
-
-  it 'notify when browser major version and lang changes' do
-    b_v1 = 'Mozilla/5.0 (Windows NT 6.1)'\
-           ' AppleWebKit/537.36 (KHTML, like Gecko)'\
-           ' Chrome/41.0.2228.0 Safari/537.36'
-
-    b_v2 = 'Mozilla/5.0 (Windows NT 6.1)'\
-           ' AppleWebKit/537.36 (KHTML, like Gecko)'\
-           ' Chrome/42.0.2228.0 Safari/537.36'
-
-    l1 = 'pl-PL,pl;q=0.5'
-    l2 = 'en-US,en;q=0.5'
-
-    a1 = create(:user_agent,
-                user: user,
-                name: b_v1,
-                accept_language: l1)
-
-    create(:user_agent,
-           user: user,
-           name: b_v2,
-           accept_language: l2)
-
-    expect { subject.call }.
-        to change { ActionMailer::Base.deliveries.count }.by(1)
-  end
-
-  it 'do not notify when only lang changes' do
-    l1 = 'pl-PL,pl;q=0.5'
-    l2 = 'en-US,en;q=0.5'
-
-    a1 = create(:user_agent,
-                user: user,
-                accept_language: l1)
-
-    create(:user_agent,
-           user: user,
-           name: a1.name,
-           accept_language: l2)
+           address: '149.156.11.37')
 
     expect { subject.call }.
         to_not(change { ActionMailer::Base.deliveries.count })
