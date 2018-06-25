@@ -18,6 +18,7 @@ module Cloud
       end
       @atmosphere_url = Rails.configuration.constants['cloud']['atmosphere_url']
       @appliance_type_id = Rails.configuration.constants['cloud']['computation_appliance_type']
+      @template_id = Rails.configuration.constants['cloud']['computation_config_template']
     end
 
     def register_initial_config(username, payload)
@@ -48,14 +49,18 @@ module Cloud
       @template_id = res_hash['appliance_configuration_template']['id']
     end
 
-    def spawn_appliance
+    def spawn_appliance(username, payload)
       if @appliance_set_id && @template_id
 
         body = {
           appliance: {
             appliance_set_id: @appliance_set_id,
             name: "cloud_step_#{SecureRandom.hex}",
-            configuration_template_id: @template_id
+            configuration_template_id: @template_id,
+            params: {
+              username: username,
+              payload: payload
+            }
           }
         }
 
@@ -108,21 +113,33 @@ module Cloud
       end
 
       res_hash = JSON.parse(res.body)
+      status = 'active'
+
       # Obtain vm ids from body
       res_hash['appliance']['virtual_machine_ids'].each do |vm|
-        if query_vm(c, vm)
-          # We're done - clean up
-          config_instance_id = res_hash['appliance']['appliance_configuration_instance_id']
-          appliance_set_id = res_hash['appliance']['appliance_set_id']
-          delete_config_template(config_instance_id)
-          delete_appliance_set(appliance_set_id)
-        else
-          next
+        vm_status = query_vm(vm)
+
+        case vm_status
+        when 'build'
+          status = 'queued'
+        when 'active'
+          status = 'running'
+        when 'shutoff'
+          status = 'finished'
+        when 'error'
+          status = 'error'
         end
+
+        next unless %w[finished error].include? status
+        # We're done - clean up
+        appliance_set_id = res_hash['appliance']['appliance_set_id']
+        delete_appliance_set(appliance_set_id)
       end
+
+      status
     end
 
-    def query_vm(c, vm)
+    def query_vm(vm)
       url, req = create_request(:get, "#{@atmosphere_url}/api/v1/virtual_machines/#{vm}")
       res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)
@@ -130,26 +147,8 @@ module Cloud
 
       res_hash = JSON.parse(res.body)
 
-      # Obtain state from body
-      status = res_hash['virtual_machine']['state']
-
-      done = false
-
-      # TODO: need more robust status handling (esp. for error states)
-      case status
-      when 'build'
-        c.update_attributes(status: 'queued')
-      when 'active'
-        c.update_attributes(status: 'running')
-      when 'shutoff'
-        c.update_attributes(status: 'finished')
-        done = true
-      when 'error'
-        c.update_attributes(status: 'error')
-        done = true
-      end
-
-      done
+      # Obtain state from body and return
+      res_hash['virtual_machine']['state']
     end
 
     private
@@ -177,26 +176,6 @@ module Cloud
       url, req = create_request(
         :delete,
         "#{@atmosphere_url}/api/v1/appliance_sets/#{appliance_set_id}"
-      )
-      Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-        http.request(req)
-      end
-    end
-
-    def delete_config_template(config_instance_id)
-      url, req = create_request(
-        :get,
-        "#{@atmosphere_url}/api/v1/appliance_configuration_instances/#{config_instance_id}"
-      )
-      res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-        http.request(req)
-      end
-
-      res_hash = JSON.parse(res.body)
-      tmpl_id = res_hash['appliance_configuration_instance']['appliance_configuration_template_id']
-      url, req = create_request(
-        :delete,
-        "#{@atmosphere_url}/api/v1/appliance_configuration_templates/#{tmpl_id}"
       )
       Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
         http.request(req)

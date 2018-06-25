@@ -18,7 +18,13 @@ module Cloud
     end
 
     def update_computation(c)
-      @client.update_computation(c)
+      new_status = @client.update_computation(c)
+      if new_status != c.status
+        c.update_attributes(status: status)
+        update(c)
+      end
+
+      on_finish_callback(c) if c.status == 'finished'
     end
 
     private
@@ -29,6 +35,10 @@ module Cloud
 
     def on_finish_callback(computation)
       @on_finish_callback&.new(computation)&.call
+    end
+
+    def update(computation)
+      @updater&.new(computation)&.call
     end
   end
 end

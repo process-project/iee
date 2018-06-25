@@ -15,11 +15,6 @@ class ScriptedStep < Step
   end
 
   def runner_for(computation, options = {})
-    case computation.deployment
-    when 'cluster'
-      PipelineSteps::Scripted::RimrockRunner.new(computation, @repository, @file, options)
-    when 'cloud'
-      PipelineSteps::Scripted::CloudRunner.new(computation, @repository, @file, options)
-    end
+    PipelineSteps::Scripted::ScriptedRunner.new(computation, @repository, @file, options)
   end
 end

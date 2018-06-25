@@ -23,9 +23,9 @@ describe Pipelines::StartRunnable do
         create(:scripted_computation,
                status: 'created', pipeline_step: '0d_models',
                pipeline: pipeline)
-        runner = instance_double(PipelineSteps::Scripted::RimrockRunner)
+        runner = instance_double(PipelineSteps::Scripted::ScriptedRunner)
 
-        allow(PipelineSteps::Scripted::RimrockRunner).to receive(:new).and_return(runner)
+        allow(PipelineSteps::Scripted::ScriptedRunner).to receive(:new).and_return(runner)
         expect(runner).to receive(:call)
 
         described_class.new(pipeline).call
@@ -36,7 +36,7 @@ describe Pipelines::StartRunnable do
                status: 'running', pipeline_step: '0d_models',
                pipeline: pipeline)
 
-        expect(PipelineSteps::Scripted::RimrockRunner).to_not receive(:new)
+        expect(PipelineSteps::Scripted::ScriptedRunner).to_not receive(:new)
 
         described_class.new(pipeline).call
       end
@@ -50,7 +50,7 @@ describe Pipelines::StartRunnable do
 
         runner = double(runnable?: false)
 
-        allow(PipelineSteps::Scripted::RimrockRunner).to receive(:new).and_return(runner)
+        allow(PipelineSteps::Scripted::ScriptedRunner).to receive(:new).and_return(runner)
         expect(runner).to_not receive(:run)
 
         described_class.new(pipeline).call
@@ -71,7 +71,7 @@ describe Pipelines::StartRunnable do
 
       runner = double(runnable?: true)
 
-      allow(PipelineSteps::Scripted::RimrockRunner).to receive(:new).and_return(runner)
+      allow(PipelineSteps::Scripted::ScriptedRunner).to receive(:new).and_return(runner)
       expect(runner).to_not receive(:call)
 
       described_class.new(pipeline).call

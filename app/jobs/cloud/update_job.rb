@@ -5,7 +5,9 @@ module Cloud
     queue_as :computation
 
     def perform(user)
-      Cloud::Update.new(user).call
+      Cloud::Update.new(user,
+                        on_finish_callback: PipelineUpdater,
+                        updater: ComputationUpdater).call
     end
   end
 end

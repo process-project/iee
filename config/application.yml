@@ -13,6 +13,7 @@ defaults: &defaults
     atmosphere_url: <%= ENV['ATMOSPHERE_BASE_URL'] || 'https://vph.cyfronet.pl' %>
     cloud_facade_path: '/api/v1/'
     computation_appliance_type: <%= ENV['ATMOSPHERE_APPLIANCE_TYPE'] || 886 %>
+    computation_config_template: <%= ENV['ATMOSPHERE_CONFIG_TEMPLATE'] || 1388 %>
   data_sets:
     url: <%= ENV['DATA_SETS_BASE_URL'] || 'https://eurvalve.sheffield.ac.uk' %>
     site_path: <%= ENV['DATA_SETS_SITE_PATH'] || '/WebQuery/site.html' %>
