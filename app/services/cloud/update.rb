@@ -20,7 +20,7 @@ module Cloud
     def update_computation(c)
       new_status = @client.update_computation(c)
       if new_status != c.status
-        c.update_attributes(status: status)
+        c.update_attributes(status: new_status)
         update(c)
       end
 

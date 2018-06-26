@@ -3,6 +3,7 @@
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 # rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/CyclomaticComplexity
 
 require 'net/http'
 require 'json'
@@ -113,8 +114,11 @@ module Cloud
       end
 
       res_hash = JSON.parse(res.body)
-      status = 'active'
 
+      # Assume finished if appliance no longer exists
+      return 'finished' if res_hash['appliance'].blank?
+
+      status = 'active'
       # Obtain vm ids from body
       res_hash['appliance']['virtual_machine_ids'].each do |vm|
         vm_status = query_vm(vm)
@@ -187,3 +191,4 @@ end
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/CyclomaticComplexity
