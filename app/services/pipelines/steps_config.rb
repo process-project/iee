@@ -3,19 +3,22 @@
 module Pipelines
   class StepsConfig
     def initialize(flow, force_reload: false)
-      @steps = Flow.steps(flow)&.map(&:name)
+      @steps = Flow.steps(flow)
       @force_reload = force_reload
     end
 
     def call
-      Hash[@steps.map { |step| [step, config(step)] }]
+      Hash[@steps.map { |step| [step.name, config(step)] }]
     end
 
     private
 
     def config(step)
       # Can be extended by other step types
-      { tags_and_branches: tags_and_branches(step) }
+      {
+        tags_and_branches: tags_and_branches(step.name),
+        run_modes: run_modes(step)
+      }
     end
 
     def tags_and_branches(step)
@@ -25,6 +28,10 @@ module Pipelines
 
     def repo(step)
       Rails.application.config_for('eurvalve')['git_repos'][step]
+    end
+
+    def run_modes(step)
+      step.run_modes if defined? step.run_modes
     end
   end
 end

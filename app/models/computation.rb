@@ -40,6 +40,10 @@ class Computation < ApplicationRecord
     type == 'RimrockComputation'
   end
 
+  def webdav?
+    type == 'WebdavComputation'
+  end
+
   def self.flow_ordered
     where(nil).sort_by(&:flow_index)
   end
@@ -64,6 +68,10 @@ class Computation < ApplicationRecord
     status == 'error'
   end
 
+  def created?
+    status == 'created'
+  end
+
   def computed_status
     if success?
       :success
@@ -76,14 +84,14 @@ class Computation < ApplicationRecord
     end
   end
 
+  def step
+    return nil if pipeline.nil?
+    pipeline.steps.find { |step| step.name == pipeline_step }
+  end
+
   private
 
   def runner
     @runner ||= step.runner_for(self)
-  end
-
-  def step
-    return nil if pipeline.nil?
-    pipeline.steps.find { |step| step.name == pipeline_step }
   end
 end

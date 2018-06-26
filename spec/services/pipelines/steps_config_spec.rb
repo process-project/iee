@@ -11,7 +11,9 @@ describe Pipelines::StepsConfig do
 
     config = described_class.new('avr_from_scan_rom').call
 
-    expect(config['rom']).to eq(tags_and_branches: versions)
-    expect(config['segmentation']).to eq(tags_and_branches: nil)
+    expect(config['rom']).to eq(tags_and_branches: versions, run_modes: nil)
+    expect(config['segmentation'][:tags_and_branches]).to be_nil
+    expect(config['segmentation'][:run_modes]).
+      to include('Workflow 5 (Mitral Valve TEE Segmentation)')
   end
 end

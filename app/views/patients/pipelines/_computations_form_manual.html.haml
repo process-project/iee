@@ -2,4 +2,4 @@
 %h4= t('.steps')
 %ul
   - steps_config.each do |step, config|
-    %li= t("steps.#{step}.title")
+    %li= t("steps.#{step.name}.title")

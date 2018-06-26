@@ -119,7 +119,6 @@ you can set the following ENV variables:
   * `PIPELINE_R_U` - Overrides default project name in Gitlab for Uncertainty Analysis
   * `PIPELINE_R_0D` - Overrides default project name in Gitlab for 0D Model Sequence
   * `PIPELINE_R_PV` - Overrides default project name in Gitlab for Pressure-Volume Visualization
-  * `SEGMENTATION_MODE` - Overrides default segmentation run mode
 
 ## Testing
 
