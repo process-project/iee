@@ -119,6 +119,12 @@ you can set the following ENV variables:
   * `PIPELINE_R_U` - Overrides default project name in Gitlab for Uncertainty Analysis
   * `PIPELINE_R_0D` - Overrides default project name in Gitlab for 0D Model Sequence
   * `PIPELINE_R_PV` - Overrides default project name in Gitlab for Pressure-Volume Visualization
+<<<<<<< HEAD
+=======
+  * `SEGMENTATION_MODE` - Overrides default segmentation run mode
+  * `ANSYSLI_SERVERS` - location of custom ansys license servers
+  * `ANSYSLMD_LICENSE_FILE`- location of sutom ansys license file
+>>>>>>> slurm-template-configure-ansys-licenses
 
 ## Testing
 

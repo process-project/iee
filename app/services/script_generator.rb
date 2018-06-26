@@ -50,8 +50,23 @@ class ScriptGenerator
       " \"#{File.join(pipeline.outputs_url, filename)}\""
   end
 
+  def setup_ansys_licenses
+    <<~LICENSE_EXPORT
+      export ANSYSLI_SERVERS=#{ansys_servers}
+      export ANSYSLMD_LICENSE_FILE=#{ansys_license_file}
+    LICENSE_EXPORT
+  end
+
   def gitlab_clone_url
     Rails.application.config_for('application')['gitlab']['clone_url']
+  end
+
+  def ansys_servers
+    Rails.application.config_for('application')['ansys']['servers']
+  end
+
+  def ansys_license_file
+    Rails.application.config_for('application')['ansys']['license_file']
   end
 
   def clone_repo(repo)
