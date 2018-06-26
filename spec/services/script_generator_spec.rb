@@ -108,4 +108,12 @@ describe ScriptGenerator do
     expect(script).to include 'export SSH_DOWNLOAD_KEY="SSH KEY'
     expect(script).to include 'git clone git@gitlab-test.com:org/repo.git'
   end
+
+  it 'inserts ansys license server configuration' do
+    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+                                 '<%= setup_ansys_licenses %>').call
+
+    expect(script).to include 'export ANSYSLI_SERVERS=ansys-servers'
+    expect(script).to include 'export ANSYSLMD_LICENSE_FILE=ansys-license-file'
+  end
 end

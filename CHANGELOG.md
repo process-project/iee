@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
 
 ### Changed
 
