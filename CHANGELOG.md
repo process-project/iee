@@ -21,6 +21,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.9.1
+
+### Security
+- Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
+
 ## 0.9.0
 
 ### Added
