@@ -9,7 +9,7 @@ RSpec.describe Audits::PerformJob, type: :job do
 
     expect(perform).to receive(:call)
     allow(Audits::Perform).
-       to receive(:new).with(user).and_return(perform)
+      to receive(:new).with(user).and_return(perform)
 
     described_class.perform_now(user)
   end

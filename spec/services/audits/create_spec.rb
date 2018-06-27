@@ -8,55 +8,45 @@ describe Audits::Create do
   subject { described_class.new(user) }
 
   it 'creates new IP in the DB' do
-    ip = Faker::Internet.public_ip_v4_address
-    ua = Faker::Internet.user_agent
-    c = Faker::Lorem.characters(2)
-    lang = "#{c.downcase}-#{c},#{c.downcase};q=0.#{Faker::Number.between(1, 9)}"
+    ip = build(:ip, user: user)
+    ua = build(:user_agent, user: user)
 
-    expect { subject.call ip,ua,lang }.
+    expect { subject.call ip.address, ua.name, ua.accept_language }.
       to change { Ip.count }.by(1)
   end
 
   it 'saves proper IP in the DB' do
-    ip = Faker::Internet.public_ip_v4_address
-    ua = Faker::Internet.user_agent
-    c = Faker::Lorem.characters(2)
-    lang = "#{c.downcase}-#{c},#{c.downcase};q=0.#{Faker::Number.between(1, 9)}"
+    ip = build(:ip, user: user)
+    ua = build(:user_agent, user: user)
 
-    subject.call ip,ua,lang
+    subject.call ip.address, ua.name, ua.accept_language
 
-    expect(Ip.last.address).to eq(ip)
+    expect(Ip.last.address).to eq(ip.address)
   end
 
   it 'creates new user_agent in the DB' do
-    ip = Faker::Internet.public_ip_v4_address
-    ua = Faker::Internet.user_agent
-    c = Faker::Lorem.characters(2)
-    lang = "#{c.downcase}-#{c},#{c.downcase};q=0.#{Faker::Number.between(1, 9)}"
+    ip = build(:ip, user: user)
+    ua = build(:user_agent, user: user)
 
-    expect { subject.call ip,ua,lang }.
-        to change { UserAgent.count }.by(1)
+    expect { subject.call ip.address, ua.name, ua.accept_language }.
+      to change { UserAgent.count }.by(1)
   end
 
   it 'saves proper user_agent name in the DB' do
-    ip = Faker::Internet.public_ip_v4_address
-    ua = Faker::Internet.user_agent
-    c = Faker::Lorem.characters(2)
-    lang = "#{c.downcase}-#{c},#{c.downcase};q=0.#{Faker::Number.between(1, 9)}"
+    ip = build(:ip, user: user)
+    ua = build(:user_agent, user: user)
 
-    subject.call ip,ua,lang
+    subject.call ip.address, ua.name, ua.accept_language
 
-    expect(UserAgent.last.name).to eq(ua)
+    expect(UserAgent.last.name).to eq(ua.name)
   end
 
   it 'saves proper user_agent lang in the DB' do
-    ip = Faker::Internet.public_ip_v4_address
-    ua = Faker::Internet.user_agent
-    c = Faker::Lorem.characters(2)
-    lang = "#{c.downcase}-#{c},#{c.downcase};q=0.#{Faker::Number.between(1, 9)}"
+    ip = build(:ip, user: user)
+    ua = build(:user_agent, user: user)
 
-    subject.call ip,ua,lang
+    subject.call ip.address, ua.name, ua.accept_language
 
-    expect(UserAgent.last.accept_language).to eq(lang)
+    expect(UserAgent.last.accept_language).to eq(ua.accept_language)
   end
 end

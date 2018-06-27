@@ -1,7 +1,11 @@
-class Audits::PerformJob < ApplicationJob
-  queue_as :audits
+# frozen_string_literal: true
 
-  def perform(user)
-    Audits::Perform.new(user).call
+module Audits
+  class PerformJob < ApplicationJob
+    queue_as :audits
+
+    def perform(user)
+      Audits::Perform.new(user).call
+    end
   end
 end
