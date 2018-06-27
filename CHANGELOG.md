@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- Mechanism to detect anomalies in user access pattern and notify them (@jmeizner)
 
 ### Changed
 
