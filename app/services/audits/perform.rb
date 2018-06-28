@@ -31,7 +31,7 @@ module Audits
 
     def check_ips?
       @user.ips.each do |ip|
-        return true if ip.cc == @user.last_ip.cc
+        return true if ip.address != @user.last_ip.address && ip.cc == @user.last_ip.cc
       end
 
       false
