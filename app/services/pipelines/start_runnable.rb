@@ -21,7 +21,7 @@ module Pipelines
       computation.runnable? &&
         (
           (computation.rimrock? && @user_proxy.valid?) ||
-          (computation.cloud? && computation.tag_or_branch.present?) ||
+          computation.cloud? ||
           computation.webdav?
         )
     end

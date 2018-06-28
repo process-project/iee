@@ -11,8 +11,6 @@ class Computation < ApplicationRecord
             inclusion: { in: %w[cluster cloud service] },
             allow_blank: true
 
-  before_save :default_values
-
   # Disabled until we are able to deal with the steps which are there
   # but are not used in any pipeline right now
   # validates :pipeline_step,
@@ -107,10 +105,6 @@ class Computation < ApplicationRecord
   end
 
   private
-
-  def default_values
-    self.deployment ||= 'cluster'
-  end
 
   def runner
     @runner ||= step.runner_for(self)
