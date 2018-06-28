@@ -11,6 +11,10 @@
         = f.input :deployment,
           as: :select,
           collection: ['cluster', 'cloud']
+    - if @run_modes
+      .col-lg-7.col-xs-6
+        = f.input :run_mode,
+          collection: @run_modes
     .col-lg-4.col-xs-12
       = f.button :submit,
         t("steps.#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),

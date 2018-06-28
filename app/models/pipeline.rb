@@ -71,6 +71,10 @@ class Pipeline < ApplicationRecord
     @status ||= calculate_status
   end
 
+  def owner_name
+    user&.name || '(deleted user)'
+  end
+
   private
 
   def calculate_status

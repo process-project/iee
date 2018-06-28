@@ -5,6 +5,8 @@
       - if computation.scripted?
         %th= t 'computation.tag_or_branch'
         %th= t 'computation.revision'
+      - elsif computation.webdav?
+        %th= t 'computation.run_mode'
       %th= t 'computation.execution_time'
       %th= t 'computation.outputs'
       %th= t 'computation.status'
@@ -14,6 +16,8 @@
       - if computation.scripted?
         %td= computation.tag_or_branch
         %td= source_link(computation)
+      - elsif computation.webdav?
+        %td= computation.run_mode
 
       - if computation.active?
         %td{data: {'computation-start' => computation.started_at}}= execution_time(computation)

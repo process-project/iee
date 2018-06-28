@@ -412,6 +412,31 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content 'can\'t be blank'
       end
 
+      scenario 'start webdav computation' do
+        mock_webdav_computation_ready_to_run
+        computation = pipeline.computations.
+                      find_by(pipeline_step: 'segmentation')
+        create(:data_file, data_type: :image, patient: patient)
+
+        expect(Webdav::StartJob).to receive(:perform_later)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        select('Workflow 5 (Mitral Valve TEE Segmentation)')
+        click_button computation_run_text(computation)
+      end
+
+      scenario 'unable to start webdav computation when run_mode is not set' do
+        mock_webdav_computation_ready_to_run
+        computation = pipeline.computations.
+                      find_by(pipeline_step: 'segmentation')
+        create(:data_file, data_type: :image, patient: patient)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        click_button computation_run_text(computation)
+
+        expect(page).to have_content 'can\'t be blank'
+      end
+
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
         allow_any_instance_of(ScriptedComputation).
@@ -419,6 +444,11 @@ RSpec.feature 'Patient browsing' do
         allow_any_instance_of(ScriptedStep).
           to receive(:input_present_for?).and_return(true)
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
+      end
+
+      def mock_webdav_computation_ready_to_run
+        allow_any_instance_of(WebdavComputation).
+          to receive(:runnable?).and_return(true)
       end
 
       scenario 'computation alert is displayed when no required input data' do

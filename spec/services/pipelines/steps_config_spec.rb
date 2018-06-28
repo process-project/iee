@@ -13,5 +13,7 @@ describe Pipelines::StepsConfig do
 
     expect(config['rom']).to eq(tags_and_branches: versions, deployment: %w[cluster cloud])
     expect(config['segmentation']).to eq(tags_and_branches: nil, deployment: %w[cluster cloud])
+    expect(config['segmentation'][:run_modes]).
+        to include('Workflow 5 (Mitral Valve TEE Segmentation)')
   end
 end

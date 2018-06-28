@@ -16,5 +16,13 @@
           include_blank: t('.blank'),
           class: "form-control",
           name: "pipeline[#{step}][deployment]"
-    - else
+    - if config[:run_modes]
+      %label.col-sm-3.control-label.select{ for: "pipeline_#{step}_run_mode" }= t('.mode')
+      .col-sm-6
+        = select_tag "pipeline_#{step}_run_mode",
+          options_for_select(config[:run_modes]),
+          include_blank: t('.blank'),
+          class: "form-control",
+          name: "pipeline[#{step}][run_mode]"
+    - unless config[:tags_and_branches] || config[:run_modes]
       .alert.alert-success.col-sm-6.col-sm-offset-3= t('.empty_configuration')

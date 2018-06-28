@@ -9,16 +9,43 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
+- User can select segmentation run mode before start (@mkasztelnik)
+- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Fix unused pipeline title missing (@mkasztelnik)
+
+### Security
+
+## 0.9.1
+
+### Security
+- Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
+
+## 0.9.0
+
+### Added
 - Added AVD/MVD ratio to patients' statistics (@Nuanda)
 - Support for execution of pipeline steps on cloud vms (@nowakowski)
 - Refactoring of pipeline step model (replacing rimrock steps with scripted steps) (@nowakowski)
 - Profile link for left avatar picture and user name (@mkasztelnik)
 - Colors for patient tile connected with last pipeline status (@mkasztelnik)
+- Instruction how to remove concrete IP from rack-attack fail2ban list (@mkasztelnik)
+- User cannot be removed or blocked when she/he owns exclusively group (@mkasztelnik)
+- Button to minimize left menu is visible always (@mkasztelnik)
+- Dedicated information about deleted pipeline owner (@mkasztelnik)
 
 ### Changed
 - Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
 - Remove `brakeman` from `Gemfile` and use latest version while executing
   `gitab-ci` checks (@mkasztelnik)
+- Trigger segmentation start after whole input file is uploaded (@mkasztelnik)
 
 ### Deprecated
 

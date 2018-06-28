@@ -76,6 +76,7 @@ en:
         empty_configuration: No configuration needed
         tag_or_branch: Tag or branch
         deployment: Deployment
+        run_mode: Run mode
       computations_form_manual:
         description: Manual pipeline steps can be configured directly before start
       list:

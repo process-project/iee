@@ -3,7 +3,7 @@ defaults: &defaults
     url: https://submit.plgrid.pl
     host: prometheus.cyfronet.pl
     tag: vapor
-  grant_id: <%= ENV['GRANT_ID'] || 'eurvalve3' %>
+  grant_id: <%= ENV['GRANT_ID'] || 'eurvalve4' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
   segmentation:
     inputs_path: segmentation/input
@@ -13,7 +13,6 @@ defaults: &defaults
     ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
     user: <%= ENV['SEGMENTATION_USER'] %>
     password: <%= ENV['SEGMENTATION_PASSWORD'] %>
-    mode: <%= ENV['SEGMENTATION_MODE'] || 3 %>
   git_repos:
     blood_flow_simulation: <%= ENV['PIPELINE_R_BFS'] || 'eurvalve/blood-flow' %>
     heart_model_calculation: <%= ENV['PIPELINE_R_HMS'] || 'eurvalve/0dmodel' %>

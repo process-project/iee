@@ -17,7 +17,8 @@ module Pipelines
       # Can be extended by other step types
       {
         tags_and_branches: tags_and_branches(step),
-        deployment: %w[cluster cloud]
+        deployment: %w[cluster cloud],
+        run_modes: run_modes(step)
       }
     end
 
@@ -28,6 +29,10 @@ module Pipelines
 
     def repo(step)
       Rails.application.config_for('eurvalve')['git_repos'][step]
+    end
+
+    def run_modes(step)
+      step.run_modes if defined? step.run_modes
     end
   end
 end

@@ -17,6 +17,7 @@ en:
         Segmentation finished successfully, results stored in
         the output directory for the results
       aborted: Segmentation was aborted by the pipeline owner
+      start_automatic: Save segmentation run mode
       start_manual: Start segmentation
       restart_manual: Restart segmentation
     parameter_extraction:
