@@ -5,7 +5,6 @@ class WebdavStep < Step
 
   def initialize(name, run_modes, required_files = [])
     super(name, required_files)
-
     @run_modes = run_modes
   end
 

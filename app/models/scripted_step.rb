@@ -5,7 +5,6 @@ class ScriptedStep < Step
 
   def initialize(name, repository, file, required_files = [])
     super(name, required_files)
-
     @repository = repository
     @file = file
   end

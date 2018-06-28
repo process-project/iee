@@ -110,7 +110,7 @@ describe ScriptGenerator do
   end
 
   it 'inserts ansys license server configuration' do
-    script = ScriptGenerator.new(create(:rimrock_computation, revision: 'rev'),
+    script = ScriptGenerator.new(create(:scripted_computation, revision: 'rev'),
                                  '<%= setup_ansys_licenses %>').call
 
     expect(script).to include 'export ANSYSLI_SERVERS=ansys-servers'

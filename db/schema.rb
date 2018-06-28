@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 20180620093532) do
     t.datetime "started_at"
     t.string "revision"
     t.string "tag_or_branch"
+    t.string "deployment", default: "cluster"
+    t.string "appliance_id"
     t.string "run_mode"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end

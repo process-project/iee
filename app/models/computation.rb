@@ -61,10 +61,6 @@ class Computation < ApplicationRecord
     type == 'WebdavComputation'
   end
 
-  def webdav?
-    type == 'WebdavComputation'
-  end
-
   def self.flow_ordered
     where(nil).sort_by(&:flow_index)
   end

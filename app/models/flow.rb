@@ -108,7 +108,18 @@ class Flow
     ScriptedStep.new('results_presentation', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new('rom', 'eurvalve/cfd', 'rom.sh.erb', [:response_surface]),
     ScriptedStep.new('rule_selection', 'eurvalve/mock-step', 'mock.sh.erb', []),
-    WebdavStep.new('segmentation', [:image]),
+    WebdavStep.new('segmentation',
+                   {
+                     'Workflow 0 (CT Aortic Valve Segmentation)' => '0',
+                     'Workflow 1 (US Philips Data Conversion)' => '1',
+                     'Workflow 2 (TTE Left Ventricular Segmentation)' => '2',
+                     'Workflow 3 (TEE Aortic Valve Segmentation)' => '3',
+                     'Workflow 5 (Mitral Valve TEE Segmentation)' => '5',
+                     'Workflow 7 (TEE Chamber Segmentation)' => '7',
+                     'Workflow 8 (US Philips Data Conversion With Screenshots)' => '8',
+                     'Workflow 9 (CT Data Conversion With Screenshots)' => '9'
+                   },
+                   [:image]),
     ScriptedStep.new('severity_model', 'eurvalve/mock-step', 'mock.sh.erb', []),
     ScriptedStep.new(
       'uncertainty_analysis',

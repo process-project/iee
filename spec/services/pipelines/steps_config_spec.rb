@@ -10,10 +10,9 @@ describe Pipelines::StepsConfig do
       and_return(versions)
 
     config = described_class.new('avr_from_scan_rom').call
-
-    expect(config['rom']).to eq(tags_and_branches: versions, deployment: %w[cluster cloud])
-    expect(config['segmentation']).to eq(tags_and_branches: nil, deployment: %w[cluster cloud])
+    expect(config['rom']).
+      to eq(tags_and_branches: versions, deployment: %w[cluster cloud], run_modes: nil)
     expect(config['segmentation'][:run_modes]).
-        to include('Workflow 5 (Mitral Valve TEE Segmentation)')
+      to include('Workflow 5 (Mitral Valve TEE Segmentation)')
   end
 end
