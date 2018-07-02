@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RimrockStep < Step
-  attr_reader :repo, :file
+  attr_reader :repository, :file
 
   def initialize(name, repository, file, required_files = [])
     super(name, required_files)
