@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
 
 ### Changed
+- Use Gitlab review procedure instead of labels (@mkasztelnik)
 
 ### Deprecated
 
