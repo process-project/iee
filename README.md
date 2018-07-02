@@ -178,19 +178,5 @@ While running application in development or running tests _bullet_ logs warnings
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new pull request
-6. When feature is ready add "ready for review" label
-
-## Review process
-
-To improve the reviewing process three labels should be used to monitor it:
-
-  * `ready for review` - should be set by the merge request owner when a merge
-request is ready for being reviewed by an assignee,
-  * `in review` - set by the reviewer when the reviewing process starts,
-  * `reviewed` - set by the reviewer when all the remarks are written down and
-the review process is finished.
-
-When the merge request owner is notified that the review is finished (`reviewed`
-flag set) he should fix/respond to all the remarks and decide whether the merge
-request should be merged or reviewed again (by setting the `ready for review`
-label again).
+6. When feature is ready add reviewers and wait for feedback (at least one
+   approve should be given and all review comments should be resolved)
