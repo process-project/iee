@@ -116,4 +116,24 @@ describe ScriptGenerator do
     expect(script).to include 'export ANSYSLI_SERVERS=ansys-servers'
     expect(script).to include 'export ANSYSLMD_LICENSE_FILE=ansys-license-file'
   end
+
+  it 'inserts pipeline identifier' do
+    patient = create(:patient, case_number: 'case-number')
+    pipeline = create(:pipeline, patient: patient, iid: 1)
+    computation = create(:rimrock_computation, pipeline: pipeline)
+
+    script = ScriptGenerator.new(computation, '<%= pipeline_identifier %>').call
+
+    expect(script).to include 'case-number-1'
+  end
+
+  it 'inserts patient case_number' do
+    patient = create(:patient, case_number: 'case-number')
+    pipeline = create(:pipeline, patient: patient, iid: 1)
+    computation = create(:rimrock_computation, pipeline: pipeline)
+
+    script = ScriptGenerator.new(computation, '<%= case_number %>').call
+
+    expect(script).to include 'case-number'
+  end
 end

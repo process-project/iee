@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - User can select segmentation run mode before start (@mkasztelnik)
 - Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+- `pipeline_identifier` `case_number` and `token` computation script helpers (@mkasztelnik)
 
 ### Changed
 
