@@ -41,7 +41,7 @@ At the moment Superuser privileges are required due to citext.
 You may also manually activate the citext extension as shown below -
 in which case normal privileges would be sufficient.
 
-### Manual activation of the citext extention
+### Manual activation of the citext extension
 
 1. Create the databases (at least for the development and test environments).
    You may run `bin/setup` (and allow it to fail due to insufficient privileges,
@@ -157,7 +157,7 @@ To execute Gitlab integration tests:
 bundle exec rspec --tag gitlab
 ```
 
-## Using bullet to increase application perfromance
+## Using bullet to increase application performance
 [Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments.
 While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
 
