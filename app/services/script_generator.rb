@@ -6,9 +6,12 @@ class ScriptGenerator
   attr_reader :computation
 
   delegate :pipeline, to: :computation
+  delegate :patient, to: :pipeline
   delegate :user, to: :pipeline
   delegate :revision, to: :computation
   delegate :patient, to: :pipeline
+  delegate :token, to: :user
+  delegate :case_number, to: :patient
 
   def initialize(computation, template)
     @computation = computation
@@ -37,7 +40,7 @@ class ScriptGenerator
       raise ArgumentError, 'stage_in needs either data_file_type or path in argument hash.'
     end
 
-    "curl -H \"Authorization: Bearer #{user.token}\""\
+    "curl -H \"Authorization: Bearer #{token}\""\
       " \"#{url}\" >> \"$SCRATCHDIR/#{filename}\""
   end
 
@@ -46,8 +49,12 @@ class ScriptGenerator
 
     "curl -X PUT --data-binary @#{relative_path} "\
       '-H "Content-Type:application/octet-stream"'\
-      " -H \"Authorization: Bearer #{user.token}\""\
+      " -H \"Authorization: Bearer #{token}\""\
       " \"#{File.join(pipeline.outputs_url, filename)}\""
+  end
+
+  def pipeline_identifier
+    "#{patient.case_number}-#{pipeline.iid}"
   end
 
   def setup_ansys_licenses
@@ -61,14 +68,6 @@ class ScriptGenerator
     Rails.application.config_for('application')['gitlab']['clone_url']
   end
 
-  def ansys_servers
-    Rails.application.config_for('application')['ansys']['servers']
-  end
-
-  def ansys_license_file
-    Rails.application.config_for('application')['ansys']['license_file']
-  end
-
   def clone_repo(repo)
     <<~CODE
       export SSH_DOWNLOAD_KEY="#{ssh_download_key}"
@@ -79,6 +78,14 @@ class ScriptGenerator
   end
 
   private
+
+  def ansys_servers
+    Rails.application.config_for('application')['ansys']['servers']
+  end
+
+  def ansys_license_file
+    Rails.application.config_for('application')['ansys']['license_file']
+  end
 
   def extract_request_data_for_type(options)
     data_file = pipeline.data_file(options[:data_file_type])
