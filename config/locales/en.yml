@@ -1,5 +1,5 @@
 en:
-  title: Test Title
+  title: '%{type}'
   rights: ©2016 All Rights Reserved.
   record_not_found: Record not found!
   login_form: Login form

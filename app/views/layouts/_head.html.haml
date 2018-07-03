@@ -4,7 +4,7 @@
   - if current_user
     %meta{name: 'token', content: current_user.token}
   = favicon_link_tag
-  %title= t('title')
+  %title= t('title', type: Rails.application.config.constants["platform_type"])
 
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true

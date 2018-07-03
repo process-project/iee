@@ -25,6 +25,7 @@ defaults: &defaults
   ansys:
     servers: <%= ENV['ANSYSLI_SERVERS'] %>
     license_file: <%= ENV['ANSYSLMD_LICENSE_FILE'] %>
+  platform_type: EURVALVE
 
 development:
   <<: *defaults
