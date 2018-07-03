@@ -19,6 +19,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Computation script repositories removed from `eurvalve.yml`, step repository
+  configuration used instead (@mkasztelnik)
 
 ### Fixed
 - Fix unused pipeline title missing (@mkasztelnik)

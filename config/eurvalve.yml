@@ -13,37 +13,6 @@ defaults: &defaults
     ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
     user: <%= ENV['SEGMENTATION_USER'] %>
     password: <%= ENV['SEGMENTATION_PASSWORD'] %>
-  git_repos:
-    blood_flow_simulation: <%= ENV['PIPELINE_R_BFS'] || 'eurvalve/blood-flow' %>
-    heart_model_calculation: <%= ENV['PIPELINE_R_HMS'] || 'eurvalve/0dmodel' %>
-    parameter_extraction: <%= ENV['PIPELINE_R_PE'] || 'eurvalve/parameter-extraction' %>
-    cfd: <%= ENV['PIPELINE_R_CFD'] || 'eurvalve/cfd' %>
-    rom: <%= ENV['PIPELINE_R_ROM'] || 'eurvalve/cfd' %>
-    parameter_optimization: <%= ENV['PIPELINE_R_PO'] || 'eurvalve/0dmodel' %>
-    uncertainty_analysis: <%= ENV['PIPELINE_R_U'] || 'eurvalve/0dmodel' %>
-    0d_models: <%= ENV['PIPELINE_R_0D'] || 'eurvalve/0dmodel' %>
-    pressure_volume_display: <%= ENV['PIPELINE_R_PV'] || 'eurvalve/0dmodel' %>
-
-    # mocked steps
-    haemodynamic_comparison: 'eurvalve/mock-step'
-    inference: 'eurvalve/mock-step'
-    inference_weighting: 'eurvalve/mock-step'
-    iteration_control: 'eurvalve/mock-step'
-    patient_db_selection: 'eurvalve/mock-step'
-    prosthetic_geometries: 'eurvalve/mock-step'
-    results_presentation: 'eurvalve/mock-step'
-    rule_selection: 'eurvalve/mock-step'
-    valve_placement: 'eurvalve/mock-step'
-    valve_sizing: 'eurvalve/mock-step'
-    progression_model: 'eurvalve/mock-step'
-    severity_model: 'eurvalve/mock-step'
-    economics_algorithm: 'eurvalve/mock-step'
-    results_comparison: 'eurvalve/mock-step'
-    valve_placement_x12: 'eurvalve/mock-step'
-    cfd_x12: 'eurvalve/mock-step'
-    ageing_model_x2: 'eurvalve/mock-step'
-    pv_loop_comparison: 'eurvalve/mock-step'
-    mv_segmentation: 'eurvalve/mock-step'
 
 
 development:
