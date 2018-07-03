@@ -18,7 +18,7 @@
   .menu_section
     %ul.nav.side-menu
       = render 'layouts/left_menu/research'
-      = Rails.application.config.constants['platform_type'] == EURVALVE ? render 'layouts/left_menu/data_sets' : nil ##TODO
+      = render 'layouts/left_menu/data_sets'#Rails.application.config.constants['platform_type'] == EURVALVE ? render 'layouts/left_menu/data_sets' : nil ##TODO
       = render 'layouts/left_menu/settings'
       = render 'layouts/left_menu/administration'
       = render 'layouts/left_menu/help'
