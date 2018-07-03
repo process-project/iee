@@ -37,8 +37,8 @@ class ScriptGenerator
       raise ArgumentError, 'stage_in needs either data_file_type or path in argument hash.'
     end
 
-    "curl -H \"Authorization: Bearer #{user.token}\""\
-      " \"#{url}\" >> \"$SCRATCHDIR/#{filename}\""
+    "curl -H \"Authorization: Bearer #{user.token}\" \"#{url}\" "\
+      ">> \"$SCRATCHDIR/#{filename}\" #{'--fail' unless options[:optional]}"
   end
 
   def stage_out(relative_path, filename = nil)
