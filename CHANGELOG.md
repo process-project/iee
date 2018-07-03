@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Use Gitlab review procedure instead of labels (@mkasztelnik)
+- `stage_in` returns error code when unable to download FileStore file (@mkasztelnik)
 
 ### Deprecated
 

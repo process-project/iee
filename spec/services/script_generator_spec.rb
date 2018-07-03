@@ -45,6 +45,23 @@ describe ScriptGenerator do
       expect(script).to include '$SCRATCHDIR/out.gif'
     end
 
+    it 'add --fail flag when download is not optional' do
+      computation = create(:rimrock_computation)
+      script = ScriptGenerator.new(computation,
+                                   '<%= stage_in path: "dir/foo.txt" %>').call
+
+      expect(script).to include '--fail'
+    end
+
+    it 'does not add --fail flag when download is optional' do
+      computation = create(:rimrock_computation)
+      script = ScriptGenerator.
+               new(computation,
+                   '<%= stage_in path: "dir/foo.txt", optional: true%>').call
+
+      expect(script).to_not include '--fail'
+    end
+
     it 'throws ArgumentException on malformed request' do
       generator = ScriptGenerator.new(
         computation,
