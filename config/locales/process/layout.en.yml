@@ -2,30 +2,4 @@ en:
   layouts:
     left_menu:
       research:
-        title: Research
         patients: Projects
-        files: Files
-        cloud_resources: Cloud resources
-      plgrid:
-        title: PLGrid
-      administration:
-        title: Administration
-        users: Users
-        jobs: Delayed jobs
-      settings:
-        title: Settings
-        profile: Profile
-        services: Services
-        groups: Groups
-      help:
-        title: Help
-        sessions: JWT
-        pdp: PDP
-        policies: Resource policies
-        data_sets: Data sets
-      data_sets:
-        title: Data sets
-        real: Clinical data set
-        inferred: Inferred data set
-        simulated: Simulated data set
-        virtual: Integrated collection

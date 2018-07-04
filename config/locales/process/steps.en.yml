@@ -1,7 +1,6 @@
 en:
   steps:
     segmentation:
-      title: AV Segmentation
       cannot_start: |
         Cannot start segmentation because required input file
         (imaging_*.zip) cannot be found in the project input directory or
@@ -9,113 +8,39 @@ en:
       created: |
         All required input files are available.
         You can start segmentation for this project.
-      new: Segmentation computation is being submitted
-      running: Segmentation computation is running
-      error: There was an error while calculating segmentation
-      finished: |
-        Segmentation finished successfully, results stored in
-        the output directory for the results
-      aborted: Segmentation was aborted by the pipeline owner
-      start_automatic: Save segmentation run mode
-      start_manual: Start segmentation
-      restart_manual: Restart segmentation
     parameter_extraction:
-      title: Parameter Extraction
       cannot_start: |
         Cannot start parameter extraction because the required input files
         (OFF mesh) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start parameter extraction for this project.
-      new: Parameter extraction is being submitted
-      queued: Parameter extraction is queued
-      running: Parameter extraction is running
-      error: There was an error while extracting simulation parameters
-      finished: |
-        Parameter extraction finished successfully, results stored in
-        the output directory.
-      aborted: Parameter extraction was aborted by the pipeline owner
-      start_automatic: Save parameter extraction version
-      start_manual: Start parameter extraction
-      restart: Restart parameter extraction
     cfd:
-      title: Computational Fluid Dynamics simulation
       cannot_start: |
         Cannot start CFD simulation because the required input files
         (*Trunc.off) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start CFD simulation for this project.
-      new: CFD simulation is being submitted
-      queued: CFD simulation is queued
-      running: CFD simulation is running
-      error: There was an error while running CFD simulation
-      finished: |
-        CFD simulation finished successfully, results stored in
-        the output directory.
-      aborted: CFD simulation was aborted by the pipeline owner
-      start_automatic: Save CFD simulation version
-      start_manual: Start CFD simulation
-      restart_manual: Restart CDF simulation
     rom:
-      title: Reduced Order Model analysis
       cannot_start: |
         Cannot start ROM analysis because the required input files
         (*.dxrom) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start ROM analysis for this project.
-      new: ROM analysis is being submitted
-      queued: ROM analysis is queued
-      running: ROM analysis is running
-      error: There was an error while running ROM analysis
-      finished: |
-        ROM analysis finished successfully, results stored in
-        the output directory.
-      aborted: ROM analysiswas aborted by the pipeline owner
-      start_automatic: Save ROM analysis version
-      start_manual: Start ROM analysis
-      restart_manual: Restart ROM analysis
     parameter_optimization:
-      title: Parameter Optimization
       cannot_start: |
         Cannot start parameter optimization because the required input files
         (ValveChar.csv) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start parameter optimization for this project.
-      new: Parameter optimization is being submitted
-      queued: Parameter optimization is queued
-      running: Parameter optimization is running
-      error: There was an error while running parameter optimization
-      finished: |
-        Parameter optimization finished successfully, results stored in
-        the output directory.
-      aborted: Parameter optimization was aborted by the pipeline owner
-      start_automatic: Save parameter optimization version
-      start_manual: Start parameter optimization
-      restart_manual: Restart parameter optimization
     uncertainty_analysis:
-      title: Uncertainty Analysis
-      cannot_start: |
-        Cannot start uncertainty analysis because the required input files
-        (OFF mesh) cannot be found in the projct input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start uncertainty analysis for this project.
-      new: Uncertainty analysis is being submitted
-      queued: Uncertainty analysis is queued
-      running: Uncertainty analysis is running
-      error: There was an error while running uncertainty analysis
-      finished: |
-        Uncertainty analysis finished successfully, results stored in
-        the output directory.
-      aborted: Uncertainty analysis was aborted by the pipeline owner
-      start_automatic: Save uncertainty analysis version
-      start_manual: Start uncertainty analysis
-      restart_manual: Restart uncertainty analysis
     blood_flow_simulation:
-      title: Blood Flow Simulation
       cannot_start: |
         Cannot start blood flow simulation because required input files
         (fluidFlow.cas and structural_vent.dat) cannot be found
@@ -123,17 +48,6 @@ en:
       created: |
         All required input files are available.
         You can start blood flow simulation for this project.
-      new: Blood flow simulation computation is being submitted
-      queued: Blood flow simulation computation is queued
-      running: Blood flow simulation computation is running
-      error: There were an error while calculating blood flow simulation
-      finished: |
-        Blood flow simulation finished successfully, results stored in
-        the output directory for the results
-      aborted: Blood flow simulation was aborted by the pipeline owner
-      start_automatic: Save blood flow simulation version
-      start_manual: Start blood floow simulation
-      restart_manual: Restart blood floow simulation
     heart_model_calculation:
       title: Heart Model Calculation
       cannot_start: |
@@ -143,19 +57,8 @@ en:
       created: |
         All required input files are available.
         You can start heart model calculation for this project.
-      new: Heart model calculation is being submitted
-      queued: Heart model calculation is queued
-      running: Heart model calculation is running
-      error: There were an error while calculating project heart model
-      finished: |
-        Heart model calculation finished successfully, results stored in
-        the output directory for the results
-      aborted: Segmentation was aborted by the pipeline owner
-      start_automatic: Save heart model calculation version
-      start_manual: Start heart model calculation
-      restart_manual: Restart heart model calculation
+      error: There were an error while calculating project.
     0d_models:
-      title: 0D Model x4
       cannot_start: |
         Cannot run 0D models because required input files
         (OutFileGA.csv) cannot be found in the project input directory or
@@ -163,19 +66,7 @@ en:
       created: |
         All required input files are available.
         You can start 0D model sequence for this project.
-      new: 0D models are being submitted
-      queued: 0D models are queued
-      running: 0D models are running
-      error: There was an error while running 0D models
-      finished: |
-        0D model sequence finished successfully, results stored in
-        the output directory for results
-      aborted: 0D model sequence was aborted by the pipeline owner
-      start_automatic: Save 0D model sequence version
-      start_manual: Start 0D model sequence
-      restart_manual: Restart 0D model sequence
     pressure_volume_display:
-      title: PV Loop Comparison
       cannot_start: |
         Cannot start PV visualization because required input files
         (OutSeries1.csv, OutSeries2.csv, OutSeries3.csv, OutSeries4.csv)
@@ -183,339 +74,8 @@ en:
       created: |
         All required input files are available.
         You can start PV visualization for this project.
-      new: PV visualization is being submitted
-      queued: PV visualization is queued
-      running: PV visualization is running
-      error: There was an error while calculating PV visualization
-      finished: |
-        PV visualization finished successfully, results stored in
-        the output directory for results
-      aborted: PV visualization was aborted by the pipeline owner
-      start_automatic: Save PV visualization version
-      start_manual: Start PV visualization
-      restart_manual: Restart PV visualization
 
     # Mocked steps
-    haemodynamic_comparison:
-      title: Haemodynamic comparison
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    inference:
-      title: Inference
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    inference_weighting:
-      title: Inference weighting
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    iteration_control:
-      title: Iteration control
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
+
     patient_db_selection:
       title: Project database selection
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    prosthetic_geometries:
-      title: Prosthetic geometries
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    results_presentation:
-      title: Results presentation
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    rule_selection:
-      title: Rule selection
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    valve_placement:
-      title: Valve placement
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    valve_sizing:
-      title: Valve sizing (EndoSize)
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    progression_model:
-      title: Progression model
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    severity_model:
-      title: Severity model
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    economics_algorithm:
-      title: Economics algorithm
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    results_comparison:
-      title: Results comparison
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    valve_placement_x12:
-      title: Valve placement (variants x12)
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    cfd_x12:
-      title: CFD x12
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    ageing_model_x2:
-      title: Ageing model x2
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    pv_loop_comparison:
-      title: PV Loop Comparison
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
-    mv_segmentation:
-      title: MV Segmenatation
-      cannot_start: Cannot start this step
-      created: |
-        All required input files are available.
-        You can start this step.
-      new: Step is being submitted
-      queued: Step is queued
-      running: Step is running
-      error: There was an error while calculating step
-      finished: |
-        Step finished successfully, results stored in
-        the output directory for results
-      aborted: Step was aborted by the pipeline owner
-      start_automatic: Save step version
-      start_manual: Start
-      restart_manual: Restart
