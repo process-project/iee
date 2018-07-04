@@ -1,0 +1,322 @@
+en:
+  layouts:
+    proxy:
+      outdated: Your proxy certificate is outdated and thus we are not able to monitor your active computations.
+      new_proxy: Please generate new proxy certificate.
+  patients:
+    index:
+      title: Projects
+      nothing: There are no projects to be shown.
+      new: New
+      add: Add a new project
+      files: Files
+      pipelines: Pipelines
+      progress: Procedure progress
+      latest_pipelines: "Latest pipelines:"
+      no_pipelines: No pipelines.
+      stats:
+        total: Total cohort projects
+        sites: "Berlin | Eindhoven | Sheffield"
+        females: Females
+        males: Males
+        states: "Pre-op | Post-op"
+        disease: "Aortic VD | Mitral VD"
+    show:
+      subtitle: A project case in EurValve project
+      remove: Delete this case
+      confirm: This will also remove all files uploaded for this case. Are you sure?
+      back: See other cases
+      details: Details
+      files: Files
+      computations: Computations
+      new_computation:
+        imaging_uploaded: Run Segmentation
+        virtual_model_ready: Run new Blood flow CFD simulation
+        after_parameter_estimation: Run new 0D Heart Model computation
+      download: Download
+      download_unavailable: (download unavailable)
+      submit: Execute simulation
+      proxy:
+        invalid: |
+          Your proxy certificate is not valid anymore and thus you are not
+          able to start computation on PLGrid infrastructure.
+      loading_patient_details: Loading project details...
+    details:
+      no_details: Project details are not available (%{details})
+      gender: Gender
+      birth_year: Birth year
+      age: Visit age
+      current_age: Current age
+      weight: Weight
+      height: Height
+      elvmin: Elastance-LVmin
+    new:
+      title: New case
+      subtitle: Register new EurValve Project to conduct research for this case
+    create:
+      success: New project case added.
+    destroy:
+      success: Project case %{case_number} was removed.
+      failure: Unable to remove project case %{case_number}.
+    patient_files:
+      proxy:
+        invalid: |
+          Your proxy certificate is not valid anymore. As a result we are not
+          able to update files list (cached files list is presented bellow).
+    file_browsers:
+      patient_inputs: "%{name} project inputs"
+      pipelines_files: All pipelines files
+    pipelines:
+      pipeline_steps_form:
+        title: Pipeline steps
+        refresh: Refresh all tags and branches
+        loading: Loading pipeline steps configuration...
+      computations_form_automatic:
+        blank: Postpone selection until execution
+        empty_configuration: No configuration needed
+        tag_or_branch: Tag or branch
+        mode: Mode
+      computations_form_manual:
+        description: Manual piepeline steps can be configured directly before start
+      list:
+        title: Pipelines for this Subject
+        new: Set up new pipeline
+      tab:
+        id: Id
+        name: Name
+        user: Owner
+        status: Status
+      tab_compare:
+        id: Id
+        name: Name
+        user: Owner
+        status: Status
+        compare: Compare Existing Results
+      show:
+        subtitle: (%{mode} pipeline)
+        owner: "Owner: %{owner}"
+        back_to_index: Back to pipelines list
+        edit: Edit pipeline
+        delete: Remove pipeline
+        no_computations: No computations defined for this pipeline
+      new:
+        title: Run pipeline
+        back_to_index: Back to pipelines list
+      edit:
+        title: Edit pipeline
+        back_to_index: Back to pipelines list
+      outputs:
+        title: "%{name} pipeline outputs"
+      computations:
+        show:
+          proxy_invalid: |
+            To run this computation you need to have valid
+            PLGrid proxy certificate
+        run:
+          reload: Reload tags and branches
+        computations_form_manual:
+          steps: "Pipeline steps:"
+      file_browsers:
+        patient_inputs: "%{name} project inputs"
+        pipeline_inputs: "%{name} pipeline inputs"
+        pipeline_outputs: "%{name} pipeline outputs"
+
+    comparisons:
+      index:
+        subtitle: pipelines comparison
+        sources_comparison: Sources comparison
+        data_comparison: Data comparison
+        source_comparison_link: "%{computation_step}, rev. %{compared_revision} vs rev. %{compare_to_revision}"
+        invalid: Please select exactly two pipelines to compare.
+        no_data: Nothing to compare.
+        noncomparable: "Result: %{noncomparable}. Not compared."
+
+  services:
+    index:
+      title: Services
+      nothing: You do not manage any service right now.
+      add: Register a new service
+    service:
+      no_name: N/A
+      remove: Remove this service completelly
+      edit: Edit this service
+    new:
+      title: New service
+      subtitle: Register a new EurValve service in order to make it accessible to other users.
+      back: Go back to the service list
+    show:
+      title: "%{name} service"
+      back: Go back to the service list
+    edit:
+      title: Edit service
+      subtitle: Edit service details and manage ownership
+      back: Go back go the service
+    local_policies:
+      index:
+        title: "%{service_name} service - local policies"
+        nothing: No local resource policies defined
+        add: Add new local policy
+        policy_name: Policy name
+        policy_uri: Policy URI
+      resource:
+        edit: Edit access policies
+        remove: Remove this resource
+      new:
+        title: "%{service_name} service - new local policy"
+      show:
+        title: "%{service_name} service - %{name} local policy"
+        back: Go back to local policy list
+      edit:
+        title: "%{service_name} service - edit %{name} local policy"
+        subtitle: Edit resource name and path
+        back: Go back to local policy
+    global_policies:
+      index:
+        title: "%{service_name} service - global policies"
+        nothing: No global resource policies defined
+        add: Add new global policy
+        policy_name: Policy name
+        policy_uri: Policy URI
+      resource:
+        edit: Edit access policies
+        remove: Remove this resource
+      new:
+        title: "%{service_name} service - new global policy"
+      show:
+        title: "%{service_name} service - %{name} global policy"
+        back: Go back to global policy list
+      edit:
+        title: "%{service_name} service - edit %{name} global policy"
+        subtitle: Edit resource name and path
+        back: Go back to global policy
+
+  groups:
+    group:
+      edit: Edit this group, manage group members
+      remove: Remove this group completely
+    index:
+      title: Groups
+      nothing: You do not manage any group right now.
+      add: Register a new group
+    show:
+      back: Go back to the group list
+      members: Group members
+      add : Add new group owners or members
+    new:
+      title: New group
+      subtitle: Register new user group.
+      back: Go back to the group list
+    edit:
+      title: Edit group
+      subtitle: Edit existing group. You can manage assigned users and other groups.
+      back: Go back to the group
+
+  user_groups:
+    user_group:
+      owner: Owner
+      remove: Remove this user from group members
+
+  resources:
+    resource:
+      edit: Edit access policies
+      remove: Remove this resource
+    index:
+      title: Web resources
+      nothing: No web resources
+      add: Create new resource
+      name: Resource name
+      uri: Resource URI
+    new:
+      title: New web resource
+      subtitle: Create new web resource
+      back: Go back to the resource list
+      submit: Create resource
+      name: Resource name
+      path: Resource path
+    managers:
+      title: Resource managers
+
+  resource_managers:
+    index:
+      users: Users
+      groups: Groups
+    resource_manager:
+      remove: Remove resource manager
+    form:
+      user: Pick user
+      group: Pick group
+      user_or_group: Pick user or group
+
+  profiles:
+    layout:
+      copy_jwt: Copy Json Web Token
+      title: Profile
+    show:
+      update: Update profile
+      email_hint: Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service
+    update:
+      success: Your profile has been updated
+      failure: Unable to update profile
+    accounts:
+      show:
+        destroy: Remove account
+    passwords:
+      show:
+        info: After a successful password update, you will be redirected to the login page where you can log in with your new password.
+        update: Update password
+      update:
+        success: Password was successfully updated. Please login with it
+    plgrids:
+      show:
+        info: Your account is connected with <strong><i>%{login}</i></strong> PLGrid account
+        no_proxy: You don't have proxy certificate generated.
+        new_proxy: Generate new proxy
+        destroy: Disconnect from PLGrid
+        proxy_description: Proxy certificate is used to delegate your identity into PLGrid infrastructure and as a conclusion it allows to run long running job on Prometheus supercomputer, monitor jobs execution statuses.
+        proxy_not_valid: Your proxy is not valid anymore, please generate new one to start/monitor jobs on PLGrid infrastructure.
+      destroy:
+        failure: Unable to disconect from PLGrid
+
+  proxy:
+    warning:
+      new_proxy: Generate new proxy
+    info:
+      new_proxy: Generate new proxy
+      issuer: 'Issuer:'
+      subject: 'Subject:'
+      description: 'Your proxy certificate is valid until: %{not_after}'
+
+  access_policies:
+    index:
+      user: Access policies for user
+      group: Access policies for group
+      no_user_access_policies: No user access policies were set
+      no_group_access_policies: No group access policies were set
+    form:
+      user_or_group: Pick user or group
+      add: Add new access policy
+      pick_user: Pick user
+      pick_group: Pick group
+      pick_method: Pick method
+  admin:
+    jobs:
+      show:
+        title: Delayed jobs
+    users:
+      index:
+        title: Users
+        all: All users
+        active: Active users
+        new: New users
+        blocked: Blocked users
+      user:
+        approve: Approve this user
+        block: Block this user
+        destroy: Destroy user account
+  file_store:
+    index:
+        title: Files
+
+  cloud_resources:
+    index:
+      title: Cloud resources

@@ -1,0 +1,67 @@
+en:
+  errors:
+    not_found:
+      title: Sorry but we couldn't find this page
+      description: The page you are looking for does not exist.
+    unprocessable:
+      title: Unprocessable entity
+      description: We was not able to procced your request due to semantic errors.
+    internal_server_error:
+      title: Internal Server Error
+      description: We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.
+    user_groups:
+      last_owner: Cannot remove last group owner
+    project_details:
+      empty_result: empty result set returned from the Data Set repository
+  data_file_synchronizer:
+    timed_out: |
+      Time out when contacting File Storage for project %{project} and
+      user %{user}.
+    invalid_response: |
+      Invalid response of File Storage for project %{project} and user %{user}.
+    request_failure: |
+      Request to File Storage failed with response code %{code} for
+      project %{project} and user %{user}.
+    no_case_number: |
+      User %{user} trying to run the service for a project with no case number.
+    no_proxy: |
+      User %{user} trying to run the service without proxy certificate.
+    no_token: |
+      User %{user} trying to run the service without token.
+    no_fs_client: |
+      There were problems accessing the EurValve File Store service.
+    file_removed: |
+      Removed %{name} file from project %{project} (pipeline %{pipeline}) as no longer present in the
+      File Storage.
+  rimrock:
+    update:
+      timeout: Time out when updating %{user} computations (%{details})
+      internal: Internal rimrock error while updating %{user} computations (%{details})
+  activerecord:
+    errors:
+      models:
+        service:
+          uri:
+            override: Given URI overrides already existing URI
+            overridden: Given URI is overridden by already existing URI
+          uri_aliases:
+            format: One of the URI aliases has invalid format
+            overridden: One of the URI aliases is overridden by already existing URI
+            uniqueness: URI aliases are not unique
+            urialiassame: URI cannot be the same as any of the aliases
+        group:
+          child_ids:
+            cycle: Cycle is not allowed
+        resource:
+          pretty_path:
+            wildcard: Path may contain a single wildcard character at the end
+        patient:
+          create_dav403: Unable to create project file structure in File Store
+          attributes:
+            case_number:
+              invalid: "contains illegal characters, correct characters are letters, digits and ~_-."
+        pipeline:
+          create_dav403: Unable to create pipeline file structure in File Store
+  api:
+    destination_resource_exists: Destination resource already exists
+    source_policy_missing: Source policy does not exist for copying/moving
