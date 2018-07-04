@@ -1,7 +1,7 @@
 .navbar.nav_title{style: "border: 0;"}
   = link_to root_path, class: 'site_title' do
     %i.fa.fa-heartbeat.logo
-    = t("title", type: Rails.application.config.constants["platform_type"] == "EURVALVE" ? "EURVALVE" : "PROCESS")
+    = t("title")
 
 .profile
   .profile_pic
@@ -18,7 +18,7 @@
   .menu_section
     %ul.nav.side-menu
       = render 'layouts/left_menu/research'
-      = render 'layouts/left_menu/data_sets'#Rails.application.config.constants['platform_type'] == EURVALVE ? render 'layouts/left_menu/data_sets' : nil ##TODO
+      = render 'layouts/left_menu/data_sets'
       = render 'layouts/left_menu/settings'
       = render 'layouts/left_menu/administration'
       = render 'layouts/left_menu/help'

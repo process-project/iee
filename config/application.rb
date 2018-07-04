@@ -30,6 +30,15 @@ module Vapor
     config.clock = Struct.new(:update).
                    new((config.constants['clock']['update'] || 30).seconds)
 
+
+    #Used for parametrization of translations (PROCESS/EURVALVE)
+    platform_type = config.constants['platform_type']
+
+    if platform_type != 'eurvalve'
+      config.i18n.load_path += Dir[Rails.root.join('config', 'locales', platform_type, '*.yml')]
+    end
+
+
     redis_url_string = config.constants['redis_url']
 
     # Redis::Store does not handle Unix sockets well, so let's do it for them
