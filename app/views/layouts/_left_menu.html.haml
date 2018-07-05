@@ -1,7 +1,10 @@
-.navbar.nav_title{style: "border: 0;"}
-  = link_to root_path, class: 'site_title' do
-    %i.fa.fa-heartbeat.logo
-    = t("title")
+-# .navbar.nav_title{style: "border: 0;"}
+-#   = link_to root_path, class: 'site_title' do
+-#     %i.fa.fa-heartbeat.logo
+-#     = t("title")
+
+- platform_type = Rails.application.config.constants['platform_type']
+= render "layouts/left_menu/logo_#{platform_type}.html.haml"
 
 .profile
   .profile_pic
