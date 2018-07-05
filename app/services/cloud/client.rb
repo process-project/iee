@@ -157,25 +157,6 @@ module Cloud
 
     private
 
-    def create_request(type, path, body = '')
-      url = URI.parse(path)
-      case type
-      when :post
-        req = Net::HTTP::Post.new(url.to_s)
-        req['Authorization'] = "Bearer #{@user_token}"
-        req['Content-Type'] = 'application/json'
-        req.body = body.to_json
-      when :get
-        req = Net::HTTP::Get.new(url.to_s)
-        req['Authorization'] = "Bearer #{@user_token}"
-        req['Content-Type'] = 'application/json'
-      when :delete
-        req = Net::HTTP::Delete.new(url.to_s)
-        req['Authorization'] = "Bearer #{@user_token}"
-      end
-      [url, req]
-    end
-
     def delete_appliance_set(appliance_set_id)
       url, req = create_request(
         :delete,

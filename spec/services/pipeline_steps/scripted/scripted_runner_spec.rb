@@ -58,7 +58,7 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
 
   it 'sets cloud computation start time to now' do
     @deployment = 'cloud'
-    cloud_client_double
+    cloud_start_double
     now = Time.zone.local(2017, 1, 2, 7, 21, 34)
     travel_to now do
       subject.call
@@ -76,7 +76,7 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
 
   it 'sends notification after cloud computation is started' do
     @deployment = 'cloud'
-    cloud_client_double
+    cloud_start_double
     expect(updater).to receive(:call)
 
     subject.call
@@ -91,7 +91,7 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
 
   it 'changes cloud computation status to :queued' do
     @deployment = 'cloud'
-    cloud_client_double
+    cloud_start_double
     subject.call
 
     expect(subject.computation.status).to eq 'queued'
@@ -116,9 +116,8 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
 
     it 'submits a cloud request for cloud computation' do
       @deployment = 'cloud'
-      client = cloud_client_double
-      expect(client).to receive(:spawn_appliance_set)
-      expect(client).to receive(:spawn_appliance)
+      client = cloud_start_double
+      expect(client).to receive(:call)
       subject.call
     end
 
@@ -133,7 +132,7 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
 
     it 'creates cloud computation with script returned by generator' do
       @deployment = 'cloud'
-      cloud_client_double
+      cloud_start_double
       cloud_computation.assign_attributes(revision: 'revision')
       subject.call
       expect(cloud_computation.script).to include 'script payload'
@@ -150,6 +149,13 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
   end
 
   private
+
+  def cloud_start_double
+    start = double(Cloud::Start)
+    allow(Cloud::Start).to receive(:new).and_return(start)
+    allow(start).to receive_messages(call: 1)
+    start
+  end
 
   def cloud_client_double
     client = double(Cloud::Client)
