@@ -1,8 +1,3 @@
--# .navbar.nav_title{style: "border: 0;"}
--#   = link_to root_path, class: 'site_title' do
--#     %i.fa.fa-heartbeat.logo
--#     = t("title")
-
 - platform_type = Rails.application.config.constants['platform_type']
 = render "layouts/left_menu/logo_#{platform_type}.html.haml"
 
@@ -21,10 +16,12 @@
   .menu_section
     %ul.nav.side-menu
       = render 'layouts/left_menu/research'
-      = (Rails.application.config.constants['platform_type'] == 'eurvalve' ? (render 'layouts/left_menu/data_sets') : nil)
+      = platform_type == 'eurvalve' ? (render 'layouts/left_menu/data_sets') : nil
       = render 'layouts/left_menu/settings'
       = render 'layouts/left_menu/administration'
       = render 'layouts/left_menu/help'
+
+
 
 .sidebar-footer.hidden-small
   = render 'layouts/footer'
