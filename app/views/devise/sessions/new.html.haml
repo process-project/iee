@@ -26,4 +26,4 @@
             = t("new_to_site")
             %a.to_register{href: new_registration_path(resource_name)}
               = t("create_account")
-          = render "devise/shared/footer"
+          = render "devise/shared/footer_#{platform_type}"

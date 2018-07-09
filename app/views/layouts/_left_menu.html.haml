@@ -1,5 +1,4 @@
-- platform_type = Rails.application.config.constants['platform_type']
-= render "layouts/left_menu/logo_#{platform_type}.html.haml"
+= render "layouts/left_menu/logo_#{platform_type}"
 
 .profile
   .profile_pic
@@ -22,6 +21,5 @@
       = render 'layouts/left_menu/help'
 
 
-
 .sidebar-footer.hidden-small
-  = render 'layouts/footer'
+  = render "layouts/footer_#{platform_type}"

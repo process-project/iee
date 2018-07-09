@@ -1,0 +1,10 @@
+%footer
+  .copyright-info
+    = icon('cog')
+    = t('title')
+    = t('by')
+    %a{ href: 'http://dice.cyfronet.pl', target: "_blank" }= t('dice')
+    %br
+    = t('version')
+    = Vapor::VERSION
+    %small= Vapor::REVISION

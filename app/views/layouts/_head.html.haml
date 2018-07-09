@@ -3,8 +3,9 @@
   %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
   - if current_user
     %meta{name: 'token', content: current_user.token}
-  = favicon_link_tag
+  = render "layouts/icon_#{platform_type}"
   %title= t('title')
+
 
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
