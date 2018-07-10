@@ -5,7 +5,7 @@
     .alert.alert-info
       = t '.nothing'
 
-= render 'patients/statistics'
+= render 'patients/statistics' if platform_type == 'eurvalve'
 
 .row.top_tiles
 
@@ -14,7 +14,7 @@
       .x_panel.fixed_height_320{ class: patient.status }
         .x_title
           %h2
-            = icon 'heart'
+            = render "project_icon_#{platform_type}"
             = link_to patient, data: { turbolinks: false } do
               = patient.case_number
           .clearfix

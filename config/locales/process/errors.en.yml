@@ -1,18 +1,20 @@
 en:
   data_file_synchronizer:
     timed_out: |
-      Time out when contacting File Storage for project %{project} and
+      Time out when contacting File Storage for project %{patient} and
       user %{user}.
     invalid_response: |
-      Invalid response of File Storage for project %{project} and user %{user}.
+      Invalid response of File Storage for project %{patient} and user %{user}.
     request_failure: |
       Request to File Storage failed with response code %{code} for
-      project %{project} and user %{user}.
+      project %{patient} and user %{user}.
     no_case_number: |
       User %{user} trying to run the service for a project with no case number.
     file_removed: |
-      Removed %{name} file from project %{project} (pipeline %{pipeline}) as no longer present in the
+      Removed %{name} file from project %{patient} (pipeline %{pipeline}) as no longer present in the
       File Storage.
+    no_fs_client: |
+          There were problems accessing the Process File Store service.
   activerecord:
     errors:
       models:

@@ -1,0 +1,7 @@
+en:
+  simple_form:
+    placeholders:
+      patient:
+        case_number: The unique Process identification
+      service:
+        uri: "#"

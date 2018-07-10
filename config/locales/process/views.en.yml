@@ -7,12 +7,12 @@ en:
       stats:
         total: Total cohort projects
     show:
-      subtitle: A project case in EurValve project
+      subtitle: A project case in Process project
       loading_patient_details: Loading project details...
     details:
       no_details: Project details are not available (%{details})
     new:
-      subtitle: Register new EurValve Project to conduct research for this case
+      subtitle: Register new Process Project to conduct research for this case
     create:
       success: New project case added.
     destroy:
@@ -23,3 +23,6 @@ en:
     pipelines:
       file_browsers:
         patient_inputs: "%{name} project inputs"
+  services:
+    new:
+      subtitle: Register a new Process service in order to make it accessible to other users.
