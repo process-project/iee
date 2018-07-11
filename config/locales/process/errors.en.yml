@@ -19,4 +19,4 @@ en:
     errors:
       models:
         patient:
-          create_dav403: Unable to create project file structure in File Store
+          create_dav403: Unable to create project file structure in Process File Store

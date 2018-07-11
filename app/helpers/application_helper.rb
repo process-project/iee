@@ -28,16 +28,8 @@ module ApplicationHelper
   def current_action?(*args)
     args.any? { |v| v.to_s.downcase == action_name }
   end
-
-  # Extracts proper platform name from aplication.yml file
+  
   def platform_type
-    platforms = %w[process]
-    config_platform_type = Rails.application.config.constants['platform_type']
-
-    if platforms.include? config_platform_type
-      config_platform_type
-    else
-      'eurvalve'
-    end
+    Rails.application.config.constants['platform_type']
   end
 end

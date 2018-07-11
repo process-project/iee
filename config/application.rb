@@ -30,9 +30,10 @@ module Vapor
     config.clock = Struct.new(:update).
                    new((config.constants['clock']['update'] || 30).seconds)
 
-    # Used for parametrization of translations (PROCESS/EURVALVE)
+
     platform_type = config.constants['platform_type']
 
+    # Overrides eurvalve locales with 'platform_type' ones
     if platform_type != 'eurvalve'
       config.i18n.load_path += Dir[root.join('config', 'locales', platform_type, '*.yml')]
     end

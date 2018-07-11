@@ -2,6 +2,6 @@ en:
   simple_form:
     placeholders:
       patient:
-        case_number: The unique Process identification
+        case_number: The unique Process ID
       service:
         uri: "#"

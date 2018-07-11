@@ -4,8 +4,6 @@ en:
       title: Projects
       nothing: There are no projects to be shown.
       add: Add a new project
-      stats:
-        total: Total cohort projects
     show:
       subtitle: A project case in Process project
       loading_patient_details: Loading project details...
