@@ -6,19 +6,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## Unreleased
 
 ### Added
-- User can select segmentation run mode before start (@mkasztelnik)
-- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
-- Ability to parameterize UI elements according to platform type (EurValve or Process) (@patrykwojtowicz, @JanKapala)
 
 ### Changed
-- Use Gitlab review procedure instead of labels (@mkasztelnik)
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+### Security
+
+## 0.10.0
+
+### Added
+- User can select segmentation run mode before start (@mkasztelnik)
+- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+- `pipeline_identifier` `case_number` and `token` computation script helpers (@mkasztelnik)
+
+### Changed
+- Use Gitlab review procedure instead of labels (@mkasztelnik)
+- `stage_in` returns error code when unable to download FileStore file (@mkasztelnik)
+- Set JWT token expiration time to 24h (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Computation script repositories removed from `eurvalve.yml`, step repository
+  configuration used instead (@mkasztelnik)
 
 ### Fixed
 - Fix unused pipeline title missing (@mkasztelnik)

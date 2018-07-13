@@ -41,7 +41,7 @@ At the moment Superuser privileges are required due to citext.
 You may also manually activate the citext extension as shown below -
 in which case normal privileges would be sufficient.
 
-### Manual activation of the citext extention
+### Manual activation of the citext extension
 
 1. Create the databases (at least for the development and test environments).
    You may run `bin/setup` (and allow it to fail due to insufficient privileges,
@@ -109,18 +109,8 @@ you can set the following ENV variables:
   * `GITLAB_HOST` - Gitlab host (without https, e.g. gitlab.com)
   * `GITLAB_API_PRIVATE_TOKEN` - Gitlab access token used to fetch Rimrock
   * `CLOCK_UPDATE` - Computations update period (in seconds)
-    Computations slurm run template
-  * `PIPELINE_R_BFS` - Overrides default project name in Gitlab for Blood Flow Simutalion
-  * `PIPELINE_R_HMS` - Overrides default project name in Gitlab for Heart Model Simulation
-  * `PIPELINE_R_PE` - Overrides default project name in Gitlab for Parameter Extraction
-  * `PIPELINE_R_CFD` - Overrides default project name in Gitlab for CFD Simulation
-  * `PIPELINE_R_ROM` - Overrides default project name in Gitlab for Reduced Order Model Analysis
-  * `PIPELINE_R_PO` - Overrides default project name in Gitlab for Parameter Optimization
-  * `PIPELINE_R_U` - Overrides default project name in Gitlab for Uncertainty Analysis
-  * `PIPELINE_R_0D` - Overrides default project name in Gitlab for 0D Model Sequence
-  * `PIPELINE_R_PV` - Overrides default project name in Gitlab for Pressure-Volume Visualization
   * `ANSYSLI_SERVERS` - location of custom ansys license servers
-  * `ANSYSLMD_LICENSE_FILE`- location of sutom ansys license file
+  * `ANSYSLMD_LICENSE_FILE`- location of custom ansys license file
 
 ## Testing
 
@@ -167,7 +157,7 @@ To execute Gitlab integration tests:
 bundle exec rspec --tag gitlab
 ```
 
-## Using bullet to increase application perfromance
+## Using bullet to increase application performance
 [Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments.
 While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
 
