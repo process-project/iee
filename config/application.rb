@@ -30,7 +30,6 @@ module Vapor
     config.clock = Struct.new(:update).
                    new((config.constants['clock']['update'] || 30).seconds)
 
-
     platform_type = config.constants['platform_type']
 
     # Overrides eurvalve locales with 'platform_type' ones

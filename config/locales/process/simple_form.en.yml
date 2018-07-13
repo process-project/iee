@@ -5,3 +5,6 @@ en:
         case_number: The unique Process ID
       service:
         uri: "#"
+    labels:
+      patient:
+        case_number: Project ID

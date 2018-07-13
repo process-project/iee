@@ -9,7 +9,7 @@ en:
       Request to File Storage failed with response code %{code} for
       project %{patient} and user %{user}.
     no_case_number: |
-      User %{user} trying to run the service for a project with no case number.
+      User %{user} trying to run the service for a project with no project ID.
     file_removed: |
       Removed %{name} file from project %{patient} (pipeline %{pipeline}) as no longer present in the
       File Storage.
