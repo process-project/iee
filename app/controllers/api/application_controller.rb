@@ -6,7 +6,9 @@ module Api
 
     before_action :authenticate_user!
     before_action :destroy_session
+
     rescue_from Pundit::NotAuthorizedError, with: :forbidden
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
     def destroy_session
       request.session_options[:skip] = true
@@ -31,6 +33,20 @@ module Api
       errors_hash
     end
 
+    def permitted_attributes(record, action = action_name)
+      policy = policy(record)
+      method_name = if policy.respond_to?("permitted_attributes_for_#{action}")
+                      "permitted_attributes_for_#{action}"
+                    else
+                      'permitted_attributes'
+                    end
+      pundit_params_for(record).permit(*policy.public_send(method_name))
+    end
+
+    def pundit_params_for(_record)
+      params.require(:data).require(:attributes)
+    end
+
     private
 
     def authenticate_user!
@@ -46,6 +62,10 @@ module Api
 
     def forbidden
       api_error(status: :forbidden)
+    end
+
+    def not_found
+      api_error(status: :not_found)
     end
   end
 end
