@@ -20,4 +20,5 @@
       - else
         %p= t '.nothing'
 .col-md-4
-  = render 'index_help'
+  / = render "index_help"
+  = render "index_help_#{platform_type}"
