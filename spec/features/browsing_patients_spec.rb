@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Patient browsing' do
+  include GitlabHelper
+
   let(:patient) { create(:patient, case_number: '1234') }
   let(:user) { create(:user, :approved) }
 
@@ -240,6 +242,8 @@ RSpec.feature 'Patient browsing' do
     end
 
     scenario 'user can create automatic pipeline, which is automatically started' do
+      mock_gitlab_versions
+
       expect(Pipelines::StartRunnable).
         to receive(:new).and_return(double(call: true))
 
@@ -371,7 +375,6 @@ RSpec.feature 'Patient browsing' do
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
         select 'bar'
-        select 'cluster'
         click_button computation_run_text(computation)
 
         computation.reload
@@ -406,7 +409,6 @@ RSpec.feature 'Patient browsing' do
         mock_rimrock_computation_ready_to_run
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
-        select 'cluster'
         click_button computation_run_text(computation)
 
         expect(page).to have_content 'can\'t be blank'

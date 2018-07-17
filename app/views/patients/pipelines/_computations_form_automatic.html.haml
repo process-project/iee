@@ -11,11 +11,20 @@
           name: "pipeline[#{step}][tag_or_branch]"
       %label.col-sm-2.control-label.select{ for: "pipeline_#{step}_deployment" }= t('.deployment')
       .col-sm-4
-        = select_tag "pipeline_#{step}_deployment",
-          options_for_select(config[:deployment]),
-          include_blank: t('.blank'),
-          class: "form-control",
-          name: "pipeline[#{step}][deployment]"
+        - deployments = config[:deployments]
+        - if deployments.size > 1
+          = select_tag "pipeline_#{step}_deployment",
+            options_for_select(config[:deployments]),
+            include_blank: t('.blank'),
+            class: "form-control",
+            name: "pipeline[#{step}][deployment]"
+        - else
+          = text_field_tag "pipeline_#{step}_deployment",
+            deployments.first,
+            readonly: true,
+            class: "form-control",
+            name: "pipeline[#{step}][deployment]"
+
     - if config[:run_modes]
       %label.col-sm-2.control-label.select{ for: "pipeline_#{step}_run_mode" }= t('.mode')
       .col-sm-6

@@ -59,26 +59,16 @@ module Patients
 
       def prepare_to_show_computation
         @computations = @pipeline.computations.flow_ordered
-
-        if load_versions?
-          @versions = Gitlab::Versions.
-                      new(repo, force_reload: params[:force_reload]).call
+        if updatable?
+          config = step.config(params[:force_reload])
+          @versions = config[:tags_and_branches]
+          @run_modes = config[:run_modes]
+          @deployments = config[:deployments]
         end
-
-        @run_modes = step.try(:run_modes) if updatable?
       end
 
       def step
         @computation.step
-      end
-
-      def repo
-        @repo ||= Rails.application.
-                  config_for('eurvalve')['git_repos'][@computation.pipeline_step]
-      end
-
-      def load_versions?
-        repo && updatable?
       end
 
       def updatable?

@@ -8,31 +8,7 @@ module Pipelines
     end
 
     def call
-      Hash[@steps.map { |step| [step.name, config(step)] }]
-    end
-
-    private
-
-    def config(step)
-      # Can be extended by other step types
-      {
-        tags_and_branches: tags_and_branches(step),
-        deployment: %w[cluster cloud],
-        run_modes: run_modes(step)
-      }
-    end
-
-    def tags_and_branches(step)
-      repo = repo(step)
-      Gitlab::Versions.new(repo, force_reload: @force_reload).call if repo
-    end
-
-    def repo(step)
-      Rails.application.config_for('eurvalve')['git_repos'][step.name]
-    end
-
-    def run_modes(step)
-      step.run_modes if defined? step.run_modes
+      Hash[@steps.map { |step| [step.name, step.config(@force_reload)] }]
     end
   end
 end

@@ -136,7 +136,13 @@ class Flow
       '0d_scenarios.sh.erb',
       [:parameter_optimization_result]
     ),
-    ScriptedStep.new('sample_cloud_step', 'eurvalve/mock-step', 'cloud_mock.sh.erb', []),
+    ScriptedStep.new(
+      'sample_cloud_step',
+      'eurvalve/mock-step',
+      'cloud_mock.sh.erb',
+      [],
+      deployments: %w[cluster cloud]
+    ),
     ScriptedStep.new('sample_cluster_step', 'eurvalve/mock-step', 'mock.sh.erb', [])
   ].freeze
 

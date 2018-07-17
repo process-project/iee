@@ -8,9 +8,14 @@
           collection: @versions,
           group_method: :last
       .col-lg-4.col-xs-12
-        = f.input :deployment,
-          as: :select,
-          collection: ['cluster', 'cloud']
+        - if @deployments.size > 1
+          = f.input :deployment,
+            as: :select,
+            collection: @deployments
+        - else
+          = f.input :deployment,
+            input_html: { value: @deployments.first },
+            readonly: true
     - if @run_modes
       .col-lg-7.col-xs-6
         = f.input :run_mode,
