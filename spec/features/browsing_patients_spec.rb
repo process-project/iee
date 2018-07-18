@@ -69,30 +69,6 @@ RSpec.feature 'Patient browsing' do
       expect(page).to have_content I18n.t('patients.index.nothing')
     end
 
-    scenario 'shows statistics on patient cohort', js: true do
-      allow_any_instance_of(Patients::Statistics).
-        to receive(:call).
-        and_return(stats)
-
-      visit patients_path
-
-      expect(page).to have_content I18n.t('patients.index.stats.total')
-      expect(page).to have_content 4
-      expect(page).to have_content 'and 1 test entries'
-      expect(page).to have_content I18n.t('patients.index.stats.sites')
-      expect(page).to have_content '2 | 1 | 1'
-      expect(page).to have_content '0 from unknown site'
-      expect(page).to have_content '2 | 2'
-      expect(page).to have_content '0 with unknown diagnosis'
-      expect(page).to have_content I18n.t('patients.index.stats.females')
-      expect(page).to have_content I18n.t('patients.index.stats.males')
-      expect(page).to have_content '2 | 1'
-      expect(page).to have_content '1 of unknown gender'
-      expect(page).to have_content I18n.t('patients.index.stats.states')
-      expect(page).to have_content '3 | 0'
-      expect(page).to have_content '1 of unknown state'
-    end
-
     scenario 'gives the file number for each patient case' do
       create_list(:data_file, 2, patient: patient)
 
@@ -188,10 +164,6 @@ RSpec.feature 'Patient browsing' do
       allow_any_instance_of(Patients::Details).
         to receive(:call).
         and_return(details)
-
-      visit patient_path(patient)
-
-      expect(page).to have_content 'Pre-op'
     end
 
     scenario 'shows pipelines list' do
