@@ -41,6 +41,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Fix unused pipeline title missing (@mkasztelnik)
+- Fixed GitLab integration spec (@Nuanda)
 
 ### Security
 
