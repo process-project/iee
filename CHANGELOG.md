@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - User can select segmentation run mode before start (@mkasztelnik)
 - Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
 - `pipeline_identifier` `case_number` and `token` computation script helpers (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
 
 ### Changed
 - Use Gitlab review procedure instead of labels (@mkasztelnik)
