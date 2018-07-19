@@ -160,12 +160,6 @@ RSpec.feature 'Patient browsing' do
       expect(current_path).to eq patients_path
     end
 
-    scenario 'shows patient\'s clinical data', js: true do
-      allow_any_instance_of(Patients::Details).
-        to receive(:call).
-        and_return(details)
-    end
-
     scenario 'shows pipelines list' do
       pipeline = create(:pipeline, patient: patient, name: 'p1')
 
