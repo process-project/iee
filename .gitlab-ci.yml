@@ -71,6 +71,20 @@ deploy_development:
   environment:
     name: development
     url: https://valve-dev.cyfronet.pl
+    
+process_deploy_development:
+  stage: deploy
+  script:
+  - mkdir /root/.ssh
+  - echo $PROCESS_DEV_HOST_KEY > ~/.ssh/known_hosts
+  - echo -e $PROCESS_DEV_KEY > ~/.ssh/id_rsa
+  - chmod 400 ~/.ssh/id_rsa
+  - git push $PROCESS_DEV_GIT_REPO HEAD:process-master
+  only:
+  - process-master
+  environment:
+    name: process-development
+    url: https://process-dev.cyfronet.pl
 
 deploy_production:
   stage: deploy
