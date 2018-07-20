@@ -1,4 +1,3 @@
-- platform_type = Rails.application.config.constants['platform_type']
 %div
   %div#wrapper
     %div#login
@@ -20,4 +19,4 @@
             = t("already_registered")
             %a.to_register{href: new_session_path(resource_name)}
               = t("login")
-          = render "devise/shared/footer_#{platform_type}"
+          = render "devise/shared/footer"

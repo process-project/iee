@@ -3,7 +3,7 @@
   %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
   - if current_user
     %meta{name: 'token', content: current_user.token}
-  = render "layouts/icon_#{platform_type}"
+  = favicon_link_tag 'process_logo.ico'
   %title= t('title')
 
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true

@@ -1,4 +1,7 @@
-= render "layouts/left_menu/logo_#{platform_type}"
+.navbar.nav_title{style: "border: 0;"}
+  = link_to root_path, class: 'site_title' do
+    = image_tag('process_logo_gear.png')
+    = image_tag('process_logo_border.png')
 
 .profile
   .profile_pic
@@ -15,11 +18,10 @@
   .menu_section
     %ul.nav.side-menu
       = render 'layouts/left_menu/research'
-      = render 'layouts/left_menu/data_sets' if platform_type == 'eurvalve'
       = render 'layouts/left_menu/settings'
       = render 'layouts/left_menu/administration'
       = render 'layouts/left_menu/help'
 
 
 .sidebar-footer.hidden-small
-  = render "layouts/footer_#{platform_type}"
+  = render "layouts/footer"

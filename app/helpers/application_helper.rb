@@ -28,9 +28,4 @@ module ApplicationHelper
   def current_action?(*args)
     args.any? { |v| v.to_s.downcase == action_name }
   end
-
-  # Extracts platform type from config.constants
-  def platform_type
-    Rails.application.config.constants['platform_type']
-  end
 end
