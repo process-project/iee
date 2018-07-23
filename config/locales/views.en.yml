@@ -42,14 +42,20 @@ en:
           able to start computation on PLGrid infrastructure.
       loading_patient_details: Loading patient details...
     details:
+      subtitle: Recorded data
       no_details: Patient details are not available (%{details})
+      not_all_details: Some patient details are not available (%{details})
+      date: Date
       gender: Gender
+      state: State
       birth_year: Birth year
       age: Visit age
       current_age: Current age
       weight: Weight
       height: Height
       elvmin: Elastance-LVmin
+      elvmax: Elastance-LVmax
+      unspecified: unspecified
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case

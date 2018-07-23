@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Accepting `file.zip` as a correct input for segmentation (@Nuanda)
+- Extended clinical details section with a multi-entry widget (@Nuanda)
 
 ### Changed
 
@@ -19,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Fixed GitLab integration spec (@Nuanda)
+- Missing clinical data for some patients (@Nuanda)
 
 ### Security
 
