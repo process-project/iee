@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Patients API (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
 
 ### Changed
 
@@ -18,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Fixed GitLab integration spec (@Nuanda)
 
 ### Security
 
@@ -41,7 +43,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Fix unused pipeline title missing (@mkasztelnik)
-- Fixed GitLab integration spec (@Nuanda)
 
 ### Security
 
