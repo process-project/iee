@@ -81,6 +81,8 @@ process_deploy_development:
   - chmod 400 ~/.ssh/id_rsa
   - ls -lh
   - git branch
+  - git checkout ci-test-process
+  - git branch
   - git push $PROCESS_DEV_GIT_REPO ci-test-process:ci-test-process
   only:
   - ci-test-process
