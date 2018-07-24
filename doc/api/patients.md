@@ -1,9 +1,11 @@
 # Patients API
 
 Access to the patients management API is authorized by delegating user
-credentials (using Bearer Authorization header). You can download your
-security (JSON web) token from your profile page in the EurValve Portal
-(navigate through the upper right dropdown menu).
+credentials (using Bearer Authorization header). The token in examples
+below were generated for your personal use, please do not share them in
+any way. If server responds with a timeout error, please refresh this
+page to receive a new token. You can also download your security
+(JSON web) token from your profile page: ${profile_url}.
 
 The API exposes the following REST methods:
 
@@ -37,7 +39,7 @@ Response body:
 Example using cURL:
 
 ```
-curl -H "Authorization: Bearer {user_token}" ${root_url}api/patients
+curl -H "Authorization: Bearer ${user_token}" ${root_url}api/patients
 ```
 
 ## `GET /api/patients/:case_number`
@@ -67,7 +69,7 @@ Response body:
 Example using cURL:
 
 ```
-curl -H "Authorization: Bearer {user_token}" ${root_url}api/patients/case-number-1
+curl -H "Authorization: Bearer ${user_token}" ${root_url}api/patients/case-number-1
 ```
 
 ## `POST /api/patients`
@@ -106,7 +108,7 @@ Response body:
 Example using cURL:
 
 ```
-curl -X POST --data '{ "data": { "type": "patient", "attributes": { "case_number": "new-case-number" } } }' -H "Content-Type: application/json" -H "Authorization: Bearer {user_token}" ${root_url}api/patients
+curl -X POST --data '{ "data": { "type": "patient", "attributes": { "case_number": "new-case-number" } } }' -H "Content-Type: application/json" -H "Authorization: Bearer ${user_token}" ${root_url}api/patients
 ```
 
 ## `DELETE /api/patients/:case_number`
@@ -116,5 +118,5 @@ Destroy patient and all patient pipelines
 Example using cURL:
 
 ```
-curl -H "Authorization: Bearer {user_token}" -X DELETE ${root_url}api/patients/case-number-1
+curl -H "Authorization: Bearer ${user_token}" -X DELETE ${root_url}api/patients/case-number-1
 ```
