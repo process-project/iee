@@ -25,8 +25,9 @@ describe Patients::Details do
 
     let(:inferred) do
       [
-        %w[roottable_patient_id_text ds_type_item com_elvmin_value com_elvmax_value],
-        %w[a_case Pre-op 0.46694209 0.258053069]
+        %w[roottable_patient_id_text ds_type_item com_elvmin_value com_elvmax_value
+           com_tbv_value systemic_resistance_distal_value systemic_resistance_proximal_value],
+        %w[a_case Pre-op 0.46694209 0.258053069 0.70694961 0.45437689 0.658990698]
       ]
     end
 
@@ -58,11 +59,13 @@ describe Patients::Details do
       expect(details[:status]).to eq :ok
       expect(details[:payload].size).to eq 4
       expect(details[:payload][0].map { |x| x[:name] }).
-        to match_array %w[birth_year gender current_age]
+        to match_array %w[year_of_birth_value gender_value]
       expect(details[:payload][1].map { |x| x[:name] }).
-        to match_array %w[age date height state weight]
+        to match_array %w[age_value ds_date_date ds_height_value ds_type_value ds_weight_value]
+      com_array = %w[ds_type_item com_elvmin_value com_elvmax_value com_tbv_value
+                     systemic_resistance_distal_value systemic_resistance_proximal_value]
       expect(details[:payload][3].map { |x| x[:name] }).
-        to match_array %w[state elvmin elvmax]
+        to match_array com_array
     end
 
     it 'shows warning alongside basic and real data when no inferred data is present' do
@@ -87,9 +90,9 @@ describe Patients::Details do
         to eq 'Empty result set returned from the data set repository of inferred values'
       expect(details[:payload].size).to eq 3
       expect(details[:payload][0].map { |x| x[:name] }).
-        to match_array %w[birth_year gender current_age]
+        to match_array %w[year_of_birth_value gender_value]
       expect(details[:payload][1].map { |x| x[:name] }).
-        to match_array %w[age date height state weight]
+        to match_array %w[age_value ds_date_date ds_height_value ds_type_value ds_weight_value]
     end
 
     it 'shows error when no real data is present' do

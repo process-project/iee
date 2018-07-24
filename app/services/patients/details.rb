@@ -39,42 +39,45 @@ module Patients
       }
     end
 
+    def basic_values(csv)
+      create_details(
+        [[
+          entry(csv, 1, 'gender_value'),
+          entry(csv, 1, 'year_of_birth_value')
+        ]]
+      )
+    end
+
     def real_values(csv)
       create_details(
         (1..(csv.size - 1)).map { |row| real_event(csv, row) }
       )
     end
 
-    def basic_values(csv)
-      create_details(
-        [[
-          entry('gender', csv_value(csv, 1, 'gender_value'), 'real', 'default'),
-          entry('birth_year', csv_value(csv, 1, 'year_of_birth_value'), 'real', 'default'),
-          entry('current_age', parse_age(csv_value(csv, 1, 'year_of_birth_value')),
-                'computed', 'success')
-        ]]
-      )
-    end
-
     def inferred_values(csv)
       create_details(
-        (1..(csv.size - 1)).map do |row|
-          [
-            entry('state', csv_value(csv, row, 'ds_type_item'), 'inferred', 'default'),
-            entry('elvmin', csv_value(csv, row, 'com_elvmin_value'), 'inferred', 'warning'),
-            entry('elvmax', csv_value(csv, row, 'com_elvmax_value'), 'inferred', 'warning')
-          ]
-        end
+        (1..(csv.size - 1)).map { |row| inferred_event(csv, row) }
       )
     end
 
     def real_event(csv, row)
       [
-        entry('date', parse_date(csv_value(csv, row, 'ds_date_date')), 'real', 'default'),
-        entry('state', csv_value(csv, row, 'ds_type_value'), 'real', 'default'),
-        entry('age', csv_value(csv, row, 'age_value'), 'real', 'default'),
-        entry('height', csv_value(csv, row, 'ds_height_value'), 'real', 'default'),
-        entry('weight', csv_value(csv, row, 'ds_weight_value'), 'real', 'default')
+        entry(csv, row, 'ds_date_date'),
+        entry(csv, row, 'ds_type_value'),
+        entry(csv, row, 'age_value'),
+        entry(csv, row, 'ds_height_value', unit: 'cm'),
+        entry(csv, row, 'ds_weight_value', unit: 'kg')
+      ]
+    end
+
+    def inferred_event(csv, row)
+      [
+        entry(csv, row, 'ds_type_item'),
+        entry(csv, row, 'com_elvmin_value', type: 'inferred', unit: 'mmHg/ml'),
+        entry(csv, row, 'com_elvmax_value', type: 'inferred', unit: 'mmHg/ml'),
+        entry(csv, row, 'com_tbv_value', type: 'inferred', unit: 'ml'),
+        entry(csv, row, 'systemic_resistance_distal_value', type: 'inferred', unit: 'mmHg/ml'),
+        entry(csv, row, 'systemic_resistance_proximal_value', type: 'inferred', unit: 'mmHg/ml')
       ]
     end
 
@@ -82,20 +85,29 @@ module Patients
       value.present? ? Date.parse(value) : ''
     end
 
-    def parse_age(value)
-      value.present? ? (Time.current.year - value.to_i) : ''
-    end
-
     def create_details(entries)
       { status: :ok, payload: entries }
     end
 
-    def entry(name, value, type, style)
-      { name: name, value: value, type: type, style: style }
+    def entry(csv, row, name, unit: nil, type: nil)
+      value = csv_value(csv, row, name)
+      style = case type
+              when 'computed' then 'success'
+              when 'inferred' then 'warning'
+              else 'default'
+              end
+      { name: name, value: value, type: type, style: style, unit: unit }
     end
 
     def csv_value(csv, row, field)
-      csv[row][csv[0].index(field)]
+      value = csv[row][csv[0].index(field)]
+      case field
+      when 'com_elvmin_value', 'com_elvmax_value', 'com_tbv_value' then value.to_f.round(3)
+      when 'systemic_resistance_distal_value', 'systemic_resistance_proximal_value'
+        value.to_f.round(3)
+      when 'ds_date_date' then parse_date(value)
+      else value
+      end
     end
   end
 end
