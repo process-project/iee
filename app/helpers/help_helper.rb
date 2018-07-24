@@ -27,7 +27,9 @@ module HelpHelper
       'jwt_public_key' => jwt_public_key,
       'jwt_key_algorithm' => jwt_key_algorithm,
       'root_url' => root_url,
-      'data_sets_api_doc' => data_sets_api_doc
+      'data_sets_api_doc' => data_sets_api_doc,
+      'profile_url' => profile_url,
+      'user_token' => current_user.token
     }
     MarkdownRenderer.new(context)
   end
