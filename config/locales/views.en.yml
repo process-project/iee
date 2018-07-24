@@ -75,6 +75,7 @@ en:
         blank: Postpone selection until execution
         empty_configuration: No configuration needed
         tag_or_branch: Tag or branch
+        mode: Mode
       computations_form_manual:
         description: Manual piepeline steps can be configured directly before start
       list:

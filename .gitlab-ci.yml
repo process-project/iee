@@ -55,10 +55,8 @@ brakeman:
   stage: test
   script:
     - ruby -v
-    - which ruby
-    - gem install bundler --no-ri --no-rdoc
-    - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
-    - bundle exec brakeman -z
+    - gem install brakeman --no-ri --no-rdoc
+    - brakeman --exit-on-warn --quiet -f plain
 
 deploy_development:
   stage: deploy

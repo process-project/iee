@@ -4,7 +4,7 @@ en:
       title: AV Segmentation
       cannot_start: |
         Cannot start segmentation because required input file
-        (imaging_*.zip) cannot be found in the patient input directory or
+        (imaging_*.zip or file.zip) cannot be found in the patient input directory or
         pipeline directory.
       created: |
         All required input files are available.
@@ -16,6 +16,7 @@ en:
         Segmentation finished successfully, results stored in
         the output directory for the results
       aborted: Segmentation was aborted by the pipeline owner
+      start_automatic: Save segmentation run mode
       start_manual: Start segmentation
       restart_manual: Restart segmentation
     parameter_extraction:

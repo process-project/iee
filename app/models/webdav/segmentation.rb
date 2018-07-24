@@ -10,8 +10,8 @@ module Webdav
     end
 
     class << self
-      def input_path(computation)
-        File.join(inputs_path, computation.working_file_name)
+      def input_path(computation, prefix = '')
+        File.join(inputs_path, "#{prefix}#{computation.working_file_name}")
       end
 
       def output_path(computation)

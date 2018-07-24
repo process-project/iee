@@ -5,6 +5,7 @@ module SynchronizerUtilities
 
   TYPE_PATTERNS = {
     /^imaging_.*\.zip$/ => 'image',
+    /file\.zip/ => 'image',
     /^segmentation_.*\.zip$/ => 'segmentation_result',
     /^fluidFlow\.cas$/ => 'fluid_virtual_model',
     /^structural_vent\.dat$/ => 'ventricle_virtual_model',

@@ -19,7 +19,7 @@ module Segmentation
 
     def download_input
       @local_path = download_service.
-                    call { |f| "#{mode}_#{SecureRandom.uuid}_#{f}" }
+                    call { |f| "#{run_mode}_#{SecureRandom.uuid}_#{f}" }
     end
 
     def download_service
@@ -27,8 +27,8 @@ module Segmentation
                                @computation.input_path)
     end
 
-    def mode
-      Rails.application.config_for('eurvalve')['segmentation']['mode']
+    def run_mode
+      @computation.run_mode
     end
 
     def update_computation
@@ -38,8 +38,20 @@ module Segmentation
     end
 
     def upload_input
-      Webdav::UploadFile.new(Webdav::Segmentation.new, @local_path,
-                             Webdav::Segmentation.input_path(@computation)).call
+      Webdav::UploadFile.new(client, @local_path, input_path_with_prefix).call
+      Webdav::MoveFile.new(client, input_path_with_prefix, input_path).call
+    end
+
+    def client
+      @client ||= Webdav::Segmentation.new
+    end
+
+    def input_path
+      Webdav::Segmentation.input_path(@computation)
+    end
+
+    def input_path_with_prefix
+      Webdav::Segmentation.input_path(@computation, 'tmp-')
     end
 
     def status_dir_path

@@ -6,23 +6,77 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## Unreleased
 
 ### Added
-- Added AVD/MVD ratio to patients' statistics (@Nuanda)
-- Profile link for left avatar picture and user name (@mkasztelnik)
-- Colors for patient tile connected with last pipeline status (@mkasztelnik)
+- Patients API (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
 - First version of automatic patient synchronization machinery (@Nuanda)
 
 ### Changed
-- Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Fixed GitLab integration spec (@Nuanda)
+
+### Security
+
+## 0.10.0
+
+### Added
+- User can select segmentation run mode before start (@mkasztelnik)
+- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+- `pipeline_identifier` `case_number` and `token` computation script helpers (@mkasztelnik)
+
+### Changed
+- Use Gitlab review procedure instead of labels (@mkasztelnik)
+- `stage_in` returns error code when unable to download FileStore file (@mkasztelnik)
+- Set JWT token expiration time to 24h (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Computation script repositories removed from `eurvalve.yml`, step repository
+  configuration used instead (@mkasztelnik)
+
+### Fixed
+- Fix unused pipeline title missing (@mkasztelnik)
+
+### Security
+
+## 0.9.1
+
+### Security
+- Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
+
+## 0.9.0
+
+### Added
+- Added AVD/MVD ratio to patients' statistics (@Nuanda)
+- Profile link for left avatar picture and user name (@mkasztelnik)
+- Colors for patient tile connected with last pipeline status (@mkasztelnik)
+- Instruction how to remove concrete IP from rack-attack fail2ban list (@mkasztelnik)
+- User cannot be removed or blocked when she/he owns exclusively group (@mkasztelnik)
+- Button to minimize left menu is visible always (@mkasztelnik)
+- Dedicated information about deleted pipeline owner (@mkasztelnik)
+
+### Changed
+- Reintegration of segmentation service using File Store in place of OwnCloud (@jmeizner)
+- Remove `brakeman` from `Gemfile` and use latest version while executing
+  `gitab-ci` checks (@mkasztelnik)
+- Trigger segmentation start after whole input file is uploaded (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Remove `faker` gem and replace it with `factory_bot` sequences (@mkasztelnik)
+
+### Fixed
 - Patients' statistics work correctly when turbolink-loaded (@Nuanda)
+- Fix `GITLAB_HOST` markup formatting in `README.md` (@mkasztelnik)
 
 ### Security
 

@@ -2,9 +2,7 @@
 
 FactoryBot.define do
   factory :computation do
-    pipeline_step 'rule_selection'
-    script { Faker::Lorem.sentence }
-    working_directory { Faker::Lorem.characters(10) }
+    sequence(:working_directory) { |n| "working_dir_#{n}" }
     started_at { Time.current }
 
     user
@@ -12,16 +10,16 @@ FactoryBot.define do
 
     factory :webdav_computation, class: 'WebdavComputation' do
       pipeline_step 'segmentation'
-      input_path { '/inputs' }
-      output_path { '/outputs' }
-      script nil
+      input_path '/inputs'
+      output_path '/outputs'
+      run_mode 'Workflow 3 (TEE Aortic Valve Segmentation)'
     end
 
     factory :rimrock_computation, class: 'RimrockComputation' do
       pipeline_step '0d_models'
       input_path nil
       output_path nil
-      script { 'SCRIPT' }
+      script 'SCRIPT'
       tag_or_branch 'master'
       revision '1234'
     end

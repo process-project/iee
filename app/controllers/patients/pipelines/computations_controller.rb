@@ -21,7 +21,7 @@ module Patients
       end
 
       def update
-        @computation.assign_attributes(permitted_attributes(@computation)) if @computation.rimrock?
+        @computation.assign_attributes(permitted_attributes(@computation))
         if run_computation
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t("computations.update.started_#{@computation.mode}")
@@ -64,15 +64,24 @@ module Patients
           @versions = Gitlab::Versions.
                       new(repo, force_reload: params[:force_reload]).call
         end
+
+        @run_modes = step.try(:run_modes) if updatable?
+      end
+
+      def step
+        @computation.step
       end
 
       def repo
-        @repo ||= Rails.application.
-                  config_for('eurvalve')['git_repos'][@computation.pipeline_step]
+        @repo ||= step.try(:repository)
       end
 
       def load_versions?
-        repo && policy(@computation).update?
+        repo && updatable?
+      end
+
+      def updatable?
+        policy(@computation).update?
       end
     end
   end
