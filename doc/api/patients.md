@@ -1,7 +1,9 @@
 # Patients API
 
 Access to the patients management API is authorized by delegating user
-credentials (using Bearer Authorization header).
+credentials (using Bearer Authorization header). You can download your
+security (JSON web) token from your profile page in the EurValve Portal
+(navigate through the upper right dropdown menu).
 
 The API exposes the following REST methods:
 
