@@ -10,8 +10,10 @@
             = value[:value]
           - else
             %i= t('.unspecified')
-          %span(class = "label label-#{value[:style]}")
-            = value[:type]
+          - if value[:unit].present?
+            = value[:unit]
+          - if value[:type].present?
+            %span(class = "label label-#{value[:style]}")= value[:type]
 
 - if details[:status] == :error
   %div.label.label-danger= t('.no_details', details: details[:message])
