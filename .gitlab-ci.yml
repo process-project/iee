@@ -79,9 +79,11 @@ process_deploy_development:
   - echo $PROCESS_DEV_HOST_KEY > ~/.ssh/known_hosts
   - echo -e $PROCESS_DEV_KEY > ~/.ssh/id_rsa
   - chmod 400 ~/.ssh/id_rsa
-  - git push $PROCESS_DEV_GIT_REPO process-master:process-master
+  - ls -lh
+  - git branch
+  - git push $PROCESS_DEV_GIT_REPO ci-test-process:ci-test-process
   only:
-  - process-master
+  - ci-test-process
   environment:
     name: process-development
     url: https://process-dev.cyfronet.pl
