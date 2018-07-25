@@ -79,10 +79,7 @@ process_deploy_development:
   - echo $PROCESS_DEV_HOST_KEY > ~/.ssh/known_hosts
   - echo -e $PROCESS_DEV_KEY > ~/.ssh/id_rsa
   - chmod 400 ~/.ssh/id_rsa
-  - ls -lh
-  - git branch
   - git checkout ci-test-process
-  - git branch
   - git push $PROCESS_DEV_GIT_REPO ci-test-process:ci-test-process
   only:
   - ci-test-process
