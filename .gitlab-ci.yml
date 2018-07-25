@@ -80,6 +80,7 @@ process_deploy_development:
   - echo -e $PROCESS_DEV_KEY > ~/.ssh/id_rsa
   - chmod 400 ~/.ssh/id_rsa
   - git checkout ci-test-process
+  - git pull
   - git push $PROCESS_DEV_GIT_REPO ci-test-process:ci-test-process
   only:
   - ci-test-process
