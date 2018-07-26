@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Patients
+module Projects
   class ComparisonsController < ApplicationController
     before_action :check_pipelines, only: [:index]
     before_action :find_and_authorize, only: [:index]
@@ -15,9 +15,9 @@ module Patients
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def index
-      # TODO: FIXME the following two lines are not needed when patient sync problem is solved
+      # TODO: FIXME the following two lines are not needed when project sync problem is solved
       #             can also enable the Metrics/MethodLength cop again, then
-      @patient.execute_data_sync(current_user)
+      @project.execute_data_sync(current_user)
       pipelines.reload
 
       @sources = []
@@ -44,12 +44,12 @@ module Patients
     private
 
     def pipelines
-      @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).
+      @pipelines ||= project.pipelines.where(iid: params[:pipeline_ids]).
                      includes(:outputs, :computations)
     end
 
-    def patient
-      @patient ||= Patient.find_by!(case_number: params[:patient_id])
+    def project
+      @project ||= Project.find_by!(project_name: params[:project_id])
     end
 
     def find_and_authorize
@@ -58,7 +58,7 @@ module Patients
 
     def check_pipelines
       if pipelines.size != 2
-        redirect_to patient_path(@patient), alert: I18n.t('patients.comparisons.index.invalid')
+        redirect_to project_path(@project), alert: I18n.t('projects.comparisons.index.invalid')
       end
     end
 
