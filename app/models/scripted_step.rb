@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RimrockStep < Step
+class ScriptedStep < Step
   attr_reader :repository, :file
 
   def initialize(name, repository, file, required_files = [])

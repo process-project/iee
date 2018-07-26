@@ -46,7 +46,7 @@ describe ScriptGenerator do
     end
 
     it 'add --fail flag when download is not optional' do
-      computation = create(:rimrock_computation)
+      computation = create(:scripted_computation)
       script = ScriptGenerator.new(computation,
                                    '<%= stage_in path: "dir/foo.txt" %>').call
 
@@ -54,7 +54,7 @@ describe ScriptGenerator do
     end
 
     it 'does not add --fail flag when download is optional' do
-      computation = create(:rimrock_computation)
+      computation = create(:scripted_computation)
       script = ScriptGenerator.
                new(computation,
                    '<%= stage_in path: "dir/foo.txt", optional: true%>').call
@@ -137,7 +137,7 @@ describe ScriptGenerator do
   it 'inserts pipeline identifier' do
     patient = create(:patient, case_number: 'case-number')
     pipeline = create(:pipeline, patient: patient, iid: 1)
-    computation = create(:rimrock_computation, pipeline: pipeline)
+    computation = create(:scripted_computation, pipeline: pipeline)
 
     script = ScriptGenerator.new(computation, '<%= pipeline_identifier %>').call
 
@@ -147,7 +147,7 @@ describe ScriptGenerator do
   it 'inserts patient case_number' do
     patient = create(:patient, case_number: 'case-number')
     pipeline = create(:pipeline, patient: patient, iid: 1)
-    computation = create(:rimrock_computation, pipeline: pipeline)
+    computation = create(:scripted_computation, pipeline: pipeline)
 
     script = ScriptGenerator.new(computation, '<%= case_number %>').call
 
