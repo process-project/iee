@@ -7,70 +7,70 @@ RSpec.describe DataFile do
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:data_type) }
-  it { should validate_presence_of(:patient) }
+  it { should validate_presence_of(:project) }
 
-  context 'when related to a patient' do
-    it 'touches related patient on modification' do
-      expect(subject.patient).
+  context 'when related to a project' do
+    it 'touches related project on modification' do
+      expect(subject.project).
         to receive(:update_procedure_status).and_call_original
       subject.name = 'something_new'
       subject.save
     end
 
-    it 'touches related patient on creation' do
-      patient = create(:patient)
-      expect(patient).
+    it 'touches related project on creation' do
+      project = create(:project)
+      expect(project).
         to receive(:update_procedure_status).and_call_original
-      create(:data_file, patient: patient)
+      create(:data_file, project: project)
     end
 
-    it 'touches related patient on destruction' do
-      expect(subject.patient).
+    it 'touches related project on destruction' do
+      expect(subject.project).
         to receive(:update_procedure_status).and_call_original
       subject.destroy
     end
   end
 
   context '#path' do
-    it 'returns relative path for patient input' do
+    it 'returns relative path for project input' do
       input = build(:data_file,
-                    patient: build(:patient, case_number: '123'), name: 'foo')
+                    project: build(:project, project_name: '123'), name: 'foo')
 
-      expect(input.path).to eq 'test/patients/123/inputs/foo'
+      expect(input.path).to eq 'test/projects/123/inputs/foo'
     end
 
-    it 'returns relative path for patient pipeline output' do
-      patient = build(:patient, case_number: '123')
-      pipeline = build(:pipeline, iid: '1', patient: patient)
-      input = build(:data_file, patient: patient, output_of: pipeline, name: 'foo')
+    it 'returns relative path for project pipeline output' do
+      project = build(:project, project_name: '123')
+      pipeline = build(:pipeline, iid: '1', project: project)
+      input = build(:data_file, project: project, output_of: pipeline, name: 'foo')
 
-      expect(input.path).to eq 'test/patients/123/pipelines/1/outputs/foo'
+      expect(input.path).to eq 'test/projects/123/pipelines/1/outputs/foo'
     end
 
-    it 'returns relative path for patient pipeline input' do
-      patient = build(:patient, case_number: '123')
-      pipeline = build(:pipeline, iid: '1', patient: patient)
-      input = build(:data_file, patient: patient, input_of: pipeline, name: 'foo')
+    it 'returns relative path for project pipeline input' do
+      project = build(:project, project_name: '123')
+      pipeline = build(:pipeline, iid: '1', project: project)
+      input = build(:data_file, project: project, input_of: pipeline, name: 'foo')
 
-      expect(input.path).to eq 'test/patients/123/pipelines/1/inputs/foo'
+      expect(input.path).to eq 'test/projects/123/pipelines/1/inputs/foo'
     end
   end
 
   describe '#content', files: true do
     let(:correct_user) { build(:user, :file_store_user) }
-    let(:test_patient_with_pipeline) do
-      create(:patient, :with_pipeline).tap { |p| p.execute_data_sync(correct_user) }
+    let(:test_project_with_pipeline) do
+      create(:project, :with_pipeline).tap { |p| p.execute_data_sync(correct_user) }
     end
-    let(:test_patient_with_input) do
-      create(:patient, case_number: '5678').tap { |p| p.execute_data_sync(correct_user) }
+    let(:test_project_with_input) do
+      create(:project, project_name: '5678').tap { |p| p.execute_data_sync(correct_user) }
     end
 
     it 'downloads pipeline file content as a string' do
-      expect(test_patient_with_pipeline.data_files.first.content(correct_user)).to eq "fake\n"
+      expect(test_project_with_pipeline.data_files.first.content(correct_user)).to eq "fake\n"
     end
 
-    it 'downloads patient input file content as a string' do
-      expect(test_patient_with_input.data_files.first.content(correct_user)).to eq "fake\n"
+    it 'downloads project input file content as a string' do
+      expect(test_project_with_input.data_files.first.content(correct_user)).to eq "fake\n"
     end
   end
 
