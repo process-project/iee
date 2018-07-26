@@ -23,7 +23,7 @@ module Pipelines
     end
 
     def tags_and_branches(step)
-      repo = repo(step)
+      repo = step.try(:repository)
       Gitlab::Versions.new(repo, force_reload: @force_reload).call if repo
     end
 
@@ -32,7 +32,7 @@ module Pipelines
     end
 
     def run_modes(step)
-      step.run_modes if defined? step.run_modes
+      step.try(:run_modes)
     end
   end
 end

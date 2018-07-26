@@ -28,7 +28,8 @@ gem 'simple_form'
 # app security
 gem 'rack-attack'
 
-# JSON validation
+# JSON
+gem 'fast_jsonapi'
 gem 'json-schema'
 
 # Markdown

@@ -2,7 +2,7 @@ defaults: &defaults
   jwt:
     key: <%= ENV['JWT_KEY_PATH'] || Rails.root.join('config', 'jwt', 'dev.pem') %>
     key_algorithm: ES256
-    expiration_time: 21600 #6 hours
+    expiration_time: 86400 #24 hours
     issuer: 'EurValve Portal'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
   file_store:

@@ -22,6 +22,7 @@ en:
         sessions: JWT
         pdp: PDP
         policies: Resource policies
+        patients: Patients API
         data_sets: Data sets
       data_sets:
         title: Data sets

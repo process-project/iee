@@ -4,9 +4,8 @@ en:
       title: AV Segmentation
       cannot_start: |
         Cannot start segmentation because required input file
-        (imaging_*.zip) cannot be found in the patient input directory or
-        pipeline directory
-        or the version and deployment mode have not been selected.
+        (imaging_*.zip or file.zip) cannot be found in the patient input directory or
+        pipeline directory.
       created: |
         All required input files are available.
         You can start segmentation for this patient.
@@ -24,8 +23,7 @@ en:
       title: Parameter Extraction
       cannot_start: |
         Cannot start parameter extraction because the required input files
-        (OFF mesh) cannot be found in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected
+        (OFF mesh) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start parameter extraction for this patient.
@@ -44,8 +42,7 @@ en:
       title: Computational Fluid Dynamics simulation
       cannot_start: |
         Cannot start CFD simulation because the required input files
-        (*Trunc.off) cannot be found in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected.
+        (*Trunc.off) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start CFD simulation for this patient.
@@ -64,8 +61,7 @@ en:
       title: Reduced Order Model analysis
       cannot_start: |
         Cannot start ROM analysis because the required input files
-        (*.dxrom) cannot be found in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected.
+        (*.dxrom) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start ROM analysis for this patient.
@@ -84,8 +80,7 @@ en:
       title: Parameter Optimization
       cannot_start: |
         Cannot start parameter optimization because the required input files
-        (ValveChar.csv) cannot be found in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected.
+        (ValveChar.csv) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start parameter optimization for this patient.
@@ -104,8 +99,7 @@ en:
       title: Uncertainty Analysis
       cannot_start: |
         Cannot start uncertainty analysis because the required input files
-        (OFF mesh) cannot be found in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected.
+        (OFF mesh) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start uncertainty analysis for this patient.
@@ -125,8 +119,7 @@ en:
       cannot_start: |
         Cannot start blood flow simulation because required input files
         (fluidFlow.cas and structural_vent.dat) cannot be found
-        in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected.
+        in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start blood flow simulation for this patient.
@@ -146,8 +139,7 @@ en:
       cannot_start: |
         Cannot start heart model calculation because required input file
         (0DModel_input.csv) cannot be found in the patient input directory or
-        pipeline directory
-        or the version and deployment mode have not been selected.
+        pipeline directory.
       created: |
         All required input files are available.
         You can start heart model calculation for this patient.
@@ -167,8 +159,7 @@ en:
       cannot_start: |
         Cannot run 0D models because required input files
         (OutFileGA.csv) cannot be found in the patient input directory or
-        pipeline directory
-        or the version and deployment mode have not been selected.
+        pipeline directory.
       created: |
         All required input files are available.
         You can start 0D model sequence for this patient.
@@ -188,8 +179,7 @@ en:
       cannot_start: |
         Cannot start PV visualization because required input files
         (OutSeries1.csv, OutSeries2.csv, OutSeries3.csv, OutSeries4.csv)
-        cannot be found in the patient input directory or pipeline directory
-        or the version and deployment mode have not been selected.
+        cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start PV visualization for this patient.

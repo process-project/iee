@@ -73,8 +73,7 @@ module Patients
       end
 
       def repo
-        @repo ||= Rails.application.
-                  config_for('eurvalve')['git_repos'][@computation.pipeline_step]
+        @repo ||= step.try(:repository)
       end
 
       def load_versions?

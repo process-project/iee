@@ -109,6 +109,8 @@ GEM
       railties (>= 3.0.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
+    fast_jsonapi (1.2)
+      activesupport (>= 4.2)
     ffi (1.9.18)
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
@@ -404,6 +406,7 @@ DEPENDENCIES
   devise (~> 4.3.0)
   dotenv-rails
   factory_bot_rails
+  fast_jsonapi
   font-awesome-sass (~> 4.5)
   github-markup
   gitlab

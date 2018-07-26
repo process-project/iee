@@ -6,17 +6,40 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## Unreleased
 
 ### Added
-- User can select segmentation run mode before start (@mkasztelnik)
-- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+- Patients API (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
 
 ### Changed
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+- Fixed GitLab integration spec (@Nuanda)
+
+### Security
+
+## 0.10.0
+
+### Added
+- User can select segmentation run mode before start (@mkasztelnik)
+- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+- `pipeline_identifier` `case_number` and `token` computation script helpers (@mkasztelnik)
+
+### Changed
+- Use Gitlab review procedure instead of labels (@mkasztelnik)
+- `stage_in` returns error code when unable to download FileStore file (@mkasztelnik)
+- Set JWT token expiration time to 24h (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Computation script repositories removed from `eurvalve.yml`, step repository
+  configuration used instead (@mkasztelnik)
 
 ### Fixed
 - Fix unused pipeline title missing (@mkasztelnik)

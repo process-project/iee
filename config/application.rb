@@ -30,6 +30,15 @@ module Vapor
     config.clock = Struct.new(:update).
                    new((config.constants['clock']['update'] || 30).seconds)
 
+    # Overrides eurvalve locales if override dir exists
+    Dir.chdir('./config/locales') do
+      Dir.foreach('./') do |item|
+        if File.directory?(item) && !['.', '..'].include?(item)
+          config.i18n.load_path += Dir[root.join('config', 'locales', item, '*.yml')]
+        end
+      end
+    end
+
     redis_url_string = config.constants['redis_url']
 
     # Redis::Store does not handle Unix sockets well, so let's do it for them
