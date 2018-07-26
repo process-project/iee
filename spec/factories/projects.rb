@@ -7,7 +7,7 @@ FactoryBot.define do
     trait :with_pipeline do
       project_name '9900'
 
-      after(:build) do |patient|
+      after(:build) do |project|
         project.pipelines << create(:pipeline)
       end
     end
