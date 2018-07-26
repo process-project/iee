@@ -1,66 +1,66 @@
 # frozen_string_literal: true
 
-class PatientsController < ApplicationController
-  before_action :set_patients, only: [:index]
+class ProjectsController < ApplicationController
+  before_action :set_projects, only: [:index]
   before_action :find_and_authorize, only: [:show, :destroy]
 
   def index
     if request.xhr?
-      @stats = Patients::Statistics.new(@patients, current_user).call
+      @stats = Projects::Statistics.new(@projects, current_user).call
       render json: @stats, layout: false
     end
   end
 
   def show
-    @pipelines = @patient.pipelines.includes(:computations, :patient, :user).
+    @pipelines = @project.pipelines.includes(:computations, :project, :user).
                  order('computations.created_at')
 
     if request.xhr?
-      @details = Patients::Details.new(@patient.case_number, current_user).call
-      render partial: 'patients/details', layout: false,
-             locals: { patient: @patient, details: @details }
+      @details = Projects::Details.new(@project.case_number, current_user).call
+      render partial: 'projects/details', layout: false,
+             locals: { project: @project, details: @details }
     end
   end
 
   def new
-    @patient = Patient.new
-    authorize(@patient)
+    @project = Project.new
+    authorize(@project)
   end
 
   def create
-    new_patient = Patient.new(permitted_attributes(Patient))
-    authorize(new_patient)
+    new_project = Project.new(permitted_attributes(Project))
+    authorize(new_project)
 
-    @patient = Patients::Create.new(current_user, new_patient).call
+    @project = Projects::Create.new(current_user, new_project).call
 
-    if @patient.errors.empty?
-      @patient.execute_data_sync(current_user)
-      redirect_to @patient, notice: I18n.t('patients.create.success')
+    if @project.errors.empty?
+      @project.execute_data_sync(current_user)
+      redirect_to @project, notice: I18n.t('projects.create.success')
     else
       render :new
     end
   end
 
   def destroy
-    if Patients::Destroy.new(current_user, @patient).call
-      redirect_to patients_path,
-                  notice: I18n.t('patients.destroy.success',
-                                 case_number: @patient.case_number)
+    if Projects::Destroy.new(current_user, @project).call
+      redirect_to projects_path,
+                  notice: I18n.t('projects.destroy.success',
+                                 case_number: @project.case_number)
     else
       render :show,
-             notice: I18n.t('patients.destroy.failure',
-                            case_number: @patient.case_number)
+             notice: I18n.t('projects.destroy.failure',
+                            case_number: @project.case_number)
     end
   end
 
   private
 
-  def set_patients
-    @patients = policy_scope(Patient).includes(pipelines: :computations).all
+  def set_projects
+    @projects = policy_scope(Project).includes(pipelines: :computations).all
   end
 
   def find_and_authorize
-    @patient = policy_scope(Patient).find_by!(case_number: params[:id])
-    authorize(@patient)
+    @project = policy_scope(Project).find_by!(case_number: params[:id])
+    authorize(@project)
   end
 end
