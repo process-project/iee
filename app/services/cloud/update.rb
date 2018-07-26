@@ -49,8 +49,7 @@ module Cloud
 
         next unless %w[finished error].include? new_status
         # We're done - clean up
-        appliance_set_id = res_hash['appliance']['appliance_set_id']
-        delete_appliance_set(appliance_set_id)
+        delete_appliance_set(res_hash['appliance']['appliance_set_id'])
       end
 
       if new_status != c.status
