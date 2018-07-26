@@ -3,7 +3,7 @@
 class Pipeline < ApplicationRecord
   enum mode: [:automatic, :manual]
 
-  belongs_to :patient
+  belongs_to :project
   belongs_to :user
 
   # Inputs and outputs relation stores pipeline specific data files
@@ -37,29 +37,29 @@ class Pipeline < ApplicationRecord
     iid.to_s
   end
 
-  def outputs_dir(prefix = patient.pipelines_dir)
+  def outputs_dir(prefix = project.pipelines_dir)
     File.join(root_dir(prefix), 'outputs', '/')
   end
 
   def outputs_url
-    outputs_dir(patient.pipelines_url)
+    outputs_dir(project.pipelines_url)
   end
 
-  def inputs_dir(prefix = patient.pipelines_dir)
+  def inputs_dir(prefix = project.pipelines_dir)
     File.join(root_dir(prefix), 'inputs', '/')
   end
 
   def inputs_url
-    inputs_dir(patient.pipelines_url)
+    inputs_dir(project.pipelines_url)
   end
 
-  def root_dir(prefix = patient.pipelines_dir)
+  def root_dir(prefix = project.pipelines_dir)
     File.join(prefix, iid.to_s, '/')
   end
 
   def data_file(data_type)
     DataFile.
-      where(patient: patient,
+      where(project: project,
             output_of: [nil, self],
             input_of: [nil, self],
             data_type: data_type).
@@ -90,6 +90,6 @@ class Pipeline < ApplicationRecord
   end
 
   def set_iid
-    self.iid = patient.pipelines.maximum(:iid).to_i + 1 if iid.blank?
+    self.iid = project.pipelines.maximum(:iid).to_i + 1 if iid.blank?
   end
 end
