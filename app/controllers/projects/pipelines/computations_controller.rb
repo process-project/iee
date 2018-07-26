@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module Patients
+module Projects
   module Pipelines
     class ComputationsController < ApplicationController
       before_action :find_and_authorize
 
       def show
-        # TODO: FIXME the following two lines are not needed when patient
+        # TODO: FIXME the following two lines are not needed when project
         #             sync problem is solved
-        @patient.execute_data_sync(current_user)
+        @project.execute_data_sync(current_user)
         prepare_to_show_computation
 
         if request.xhr?
-          render partial: 'patients/pipelines/computations/show', layout: false,
+          render partial: 'projects/pipelines/computations/show', layout: false,
                  locals: {
-                   patient: @patient, pipeline: @pipeline,
+                   project: @project, pipeline: @pipeline,
                    computation: @computation, computations: @computations
                  }
         end
@@ -23,7 +23,7 @@ module Patients
       def update
         @computation.assign_attributes(permitted_attributes(@computation))
         if run_computation
-          redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
+          redirect_to project_pipeline_computation_path(@project, @pipeline, @computation),
                       notice: I18n.t("computations.update.started_#{@computation.mode}")
         else
           @computation.status = @computation.status_was
@@ -47,12 +47,12 @@ module Patients
 
       def find_and_authorize
         @computation = Computation.
-                       joins(pipeline: :patient).
-                       find_by(patients: { case_number: params[:patient_id] },
+                       joins(pipeline: :project).
+                       find_by(projects: { case_number: params[:project_id] },
                                pipelines: { iid: params[:pipeline_id] },
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
-        @patient = @pipeline.patient
+        @project = @pipeline.project
 
         authorize(@computation)
       end
