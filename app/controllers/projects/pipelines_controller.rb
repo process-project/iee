@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Patients
+module Projects
   class PipelinesController < ApplicationController
-    before_action :load_patient
+    before_action :load_project
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
 
     def index
-      redirect_to(patient_path(@patient))
+      redirect_to(project_path(@project))
     end
 
     def new
@@ -20,20 +20,20 @@ module Patients
       @pipeline = create_pipeline
 
       if @pipeline.errors.empty?
-        @patient.execute_data_sync(current_user)
+        @project.execute_data_sync(current_user)
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
-        redirect_to(patient_pipeline_path(@patient, @pipeline))
+        redirect_to(project_pipeline_path(@project, @pipeline))
       else
         render(:new)
       end
     end
 
     def show
-      @pipeline = @patient.pipelines.find_by(iid: params[:id])
+      @pipeline = @project.pipelines.find_by(iid: params[:id])
       computation = @pipeline.computations.first
 
       return unless computation
-      redirect_to(patient_pipeline_computation_path(@patient,
+      redirect_to(project_pipeline_computation_path(@project,
                                                     @pipeline,
                                                     computation))
     end
@@ -42,7 +42,7 @@ module Patients
 
     def update
       if @pipeline.update_attributes(permitted_attributes(@pipeline))
-        redirect_to(patient_pipeline_path(@patient, @pipeline))
+        redirect_to(project_pipeline_path(@project, @pipeline))
       else
         render(:edit)
       end
@@ -50,7 +50,7 @@ module Patients
 
     def destroy
       if ::Pipelines::Destroy.new(@pipeline).call
-        redirect_to patient_path(@patient),
+        redirect_to project_path(@project),
                     notice: I18n.t('pipelines.destroy.success',
                                    name: @pipeline.name)
       else
@@ -69,11 +69,11 @@ module Patients
 
     def pipeline_steps_form
       if params[:mode] == 'automatic'
-        render partial: 'patients/pipelines/computations_form_automatic',
+        render partial: 'projects/pipelines/computations_form_automatic',
                locals: { steps_config: steps_config },
                layout: false
       else
-        render partial: 'patients/pipelines/computations_form_manual',
+        render partial: 'projects/pipelines/computations_form_manual',
                locals: { steps_config: steps_config },
                layout: false
       end
@@ -85,15 +85,15 @@ module Patients
     end
 
     def owners
-      { patient: @patient, user: current_user }
+      { project: @project, user: current_user }
     end
 
-    def load_patient
-      @patient = Patient.find_by!(case_number: params[:patient_id])
+    def load_project
+      @project = Project.find_by!(project_name: params[:project_id])
     end
 
     def find_and_authorize
-      @pipeline = @patient.pipelines.find_by(iid: params[:id])
+      @pipeline = @project.pipelines.find_by(iid: params[:id])
       authorize(@pipeline)
     end
   end
