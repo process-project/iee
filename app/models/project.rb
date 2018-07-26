@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Patient < ApplicationRecord
+class Project < ApplicationRecord
   enum procedure_status: [
     :not_started,
     :imaging_uploaded,
@@ -16,16 +16,16 @@ class Patient < ApplicationRecord
            -> { order(iid: :asc) },
            dependent: :destroy
 
-  validates :case_number, :procedure_status, presence: true
-  validates :case_number, uniqueness: true
-  validates :case_number, format: { with: /\A[a-zA-Z0-9_\-.]+\z/ }
+  validates :project_name, :procedure_status, presence: true
+  validates :project_name, uniqueness: true
+  validates :project_name, format: { with: /\A[a-zA-Z0-9_\-.]+\z/ }
 
-  default_scope { order('case_number asc') }
+  default_scope { order('project_name asc') }
 
   after_touch :update_procedure_status
 
   def to_param
-    case_number
+    project_name
   end
 
   def execute_data_sync(user)
@@ -33,7 +33,7 @@ class Patient < ApplicationRecord
   end
 
   def working_dir
-    File.join(Rails.env, 'patients', case_number, '/')
+    File.join(Rails.env, 'projects', project_name, '/')
   end
 
   def working_url
