@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180620093532) do
+ActiveRecord::Schema.define(version: 20180725100559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,15 +67,15 @@ ActiveRecord::Schema.define(version: 20180620093532) do
   create_table "data_files", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.integer "data_type", null: false
-    t.integer "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "output_of_id"
     t.bigint "input_of_id"
+    t.bigint "project_id"
     t.index ["data_type"], name: "index_data_files_on_data_type"
     t.index ["input_of_id"], name: "index_data_files_on_input_of_id"
     t.index ["output_of_id"], name: "index_data_files_on_output_of_id"
-    t.index ["patient_id"], name: "index_data_files_on_patient_id"
+    t.index ["project_id"], name: "index_data_files_on_project_id"
   end
 
   create_table "group_relationships", id: :serial, force: :cascade do |t|
@@ -95,28 +95,28 @@ ActiveRecord::Schema.define(version: 20180620093532) do
     t.boolean "default", default: false, null: false
   end
 
-  create_table "patients", id: :serial, force: :cascade do |t|
-    t.string "case_number", null: false
-    t.integer "procedure_status", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["case_number"], name: "index_patients_on_case_number"
-    t.index ["procedure_status"], name: "index_patients_on_procedure_status"
-  end
-
   create_table "pipelines", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.integer "iid", null: false
-    t.integer "patient_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "mode", default: 0, null: false
     t.string "flow", default: "full_body_scan", null: false
+    t.bigint "project_id"
     t.index ["iid"], name: "index_pipelines_on_iid"
-    t.index ["patient_id", "iid"], name: "index_pipelines_on_patient_id_and_iid", unique: true
-    t.index ["patient_id"], name: "index_pipelines_on_patient_id"
+    t.index ["project_id", "iid"], name: "index_pipelines_on_project_id_and_iid", unique: true
+    t.index ["project_id"], name: "index_pipelines_on_project_id"
     t.index ["user_id"], name: "index_pipelines_on_user_id"
+  end
+
+  create_table "projects", id: :serial, force: :cascade do |t|
+    t.string "project_name", null: false
+    t.integer "procedure_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["procedure_status"], name: "index_projects_on_procedure_status"
+    t.index ["project_name"], name: "index_projects_on_project_name"
   end
 
   create_table "resource_managers", id: :serial, force: :cascade do |t|
@@ -198,9 +198,9 @@ ActiveRecord::Schema.define(version: 20180620093532) do
 
   add_foreign_key "access_methods", "services"
   add_foreign_key "computations", "pipelines"
-  add_foreign_key "data_files", "patients"
   add_foreign_key "data_files", "pipelines", column: "input_of_id"
   add_foreign_key "data_files", "pipelines", column: "output_of_id"
+  add_foreign_key "data_files", "projects"
   add_foreign_key "group_relationships", "groups", column: "child_id"
   add_foreign_key "group_relationships", "groups", column: "parent_id"
 end
