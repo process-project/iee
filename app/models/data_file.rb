@@ -23,7 +23,7 @@ class DataFile < ApplicationRecord
 
   ]
 
-  belongs_to :patient, touch: true
+  belongs_to :project, touch: true
 
   belongs_to :output_of,
              optional: true,
@@ -35,7 +35,7 @@ class DataFile < ApplicationRecord
              inverse_of: :inputs,
              class_name: 'Pipeline'
 
-  validates :name, :data_type, :patient, presence: true
+  validates :name, :data_type, :project, presence: true
 
   def path
     File.join(root_path, name)
@@ -62,12 +62,12 @@ class DataFile < ApplicationRecord
   def root_path
     output_of&.outputs_dir ||
       input_of&.inputs_dir ||
-      patient.inputs_dir
+      project.inputs_dir
   end
 
   def root_url
     output_of&.outputs_url ||
       input_of&.inputs_url ||
-      patient.inputs_url
+      project.inputs_url
   end
 end
