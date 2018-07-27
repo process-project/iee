@@ -2,10 +2,10 @@
 .x_panel
   .x_title
     %h2
-      = patient.case_number
+      = project.project_name
       %small= t '.subtitle'
     %span.pull-right
-      = link_to t('.remove'), patient_path(patient), method: :delete,
+      = link_to t('.remove'), project_path(project), method: :delete,
         data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
-      = link_to t('.back'), patients_path, class: 'btn btn-sm btn-primary'
+      = link_to t('.back'), projects_path, class: 'btn btn-sm btn-primary'
     .clearfix
