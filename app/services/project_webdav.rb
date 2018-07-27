@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PatientWebdav
+class ProjectWebdav
   def initialize(user, options = {})
     @user = user
     @dav_client = options.fetch(:client) { Webdav::FileStore.new(user) }

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Patients
+module Projects
   class Details
-    def initialize(patient_case, user)
-      @patient_case = patient_case
+    def initialize(project, user)
+      @project = project
       @token = user.token
     end
 
@@ -23,16 +23,16 @@ module Patients
 
     def service_calls
       [
-        fetch_details('patient_details.json', :real_values),
-        fetch_details('patient_details_inferred.json', :inferred_values)
+        fetch_details('project_details.json', :real_values),
+        fetch_details('project_details_inferred.json', :inferred_values)
       ]
     end
 
     def fetch_details(payload_file, extraction)
-      client = DataSets::Client.new(@token, payload_file, '{case_number}' => @patient_case)
+      client = DataSets::Client.new(@token, payload_file, '{project_name}' => @project)
       method(extraction).call(client.call)
     rescue StandardError => e
-      Rails.logger.error("Could not fetch patient details with unknown error: #{e.message}")
+      Rails.logger.error("Could not fetch project details with unknown error: #{e.message}")
       { status: :error, message: e.message }
     end
 

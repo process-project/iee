@@ -6,9 +6,9 @@ class PipelineUpdater
   end
 
   def call
-    patient = @computation.pipeline.patient
+    project = @computation.pipeline.project
     user = @computation.user
-    patient && user && patient.execute_data_sync(user)
+    project && user && project.execute_data_sync(user)
     Pipelines::StartRunnable.new(@computation.pipeline).call
   end
 end

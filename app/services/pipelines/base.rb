@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Pipelines
-  class Base < PatientWebdav
+  class Base < ProjectWebdav
     def initialize(pipeline, options = {})
       super(pipeline.user, options)
       @pipeline = pipeline

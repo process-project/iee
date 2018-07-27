@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Patients
+module Projects
   class Statistics
-    def initialize(patients, user)
-      @patients = patients || []
+    def initialize(projects, user)
+      @projects = projects || []
       @token = user.token
     end
 
@@ -14,19 +14,19 @@ module Patients
     private
 
     def fetch_statistics
-      constraints = @patients.map { |p| patient_constraint(p.case_number) }.join(',')
+      constraints = @projects.map { |p| project_constraint(p.project_name) }.join(',')
       client = DataSets::Client.new(@token,
-                                    'patient_statistics.json',
-                                    '{patient_id_constraints}' => constraints)
+                                    'project_statistics.json',
+                                    '{project_id_constraints}' => constraints)
       create_details(client.call)
     rescue StandardError => e
-      Rails.logger.error("Could not fetch patient statistics with unknown error: #{e.message}")
+      Rails.logger.error("Could not fetch project statistics with unknown error: #{e.message}")
       { status: :error, message: e.message }
     end
 
-    def patient_constraint(case_number)
-      File.read(Rails.root.join('config', 'data_sets', 'payloads', 'patient_id_constraint.part')).
-        gsub('{case_number}', case_number)
+    def project_constraint(project_name)
+      File.read(Rails.root.join('config', 'data_sets', 'payloads', 'project_id_constraint.part')).
+        gsub('{project_name}', project_name)
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -36,7 +36,7 @@ module Patients
       {
         status: :ok,
         count: entries.count,
-        test: @patients.count - entries.count,
+        test: @projects.count - entries.count,
         berlin: entries.count { |p| p[0].include?('_B_') },
         sheffield: entries.count { |p| p[0].include?('_S_') },
         eindhoven: entries.count { |p| p[0].include?('-C-') },

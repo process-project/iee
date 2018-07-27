@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Patients
+module Projects
   class Destroy < Base
     def call
       !super.persisted?
@@ -9,8 +9,8 @@ module Patients
     protected
 
     def internal_call
-      @patient.destroy
-      delete(@patient.working_dir)
+      @project.destroy
+      delete(@project.working_dir)
     rescue Net::HTTPServerException
       raise ActiveRecord::Rollback
     end

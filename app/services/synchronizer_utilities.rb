@@ -24,8 +24,8 @@ module SynchronizerUtilities
     /^OutSeries4\.csv$/ => 'data_series_4'
   }.freeze
 
-  def case_directory(url)
-    File.join(url, 'patients', @patient.case_number)
+  def project_directory(url)
+    File.join(url, 'projects', @project.project_name)
   end
 
   def webdav_storage_url
@@ -33,8 +33,8 @@ module SynchronizerUtilities
   end
 
   def parse_response(remote_names)
-    sync_dir(remote_names, @patient.inputs_dir)
-    @patient.pipelines.each do |pipeline|
+    sync_dir(remote_names, @project.inputs_dir)
+    @project.pipelines.each do |pipeline|
       sync_dir(remote_names, pipeline.inputs_dir, input_pipeline: pipeline)
       sync_dir(remote_names, pipeline.outputs_dir, output_pipeline: pipeline)
     end
@@ -77,7 +77,7 @@ module SynchronizerUtilities
 
   def extra_details(details = {})
     {
-      patient: @patient.try(:case_number),
+      project: @project.try(:project_name),
       user: @user.try(:name),
       code: details[:response].try(:code)
     }
@@ -97,24 +97,24 @@ module SynchronizerUtilities
   end
 
   def current_names(input_pipeline, output_pipeline)
-    @patient.data_files.where(input_of: input_pipeline,
+    @project.data_files.where(input_of: input_pipeline,
                               output_of: output_pipeline).pluck(:name)
   end
 
   def create_db_entry(data_type, remote_name, input_pipeline, output_pipeline)
-    DataFile.create(name: remote_name, data_type: data_type, patient: @patient,
+    DataFile.create(name: remote_name, data_type: data_type, project: @project,
                     input_of: input_pipeline, output_of: output_pipeline)
   end
 
   def remove_obsolete_db_entries(remote_names, input_pipeline: nil, output_pipeline: nil)
-    @patient.data_files.where(input_of: input_pipeline,
+    @project.data_files.where(input_of: input_pipeline,
                               output_of: output_pipeline).each do |data_file|
       next if remote_names.include? data_file.name
       data_file.destroy!
       pipeline = input_pipeline || output_pipeline
       Rails.logger.info(
         I18n.t('data_file_synchronizer.file_removed',
-               name: data_file.name, patient: @patient.case_number, pipeline: pipeline)
+               name: data_file.name, project: @project.project_name, pipeline: pipeline)
       )
     end
   end
