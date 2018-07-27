@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
                  order('computations.created_at')
 
     if request.xhr?
-      @details = Projects::Details.new(@project.case_number, current_user).call
+      @details = Projects::Details.new(@project.project_name, current_user).call
       render partial: 'projects/details', layout: false,
              locals: { project: @project, details: @details }
     end
@@ -45,11 +45,11 @@ class ProjectsController < ApplicationController
     if Projects::Destroy.new(current_user, @project).call
       redirect_to projects_path,
                   notice: I18n.t('projects.destroy.success',
-                                 case_number: @project.case_number)
+                                 project_name: @project.project_name)
     else
       render :show,
              notice: I18n.t('projects.destroy.failure',
-                            case_number: @project.case_number)
+                            project_name: @project.project_name)
     end
   end
 
@@ -60,7 +60,7 @@ class ProjectsController < ApplicationController
   end
 
   def find_and_authorize
-    @project = policy_scope(Project).find_by!(case_number: params[:id])
+    @project = policy_scope(Project).find_by!(project_name: params[:id])
     authorize(@project)
   end
 end

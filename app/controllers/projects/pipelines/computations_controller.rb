@@ -48,7 +48,7 @@ module Projects
       def find_and_authorize
         @computation = Computation.
                        joins(pipeline: :project).
-                       find_by(projects: { case_number: params[:project_id] },
+                       find_by(projects: { project_name: params[:project_id] },
                                pipelines: { iid: params[:pipeline_id] },
                                pipeline_step: params[:id])
         @pipeline = @computation.pipeline
