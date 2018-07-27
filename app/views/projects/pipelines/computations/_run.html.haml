@@ -1,4 +1,4 @@
-= simple_form_for(computation, url: patient_pipeline_computation_path(patient, pipeline, computation)) do |f|
+= simple_form_for(computation, url: project_pipeline_computation_path(project, pipeline, computation)) do |f|
   = f.error_notification
   .row.form-group
     - if @versions
@@ -17,6 +17,6 @@
         class: 'btn btn-default'
       - if computation.rimrock?
         = link_to t('.reload'),
-                  patient_pipeline_computation_path(patient, pipeline, computation, force_reload: true),
+                  project_pipeline_computation_path(project, pipeline, computation, force_reload: true),
                   class: 'btn btn-default',
                   data: { turbolinks: false }
