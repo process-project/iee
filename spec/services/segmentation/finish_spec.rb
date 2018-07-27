@@ -21,6 +21,7 @@ RSpec.describe Segmentation::Finish do
     end
 
     expect_put(file_store, 'segmentation/output/prefix.txt', 5)
+    expect_put(file_store, 'segmentation/output/infix--tail.foo', 4)
     expect_put(file_store, 'segmentation/output/bar.txt', 4)
     expect_put(file_store, 'segmentation/output/secondprefix.txt', 4)
 
