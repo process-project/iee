@@ -2,12 +2,12 @@
   .col-xs-6
     .x_panel
       .x_title
-        %h3= t('.patient_inputs', name: patient.case_number)
+        %h3= t('.project_inputs', name: project.project_name)
       .x_content
         %section.content
           = render partial: 'file_store/file_browser_multi',
-            locals: { target_path: patient.inputs_dir,
-              element_id: 'patient-inputs', disable_mkdir: true,
+            locals: { target_path: project.inputs_dir,
+              element_id: 'project-inputs', disable_mkdir: true,
               sortingField: 'date', sortingOrder: 'descending' }
 
   .col-xs-6
@@ -17,8 +17,8 @@
       .x_content
         %section.content
           = render partial: 'file_store/file_browser_multi',
-            locals: { target_path: patient.pipelines_dir,
-              element_id: 'patient-outputs', disable_mkdir: true,
+            locals: { target_path: project.pipelines_dir,
+              element_id: 'project-outputs', disable_mkdir: true,
               disable_upload: true, sortingField: 'date',
               sortingOrder: 'descending' }
 
