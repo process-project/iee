@@ -2,51 +2,51 @@
 
 require 'rails_helper'
 
-describe Patients::Destroy do
+describe Projects::Destroy do
   include WebDavSpecHelper
 
   let(:user) { create(:user) }
-  let!(:patient) { create(:patient) }
+  let!(:project) { create(:project) }
 
-  it 'remove patient from db' do
+  it 'remove project from db' do
     webdav = instance_double(Net::DAV)
     allow(webdav).to receive(:exists?)
     allow(webdav).to receive(:delete)
 
-    expect { described_class.new(user, patient, client: webdav).call }.
-      to change { Patient.count }.by(-1)
+    expect { described_class.new(user, project, client: webdav).call }.
+      to change { Project.count }.by(-1)
   end
 
-  it 'removes patient webdav directory' do
+  it 'removes project webdav directory' do
     webdav = instance_double(Net::DAV)
 
     allow(webdav).to receive(:exists?).and_return(true)
-    expect(webdav).to receive(:delete).with("test/patients/#{patient.case_number}/")
+    expect(webdav).to receive(:delete).with("test/projects/#{project.project_name}/")
 
-    described_class.new(user, patient, client: webdav).call
+    described_class.new(user, project, client: webdav).call
   end
 
-  it 'returns true when patient is removed' do
+  it 'returns true when project is removed' do
     webdav = instance_double(Net::DAV)
     allow(webdav).to receive(:exists?)
     allow(webdav).to receive(:delete)
 
-    result = described_class.new(user, patient, client: webdav).call
+    result = described_class.new(user, project, client: webdav).call
 
     expect(result).to be_truthy
   end
 
-  it 'don\'t remove patient when cannot remove webdav patient directory' do
+  it 'don\'t remove project when cannot remove webdav project directory' do
     webdav = web_dav_with_http_server_exception
 
-    expect { described_class.new(user, patient, client: webdav).call }.
-      to_not(change { Patient.count })
+    expect { described_class.new(user, project, client: webdav).call }.
+      to_not(change { Project.count })
   end
 
-  it 'returns false when patient cannot be removed' do
+  it 'returns false when project cannot be removed' do
     webdav = web_dav_with_http_server_exception
 
-    result = described_class.new(user, patient, client: webdav).call
+    result = described_class.new(user, project, client: webdav).call
 
     expect(result).to be_falsy
   end

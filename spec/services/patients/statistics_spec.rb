@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Patients::Statistics do
+describe Projects::Statistics do
   let(:user) { create(:user) }
   let(:subject) { described_class.new(nil, user) }
 
@@ -49,7 +49,7 @@ describe Patients::Statistics do
         to receive(:call).
         and_return(sample)
 
-      subject = described_class.new(create_list(:patient, 4), user)
+      subject = described_class.new(create_list(:project, 4), user)
       expect(subject.call[:test]).to eq 1
     end
   end
