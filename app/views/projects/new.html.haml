@@ -10,17 +10,17 @@
 
       .x_content
         %br
-        = simple_form_for(@patient) do |f|
+        = simple_form_for(@project) do |f|
 
           .form-group
             .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
               = f.error_notification
 
-          = f.input :case_number, autofocus: true
+          = f.input :project_name, autofocus: true
 
           .ln_solid
 
           .form-group
             .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
-              = link_to t('cancel'), patients_path, class: 'btn btn-primary'
+              = link_to t('cancel'), projects_path, class: 'btn btn-primary'
               = f.button :submit, t("register"), class: "btn btn-success"
