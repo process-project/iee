@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Patient altering' do
+RSpec.feature 'Project altering' do
   include WebDavSpecHelper
 
-  let(:patient) { create(:patient) }
+  let(:project) { create(:project) }
 
   before(:each) do
-    allow_any_instance_of(Patients::Details).
+    allow_any_instance_of(Projects::Details).
       to receive(:call).
       and_return(details: [])
   end
@@ -19,76 +19,77 @@ RSpec.feature 'Patient altering' do
       login_as(user)
     end
 
-    context 'when registering a new patient' do
+    context 'when registering a new project' do
       before { stub_webdav }
 
-      scenario 'blocks incorrect case number registration' do
-        visit new_patient_path
+      scenario 'blocks incorrect project name registration' do
+        visit new_project_path
 
-        fill_in 'patient[case_number]', with: '[a stranger in the night]'
+        fill_in 'project[project_name]', with: '[a stranger in the night]'
 
         expect { click_button I18n.t('register') }.
-          not_to(change { Patient.count })
+          not_to(change { Project.count })
 
         expect(page).
-          to have_content I18n.t 'activerecord.errors.models.patient.attributes.case_number.invalid'
+          to have_content I18n.t 'activerecord.errors.models.project.
+                                  attributes.project_name.invalid'
       end
 
-      scenario 'lets the user register a case with case number' do
-        visit new_patient_path
+      scenario 'lets the user register a project with project name' do
+        visit new_project_path
 
-        expect(page).to have_content I18n.t('simple_form.labels.patient.case_number')
+        expect(page).to have_content I18n.t('simple_form.labels.project.project_name')
 
-        fill_in 'patient[case_number]', with: '888'
+        fill_in 'project[project_name]', with: '888'
 
         expect { click_button I18n.t('register') }.
-          to change { Patient.count }.by(1)
+          to change { Project.count }.by(1)
 
-        expect(current_path).to eq patient_path(Patient.first)
+        expect(current_path).to eq project_path(Project.first)
       end
 
-      scenario 'lets the user register a case with uncommon characters' do
-        visit new_patient_path
+      scenario 'lets the user register a project with uncommon characters' do
+        visit new_project_path
 
-        fill_in 'patient[case_number]', with: '-_.'
+        fill_in 'project[project_name]', with: '-_.'
 
         expect { click_button I18n.t('register') }.
-          to change { Patient.count }.by(1)
+          to change { Project.count }.by(1)
 
-        expect(current_path).to eq patient_path(Patient.first)
+        expect(current_path).to eq project_path(Project.first)
       end
 
-      scenario 'allows to cancel the case registration' do
-        visit new_patient_path
+      scenario 'allows to cancel the project registration' do
+        visit new_project_path
 
         expect(page).to have_content I18n.t('cancel')
 
         click_link I18n.t('cancel')
 
-        expect(current_path).to eq patients_path
+        expect(current_path).to eq projects_path
       end
 
       scenario 'remembers provided field values on validation error' do
-        visit new_patient_path
+        visit new_project_path
 
-        fill_in 'patient[case_number]', with: patient.case_number
+        fill_in 'project[project_name]', with: project.project_name
 
         expect { click_button I18n.t('register') }.
-          not_to(change { Patient.count })
+          not_to(change { Project.count })
 
-        expect(page).to have_selector "input[value='#{patient.case_number}']"
+        expect(page).to have_selector "input[value='#{project.project_name}']"
         expect(page).to have_content 'has already been taken'
       end
     end
 
-    context 'when removing a patient case' do
-      scenario 'makes it possible to remove a chosen case' do
-        visit patient_path(patient)
+    context 'when removing a project' do
+      scenario 'makes it possible to remove a chosen project' do
+        visit project_path(project)
 
-        expect(page).to have_content I18n.t('patients.show.remove')
+        expect(page).to have_content I18n.t('projects.show.remove')
 
-        expect { click_link I18n.t('patients.show.remove') }.
-          to change { Patient.count }.by(-1)
+        expect { click_link I18n.t('projects.show.remove') }.
+          to change { Project.count }.by(-1)
       end
     end
   end
@@ -100,27 +101,28 @@ RSpec.feature 'Patient altering' do
       login_as(@user)
     end
 
-    context 'when registering a new patient' do
+    context 'when registering a new project' do
       scenario 'automatically synchronizes data_files and updates status' do
-        visit new_patient_path
+        visit new_project_path
 
-        fill_in 'patient[case_number]', with: '1234'
+        fill_in 'project[project_name]', with: '1234'
 
-        expect { click_button I18n.t('register') }.to change { Patient.count }.by(1)
+        expect { click_button I18n.t('register') }.to change { Project.count }.by(1)
 
-        expect(current_path).to eq patient_path(Patient.first)
+        expect(current_path).to eq project_path(Project.first)
         expect(page).to have_content '1234'
       end
 
-      scenario 'automatically synchronizes data_files and updates status for strange case number' do
-        visit new_patient_path
+      scenario 'automatically synchronizes data_files and
+                updates status for strange project number' do
+        visit new_project_path
 
-        fill_in 'patient[case_number]', with: '-._'
+        fill_in 'project[project_name]', with: '-._'
 
-        expect { click_button I18n.t('register') }.to change { Patient.count }.by(1)
+        expect { click_button I18n.t('register') }.to change { Project.count }.by(1)
 
-        expect(current_path).to eq patient_path(Patient.first)
-        expect(Patient.first.data_files.count).to eq 1
+        expect(current_path).to eq project_path(Project.first)
+        expect(Project.first.data_files.count).to eq 1
         expect(page).to have_content '-._'
       end
     end
