@@ -6,7 +6,7 @@
   = f.input :mode, disabled: !pipeline.new_record?,
     collection: Pipeline.modes.keys, include_blank: false
 
-  = render 'pipeline_steps_form', project: c, pipeline: pipeline
+  = render 'pipeline_steps_form', project: project, pipeline: pipeline
 
   .ln_solid
   .form-group
