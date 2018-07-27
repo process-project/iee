@@ -3,12 +3,12 @@
   %th
     %input{ value: pipeline.iid, type: 'checkbox', name: 'pipeline_ids[]' }
   %th
-    = link_to  [pipeline.patient, pipeline], data: { turbolinks: false } do
+    = link_to  [pipeline.project, pipeline], data: { turbolinks: false } do
       = pipeline_title(pipeline)
   %th
     = pipeline.owner_name
   %th
     - pipeline.computations.each do |c|
-      = link_to patient_pipeline_computation_path(pipeline.patient, pipeline, c),
+      = link_to project_pipeline_computation_path(pipeline.project, pipeline, c),
         data: { turbolinks: false } do
         = run_status(c)
