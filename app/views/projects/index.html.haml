@@ -1,37 +1,37 @@
 %h1= t('.title')
 %br
-- if @patients.blank?
+- if @projects.blank?
   .row
     .alert.alert-info
       = t '.nothing'
 
 .row.top_tiles
 
-  - @patients.each do |patient|
-    .col-md-3.col-xs-12.widget.widget_tally_box.tile-patient
-      .x_panel.fixed_height_320{ class: patient.status }
+  - @projects.each do |project|
+    .col-md-3.col-xs-12.widget.widget_tally_box.tile-project
+      .x_panel.fixed_height_320{ class: project.status }
         .x_title
           %h2
             = icon('cog')
-            = link_to patient, data: { turbolinks: false } do
-              = patient.case_number
+            = link_to project, data: { turbolinks: false } do
+              = project.project_name
           .clearfix
 
         .x_content
 
           %h5
-            %span= "#{t '.files'}: #{patient.data_files.count}"
-            %span.right= "#{t '.pipelines'}: #{patient.pipelines.count}"
+            %span= "#{t '.files'}: #{project.data_files.count}"
+            %span.right= "#{t '.pipelines'}: #{project.pipelines.count}"
 
-          %h5= t patient.pipelines.present? ? '.latest_pipelines' : '.no_pipelines'
+          %h5= t project.pipelines.present? ? '.latest_pipelines' : '.no_pipelines'
           %ul.list-inline.widget_tally
-            - patient.pipelines.latest.each do |pipeline|
+            - project.pipelines.latest.each do |pipeline|
               %li
-                = render partial: 'progress', locals: { pipeline: pipeline, patient: patient }
+                = render partial: 'progress', locals: { pipeline: pipeline, project: project }
 
   .col-md-3.col-xs-12.widget
-    .tile-stats.tile-new-patient.bg-blue
-      = link_to new_patient_path do
+    .tile-stats.tile-new-project.bg-blue
+      = link_to new_project_path do
         .icon
           = icon 'plus'
         .count= t '.new'
