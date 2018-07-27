@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PatientPolicy < ApplicationPolicy
+class ProjectPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::ApplicationScope
     def resolve
       # NOTE Here insert the code that decides what Patients the current_user
@@ -30,6 +30,6 @@ class PatientPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:case_number]
+    [:project_name]
   end
 end
