@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Comparing two pipelines', files: true do
-  let(:patient) { create(:patient, :with_pipeline) }
-  let!(:pipelines) { create_list(:pipeline, 2, patient: patient) }
+  let(:project) { create(:project, :with_pipeline) }
+  let!(:pipelines) { create_list(:pipeline, 2, project: project) }
 
   before(:each) do
     user = create(:user, :approved, :file_store_user)
@@ -12,7 +12,7 @@ RSpec.feature 'Comparing two pipelines', files: true do
   end
 
   scenario 'shows data file diffs', js: true do
-    visit patient_comparisons_path(patient, pipeline_ids: pipelines.map(&:iid))
+    visit project_comparisons_path(project, pipeline_ids: pipelines.map(&:iid))
 
     expect(page).to have_content 'Result: Estimated parameters'
     expect(page).to have_css 'table.diff td.replace'
@@ -21,20 +21,20 @@ RSpec.feature 'Comparing two pipelines', files: true do
   end
 
   scenario 'hides non-paired and noncomparable files', js: true do
-    visit patient_comparisons_path(patient, pipeline_ids: pipelines.map(&:iid))
+    visit project_comparisons_path(project, pipeline_ids: pipelines.map(&:iid))
 
     expect(page).to have_content 'Result: Blood flow model. Not compared.'
     expect(page).to have_css '.diff_output', count: 1
   end
 
   scenario 'refuses to work for >2 pipelines' do
-    visit patient_comparisons_path(patient, pipeline_ids: Pipeline.all.map(&:iid))
+    visit project_comparisons_path(project, pipeline_ids: Pipeline.all.map(&:iid))
 
-    expect(current_path).to eq patient_path(patient)
+    expect(current_path).to eq project_path(project)
   end
 
   scenario 'shows link to sources comparison when enough data is available' do
-    visit patient_comparisons_path(patient, pipeline_ids: pipelines.map(&:iid))
+    visit project_comparisons_path(project, pipeline_ids: pipelines.map(&:iid))
 
     expect(page).not_to have_content 'Sources comparison'
 
@@ -43,7 +43,7 @@ RSpec.feature 'Comparing two pipelines', files: true do
                                         tag_or_branch: 'fixes',
                                         revision: '5678')
 
-    visit patient_comparisons_path(patient, pipeline_ids: pipelines.map(&:iid))
+    visit project_comparisons_path(project, pipeline_ids: pipelines.map(&:iid))
 
     expect(page).to have_content 'Sources comparison'
     step = pipelines[0].computations[0].pipeline_step
