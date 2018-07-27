@@ -46,7 +46,7 @@ module Segmentation
 
     def repetition
       @repetition ||= File.basename(@computation.working_file_name,
-                                File.extname(@computation.working_file_name))
+                                    File.extname(@computation.working_file_name))
     end
 
     def update_computation(attrs)
