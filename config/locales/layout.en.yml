@@ -3,7 +3,7 @@ en:
     left_menu:
       research:
         title: Research
-        patients: Projects
+        projects: Projects
         files: Files
         cloud_resources: Cloud resources
       plgrid:

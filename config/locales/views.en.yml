@@ -15,7 +15,7 @@ en:
       latest_pipelines: "Latest pipelines:"
       no_pipelines: No pipelines.
       stats:
-        total: Total cohort patients
+        total: Total cohort projects
         sites: "Berlin | Eindhoven | Sheffield"
         females: Females
         males: Males
@@ -40,9 +40,9 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore and thus you are not
           able to start computation on PLGrid infrastructure.
-      loading_patient_details: Loading patient details...
+      loading_project_details: Loading project details...
     details:
-      no_details: Patient details are not available (%{details})
+      no_details: Project details are not available (%{details})
       gender: Gender
       birth_year: Birth year
       age: Visit age
@@ -51,20 +51,20 @@ en:
       height: Height
       elvmin: Elastance-LVmin
     new:
-      title: New case
+      title: New project
       subtitle: Register new Process project
     create:
       success: New project added.
     destroy:
-      success: Project %{case_number} was removed.
-      failure: Unable to remove project %{case_number}.
-    patient_files:
+      success: Project %{project_name} was removed.
+      failure: Unable to remove project %{project_name}.
+    project_files:
       proxy:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
     file_browsers:
-      patient_inputs: "%{name} project inputs"
+      project_inputs: "%{name} project inputs"
       pipelines_files: All pipelines files
     pipelines:
       pipeline_steps_form:
@@ -117,7 +117,7 @@ en:
         computations_form_manual:
           steps: "Pipeline steps:"
       file_browsers:
-        patient_inputs: "%{name} project inputs"
+        project_inputs: "%{name} project inputs"
         pipeline_inputs: "%{name} pipeline inputs"
         pipeline_outputs: "%{name} pipeline outputs"
 

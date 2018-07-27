@@ -4,11 +4,11 @@ en:
       title: AV Segmentation
       cannot_start: |
         Cannot start segmentation because required input file
-        (imaging_*.zip) cannot be found in the patient input directory or
+        (imaging_*.zip) cannot be found in the project input directory or
         pipeline directory.
       created: |
         All required input files are available.
-        You can start segmentation for this patient.
+        You can start segmentation for this project.
       new: Segmentation computation is being submitted
       running: Segmentation computation is running
       error: There was an error while calculating segmentation
@@ -23,10 +23,10 @@ en:
       title: Parameter Extraction
       cannot_start: |
         Cannot start parameter extraction because the required input files
-        (OFF mesh) cannot be found in the patient input directory or pipeline directory.
+        (OFF mesh) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start parameter extraction for this patient.
+        You can start parameter extraction for this project.
       new: Parameter extraction is being submitted
       queued: Parameter extraction is queued
       running: Parameter extraction is running
@@ -42,10 +42,10 @@ en:
       title: Computational Fluid Dynamics simulation
       cannot_start: |
         Cannot start CFD simulation because the required input files
-        (*Trunc.off) cannot be found in the patient input directory or pipeline directory.
+        (*Trunc.off) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start CFD simulation for this patient.
+        You can start CFD simulation for this project.
       new: CFD simulation is being submitted
       queued: CFD simulation is queued
       running: CFD simulation is running
@@ -61,10 +61,10 @@ en:
       title: Reduced Order Model analysis
       cannot_start: |
         Cannot start ROM analysis because the required input files
-        (*.dxrom) cannot be found in the patient input directory or pipeline directory.
+        (*.dxrom) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start ROM analysis for this patient.
+        You can start ROM analysis for this project.
       new: ROM analysis is being submitted
       queued: ROM analysis is queued
       running: ROM analysis is running
@@ -80,10 +80,10 @@ en:
       title: Parameter Optimization
       cannot_start: |
         Cannot start parameter optimization because the required input files
-        (ValveChar.csv) cannot be found in the patient input directory or pipeline directory.
+        (ValveChar.csv) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start parameter optimization for this patient.
+        You can start parameter optimization for this project.
       new: Parameter optimization is being submitted
       queued: Parameter optimization is queued
       running: Parameter optimization is running
@@ -99,10 +99,10 @@ en:
       title: Uncertainty Analysis
       cannot_start: |
         Cannot start uncertainty analysis because the required input files
-        (OFF mesh) cannot be found in the patient input directory or pipeline directory.
+        (OFF mesh) cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start uncertainty analysis for this patient.
+        You can start uncertainty analysis for this project.
       new: Uncertainty analysis is being submitted
       queued: Uncertainty analysis is queued
       running: Uncertainty analysis is running
@@ -119,10 +119,10 @@ en:
       cannot_start: |
         Cannot start blood flow simulation because required input files
         (fluidFlow.cas and structural_vent.dat) cannot be found
-        in the patient input directory or pipeline directory.
+        in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start blood flow simulation for this patient.
+        You can start blood flow simulation for this project.
       new: Blood flow simulation computation is being submitted
       queued: Blood flow simulation computation is queued
       running: Blood flow simulation computation is running
@@ -138,15 +138,15 @@ en:
       title: Heart Model Calculation
       cannot_start: |
         Cannot start heart model calculation because required input file
-        (0DModel_input.csv) cannot be found in the patient input directory or
+        (0DModel_input.csv) cannot be found in the project input directory or
         pipeline directory.
       created: |
         All required input files are available.
-        You can start heart model calculation for this patient.
+        You can start heart model calculation for this project.
       new: Heart model calculation is being submitted
       queued: Heart model calculation is queued
       running: Heart model calculation is running
-      error: There were an error while calculating patient heart model
+      error: There were an error while calculating project heart model
       finished: |
         Heart model calculation finished successfully, results stored in
         the output directory for the results
@@ -158,11 +158,11 @@ en:
       title: 0D Model x4
       cannot_start: |
         Cannot run 0D models because required input files
-        (OutFileGA.csv) cannot be found in the patient input directory or
+        (OutFileGA.csv) cannot be found in the project input directory or
         pipeline directory.
       created: |
         All required input files are available.
-        You can start 0D model sequence for this patient.
+        You can start 0D model sequence for this project.
       new: 0D models are being submitted
       queued: 0D models are queued
       running: 0D models are running
@@ -179,10 +179,10 @@ en:
       cannot_start: |
         Cannot start PV visualization because required input files
         (OutSeries1.csv, OutSeries2.csv, OutSeries3.csv, OutSeries4.csv)
-        cannot be found in the patient input directory or pipeline directory.
+        cannot be found in the project input directory or pipeline directory.
       created: |
         All required input files are available.
-        You can start PV visualization for this patient.
+        You can start PV visualization for this project.
       new: PV visualization is being submitted
       queued: PV visualization is queued
       running: PV visualization is running
@@ -264,8 +264,8 @@ en:
       start_automatic: Save step version
       start_manual: Start
       restart_manual: Restart
-    patient_db_selection:
-      title: Patient database selection
+    project_db_selection:
+      title: Project database selection
       cannot_start: Cannot start this step
       created: |
         All required input files are available.

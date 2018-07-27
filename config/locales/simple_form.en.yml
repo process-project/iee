@@ -21,8 +21,8 @@ en:
     error_notification:
       default_message: "Please review the problems below:"
     labels:
-      patient:
-        case_number: Project ID
+      project:
+        project_name: Project ID
       user:
         plgrid_login: PLGrid user login
       service:
@@ -52,8 +52,8 @@ en:
         flow: Select pipeline
 
     placeholders:
-      patient:
-        case_number: The unique Process ID
+      project:
+        project_name: The unique Process ID
       service:
         name: Please use a short name recognizable for other project members
         uri: "e.g. https://files.eurvalve.eu"
