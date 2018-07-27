@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get 'resources/index'
 
-  root to: redirect(path: '/patients')
+  root to: redirect(path: '/projects')
 
   devise_for :users,
              controllers: {
@@ -24,8 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :patients, except: [:edit, :update], constraints: { id: /.+/ } do
-    scope module: :patients do
+  resources :projects, except: [:edit, :update], constraints: { id: /.+/ } do
+    scope module: :projects do
       resources :comparisons, only: [:index]
       resources :pipelines do
         scope module: :pipelines do
