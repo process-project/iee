@@ -15,23 +15,23 @@ en:
       empty_result: empty result set returned from the Data Set repository
   data_file_synchronizer:
     timed_out: |
-      Time out when contacting File Storage for patient %{patient} and
-      user %{user}.
+      Time out when contacting File Storage for project %{patient} and
+      user %{user}
     invalid_response: |
-      Invalid response of File Storage for patient %{patient} and user %{user}.
+      Invalid response of File Storage for project %{patient} and user %{user}.
     request_failure: |
       Request to File Storage failed with response code %{code} for
-      patient %{patient} and user %{user}.
+      project %{patient} and user %{user}.
     no_case_number: |
-      User %{user} trying to run the service for a patient with no case number.
+      User %{user} trying to run the service for a project with no project ID.
     no_proxy: |
       User %{user} trying to run the service without proxy certificate.
     no_token: |
       User %{user} trying to run the service without token.
     no_fs_client: |
-      There were problems accessing the EurValve File Store service.
+      There were problems accessing the Process File Store service.
     file_removed: |
-      Removed %{name} file from patient %{patient} (pipeline %{pipeline}) as no longer present in the
+      Removed %{name} file from project %{patient} (pipeline %{pipeline}) as no longer present in the
       File Storage.
   rimrock:
     update:
@@ -56,7 +56,7 @@ en:
           pretty_path:
             wildcard: Path may contain a single wildcard character at the end
         patient:
-          create_dav403: Unable to create patient file structure in File Store
+          create_dav403: Unable to create project file structure in Process File Store
           attributes:
             case_number:
               invalid: "contains illegal characters, correct characters are letters, digits and ~_-."

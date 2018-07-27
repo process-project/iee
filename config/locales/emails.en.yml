@@ -6,9 +6,9 @@ en:
         A new user %{name} has registered recently. He/She is waiting for the acceptance.
         You can accept this user - to do so, please use this link: %{approve_url}.
     account_approved:
-      subject: Your EurValve portal account has been approved
+      subject: Your Process portal account has been approved
       body: |
-        Your EurValve portal account has been approved by one of the supervisors.
+        Your Process portal account has been approved by one of the supervisors.
         You can now log into the portal using this link: %{login_url}.
     proxy_expired:
       subject: Your PLGrid proxy has expired
