@@ -8,7 +8,7 @@
         %th= t('.user')
         %th= t('.status')
     %tbody
-      = render partial: 'patients/pipelines/pipeline_compare',
+      = render partial: 'projects/pipelines/pipeline_compare',
                collection: pipelines, as: :pipeline
 
   = submit_tag(t('.compare'), class: 'btn btn-success')

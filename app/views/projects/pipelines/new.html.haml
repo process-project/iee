@@ -1,18 +1,18 @@
-= render 'patients/show', patient: @patient, details: @details do
-  = render 'patients/all_pipelines_outputs', patient: @patient
+= render 'projects/show', project: @project, details: @details do
+  = render 'projects/all_pipelines_outputs', project: @project
 
 .x_panel
   .x_title
     %h2
-      = t 'patients.pipelines.new.title'
+      = t 'projects.pipelines.new.title'
 
     %ul.nav.navbar-right.panel_toolbox
       %li
-        = link_to patient_path(@patient), class: 'back' do
+        = link_to project_path(@project), class: 'back' do
           = icon 'hand-o-left',
-            title: t('patients.pipelines.new.back_to_index')
+            title: t('projects.pipelines.new.back_to_index')
     .clearfix
 
   .x_content
-    = render 'patients/pipelines/form',
-              patient: @patient, pipeline: @pipeline
+    = render 'projects/pipelines/form',
+              project: @project, pipeline: @pipeline
