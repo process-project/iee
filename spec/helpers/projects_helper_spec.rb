@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PatientsHelper do
+RSpec.describe ProjectsHelper do
   describe '#computation_progress' do
     let(:pipeline) { create(:pipeline) }
     let(:computation) do
