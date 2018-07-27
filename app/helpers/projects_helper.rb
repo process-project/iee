@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PatientsHelper
+module ProjectsHelper
   STATUS_MAP = {
     created: { type: 'primary' },
     new: { type: 'primary' },
