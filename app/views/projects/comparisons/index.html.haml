@@ -21,9 +21,9 @@
 
     %ul.nav.navbar-right.panel_toolbox
       %li
-        = link_to patient_path(@patient), class: 'back' do
+        = link_to project_path(@project), class: 'back' do
           = icon 'hand-o-left',
-            title: t('patients.pipelines.show.back_to_index')
+            title: t('projects.pipelines.show.back_to_index')
 
     .clearfix
 
@@ -64,5 +64,5 @@
       .noncomparable
         = t '.noncomparable', noncomparable: noncomparable
 
-= render('patients/file_browsers', patient: @patient) do
-  = render('patients/all_pipelines_outputs', patient: @patient)
+= render('projects/file_browsers', project: @project) do
+  = render('projects/all_pipelines_outputs', project: @project)
