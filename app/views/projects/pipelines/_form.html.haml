@@ -1,4 +1,4 @@
-= simple_form_for [patient, pipeline] do |f|
+= simple_form_for [project, pipeline] do |f|
   = f.error_notification
   = f.input :flow, disabled: !pipeline.new_record?,
     collection: Flow::types, include_blank: false
@@ -6,7 +6,7 @@
   = f.input :mode, disabled: !pipeline.new_record?,
     collection: Pipeline.modes.keys, include_blank: false
 
-  = render 'pipeline_steps_form', patient: patient, pipeline: pipeline
+  = render 'pipeline_steps_form', project: c, pipeline: pipeline
 
   .ln_solid
   .form-group
