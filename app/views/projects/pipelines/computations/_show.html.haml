@@ -1,7 +1,7 @@
-#pipeline.pipeline{ data: { pipeline: pipeline.iid, patient: patient.id, computation: computation.pipeline_step } }
+#pipeline.pipeline{ data: { pipeline: pipeline.iid, project: project.id, computation: computation.pipeline_step } }
   .col-xs-2
-    = render 'patients/pipelines/computations/menu',
-      patient: patient, pipeline: pipeline,
+    = render 'projects/pipelines/computations/menu',
+      project: project, pipeline: pipeline,
       computation: computation, computations: computations
   .col-xs-10
     #pipeline-content.tab-content
@@ -15,4 +15,4 @@
       - if policy(computation).need_proxy?
         = render(partial: 'proxy/warning', locals: { msg: t('.proxy_invalid') })
       - if policy(computation).update?
-        = render 'run', patient: patient, pipeline: pipeline, computation: computation
+        = render 'run', project: project, pipeline: pipeline, computation: computation
