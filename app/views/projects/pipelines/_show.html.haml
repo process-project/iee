@@ -1,4 +1,4 @@
-= render 'patients/show', patient: patient, details: @details
+= render 'projects/show', project: project, details: @details
 
 .x_panel
   .x_title
@@ -9,26 +9,26 @@
       %li
         = pipeline_owner(pipeline)
       %li
-        = link_to patient_path(patient),
+        = link_to project_path(project),
           class: 'back', data: { turbolinks: false } do
           = icon 'hand-o-left',
-            title: t('patients.pipelines.show.back_to_index')
+            title: t('projects.pipelines.show.back_to_index')
       %li
-        = link_to edit_patient_pipeline_path(patient, pipeline),
+        = link_to edit_project_pipeline_path(project, pipeline),
           data: { turbolinks: false },
           class: 'edit' do
           = icon 'edit',
-            title: t('patients.pipelines.show.edit')
+            title: t('projects.pipelines.show.edit')
       %li
-        = link_to patient_pipeline_path(patient, pipeline),
+        = link_to project_pipeline_path(project, pipeline),
           method: :delete, class: 'delete',
           data: { confirm: t('are_you_sure') } do
           = icon 'remove',
-            title: t('patients.pipelines.show.delete')
+            title: t('projects.pipelines.show.delete')
     .clearfix
 
   .x_content
     = yield
 
-= render('patients/pipelines/file_browsers',
-  patient: patient, pipeline: pipeline)
+= render('projects/pipelines/file_browsers',
+  project: project, pipeline: pipeline)
