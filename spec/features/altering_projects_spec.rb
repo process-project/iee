@@ -31,8 +31,7 @@ RSpec.feature 'Project altering' do
           not_to(change { Project.count })
 
         expect(page).
-          to have_content I18n.t 'activerecord.errors.models.project.
-                                  attributes.project_name.invalid'
+          to have_content I18n.t 'activerecord.errors.models.project.attributes.project_name.invalid'
       end
 
       scenario 'lets the user register a project with project name' do
