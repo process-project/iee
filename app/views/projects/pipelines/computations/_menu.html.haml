@@ -1,7 +1,7 @@
 %ul#computations.nav.nav-tabs.tabs-left
   - computations.each do |c|
     %li{class: [c == computation && 'active']}
-      = link_to patient_pipeline_computation_path(patient, pipeline, c),
+      = link_to project_pipeline_computation_path(project, pipeline, c),
         data: { turbolinks: false } do
         = run_status(c)
         = t("steps.#{c.pipeline_step}.title")
