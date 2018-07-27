@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class PatientChannel < ApplicationCable::Channel
+class ProjectChannel < ApplicationCable::Channel
   def subscribed
-    stream_for patient
+    stream_for project
   end
 
   private
 
-  def patient
-    Patient.find_by(case_number: params[:patient])
+  def project
+    Project.find_by(project_name: params[:project])
   end
 end
