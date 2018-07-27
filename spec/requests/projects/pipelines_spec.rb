@@ -5,12 +5,12 @@ require 'rails_helper'
 describe 'Pipelines controller' do
   include WebDavSpecHelper
 
-  let(:patient) { create(:patient) }
+  let(:project) { create(:project) }
 
   context 'with no user signed in' do
-    describe 'GET /patients/:id/pipelines' do
+    describe 'GET /projects/:id/pipelines' do
       it 'is redirects to signin url' do
-        get patient_pipelines_path(patient)
+        get project_pipelines_path(project)
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -23,27 +23,27 @@ describe 'Pipelines controller' do
       login_as(user)
     end
 
-    describe 'GET /patients/:id/pipelines' do
-      it 'redirects user to patient page' do
-        get patient_pipelines_path(patient)
-        expect(response).to redirect_to patient_path(patient)
+    describe 'GET /projects/:id/pipelines' do
+      it 'redirects user to project page' do
+        get project_pipelines_path(project)
+        expect(response).to redirect_to project_path(project)
       end
     end
 
-    describe 'POST /patients/:id/pipelines' do
+    describe 'POST /projects/:id/pipelines' do
       before { stub_webdav }
 
       it 'allow to run pipelines for all logged in users' do
         expect do
-          post patient_pipelines_path(patient),
+          post project_pipelines_path(project),
                params: { pipeline: { name: 'my pipeline',
                                      flow: 'avr_from_scan_rom',
                                      mode: 'manual' } }
-        end.to change { patient.pipelines.count }.by(1)
+        end.to change { project.pipelines.count }.by(1)
       end
 
       it 'current user becomes pipeline owner' do
-        post patient_pipelines_path(patient),
+        post project_pipelines_path(project),
              params: { pipeline: { name: 'my pipeline',
                                    flow: 'avr_from_scan_rom',
                                    mode: 'manual' } }
@@ -52,29 +52,29 @@ describe 'Pipelines controller' do
       end
     end
 
-    describe 'DELETE /patients/:id/pipelines/:iid' do
+    describe 'DELETE /projects/:id/pipelines/:iid' do
       before { stub_webdav }
 
       it 'can be performed by owner' do
-        pipeline = create(:pipeline, patient: patient, user: user)
+        pipeline = create(:pipeline, project: project, user: user)
 
-        expect { delete patient_pipeline_path(patient, pipeline) }.
-          to change { patient.pipelines.count }.by(-1)
+        expect { delete project_pipeline_path(project, pipeline) }.
+          to change { project.pipelines.count }.by(-1)
       end
 
       it 'cannot be removed by no owner' do
-        pipeline = create(:pipeline, patient: patient)
+        pipeline = create(:pipeline, project: project)
 
-        expect { delete patient_pipeline_path(patient, pipeline) }.
-          to_not(change { patient.pipelines.count })
+        expect { delete project_pipeline_path(project, pipeline) }.
+          to_not(change { project.pipelines.count })
       end
     end
 
-    describe 'PUT /patients/:id/pipelines/:iid' do
+    describe 'PUT /projects/:id/pipelines/:iid' do
       it 'can be performed by owner' do
-        pipeline = create(:pipeline, patient: patient, user: user, name: 'owned')
+        pipeline = create(:pipeline, project: project, user: user, name: 'owned')
 
-        put patient_pipeline_path(patient, pipeline),
+        put project_pipeline_path(project, pipeline),
             params: { pipeline: { name: 'updated' } }
         pipeline.reload
 
@@ -82,9 +82,9 @@ describe 'Pipelines controller' do
       end
 
       it 'cannot be removed by no owner' do
-        pipeline = create(:pipeline, patient: patient, name: 'not my')
+        pipeline = create(:pipeline, project: project, name: 'not my')
 
-        put patient_pipeline_path(patient, pipeline),
+        put project_pipeline_path(project, pipeline),
             params: { pipeline: { name: 'updated' } }
         pipeline.reload
 
