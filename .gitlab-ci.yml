@@ -116,3 +116,20 @@ deploy_production_manual:
   environment:
     name: production
     url: https://valve.cyfronet.pl
+    
+process_deploy_production_manual:
+  stage: deploy
+  script:
+  - mkdir /root/.ssh
+  - echo $PROCESS_PROD_HOST_KEY > ~/.ssh/known_hosts
+  - echo -e $PROCESS_PROD_KEY > ~/.ssh/id_rsa
+  - chmod 400 ~/.ssh/id_rsa
+  - git checkout process-master
+  - git pull
+  - git push $PROCESS_GIT_REPO process-master:process-master
+  when: manual
+  only:
+  - process-master
+  environment:
+    name: production
+    url: https://process.cyfronet.pl
