@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Exclude process-* tags from the EurValve CI (@jmeizner)
+- Segmentation output files have shorter names (@Nuanda)
 
 ### Deprecated
 
