@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Accepting `file.zip` as a correct input for segmentation (@Nuanda)
 
 ### Changed
+- Exclude process-* tags from the EurValve CI (@jmeizner)
 - Segmentation output files have shorter names (@Nuanda)
 
 ### Deprecated
