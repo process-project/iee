@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Patients API (@mkasztelnik)
 - Accepting `file.zip` as a correct input for segmentation (@Nuanda)
+- Extended clinical details section with a multi-entry widget (@Nuanda)
 
 ### Changed
 - Exclude process-* tags from the EurValve CI (@jmeizner)
@@ -22,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Fixed GitLab integration spec (@Nuanda)
+- Missing clinical data for some patients (@Nuanda)
 
 ### Security
 

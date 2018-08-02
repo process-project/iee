@@ -1,10 +1,21 @@
-- if details[:status] == :ok
-  %ul.list-inline
-    - details[:payload].each do |value|
-      %li
-        #{t(".#{value[:name]}")}: #{value[:value]}
-        %span(class = "label label-#{value[:style]}")
-          = value[:type]
-- else
-  %div.label.label-danger= t('.no_details', details: details[:message])
+%b #{t('.subtitle')}:
 
+- unless details[:status] == :error
+  - details[:payload].each do |event|
+    %ul.list-inline
+      - event.each do |value|
+        %li
+          #{t(".#{value[:name]}")}:
+          - if value[:value].present?
+            = value[:value]
+          - else
+            %i= t('.unspecified')
+          - if value[:unit].present?
+            = value[:unit]
+          - if value[:type].present?
+            %span(class = "label label-#{value[:style]}")= value[:type]
+
+- if details[:status] == :error
+  %div.label.label-danger= t('.no_details', details: details[:message])
+- elsif details[:status] == :warn
+  %div.label.label-warning= t('.not_all_details', details: details[:message])

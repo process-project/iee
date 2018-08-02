@@ -42,14 +42,23 @@ en:
           able to start computation on PLGrid infrastructure.
       loading_patient_details: Loading patient details...
     details:
+      subtitle: Recorded data
       no_details: Patient details are not available (%{details})
-      gender: Gender
-      birth_year: Birth year
-      age: Visit age
-      current_age: Current age
-      weight: Weight
-      height: Height
-      elvmin: Elastance-LVmin
+      not_all_details: Some patient details are not available (%{details})
+      ds_date_date: Date
+      gender_value: Gender
+      ds_type_item: State
+      ds_type_value: State
+      year_of_birth_value: Birth year
+      age_value: Visit age
+      ds_weight_value: Weight
+      ds_height_value: Height
+      com_elvmin_value: Min LV Elastance
+      com_elvmax_value: Max LV Elastance
+      com_tbv_value: Total Blood Volume
+      systemic_resistance_proximal_value: Systemic resistance proximal
+      systemic_resistance_distal_value: Systemic resistance distal
+      unspecified: unspecified
     new:
       title: New case
       subtitle: Register new EurValve patient to conduct research for this case

@@ -1,0 +1,9 @@
+{
+  "DatasetName": "eurvalve",
+  "HostAddress": "eurvalve.shef.ac.uk",
+  "Query": "{\"select\":[{\"field\":{\"dbPublishAddress\":\"eurvalve.sheffield.ac.uk\",\"dbName\":\"eurvalve\",\"tableName\":\"roottable\",\"columnName\":\"patient_id_text\",\"columnDisplayName\":\"patient_id$text\",\"columnType\":\"string\",\"annoDisplay\":\"\",\"columnEnum\":\"\"},\"sortOrder\":\"DESCENDING\"},
+                         {\"field\":{\"dbPublishAddress\":\"eurvalve.sheffield.ac.uk\",\"dbName\":\"eurvalve\",\"tableName\":\"roottable\",\"columnName\":\"year_of_birth_value\",\"columnDisplayName\":\"year_of_birth$value\",\"columnType\":\"int\",\"annoDisplay\":\"\",\"columnEnum\":\"\"},\"sortOrder\":\"DESCENDING\"},
+                         {\"field\":{\"dbPublishAddress\":\"eurvalve.sheffield.ac.uk\",\"dbName\":\"eurvalve\",\"tableName\":\"roottable\",\"columnName\":\"gender_value\",\"columnDisplayName\":\"gender$value\",\"columnType\":\"string\",\"annoDisplay\":\"\",\"columnEnum\":\"Male,Female\"},\"sortOrder\":\"DESCENDING\"}],
+             \"where\":[{\"groupOperator\":\"AND\",\"rules\":[{\"field\":{\"dbPublishAddress\":\"eurvalve.sheffield.ac.uk\",\"dbName\":\"eurvalve\",\"tableName\":\"roottable\",\"columnName\":\"patient_id_text\",\"columnDisplayName\":\"patient_id$text\",\"columnType\":\"string\",\"annoDisplay\":\"\",\"columnEnum\":\"\"},\"operation\":\"=\",\"values\":[\"{case_number}\"]}],\"groups\":[]}]}",
+  "queryType": "Normal"
+}
