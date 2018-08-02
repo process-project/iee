@@ -17,51 +17,51 @@ $(document).on 'turbolinks:load', ->
       viewType: 0
     ))
 
-  $('div[data-patient-details]').each ->
+  $('div[data-project-details]').each ->
     div = $(this)
-    patientUrl = div.data('patient-details')
-    console.log("patient id %o", patientUrl)
+    projectUrl = div.data('project-details')
+    console.log("project id %o", projectUrl)
     $.ajax
       method: 'get'
-      url: patientUrl
+      url: projectUrl
       cache: false
       success: (response) ->
         console.log("response %o", response)
         console.log("div %o", div)
         div.replaceWith(response)
 
-  $('div[data-patient-statistics]').each ->
+  $('div[data-project-statistics]').each ->
     $.ajax
       method: 'get'
-      url: $(this).data('patient-statistics')
+      url: $(this).data('project-statistics')
       cache: false
       success: (response) =>
         console.log("response %o", response)
-        $(this).find('.patient_stats .count').html(response['count'])
-        $(this).find('.patient_stats .count_bottom').html(
+        $(this).find('.project_stats .count').html(response['count'])
+        $(this).find('.project_stats .count_bottom').html(
           "and <i class='green'>#{response['test']}</i> test entries"
         )
-        $(this).find('.patient_site_stats .count').html(
+        $(this).find('.project_site_stats .count').html(
           "#{response['berlin']} | #{response['eindhoven']} | #{response['sheffield']}"
         )
-        $(this).find('.patient_site_stats .count_bottom').html(
+        $(this).find('.project_site_stats .count_bottom').html(
           "<i class='green'>#{response['no_site']}</i> from unknown site"
         )
-        $(this).find('.patient_gender_stats .count').html(
+        $(this).find('.project_gender_stats .count').html(
           "#{response['females']} | #{response['males']}"
         )
-        $(this).find('.patient_gender_stats .count_bottom').html(
+        $(this).find('.project_gender_stats .count_bottom').html(
           "<i class='green'>#{response['no_gender']}</i> of unknown gender"
         )
-        $(this).find('.patient_disease_stats .count').html(
+        $(this).find('.project_disease_stats .count').html(
           "#{response['aortic']} | #{response['mitral']}"
         )
-        $(this).find('.patient_disease_stats .count_bottom').html(
+        $(this).find('.project_disease_stats .count_bottom').html(
           "<i class='green'>#{response['no_diagnosis']}</i> with unknown diagnosis"
         )
-        $(this).find('.patient_state_stats .count').html(
+        $(this).find('.project_state_stats .count').html(
           "#{response['preop']} | #{response['postop']}"
         )
-        $(this).find('.patient_state_stats .count_bottom').html(
+        $(this).find('.project_state_stats .count_bottom').html(
           "<i class='red'>#{response['no_state']}</i> of unknown state"
         )
