@@ -26,7 +26,6 @@ class User < ApplicationRecord
   has_many :computations, dependent: :destroy
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
-  has_many :ips, dependent: :destroy
   has_many :user_agents, dependent: :destroy
 
   validates :first_name, presence: true
@@ -120,11 +119,7 @@ class User < ApplicationRecord
     all_groups.map(&:name)
   end
 
-  def last_ip
-    ips.last
-  end
-
-  def last_agent
-    user_agents.last
+  def updated_agent
+    user_agents.first
   end
 end

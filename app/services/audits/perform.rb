@@ -7,31 +7,37 @@ module Audits
     end
 
     def call
-      Notifier.audit_failed(@user.last_ip).deliver_later unless ok?
+      ua = @user.updated_agent
+      Notifier.audit_failed(ua).deliver_later unless ok?(ua)
     end
 
     private
 
-    def ok?
-      browser_ok? && ip_ok?
+    def ok?(ua)
+      return true if ua.nil?
+
+      browser_ok?(ua) && ip_ok?(ua)
     end
 
-    def browser_ok?
+    def browser_ok?(ua)
       return true if @user.user_agents.count < 2
 
-      @user.user_agents.where(name: @user.last_agent.name).count > 1
+      @user.user_agents.where(name: ua.name).count > 1
     end
 
-    def ip_ok?
-      return true if @user.ips.count < 2
-      return true if @user.ips.where(address: @user.last_ip.address).count > 1
+    def ip_ok?(ua)
+      return true if ua.ips.count < 2
 
-      check_ips?
+      ip = ua.updated_ip
+
+      return true if ua.ips.where(address: ip.address).count > 1
+
+      check_ips?(ua, ip)
     end
 
-    def check_ips?
-      @user.ips.each do |ip|
-        return true if ip.address != @user.last_ip.address && ip.cc == @user.last_ip.cc
+    def check_ips?(ua, ip)
+      ua.ips.each do |i|
+        return true if i.address != ip.address && i.cc == ip.cc
       end
 
       false

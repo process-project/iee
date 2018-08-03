@@ -8,6 +8,6 @@ FactoryBot.define do
       sequence(:address, (1..254).cycle) { |n| "8.8.8.#{n}" }
     end
 
-    user
+    user_agent
   end
 end

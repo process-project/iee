@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Ip < ApplicationRecord
-  belongs_to :user
+  belongs_to :user_agent
 
   validates :address, presence: true
+
+  default_scope { order(updated_at: :desc) }
 
   def cc
     db = MaxMindDB.new(Rails.application.config_for('eurvalve')['maxmind']['db'])
