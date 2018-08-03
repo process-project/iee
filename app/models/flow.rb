@@ -50,7 +50,7 @@ class Flow
       mv_segmentation rom parameter_optimization 0d_models
       uncertainty_analysis pv_loop_comparison
     ],
-    unused_steps: %w[heart_model_calculation blood_flow_simulation]
+    unused_steps: %w[heart_model_calculation blood_flow_simulation parameter_extraction]
   }.freeze
 
   STEPS = [
