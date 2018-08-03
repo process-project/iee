@@ -20,5 +20,5 @@ en:
       not_runnable_manual: |
         Required input files needed to run this computation cannot be found
       not_runnable_automatic: Error while updating computation
-      started_manual: Computation subbmitted successfully
+      started_manual: Computation submitted successfully
       started_automatic: Computation was updated successfully

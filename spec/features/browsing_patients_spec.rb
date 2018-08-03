@@ -163,14 +163,44 @@ RSpec.feature 'Patient browsing' do
     let(:details) do
       {
         status: :ok,
-        payload: [
+        payload: [[
           {
             name: 'state',
             value: 'Pre-op',
             style: 'default',
             type: 'real'
           }
-        ]
+        ]]
+      }
+    end
+
+    let(:incomplete_details) do
+      {
+        status: :warn,
+        payload: [[
+          {
+            name: 'state',
+            value: 'Pre-op',
+            style: 'default',
+            type: 'real'
+          }
+        ]],
+        message: 'Oh well...'
+      }
+    end
+
+    let(:no_details) do
+      {
+        status: :error,
+        payload: [[
+          {
+            name: 'state',
+            value: 'Pre-op',
+            style: 'default',
+            type: 'real'
+          }
+        ]],
+        message: 'Too bad...'
       }
     end
 
@@ -192,6 +222,28 @@ RSpec.feature 'Patient browsing' do
       visit patient_path(patient)
 
       expect(page).to have_content 'Pre-op'
+    end
+
+    scenario 'shows patient\'s incomplete clinical data', js: true do
+      allow_any_instance_of(Patients::Details).
+        to receive(:call).
+        and_return(incomplete_details)
+
+      visit patient_path(patient)
+
+      expect(page).to have_content 'Pre-op'
+      expect(page).to have_content 'Some patient details are not available (Oh well...)'
+    end
+
+    scenario 'shows error message instead of patient\'s clinical data', js: true do
+      allow_any_instance_of(Patients::Details).
+        to receive(:call).
+        and_return(no_details)
+
+      visit patient_path(patient)
+
+      expect(page).not_to have_content 'Pre-op'
+      expect(page).to have_content 'Patient details are not available (Too bad...)'
     end
 
     scenario 'shows pipelines list' do

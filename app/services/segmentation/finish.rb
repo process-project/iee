@@ -36,17 +36,17 @@ module Segmentation
         new(@file_store,
             @local_file_path,
             @computation.output_path).
-        call { |f| without_prefix(f) }
+        call { |f| without_repetition(f) }
     end
 
-    def without_prefix(file_name)
-      prefixless = file_name.gsub(/^#{prefix}\.{0,1}/, '')
-      File.extname(prefixless).empty? ? file_name : prefixless
+    def without_repetition(file_name)
+      no_repetition_name = file_name.sub(/#{repetition}\.{0,1}/, '')
+      File.extname(no_repetition_name).empty? ? file_name : no_repetition_name
     end
 
-    def prefix
-      @prefix ||= File.basename(@computation.working_file_name,
-                                File.extname(@computation.working_file_name))
+    def repetition
+      @repetition ||= File.basename(@computation.working_file_name,
+                                    File.extname(@computation.working_file_name))
     end
 
     def update_computation(attrs)

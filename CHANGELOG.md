@@ -9,8 +9,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## Unreleased
 
 ### Added
-- Patients API (@mkasztelnik)
-- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
 
 ### Changed
 
@@ -19,7 +17,27 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+
+### Security
+
+## 0.11.0
+
+### Added
+- Patients API (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
+- Extended clinical details section with a multi-entry widget (@Nuanda)
+
+### Changed
+- Exclude process-* tags from the EurValve CI (@jmeizner)
+- Segmentation output files have shorter names (@Nuanda)
+
+### Deprecated
+
+### Removed
+
+### Fixed
 - Fixed GitLab integration spec (@Nuanda)
+- Missing clinical data for some patients (@Nuanda)
 
 ### Security
 
