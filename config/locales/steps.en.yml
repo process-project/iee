@@ -37,7 +37,7 @@ en:
       aborted: Parameter extraction was aborted by the pipeline owner
       start_automatic: Save parameter extraction version
       start_manual: Start parameter extraction
-      restart: Restart parameter extraction
+      restart_manual: Restart parameter extraction
     cfd:
       title: Computational Fluid Dynamics simulation
       cannot_start: |
