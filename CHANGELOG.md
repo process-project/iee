@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
 
 ### Security
 
