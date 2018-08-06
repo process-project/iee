@@ -73,19 +73,7 @@ en:
     options:
       pipeline:
         flow:
-          inference_variants: Inference variants
-          avr_surgical_preparation: AVR surgical prep
-          avr_from_scan_rom: AVR from Scan (ROM)
-          avr_from_scan_cfd: AVR from Scan (CFD)
-          avr_tavi_cfd: AVR/TAVI (CFD)
-          avr_valve_selection: AVR Valve selection
-          avr_intervention_timing: AVR Intervention Timing
-          av_classification: AV Classification
-          avr_risk_benefit: AVR Risk/Benefit
-          prosthetic_angle_tilt: Prosthetic angle/tilt
-          avr_long_term_post_op: AVR long term post-op
-          mvr_from_scan_rom: MVR from scan (ROM)
-          unused_steps: Additional computations
+          placeholder_pipeline: Placeholder pipeline
     # Examples
     # labels:
     #   defaults:
