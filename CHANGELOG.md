@@ -17,7 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- ExclusivelyOwnedGroups incorrect positive removed
+- ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
 
 ### Security
 
