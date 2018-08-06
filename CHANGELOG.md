@@ -17,7 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
-- STDOUT and STDERR files reset to nil for a re-run computation
+- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
 
 ### Security
 
