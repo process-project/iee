@@ -77,11 +77,12 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
 
+  gem 'railroady'
+  gem 'rubocop', '0.51.0', require: false
+
   # PLG OpenId requires ssh even for development
   # start app using `thin start --ssl
   gem 'thin'
-
-  gem 'rubocop', '0.51.0', require: false
 end
 
 group :test do
