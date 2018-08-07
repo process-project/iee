@@ -74,6 +74,7 @@ en:
       pipeline:
         flow:
           placeholder_pipeline: Placeholder pipeline
+          tensorflow_pipeline: Tensorflow pipeline
     # Examples
     # labels:
     #   defaults:
