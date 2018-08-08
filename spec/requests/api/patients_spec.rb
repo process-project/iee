@@ -77,6 +77,10 @@ RSpec.describe 'Patients API' do
       )
     end
 
+    it 'allows to acquire pipelines iid for pipeline API use' do
+      pending; fail
+    end
+
     it 'returns 404 when patient not found' do
       get api_patient_path(id: 'non_existing'), headers: auth
 

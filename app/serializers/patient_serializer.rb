@@ -4,5 +4,5 @@ class PatientSerializer
   include FastJsonapi::ObjectSerializer
   set_id :case_number
   attributes :case_number
-  has_many :pipelines
+  has_many :pipelines, serializer: SimplePipelineSerializer
 end
