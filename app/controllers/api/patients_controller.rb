@@ -12,7 +12,7 @@ module Api
     end
 
     def show
-      render json: PatientSerializer.new(@patient, include: [:pipelines])
+      render json: PatientSerializer.new(@patient)
     end
 
     def create

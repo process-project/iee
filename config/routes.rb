@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     delete 'policies', to: 'policies#destroy'
     resources :policy_entities, only: :index
     resources :patients do
-      resources :pipelines, only: [:create, :show, :destroy]
+      resources :pipelines, only: [:index, :create, :show, :destroy]
     end
   end
 

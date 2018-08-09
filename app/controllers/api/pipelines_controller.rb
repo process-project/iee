@@ -5,6 +5,10 @@ module Api
     before_action :load_patient
     before_action :find_and_authorize, only: [:show, :destroy]
 
+    def index
+      render json: SimplePipelineSerializer.new(@patient.pipelines)
+    end
+
     def show
       render json: pipeline_json
     end
