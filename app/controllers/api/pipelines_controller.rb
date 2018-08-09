@@ -59,7 +59,7 @@ module Api
     end
 
     def master_branch(pipeline)
-      Hash[pipeline.steps.map { |step| [step.name, { tag_or_branch: "master" }] }]
+      Hash[pipeline.steps.map { |step| [step.name, { tag_or_branch: 'master' }] }]
     end
   end
 end

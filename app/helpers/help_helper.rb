@@ -22,6 +22,7 @@ module HelpHelper
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def renderer
     context = {
       'jwt_public_key' => jwt_public_key,
@@ -32,11 +33,12 @@ module HelpHelper
       'user_token' => current_user.token,
       'flows' => flow_definitions,
       'required_files' => required_file_patterns,
-      'webdav_docs_url' => Rails.configuration.constants['file_store']['web_dav_base_url'],
+      'webdav_docs_url' => webdav_docs_url,
       'computation_statuses' =>  computation_statuses
     }
     MarkdownRenderer.new(context)
   end
+  # rubocop:enable Metrics/MethodLength
 
   def jwt_public_key
     Vapor::Application.config.jwt.public_key.export
@@ -63,9 +65,13 @@ module HelpHelper
     end.join("\n")
   end
 
+  def webdav_docs_url
+    Rails.configuration.constants['file_store']['web_dav_base_url']
+  end
+
   def computation_statuses
     Computation.validators_on(:status).select do |validator|
-      validator.kind_of? ActiveModel::Validations::InclusionValidator
+      validator.is_a? ActiveModel::Validations::InclusionValidator
     end.first.options[:in]
   end
 end
