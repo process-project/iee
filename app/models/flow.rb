@@ -6,7 +6,7 @@ class Flow
   }.freeze
 
   STEPS = [
-    RimrockStep.new('placeholder_step', 'patrykwojtowicz/mock-step', 'mock.sh.erb')
+    RimrockStep.new('placeholder_step', 'process-eu/mock-step', 'mock.sh.erb')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
