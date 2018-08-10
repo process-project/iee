@@ -15,7 +15,7 @@ RSpec.describe SimplePipelineSerializer do
         id: pipeline.iid.to_s,
         attributes: {
           name: pipeline.name,
-          flow: "unused_steps"
+          flow: 'unused_steps'
         }
       }
     )
