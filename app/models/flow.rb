@@ -3,12 +3,12 @@
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
-    tensorflow_pipeline: %W[ts_computation]
+    tensorflow_pipeline: %W[tf_step]
   }.freeze
 
   STEPS = [
     RimrockStep.new('placeholder_step', 'process-eu/mock-step', 'mock.sh.erb')
-    RimrockStep.new('ts_computation', 'patrykwojtowicz/tensorflow-pipeline', 'tensorflow_step.sh.erb')
+    RimrockStep.new('tf_step', 'process-eu/tensorflow-pipeline', 'tensorflow_mock_job.sh.erb')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
