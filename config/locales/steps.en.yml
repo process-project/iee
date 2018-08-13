@@ -18,5 +18,5 @@ en:
       start_automatic: Save placeholder step version
       start_manual: Start placeholder step
       restart_manual: Restart placeholder step
-    ts_computation:
+    tf_step:
       title: Tensorflow computation
