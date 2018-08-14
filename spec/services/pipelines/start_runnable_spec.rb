@@ -21,7 +21,7 @@ describe Pipelines::StartRunnable do
       end
       it 'starts created runnable pipeline step' do
         create(:rimrock_computation,
-               status: 'created', pipeline_step: '0d_models',
+               status: 'created', pipeline_step: 'placeholder_step',
                pipeline: pipeline)
         runner = instance_double(PipelineSteps::Rimrock::Runner)
 
@@ -33,7 +33,7 @@ describe Pipelines::StartRunnable do
 
       it 'does not start already started pipeline step' do
         create(:rimrock_computation,
-               status: 'running', pipeline_step: '0d_models',
+               status: 'running', pipeline_step: 'placeholder_step',
                pipeline: pipeline)
 
         expect(PipelineSteps::Rimrock::Runner).to_not receive(:new)
@@ -45,7 +45,7 @@ describe Pipelines::StartRunnable do
     context 'and without required input' do
       it 'does not start not runnable pipeline step' do
         create(:rimrock_computation,
-               status: 'created', pipeline_step: '0d_models',
+               status: 'created', pipeline_step: 'placeholder_step',
                pipeline: pipeline)
 
         runner = double(runnable?: false)
@@ -63,7 +63,7 @@ describe Pipelines::StartRunnable do
 
     it 'runnable rimrock computations are not started' do
       create(:rimrock_computation,
-             status: 'created', pipeline_step: '0d_models',
+             status: 'created', pipeline_step: 'placeholder_step',
              pipeline: pipeline)
       create(:data_file,
              patient: pipeline.patient,

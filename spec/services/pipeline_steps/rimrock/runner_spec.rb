@@ -22,7 +22,7 @@ RSpec.describe PipelineSteps::Rimrock::Runner do
 
   let(:updater) { instance_double(ComputationUpdater, call: true) }
 
-  let(:computation) { create(:rimrock_computation, pipeline_step: '0d_models') }
+  let(:computation) { create(:rimrock_computation, pipeline_step: 'placeholder_step') }
 
   subject do
     described_class.new(computation, 'repo', 'file',

@@ -5,7 +5,7 @@ require 'services/pipeline_steps/runner_shared_examples'
 
 RSpec.describe PipelineSteps::Webdav::Runner do
   let(:updater) { instance_double(ComputationUpdater, call: true) }
-  let(:computation) { create(:webdav_computation, pipeline_step: 'segmentation') }
+  let(:computation) { create(:webdav_computation, pipeline_step: 'placeholder_step') }
 
   subject do
     described_class.new(computation, :image,
