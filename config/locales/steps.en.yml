@@ -20,3 +20,19 @@ en:
       restart_manual: Restart placeholder step
     tf_step:
       title: Tensorflow computation
+      cannot_start: |
+        Cannot start tensorflow computation.
+      created: |
+        All required input files are available.
+        You can start tensorflow computation for this project.
+      new: Tensorflow computation is being submitted
+      queued: Tensorflow computation is queued
+      running: Tensorflow computation is running
+      error: There was an error while running tensorflow computation
+      finished: |
+        Tensorflow computation finished successfully, results stored in
+        the output directory.
+      aborted: Tensorflow computation was aborted by the pipeline owner
+      start_automatic: Save tensorflow computation version
+      start_manual: Start tensorflow computation
+      restart_manual: Restart tensorflow computation
