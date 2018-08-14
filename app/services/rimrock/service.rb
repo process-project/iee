@@ -16,7 +16,7 @@ module Rimrock
     private
 
     def rimrock_url
-      Rails.application.config_for('eurvalve')['rimrock']['url']
+      Rails.application.config_for('process')['rimrock']['url']
     end
   end
 

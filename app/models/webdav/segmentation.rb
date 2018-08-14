@@ -4,8 +4,8 @@ module Webdav
   class Segmentation < Webdav::Client
     def initialize
       super(storage_url)
-      credentials(Rails.application.config_for('eurvalve')['segmentation']['user'],
-                  Rails.application.config_for('eurvalve')['segmentation']['password'])
+      credentials(Rails.application.config_for('process')['segmentation']['user'],
+                  Rails.application.config_for('process')['segmentation']['password'])
       self.verify_server = false
     end
 
@@ -21,18 +21,18 @@ module Webdav
       private
 
       def inputs_path
-        Rails.application.config_for('eurvalve')['segmentation']['inputs_path']
+        Rails.application.config_for('process')['segmentation']['inputs_path']
       end
 
       def outputs_path
-        Rails.application.config_for('eurvalve')['segmentation']['outputs_path']
+        Rails.application.config_for('process')['segmentation']['outputs_path']
       end
     end
 
     private
 
     def storage_url
-      Rails.application.config_for('eurvalve')['segmentation']['url']
+      Rails.application.config_for('process')['segmentation']['url']
     end
   end
 end

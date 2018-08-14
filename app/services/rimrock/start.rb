@@ -24,10 +24,10 @@ module Rimrock
 
     def req_body
       {
-        host: Rails.application.config_for('eurvalve')['rimrock']['host'],
+        host: Rails.application.config_for('process')['rimrock']['host'],
         working_directory: computation.working_directory,
         script: computation.script,
-        tag: Rails.application.config_for('eurvalve')['rimrock']['tag']
+        tag: Rails.application.config_for('process')['rimrock']['tag']
       }.to_json
     end
 

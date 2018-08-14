@@ -66,7 +66,7 @@ module Segmentation
     end
 
     def segmentation
-      @segmentation ||= Rails.application.config_for('eurvalve')['segmentation']
+      @segmentation ||= Rails.application.config_for('process')['segmentation']
     end
 
     def cleanup
