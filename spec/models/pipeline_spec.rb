@@ -113,7 +113,7 @@ RSpec.describe Pipeline, type: :model do
       pipeline = create(:pipeline)
       create_list(:computation, 2,
                   status: :finished, pipeline: pipeline,
-                  pipeline_step: 'ageing_model_x2')
+                  pipeline_step: 'placeholder_step')
 
       expect(pipeline.status).to eq :success
     end
@@ -122,10 +122,10 @@ RSpec.describe Pipeline, type: :model do
       pipeline = create(:pipeline)
       create(:computation,
              status: :finished, pipeline: pipeline,
-             pipeline_step: 'ageing_model_x2')
+             pipeline_step: 'placeholder_step')
       create(:computation,
              status: :error, pipeline: pipeline,
-             pipeline_step: 'ageing_model_x2')
+             pipeline_step: 'placeholder_step')
 
       expect(pipeline.status).to eq :error
     end
@@ -134,11 +134,11 @@ RSpec.describe Pipeline, type: :model do
       pipeline = create(:pipeline)
       create(:computation,
              status: :finished, pipeline: pipeline,
-             pipeline_step: 'ageing_model_x2')
+             pipeline_step: 'placeholder_step')
 
       running = create(:computation,
                        status: :running, pipeline: pipeline,
-                       pipeline_step: 'ageing_model_x2')
+                       pipeline_step: 'placeholder_step')
       expect(pipeline.status).to eq :running
 
       running.update_attributes(status: :new)
@@ -149,7 +149,7 @@ RSpec.describe Pipeline, type: :model do
     end
 
     it 'is waiting when is not running and any step is waiting for input' do
-      pipeline = create(:pipeline, flow: :avr_surgical_preparation)
+      pipeline = create(:pipeline, flow: :placeholder_pipeline)
       create(:computation,
              status: :created, pipeline: pipeline,
              pipeline_step: 'rom')
