@@ -37,7 +37,7 @@ describe 'Pipelines controller' do
         expect do
           post patient_pipelines_path(patient),
                params: { pipeline: { name: 'my pipeline',
-                                     flow: 'avr_from_scan_rom',
+                                     flow: 'placeholder_pipeline',
                                      mode: 'manual' } }
         end.to change { patient.pipelines.count }.by(1)
       end
@@ -45,7 +45,7 @@ describe 'Pipelines controller' do
       it 'current user becomes pipeline owner' do
         post patient_pipelines_path(patient),
              params: { pipeline: { name: 'my pipeline',
-                                   flow: 'avr_from_scan_rom',
+                                   flow: 'placeholder_pipeline',
                                    mode: 'manual' } }
 
         expect(Pipeline.last.user).to eq(user)
