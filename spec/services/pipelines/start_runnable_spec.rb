@@ -49,6 +49,7 @@ describe Pipelines::StartRunnable do
                pipeline: pipeline)
 
         runner = double(runnable?: false)
+        allow(runner).to receive(:call)
 
         allow(PipelineSteps::Rimrock::Runner).to receive(:new).and_return(runner)
         expect(runner).to_not receive(:run)
