@@ -9,28 +9,6 @@ RSpec.describe DataFile do
   it { should validate_presence_of(:data_type) }
   it { should validate_presence_of(:project) }
 
-  context 'when related to a project' do
-    it 'touches related project on modification' do
-      expect(subject.project).
-        to receive(:update_procedure_status).and_call_original
-      subject.name = 'something_new'
-      subject.save
-    end
-
-    it 'touches related project on creation' do
-      project = create(:project)
-      expect(project).
-        to receive(:update_procedure_status).and_call_original
-      create(:data_file, project: project)
-    end
-
-    it 'touches related project on destruction' do
-      expect(subject.project).
-        to receive(:update_procedure_status).and_call_original
-      subject.destroy
-    end
-  end
-
   context '#path' do
     it 'returns relative path for project input' do
       input = build(:data_file,
