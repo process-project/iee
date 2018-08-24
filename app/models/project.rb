@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-
   has_many :data_files, dependent: :destroy
   has_many :pipelines,
            -> { order(iid: :asc) },
@@ -48,10 +47,4 @@ class Project < ApplicationRecord
   def status
     pipelines.last&.status
   end
-
-  private
-
-  # rubocop:disable CyclomaticComplexity
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/PerceivedComplexity
 end
