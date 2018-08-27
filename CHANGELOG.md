@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
 - Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
+- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
 
 ### Security
 
