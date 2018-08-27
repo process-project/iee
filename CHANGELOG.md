@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
 
 ### Security
 
