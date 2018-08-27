@@ -10,9 +10,9 @@ describe ScriptGenerator do
   end
 
   context 'when generating curls' do
-    let(:patient) do
+    let(:project) do
       create(
-        :patient,
+        :project,
         data_files: [build(
           :data_file,
           name: 'foo.txt',
@@ -20,7 +20,7 @@ describe ScriptGenerator do
         )]
       )
     end
-    let(:pipeline) { create(:pipeline, patient: patient) }
+    let(:pipeline) { create(:pipeline, project: project) }
     let(:computation) { create(:rimrock_computation, pipeline: pipeline) }
     let(:data_file) { pipeline.data_file(:image) }
 
@@ -71,10 +71,10 @@ describe ScriptGenerator do
       expect { generator.call }.to raise_error(ArgumentError)
     end
 
-    it 'inserts case number of the patient' do
-      script = ScriptGenerator.new(computation, '<%= patient.case_number %>').call
+    it 'inserts project name of the project' do
+      script = ScriptGenerator.new(computation, '<%= project.project_name %>').call
 
-      expect(script).to include(patient.case_number)
+      expect(script).to include(project.project_name)
     end
   end
 
@@ -135,22 +135,22 @@ describe ScriptGenerator do
   end
 
   it 'inserts pipeline identifier' do
-    patient = create(:patient, case_number: 'case-number')
-    pipeline = create(:pipeline, patient: patient, iid: 1)
+    project = create(:project, project_name: 'project-name')
+    pipeline = create(:pipeline, project: project, iid: 1)
     computation = create(:rimrock_computation, pipeline: pipeline)
 
     script = ScriptGenerator.new(computation, '<%= pipeline_identifier %>').call
 
-    expect(script).to include 'case-number-1'
+    expect(script).to include 'project-name-1'
   end
 
-  it 'inserts patient case_number' do
-    patient = create(:patient, case_number: 'case-number')
-    pipeline = create(:pipeline, patient: patient, iid: 1)
+  it 'inserts project project_name' do
+    project = create(:project, project_name: 'project-name')
+    pipeline = create(:pipeline, project: project, iid: 1)
     computation = create(:rimrock_computation, pipeline: pipeline)
 
-    script = ScriptGenerator.new(computation, '<%= case_number %>').call
+    script = ScriptGenerator.new(computation, '<%= project_name %>').call
 
-    expect(script).to include 'case-number'
+    expect(script).to include 'project-name'
   end
 end

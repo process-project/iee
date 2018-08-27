@@ -25,13 +25,13 @@ describe Pipelines::Create do
   end
 
   it 'creates pipeline webdav directory' do
-    patient = create(:patient)
-    new_pipeline = build(:pipeline, patient: patient, user: user)
+    project = create(:project)
+    new_pipeline = build(:pipeline, project: project, user: user)
 
     expect(webdav).to receive(:r_mkdir).
-      with("test/patients/#{patient.case_number}/pipelines/1/inputs/")
+      with("test/projects/#{project.project_name}/pipelines/1/inputs/")
     expect(webdav).to receive(:r_mkdir).
-      with("test/patients/#{patient.case_number}/pipelines/1/outputs/")
+      with("test/projects/#{project.project_name}/pipelines/1/outputs/")
 
     described_class.new(new_pipeline, {}, client: webdav).call
   end

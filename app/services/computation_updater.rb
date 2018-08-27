@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ComputationUpdater
-  attr_reader :computation, :computations, :pipeline, :patient
+  attr_reader :computation, :computations, :pipeline, :project
 
   def initialize(computation)
     @computation = computation
@@ -10,12 +10,12 @@ class ComputationUpdater
                     where(pipeline_id: computation.pipeline_id).
                     order(:created_at)
     @pipeline = computation.pipeline
-    @patient = pipeline.patient
+    @project = pipeline.project
   end
 
   def call
     computations.each { |c| broadcast_to_computation(c) }
-    broadcast_to_patient(patient)
+    broadcast_to_project(project)
   end
 
   private
@@ -29,23 +29,23 @@ class ComputationUpdater
 
   def menu(to)
     ApplicationController.
-      render(partial: 'patients/pipelines/computations/menu',
-             locals: { patient: patient, pipeline: pipeline,
+      render(partial: 'projects/pipelines/computations/menu',
+             locals: { project: project, pipeline: pipeline,
                        computation: to, computations: computations })
   end
 
-  def broadcast_to_patient(to)
-    PatientChannel.broadcast_to(to, list: list(to))
+  def broadcast_to_project(to)
+    ProjectChannel.broadcast_to(to, list: list(to))
   end
 
-  def list(patient)
+  def list(project)
     ApplicationController.
-      render(partial: 'patients/pipelines/list',
-             locals: { patient: patient, pipelines: pipelines })
+      render(partial: 'projects/pipelines/list',
+             locals: { project: project, pipelines: pipelines })
   end
 
   def pipelines
-    patient.pipelines.includes(:computations).
+    project.pipelines.includes(:computations).
       order(:iid).order('computations.created_at')
   end
 

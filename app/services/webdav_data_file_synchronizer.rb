@@ -5,17 +5,17 @@ require 'net/dav'
 class WebdavDataFileSynchronizer
   include SynchronizerUtilities
 
-  def initialize(patient, user)
+  def initialize(project, user)
     @dav_client = Webdav::FileStore.new(user)
-    @patient = patient
+    @project = project
     @user = user
   end
 
   # Contacts EurValve file storage and updates the list of DataFiles
-  # related to a patient.
+  # related to a project.
   def call
-    if !@patient || @patient.case_number.blank?
-      report_problem(:no_case_number)
+    if !@project || @project.project_name.blank?
+      report_problem(:no_project_name)
     elsif @user.try(:token).blank?
       report_problem(:no_token)
     elsif @dav_client.blank?
@@ -38,7 +38,7 @@ class WebdavDataFileSynchronizer
 
   def remote_file_names
     remote_names = []
-    @dav_client.find(case_directory(webdav_storage_url), recursive: true) do |item|
+    @dav_client.find(project_directory(webdav_storage_url), recursive: true) do |item|
       remote_names << item.uri.to_s
     end
     remote_names

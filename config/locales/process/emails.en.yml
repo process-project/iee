@@ -1,7 +1,0 @@
-en:
-  emails:
-    account_approved:
-      subject: Your Process portal account has been approved
-      body: |
-        Your Process portal account has been approved by one of the supervisors.
-        You can now log into the portal using this link: %{login_url}.

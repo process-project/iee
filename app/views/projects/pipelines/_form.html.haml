@@ -1,0 +1,14 @@
+= simple_form_for [project, pipeline] do |f|
+  = f.error_notification
+  = f.input :flow, disabled: !pipeline.new_record?,
+    collection: Flow::types, include_blank: false
+  = f.input :name
+  = f.input :mode, disabled: !pipeline.new_record?,
+    collection: Pipeline.modes.keys, include_blank: false
+
+  = render 'pipeline_steps_form', project: project, pipeline: pipeline
+
+  .ln_solid
+  .form-group
+    .col-md-6.col-md-offset-3
+      = f.button :submit, class: 'btn btn-success'

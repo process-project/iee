@@ -4,7 +4,7 @@
 class Flow
   FLOWS = {
     inference_variants: %w[
-      rule_selection inference_weighting patient_db_selection
+      rule_selection inference_weighting project_db_selection
       iteration_control results_presentation
     ],
     avr_surgical_preparation: %w[segmentation rom],
@@ -76,7 +76,7 @@ class Flow
     RimrockStep.new('parameter_optimization',
                     'eurvalve/0dmodel', 'parameter_optimization.sh.erb',
                     [:pressure_drops]),
-    RimrockStep.new('patient_db_selection', 'eurvalve/mock-step', 'mock.sh.erb'),
+    RimrockStep.new('project_db_selection', 'eurvalve/mock-step', 'mock.sh.erb'),
     RimrockStep.new('pressure_volume_display',
                     'eurvalve/0dmodel', 'pv_display.sh.erb',
                     [:data_series_1, :data_series_2,

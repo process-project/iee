@@ -1,0 +1,11 @@
+%br
+.x_panel
+  .x_title
+    %h2
+      = project.project_name
+      %small= t '.subtitle'
+    %span.pull-right
+      = link_to t('.remove'), project_path(project), method: :delete,
+        data: { confirm: t('.confirm') }, class: 'btn btn-sm btn-danger'
+      = link_to t('.back'), projects_path, class: 'btn btn-sm btn-primary'
+    .clearfix

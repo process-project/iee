@@ -1,0 +1,79 @@
+.tile-stats:hover a {
+  text-decoration: none  !important;
+}
+
+.tile-stats.tile-new-project a {
+  color: whitesmoke;
+
+  .icon {
+    background-image: none;
+  }
+}
+
+.tile_count {
+  .tile_stats_count {
+    padding: 0 10px 0 20px !important;
+  }
+}
+
+.tile-project {
+  .pipeline-name {
+    line-height: 1.5em;
+    max-height: 3em;
+    overflow: hidden
+  }
+
+  .progress_sm {
+    margin-bottom: 4px;
+
+    .progress-bar {
+      -webkit-box-shadow:inset 0px 0px 0px 1px #fff;
+      -moz-box-shadow:inset 0px 0px 0px 1px #fff;
+      box-shadow:inset 0px 0px 0px 1px #fff;
+    }
+  }
+
+  .running {
+    @include panel-border($running)
+  }
+
+  .error {
+    @include panel-border($error)
+  }
+
+  .success {
+    @include panel-border($success)
+  }
+
+  .waiting {
+    @include panel-border($waiting)
+  }
+}
+
+th {
+  &.iid {
+    width: 40px;
+  }
+
+  &.select {
+    width: 10px;
+  }
+}
+
+.owner-label {
+  vertical-align: bottom;
+}
+
+.off-viewer-header {
+  margin: 10px 0px;
+}
+
+.off-viewer-header .off-header-left {
+  color: red;
+  float: left;
+}
+
+.off-viewer-header .off-header-right {
+  color: green;
+  float: right;
+}

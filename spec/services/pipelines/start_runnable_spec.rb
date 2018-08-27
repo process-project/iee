@@ -16,7 +16,7 @@ describe Pipelines::StartRunnable do
     context 'and required inputs' do
       before do
         create(:data_file,
-               patient: pipeline.patient,
+               project: pipeline.project,
                data_type: :parameter_optimization_result)
       end
       it 'starts created runnable pipeline step' do
@@ -66,7 +66,7 @@ describe Pipelines::StartRunnable do
              status: 'created', pipeline_step: '0d_models',
              pipeline: pipeline)
       create(:data_file,
-             patient: pipeline.patient,
+             project: pipeline.project,
              data_type: :parameter_optimization_result)
 
       runner = double(runnable?: true)

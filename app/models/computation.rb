@@ -20,7 +20,7 @@ class Computation < ApplicationRecord
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
-  scope :for_patient_status, ->(status) { where(pipeline_step: status) }
+  scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline
 

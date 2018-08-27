@@ -1,0 +1,4 @@
+= render 'projects/pipelines/show', project: @project, pipeline: @pipeline, details: @details do
+  = render 'projects/pipelines/computations/show',
+    project: @project, pipeline: @pipeline,
+    computation: @computation, computations: @computations

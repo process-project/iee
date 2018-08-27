@@ -1,0 +1,22 @@
+= simple_form_for(computation, url: project_pipeline_computation_path(project, pipeline, computation)) do |f|
+  = f.error_notification
+  .row.form-group
+    - if @versions
+      .col-lg-7.col-xs-6
+        = f.input :tag_or_branch,
+          as: :grouped_select,
+          collection: @versions,
+          group_method: :last
+    - if @run_modes
+      .col-lg-7.col-xs-6
+        = f.input :run_mode,
+          collection: @run_modes
+    .col-lg-5.col-xs-12
+      = f.button :submit,
+        t("steps.#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
+        class: 'btn btn-default'
+      - if computation.rimrock?
+        = link_to t('.reload'),
+                  project_pipeline_computation_path(project, pipeline, computation, force_reload: true),
+                  class: 'btn btn-default',
+                  data: { turbolinks: false }

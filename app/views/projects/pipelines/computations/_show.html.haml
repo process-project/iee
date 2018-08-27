@@ -1,0 +1,18 @@
+#pipeline.pipeline{ data: { pipeline: pipeline.iid, project: project.id, computation: computation.pipeline_step } }
+  .col-xs-2
+    = render 'projects/pipelines/computations/menu',
+      project: project, pipeline: pipeline,
+      computation: computation, computations: computations
+  .col-xs-10
+    #pipeline-content.tab-content
+      - if computation.runnable?
+        .alert{class: alert_computation_class(computation)}
+          = t("steps.#{computation.pipeline_step}.#{computation.status}")
+      - else
+        .alert.alert-warning= t("steps.#{computation.pipeline_step}.cannot_start")
+
+      = render 'details', computation: computation
+      - if policy(computation).need_proxy?
+        = render(partial: 'proxy/warning', locals: { msg: t('.proxy_invalid') })
+      - if policy(computation).update?
+        = render 'run', project: project, pipeline: pipeline, computation: computation

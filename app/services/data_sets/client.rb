@@ -45,7 +45,7 @@ module DataSets
       if csv.length > 1
         csv
       else
-        raise StandardError, I18n.t('errors.patient_details.empty_result')
+        raise StandardError, I18n.t('errors.project_details.empty_result')
       end
     end
 
