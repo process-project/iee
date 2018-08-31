@@ -111,22 +111,7 @@ RSpec.feature 'Project browsing' do
       visit projects_path
 
       expect(page).to have_selector(
-        ".progress a:nth-child(1) #{bar_selector('segmentation')}"
-      )
-      expect(page).to have_selector(
-        ".progress a:nth-child(2) #{bar_selector('rom')}"
-      )
-      expect(page).to have_selector(
-        ".progress a:nth-child(3) #{bar_selector('parameter_optimization')}"
-      )
-      expect(page).to have_selector(
-        ".progress a:nth-child(4) #{bar_selector('0d_models')}"
-      )
-      expect(page).to have_selector(
-        ".progress a:nth-child(5) #{bar_selector('uncertainty_analysis')}"
-      )
-      expect(page).to have_selector(
-        ".progress a:nth-child(6) #{bar_selector('pressure_volume_display')}"
+        ".progress a:nth-child(1) #{bar_selector('placeholder_step')}"
       )
     end
 
@@ -249,22 +234,7 @@ RSpec.feature 'Project browsing' do
       visit project_pipeline_path(project, pipeline)
 
       expect(page).to have_selector(
-        '#computations li:nth-child(1) a', text: I18n.t('steps.segmentation.title')
-      )
-      expect(page).to have_selector(
-        '#computations li:nth-child(2) a', text: I18n.t('steps.rom.title')
-      )
-      expect(page).to have_selector(
-        '#computations li:nth-child(3) a', text: I18n.t('steps.parameter_optimization.title')
-      )
-      expect(page).to have_selector(
-        '#computations li:nth-child(4) a', text: I18n.t('steps.0d_models.title')
-      )
-      expect(page).to have_selector(
-        '#computations li:nth-child(5) a', text: I18n.t('steps.uncertainty_analysis.title')
-      )
-      expect(page).to have_selector(
-        '#computations li:nth-child(6) a', text: I18n.t('steps.pressure_volume_display.title')
+        '#computations li:nth-child(1) a', text: I18n.t('steps.placeholder_step.title')
       )
     end
 
@@ -305,7 +275,7 @@ RSpec.feature 'Project browsing' do
       let(:pipeline) do
         pipeline = build(:pipeline,
                          project: project,
-                         flow: 'avr_from_scan_rom',
+                         flow: 'placeholder_pipeline',
                          name: 'p1', user: user, mode: :manual)
         Pipelines::Create.new(pipeline, {}).call
       end
@@ -346,7 +316,7 @@ RSpec.feature 'Project browsing' do
 
       scenario 'show started rimrock computation source link for started step' do
         computation = pipeline.computations.
-                      find_by(pipeline_step: '0d_models')
+                      find_by(pipeline_step: 'placeholder_step')
         computation.update_attributes(revision: 'my-revision',
                                       started_at: Time.zone.now)
 
@@ -354,17 +324,17 @@ RSpec.feature 'Project browsing' do
 
         expect(page).to have_link 'my-revision'
         expect(page).
-          to have_link href: 'https://gitlab.com/eurvalve/0dmodel/tree/my-revision'
+          to have_link href: 'https://gitlab.com/process-eu/mock-step/tree/my-revision'
       end
 
       scenario 'rimrock computation source link is not shown when no revision' do
         computation = pipeline.computations.
-                      find_by(pipeline_step: '0d_models')
+                      find_by(pipeline_step: 'placeholder_step')
 
         visit project_pipeline_computation_path(project, pipeline, computation)
 
         expect(page).
-          to_not have_link href: 'https://gitlab.com/eurvalve/0dmodel/tree'
+          to_not have_link href: 'https://gitlab.com/process-eu/mock-step/tree'
       end
 
       scenario 'unable to start rimrock computation when version is not chosen' do
@@ -376,30 +346,30 @@ RSpec.feature 'Project browsing' do
         expect(page).to have_content 'can\'t be blank'
       end
 
-      scenario 'start webdav computation' do
-        mock_webdav_computation_ready_to_run
-        computation = pipeline.computations.
-                      find_by(pipeline_step: 'segmentation')
-        create(:data_file, data_type: :image, project: project)
+      # scenario 'start webdav computation' do
+      #   mock_webdav_computation_ready_to_run
+      #   computation = pipeline.computations.
+      #                 find_by(pipeline_step: 'placeholder_step')
+      #   create(:data_file, data_type: :image, patient: patient)
 
-        expect(Webdav::StartJob).to receive(:perform_later)
+      #   expect(Webdav::StartJob).to receive(:perform_later)
 
-        visit project_pipeline_computation_path(project, pipeline, computation)
-        select('Workflow 5 (Mitral Valve TEE Segmentation)')
-        click_button computation_run_text(computation)
-      end
+      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
+      #   # select('Workflow 5 (Mitral Valve TEE Segmentation)')
+      #   click_button computation_run_text(computation)
+      # end
 
-      scenario 'unable to start webdav computation when run_mode is not set' do
-        mock_webdav_computation_ready_to_run
-        computation = pipeline.computations.
-                      find_by(pipeline_step: 'segmentation')
-        create(:data_file, data_type: :image, project: project)
+      # scenario 'unable to start webdav computation when run_mode is not set' do
+      #   mock_webdav_computation_ready_to_run
+      #   computation = pipeline.computations.
+      #                 find_by(pipeline_step: 'placeholder_step')
+      #   create(:data_file, data_type: :image, patient: patient)
 
-        visit project_pipeline_computation_path(project, pipeline, computation)
-        click_button computation_run_text(computation)
+      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
+      #   click_button computation_run_text(computation)
 
-        expect(page).to have_content 'can\'t be blank'
-      end
+      #   expect(page).to have_content 'can\'t be blank'
+      # end
 
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
@@ -414,12 +384,12 @@ RSpec.feature 'Project browsing' do
           to receive(:runnable?).and_return(true)
       end
 
-      scenario 'computation alert is displayed when no required input data' do
-        visit project_pipeline_computation_path(project, pipeline, computation)
-        msg_key = "steps.#{computation.pipeline_step}.cannot_start"
+      # scenario 'computation alert is displayed when no required input data' do
+      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
+      #   msg_key = "steps.#{computation.pipeline_step}.cannot_start"
 
-        expect(page).to have_content I18n.t(msg_key)
-      end
+      #   expect(page).to have_content I18n.t(msg_key)
+      # end
 
       context 'when computing for project\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do

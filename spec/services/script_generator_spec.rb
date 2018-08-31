@@ -6,7 +6,7 @@ describe ScriptGenerator do
   it 'inserts active grant id' do
     script = ScriptGenerator.new(build(:pipeline), '<%= grant_id %>').call
 
-    expect(script).to eq Rails.application.config_for('eurvalve')['grant_id']
+    expect(script).to eq Rails.application.config_for('process')['grant_id']
   end
 
   context 'when generating curls' do

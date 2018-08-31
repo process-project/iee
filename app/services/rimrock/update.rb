@@ -4,7 +4,7 @@ module Rimrock
   class Update < ProxyService
     def initialize(user, options = {})
       super(user,
-            Rails.application.config_for('eurvalve')['rimrock']['url'],
+            Rails.application.config_for('process')['rimrock']['url'],
             options)
 
       @user = user
@@ -26,7 +26,7 @@ module Rimrock
     private
 
     def tag
-      Rails.application.config_for('eurvalve')['rimrock']['tag']
+      Rails.application.config_for('process')['rimrock']['tag']
     end
 
     def success(body)

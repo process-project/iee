@@ -9,11 +9,8 @@ describe Pipelines::StepsConfig do
       to receive_message_chain(:new, :call).
       and_return(versions)
 
-    config = described_class.new('avr_from_scan_rom').call
+    config = described_class.new('placeholder_pipeline').call
 
-    expect(config['rom']).to eq(tags_and_branches: versions, run_modes: nil)
-    expect(config['segmentation'][:tags_and_branches]).to be_nil
-    expect(config['segmentation'][:run_modes]).
-      to include('Workflow 5 (Mitral Valve TEE Segmentation)')
+    expect(config['placeholder_step']).to eq(tags_and_branches: versions, run_modes: nil)
   end
 end

@@ -23,11 +23,11 @@ class ScriptGenerator
   end
 
   def grant_id
-    Rails.application.config_for('eurvalve')['grant_id']
+    Rails.application.config_for('process')['grant_id']
   end
 
   def ssh_download_key
-    File.read(Rails.application.config_for('eurvalve')['git_download_key'])
+    File.read(Rails.application.config_for('process')['git_download_key'])
   end
 
   def stage_in(options = {})
