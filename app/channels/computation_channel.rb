@@ -17,12 +17,12 @@ class ComputationChannel < ApplicationCable::Channel
 
   def computation
     Computation.joins(:pipeline).
-      find_by(pipelines: { patient_id: params[:patient],
+      find_by(pipelines: { project_id: params[:project],
                            iid: params[:pipeline] },
               pipeline_step: params[:computation])
   end
 
   def data_sync!
-    computation.pipeline.patient.execute_data_sync(current_user)
+    computation.pipeline.project.execute_data_sync(current_user)
   end
 end

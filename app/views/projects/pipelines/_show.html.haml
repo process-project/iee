@@ -1,0 +1,34 @@
+= render 'projects/show', project: project, details: @details
+
+.x_panel
+  .x_title
+    %h2
+      = pipeline_title(pipeline)
+
+    %ul.nav.navbar-right.panel_toolbox
+      %li
+        = pipeline_owner(pipeline)
+      %li
+        = link_to project_path(project),
+          class: 'back', data: { turbolinks: false } do
+          = icon 'hand-o-left',
+            title: t('projects.pipelines.show.back_to_index')
+      %li
+        = link_to edit_project_pipeline_path(project, pipeline),
+          data: { turbolinks: false },
+          class: 'edit' do
+          = icon 'edit',
+            title: t('projects.pipelines.show.edit')
+      %li
+        = link_to project_pipeline_path(project, pipeline),
+          method: :delete, class: 'delete',
+          data: { confirm: t('are_you_sure') } do
+          = icon 'remove',
+            title: t('projects.pipelines.show.delete')
+    .clearfix
+
+  .x_content
+    = yield
+
+= render('projects/pipelines/file_browsers',
+  project: project, pipeline: pipeline)

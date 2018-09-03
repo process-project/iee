@@ -6,12 +6,12 @@ class ScriptGenerator
   attr_reader :computation
 
   delegate :pipeline, to: :computation
-  delegate :patient, to: :pipeline
+  delegate :project, to: :pipeline
   delegate :user, to: :pipeline
   delegate :revision, to: :computation
-  delegate :patient, to: :pipeline
+  delegate :project, to: :pipeline
   delegate :token, to: :user
-  delegate :case_number, to: :patient
+  delegate :project_name, to: :project
 
   def initialize(computation, template)
     @computation = computation
@@ -54,7 +54,7 @@ class ScriptGenerator
   end
 
   def pipeline_identifier
-    "#{patient.case_number}-#{pipeline.iid}"
+    "#{project.project_name}-#{pipeline.iid}"
   end
 
   def setup_ansys_licenses

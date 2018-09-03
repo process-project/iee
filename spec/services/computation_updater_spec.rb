@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe ComputationUpdater do
-  let(:patient) { create(:patient) }
-  let(:pipeline) { create(:pipeline, patient: patient) }
+  let(:project) { create(:project) }
+  let(:pipeline) { create(:pipeline, project: project) }
   let!(:c1) { create(:rimrock_computation, pipeline: pipeline, status: 'new') }
   let!(:c2) { create(:webdav_computation, pipeline: pipeline, status: 'finished') }
 
@@ -32,10 +32,10 @@ describe ComputationUpdater do
     described_class.new(c2).call
   end
 
-  it 'broadcast reload patient pipelines statuses' do
-    expect(PatientChannel).
+  it 'broadcast reload project pipelines statuses' do
+    expect(ProjectChannel).
       to receive(:broadcast_to).
-      with(patient, anything)
+      with(project, anything)
 
     described_class.new(c2).call
   end

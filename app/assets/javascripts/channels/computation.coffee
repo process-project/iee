@@ -4,7 +4,7 @@
   if pipeline
     App.computation = App.cable.subscriptions.create {
         channel: "ComputationChannel",
-        patient: pipeline.dataset.patient,
+        project: pipeline.dataset.project,
         pipeline: pipeline.dataset.pipeline,
         computation: pipeline.dataset.computation
       },
@@ -34,7 +34,7 @@
         document.getElementById("computations").outerHTML = menu
 
       reloadOutputs: ->
-        eurvalve.filestore.Embed.refreshFileBrowser("patient-outputs")
+        eurvalve.filestore.Embed.refreshFileBrowser("project-outputs")
 
   else if App.computation
     App.computation.unsubscribe

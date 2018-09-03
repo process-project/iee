@@ -3,29 +3,29 @@ en:
     proxy:
       outdated: Your proxy certificate is outdated and thus we are not able to monitor your active computations.
       new_proxy: Please generate new proxy certificate.
-  patients:
+  projects:
     index:
-      title: Patients
-      nothing: There are no patients to be shown.
+      title: Projects
+      nothing: There are no projects to be shown.
       new: New
-      add: Add a new patient
+      add: Add a new project
       files: Files
       pipelines: Pipelines
       progress: Procedure progress
       latest_pipelines: "Latest pipelines:"
       no_pipelines: No pipelines.
       stats:
-        total: Total cohort patients
+        total: Total cohort projects
         sites: "Berlin | Eindhoven | Sheffield"
         females: Females
         males: Males
         states: "Pre-op | Post-op"
         disease: "Aortic VD | Mitral VD"
     show:
-      subtitle: A patient case in EurValve project
-      remove: Delete this case
-      confirm: This will also remove all files uploaded for this case. Are you sure?
-      back: See other cases
+      subtitle: A Process project
+      remove: Delete this project
+      confirm: This will also remove all files uploaded for this project. Are you sure?
+      back: See other projects
       details: Details
       files: Files
       computations: Computations
@@ -40,9 +40,9 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore and thus you are not
           able to start computation on PLGrid infrastructure.
-      loading_patient_details: Loading patient details...
+      loading_project_details: Loading project details...
     details:
-      no_details: Patient details are not available (%{details})
+      no_details: Project details are not available (%{details})
       gender: Gender
       birth_year: Birth year
       age: Visit age
@@ -51,20 +51,20 @@ en:
       height: Height
       elvmin: Elastance-LVmin
     new:
-      title: New case
-      subtitle: Register new EurValve patient to conduct research for this case
+      title: New project
+      subtitle: Register new Process project
     create:
-      success: New patient case added.
+      success: New project added.
     destroy:
-      success: Patient case %{case_number} was removed.
-      failure: Unable to remove patient case %{case_number}.
-    patient_files:
+      success: Project %{project_name} was removed.
+      failure: Unable to remove project %{project_name}.
+    project_files:
       proxy:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
     file_browsers:
-      patient_inputs: "%{name} patient inputs"
+      project_inputs: "%{name} project inputs"
       pipelines_files: All pipelines files
     pipelines:
       pipeline_steps_form:
@@ -79,7 +79,7 @@ en:
       computations_form_manual:
         description: Manual piepeline steps can be configured directly before start
       list:
-        title: Pipelines for this Subject
+        title: Pipelines for this project
         new: Set up new pipeline
       tab:
         id: Id
@@ -117,7 +117,7 @@ en:
         computations_form_manual:
           steps: "Pipeline steps:"
       file_browsers:
-        patient_inputs: "%{name} patient inputs"
+        project_inputs: "%{name} project inputs"
         pipeline_inputs: "%{name} pipeline inputs"
         pipeline_outputs: "%{name} pipeline outputs"
 
@@ -142,7 +142,7 @@ en:
       edit: Edit this service
     new:
       title: New service
-      subtitle: Register a new EurValve service in order to make it accessible to other users.
+      subtitle: Register a new Process service in order to make it accessible to other users.
       back: Go back to the service list
     show:
       title: "%{name} service"

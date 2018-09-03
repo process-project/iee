@@ -34,7 +34,7 @@ RSpec.describe PipelineSteps::Rimrock::Runner do
   context 'inputs are available' do
     before do
       create(:data_file,
-             patient: computation.pipeline.patient,
+             project: computation.pipeline.project,
              data_type: :parameter_optimization_result)
     end
 

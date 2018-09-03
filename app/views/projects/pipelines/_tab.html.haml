@@ -1,0 +1,11 @@
+%table.table
+  %thead
+    %tr
+      %th.iid= t('.id')
+      %th= t('.name')
+      %th= t('.user')
+      %th= t('.status')
+  %tbody
+    = render partial: 'projects/pipelines/pipeline',
+             collection: pipelines
+

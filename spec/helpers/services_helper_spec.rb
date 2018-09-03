@@ -23,7 +23,7 @@ RSpec.describe ServicesHelper do
     end
 
     it 'raises error if items have no names' do
-      expect { pill_list([build(:patient)]) }.to raise_error NoMethodError
+      expect { pill_list([build(:project)]) }.to raise_error NoMethodError
     end
 
     it 'uses block to render name' do

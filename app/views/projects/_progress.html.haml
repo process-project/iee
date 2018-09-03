@@ -1,0 +1,9 @@
+.pipeline-progress{ class: pipeline.status }
+  .pipeline-name
+    = link_to [project, pipeline], data: { turbolinks: false } do
+      = pipeline.name
+  .progress.progress_sm
+    - pipeline.computations.flow_ordered.each_with_index do |computation, i|
+      = link_to project_pipeline_computation_path(project, pipeline, computation),
+        data: { turbolinks: false } do
+        = computation_progress(computation, i)

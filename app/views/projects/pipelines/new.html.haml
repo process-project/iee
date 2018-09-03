@@ -1,0 +1,18 @@
+= render 'projects/show', project: @project, details: @details do
+  = render 'projects/all_pipelines_outputs', project: @project
+
+.x_panel
+  .x_title
+    %h2
+      = t 'projects.pipelines.new.title'
+
+    %ul.nav.navbar-right.panel_toolbox
+      %li
+        = link_to project_path(@project), class: 'back' do
+          = icon 'hand-o-left',
+            title: t('projects.pipelines.new.back_to_index')
+    .clearfix
+
+  .x_content
+    = render 'projects/pipelines/form',
+              project: @project, pipeline: @pipeline

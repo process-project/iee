@@ -5,15 +5,15 @@ require 'rails_helper'
 RSpec.describe Pipeline, type: :model do
   subject { create(:pipeline) }
 
-  it { should belong_to(:patient) }
+  it { should belong_to(:project) }
   it { should belong_to(:user) }
   it { should have_many(:computations).dependent(:destroy) }
 
   it 'generates relative pipeline id' do
-    patient = create(:patient)
+    project = create(:project)
 
-    p1 = create(:pipeline, patient: patient)
-    p2 = create(:pipeline, patient: patient)
+    p1 = create(:pipeline, project: project)
+    p2 = create(:pipeline, project: project)
 
     expect(p1.iid).to eq(1)
     expect(p2.iid).to eq(2)
@@ -22,10 +22,10 @@ RSpec.describe Pipeline, type: :model do
   it 'returns pipeline working dir' do
     pipeline = build(:pipeline,
                      iid: 123,
-                     patient: build(:patient, case_number: 'abc'))
+                     project: build(:project, project_name: 'abc'))
 
-    expect(pipeline.inputs_dir).to eq 'test/patients/abc/pipelines/123/inputs/'
-    expect(pipeline.outputs_dir).to eq 'test/patients/abc/pipelines/123/outputs/'
+    expect(pipeline.inputs_dir).to eq 'test/projects/abc/pipelines/123/inputs/'
+    expect(pipeline.outputs_dir).to eq 'test/projects/abc/pipelines/123/outputs/'
   end
 
   it do
@@ -34,23 +34,23 @@ RSpec.describe Pipeline, type: :model do
   end
 
   it 'returns data file scoped into pipeline' do
-    patient = create(:patient)
-    p1, p2 = create_list(:pipeline, 2, patient: patient)
+    project = create(:project)
+    p1, p2 = create_list(:pipeline, 2, project: project)
 
     create(:data_file,
-           patient: patient, output_of: p1,
+           project: project, output_of: p1,
            data_type: :image, name: 'p1 image output')
     create(:data_file,
-           patient: patient, output_of: p2,
+           project: project, output_of: p2,
            data_type: :image, name: 'p2 image output')
     create(:data_file,
-           patient: patient, input_of: p1,
+           project: project, input_of: p1,
            data_type: :off_mesh, name: 'p1 off mesh output')
     create(:data_file,
-           patient: patient, input_of: p2,
+           project: project, input_of: p2,
            data_type: :graphics, name: 'p2 graphics output')
     create(:data_file,
-           patient: patient,
+           project: project,
            data_type: :estimated_parameters, name: 'input')
 
     expect(p1.data_file(:image).name).to eq('p1 image output')
@@ -63,18 +63,18 @@ RSpec.describe Pipeline, type: :model do
 
   context 'data files order' do
     it 'returns first data file from output directory' do
-      patient = create(:patient)
-      pipeline = create(:pipeline, patient: patient)
+      project = create(:project)
+      pipeline = create(:pipeline, project: project)
 
       create(:data_file,
-             patient: patient,
-             data_type: :image, name: 'patient file')
+             project: project,
+             data_type: :image, name: 'project file')
       create(:data_file,
-             patient: patient,
+             project: project,
              input_of: pipeline,
              data_type: :image, name: 'pipeline input file')
       create(:data_file,
-             patient: patient,
+             project: project,
              output_of: pipeline,
              data_type: :image, name: 'pipeline output file')
 
@@ -82,29 +82,29 @@ RSpec.describe Pipeline, type: :model do
     end
 
     it 'returns pipeline input data file when no output' do
-      patient = create(:patient)
-      pipeline = create(:pipeline, patient: patient)
+      project = create(:project)
+      pipeline = create(:pipeline, project: project)
 
       create(:data_file,
-             patient: patient,
-             data_type: :image, name: 'patient file')
+             project: project,
+             data_type: :image, name: 'project file')
       create(:data_file,
-             patient: patient,
+             project: project,
              input_of: pipeline,
              data_type: :image, name: 'pipeline input file')
 
       expect(pipeline.data_file(:image).name).to eq('pipeline input file')
     end
 
-    it 'returns patient input files when no pipeline output or input' do
-      patient = create(:patient)
-      pipeline = create(:pipeline, patient: patient)
+    it 'returns project input files when no pipeline output or input' do
+      project = create(:project)
+      pipeline = create(:pipeline, project: project)
 
       create(:data_file,
-             patient: patient,
-             data_type: :image, name: 'patient file')
+             project: project,
+             data_type: :image, name: 'project file')
 
-      expect(pipeline.data_file(:image).name).to eq('patient file')
+      expect(pipeline.data_file(:image).name).to eq('project file')
     end
   end
 

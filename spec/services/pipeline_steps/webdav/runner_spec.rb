@@ -15,7 +15,7 @@ RSpec.describe PipelineSteps::Webdav::Runner do
   context 'inputs are available' do
     let!(:input_file) do
       create(:data_file,
-             patient: computation.pipeline.patient,
+             project: computation.pipeline.project,
              data_type: :image)
     end
 

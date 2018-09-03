@@ -16,7 +16,7 @@ describe Pipelines::StartRunnable do
     context 'and required inputs' do
       before do
         create(:data_file,
-               patient: pipeline.patient,
+               project: pipeline.project,
                data_type: :parameter_optimization_result)
       end
       it 'starts created runnable pipeline step' do
@@ -49,6 +49,7 @@ describe Pipelines::StartRunnable do
                pipeline: pipeline)
 
         runner = double(runnable?: false)
+        allow(runner).to receive(:call)
 
         allow(PipelineSteps::Rimrock::Runner).to receive(:new).and_return(runner)
         expect(runner).to_not receive(:run)
@@ -66,7 +67,7 @@ describe Pipelines::StartRunnable do
              status: 'created', pipeline_step: 'placeholder_step',
              pipeline: pipeline)
       create(:data_file,
-             patient: pipeline.patient,
+             project: pipeline.project,
              data_type: :parameter_optimization_result)
 
       runner = double(runnable?: true)

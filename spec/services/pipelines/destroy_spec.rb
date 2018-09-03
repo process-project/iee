@@ -20,7 +20,7 @@ describe Pipelines::Destroy do
     webdav = instance_double(Webdav::Client)
 
     expect(webdav).to receive(:delete).
-      with("test/patients/#{pipeline.patient.case_number}/pipelines/1/")
+      with("test/projects/#{pipeline.project.project_name}/pipelines/1/")
 
     described_class.new(pipeline, client: webdav).call
   end
@@ -38,7 +38,7 @@ describe Pipelines::Destroy do
     webdav = web_dav_with_http_server_exception
 
     expect { described_class.new(pipeline, client: webdav).call }.
-      to_not(change { Patient.count })
+      to_not(change { Project.count })
   end
 
   it 'returns false when pipeline cannot be removed' do

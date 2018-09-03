@@ -1,12 +1,12 @@
-= nav_link controller: [:patients, :file_store, :pipelines] do
+= nav_link controller: [:projects, :file_store, :pipelines] do
   %a
     = icon('flask')
     = t('.title')
     %span.fa.fa-chevron-down
   %ul.nav.child_menu
-    = nav_link controller: [:patients, :pipelines, :computations], active_class: 'current-page' do
-      = link_to patients_path do
-        = t('.patients')
+    = nav_link controller: [:projects, :pipelines, :computations], active_class: 'current-page' do
+      = link_to projects_path do
+        = t('.projects')
     = nav_link controller: :file_store, active_class: 'current-page' do
       = link_to file_store_path, data: { turbolinks: false } do
         = t('files')
