@@ -229,6 +229,7 @@ GEM
       rack
     rack-test (0.8.0)
       rack (>= 1.0, < 3)
+    railroady (1.5.3)
     rails (5.1.4)
       actioncable (= 5.1.4)
       actionmailer (= 5.1.4)
@@ -428,6 +429,7 @@ DEPENDENCIES
   puma (~> 3.7)
   pundit
   rack-attack
+  railroady
   rails (~> 5.1.0)
   redcarpet
   redis (~> 3.0)
@@ -451,4 +453,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
