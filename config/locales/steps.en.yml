@@ -18,3 +18,39 @@ en:
       start_automatic: Save placeholder step version
       start_manual: Start placeholder step
       restart_manual: Restart placeholder step
+    tf_cpu_step:
+      title: Tensorflow CPU computation
+      cannot_start: |
+        Cannot start tensorflow CPU computation.
+      created: |
+        All required input files are available.
+        You can start tensorflow CPU computation for this project.
+      new: Tensorflow CPU computation is being submitted
+      queued: Tensorflow CPU computation is queued
+      running: Tensorflow CPU computation is running
+      error: There was an error while running tensorflow CPU computation
+      finished: |
+        Tensorflow CPU computation finished successfully, results stored in
+        the output directory.
+      aborted: Tensorflow CPU computation was aborted by the pipeline owner
+      start_automatic: Save tensorflow CPU computation version
+      start_manual: Start tensorflow CPU computation
+      restart_manual: Restart tensorflow CPU computation
+    tf_gpu_step:
+      title: Tensorflow GPU computation
+      cannot_start: |
+        Cannot start tensorflow GPU computation.
+      created: |
+        All required input files are available.
+        You can start tensorflow GPU computation for this project.
+      new: Tensorflow GPU computation is being submitted
+      queued: Tensorflow GPU computation is queued
+      running: Tensorflow GPU computation is running
+      error: There was an error while running tensorflow GPU computation
+      finished: |
+        Tensorflow GPU computation finished successfully, results stored in
+        the output directory.
+      aborted: Tensorflow GPU computation was aborted by the pipeline owner
+      start_automatic: Save tensorflow GPU computation version
+      start_manual: Start tensorflow GPU computation
+      restart_manual: Restart tensorflow GPU computation
