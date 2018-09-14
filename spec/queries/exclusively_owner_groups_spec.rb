@@ -16,5 +16,6 @@ describe ExclusivelyOwnedGroups do
     g2.save!
 
     expect(described_class.new(u1).call).to contain_exactly(g2)
+    expect(described_class.new(u3).call).to be_empty
   end
 end
