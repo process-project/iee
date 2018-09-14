@@ -13,7 +13,7 @@ module SynchronizerUtilities
     /^fluidFlow.*\.cas$/ => 'blood_flow_model',
     /^0DModel_input\.csv$/ => 'estimated_parameters',
     /^Outfile\.csv$/ => 'heart_model_output',
-    /^.*Trunc\.off$/ => 'truncated_off_mesh',
+    /^.*Trunc.*off$/i => 'truncated_off_mesh',
     /^.*\.off$/ => 'off_mesh',
     /^.*\.\b(png|bmp|jpg)\b$/ => 'graphics',
     /^.*\.dxrom$/ => 'response_surface',
