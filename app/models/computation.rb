@@ -14,6 +14,7 @@ class Computation < ApplicationRecord
 
   scope :active, -> { where(status: %w[new queued running]) }
   scope :submitted, -> { where(status: %w[queued running]) }
+  scope :unsubmitted, -> { where(status: %w[created new]) }
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
