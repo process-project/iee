@@ -48,6 +48,11 @@ RSpec.describe Computation, type: :model do
       new = create(:rimrock_computation, status: 'new')
       create(:rimrock_computation, status: 'queued')
       created = create(:webdav_computation, status: 'created')
+      create(:rimrock_computation, status: 'running')
+      create(:rimrock_computation, status: 'error')
+      create(:rimrock_computation, status: 'finished')
+      create(:rimrock_computation, status: 'aborted')
+      expect(Computation.all.count).to eq 7
       expect(Computation.unsubmitted.pluck(:id)).
         to contain_exactly(new.id, created.id)
     end
