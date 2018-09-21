@@ -3,7 +3,8 @@
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
-    tensorflow_pipeline: %w[tf_cpu_step tf_gpu_step]
+    tensorflow_pipeline: %w[tf_cpu_step tf_gpu_step],
+    singularity_pipeline: %w[singularity_step]
   }.freeze
 
   STEPS = [
@@ -15,7 +16,10 @@ class Flow
                     'tensorflow_cpu_mock_job.sh.erb'),
     RimrockStep.new('tf_gpu_step',
                     'process-eu/tensorflow-pipeline',
-                    'tensorflow_gpu_mock_job.sh.erb')
+                    'tensorflow_gpu_mock_job.sh.erb'),
+    RimrockStep.new('singularity_step',
+                    'process-eu/singularity-pipeline',
+                    'singularity_mock_job.sh.erb')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]

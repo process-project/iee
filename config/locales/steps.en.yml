@@ -54,3 +54,21 @@ en:
       start_automatic: Save tensorflow GPU computation version
       start_manual: Start tensorflow GPU computation
       restart_manual: Restart tensorflow GPU computation
+    singularity_step:
+      title: Singularity container computation
+      cannot_start: |
+        Cannot start Singularity container computation.
+      created: |
+        All required input files are available.
+        You can start Singularity container computation for this project.
+      new: Singularity container computation is being submitted
+      queued: Singularity container computation is queued
+      running: Singularity container computation is running
+      error: There was an error while running Singularity container computation
+      finished: |
+        Singularity container computation finished successfully, results stored in
+        the output directory.
+      aborted: Singularity container computation was aborted by the pipeline owner
+      start_automatic: Save Singularity container computation version
+      start_manual: Start Singularity container computation computation
+      restart_manual: Restart Singularity container computation
