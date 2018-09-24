@@ -30,7 +30,7 @@ module Api
         head :no_content
       else
         api_error errors: I18n.t('pipelines.destroy.failure',
-                                name: @pipeline.name)
+                                 name: @pipeline.name)
       end
     end
 
