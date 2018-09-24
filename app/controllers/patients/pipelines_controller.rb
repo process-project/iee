@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Patients
+  # NOTE; This controller's actions are also exposed via API - remember to update both sources
   class PipelinesController < ApplicationController
     before_action :load_patient
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
