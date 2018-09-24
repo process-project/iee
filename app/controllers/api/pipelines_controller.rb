@@ -29,7 +29,7 @@ module Api
       if ::Pipelines::Destroy.new(@pipeline).call
         head :no_content
       else
-        api_error error: I18n.t('pipelines.destroy.failure',
+        api_error errors: I18n.t('pipelines.destroy.failure',
                                 name: @pipeline.name)
       end
     end

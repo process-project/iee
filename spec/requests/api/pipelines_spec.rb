@@ -185,5 +185,18 @@ RSpec.describe 'Pipelines API' do
 
       expect(response.status).to eq(204)
     end
+
+    it 'is not able to destroy pipeline without deleting its folder' do
+      pipeline = create(:pipeline, user: user)
+      allow_any_instance_of(PatientWebdav).to receive(:delete).
+        and_raise(Net::HTTPServerException.new("error", 500))
+
+      expect do
+        delete api_patient_pipeline_path(pipeline.patient, pipeline), headers: auth
+      end.not_to change { Pipeline.count }
+
+      expect(response.status).to eq(500)
+      expect(response.body).to eq("\"Unable to remove pipeline #{pipeline.name}.\"")
+    end
   end
 end
