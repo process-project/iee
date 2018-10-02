@@ -19,7 +19,8 @@ class Flow
                     'tensorflow_gpu_mock_job.sh.erb'),
     RimrockStep.new('singularity_step',
                     'process-eu/singularity-pipeline',
-                    'singularity_mock_job.sh.erb')
+                    'singularity_mock_job.sh.erb',
+                    [:generic_type])
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
