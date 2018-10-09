@@ -504,7 +504,7 @@ RSpec.feature 'Patient browsing' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
         msg_key = "steps.#{computation.pipeline_step}.cannot_start"
 
-        expect(page).to have_content I18n.t(msg_key)
+        expect(page).to have_content I18n.t(msg_key).squish
       end
 
       context 'when computing for patient\'s wellbeing' do
