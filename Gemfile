@@ -36,7 +36,7 @@ gem 'json-schema'
 gem 'github-markup'
 gem 'redcarpet'
 
-gem 'devise', '~> 4.3.0'
+gem 'devise', '~> 4.5.0'
 gem 'jwt'
 gem 'omniauth-openid'
 gem 'pundit'
