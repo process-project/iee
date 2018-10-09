@@ -14,7 +14,7 @@ module Jwt
     end
 
     def public_key
-      @pub_key ||= OpenSSL::PKey::EC.new(key).tap { |pk| pk.private_key = nil }
+      @public_key ||= OpenSSL::PKey::EC.new(key).tap { |pk| pk.private_key = nil }
     end
   end
 end

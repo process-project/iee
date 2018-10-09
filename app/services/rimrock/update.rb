@@ -59,7 +59,7 @@ module Rimrock
     end
 
     def active_computations
-      @ac ||= @user.computations.submitted_rimrock
+      @active_computations ||= @user.computations.submitted_rimrock
     end
 
     def on_finish_callback(computation)
