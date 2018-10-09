@@ -31,9 +31,9 @@ class ScriptGenerator
   end
 
   def stage_in(options = {})
-    if options.keys.include?(:data_file_type)
+    if options.key?(:data_file_type)
       filename, url = extract_request_data_for_type(options)
-    elsif options.keys.include?(:path)
+    elsif options.key?(:path)
       filename, url = extract_request_data_for_path(options)
     else
       Rails.logger.error('stage_in needs either data_file_type or path in argument hash.')

@@ -35,7 +35,7 @@ module Services
     def edit; end
 
     def update
-      if @resource.update_attributes(permitted_attributes(@resource))
+      if @resource.update(permitted_attributes(@resource))
         redirect_to(resource_path(@service, @resource))
       else
         render(:edit, status: :bad_request)

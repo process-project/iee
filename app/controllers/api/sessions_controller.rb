@@ -9,7 +9,7 @@ module Api
       return api_error(status: 401) unless user&.valid_password?(create_params[:password])
 
       @current_user = user
-      render json: user_details, status: 201
+      render json: user_details, status: :created
     end
 
     private

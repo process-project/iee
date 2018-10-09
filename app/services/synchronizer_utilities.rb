@@ -112,6 +112,7 @@ module SynchronizerUtilities
     @patient.data_files.where(input_of: input_pipeline,
                               output_of: output_pipeline).each do |data_file|
       next if remote_names.include? data_file.name
+
       data_file.destroy!
       pipeline = input_pipeline || output_pipeline
       Rails.logger.info(

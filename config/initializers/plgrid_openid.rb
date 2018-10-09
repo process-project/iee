@@ -76,7 +76,7 @@ module OmniAuth
 
       def identifier_postfix
         login = current_user&.plgrid_login
-        login.blank? ? 'gateway' : login
+        login.presence || 'gateway'
       end
 
       def current_user

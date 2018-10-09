@@ -24,6 +24,7 @@ module Api
 
     def jsonapi_format(errors)
       return errors if errors.is_a?(String)
+
       errors_hash = {}
       errors.messages.each do |attribute, error|
         array_hash = []

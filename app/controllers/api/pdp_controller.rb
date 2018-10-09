@@ -49,7 +49,7 @@ module Api
       postfix = uri
       path = postfix[(@service_uri.length)..-1]
 
-      path.blank? ? '/' : path
+      path.presence || '/'
     end
 
     def every_resource_permitted?(resources)

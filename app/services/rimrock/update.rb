@@ -42,11 +42,11 @@ module Rimrock
         current_status = computation.status
         updated_status = new_status['status'].downcase
 
-        computation.update_attributes(status: updated_status)
+        computation.update(status: updated_status)
         on_finish_callback(computation) if computation.status == 'finished'
         update(computation) if current_status != updated_status
       else
-        computation.update_attributes(status: 'error', error_message: 'Job cannot be found')
+        computation.update(status: 'error', error_message: 'Job cannot be found')
       end
     end
 

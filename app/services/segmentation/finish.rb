@@ -55,7 +55,7 @@ module Segmentation
     end
 
     def update_computation(attrs)
-      @computation.update_attributes(attrs)
+      @computation.update(attrs)
       @updater.new(@computation).call
     end
   end
