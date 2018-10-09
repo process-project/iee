@@ -558,8 +558,8 @@ RSpec.feature 'Patient browsing' do
       allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
     end
 
-    def computation_run_text(c)
-      I18n.t("steps.#{c.pipeline_step}.start_#{c.mode}")
+    def computation_run_text(computation)
+      I18n.t("steps.#{computation.pipeline_step}.start_#{computation.mode}")
     end
   end
 end

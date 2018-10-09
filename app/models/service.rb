@@ -90,16 +90,16 @@ class Service < ApplicationRecord
     Service.where.not(id: id).any? { |s| yield(s) }
   end
 
-  def duplicate_aliases?(la)
+  def duplicate_aliases?(uri_alias)
     sql = <<~SQL
       EXISTS (SELECT * FROM (SELECT unnest(services.uri_aliases))
        x(uri_aliases) WHERE x.uri_aliases LIKE ?)
     SQL
-    Service.where(sql, "#{la}%").where.not(id: id).count.positive?
+    Service.where(sql, "#{uri_alias}%").where.not(id: id).count.positive?
   end
 
-  def duplicate_uri?(u)
-    Service.where('uri LIKE ?', "#{u}%").where.not(id: id).count.positive?
+  def duplicate_uri?(uri)
+    Service.where('uri LIKE ?', "#{uri}%").where.not(id: id).count.positive?
   end
 
   def check_uri_aliases_format

@@ -28,7 +28,7 @@ end
 module OpenID
   module AX
     class AttrInfo
-      def initialize(type_uri, _ = nil, required = false, count = 1)
+      def initialize(type_uri, _ns_alias = nil, required = false, count = 1)
         @type_uri = type_uri
         @count = count
         @required = required
@@ -83,9 +83,11 @@ module OmniAuth
         @current_user ||= env['warden'].authenticate(scope: :user)
       end
 
+      # rubocop:disable Naming/UncommunicativeMethodParamName
       def get_proxy_element(ax, id)
         ax.get_single(OmniAuth::Strategies::OpenID::AX[id])&.gsub('<br>', "\n")
       end
+      # rubocop:enable Naming/UncommunicativeMethodParamName
     end
   end
 end
