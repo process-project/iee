@@ -2,7 +2,9 @@
 
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    # rubocop:disable Rails/LexicallyScopedActionFilter
     skip_before_action :verify_authenticity_token, only: [:open_id, :failure]
+    # rubocop:enable Rails/LexicallyScopedActionFilter
 
     def open_id
       new_user = user.new_record?
