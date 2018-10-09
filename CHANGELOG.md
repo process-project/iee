@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - JWT expiration time is now the same as for other envs (@mkasztelnik)
 - JWT expiration time can be configured using ENV variable (@mkasztelnik)
 - `stage_in` adds commented line when file cannot be found (@mkasztelnik)
+- Update to ruby 2.5.1 (@mkasztelnik)
 
 ### Deprecated
 
