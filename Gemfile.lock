@@ -114,7 +114,7 @@ GEM
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
     formatador (0.2.5)
-    github-markup (1.6.1)
+    github-markup (2.0.1)
     gitlab (4.5.0)
       httparty (>= 0.14.0)
       terminal-table (>= 1.5.1)
@@ -217,7 +217,7 @@ GEM
       method_source (~> 0.9.0)
     public_suffix (3.0.3)
     puma (3.12.0)
-    pundit (1.1.0)
+    pundit (2.0.0)
       activesupport (>= 3.0.0)
     rack (2.0.5)
     rack-attack (5.4.1)
@@ -370,7 +370,7 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (3.2.0)
+    uglifier (4.1.19)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.4.0)
     uniform_notifier (1.11.0)
@@ -423,7 +423,7 @@ DEPENDENCIES
   newrelic_rpm
   nicescroll-rails
   omniauth-openid
-  pg (~> 0.15)
+  pg (>= 0.18, < 2.0)
   puma (~> 3.7)
   pundit
   rack-attack
