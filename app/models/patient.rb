@@ -77,6 +77,9 @@ class Patient < ApplicationRecord
     else not_started!
     end
   end
+  # rubocop:enable CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def fluid_and_ventricle_virtual_models_exist?
     data_files.any?(&:fluid_virtual_model?) &&
