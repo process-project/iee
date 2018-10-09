@@ -14,6 +14,7 @@ class Patient < ApplicationRecord
   has_many :data_files, dependent: :destroy
   has_many :pipelines,
            -> { order(iid: :asc) },
+           inverse_of: 'patient',
            dependent: :destroy
 
   validates :case_number, :procedure_status, presence: true
