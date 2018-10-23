@@ -31,6 +31,16 @@ describe Pipelines::StartRunnable do
         described_class.new(pipeline).call
       end
 
+      it 'does not start when tag or branch is not chosen' do
+        create(:rimrock_computation,
+               status: 'created', pipeline_step: '0d_models',
+               tag_or_branch: nil, pipeline: pipeline)
+
+        expect(PipelineSteps::Rimrock::Runner).to_not receive(:new)
+
+        described_class.new(pipeline).call
+      end
+
       it 'does not start already started pipeline step' do
         create(:rimrock_computation,
                status: 'running', pipeline_step: '0d_models',

@@ -19,7 +19,16 @@ module Pipelines
 
     def runnable?(computation)
       computation.runnable? &&
-        (!computation.rimrock? || @user_proxy.valid?)
+        valid_proxy?(computation) &&
+        configured?(computation)
+    end
+
+    def valid_proxy?(computation)
+      !computation.rimrock? || @user_proxy.valid?
+    end
+
+    def configured?(computation)
+      !computation.rimrock? || computation.tag_or_branch.present?
     end
   end
 end

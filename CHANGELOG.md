@@ -25,6 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
 - STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
 - Uploading input files via WebDAV triggers computation run (@Nuanda)
+- `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
 
 ### Security
 
