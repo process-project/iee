@@ -42,5 +42,6 @@ production:
   <<: *defaults
   jwt:
     key: <%= Rails.root.join('config', 'jwt', 'prod.pem') %>
+    expiration_time: <%= ENV['JWT_EXP_TIME'] || 86400 %> #24 hours
     key_algorithm: ES256
     issuer: 'EurValve Portal'
