@@ -13,6 +13,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
+- JWT expiration time is now the same as for other envs (@mkasztelnik)
+- JWT expiration time can be configured using ENV variable (@mkasztelnik)
 
 ### Deprecated
 
