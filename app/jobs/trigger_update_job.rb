@@ -4,7 +4,7 @@ class TriggerUpdateJob < ApplicationJob
   queue_as :computation
 
   def perform
-    trigger_runnable_jobs
+    # trigger_runnable_jobs
     trigger_rimrock_jobs_update
     trigger_webdav_jobs_update
   end
