@@ -28,7 +28,11 @@ module Pipelines
     end
 
     def configured?(computation)
-      !computation.rimrock? || computation.tag_or_branch.present?
+      if computation.rimrock?
+        computation.tag_or_branch.present?
+      elsif computation.webdav?
+        computation.run_mode.present?
+      end
     end
   end
 end
