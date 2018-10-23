@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipelines API (@Nuanda)
 
 ### Changed
+- `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
 
 ### Deprecated
 

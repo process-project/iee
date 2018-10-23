@@ -80,7 +80,7 @@ en:
       title: Parameter Optimization
       cannot_start: |
         Cannot start parameter optimization because the required input files
-        (ValveChar.csv) cannot be found in the patient input directory or pipeline directory.
+        (ValveChar.dat) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start parameter optimization for this patient.

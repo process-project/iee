@@ -17,7 +17,7 @@ module SynchronizerUtilities
     /^.*\.off$/ => 'off_mesh',
     /^.*\.\b(png|bmp|jpg)\b$/ => 'graphics',
     /^.*\.dxrom$/ => 'response_surface',
-    /^ValveChar\.csv$/ => 'pressure_drops',
+    /^ValveChar\.dat$/ => 'pressure_drops',
     /^OutFileGA\.csv$/ => 'parameter_optimization_result',
     /^OutSeries1\.csv$/ => 'data_series_1',
     /^OutSeries2\.csv$/ => 'data_series_2',
