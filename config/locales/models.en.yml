@@ -30,6 +30,7 @@ en:
       data_series_2: Data series 2
       data_series_3: Data series 3
       data_series_4: Data series 4
+      provenance: Provenance log
 
   computation:
     started_at: Start time

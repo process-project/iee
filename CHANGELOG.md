@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
 
 ### Changed
 - `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)

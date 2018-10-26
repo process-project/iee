@@ -22,7 +22,8 @@ module SynchronizerUtilities
     /^OutSeries1\.csv$/ => 'data_series_1',
     /^OutSeries2\.csv$/ => 'data_series_2',
     /^OutSeries3\.csv$/ => 'data_series_3',
-    /^OutSeries4\.csv$/ => 'data_series_4'
+    /^OutSeries4\.csv$/ => 'data_series_4',
+    /^ProvFile\.txt$/ => 'provenance'
   }.freeze
 
   def case_directory(url)
