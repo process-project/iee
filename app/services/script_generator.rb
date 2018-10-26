@@ -40,8 +40,7 @@ class ScriptGenerator
       raise ArgumentError, 'stage_in needs either data_file_type or path in argument hash.'
     end
 
-    "curl -H \"Authorization: Bearer #{token}\" \"#{url}\" "\
-      ">> \"$SCRATCHDIR/#{filename}\" #{'--fail' unless options[:optional]}"
+    download_curl_command(filename, url, options)
   end
 
   def stage_out(relative_path, filename = nil)
@@ -79,6 +78,16 @@ class ScriptGenerator
 
   private
 
+  def download_curl_command(filename, url, options)
+    if filename && url
+      "curl -H \"Authorization: Bearer #{token}\" \"#{url}\" "\
+        ">> \"$SCRATCHDIR/#{filename}\" #{'--fail' unless options[:optional]}"
+    else
+      "# Requested file #{options[:data_file_type] || options[:path]}"\
+        ' cannot be found'
+    end
+  end
+
   def ansys_servers
     Rails.application.config_for('application')['ansys']['servers']
   end
@@ -90,7 +99,7 @@ class ScriptGenerator
   def extract_request_data_for_type(options)
     data_file = pipeline.data_file(options[:data_file_type])
     filename = options[:filename] || data_file&.name
-    url = data_file.url
+    url = data_file&.url
     [filename, url]
   end
 
