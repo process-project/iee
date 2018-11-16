@@ -96,10 +96,10 @@ ActiveRecord::Schema.define(version: 20180608112510) do
 
   create_table "ips", force: :cascade do |t|
     t.string "address"
-    t.bigint "user_agent_id"
+    t.bigint "device_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_agent_id"], name: "index_ips_on_user_agent_id"
+    t.index ["device_id"], name: "index_ips_on_device_id"
   end
 
   create_table "patients", id: :serial, force: :cascade do |t|
@@ -169,13 +169,13 @@ ActiveRecord::Schema.define(version: 20180608112510) do
     t.index ["uri_aliases"], name: "index_services_on_uri_aliases", using: :gin
   end
 
-  create_table "user_agents", force: :cascade do |t|
+  create_table "devices", force: :cascade do |t|
     t.string "name"
     t.string "accept_language"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_user_agents_on_user_id"
+    t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|

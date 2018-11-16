@@ -8,45 +8,45 @@ describe Audits::Create do
   subject { described_class.new(user) }
 
   it 'creates new IP in the DB' do
-    ua = build(:user_agent, user: user)
-    ip = build(:ip, user_agent: ua)
+    ua = build(:device, user: user)
+    ip = build(:ip, device: ua)
 
     expect { subject.call ip.address, ua.name, ua.accept_language }.
       to change { Ip.count }.by(1)
   end
 
   it 'saves proper IP in the DB' do
-    ua = build(:user_agent, user: user)
-    ip = build(:ip, user_agent: ua)
+    ua = build(:device, user: user)
+    ip = build(:ip, device: ua)
 
     subject.call ip.address, ua.name, ua.accept_language
 
     expect(Ip.last.address).to eq(ip.address)
   end
 
-  it 'creates new user_agent in the DB' do
-    ua = build(:user_agent, user: user)
-    ip = build(:ip, user_agent: ua)
+  it 'creates new device in the DB' do
+    ua = build(:device, user: user)
+    ip = build(:ip, device: ua)
 
     expect { subject.call ip.address, ua.name, ua.accept_language }.
-      to change { UserAgent.count }.by(1)
+      to change { Device.count }.by(1)
   end
 
-  it 'saves proper user_agent name in the DB' do
-    ua = build(:user_agent, user: user)
-    ip = build(:ip, user_agent: ua)
+  it 'saves proper device name in the DB' do
+    ua = build(:device, user: user)
+    ip = build(:ip, device: ua)
 
     subject.call ip.address, ua.name, ua.accept_language
 
-    expect(UserAgent.last.name).to eq(ua.name)
+    expect(Device.last.name).to eq(ua.name)
   end
 
-  it 'saves proper user_agent lang in the DB' do
-    ua = build(:user_agent, user: user)
-    ip = build(:ip, user_agent: ua)
+  it 'saves proper device lang in the DB' do
+    ua = build(:device, user: user)
+    ip = build(:ip, device: ua)
 
     subject.call ip.address, ua.name, ua.accept_language
 
-    expect(UserAgent.last.accept_language).to eq(ua.accept_language)
+    expect(Device.last.accept_language).to eq(ua.accept_language)
   end
 end

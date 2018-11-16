@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Ip < ApplicationRecord
-  belongs_to :user_agent
+  belongs_to :device
 
   validates :address, presence: true
 

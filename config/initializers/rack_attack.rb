@@ -17,7 +17,7 @@ ActiveSupport::Notifications.subscribe('rack.attack') do |_, _, _, _, req|
          req.ip,
          req.request_method,
          req.fullpath,
-         ('"' + req.user_agent.to_s + '"')].join(' ')
+         ('"' + req.device.to_s + '"')].join(' ')
 
   if [:throttle, :blocklist].include?(req.env['rack.attack.match_type'])
     RACK_ATTACK_LOGGER.error(msg)

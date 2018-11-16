@@ -74,8 +74,11 @@ Rails.application.routes.draw do
   get 'file_store' => 'file_store#index'
 
   namespace :admin do
-    resources :users
-    resources :user_agents, only: [:index, :show]
+    resources :users do
+      scope module: :users do
+        resources :devices, only: [:index]
+      end
+    end
   end
 
   # Sidekiq monitoring

@@ -8,7 +8,7 @@ RSpec.describe User do
   it { should have_many(:resource_managers).dependent(:destroy) }
   it { should have_many(:computations) }
   it { should have_many(:service_ownerships).dependent(:destroy) }
-  it { should have_many(:user_agents).dependent(:destroy) }
+  it { should have_many(:devices).dependent(:destroy) }
 
   context 'plgrid login' do
     let(:auth) do

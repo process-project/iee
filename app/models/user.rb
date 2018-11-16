@@ -26,7 +26,7 @@ class User < ApplicationRecord
   has_many :computations, dependent: :destroy
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
-  has_many :user_agents, dependent: :destroy
+  has_many :devices, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -120,6 +120,6 @@ class User < ApplicationRecord
   end
 
   def updated_agent
-    user_agents.first
+    devices.first
   end
 end

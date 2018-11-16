@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_agent do
+  factory :device do
     sequence(:name) do |n|
       "SuperEngine/#{n}.0 (X11; Linux x86_64) SuperBrowser/#{n * 10}.0"
     end

@@ -20,9 +20,9 @@ module Audits
     end
 
     def browser_ok?(ua)
-      return true if @user.user_agents.count < 2
+      return true if @user.devices.count < 2
 
-      @user.user_agents.where(name: ua.name).count > 1
+      @user.devices.where(name: ua.name).count > 1
     end
 
     def ip_ok?(ua)

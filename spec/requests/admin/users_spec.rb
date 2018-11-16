@@ -3,6 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe 'Users management' do
+  describe 'not logged in' do
+    it 'index redirects to signin url' do
+      user = create(:user)
+
+      get admin_users_path
+
+      expect(response.status).to eq(302)
+
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it 'show redirects to signin url' do
+      user = create(:user)
+
+      get admin_user_devices_path(user)
+
+      expect(response).to redirect_to new_user_session_path
+    end
+  end
+
   describe 'logged as supervisor' do
     let(:supervisor) { create(:supervisor_user) }
     before { login_as(supervisor) }
@@ -36,6 +56,14 @@ RSpec.describe 'Users management' do
       expect { delete admin_user_path(user) }.
         to_not(change { User.count })
     end
+
+    it 'can view user devices' do
+      user = create(:user)
+
+      get admin_user_devices_path(user)
+
+      expect(response.status).to eq(200)
+    end
   end
 
   describe 'logged as admin' do
@@ -57,6 +85,14 @@ RSpec.describe 'Users management' do
         to_not(change { User.count })
       expect(flash[:alert]).to eq(I18n.t('admin.users.destroy.self'))
     end
+
+    it 'can view user devices' do
+      user = create(:user)
+
+      get admin_user_devices_path(user)
+
+      expect(response.status).to eq(200)
+    end
   end
 
   describe 'logged as normal user' do
@@ -71,6 +107,18 @@ RSpec.describe 'Users management' do
 
     it 'cannot change users state' do
       put admin_user_path(user, state: :blocked)
+
+      expect(response.status).to eq(302)
+    end
+
+    it 'cannot view user' do
+      get admin_users_path(user)
+
+      expect(response.status).to eq(302)
+    end
+
+    it 'cannot view user devices' do
+      get admin_user_devices_path(user)
 
       expect(response.status).to eq(302)
     end

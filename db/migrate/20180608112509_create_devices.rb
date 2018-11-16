@@ -1,6 +1,6 @@
-class CreateUserAgents < ActiveRecord::Migration[5.1]
+class CreateDevices < ActiveRecord::Migration[5.1]
   def change
-    create_table :user_agents do |t|
+    create_table :devices do |t|
       t.string :name
       t.string :accept_language
 

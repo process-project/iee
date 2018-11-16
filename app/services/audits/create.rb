@@ -6,13 +6,13 @@ module Audits
       @user = user
     end
 
-    def call(ip, ua, lang)
-      uao = UserAgent.find_or_create_by(name: ua) do |u|
+    def call(ip, user_agent, lang)
+      dev = Device.find_or_create_by(name: user_agent) do |u|
         u.accept_language = lang
         u.user = @user
       end
 
-      Ip.create(address: ip, user_agent: uao)
+      Ip.create(address: ip, device: dev)
     end
   end
 end

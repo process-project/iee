@@ -60,7 +60,7 @@ RSpec.describe Notifier do
     it 'sends email to account owner' do
       ip = create(:ip)
 
-      mail = described_class.audit_failed(ip.user_agent).deliver_now
+      mail = described_class.audit_failed(ip.device).deliver_now
 
       expect(mail.body.encoded).to match('detected unusual authentication')
     end

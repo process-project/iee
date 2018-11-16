@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserAgent < ApplicationRecord
+class Device < ApplicationRecord
   belongs_to :user
   has_many :ips, dependent: :destroy
 

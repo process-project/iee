@@ -18,13 +18,13 @@ module Admin
 
     def destroy
       perform(t('success', user: @user.name)) do
-        Users::Destroy.new(current_user, @user).call
+        ::Users::Destroy.new(current_user, @user).call
       end
     end
 
     def update
       perform(t('success', user: @user.name, state: state)) do
-        Users::ChangeState.new(current_user, @user, state).call
+        ::Users::ChangeState.new(current_user, @user, state).call
       end
     end
 
