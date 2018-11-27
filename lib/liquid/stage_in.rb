@@ -8,7 +8,7 @@ module Liquid
     end
 
     def render(context)
-      filename, url = if DataFile.data_types.keys.include? @data_file_type_or_path
+      filename, url = if DataFile.data_types.key? @data_file_type_or_path
                         extract_request_data_for_type(data_file_type: @data_file_type_or_path,
                                                       filename: @filename,
                                                       pipeline: context.registers[:pipeline])
