@@ -21,6 +21,8 @@ module PipelineSteps
         computation.revision = revision
         computation.script = ScriptGenerator.new(computation, template).call
         computation.job_id = nil
+        computation.stdout_path = nil
+        computation.stderr_path = nil
       end
 
       def internal_run

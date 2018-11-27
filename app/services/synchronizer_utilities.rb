@@ -13,16 +13,17 @@ module SynchronizerUtilities
     /^fluidFlow.*\.cas$/ => 'blood_flow_model',
     /^0DModel_input\.csv$/ => 'estimated_parameters',
     /^Outfile\.csv$/ => 'heart_model_output',
-    /^.*Trunc\.off$/ => 'truncated_off_mesh',
+    /^.*Trunc.*off$/i => 'truncated_off_mesh',
     /^.*\.off$/ => 'off_mesh',
     /^.*\.\b(png|bmp|jpg)\b$/ => 'graphics',
     /^.*\.dxrom$/ => 'response_surface',
-    /^ValveChar\.csv$/ => 'pressure_drops',
+    /^ValveChar\.dat$/ => 'pressure_drops',
     /^OutFileGA\.csv$/ => 'parameter_optimization_result',
     /^OutSeries1\.csv$/ => 'data_series_1',
     /^OutSeries2\.csv$/ => 'data_series_2',
     /^OutSeries3\.csv$/ => 'data_series_3',
-    /^OutSeries4\.csv$/ => 'data_series_4'
+    /^OutSeries4\.csv$/ => 'data_series_4',
+    /^ProvFile\.txt$/ => 'provenance'
   }.freeze
 
   def case_directory(url)
@@ -35,7 +36,7 @@ module SynchronizerUtilities
 
   def parse_response(remote_names)
     sync_dir(remote_names, @patient.inputs_dir)
-    @patient.pipelines.each do |pipeline|
+    @patient.pipelines.includes([:patient]).each do |pipeline|
       sync_dir(remote_names, pipeline.inputs_dir, input_pipeline: pipeline)
       sync_dir(remote_names, pipeline.outputs_dir, output_pipeline: pipeline)
     end
@@ -111,6 +112,7 @@ module SynchronizerUtilities
     @patient.data_files.where(input_of: input_pipeline,
                               output_of: output_pipeline).each do |data_file|
       next if remote_names.include? data_file.name
+
       data_file.destroy!
       pipeline = input_pipeline || output_pipeline
       Rails.logger.info(

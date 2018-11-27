@@ -433,8 +433,8 @@ RSpec.feature 'Patient browsing' do
       scenario 'show started rimrock computation source link for started step' do
         computation = pipeline.computations.
                       find_by(pipeline_step: '0d_models')
-        computation.update_attributes(revision: 'my-revision',
-                                      started_at: Time.zone.now)
+        computation.update(revision: 'my-revision',
+                           started_at: Time.zone.now)
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
@@ -504,15 +504,15 @@ RSpec.feature 'Patient browsing' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
         msg_key = "steps.#{computation.pipeline_step}.cannot_start"
 
-        expect(page).to have_content I18n.t(msg_key)
+        expect(page).to have_content I18n.t(msg_key).squish
       end
 
       context 'when computing for patient\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-          computation.update_attributes(started_at: Time.current,
-                                        stdout_path: 'http://download/stdout.pl',
-                                        stderr_path: 'http://download/stderr.pl')
+          computation.update(started_at: Time.current,
+                             stdout_path: 'http://download/stdout.pl',
+                             stderr_path: 'http://download/stderr.pl')
 
           visit patient_pipeline_computation_path(patient, pipeline, computation)
 
@@ -558,8 +558,8 @@ RSpec.feature 'Patient browsing' do
       allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
     end
 
-    def computation_run_text(c)
-      I18n.t("steps.#{c.pipeline_step}.start_#{c.mode}")
+    def computation_run_text(computation)
+      I18n.t("steps.#{computation.pipeline_step}.start_#{computation.mode}")
     end
   end
 end

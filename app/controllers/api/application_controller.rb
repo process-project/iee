@@ -8,6 +8,7 @@ module Api
     before_action :destroy_session
 
     rescue_from Pundit::NotAuthorizedError, with: :forbidden
+    rescue_from Pundit::NotDefinedError, with: :not_found
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
     def destroy_session
@@ -23,6 +24,7 @@ module Api
 
     def jsonapi_format(errors)
       return errors if errors.is_a?(String)
+
       errors_hash = {}
       errors.messages.each do |attribute, error|
         array_hash = []

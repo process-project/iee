@@ -11,8 +11,7 @@ describe GuardedProxyExecutor do
   subject { described_class.new(user) }
 
   context 'valid proxy' do
-    before(:context) { travel_to valid_proxy_time }
-    after(:context) { travel_back }
+    before(:example) { travel_to valid_proxy_time }
 
     it 'invoke block when proxy is valid' do
       expect { |b| subject.call(&b) }.to yield_control

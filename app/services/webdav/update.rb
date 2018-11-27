@@ -18,7 +18,7 @@ module Webdav
     private
 
     def active_computations
-      @ac ||= @user.computations.submitted_webdav
+      @active_computations ||= @user.computations.submitted_webdav
     end
 
     def update_computations

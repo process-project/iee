@@ -43,6 +43,21 @@ RSpec.describe Computation, type: :model do
     end
   end
 
+  describe '.unsubmitted' do
+    it 'returns only created and new computations' do
+      new = create(:rimrock_computation, status: 'new')
+      create(:rimrock_computation, status: 'queued')
+      created = create(:webdav_computation, status: 'created')
+      create(:rimrock_computation, status: 'running')
+      create(:rimrock_computation, status: 'error')
+      create(:rimrock_computation, status: 'finished')
+      create(:rimrock_computation, status: 'aborted')
+      expect(Computation.all.count).to eq 7
+      expect(Computation.unsubmitted.pluck(:id)).
+        to contain_exactly(new.id, created.id)
+    end
+  end
+
   describe '.submitted_rimrock' do
     it 'returns only queued and running rimrock-based computations' do
       create(:webdav_computation, status: 'running')

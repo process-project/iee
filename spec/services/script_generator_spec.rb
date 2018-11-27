@@ -35,6 +35,15 @@ describe ScriptGenerator do
       expect(script).to include '$SCRATCHDIR/out.txt'
     end
 
+    it 'adds comment when input file is not found' do
+      script = ScriptGenerator.new(
+        computation,
+        '<%= stage_in data_file_type: :provenance %>'
+      ).call
+
+      expect(script).to include 'cannot be found'
+    end
+
     it 'inserts upload file curl for file path' do
       script = ScriptGenerator.new(
         computation,

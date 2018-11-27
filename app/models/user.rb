@@ -68,6 +68,7 @@ class User < ApplicationRecord
 
   def self.compose_proxy(info)
     return unless info.proxy && info.proxyPrivKey && info.userCert
+
     info.proxy + info.proxyPrivKey + info.userCert
   end
 

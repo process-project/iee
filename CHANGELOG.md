@@ -9,8 +9,16 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## Unreleased
 
 ### Added
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
 
 ### Changed
+- `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
+- JWT expiration time is now the same as for other envs (@mkasztelnik)
+- JWT expiration time can be configured using ENV variable (@mkasztelnik)
+- `stage_in` adds commented line when file cannot be found (@mkasztelnik)
+- Update to ruby 2.5.1 (@mkasztelnik)
+- Update to rails 5.2.1 (@mkasztelnik)
 - Replaced ERB-based templating with a Liquid-based system (@Nuanda, @mkasztelnik)
 
 ### Deprecated
@@ -18,6 +26,26 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
+- Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
+- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
+- Uploading input files via WebDAV triggers computation run (@Nuanda)
+- `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
+
+### Security
+
+## 0.12.0
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
 
 ### Security
 

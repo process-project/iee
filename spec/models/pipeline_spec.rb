@@ -141,10 +141,10 @@ RSpec.describe Pipeline, type: :model do
                        pipeline_step: 'ageing_model_x2')
       expect(pipeline.status).to eq :running
 
-      running.update_attributes(status: :new)
+      running.update(status: :new)
       expect(pipeline.status).to eq :running
 
-      running.update_attributes(status: :queued)
+      running.update(status: :queued)
       expect(pipeline.status).to eq :running
     end
 

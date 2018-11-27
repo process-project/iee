@@ -34,7 +34,7 @@ module Rimrock
     def success(body)
       body_json = JSON.parse(body)
 
-      computation.update_attributes(
+      computation.update(
         job_id: body_json['job_id'],
         status: body_json['status'].downcase,
         stdout_path: body_json['stdout_path'],
@@ -45,7 +45,7 @@ module Rimrock
     def failure(body)
       body_json = JSON.parse(body)
 
-      computation.update_attributes(
+      computation.update(
         status: body_json['status'].downcase,
         exit_code: body_json['exit_code'],
         standard_output: body_json['standard_output'],
