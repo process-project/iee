@@ -100,18 +100,30 @@ describe ScriptGenerator do
   it 'inserts pipeline identifier' do
     script = ScriptGenerator.new(computation, '{{ pipeline_identifier }}').call
 
-    expect(script).to include 'case-number-1'
+    expect(script).to eq 'case-number-1'
   end
 
   it 'inserts patient case_number' do
     script = ScriptGenerator.new(computation, '{{ case_number }}').call
 
-    expect(script).to include 'case-number'
+    expect(script).to eq 'case-number'
   end
 
   it 'generates user token' do
     script = ScriptGenerator.new(computation, '{{ token }}').call
 
     expect(script.size).not_to be 0
+  end
+
+  it 'inserts user email' do
+    script = ScriptGenerator.new(computation, '{{ email }}').call
+
+    expect(script).to eq pipeline.user.email
+  end
+
+  it 'inserts pipeline mode' do
+    script = ScriptGenerator.new(computation, '{{ mode }}').call
+
+    expect(script).to eq 'automatic'
   end
 end
