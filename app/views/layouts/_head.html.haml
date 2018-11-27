@@ -11,5 +11,6 @@
   - if content_for? :extra_head
     = content_for :extra_head
   = csrf_meta_tags
+  = csp_meta_tag
 
   =yield :head

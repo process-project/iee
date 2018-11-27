@@ -34,8 +34,8 @@ class ArrayInput < SimpleForm::Inputs::StringInput
     end
   end
 
-  def next_field(ae, fid)
-    @builder.text_field(nil, input_html_options.merge(value: ae,
+  def next_field(element, fid)
+    @builder.text_field(nil, input_html_options.merge(value: element,
                                                       id: "#{attribute_name}_#{fid}",
                                                       class: 'string optional form-control',
                                                       style: 'margin-bottom: 5px',

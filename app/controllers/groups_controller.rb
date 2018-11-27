@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    if @group.update_attributes(permitted_attributes(@group))
+    if @group.update(permitted_attributes(@group))
       redirect_to(group_path(@group))
     else
       render(:edit, status: :bad_request)

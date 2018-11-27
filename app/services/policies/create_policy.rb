@@ -23,6 +23,7 @@ module Policies
 
     def create_access_policies(resource)
       return unless @json_body['permissions']
+
       @json_body['permissions'].each do |permission|
         process_permission(permission, resource)
       end
@@ -32,11 +33,13 @@ module Policies
       resource.resource_managers.find_or_create_by(user: @user)
 
       return unless @json_body['managers'] && @json_body['managers']['users']
+
       merge_user_managers(@json_body['managers']['users'], resource)
     end
 
     def create_group_managers(resource)
       return unless @json_body['managers'] && @json_body['managers']['groups']
+
       merge_group_managers(@json_body['managers']['groups'], resource)
     end
 

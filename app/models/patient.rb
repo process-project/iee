@@ -14,6 +14,7 @@ class Patient < ApplicationRecord
   has_many :data_files, dependent: :destroy
   has_many :pipelines,
            -> { order(iid: :asc) },
+           inverse_of: 'patient',
            dependent: :destroy
 
   validates :case_number, :procedure_status, presence: true
@@ -77,6 +78,9 @@ class Patient < ApplicationRecord
     else not_started!
     end
   end
+  # rubocop:enable CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def fluid_and_ventricle_virtual_models_exist?
     data_files.any?(&:fluid_virtual_model?) &&

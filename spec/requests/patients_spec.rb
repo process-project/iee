@@ -26,7 +26,7 @@ describe 'Patients controller' do
         expect_any_instance_of(PatientsController).
           to receive(:set_patients).and_call_original
         get '/patients'
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
@@ -35,7 +35,7 @@ describe 'Patients controller' do
         expect_any_instance_of(PatientsController).
           to receive(:find_and_authorize).and_call_original
         get "/patients/#{patient.case_number}"
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 

@@ -125,4 +125,4 @@ class Flow
     FLOWS_MAP[flow_type.to_sym] || []
   end
 end
-# rubocop:enabled ClassLength
+# rubocop:enable ClassLength

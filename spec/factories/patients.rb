@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:case_number) { |n| "c#{n}" }
 
     trait :with_pipeline do
-      case_number '9900'
+      case_number { '9900' }
 
       after(:build) do |patient|
         patient.pipelines << create(:pipeline)

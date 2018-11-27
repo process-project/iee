@@ -5,8 +5,10 @@ namespace :users do
   task generate: :environment do
     n = (ENV['N'] || 10).to_i
     raise 'N must be grater than 0' if n <= 0
+
     groups_per_user = (ENV['GROUPS_PER_USER'] || 5).to_i
     raise 'GROUPS_PER_USER must be grater than 0' if groups_per_user <= 0
+
     groups = Group.all
     n.times do
       first_name = SecureRandom.urlsafe_base64(8)

@@ -11,6 +11,7 @@ module Patients
       service_calls.reduce do |result, current|
         return current if current[:status] == :error
         return result if result[:status] == :error
+
         result.merge(current) do |_, old_value, new_value|
           new_value.is_a?(Array) ? (old_value + new_value) : new_value
         end

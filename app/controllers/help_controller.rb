@@ -17,7 +17,7 @@ class HelpController < ApplicationController
     if File.exist?(path)
       @markdown = File.read(path)
     else
-      render 'errors/not_found.html.haml', layout: 'errors', status: 404
+      render 'errors/not_found.html.haml', layout: 'errors', status: :not_found
     end
   end
 

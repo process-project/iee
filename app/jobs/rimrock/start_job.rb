@@ -14,8 +14,8 @@ module Rimrock
       Rimrock::Start.new(computation).call
     rescue StandardError => e
       Rails.logger.error(e)
-      computation.update_attributes(status: 'error',
-                                    error_message: e.message)
+      computation.update(status: 'error',
+                         error_message: e.message)
     ensure
       ComputationUpdater.new(computation).call
     end

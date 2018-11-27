@@ -87,6 +87,7 @@ class Computation < ApplicationRecord
 
   def step
     return nil if pipeline.nil?
+
     pipeline.steps.find { |step| step.name == pipeline_step }
   end
 
