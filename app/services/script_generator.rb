@@ -6,8 +6,8 @@ class ScriptGenerator
   attr_reader :computation
 
   delegate :pipeline, :revision, to: :computation
-  delegate :patient, :user, to: :pipeline
-  delegate :token, to: :user
+  delegate :patient, :user, :mode, to: :pipeline
+  delegate :token, :email, to: :user
   delegate :case_number, to: :patient
 
   def initialize(computation, template)
@@ -18,8 +18,8 @@ class ScriptGenerator
   def call
     if @template
       parsed_template = Liquid::Template.parse(@template)
-      parsed_template.render({ 'token' => token, 'case_number' => case_number,
-                               'revision' => revision, 'grant_id' => grant_id,
+      parsed_template.render({ 'token' => token, 'email' => email, 'case_number' => case_number,
+                               'revision' => revision, 'grant_id' => grant_id, 'mode' => mode,
                                'setup_ansys_licenses' => setup_ansys_licenses,
                                'pipeline_identifier' => pipeline_identifier },
                              registers: { pipeline: pipeline })
