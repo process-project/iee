@@ -6,9 +6,6 @@ class PipelineUpdater
   end
 
   def call
-    patient = @computation.pipeline.patient
-    user = @computation.user
-    patient && user && patient.execute_data_sync(user)
     Pipelines::StartRunnable.new(@computation.pipeline).call
   end
 end

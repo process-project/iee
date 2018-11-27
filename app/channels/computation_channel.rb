@@ -15,14 +15,15 @@ class ComputationChannel < ApplicationCable::Channel
 
   private
 
+  def data_sync!
+    Vapor::Application.config.sync_callbacks ||
+      computation.pipeline.patient.execute_data_sync(current_user)
+  end
+
   def computation
     Computation.joins(:pipeline).
       find_by(pipelines: { patient_id: params[:patient],
                            iid: params[:pipeline] },
               pipeline_step: params[:computation])
-  end
-
-  def data_sync!
-    computation.pipeline.patient.execute_data_sync(current_user)
   end
 end
