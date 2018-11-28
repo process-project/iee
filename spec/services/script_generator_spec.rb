@@ -38,10 +38,10 @@ describe ScriptGenerator do
     it 'adds comment when input file is not found' do
       script = ScriptGenerator.new(
         computation,
-        '<%= stage_in data_file_type: :provenance %>'
+        '{% stage_in provenance %}'
       ).call
 
-      expect(script).to include 'cannot be found'
+      expect(script).to include 'could not be found'
     end
 
     it 'inserts upload file curl for file path' do
