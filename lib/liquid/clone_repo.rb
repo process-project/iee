@@ -7,12 +7,14 @@ module Liquid
       @repo = repo
     end
 
-    def render(_context)
+    def render(context)
       <<~CODE
         export SSH_DOWNLOAD_KEY="#{ssh_download_key}"
         ssh-agent bash -c '
           ssh-add <(echo "$SSH_DOWNLOAD_KEY");
-          git clone #{gitlab_clone_url}:#{@repo}'
+          git clone #{gitlab_clone_url}:#{@repo}
+          cd `basename #{@repo} .git`
+          git reset --hard #{context['revision']}'
       CODE
     end
 

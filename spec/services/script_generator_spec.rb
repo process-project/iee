@@ -96,6 +96,8 @@ describe ScriptGenerator do
 
     expect(script).to include 'export SSH_DOWNLOAD_KEY="SSH KEY'
     expect(script).to include 'git clone git@gitlab-test.com:org/repo.git'
+    expect(script).to match(/cd.*repo.*/)
+    expect(script).to include 'git reset --hard rev'
   end
 
   it 'inserts ansys license server configuration' do
