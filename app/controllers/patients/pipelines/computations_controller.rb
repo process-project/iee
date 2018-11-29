@@ -36,7 +36,7 @@ module Patients
       private
 
       def run_computation
-        if @computation.manual?
+        if @computation.manual? && @computation.valid?
           @computation.run
         else
           @computation.save.tap do |success|
