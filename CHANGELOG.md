@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Pipelines API (@Nuanda)
 - New provenance data file type (@mkasztelnik)
+- Add FileStore IP to rake attack safelist (@mkasztelnik)
 
 ### Changed
 - `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
@@ -56,7 +57,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Extended clinical details section with a multi-entry widget (@Nuanda)
 
 ### Changed
-- Exclude process-* tags from the EurValve CI (@jmeizner)
+- Exclude process-\* tags from the EurValve CI (@jmeizner)
 - Segmentation output files have shorter names (@Nuanda)
 
 ### Deprecated

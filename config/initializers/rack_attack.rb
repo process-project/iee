@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Rack::Attack.safelist_ip('10.7.112.27')
+
 Rack::Attack.blocklist('fail2ban pentesters') do |req|
   Rack::Attack::Fail2Ban.filter(
     "pentesters-#{req.ip}",
