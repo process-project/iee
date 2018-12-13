@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module Rimrock
+  module Singularity
     class Builder
       def initialize(pipeline, name, params = {})
         @pipeline = pipeline
