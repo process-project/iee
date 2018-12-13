@@ -17,7 +17,7 @@ class SingularityScriptGenerator
       #SBATCH -N 1
       #SBATCH --ntasks-per-node=1
       #SBATCH --time=00:05:00
-      #SBATCH -A process
+      #SBATCH -A process1
       #SBATCH -p plgrid-testing
       #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%j.out
       #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%j.err
