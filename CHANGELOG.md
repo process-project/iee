@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `stage_in` adds commented line when file cannot be found (@mkasztelnik)
 - Update to ruby 2.5.3 (@mkasztelnik)
 - Update to rails 5.2.1 (@mkasztelnik)
+- Replaced ERB-based templating with a Liquid-based system (@Nuanda, @mkasztelnik)
 
 ### Deprecated
 

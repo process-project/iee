@@ -40,6 +40,8 @@ gem 'json-schema'
 gem 'github-markup'
 gem 'redcarpet'
 
+gem 'liquid'
+
 gem 'devise', '~> 4.5.0'
 gem 'jwt'
 gem 'omniauth-openid'

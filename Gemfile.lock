@@ -178,6 +178,7 @@ GEM
     jwt (2.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    liquid (4.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -430,6 +431,7 @@ DEPENDENCIES
   json-schema
   jwt
   launchy
+  liquid
   listen (>= 3.0.5, < 3.2)
   net_dav
   newrelic_rpm
