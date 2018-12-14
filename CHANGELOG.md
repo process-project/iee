@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## Unreleased
+## 0.12.0
 
 ### Added
 - Pipelines API (@Nuanda)
@@ -27,26 +27,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
 - ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
 - Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
 - STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
 - Uploading input files via WebDAV triggers computation run (@Nuanda)
 - `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
-
-### Security
-
-## 0.12.0
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-- Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
 
 ### Security
 
