@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180824090731) do
+ActiveRecord::Schema.define(version: 20181218120256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20180824090731) do
     t.string "revision"
     t.string "tag_or_branch"
     t.string "run_mode"
+    t.string "container_name"
+    t.string "registry_url"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 
