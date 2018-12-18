@@ -12,11 +12,12 @@ module PipelineSteps
 
       #TODO
       def call
-        RimrockComputation.create!(
+        SingularityComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
-          tag_or_branch: nil,
-          pipeline_step: @name
+          pipeline_step: @name,
+          registry_url: 'Placeholder registry url',
+          container_name: 'Placeholder container name'
         )
       end
     end
