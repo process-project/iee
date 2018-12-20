@@ -76,6 +76,9 @@ en:
           placeholder_pipeline: Placeholder pipeline
           tensorflow_pipeline: Tensorflow pipeline
           singularity_pipeline: Singularity pipeline
+          medical_pipeline: Medical pipeline
+          lofar_pipeline: LOFAR pipeline
+          lufthansa_pipeline: Lufthansa pipeline
     # Examples
     # labels:
     #   defaults:

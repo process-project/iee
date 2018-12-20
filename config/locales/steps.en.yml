@@ -72,3 +72,57 @@ en:
       start_automatic: Save Singularity container computation version
       start_manual: Start Singularity container computation computation
       restart_manual: Restart Singularity container computation
+    medical_step:
+      title: Medical container computation
+      cannot_start: |
+        Cannot start Medical container computation.
+      created: |
+        All required input files are available.
+        You can start Medical container computation for this project.
+      new: Medical container computation is being submitted
+      queued: Medical container computation is queued
+      running: Medical container computation is running
+      error: There was an error while running Medical container computation
+      finished: |
+        Medical container computation finished successfully, results stored in
+        the output directory.
+      aborted: Medical container computation was aborted by the pipeline owner
+      start_automatic: Save Medical container computation version
+      start_manual: Start Medical container computation computation
+      restart_manual: Restart Medical container computation
+    lofar_step:
+      title: LOFAR container computation
+      cannot_start: |
+        Cannot start LOFAR container computation.
+      created: |
+        All required input files are available.
+        You can start LOFAR container computation for this project.
+      new: LOFAR container computation is being submitted
+      queued: LOFAR container computation is queued
+      running: LOFAR container computation is running
+      error: There was an error while running LOFAR container computation
+      finished: |
+        LOFAR container computation finished successfully, results stored in
+        the output directory.
+      aborted: LOFAR container computation was aborted by the pipeline owner
+      start_automatic: Save LOFAR container computation version
+      start_manual: Start LOFAR container computation computation
+      restart_manual: Restart LOFAR container computation
+    lufthansa_step:
+      title: Lufthansa container computation
+      cannot_start: |
+        Cannot start Lufthansa container computation.
+      created: |
+        All required input files are available.
+        You can start Lufthansa container computation for this project.
+      new: Lufthansa container computation is being submitted
+      queued: Lufthansa container computation is queued
+      running: Lufthansa container computation is running
+      error: There was an error while running Lufthansa container computation
+      finished: |
+        Lufthansa container computation finished successfully, results stored in
+        the output directory.
+      aborted: Lufthansa container computation was aborted by the pipeline owner
+      start_automatic: Save Lufthansa container computation version
+      start_manual: Start Lufthansa container computation computation
+      restart_manual: Restart Lufthansa container computation
