@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SingularityStep < Step
   attr_reader :repository, :file
 

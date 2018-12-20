@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class SingularityComputationPolicy < ApplicationPolicy
-
   def show?
     true
   end

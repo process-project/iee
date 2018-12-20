@@ -27,9 +27,8 @@ class SingularityScriptGenerator
 
       cd $SCRATCHDIR
 
-      singularity pull --name container.simg #{@registry_url}#{@container_name} 
+      singularity pull --name container.simg #{@registry_url}#{@container_name}
       singularity run container.simg
     CODE
   end
-
 end

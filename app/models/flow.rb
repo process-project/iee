@@ -32,7 +32,7 @@ class Flow
                         'vsoch/hello-world'),
     SingularityStep.new('lufthansa_step',
                         'shub://',
-                        'vsoch/hello-world'),
+                        'vsoch/hello-world')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
