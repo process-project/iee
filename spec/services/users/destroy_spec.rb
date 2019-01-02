@@ -18,6 +18,20 @@ describe Users::Destroy do
     expect(result).to eq(:ok)
   end
 
+  it 'abort all active user computation' do
+    user = create(:user)
+    rimrock = create(:rimrock_computation, user: user, status: :running)
+    webdav = create(:webdav_computation, user: user, status: :running)
+    allow(Webdav::Segmentation).to receive_message_chain(:new, :delete)
+
+    described_class.new(current_user, user).call
+    rimrock.reload
+    webdav.reload
+
+    expect(rimrock.status).to eq('aborted')
+    expect(webdav.status).to eq('aborted')
+  end
+
   it 'is fobidden to remove self' do
     expect do
       described_class.new(current_user, current_user).call

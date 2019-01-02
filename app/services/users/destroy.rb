@@ -5,6 +5,7 @@ module Users
     protected
 
     def perform!
+      @user.computations.each(&:abort!)
       @user.destroy
     end
   end
