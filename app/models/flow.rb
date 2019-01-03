@@ -26,13 +26,16 @@ class Flow
                     [:generic_type]),
     SingularityStep.new('medical_step',
                         'shub://',
-                        'vsoch/hello-world'),
+                        'vsoch/hello-world',
+                        'latest'),
     SingularityStep.new('lofar_step',
                         'shub://',
-                        'vsoch/hello-world'),
+                        'vsoch/hello-world',
+                        'latest'),
     SingularityStep.new('lufthansa_step',
                         'shub://',
-                        'vsoch/hello-world')
+                        'vsoch/hello-world',
+                        'latest')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
