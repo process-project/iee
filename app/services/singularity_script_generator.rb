@@ -5,10 +5,11 @@ require 'erb'
 class SingularityScriptGenerator
   attr_reader :computation
 
-  def initialize(computation, registry_url, container_name)
+  def initialize(computation, registry_url, container_name, container_tag)
     @computation = computation
     @registry_url = registry_url
     @container_name = container_name
+    @container_tag = container_tag
   end
 
   def call
@@ -27,7 +28,7 @@ class SingularityScriptGenerator
 
       cd $SCRATCHDIR
 
-      singularity pull --name container.simg #{@registry_url}#{@container_name}
+      singularity pull --name container.simg #{@registry_url}#{@container_name}:#{@container_tag}
       singularity run container.simg
     CODE
   end
