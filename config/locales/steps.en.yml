@@ -54,7 +54,7 @@ en:
       start_automatic: Save tensorflow GPU computation version
       start_manual: Start tensorflow GPU computation
       restart_manual: Restart tensorflow GPU computation
-    singularity_step:
+    singularity_test_gpu_step:
       title: Singularity container computation
       cannot_start: |
         Cannot start Singularity container computation.
