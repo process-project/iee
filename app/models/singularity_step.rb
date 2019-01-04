@@ -11,10 +11,22 @@ class SingularityStep < Step
   end
 
   def builder_for(pipeline, params)
-    PipelineSteps::Singularity::Builder.new(pipeline, name, @registry_url, @container_name, @container_tag)
+    PipelineSteps::Singularity::Builder.new(
+      pipeline,
+      name,
+      @registry_url,
+      @container_name,
+      @container_tag
+    )
   end
 
   def runner_for(computation, options = {})
-    PipelineSteps::Singularity::Runner.new(computation, @registry_url, @container_name, @container_tag, options)
+    PipelineSteps::Singularity::Runner.new(
+      computation,
+      @registry_url,
+      @container_name,
+      @container_tag,
+      options
+    )
   end
 end
