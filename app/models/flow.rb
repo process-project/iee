@@ -8,7 +8,7 @@ class Flow
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
-    lufthansa_pipeline: %w[lufthansa_step],
+    lufthansa_pipeline: %w[lufthansa_step]
 
   }.freeze
 
