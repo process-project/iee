@@ -72,6 +72,24 @@ en:
       start_automatic: Save Singularity container computation version
       start_manual: Start Singularity container computation computation
       restart_manual: Restart Singularity container computation
+    singularity_placeholder_step:
+      title: Singularity placeholder computation
+      cannot_start: |
+        Cannot start singularit placeholder computation.
+      created: |
+        All required input files are available.
+        You can start Singularit placholder computation for this project.
+      new: Singularity placholder computation is being submitted
+      queued: singularity placholder computation is queued
+      running: Singularity placholder computation is running
+      error: There was an error while running Singularity placholder computation
+      finished: |
+        singularity placholder computation finished successfully, results stored in
+        the output directory.
+      aborted: Singularity placholder computation was aborted by the pipeline owner
+      start_automatic: Save Singularity placholder computation version
+      start_manual: Start Singularity placholder computation computation
+      restart_manual: Restart Singularity placholder computation
     medical_step:
       title: Medical container computation
       cannot_start: |

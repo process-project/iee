@@ -5,9 +5,11 @@ class Flow
     placeholder_pipeline: %w[placeholder_step],
     tensorflow_pipeline: %w[tf_cpu_step tf_gpu_step],
     singularity_pipeline: %w[singularity_step],
+    singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
-    lufthansa_pipeline: %w[lufthansa_step]
+    lufthansa_pipeline: %w[lufthansa_step],
+
   }.freeze
 
   STEPS = [
@@ -24,6 +26,10 @@ class Flow
                     'process-eu/singularity-pipeline',
                     'singularity_mock_job.sh.erb',
                     [:generic_type]),
+    SingularityStep.new('singularity_placeholder_step',
+                        'shub://',
+                        'vsoch/hello-world',
+                        'latest'),
     SingularityStep.new('medical_step',
                         'shub://',
                         'vsoch/hello-world',
