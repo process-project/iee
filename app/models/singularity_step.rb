@@ -10,7 +10,7 @@ class SingularityStep < Step
     @container_tag = container_tag
   end
 
-  def builder_for(pipeline, params)
+  def builder_for(pipeline, _params)
     PipelineSteps::Singularity::Builder.new(
       pipeline,
       name,
