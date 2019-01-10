@@ -67,6 +67,16 @@ class Pipeline < ApplicationRecord
       first
   end
 
+  def named_data_file(df_name)
+    DataFile.
+      where(project: project,
+            output_of: [nil, self],
+            input_of: [nil, self],
+            name: df_name).
+      order(:output_of_id, :input_of_id).
+      first
+  end
+
   def status
     @status ||= calculate_status
   end
