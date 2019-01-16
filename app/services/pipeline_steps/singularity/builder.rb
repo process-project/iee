@@ -12,11 +12,13 @@ module PipelineSteps
       end
 
       def call
+        container_registry = ContainerRegistry.create!(registry_url: @registry_url)
+
         SingularityComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,
-          registry_url: @registry_url,
+          container_registry_id: container_registry.id,
           container_name: @container_name,
           container_tag: @container_tag
         )
