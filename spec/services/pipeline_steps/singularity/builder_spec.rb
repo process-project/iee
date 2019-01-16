@@ -17,7 +17,6 @@ RSpec.describe PipelineSteps::Singularity::Builder do
     expect(computation.pipeline_step).to eq 'singularity'
     expect(computation.pipeline).to eq pipeline
     expect(computation.container_name).to eq 'vsoch/hello-world'
-    expect(computation.registry_url).to eq 'shub://'
     expect(computation.container_tag).to eq 'latest'
     expect(computation.user).to eq pipeline.user
   end

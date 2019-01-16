@@ -6,6 +6,8 @@ require 'services/pipeline_steps/runner_shared_examples'
 RSpec.describe PipelineSteps::Singularity::Runner do
   let(:updater) { instance_double(ComputationUpdater, call: true) }
 
+  let(:container_registry) { create(:container_registry) }
+
   # rubocop:disable LineLength
   let(:computation) { create(:singularity_computation, pipeline_step: 'singularity_placeholder_step') }
   # rubocop:enable LineLength

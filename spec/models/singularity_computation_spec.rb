@@ -7,6 +7,5 @@ RSpec.describe SingularityComputation, type: :model do
 
   it { should validate_presence_of(:script) }
   it { should validate_presence_of(:container_name) }
-  it { should validate_presence_of(:registry_url) }
   it { should validate_presence_of(:container_tag) }
 end

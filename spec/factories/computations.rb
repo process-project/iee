@@ -28,7 +28,7 @@ FactoryBot.define do
       pipeline_step 'singularity_placeholder_step'
       script 'SCRIPT'
       container_name 'lolcow'
-      registry_url 'shub://'
+      # container_registry_id nil
       container_tag 'latest'
     end
   end
