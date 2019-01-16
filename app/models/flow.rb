@@ -41,7 +41,7 @@ class Flow
     SingularityStep.new('lufthansa_step',
                         'shub://',
                         'vsoch/hello-world',
-                        'latest')
+                        'latest', ['input.csv'])
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
