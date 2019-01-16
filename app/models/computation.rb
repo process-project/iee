@@ -3,6 +3,7 @@
 class Computation < ApplicationRecord
   belongs_to :user
   belongs_to :pipeline
+  belongs_to :container_registry, optional: true
 
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
