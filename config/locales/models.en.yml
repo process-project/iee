@@ -17,6 +17,7 @@ en:
       response_surface: Response surface
       pressure_drops: Pressure drops
       parameter_optimization_result: Parameter optimization result
+      generic_type: Generic data type
       data_series_1: Data series 1
       data_series_2: Data series 2
       data_series_3: Data series 3

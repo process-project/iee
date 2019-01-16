@@ -3,6 +3,7 @@
 class Computation < ApplicationRecord
   belongs_to :user
   belongs_to :pipeline
+  belongs_to :container_registry, optional: true
 
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
@@ -18,8 +19,10 @@ class Computation < ApplicationRecord
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
   scope :webdav, -> { where(type: 'WebdavComputation') }
+  scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
+  scope :submitted_singularity, -> { submitted.singularity }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline
@@ -42,6 +45,10 @@ class Computation < ApplicationRecord
 
   def webdav?
     type == 'WebdavComputation'
+  end
+
+  def singularity?
+    type == 'SingularityComputation'
   end
 
   def self.flow_ordered

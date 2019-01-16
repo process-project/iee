@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180824090731) do
+ActiveRecord::Schema.define(version: 20190116180130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,16 @@ ActiveRecord::Schema.define(version: 20180824090731) do
     t.string "revision"
     t.string "tag_or_branch"
     t.string "run_mode"
+    t.string "container_name"
+    t.string "container_tag"
+    t.integer "container_registry_id"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
+  end
+
+  create_table "container_registries", force: :cascade do |t|
+    t.string "registry_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "data_files", id: :serial, force: :cascade do |t|
@@ -195,6 +204,7 @@ ActiveRecord::Schema.define(version: 20180824090731) do
   end
 
   add_foreign_key "access_methods", "services"
+  add_foreign_key "computations", "container_registries"
   add_foreign_key "computations", "pipelines"
   add_foreign_key "data_files", "pipelines", column: "input_of_id"
   add_foreign_key "data_files", "pipelines", column: "output_of_id"
