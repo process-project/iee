@@ -23,10 +23,10 @@ RSpec.describe PipelineSteps::Singularity::Builder do
 
   it "doesn't create double records in container_registry table" do
     builder = described_class.new(pipeline,
-                                      'singularity',
-                                      'shub://',
-                                      'vsoch/hello-world',
-                                      'latest')
+                                  'singularity',
+                                  'shub://',
+                                  'vsoch/hello-world',
+                                  'latest')
     computation = builder.call
     test_registry_url = computation.container_registry.registry_url
     builder.call
