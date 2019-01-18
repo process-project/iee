@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'models/step_shared_examples'
 
-RSpec.describe RimrockStep do
+RSpec.describe SingularityStep do
   subject { SingularityStep.new('TestStep', 'shub://', 'vsoch/hello-world', 'latest') }
   let(:pipeline) { create(:pipeline) }
 
