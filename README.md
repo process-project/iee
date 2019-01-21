@@ -36,10 +36,12 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
 
 ## DBMS Settings
 
-You need to create user/role for your account in PostgreSQL.
-At the moment Superuser privileges are required due to citext.
-You may also manually activate the citext extension as shown below -
-in which case normal privileges would be sufficient.
+You need to create user/role for your account in PostgreSQL. You can do it
+using the 'createuser' command line tool. Then, make sure to alter this user
+for rights to create databases.
+
+At the moment Superuser privileges are required due to citext. See below
+for the instruction.
 
 ### Manual activation of the citext extension
 
@@ -48,7 +50,13 @@ in which case normal privileges would be sufficient.
    but only after the DBs are created) or create them manually with an
    unprivileged user as the owner.
 2. As the PostgreSQL superuser, run the `CREATE EXTENSION IF NOT EXISTS citext
-   WITH SCHEMA public;` on all databases (dev, test, ...) to activate the extension.
+   WITH SCHEMA public;` on all databases (dev, test, ...) to activate the
+   extension. So login to the `vapor_development` database as the superuser (it is
+   usually called 'postgres') and issue the CREATE EXTENSION command above. Then
+   switch to `vapor_test` and do the same.
+
+When done, issue the `bin/setup` command again, as a regular system user. This
+time it should have no problem completing.
 
 
 ## Installation
