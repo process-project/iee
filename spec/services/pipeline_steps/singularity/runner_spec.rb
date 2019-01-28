@@ -8,12 +8,17 @@ RSpec.describe PipelineSteps::Singularity::Runner do
 
   let(:container_registry) { create(:container_registry) }
 
-  # rubocop:disable LineLength
-  let(:computation) { create(:singularity_computation, pipeline_step: 'singularity_placeholder_step') }
-  # rubocop:enable LineLength
+  let(:computation) do
+    create(:singularity_computation,
+           pipeline_step: 'singularity_placeholder_step',
+           container_registry: container_registry)
+  end
+
+  let(:container_name) { 'lolcow' }
+  let(:container_tag) { 'latest' }
 
   subject do
-    described_class.new(computation, 'registry', 'container', 'container_tag',
+    described_class.new(computation, container_registry.registry_url, container_name, container_tag,
                         updater: double(new: updater))
   end
 
@@ -29,7 +34,10 @@ RSpec.describe PipelineSteps::Singularity::Runner do
     it 'creates computation with script returned by singularity script generator' do
       subject.call
 
-      expect(computation.script).to include 'singularity pull'
+      expect(computation.script).to include container_registry.registry_url +
+                                            container_name +
+                                            ':' +
+                                            container_tag
     end
 
     it 'set job_id to null while restarting computation' do
