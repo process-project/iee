@@ -22,4 +22,17 @@ RSpec.describe PipelineSteps::Singularity::Builder do
     expect(computation.container_tag).to eq 'latest'
     expect(computation.user).to eq pipeline.user
   end
+
+  it "doesn't create double records in container_registry table" do
+    builder = described_class.new(pipeline,
+                                  'singularity',
+                                  'shub://',
+                                  'vsoch/hello-world',
+                                  'latest')
+    computation = builder.call
+    test_registry_url = computation.container_registry.registry_url
+    builder.call
+
+    expect(ContainerRegistry.where(registry_url: test_registry_url).count).to eq 1
+  end
 end
