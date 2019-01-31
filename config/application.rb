@@ -28,6 +28,7 @@ module Vapor
     config.constants = config_for(:application)
 
     config.jwt = Jwt::Config.new(config.constants['jwt'])
+    config.sync_callbacks = ENV['FILESTORE_SECRET'].present?
     config.clock = Struct.new(:update).
                    new((config.constants['clock']['update'] || 30).seconds)
 

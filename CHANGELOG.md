@@ -10,6 +10,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - All active user computation are aborted when user is deleted (@mkasztelnik)
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
+- Data file synchronization API (@mkasztelnik)
 
 ### Changed
 

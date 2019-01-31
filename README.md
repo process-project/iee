@@ -119,6 +119,9 @@ you can set the following ENV variables:
   * `CLOCK_UPDATE` - Computations update period (in seconds)
   * `ANSYSLI_SERVERS` - location of custom ansys license servers
   * `ANSYSLMD_LICENSE_FILE`- location of custom ansys license file
+  * `FILESTORE_SECRET` - FileStore secret used during file synchronization
+    callback authentication. If this value is set than active data
+    synchronization is turned off.
 
 ## Testing
 
