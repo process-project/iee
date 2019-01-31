@@ -94,11 +94,9 @@ describe WebdavDataFileSynchronizer, files: true do
         create(:data_file, name: 'fluidFlow.cas',
                            data_type: 'fluid_virtual_model',
                            patient: test_patient)
-        expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
         expect(DataFile.all.map(&:data_type)).
           to match_array %w[fluid_virtual_model ventricle_virtual_model]
-        expect(test_patient.reload.virtual_model_ready?).to be_truthy
       end
     end
 
