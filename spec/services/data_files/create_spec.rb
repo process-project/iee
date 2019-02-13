@@ -9,16 +9,17 @@ describe DataFiles::Create do
     patient = create(:patient)
 
     expect do
-      described_class.
+      data_files =
+        described_class.
         new([File.join('/', patient.working_dir, 'inputs', 'file.zip')]).call
+
+      data_file = data_files.first
+
+      expect(data_file.data_type).to eq('image')
+      expect(data_file.patient).to eq(patient)
+      expect(data_file.input_of).to be_nil
+      expect(data_file.output_of).to be_nil
     end.to change { DataFile.count }.by(1)
-
-    data_file = DataFile.last
-
-    expect(data_file.data_type).to eq('image')
-    expect(data_file.patient).to eq(patient)
-    expect(data_file.input_of).to be_nil
-    expect(data_file.output_of).to be_nil
   end
 
   it 'does not create input data file when type is not found' do
@@ -45,16 +46,20 @@ describe DataFiles::Create do
     pipeline = create(:pipeline, patient: patient)
 
     expect do
-      described_class.
+      data_files =
+        described_class.
         new([File.join('/', pipeline.inputs_dir, 'inputs', 'file.zip')]).call
+
+      data_file = data_files.first
+
+      expect(data_file.data_type).to eq('image')
+      expect(data_file.patient).to eq(patient)
+      expect(data_file.input_of).to eq(pipeline)
+      expect(data_file.output_of).to be_nil
     end.to change { DataFile.count }.by(1)
+  end
 
-    data_file = DataFile.last
-
-    expect(data_file.data_type).to eq('image')
-    expect(data_file.patient).to eq(patient)
-    expect(data_file.input_of).to eq(pipeline)
-    expect(data_file.output_of).to be_nil
+  it 'returns all patient pipelines as affected when new input' do
   end
 
   it 'creates pipeline output file' do
@@ -62,16 +67,17 @@ describe DataFiles::Create do
     pipeline = create(:pipeline, patient: patient)
 
     expect do
-      described_class.
+      data_files =
+        described_class.
         new([File.join('/', pipeline.outputs_dir, 'inputs', 'file.zip')]).call
+
+      data_file = data_files.first
+
+      expect(data_file.data_type).to eq('image')
+      expect(data_file.patient).to eq(patient)
+      expect(data_file.input_of).to be_nil
+      expect(data_file.output_of).to eq(pipeline)
     end.to change { DataFile.count }.by(1)
-
-    data_file = DataFile.last
-
-    expect(data_file.data_type).to eq('image')
-    expect(data_file.patient).to eq(patient)
-    expect(data_file.input_of).to be_nil
-    expect(data_file.output_of).to eq(pipeline)
   end
 
   it 'ignores files from outsite patients folder' do
@@ -85,5 +91,11 @@ describe DataFiles::Create do
     expect do
       described_class.new([File.join('/', patient.working_dir, 'a', 'file.zip')]).call
     end.to_not(change { DataFile.count })
+  end
+
+  it 'returns empty when no data file created' do
+    data_files = described_class.new(['/a/file.zip', '/a/b/file.zip']).call
+
+    expect(data_files).to be_empty
   end
 end
