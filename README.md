@@ -80,13 +80,33 @@ bin/rails server
 ```
 
 We are also using [sidekiq](https://github.com/mperham/sidekiq) to execute
-delayed jobs and [clockwork](https://github.com/tomykaira/clockworki) for
+delayed jobs and [clockwork](https://github.com/tomykaira/clockwork) for
 triggering delayed jobs in defined interval. To run full application stack
 perform following steps:
 ```
 gem install foreman
 foreman start
 ```
+
+If you want to start development environment with https support first make sure
+that `crt` and `key` are generated for localhost domain:
+
+```
+openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout tmp/localhost.key -out tmp/localhost.crt
+```
+
+Next you can use development foreman configuration:
+
+```
+foreman start -f Procfile.dev
+```
+
+or shortcut:
+```
+./bin/dev-server
+```
+to start https development environment (located at https://localhost:3000).
+
 
 To load sample data for development purposes run:
 ```
