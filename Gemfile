@@ -80,10 +80,6 @@ group :development do
 
   gem 'railroady'
   gem 'rubocop', '0.51.0', require: false
-
-  # PLG OpenId requires ssh even for development
-  # start app using `thin start --ssl
-  gem 'thin'
 end
 
 group :test do
