@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_31_111438) do
+ActiveRecord::Schema.define(version: 2019_02_20_110652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(version: 2019_01_31_111438) do
     t.string "tag_or_branch"
     t.string "run_mode"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
+  end
+
+  create_table "data_file_types", force: :cascade do |t|
+    t.string "data_type", null: false
+    t.text "pattern", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "data_files", id: :serial, force: :cascade do |t|
