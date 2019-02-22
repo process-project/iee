@@ -3,6 +3,12 @@
 # rubocop:disable ClassLength
 class Flow
   FLOWS = {
+    crc_model_cfd: %w[
+      segmentation cfd parameter_optimization uncertainty_analysis
+    ],
+    crc_model_rom: %w[
+      segmentation rom parameter_optimization uncertainty_analysis
+    ],
     inference_variants: %w[
       rule_selection inference_weighting patient_db_selection
       iteration_control results_presentation
