@@ -24,6 +24,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## 0.12.1
+
+### Fixed
+- Fix pipeline list: CRC model CFD/ROM pipelines (@mkasztelnik)
+
 ## 0.12.0
 
 ### Added
