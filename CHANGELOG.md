@@ -13,12 +13,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Pipelines API (@Nuanda)
 - New provenance data file type (@mkasztelnik)
 - Data file synchronization API (@mkasztelnik)
+- Description how to start https development server using puma (@mkasztelnik)
 
 ### Changed
 
 ### Deprecated
 
 ### Removed
+- Remove `thin` from `Gemfile` since puma can be used to start https development
+  server (@mkasztelnik)
 
 ### Fixed
 
