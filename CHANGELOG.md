@@ -20,8 +20,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
-- Remove `thin` from `Gemfile` since puma can be used to start https development
-  server (@mkasztelnik)
+- Remove `thin` from `Gemfile` since puma can be used to start https development server (@mkasztelnik)
+- Remove `Patient#procedure_status` not used anymore (@mkasztelnik)
 
 ### Fixed
 
