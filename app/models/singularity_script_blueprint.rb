@@ -1,0 +1,2 @@
+class SingularityScriptBlueprint < ApplicationRecord
+end
