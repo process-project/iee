@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Description how to start https development server using puma (@mkasztelnik)
 
 ### Changed
+- Move application controller configurations to separate concerns (@mkasztelnik)
 
 ### Deprecated
 
