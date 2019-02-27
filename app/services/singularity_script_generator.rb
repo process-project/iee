@@ -17,8 +17,8 @@ class SingularityScriptGenerator
     mock_params = { tag: @container_tag, hpc: 'Prometheus' }
 
     record = SingularityScriptBlueprint.find_by!(container_name: @container_name,
-                                                tag: mock_params[:tag],
-                                                hpc: mock_params[:hpc])
+                                                 tag: mock_params[:tag],
+                                                 hpc: mock_params[:hpc])
 
     script_options = mock_params.merge(registry_url: @registry_url, container_name: @container_name)
 
