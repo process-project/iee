@@ -113,6 +113,8 @@ RSpec.feature 'Patient altering' do
       end
 
       scenario 'automatically synchronizes data_files and updates status for strange case number' do
+        DataFileType.create!(pattern: /^.*\.\b(png|bmp|jpg)\b$/, data_type: 'graphics')
+
         visit new_patient_path
 
         fill_in 'patient[case_number]', with: '-._'

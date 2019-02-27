@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe DataFiles::Create do
+  before { DataFileType.create!(data_type: 'image', pattern: /(file\.zip)/) }
+
   it 'creates patient input data files' do
     patient = create(:patient)
 

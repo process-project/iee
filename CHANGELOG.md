@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - New provenance data file type (@mkasztelnik)
 - Data file synchronization API (@mkasztelnik)
 - Description how to start https development server using puma (@mkasztelnik)
+- Data file type stored in DB (@mkasztelnik)
 
 ### Changed
 - Move application controller configurations to separate concerns (@mkasztelnik)

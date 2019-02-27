@@ -8,6 +8,13 @@ describe WebdavDataFileSynchronizer, files: true do
   let(:null_patient) { create(:patient, case_number: '0000') }
   let(:test_patient) { create(:patient, case_number: '1234') }
 
+  before do
+    DataFileType.create!(data_type: 'fluid_virtual_model', pattern: /^fluidFlow\.cas$/)
+    DataFileType.create!(data_type: 'ventricle_virtual_model', pattern: /^structural_vent\.dat$/)
+    DataFileType.create!(data_type: 'blood_flow_result', pattern: /^fluidFlow.*\.dat$/)
+    DataFileType.create!(data_type: 'image', pattern: /(^imaging_.*\.zip$)|(file\.zip)/)
+  end
+
   it 'does nothing for wrong input' do
     expect_any_instance_of(WebdavDataFileSynchronizer).not_to receive(:call_file_storage)
     call(nil, nil)
