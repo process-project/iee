@@ -14,12 +14,14 @@ class SingularityScriptGenerator
 
   def call
     # to be replaced later when those params are coming from gui
-    mock_params = {tag: @container_tag, hpc: 'Prometheus'}
+    mock_params = { tag: @container_tag, hpc: 'Prometheus' }
 
-    blueprint = SingularityScriptBlueprint.find_by(container_name: @container_name, tag: mock_params[:tag], hpc: mock_params[:hpc])
+    record = SingularityScriptBlueprint.find_by!(container_name: @container_name,
+                                                tag: mock_params[:tag],
+                                                hpc: mock_params[:hpc])
 
     script_options = mock_params.merge(registry_url: @registry_url, container_name: @container_name)
 
-    blueprint.script_blueprint % script_options
+    record.script_blueprint % script_options
   end
 end

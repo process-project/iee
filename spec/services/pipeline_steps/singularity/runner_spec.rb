@@ -14,7 +14,7 @@ RSpec.describe PipelineSteps::Singularity::Runner do
            container_registry: container_registry)
   end
 
-  let(:container_name) { 'lolcow' }
+  let(:container_name) { 'vsoch/hello-world' }
   let(:container_tag) { 'latest' }
 
   subject do
