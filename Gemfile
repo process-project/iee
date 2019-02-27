@@ -74,7 +74,6 @@ group :development, :test do
   gem 'byebug', platform: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'guard-rspec', require: false
   gem 'rspec-rails', '~> 3.0'
 end
 

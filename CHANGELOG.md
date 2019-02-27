@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 - Remove `thin` from `Gemfile` since puma can be used to start https development server (@mkasztelnik)
 - Remove `Patient#procedure_status` not used anymore (@mkasztelnik)
+- Remove `guard` since no one from the team is using it right now (@mkasztelnik)
 
 ### Fixed
 
