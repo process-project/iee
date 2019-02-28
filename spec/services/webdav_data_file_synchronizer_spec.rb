@@ -54,6 +54,7 @@ describe WebdavDataFileSynchronizer, files: true do
 
     context 'and there are patient inputs' do
       let(:test_advanced_patient) { create(:patient, case_number: '5678') }
+      let(:test_segmentation_patient) { create(:patient, case_number: '1111') }
 
       it 'calls file storage and creates new input-related data_files' do
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
@@ -76,6 +77,12 @@ describe WebdavDataFileSynchronizer, files: true do
         expect { call(test_advanced_patient, correct_user) }.to change { DataFile.count }.by(1)
         expect(DataFile.all.map(&:data_type)).to match_array ['blood_flow_result']
         expect(DataFile.all.map(&:name)).to match_array ['fluidFlow-1-00002.dat']
+      end
+
+      it 'recognizes the famous file.zip as a correct segmentation input' do
+        expect { call(test_segmentation_patient, correct_user) }.to change { DataFile.count }.by(1)
+        expect(DataFile.all.map(&:data_type)).to match_array ['image']
+        expect(DataFile.all.map(&:name)).to match_array ['file.zip']
       end
 
       it 'destroys data_files which are no longer stored in File Storage' do

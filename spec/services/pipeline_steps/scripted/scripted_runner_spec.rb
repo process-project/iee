@@ -161,7 +161,7 @@ RSpec.describe PipelineSteps::Scripted::ScriptedRunner do
     client = double(Cloud::Client)
     allow(Cloud::Client).to receive(:new).and_return(client)
     allow(client).to receive_messages(
-      register_initial_config: 1, spawn_appliance_set: 2, spawn_appliance: 3
+      spawn_appliance_set: 1, spawn_appliance: 2
     )
     client
   end

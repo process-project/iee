@@ -45,6 +45,23 @@ describe ScriptGenerator do
       expect(script).to include '$SCRATCHDIR/out.gif'
     end
 
+    it 'add --fail flag when download is not optional' do
+      computation = create(:scripted_computation)
+      script = ScriptGenerator.new(computation,
+                                   '<%= stage_in path: "dir/foo.txt" %>').call
+
+      expect(script).to include '--fail'
+    end
+
+    it 'does not add --fail flag when download is optional' do
+      computation = create(:scripted_computation)
+      script = ScriptGenerator.
+               new(computation,
+                   '<%= stage_in path: "dir/foo.txt", optional: true%>').call
+
+      expect(script).to_not include '--fail'
+    end
+
     it 'throws ArgumentException on malformed request' do
       generator = ScriptGenerator.new(
         computation,
@@ -115,5 +132,25 @@ describe ScriptGenerator do
 
     expect(script).to include 'export ANSYSLI_SERVERS=ansys-servers'
     expect(script).to include 'export ANSYSLMD_LICENSE_FILE=ansys-license-file'
+  end
+
+  it 'inserts pipeline identifier' do
+    patient = create(:patient, case_number: 'case-number')
+    pipeline = create(:pipeline, patient: patient, iid: 1)
+    computation = create(:scripted_computation, pipeline: pipeline)
+
+    script = ScriptGenerator.new(computation, '<%= pipeline_identifier %>').call
+
+    expect(script).to include 'case-number-1'
+  end
+
+  it 'inserts patient case_number' do
+    patient = create(:patient, case_number: 'case-number')
+    pipeline = create(:pipeline, patient: patient, iid: 1)
+    computation = create(:scripted_computation, pipeline: pipeline)
+
+    script = ScriptGenerator.new(computation, '<%= case_number %>').call
+
+    expect(script).to include 'case-number'
   end
 end

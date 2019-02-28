@@ -71,6 +71,14 @@ module Patients
         @computation.step
       end
 
+      def repo
+        @repo ||= step.try(:repository)
+      end
+
+      def load_versions?
+        repo && updatable?
+      end
+
       def updatable?
         policy(@computation).update?
       end
