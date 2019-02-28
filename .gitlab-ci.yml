@@ -22,7 +22,7 @@ test:
   - google-chrome --version
   - ruby -v
   - which ruby
-  - gem install bundler --no-ri --no-rdoc
+  - gem install bundler --no-document
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
@@ -35,7 +35,7 @@ integration:
   - google-chrome --version
   - ruby -v
   - which ruby
-  - gem install bundler --no-ri --no-rdoc
+  - gem install bundler --no-document
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
@@ -47,7 +47,7 @@ rubocop:
   stage: test
   script:
     - ruby -v
-    - gem install bundler --no-ri --no-rdoc
+    - gem install bundler --no-document
     - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
     - bundle exec rubocop
 
@@ -55,7 +55,7 @@ brakeman:
   stage: test
   script:
     - ruby -v
-    - gem install brakeman --no-ri --no-rdoc
+    - gem install brakeman --no-document
     - brakeman --exit-on-warn --quiet -f plain
 
 deploy_development:
