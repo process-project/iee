@@ -79,7 +79,7 @@ group :development do
   gem 'web-console', '>= 3.3.0'
 
   gem 'railroady'
-  gem 'rubocop', '0.51.0', require: false
+  gem 'rubocop', '~> 0.65.0', require: false
 
   # PLG OpenId requires ssh even for development
   # start app using `thin start --ssl

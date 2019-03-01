@@ -12,6 +12,7 @@ Style/SymbolArray:
   Enabled: false
 
 AllCops:
+  TargetRubyVersion: 2.5
   Exclude:
     - 'bin/*'
     - 'bin/**/*'
