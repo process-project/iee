@@ -1,74 +1,33 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
 en:
-  title: Process
-  rights: ©2016 All Rights Reserved.
-  record_not_found: Record not found!
-  login_form: Login form
-  first_name: Name
-  last_name: Surname
-  email: Email
-  password: Password
-  remember_me: Remember me
-  login: Log in
-  forgot: Forgot your password?
-  login_with: Log in with
-  connect_to_plgrid: Connect to PLGrid
-  new_to_site: New to site?
-  create_account: Create account
-  registration_form: Registration form
-  confirmation_password: Password confirmation
-  edit: Edit
-  remove: Remove
-  register: Register
-  cancel: Cancel
-  already_registered: Already registered?
-  forgot_password_form: Forgot password?
-  submit_forgot_password: Send me reset password instructions
-  go_back: Go back to
-  change_password_form: Change password
-  change_password_submit: Change
-  password_hint: '%{length} characters minimum'
-  token_expired: Change password token has expired. Please request a new one
-  token_expired_link: here.
-  new_password: New password
-  new_password_confirmation: New password confirmation
-  edit_form: Edit %{who}
-  account_confirmation: 'Currently waiting confirmation for: %{email}'
-  password_leave_blank: leave it blank if you don't want to change it
-  current_password: Current password
-  current_password_hint: we need your current password to confirm your changes
-  edit_registration_submit: Update
-  are_you_sure: Are you sure?
-  go_back: Go back
-  dice: Dice Team
-  by: by
-  version: Version
-  logout: Logout
-  not_confirmed_users: Users to be confirmed
-  confirmed_users: Confirmed users
-  no_users: No users
-  approve_all: Approve all
-  approve: Approve
-  block_all: Block all
-  block: Block
-  user_approved: User %{email} has been successfully approved
-  user_blocked: User %{email} has been blocked
-  cannot_block_itself: You cannot block your own account
-  all_approved: All pending users have been approved
-  all_blocked: All non-supervisor and non-admin accounts have been blocked
-  restricted_to_supervisors: Only supervisors can perform this action
-  plgrid: PLGrid
-
-  edit_resource_form: Edit resource
-  resource_not_found: Resource could not be found
-
-  either_user_or_group: Either user or group has to be chosen
-  missing_access_method: Method has to be chosen
-  different_service_access_method: |
-    Access method needs to be either global or defined for this Service.
-  missing_resource: Resource is missing
-  access_policies_list: List of access policies
-  welcome: Welcome,
-  help:
-    pdp: Policy Decision Point
-  similar_access_policy_exists: Similar access policy already exists
-  warning: Warning!
+  hello: "Hello world"
