@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:project_name) { |n| "c#{n}" }
 
     trait :with_pipeline do
-      project_name '9900'
+      project_name { '9900' }
 
       after(:build) do |project|
         project.pipelines << create(:pipeline)

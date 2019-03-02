@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :pipeline do
     sequence(:name) { |n| "pipeline_#{n}" }
-    flow 'placeholder_pipeline'
+    flow { 'placeholder_pipeline' }
     project
     user
 
