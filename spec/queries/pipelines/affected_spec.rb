@@ -10,7 +10,7 @@ describe Pipelines::Affected do
     data_file = create(:data_file, patient: patient)
 
     expect(described_class.new([data_file]).call).
-      to contain_exactly(*all_pipelines)
+      to match_array(all_pipelines)
   end
 
   it 'returns input pipeline' do
@@ -21,7 +21,7 @@ describe Pipelines::Affected do
       to contain_exactly(pipeline)
   end
 
-  it 'returns input pipeline' do
+  it 'returns output pipeline' do
     pipeline, = create_list(:pipeline, 2, patient: patient)
     data_file = create(:data_file, patient: patient, output_of: pipeline)
 
