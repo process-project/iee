@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Data file synchronization API (@mkasztelnik)
 - Description how to start https development server using puma (@mkasztelnik)
 - Data file type stored in DB (@mkasztelnik)
+- Start runnable computation after new file appears (@mkasztelnik)
 
 ### Changed
 - Move application controller configurations to separate concerns (@mkasztelnik)

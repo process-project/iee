@@ -26,7 +26,7 @@ module DataFiles
         map { |p| data_file_hash(p) }.
         reject(&:blank?).
         group_by { |path_hash| path_hash[:case_number] }.
-        each { |case_number, hash| patient_data_file_create(case_number, hash) }
+        flat_map { |case_number, hash| patient_data_file_create(case_number, hash) }
     end
 
     private
@@ -47,8 +47,10 @@ module DataFiles
       patient = Patient.find_by(case_number: case_number)
 
       if patient
-        patient_inputs_create(patient, hashes)
-        pipelines_data_files_create(patient, hashes)
+        patient_inputs_create(patient, hashes) +
+          pipelines_data_files_create(patient, hashes)
+      else
+        []
       end
     end
 
@@ -60,22 +62,24 @@ module DataFiles
       data_file_hashes.
         reject { |hash| hash[:iid].blank? }.
         group_by { |hash| hash[:iid] }.
-        each { |iid, hashes| pipeline_data_files_create(patient, iid, hashes) }
+        flat_map { |iid, hashes| pipeline_data_files_create(patient, iid, hashes) }
     end
 
     def pipeline_data_files_create(patient, iid, hashes)
       pipeline = patient.pipelines.find_by(iid: iid)
 
       if pipeline
-        data_files_create(hashes, :pipeline_input, patient, input_of: pipeline)
-        data_files_create(hashes, :pipeline_output, patient, output_of: pipeline)
+        data_files_create(hashes, :pipeline_input, patient, input_of: pipeline) +
+          data_files_create(hashes, :pipeline_output, patient, output_of: pipeline)
+      else
+        []
       end
     end
 
     def data_files_create(hashes, type, patient, input_of: nil, output_of: nil)
       hashes.
         select { |hash| hash[:type] == type }.
-        each do |hash|
+        map do |hash|
           data_file_create(hash, patient, input_of: input_of, output_of: output_of)
         end
     end

@@ -6,8 +6,8 @@ class ComputationChannel < ApplicationCable::Channel
   end
 
   def receive(data)
-    if data['new_input']
-      data_sync!
+    if data['new_input'] && callbacks_turned_off
+      computation.pipeline.patient.execute_data_sync(current_user)
       ComputationUpdater.new(computation).call
       Pipelines::StartRunnable.new(computation.pipeline).call
     end
@@ -15,9 +15,8 @@ class ComputationChannel < ApplicationCable::Channel
 
   private
 
-  def data_sync!
-    Vapor::Application.config.sync_callbacks ||
-      computation.pipeline.patient.execute_data_sync(current_user)
+  def callbacks_turned_off
+    !Vapor::Application.config.sync_callbacks
   end
 
   def computation

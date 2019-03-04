@@ -5,7 +5,10 @@ module DataFiles
     queue_as :data_files
 
     def perform(paths)
-      DataFiles::Create.new(paths).call
+      created_data_files = DataFiles::Create.new(paths).call
+
+      Pipelines::Affected.new(created_data_files).call.
+        each { |p| Pipelines::StartRunnableJob.perform_later(p) }
     end
   end
 end
