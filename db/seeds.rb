@@ -41,17 +41,18 @@ SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
 
 script = <<~CODE
   #!/bin/bash
-  #SBATCH -A process1
-  #SBATCH -p plgrid-testing
-  #SBATCH -N 1
+  #SBATCH -A process1gpu
+  #SBATCH -p plgrid-gpu
+  #SBATCH -N 2
   #SBATCH -n 24
-  #SBATCH --time 0:59:00
+  #SBATCH --gres=gpu:2
+  #SBATCH --time 8:00:00
   #SBATCH --job-name UC1_test
   #SBATCH --output /net/archive/groups/plggprocess/UC1/slurm_outputs/uc1-pipeline-log-%%J.txt
 
   module load plgrid/tools/singularity/stable
 
-  singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,/net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,/net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts /net/archive/groups/plggprocess/UC1/funny_cos_working.img /mnt/run_scripts/runscript.sh
+  singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,/net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,/net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts /net/archive/groups/plggprocess/UC1/funny_cos_working.img /mnt/run_scripts/runscript.sh 4
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
