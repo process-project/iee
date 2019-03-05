@@ -1,12 +1,13 @@
 defaults: &defaults
   jwt:
-    key: <%= ENV['JWT_KEY_PATH'] || Rails.root.join('config', 'jwt', 'dev.pem') %>
+    key: <%= ENV['JWT_KEY_PATH'] || Rails.root.join('config', 'jwt', 'prod-dev.pem') %>
     key_algorithm: ES256
     expiration_time: <%= ENV['JWT_EXP_TIME'] || 86400 %> #24 hours
     issuer: 'EurValve Portal'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
   file_store:
-    web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve.cyfronet.pl' %>
+    web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve-dev.cyfronet.pl' %>
+    #web_dav_base_url: <%= 'http://localhost:8080/webdav/' %>
     web_dav_base_path: '/webdav'
     web_dav_policy_proxy_path: '/portal-proxy'
   cloud:
@@ -42,6 +43,6 @@ production:
   <<: *defaults
   jwt:
     key: <%= Rails.root.join('config', 'jwt', 'prod.pem') %>
-    expiration_time: <%= ENV['JWT_EXP_TIME'] || 86400 %> #24 hours
     key_algorithm: ES256
+    expiration_time: 3600
     issuer: 'EurValve Portal'
