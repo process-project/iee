@@ -29,10 +29,6 @@ en:
       details: Details
       files: Files
       computations: Computations
-      new_computation:
-        imaging_uploaded: Run Segmentation
-        virtual_model_ready: Run new Blood flow CFD simulation
-        after_parameter_estimation: Run new 0D Heart Model computation
       download: Download
       download_unavailable: (download unavailable)
       submit: Execute simulation

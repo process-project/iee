@@ -44,6 +44,8 @@ Rails.application.routes.draw do
     resources :patients do
       resources :pipelines, only: [:index, :create, :show, :destroy]
     end
+    resources :files, only: :create
+    delete 'files', to: 'files#destroy'
   end
 
   resources :services do

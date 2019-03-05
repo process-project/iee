@@ -73,6 +73,8 @@ en:
     options:
       pipeline:
         flow:
+          crc_model_cfd: CRC model CFD
+          crc_model_rom: CRC model ROM
           inference_variants: Inference variants
           avr_surgical_preparation: AVR surgical prep
           avr_from_scan_rom: AVR from Scan (ROM)

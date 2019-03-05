@@ -3,29 +3,6 @@
 module SynchronizerUtilities
   private
 
-  TYPE_PATTERNS = {
-    /^imaging_.*\.zip$/ => 'image',
-    /file\.zip/ => 'image',
-    /^segmentation_.*\.zip$/ => 'segmentation_result',
-    /^fluidFlow\.cas$/ => 'fluid_virtual_model',
-    /^structural_vent\.dat$/ => 'ventricle_virtual_model',
-    /^fluidFlow.*\.dat$/ => 'blood_flow_result',
-    /^fluidFlow.*\.cas$/ => 'blood_flow_model',
-    /^0DModel_input\.csv$/ => 'estimated_parameters',
-    /^Outfile\.csv$/ => 'heart_model_output',
-    /^.*Trunc.*off$/i => 'truncated_off_mesh',
-    /^.*\.off$/ => 'off_mesh',
-    /^.*\.\b(png|bmp|jpg)\b$/ => 'graphics',
-    /^.*\.dxrom$/ => 'response_surface',
-    /^ValveChar\.dat$/ => 'pressure_drops',
-    /^OutFileGA\.csv$/ => 'parameter_optimization_result',
-    /^OutSeries1\.csv$/ => 'data_series_1',
-    /^OutSeries2\.csv$/ => 'data_series_2',
-    /^OutSeries3\.csv$/ => 'data_series_3',
-    /^OutSeries4\.csv$/ => 'data_series_4',
-    /^ProvFile\.txt$/ => 'provenance'
-  }.freeze
-
   def case_directory(url)
     File.join(url, 'patients', @patient.case_number)
   end
@@ -63,7 +40,11 @@ module SynchronizerUtilities
   end
 
   def recognize_data_type(name)
-    TYPE_PATTERNS.detect { |k, _| name =~ k }&.[](1)
+    data_file_types.detect { |dft| dft.match?(name) }&.data_type
+  end
+
+  def data_file_types
+    @data_file_types ||= DataFileType.all
   end
 
   def report_problem(problem, details = {})

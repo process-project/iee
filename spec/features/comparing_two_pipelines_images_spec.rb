@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Comparing two pipelines images', files: true do
+  before { DataFileType.create!(pattern: /^.*\.\b(png|bmp|jpg)\b$/, data_type: 'graphics') }
+
   scenario 'shows image diffs for comparable image files', js: true do
     user = create(:user, :approved, :file_store_user)
     login_as(user)

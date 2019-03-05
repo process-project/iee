@@ -6,9 +6,7 @@ module Patients
       before_action :find_and_authorize
 
       def show
-        # TODO: FIXME the following two lines are not needed when patient
-        #             sync problem is solved
-        @patient.execute_data_sync(current_user)
+        data_sync!
         prepare_to_show_computation
 
         if request.xhr?
@@ -34,6 +32,11 @@ module Patients
       end
 
       private
+
+      def data_sync!
+        Vapor::Application.config.sync_callbacks ||
+          @patient.execute_data_sync(current_user)
+      end
 
       def run_computation
         if @computation.manual? && @computation.valid?

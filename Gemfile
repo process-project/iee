@@ -40,6 +40,8 @@ gem 'json-schema'
 gem 'github-markup'
 gem 'redcarpet'
 
+gem 'liquid'
+
 gem 'devise', '~> 4.5.0'
 gem 'jwt'
 gem 'omniauth-openid'
@@ -72,7 +74,6 @@ group :development, :test do
   gem 'byebug', platform: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'guard-rspec', require: false
   gem 'rspec-rails', '~> 3.0'
 end
 
@@ -81,10 +82,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
-
-  # PLG OpenId requires ssh even for development
-  # start app using `thin start --ssl
-  gem 'thin'
 
   gem 'rubocop', '~> 0.59', require: false
 end

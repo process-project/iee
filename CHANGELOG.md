@@ -9,8 +9,39 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## Unreleased
 
 ### Added
+- All active user computation are aborted when user is deleted (@mkasztelnik)
 - Pipelines API (@Nuanda)
 - New provenance data file type (@mkasztelnik)
+- Data file synchronization API (@mkasztelnik)
+- Description how to start https development server using puma (@mkasztelnik)
+- Data file type stored in DB (@mkasztelnik)
+- Start runnable computation after new file appears (@mkasztelnik)
+
+### Changed
+- Move application controller configurations to separate concerns (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Remove `thin` from `Gemfile` since puma can be used to start https development server (@mkasztelnik)
+- Remove `Patient#procedure_status` not used anymore (@mkasztelnik)
+- Remove `guard` since no one from the team is using it right now (@mkasztelnik)
+
+### Fixed
+
+### Security
+
+## 0.12.1
+
+### Fixed
+- Fix pipeline list: CRC model CFD/ROM pipelines (@mkasztelnik)
+
+## 0.12.0
+
+### Added
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
+- Add FileStore IP to rake attack safelist (@mkasztelnik)
 
 ### Changed
 - `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
@@ -19,25 +50,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - `stage_in` adds commented line when file cannot be found (@mkasztelnik)
 - Update to ruby 2.5.3 (@mkasztelnik)
 - Update to rails 5.2.1 (@mkasztelnik)
-
-### Deprecated
-
-### Removed
-
-### Fixed
-- ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
-- Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
-- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
-- Uploading input files via WebDAV triggers computation run (@Nuanda)
-- `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
-
-### Security
-
-## 0.12.0
-
-### Added
-
-### Changed
+- Replaced ERB-based templating with a Liquid-based system (@Nuanda, @mkasztelnik)
 
 ### Deprecated
 
@@ -45,6 +58,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
+- ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
+- Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
+- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
+- Uploading input files via WebDAV triggers computation run (@Nuanda)
+- `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
 
 ### Security
 
@@ -56,7 +74,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Extended clinical details section with a multi-entry widget (@Nuanda)
 
 ### Changed
-- Exclude process-* tags from the EurValve CI (@jmeizner)
+- Exclude process-\* tags from the EurValve CI (@jmeizner)
 - Segmentation output files have shorter names (@Nuanda)
 
 ### Deprecated
