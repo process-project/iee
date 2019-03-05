@@ -66,11 +66,13 @@ RSpec.feature 'Profile page' do
     expect(page).to have_content('Generate new proxy')
   end
 
-  # Workaround to work with old chrome version
+  # 
 
-  # scenario 'plgrid section is visible only for connected accounts', js: true do
-  #   visit profile_plgrid_path
+  scenario 'plgrid section is visible only for connected accounts', js: true do
+    skip "workaround to work with old chrome version" do
+      visit profile_plgrid_path
 
-  #   expect(page).to have_content('You are not authorized to perform this action.')
-  # end
+      expect(page).to have_content('You are not authorized to perform this action.')
+    end
+  end
 end
