@@ -8,7 +8,6 @@
       - if computation.runnable?
         .alert{class: alert_computation_class(computation)}
           = t("steps.#{computation.pipeline_step}.#{computation.status}")
-          = t('steps.select_options') unless computation.configured?
       - else
         .alert.alert-warning= t("steps.#{computation.pipeline_step}.cannot_start")
 

@@ -6,6 +6,6 @@ class RimrockComputation < Computation
   validates :tag_or_branch, presence: true, unless: :created?
 
   def configured?
-    super && tag_or_branch.present? && script.present?
+    super && tag_or_branch.present?
   end
 end
