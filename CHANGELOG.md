@@ -28,6 +28,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove `guard` since no one from the team is using it right now (@mkasztelnik)
 
 ### Fixed
+- Issue #361 regression when running a rimrock step without tag or branch (@Nuanda)
 
 ### Security
 
