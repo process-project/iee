@@ -14,8 +14,32 @@ RSpec.describe PipelineSteps::Singularity::Runner do
            container_registry: container_registry)
   end
 
-  let(:container_name) { 'lolcow' }
+  let(:container_name) { 'vsoch/hello-world' }
   let(:container_tag) { 'latest' }
+  script = <<~CODE
+    #!/bin/bash -l
+    #SBATCH -N 1
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --time=00:05:00
+    #SBATCH -A process1
+    #SBATCH -p plgrid-testing
+    #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.out
+    #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.err
+
+    ## Running container using singularity
+    module load plgrid/tools/singularity/stable
+
+    cd $SCRATCHDIR
+
+    singularity pull --name container.simg %<registry_url>s%<container_name>s:%<tag>s
+    singularity run container.simg
+  CODE
+
+  SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
+                                     tag: 'latest',
+                                     hpc: 'Prometheus',
+                                     available_options: '',
+                                     script_blueprint: script)
 
   subject do
     described_class.new(computation, container_registry.registry_url, container_name, container_tag,
