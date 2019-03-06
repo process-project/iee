@@ -18,12 +18,12 @@ module Gitlab
     def fetch
       branches = @gitlab_client.branches(@project_name).collect(&:name)
       tags = @gitlab_client.tags(@project_name).collect(&:name)
-      return { branches: branches, tags: tags }
+      { branches: branches, tags: tags }
     rescue Gitlab::Error::MissingCredentials
       Rails.logger.error('Gitlab operation invoked with no valid credentials. '\
       'Make sure the environment variable GITLAB_API_PRIVATE_TOKEN is defined ')
       { branches: [], tags: [] }
-    rescue SocketError, Gitlab::Error::Parsing
+    rescue OpenSSL::SSL::SSLError, SocketError, Gitlab::Error::Parsing
       Rails.logger.error('Unable to establish Gitlab connection. Check your gitlab host config.')
       { branches: [], tags: [] }
     end

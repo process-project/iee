@@ -36,19 +36,27 @@ Vapor is intended for members of the EurValve consortium and their clinical coll
 
 ## DBMS Settings
 
-You need to create user/role for your account in PostgreSQL.
-At the moment Superuser privileges are required due to citext.
-You may also manually activate the citext extension as shown below -
-in which case normal privileges would be sufficient.
+You need to create user/role for your account in PostgreSQL. You can do it
+using the 'createuser' command line tool. Then, make sure to alter this user
+for rights to create databases.
 
-### Manual activation of the citext extention
+At the moment Superuser privileges are required due to citext. See below
+for the instruction.
+
+### Manual activation of the citext extension
 
 1. Create the databases (at least for the development and test environments).
    You may run `bin/setup` (and allow it to fail due to insufficient privileges,
    but only after the DBs are created) or create them manually with an
    unprivileged user as the owner.
 2. As the PostgreSQL superuser, run the `CREATE EXTENSION IF NOT EXISTS citext
-   WITH SCHEMA public;` on all databases (dev, test, ...) to activate the extension.
+   WITH SCHEMA public;` on all databases (dev, test, ...) to activate the
+   extension. So login to the `vapor_development` database as the superuser (it is
+   usually called 'postgres') and issue the CREATE EXTENSION command above. Then
+   switch to `vapor_test` and do the same.
+
+When done, issue the `bin/setup` command again, as a regular system user. This
+time it should have no problem completing.
 
 
 ## Installation
@@ -72,13 +80,33 @@ bin/rails server
 ```
 
 We are also using [sidekiq](https://github.com/mperham/sidekiq) to execute
-delayed jobs and [clockwork](https://github.com/tomykaira/clockworki) for
+delayed jobs and [clockwork](https://github.com/tomykaira/clockwork) for
 triggering delayed jobs in defined interval. To run full application stack
 perform following steps:
 ```
 gem install foreman
 foreman start
 ```
+
+If you want to start development environment with https support first make sure
+that `crt` and `key` are generated for localhost domain:
+
+```
+openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout tmp/localhost.key -out tmp/localhost.crt
+```
+
+Next you can use development foreman configuration:
+
+```
+foreman start -f Procfile.dev
+```
+
+or shortcut:
+```
+./bin/dev-server
+```
+to start https development environment (located at https://localhost:3000).
+
 
 To load sample data for development purposes run:
 ```
@@ -109,17 +137,11 @@ you can set the following ENV variables:
   * `GITLAB_HOST` - Gitlab host (without https, e.g. gitlab.com)
   * `GITLAB_API_PRIVATE_TOKEN` - Gitlab access token used to fetch Rimrock
   * `CLOCK_UPDATE` - Computations update period (in seconds)
-    Computations slurm run template
-  * `PIPELINE_R_BFS` - Overrides default project name in Gitlab for Blood Flow Simutalion
-  * `PIPELINE_R_HMS` - Overrides default project name in Gitlab for Heart Model Simulation
-  * `PIPELINE_R_PE` - Overrides default project name in Gitlab for Parameter Extraction
-  * `PIPELINE_R_CFD` - Overrides default project name in Gitlab for CFD Simulation
-  * `PIPELINE_R_ROM` - Overrides default project name in Gitlab for Reduced Order Model Analysis
-  * `PIPELINE_R_PO` - Overrides default project name in Gitlab for Parameter Optimization
-  * `PIPELINE_R_U` - Overrides default project name in Gitlab for Uncertainty Analysis
-  * `PIPELINE_R_0D` - Overrides default project name in Gitlab for 0D Model Sequence
-  * `PIPELINE_R_PV` - Overrides default project name in Gitlab for Pressure-Volume Visualization
-  * `SEGMENTATION_MODE` - Overrides default segmentation run mode
+  * `ANSYSLI_SERVERS` - location of custom ansys license servers
+  * `ANSYSLMD_LICENSE_FILE`- location of custom ansys license file
+  * `FILESTORE_SECRET` - FileStore secret used during file synchronization
+    callback authentication. If this value is set than active data
+    synchronization is turned off.
 
 ## Testing
 
@@ -166,7 +188,7 @@ To execute Gitlab integration tests:
 bundle exec rspec --tag gitlab
 ```
 
-## Using bullet to increase application perfromance
+## Using bullet to increase application performance
 [Bullet](https://github.com/flyerhzm/bullet) gem is enabled in _development_ and _test_ environments.
 While running application in development or running tests _bullet_ logs warnings to _log/bullet.log_ file.
 
@@ -177,19 +199,5 @@ While running application in development or running tests _bullet_ logs warnings
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new pull request
-6. When feature is ready add "ready for review" label
-
-## Review process
-
-To improve the reviewing process three labels should be used to monitor it:
-
-  * `ready for review` - should be set by the merge request owner when a merge
-request is ready for being reviewed by an assignee,
-  * `in review` - set by the reviewer when the reviewing process starts,
-  * `reviewed` - set by the reviewer when all the remarks are written down and
-the review process is finished.
-
-When the merge request owner is notified that the review is finished (`reviewed`
-flag set) he should fix/respond to all the remarks and decide whether the merge
-request should be merged or reviewed again (by setting the `ready for review`
-label again).
+6. When feature is ready add reviewers and wait for feedback (at least one
+   approve should be given and all review comments should be resolved)

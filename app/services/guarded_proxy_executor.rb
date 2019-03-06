@@ -19,7 +19,7 @@ class GuardedProxyExecutor
     return unless notify_user?
 
     Notifier.proxy_expired(@user).deliver_later
-    @user.update_attributes(proxy_expired_notification_time: Time.zone.now)
+    @user.update(proxy_expired_notification_time: Time.zone.now)
   end
 
   def notify_user?

@@ -8,6 +8,13 @@ describe WebdavDataFileSynchronizer, files: true do
   let(:null_patient) { create(:patient, case_number: '0000') }
   let(:test_patient) { create(:patient, case_number: '1234') }
 
+  before do
+    DataFileType.create!(data_type: 'fluid_virtual_model', pattern: /^fluidFlow\.cas$/)
+    DataFileType.create!(data_type: 'ventricle_virtual_model', pattern: /^structural_vent\.dat$/)
+    DataFileType.create!(data_type: 'blood_flow_result', pattern: /^fluidFlow.*\.dat$/)
+    DataFileType.create!(data_type: 'image', pattern: /(^imaging_.*\.zip$)|(file\.zip)/)
+  end
+
   it 'does nothing for wrong input' do
     expect_any_instance_of(WebdavDataFileSynchronizer).not_to receive(:call_file_storage)
     call(nil, nil)
@@ -54,6 +61,7 @@ describe WebdavDataFileSynchronizer, files: true do
 
     context 'and there are patient inputs' do
       let(:test_advanced_patient) { create(:patient, case_number: '5678') }
+      let(:test_segmentation_patient) { create(:patient, case_number: '1111') }
 
       it 'calls file storage and creates new input-related data_files' do
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(2)
@@ -78,6 +86,12 @@ describe WebdavDataFileSynchronizer, files: true do
         expect(DataFile.all.map(&:name)).to match_array ['fluidFlow-1-00002.dat']
       end
 
+      it 'recognizes the famous file.zip as a correct segmentation input' do
+        expect { call(test_segmentation_patient, correct_user) }.to change { DataFile.count }.by(1)
+        expect(DataFile.all.map(&:data_type)).to match_array ['image']
+        expect(DataFile.all.map(&:name)).to match_array ['file.zip']
+      end
+
       it 'destroys data_files which are no longer stored in File Storage' do
         create(:data_file, data_type: 'blood_flow_result', patient: test_patient)
         create(:data_file, data_type: 'blood_flow_model', patient: test_patient)
@@ -87,11 +101,9 @@ describe WebdavDataFileSynchronizer, files: true do
         create(:data_file, name: 'fluidFlow.cas',
                            data_type: 'fluid_virtual_model',
                            patient: test_patient)
-        expect(test_patient.reload.after_blood_flow_simulation?).to be_truthy
         expect { call(test_patient, correct_user) }.to change { DataFile.count }.by(-2)
         expect(DataFile.all.map(&:data_type)).
           to match_array %w[fluid_virtual_model ventricle_virtual_model]
-        expect(test_patient.reload.virtual_model_ready?).to be_truthy
       end
     end
 

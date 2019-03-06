@@ -11,11 +11,11 @@ FactoryBot.define do
     end
 
     factory :supervisor_group do
-      name 'supervisor'
+      name { 'supervisor' }
     end
 
     factory :admin_group do
-      name 'admin'
+      name { 'admin' }
     end
   end
 end

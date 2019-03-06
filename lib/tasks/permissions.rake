@@ -6,6 +6,7 @@ namespace :permissions do
   task generate: :environment do
     n = (ENV['N'] || 10).to_i
     raise 'N must be grater than 0' if n <= 0
+
     users = User.all
     groups = Group.all
     resources = Resource.all

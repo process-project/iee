@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :pipeline do
     sequence(:name) { |n| "pipeline_#{n}" }
-    flow 'avr_from_scan_rom'
+    flow { 'avr_from_scan_rom' }
     patient
     user
 

@@ -9,18 +9,19 @@ FactoryBot.define do
     pipeline
 
     factory :webdav_computation, class: 'WebdavComputation' do
-      pipeline_step 'segmentation'
+      pipeline_step { 'segmentation' }
       input_path { '/inputs' }
       output_path { '/outputs' }
+      run_mode { 'Workflow 3 (TEE Aortic Valve Segmentation)' }
     end
 
     factory :rimrock_computation, class: 'RimrockComputation' do
-      pipeline_step '0d_models'
-      input_path nil
-      output_path nil
+      pipeline_step { '0d_models' }
+      input_path { nil }
+      output_path { nil }
       script { 'SCRIPT' }
-      tag_or_branch 'master'
-      revision '1234'
+      tag_or_branch { 'master' }
+      revision { '1234' }
     end
   end
 end

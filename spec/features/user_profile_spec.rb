@@ -46,8 +46,8 @@ RSpec.feature 'Profile page' do
   end
 
   scenario 'is used to disconect with plgrid account' do
-    user.update_attributes(plgrid_login: 'plgjdoe',
-                           proxy: outdated_proxy)
+    user.update(plgrid_login: 'plgjdoe',
+                proxy: outdated_proxy)
 
     visit profile_plgrid_path
     click_link 'Disconnect from PLGrid'
@@ -58,8 +58,8 @@ RSpec.feature 'Profile page' do
   end
 
   scenario 'shows PLGrid proxy info' do
-    user.update_attributes(plgrid_login: 'plgjdoe',
-                           proxy: outdated_proxy)
+    user.update(plgrid_login: 'plgjdoe',
+                proxy: outdated_proxy)
 
     visit profile_plgrid_path
 

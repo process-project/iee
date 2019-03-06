@@ -2,7 +2,9 @@
 
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    # rubocop:disable Rails/LexicallyScopedActionFilter
     skip_before_action :verify_authenticity_token, only: [:open_id, :failure]
+    # rubocop:enable Rails/LexicallyScopedActionFilter
 
     def open_id
       new_user = user.new_record?
@@ -31,7 +33,7 @@ module Users
 
     def success(new_user)
       sign_in_and_redirect user, event: :authentication
-      set_flash_message(:notice, :success, kind: 'PLGrid') if is_navigational_format?
+      set_flash_message!(:notice, :success, kind: 'PLGrid') if is_navigational_format?
       Users::AddToDefaultGroups.new(user).call if new_user
       start_computations
     end
@@ -42,12 +44,12 @@ module Users
     end
 
     def email_error
-      set_flash_message(:alert, :email_not_unique)
+      set_flash_message!(:alert, :email_not_unique)
       redirect_to new_user_session_path
     end
 
     def plgrid_error
-      set_flash_message(:alert, :failure, kind: 'PLGrid')
+      set_flash_message!(:alert, :failure, kind: 'PLGrid')
       redirect_to root_url
     end
 

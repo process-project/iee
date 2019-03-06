@@ -6,67 +6,116 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## Unreleased
 
 ### Added
 - Mechanism to detect anomalies in user access pattern and notify them (@jmeizner)
+- All active user computation are aborted when user is deleted (@mkasztelnik)
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
+- Data file synchronization API (@mkasztelnik)
+- Description how to start https development server using puma (@mkasztelnik)
+- Data file type stored in DB (@mkasztelnik)
+- Start runnable computation after new file appears (@mkasztelnik)
 
 ### Changed
+- Move application controller configurations to separate concerns (@mkasztelnik)
 
 ### Deprecated
 
 ### Removed
+- Remove `thin` from `Gemfile` since puma can be used to start https development server (@mkasztelnik)
+- Remove `Patient#procedure_status` not used anymore (@mkasztelnik)
+- Remove `guard` since no one from the team is using it right now (@mkasztelnik)
+
+### Fixed
+- Issue #361 regression when running a rimrock step without tag or branch (@Nuanda)
+
+### Security
+
+## 0.12.1
+
+### Fixed
+- Fix pipeline list: CRC model CFD/ROM pipelines (@mkasztelnik)
+
+## 0.12.0
+
+### Added
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
+- Add FileStore IP to rake attack safelist (@mkasztelnik)
+
+### Changed
+- `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
+- JWT expiration time is now the same as for other envs (@mkasztelnik)
+- JWT expiration time can be configured using ENV variable (@mkasztelnik)
+- `stage_in` adds commented line when file cannot be found (@mkasztelnik)
+- Update to ruby 2.5.3 (@mkasztelnik)
+- Update to rails 5.2.1 (@mkasztelnik)
+- Replaced ERB-based templating with a Liquid-based system (@Nuanda, @mkasztelnik)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
+- ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
+- Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
+- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
+- Uploading input files via WebDAV triggers computation run (@Nuanda)
+- `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
+
+### Security
+
+## 0.11.0
+
+### Added
+- Patients API (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
+- Extended clinical details section with a multi-entry widget (@Nuanda)
+
+### Changed
+- Exclude process-\* tags from the EurValve CI (@jmeizner)
+- Segmentation output files have shorter names (@Nuanda)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Fixed GitLab integration spec (@Nuanda)
+- Missing clinical data for some patients (@Nuanda)
+
+### Security
+
+## 0.10.0
+
+### Added
+- User can select segmentation run mode before start (@mkasztelnik)
+- Possibility to configure custom Ansys licenses for pipeline computation (@mkasztelnik)
+- `pipeline_identifier` `case_number` and `token` computation script helpers (@mkasztelnik)
+
+### Changed
+- Use Gitlab review procedure instead of labels (@mkasztelnik)
+- `stage_in` returns error code when unable to download FileStore file (@mkasztelnik)
+- Set JWT token expiration time to 24h (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Computation script repositories removed from `eurvalve.yml`, step repository
+  configuration used instead (@mkasztelnik)
 
 ### Fixed
 - Fix unused pipeline title missing (@mkasztelnik)
 
 ### Security
 
-## 0.8.0
-
-### Added
-- Reload pipeline step status on patient view (@mkasztelnik)
-- Reload segmentation status after it is started (@mkasztelnik)
-- Proper handling for rimrock computation start failure (@mkasztelnik)
-- Execution time updated each second for active computation (@mkasztelnik)
-- Pipeline specific input (@mkasztelnik)
-- Patient clinical details now includes patient's state (preop/postop) (@Nuanda)
-- New statistics about the current state of EurValve's prospective cohort (@Nuanda)
-
-### Changed
-- Labels for pipelines list view improved (@mkasztelnik)
-- Segmentation temp file is removed from local disc after it is transferred into
-  segmentation Philips service (@mkasztelnik)
-- Use stages instead of types in Gitlab CI yml (@mkasztelnik)
-- Upgrade to rubocop 0.51.0 (@mkasztelnik)
-- Use addressable gem to parse URLs (@mkasztelnik)
-- Upgraded rails into 5.1.4 and other gems into latest supported versions (@mkasztelnik)
-- Change `factory_girl` into `factory_bot` (@mkasztelnik)
-- Use preconfigured docker image for builds (@mkasztelnik)
-- Extracted DataSets::Client from Patients::Details for reusability (@Nuanda)
-- Lock redis version into 3.x (@mkasztelnik)
-- New patient case widget to reflect new developments in pipelining (@Nuanda)
-- Flow model class which stores information about pipeline flow steps (@mkasztelnik)
-- Switch from PhantomJS into Chrome headless (@mkasztelnik)
-- Add escaping in the documentation pdp curl example (@mkasztelnik)
-- Unique while fetching resources in pdp (@mkasztelnik)
-- Change comparison `show` method to `index` (@mkasztelnik)
-- Pipeline steps definition refactored and generalized (@mkasztelnik)
-- Change defaults for data sets (@mkasztelnik)
-- Change the default root path to patients index (@Nuanda)
-- Renamed `not_used_flow` into `unused_steps` (@mkasztelnik)
-
-### Deprecated
-
-### Removed
-
-### Fixed
-- Remove n+1 query when updating computation status (@mkasztelnik)
-- Sidebar's hamburger button is operational properly toggling the left menu (@dharezlak)
-- Fix patient web socket unsubscribe (@mkasztelnik)
-- Patient and pipeline creation silent failures (@jmeizner)
+## 0.9.1
 
 ### Security
+- Upgrade Sprockets gem to avoid CVE-2018-3760 vulnerability (@mkasztelnik)
 
 ## 0.9.0
 

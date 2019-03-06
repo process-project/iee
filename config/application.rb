@@ -12,13 +12,14 @@ Bundler.require(*Rails.groups)
 
 module Vapor
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.,
-    config.load_defaults 5.1
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.2
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
 
+    # the framework and any gems in your application.
     config.middleware.insert_before Warden::Manager, Rack::Attack
 
     # Custom error pages
@@ -27,8 +28,18 @@ module Vapor
     config.constants = config_for(:application)
 
     config.jwt = Jwt::Config.new(config.constants['jwt'])
+    config.sync_callbacks = ENV['FILESTORE_SECRET'].present?
     config.clock = Struct.new(:update).
                    new((config.constants['clock']['update'] || 30).seconds)
+
+    # Overrides eurvalve locales if override dir exists
+    Dir.chdir('./config/locales') do
+      Dir.foreach('./') do |item|
+        if File.directory?(item) && !['.', '..'].include?(item)
+          config.i18n.load_path += Dir[root.join('config', 'locales', item, '*.yml')]
+        end
+      end
+    end
 
     redis_url_string = config.constants['redis_url']
 

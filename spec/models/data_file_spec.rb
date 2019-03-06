@@ -9,28 +9,6 @@ RSpec.describe DataFile do
   it { should validate_presence_of(:data_type) }
   it { should validate_presence_of(:patient) }
 
-  context 'when related to a patient' do
-    it 'touches related patient on modification' do
-      expect(subject.patient).
-        to receive(:update_procedure_status).and_call_original
-      subject.name = 'something_new'
-      subject.save
-    end
-
-    it 'touches related patient on creation' do
-      patient = create(:patient)
-      expect(patient).
-        to receive(:update_procedure_status).and_call_original
-      create(:data_file, patient: patient)
-    end
-
-    it 'touches related patient on destruction' do
-      expect(subject.patient).
-        to receive(:update_procedure_status).and_call_original
-      subject.destroy
-    end
-  end
-
   context '#path' do
     it 'returns relative path for patient input' do
       input = build(:data_file,
@@ -59,9 +37,11 @@ RSpec.describe DataFile do
   describe '#content', files: true do
     let(:correct_user) { build(:user, :file_store_user) }
     let(:test_patient_with_pipeline) do
+      DataFileType.create!(pattern: /^structural_vent\.dat$/, data_type: 'ventricle_virtual_model')
       create(:patient, :with_pipeline).tap { |p| p.execute_data_sync(correct_user) }
     end
     let(:test_patient_with_input) do
+      DataFileType.create!(pattern: /^fluidFlow.*\.dat$/, data_type: 'blood_flow_result')
       create(:patient, case_number: '5678').tap { |p| p.execute_data_sync(correct_user) }
     end
 

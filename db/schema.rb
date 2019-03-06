@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608112510) do
+ActiveRecord::Schema.define(version: 2019_02_20_110652) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "citext"
+  enable_extension "plpgsql"
 
   create_table "access_methods", id: :serial, force: :cascade do |t|
     t.citext "name", null: false
@@ -60,7 +60,15 @@ ActiveRecord::Schema.define(version: 20180608112510) do
     t.datetime "started_at"
     t.string "revision"
     t.string "tag_or_branch"
+    t.string "run_mode"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
+  end
+
+  create_table "data_file_types", force: :cascade do |t|
+    t.string "data_type", null: false
+    t.text "pattern", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "data_files", id: :serial, force: :cascade do |t|
@@ -104,11 +112,9 @@ ActiveRecord::Schema.define(version: 20180608112510) do
 
   create_table "patients", id: :serial, force: :cascade do |t|
     t.string "case_number", null: false
-    t.integer "procedure_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_number"], name: "index_patients_on_case_number"
-    t.index ["procedure_status"], name: "index_patients_on_procedure_status"
   end
 
   create_table "pipelines", id: :serial, force: :cascade do |t|

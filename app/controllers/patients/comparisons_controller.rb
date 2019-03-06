@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Patients
+  # rubocop:disable Metrics/ClassLength
   class ComparisonsController < ApplicationController
     before_action :check_pipelines, only: [:index]
     before_action :find_and_authorize, only: [:index]
@@ -15,9 +16,7 @@ module Patients
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def index
-      # TODO: FIXME the following two lines are not needed when patient sync problem is solved
-      #             can also enable the Metrics/MethodLength cop again, then
-      @patient.execute_data_sync(current_user)
+      data_sync!
       pipelines.reload
 
       @sources = []
@@ -42,6 +41,11 @@ module Patients
     # rubocop:enable Metrics/AbcSize
 
     private
+
+    def data_sync!
+      Vapor::Application.config.sync_callbacks ||
+        @patient.execute_data_sync(current_user)
+    end
 
     def pipelines
       @pipelines ||= patient.pipelines.where(iid: params[:pipeline_ids]).
@@ -127,4 +131,5 @@ module Patients
       }
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

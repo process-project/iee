@@ -5,14 +5,14 @@ FactoryBot.define do
     sequence(:email) { |n| "johndoe#{n}@email.pl" }
     sequence(:first_name) { |n| "John#{n}" }
     sequence(:last_name) { |n| "Doe#{n}" }
-    password '12345678'
+    password { '12345678' }
 
     trait :plgrid do
       plgrid_login { |n| "plgjohndoe#{n}" }
     end
 
     trait :approved do
-      state :approved
+      state { :approved }
     end
 
     trait :supervisor do

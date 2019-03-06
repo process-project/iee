@@ -8,7 +8,7 @@ module Profiles
       if !current_user.valid_password?(current_password)
         wrong_password!
         render 'show'
-      elsif current_user.update_attributes(user_params)
+      elsif current_user.update(user_params)
         redirect_to new_user_session_path,
                     notice: t('profiles.passwords.update.success')
       else

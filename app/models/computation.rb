@@ -14,6 +14,7 @@ class Computation < ApplicationRecord
 
   scope :active, -> { where(status: %w[new queued running]) }
   scope :submitted, -> { where(status: %w[queued running]) }
+  scope :unsubmitted, -> { where(status: %w[created new]) }
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
@@ -40,6 +41,10 @@ class Computation < ApplicationRecord
     type == 'RimrockComputation'
   end
 
+  def webdav?
+    type == 'WebdavComputation'
+  end
+
   def self.flow_ordered
     where(nil).sort_by(&:flow_index)
   end
@@ -52,8 +57,16 @@ class Computation < ApplicationRecord
     runner.call
   end
 
+  def abort!
+    aborter.call
+  end
+
   def runnable?
     step.input_present_for?(pipeline)
+  end
+
+  def configured?
+    true
   end
 
   def success?
@@ -62,6 +75,10 @@ class Computation < ApplicationRecord
 
   def error?
     status == 'error'
+  end
+
+  def created?
+    status == 'created'
   end
 
   def computed_status
@@ -76,14 +93,19 @@ class Computation < ApplicationRecord
     end
   end
 
+  def step
+    return nil if pipeline.nil?
+
+    pipeline.steps.find { |step| step.name == pipeline_step }
+  end
+
   private
 
   def runner
     @runner ||= step.runner_for(self)
   end
 
-  def step
-    return nil if pipeline.nil?
-    pipeline.steps.find { |step| step.name == pipeline_step }
+  def aborter
+    @aborter ||= step.aborter_for(self)
   end
 end

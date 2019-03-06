@@ -163,14 +163,44 @@ RSpec.feature 'Patient browsing' do
     let(:details) do
       {
         status: :ok,
-        payload: [
+        payload: [[
           {
             name: 'state',
             value: 'Pre-op',
             style: 'default',
             type: 'real'
           }
-        ]
+        ]]
+      }
+    end
+
+    let(:incomplete_details) do
+      {
+        status: :warn,
+        payload: [[
+          {
+            name: 'state',
+            value: 'Pre-op',
+            style: 'default',
+            type: 'real'
+          }
+        ]],
+        message: 'Oh well...'
+      }
+    end
+
+    let(:no_details) do
+      {
+        status: :error,
+        payload: [[
+          {
+            name: 'state',
+            value: 'Pre-op',
+            style: 'default',
+            type: 'real'
+          }
+        ]],
+        message: 'Too bad...'
       }
     end
 
@@ -192,6 +222,28 @@ RSpec.feature 'Patient browsing' do
       visit patient_path(patient)
 
       expect(page).to have_content 'Pre-op'
+    end
+
+    scenario 'shows patient\'s incomplete clinical data', js: true do
+      allow_any_instance_of(Patients::Details).
+        to receive(:call).
+        and_return(incomplete_details)
+
+      visit patient_path(patient)
+
+      expect(page).to have_content 'Pre-op'
+      expect(page).to have_content 'Some patient details are not available (Oh well...)'
+    end
+
+    scenario 'shows error message instead of patient\'s clinical data', js: true do
+      allow_any_instance_of(Patients::Details).
+        to receive(:call).
+        and_return(no_details)
+
+      visit patient_path(patient)
+
+      expect(page).not_to have_content 'Pre-op'
+      expect(page).to have_content 'Patient details are not available (Too bad...)'
     end
 
     scenario 'shows pipelines list' do
@@ -381,8 +433,8 @@ RSpec.feature 'Patient browsing' do
       scenario 'show started rimrock computation source link for started step' do
         computation = pipeline.computations.
                       find_by(pipeline_step: '0d_models')
-        computation.update_attributes(revision: 'my-revision',
-                                      started_at: Time.zone.now)
+        computation.update(revision: 'my-revision',
+                           started_at: Time.zone.now)
 
         visit patient_pipeline_computation_path(patient, pipeline, computation)
 
@@ -410,6 +462,31 @@ RSpec.feature 'Patient browsing' do
         expect(page).to have_content 'can\'t be blank'
       end
 
+      scenario 'start webdav computation' do
+        mock_webdav_computation_ready_to_run
+        computation = pipeline.computations.
+                      find_by(pipeline_step: 'segmentation')
+        create(:data_file, data_type: :image, patient: patient)
+
+        expect(Webdav::StartJob).to receive(:perform_later)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        select('Workflow 5 (Mitral Valve TEE Segmentation)')
+        click_button computation_run_text(computation)
+      end
+
+      scenario 'unable to start webdav computation when run_mode is not set' do
+        mock_webdav_computation_ready_to_run
+        computation = pipeline.computations.
+                      find_by(pipeline_step: 'segmentation')
+        create(:data_file, data_type: :image, patient: patient)
+
+        visit patient_pipeline_computation_path(patient, pipeline, computation)
+        click_button computation_run_text(computation)
+
+        expect(page).to have_content 'can\'t be blank'
+      end
+
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
         allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
@@ -418,19 +495,24 @@ RSpec.feature 'Patient browsing' do
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
 
+      def mock_webdav_computation_ready_to_run
+        allow_any_instance_of(WebdavComputation).
+          to receive(:runnable?).and_return(true)
+      end
+
       scenario 'computation alert is displayed when no required input data' do
         visit patient_pipeline_computation_path(patient, pipeline, computation)
         msg_key = "steps.#{computation.pipeline_step}.cannot_start"
 
-        expect(page).to have_content I18n.t(msg_key)
+        expect(page).to have_content I18n.t(msg_key).squish
       end
 
       context 'when computing for patient\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-          computation.update_attributes(started_at: Time.current,
-                                        stdout_path: 'http://download/stdout.pl',
-                                        stderr_path: 'http://download/stderr.pl')
+          computation.update(started_at: Time.current,
+                             stdout_path: 'http://download/stdout.pl',
+                             stderr_path: 'http://download/stderr.pl')
 
           visit patient_pipeline_computation_path(patient, pipeline, computation)
 
@@ -476,8 +558,8 @@ RSpec.feature 'Patient browsing' do
       allow_any_instance_of(Gitlab::GetFile).to receive(:call).and_return('script')
     end
 
-    def computation_run_text(c)
-      I18n.t("steps.#{c.pipeline_step}.start_#{c.mode}")
+    def computation_run_text(computation)
+      I18n.t("steps.#{computation.pipeline_step}.start_#{computation.mode}")
     end
   end
 end

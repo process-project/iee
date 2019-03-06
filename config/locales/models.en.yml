@@ -1,13 +1,5 @@
 en:
   patient:
-    procedure_status:
-      not_started: Not yet started
-      imaging_uploaded: Imaging ready
-      segmentation_ready: Segmentation ready
-      virtual_model_ready: Virtual model ready
-      after_blood_flow_simulation: Blood flow simulation completed
-      after_parameter_estimation: Parameters estimated
-      after_heart_simulation: Heart simulation completed
   data_file:
     name: File name
     data_type: Data type
@@ -30,11 +22,13 @@ en:
       data_series_2: Data series 2
       data_series_3: Data series 3
       data_series_4: Data series 4
+      provenance: Provenance log
 
   computation:
     started_at: Start time
     revision: Revision
     tag_or_branch: Model version
+    run_mode: Run mode
     execution_time: Execution time
     outputs: Outputs
     stdout_path: stdout
@@ -42,10 +36,6 @@ en:
     stdout_path_missing: no stdout
     stderr_path_missing: no stderr
     status: Status
-    for_procedure_status:
-      imaging_uploaded: Segmentation
-      virtual_model_ready: Blood flow CFD simulation
-      after_parameter_estimation: 0D Heart Model computation
 
   user:
     wrong_password: You must provide a valid current password

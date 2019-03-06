@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Patients
+  # NOTE; This controller's actions are also exposed via API - remember to update both sources
   class PipelinesController < ApplicationController
     before_action :load_patient
     before_action :find_and_authorize, only: [:show, :edit, :update, :destroy]
@@ -33,6 +34,7 @@ module Patients
       computation = @pipeline.computations.first
 
       return unless computation
+
       redirect_to(patient_pipeline_computation_path(@patient,
                                                     @pipeline,
                                                     computation))
@@ -41,7 +43,7 @@ module Patients
     def edit; end
 
     def update
-      if @pipeline.update_attributes(permitted_attributes(@pipeline))
+      if @pipeline.update(permitted_attributes(@pipeline))
         redirect_to(patient_pipeline_path(@patient, @pipeline))
       else
         render(:edit)

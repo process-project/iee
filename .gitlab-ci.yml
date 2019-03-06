@@ -1,4 +1,4 @@
-image: cyfronet/ruby-2.4.1-node-chrome
+image: cyfronet/ruby-2.5.3-node-chrome
 
 services:
   - postgres
@@ -29,7 +29,7 @@ test:
   - google-chrome --version
   - ruby -v
   - which ruby
-  - gem install bundler --no-ri --no-rdoc
+  - gem install bundler
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
@@ -49,7 +49,7 @@ integration:
   - google-chrome --version
   - ruby -v
   - which ruby
-  - gem install bundler --no-ri --no-rdoc
+  - gem install bundler
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
@@ -61,7 +61,7 @@ rubocop:
   stage: test
   script:
     - ruby -v
-    - gem install bundler --no-ri --no-rdoc
+    - gem install bundler
     - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
     - bundle exec rubocop
 
@@ -69,7 +69,7 @@ brakeman:
   stage: test
   script:
     - ruby -v
-    - gem install brakeman --no-ri --no-rdoc
+    - gem install brakeman
     - brakeman --exit-on-warn --quiet -f plain
 
 deploy_development:
@@ -96,6 +96,8 @@ deploy_production:
   - git push $PROD_GIT_REPO $CI_COMMIT_TAG
   only:
   - tags
+  except:
+  - /^process-.*$/
   environment:
     name: production
     url: https://valve.cyfronet.pl

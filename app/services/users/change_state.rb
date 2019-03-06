@@ -14,7 +14,7 @@ module Users
     end
 
     def perform!
-      user.update_attributes(state: @new_state)
+      user.update(state: @new_state)
     end
   end
 end

@@ -12,14 +12,14 @@ module Segmentation
       upload_input
       cleanup
 
-      @computation.update_attributes(status: 'running')
+      @computation.update(status: 'running')
     end
 
     private
 
     def download_input
       @local_path = download_service.
-                    call { |f| "#{mode}_#{SecureRandom.uuid}_#{f}" }
+                    call { |f| "#{run_mode}_#{SecureRandom.uuid}_#{f}" }
     end
 
     def download_service
@@ -27,14 +27,14 @@ module Segmentation
                                @computation.input_path)
     end
 
-    def mode
-      Rails.application.config_for('eurvalve')['segmentation']['mode']
+    def run_mode
+      @computation.run_mode
     end
 
     def update_computation
       @computation.
-        update_attributes(working_file_name: File.basename(@local_path),
-                          stdout_path: status_dir_path)
+        update(working_file_name: File.basename(@local_path),
+               stdout_path: status_dir_path)
     end
 
     def upload_input

@@ -34,7 +34,7 @@ module ComputationsHelper
   private
 
   def computation_repo(computation)
-    Rails.application.config_for('eurvalve')['git_repos'][computation.pipeline_step]
+    computation.step.try(:repository)
   end
 
   def gitlab_host

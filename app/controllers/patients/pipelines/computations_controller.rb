@@ -6,9 +6,7 @@ module Patients
       before_action :find_and_authorize
 
       def show
-        # TODO: FIXME the following two lines are not needed when patient
-        #             sync problem is solved
-        @patient.execute_data_sync(current_user)
+        data_sync!
         prepare_to_show_computation
 
         if request.xhr?
@@ -21,7 +19,7 @@ module Patients
       end
 
       def update
-        @computation.assign_attributes(permitted_attributes(@computation)) if @computation.rimrock?
+        @computation.assign_attributes(permitted_attributes(@computation))
         if run_computation
           redirect_to patient_pipeline_computation_path(@patient, @pipeline, @computation),
                       notice: I18n.t("computations.update.started_#{@computation.mode}")
@@ -34,6 +32,11 @@ module Patients
       end
 
       private
+
+      def data_sync!
+        Vapor::Application.config.sync_callbacks ||
+          @patient.execute_data_sync(current_user)
+      end
 
       def run_computation
         if @computation.manual?
@@ -64,15 +67,24 @@ module Patients
           @versions = Gitlab::Versions.
                       new(repo, force_reload: params[:force_reload]).call
         end
+
+        @run_modes = step.try(:run_modes) if updatable?
+      end
+
+      def step
+        @computation.step
       end
 
       def repo
-        @repo ||= Rails.application.
-                  config_for('eurvalve')['git_repos'][@computation.pipeline_step]
+        @repo ||= step.try(:repository)
       end
 
       def load_versions?
-        repo && policy(@computation).update?
+        repo && updatable?
+      end
+
+      def updatable?
+        policy(@computation).update?
       end
     end
   end

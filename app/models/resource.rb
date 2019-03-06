@@ -47,11 +47,13 @@ class Resource < ApplicationRecord
 
   def local_path_exclusion
     return unless Resource.local_paths(path).where(service: service).exists?
+
     errors.add(:path, 'local resource paths cannot overlap')
   end
 
   def path_starts_with_slash
     return unless path.present? && !path.start_with?('/')
+
     errors.add(:path, 'Resource path must start with a slash')
   end
 

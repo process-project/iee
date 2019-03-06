@@ -14,6 +14,7 @@ namespace :groups do
   task benchmark: :environment do
     n = (ENV['N'] || 10).to_i
     raise 'N must be grater than 0' if n <= 0
+
     groups = Group.all
     results = {}
     groups.each { |g| results[g.name] = [] }
