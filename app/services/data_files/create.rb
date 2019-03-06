@@ -26,7 +26,8 @@ module DataFiles
         map { |p| data_file_hash(p) }.
         reject(&:blank?).
         group_by { |path_hash| path_hash[:case_number] }.
-        flat_map { |case_number, hash| patient_data_file_create(case_number, hash) }
+        flat_map { |case_number, hash| patient_data_file_create(case_number, hash) }.
+        compact
     end
 
     private
