@@ -44,7 +44,7 @@ TYPE_PATTERNS = {
 
 TYPE_PATTERNS.each do |pattern, data_type|
   DataFileType.find_or_initialize_by(data_type: data_type) do |dft|
-    dft.pattern = pattern
+    dft.pattern = pattern.source
     dft.save!
   end
 end
