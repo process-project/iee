@@ -14,6 +14,7 @@ class Computation < ApplicationRecord
 
   scope :active, -> { where(status: %w[new queued running]) }
   scope :submitted, -> { where(status: %w[queued running]) }
+  scope :unsubmitted, -> { where(status: %w[created new]) }
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
@@ -56,8 +57,16 @@ class Computation < ApplicationRecord
     runner.call
   end
 
+  def abort!
+    aborter.call
+  end
+
   def runnable?
     step.input_present_for?(pipeline)
+  end
+
+  def configured?
+    true
   end
 
   def success?
@@ -86,6 +95,7 @@ class Computation < ApplicationRecord
 
   def step
     return nil if pipeline.nil?
+
     pipeline.steps.find { |step| step.name == pipeline_step }
   end
 
@@ -93,5 +103,9 @@ class Computation < ApplicationRecord
 
   def runner
     @runner ||= step.runner_for(self)
+  end
+
+  def aborter
+    @aborter ||= step.aborter_for(self)
   end
 end

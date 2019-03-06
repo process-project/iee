@@ -37,7 +37,7 @@ en:
       aborted: Parameter extraction was aborted by the pipeline owner
       start_automatic: Save parameter extraction version
       start_manual: Start parameter extraction
-      restart: Restart parameter extraction
+      restart_manual: Restart parameter extraction
     cfd:
       title: Computational Fluid Dynamics simulation
       cannot_start: |
@@ -56,7 +56,7 @@ en:
       aborted: CFD simulation was aborted by the pipeline owner
       start_automatic: Save CFD simulation version
       start_manual: Start CFD simulation
-      restart_manual: Restart CDF simulation
+      restart_manual: Restart CFD simulation
     rom:
       title: Reduced Order Model analysis
       cannot_start: |
@@ -80,7 +80,7 @@ en:
       title: Parameter Optimization
       cannot_start: |
         Cannot start parameter optimization because the required input files
-        (ValveChar.csv) cannot be found in the patient input directory or pipeline directory.
+        (ValveChar.dat) cannot be found in the patient input directory or pipeline directory.
       created: |
         All required input files are available.
         You can start parameter optimization for this patient.

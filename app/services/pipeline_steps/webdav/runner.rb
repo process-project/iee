@@ -12,7 +12,7 @@ module PipelineSteps
 
       def internal_run
         computation.tap do |c|
-          c.update_attributes(input_path: input_data_file.path)
+          c.update(input_path: input_data_file.path)
           ::Webdav::StartJob.perform_later(c)
         end
       end

@@ -26,7 +26,7 @@ describe 'Patients controller' do
         expect_any_instance_of(PatientsController).
           to receive(:set_patients).and_call_original
         get '/patients'
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
@@ -35,7 +35,7 @@ describe 'Patients controller' do
         expect_any_instance_of(PatientsController).
           to receive(:find_and_authorize).and_call_original
         get "/patients/#{patient.case_number}"
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
@@ -77,25 +77,44 @@ describe 'Patients controller' do
         expect_any_instance_of(Patients::Details).to receive(:call).and_return(
           status: :ok,
           payload: [
-            { name: 'gender', value: 'Male', type: 'real', style: 'default' },
-            { name: 'birth_year', value: 1970, type: 'real', style: 'default' },
-            { name: 'age', value: 47, type: 'real', style: 'default' },
-            { name: 'current_age', value: 50, type: 'computed', style: 'success' },
-            { name: 'height', value: 170, type: 'real', style: 'default' },
-            { name: 'weight', value: 45, type: 'real', style: 'real' },
-            { name: 'elvmin', value: 0.5, type: 'inferred', style: 'warning' }
+            [
+              { name: 'gender', value: 'Male', type: 'real', style: 'default' },
+              { name: 'birth_year', value: 1970, type: 'real', style: 'default' },
+              { name: 'current_age', value: 50, type: 'computed', style: 'success' }
+            ],
+            [
+              { name: 'age', value: 47, type: 'real', style: 'default' },
+              { name: 'date', value: Time.current, type: 'real', style: 'default' },
+              { name: 'state', value: 'Pre-op', type: 'real', style: 'default' },
+              { name: 'height', value: 170, type: 'real', style: 'default' },
+              { name: 'weight', value: 45, type: 'real', style: 'real' }
+            ],
+            [
+              { name: 'state', value: 'Pre-op', type: 'inferred', style: 'default' },
+              { name: 'elvmin', value: 0.45, type: 'inferred', style: 'warning' },
+              { name: 'elvmax', value: 0.56, type: 'inferred', style: 'warning' }
+            ]
           ]
         )
 
         get patient_path(patient), xhr: true
 
-        expect(response.body).to include("#{I18n.t('patients.details.gender')}: Male")
-        expect(response.body).to include("#{I18n.t('patients.details.birth_year')}: 1970")
-        expect(response.body).to include("#{I18n.t('patients.details.age')}: 47")
-        expect(response.body).to include("#{I18n.t('patients.details.current_age')}: 50")
-        expect(response.body).to include("#{I18n.t('patients.details.height')}: 170")
-        expect(response.body).to include("#{I18n.t('patients.details.weight')}: 45")
-        expect(response.body).to include("#{I18n.t('patients.details.elvmin')}: 0.5")
+        expect(response.body).to include(I18n.t('patients.details.gender'))
+        expect(response.body).to include('Male')
+        expect(response.body).to include(I18n.t('patients.details.birth_year'))
+        expect(response.body).to include('1970')
+        expect(response.body).to include(I18n.t('patients.details.age'))
+        expect(response.body).to include('47')
+        expect(response.body).to include(I18n.t('patients.details.current_age'))
+        expect(response.body).to include('50')
+        expect(response.body).to include(I18n.t('patients.details.height'))
+        expect(response.body).to include('170')
+        expect(response.body).to include(I18n.t('patients.details.weight'))
+        expect(response.body).to include('45')
+        expect(response.body).to include(I18n.t('patients.details.elvmin'))
+        expect(response.body).to include('0.45')
+        expect(response.body).to include(I18n.t('patients.details.elvmax'))
+        expect(response.body).to include('0.56')
       end
     end
   end

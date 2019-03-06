@@ -18,9 +18,13 @@ module PipelineSteps
       protected
 
       def pre_internal_run
-        computation.revision = revision
-        computation.script = ScriptGenerator.new(computation, template).call
+        if computation.tag_or_branch.present?
+          computation.revision = revision
+          computation.script = ScriptGenerator.new(computation, template).call
+        end
         computation.job_id = nil
+        computation.stdout_path = nil
+        computation.stderr_path = nil
       end
 
       def internal_run

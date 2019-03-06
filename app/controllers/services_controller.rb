@@ -34,7 +34,7 @@ class ServicesController < ApplicationController
   end
 
   def update
-    if @service.update_attributes(permitted_attributes(@service).merge(access_method_params))
+    if @service.update(permitted_attributes(@service).merge(access_method_params))
       redirect_to(service_path(@service))
     else
       render(:edit)

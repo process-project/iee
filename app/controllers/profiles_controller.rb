@@ -4,7 +4,7 @@ class ProfilesController < ApplicationController
   def show; end
 
   def update
-    if current_user.update_attributes(user_params)
+    if current_user.update(user_params)
       flash[:notice] = t('profiles.update.success')
     else
       flash[:alert] = t('profiles.update.failure')

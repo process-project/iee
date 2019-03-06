@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 class GroupRelationship < ApplicationRecord
-  belongs_to :parent, class_name: 'Group', foreign_key: 'parent_id'
-  belongs_to :child, class_name: 'Group', foreign_key: 'child_id'
+  belongs_to :parent,
+             class_name: 'Group',
+             foreign_key: 'parent_id',
+             inverse_of: 'child_group_relationship'
+
+  belongs_to :child,
+             class_name: 'Group',
+             foreign_key: 'child_id',
+             inverse_of: 'parent_group_relationship'
 
   validate :no_cycles
 

@@ -9,12 +9,11 @@ module Patients
 
     def call
       service_calls.reduce do |result, current|
-        if current['status'] == :error
-          current
-        else
-          result.merge(current) do |_, old_value, new_value|
-            new_value.is_a?(Array) ? (old_value + new_value) : new_value
-          end
+        return current if current[:status] == :error
+        return result if result[:status] == :error
+
+        result.merge(current) do |_, old_value, new_value|
+          new_value.is_a?(Array) ? (old_value + new_value) : new_value
         end
       end
     end
@@ -23,6 +22,7 @@ module Patients
 
     def service_calls
       [
+        fetch_details('patient_basic.json', :basic_values),
         fetch_details('patient_details.json', :real_values),
         fetch_details('patient_details_inferred.json', :inferred_values)
       ]
@@ -32,51 +32,83 @@ module Patients
       client = DataSets::Client.new(@token, payload_file, '{case_number}' => @patient_case)
       method(extraction).call(client.call)
     rescue StandardError => e
-      Rails.logger.error("Could not fetch patient details with unknown error: #{e.message}")
-      { status: :error, message: e.message }
+      level = extraction == :inferred_values ? 'warn' : 'error'
+      Rails.logger.send(level, "Could not fetch patient details with unknown error: #{e.message}")
+      {
+        status: level.to_sym,
+        message: "#{e.message.capitalize} of #{extraction.to_s.humanize(capitalize: false)}"
+      }
+    end
+
+    def basic_values(csv)
+      create_details(
+        [[
+          entry(csv, 1, 'gender_value'),
+          entry(csv, 1, 'year_of_birth_value')
+        ]]
+      )
     end
 
     def real_values(csv)
-      create_details(first_values(csv).concat(last_values(csv)))
+      create_details(
+        (1..(csv.size - 1)).map { |row| real_event(csv, row) }
+      )
     end
 
     def inferred_values(csv)
       create_details(
-        [entry('elvmin', csv_value(csv, 'com_elvmin_value'), 'inferred', 'warning')]
+        (1..(csv.size - 1)).map { |row| inferred_event(csv, row) }
       )
     end
 
-    def first_values(csv)
+    def real_event(csv, row)
       [
-        entry('state', csv_value(csv, 'state_value'), 'real', 'default'),
-        entry('gender', csv_value(csv, 'gender_value'), 'real', 'default'),
-        entry('birth_year', csv_value(csv, 'year_of_birth_value'), 'real', 'default'),
-        entry('age', csv_value(csv, 'age_value'), 'real', 'default'),
-        entry('current_age', Time.current.year - csv_value(csv, 'year_of_birth_value').to_i,
-              'computed', 'success')
+        entry(csv, row, 'ds_date_date'),
+        entry(csv, row, 'ds_type_value'),
+        entry(csv, row, 'age_value'),
+        entry(csv, row, 'ds_height_value', unit: 'cm'),
+        entry(csv, row, 'ds_weight_value', unit: 'kg')
       ]
     end
 
-    def last_values(csv)
+    def inferred_event(csv, row)
       [
-        entry('height', csv_value(csv, 'ds_height_value'), 'real', 'default'),
-        entry('weight', csv_value(csv, 'ds_weight_value'), 'real', 'default')
+        entry(csv, row, 'ds_type_item'),
+        entry(csv, row, 'com_elvmin_value', type: 'inferred', unit: 'mmHg/ml'),
+        entry(csv, row, 'com_elvmax_value', type: 'inferred', unit: 'mmHg/ml'),
+        entry(csv, row, 'com_tbv_value', type: 'inferred', unit: 'ml'),
+        entry(csv, row, 'systemic_resistance_distal_value', type: 'inferred', unit: 'mmHg/ml'),
+        entry(csv, row, 'systemic_resistance_proximal_value', type: 'inferred', unit: 'mmHg/ml')
       ]
+    end
+
+    def parse_date(value)
+      value.present? ? Date.parse(value) : ''
     end
 
     def create_details(entries)
-      {
-        status: :ok,
-        payload: entries
-      }
+      { status: :ok, payload: entries }
     end
 
-    def entry(name, value, type, style)
-      { name: name, value: value, type: type, style: style }
+    def entry(csv, row, name, unit: nil, type: nil)
+      value = csv_value(csv, row, name)
+      style = case type
+              when 'computed' then 'success'
+              when 'inferred' then 'warning'
+              else 'default'
+              end
+      { name: name, value: value, type: type, style: style, unit: unit }
     end
 
-    def csv_value(csv, field)
-      csv[1][csv[0].index(field)]
+    def csv_value(csv, row, field)
+      value = csv[row][csv[0].index(field)]
+      case field
+      when 'com_elvmin_value', 'com_elvmax_value', 'com_tbv_value' then value.to_f.round(3)
+      when 'systemic_resistance_distal_value', 'systemic_resistance_proximal_value'
+        value.to_f.round(3)
+      when 'ds_date_date' then parse_date(value)
+      else value
+      end
     end
   end
 end

@@ -12,9 +12,9 @@ module PatientsHelper
     aborted: { type: 'default' }
   }.freeze
 
-  def computation_progress(computation, i)
+  def computation_progress(computation, progress)
     slice = (1.0 / computation.pipeline.computations.count.to_f) * 100.0
-    offset = i.to_f * slice
+    offset = progress.to_f * slice
     tag.div(class: "progress-bar #{computation.computed_status}",
             role: 'progressbar',
             title: I18n.t("steps.#{computation.pipeline_step}.title"),

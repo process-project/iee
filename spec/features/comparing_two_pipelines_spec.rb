@@ -7,6 +7,9 @@ RSpec.feature 'Comparing two pipelines', files: true do
   let!(:pipelines) { create_list(:pipeline, 2, patient: patient) }
 
   before(:each) do
+    DataFileType.create!(data_type: 'blood_flow_model', pattern: /^fluidFlow.*\.cas$/)
+    DataFileType.create!(data_type: 'estimated_parameters', pattern: /^0DModel_input\.csv$/)
+
     user = create(:user, :approved, :file_store_user)
     login_as(user)
   end

@@ -7,7 +7,7 @@ class ExclusivelyOwnedGroups
 
   def call
     Group.joins(:user_groups).
-      where(user_groups: { user: @user },
+      where(user_groups: { user: @user, owner: true },
             id: group_with_only_one_owner)
   end
 

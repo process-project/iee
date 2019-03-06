@@ -11,8 +11,7 @@ The API exposes the following REST methods:
 
 ## `GET /api/patients`
 
-Returns a list of all registered patients with information about patient
-pipelines.
+Returns a list of all registered patients.
 
 Response body:
 
@@ -22,15 +21,7 @@ Response body:
     {
       "type": "patient",
       "id": "case-number-1",
-      "attributes": { "case_number": "case-number-1" },
-      "relationships": {
-        "pipelines": {
-          "data": [
-            { "id": "1", "type": "pipeline" },
-            { "id": "2", "type": "pipeline" }
-          ]
-        }
-      }
+      "attributes": { "case_number": "case-number-1" }
     }
   ]
 }
@@ -44,7 +35,7 @@ curl -H "Authorization: Bearer ${user_token}" ${root_url}api/patients
 
 ## `GET /api/patients/:case_number`
 
-Returns patient details with information about patient pipelines.
+Returns patient details.
 
 Response body:
 
@@ -53,15 +44,7 @@ Response body:
   "data": {
     "type": "patient",
     "id": "case-number-1",
-    "attributes": { "case_number": "case-number-1" },
-    "relationships": {
-      "pipelines": {
-        "data": [
-          { "id": "1", "type": "pipeline" },
-          { "id": "2", "type": "pipeline" }
-        ]
-      }
-    }
+    "attributes": { "case_number": "case-number-1" }
   }
 }
 ```
@@ -95,12 +78,7 @@ Response body:
   "data": {
     "type": "patient",
     "id": "new-case-number",
-    "attributes": { "case_number": "new-case-number" },
-    "relationships": {
-      "pipelines": {
-        "data": []
-      }
-    }
+    "attributes": { "case_number": "new-case-number" }
   }
 }
 ```
@@ -113,7 +91,7 @@ curl -X POST --data '{ "data": { "type": "patient", "attributes": { "case_number
 
 ## `DELETE /api/patients/:case_number`
 
-Destroy patient and all patient pipelines
+Destroy patient and all pipelines created for this patient
 
 Example using cURL:
 

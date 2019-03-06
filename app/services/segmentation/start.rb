@@ -12,7 +12,7 @@ module Segmentation
       upload_input
       cleanup
 
-      @computation.update_attributes(status: 'running')
+      @computation.update(status: 'running')
     end
 
     private
@@ -33,8 +33,8 @@ module Segmentation
 
     def update_computation
       @computation.
-        update_attributes(working_file_name: File.basename(@local_path),
-                          stdout_path: status_dir_path)
+        update(working_file_name: File.basename(@local_path),
+               stdout_path: status_dir_path)
     end
 
     def upload_input

@@ -16,4 +16,8 @@ class WebdavStep < Step
   def runner_for(computation, options = {})
     PipelineSteps::Webdav::Runner.new(computation, required_files.first, options)
   end
+
+  def aborter_for(computation, options = {})
+    Segmentation::Abort.new(computation, PipelineUpdater, options)
+  end
 end

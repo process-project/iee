@@ -55,7 +55,7 @@ RSpec.describe PipelineSteps::Rimrock::Runner do
     end
 
     it 'set job_id to null while restarting computation' do
-      computation.update_attributes(job_id: 'some_id', revision: 'master')
+      computation.update(job_id: 'some_id', revision: 'master')
 
       subject.call
 

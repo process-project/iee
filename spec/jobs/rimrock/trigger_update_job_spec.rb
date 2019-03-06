@@ -18,4 +18,18 @@ RSpec.describe Rimrock::TriggerUpdateJob do
 
     described_class.perform_now
   end
+
+  # it 'refreshes job states after detecting required input files' do
+  #   c = create(:rimrock_computation,
+  #              status: 'created',
+  #              pipeline_step: 'heart_model_calculation',
+  #              pipeline: build(:pipeline, flow: 'unused_steps'))
+  #
+  #   expect(ComputationUpdater).to receive(:new).with(c).and_call_original
+  #   allow(c.step).to receive(:input_present_for?).with(c.pipeline).and_return(true)
+  #   allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
+  #   expect_any_instance_of(Computation).to receive(:run)
+  #
+  #   described_class.perform_now
+  # end
 end

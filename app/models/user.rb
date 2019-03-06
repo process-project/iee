@@ -23,7 +23,7 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
   has_many :access_policies, dependent: :destroy
   has_many :resource_managers, dependent: :destroy
-  has_many :computations, dependent: :destroy
+  has_many :computations, dependent: :nullify
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
 
@@ -68,6 +68,7 @@ class User < ApplicationRecord
 
   def self.compose_proxy(info)
     return unless info.proxy && info.proxyPrivKey && info.userCert
+
     info.proxy + info.proxyPrivKey + info.userCert
   end
 

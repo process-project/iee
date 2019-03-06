@@ -9,7 +9,30 @@ RSpec.describe Segmentation::Finish do
   let(:segmentation) { instance_double(Webdav::Segmentation) }
   let(:updater) { double.tap { |d| allow(d).to receive_message_chain(:new, :call) } }
 
-  it 'push results into FileStore' do
+  it 'push results into FileStore with workflow mode' do
+    computation = create(:computation,
+                         working_file_name: '0_prefix.zip',
+                         output_path: 'segmentation/output')
+
+    expect(segmentation).to receive(:get_file) do |remote_path, local_file_path|
+      expect(remote_path).to eq 'segmentation/output/0_prefix.zip'
+      FileUtils.cp('spec/support/data_files/segmentation-output.zip',
+                   local_file_path)
+    end
+
+    expect_put(file_store, 'segmentation/output/0_bar.txt', 4)
+    expect_put(file_store, 'segmentation/output/0_name.bar.txt', 4)
+    expect_put(file_store, 'segmentation/output/infix--tail.foo', 4)
+    expect_put(file_store, 'segmentation/output/prefix.txt', 5)
+    expect_put(file_store, 'segmentation/output/secondprefix.txt', 4)
+
+    described_class.new(computation, updater,
+                        segmentation: segmentation, file_store: file_store).call
+
+    expect(computation.status).to eq 'finished'
+  end
+
+  it 'push results into FileStore without workflow mode' do
     computation = create(:computation,
                          working_file_name: 'prefix.zip',
                          output_path: 'segmentation/output')
@@ -20,8 +43,10 @@ RSpec.describe Segmentation::Finish do
                    local_file_path)
     end
 
+    expect_put(file_store, 'segmentation/output/0_bar.txt', 4)
+    expect_put(file_store, 'segmentation/output/0_name.bar.txt', 4)
+    expect_put(file_store, 'segmentation/output/infix--tail.foo', 4)
     expect_put(file_store, 'segmentation/output/prefix.txt', 5)
-    expect_put(file_store, 'segmentation/output/bar.txt', 4)
     expect_put(file_store, 'segmentation/output/secondprefix.txt', 4)
 
     described_class.new(computation, updater,

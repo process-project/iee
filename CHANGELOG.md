@@ -9,11 +9,75 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## Unreleased
 
 ### Added
-- Patients API (@mkasztelnik)
-- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
+- All active user computation are aborted when user is deleted (@mkasztelnik)
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
+- Data file synchronization API (@mkasztelnik)
+- Description how to start https development server using puma (@mkasztelnik)
+- Data file type stored in DB (@mkasztelnik)
+- Start runnable computation after new file appears (@mkasztelnik)
 - First version of automatic patient synchronization machinery (@Nuanda)
 
 ### Changed
+- Move application controller configurations to separate concerns (@mkasztelnik)
+
+### Deprecated
+
+### Removed
+- Remove `thin` from `Gemfile` since puma can be used to start https development server (@mkasztelnik)
+- Remove `Patient#procedure_status` not used anymore (@mkasztelnik)
+- Remove `guard` since no one from the team is using it right now (@mkasztelnik)
+
+### Fixed
+- Issue #361 regression when running a rimrock step without tag or branch (@Nuanda)
+
+### Security
+
+## 0.12.1
+
+### Fixed
+- Fix pipeline list: CRC model CFD/ROM pipelines (@mkasztelnik)
+
+## 0.12.0
+
+### Added
+- Pipelines API (@Nuanda)
+- New provenance data file type (@mkasztelnik)
+- Add FileStore IP to rake attack safelist (@mkasztelnik)
+
+### Changed
+- `pressure_drops` file pattern extension changed to `dat` (@mkasztelnik)
+- JWT expiration time is now the same as for other envs (@mkasztelnik)
+- JWT expiration time can be configured using ENV variable (@mkasztelnik)
+- `stage_in` adds commented line when file cannot be found (@mkasztelnik)
+- Update to ruby 2.5.3 (@mkasztelnik)
+- Update to rails 5.2.1 (@mkasztelnik)
+- Replaced ERB-based templating with a Liquid-based system (@Nuanda, @mkasztelnik)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Seg output shortening rule fix to deal with both success and failure outputs (@Nuanda)
+- ExclusivelyOwnedGroups incorrect positive removed (@Nuanda)
+- Updated truncated_off_mesh regular expression to recognize new segmentation output (@Nuanda)
+- STDOUT and STDERR files reset to nil for a re-run computation (@Nuanda)
+- Uploading input files via WebDAV triggers computation run (@Nuanda)
+- `Pipelines::StartRunnable` starts only configured computations (@mkasztelnik)
+
+### Security
+
+## 0.11.0
+
+### Added
+- Patients API (@mkasztelnik)
+- Accepting `file.zip` as a correct input for segmentation (@Nuanda)
+- Extended clinical details section with a multi-entry widget (@Nuanda)
+
+### Changed
+- Exclude process-\* tags from the EurValve CI (@jmeizner)
+- Segmentation output files have shorter names (@Nuanda)
 
 ### Deprecated
 
@@ -21,6 +85,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Fixed GitLab integration spec (@Nuanda)
+- Missing clinical data for some patients (@Nuanda)
 
 ### Security
 

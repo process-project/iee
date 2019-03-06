@@ -23,6 +23,7 @@ en:
         pdp: PDP
         policies: Resource policies
         patients: Patients API
+        pipelines: Pipelines API
         data_sets: Data sets
       data_sets:
         title: Data sets

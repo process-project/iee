@@ -10,11 +10,13 @@ class Pipeline < ApplicationRecord
   has_many :inputs,
            class_name: 'DataFile',
            foreign_key: 'input_of_id',
+           inverse_of: 'input_of',
            dependent: :destroy
 
   has_many :outputs,
            class_name: 'DataFile',
            foreign_key: 'output_of_id',
+           inverse_of: 'output_of',
            dependent: :destroy
 
   has_many :computations,

@@ -31,6 +31,23 @@ describe Pipelines::StartRunnable do
         described_class.new(pipeline).call
       end
 
+      it 'does not start when tag or branch is not chosen' do
+        create(:rimrock_computation,
+               status: 'created', pipeline_step: '0d_models',
+               tag_or_branch: nil, pipeline: pipeline)
+        create(:webdav_computation,
+               status: 'created', pipeline_step: 'segmentation',
+               run_mode: nil, pipeline: pipeline)
+        _segmentation_input = create(:data_file,
+                                     patient: pipeline.patient,
+                                     data_type: :image)
+
+        expect(PipelineSteps::Rimrock::Runner).to_not receive(:new)
+        expect(PipelineSteps::Webdav::Runner).to_not receive(:new)
+
+        described_class.new(pipeline).call
+      end
+
       it 'does not start already started pipeline step' do
         create(:rimrock_computation,
                status: 'running', pipeline_step: '0d_models',
