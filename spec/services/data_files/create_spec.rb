@@ -59,9 +59,6 @@ describe DataFiles::Create do
     end.to change { DataFile.count }.by(1)
   end
 
-  it 'returns all patient pipelines as affected when new input' do
-  end
-
   it 'creates pipeline output file' do
     patient = create(:patient)
     pipeline = create(:pipeline, patient: patient)
