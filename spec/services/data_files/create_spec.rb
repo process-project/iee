@@ -24,10 +24,11 @@ describe DataFiles::Create do
 
   it 'does not create input data file when type is not found' do
     patient = create(:patient)
+    unknown_file_path = File.join('/', patient.working_dir, 'inputs', 'file.unknown')
 
     expect do
-      described_class.
-        new([File.join('/', patient.working_dir, 'inputs', 'file.unknown')]).call
+      result = described_class.new([unknown_file_path]).call
+      expect(result).to eq([])
     end.to_not(change { DataFile.count })
   end
 
