@@ -60,8 +60,8 @@ module HelpHelper
   end
 
   def required_file_patterns
-    SynchronizerUtilities::TYPE_PATTERNS.map do |pattern, data_type|
-      "#{pattern.inspect} = #{data_type}"
+    DataFileType.pluck(:pattern, :data_type).map do |pattern, data_type|
+      "#{Regexp.new(pattern).inspect} = #{data_type}"
     end.join("\n")
   end
 

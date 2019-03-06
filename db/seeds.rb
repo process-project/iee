@@ -43,8 +43,7 @@ TYPE_PATTERNS = {
 }.freeze
 
 TYPE_PATTERNS.each do |pattern, data_type|
-  DataFileType.find_or_initialize_by(data_type: data_type) do |dft|
-    dft.pattern = pattern
-    dft.save!
-  end
+  dft = DataFileType.where(data_type: data_type).first_or_initialize
+  dft.pattern = pattern.source
+  dft.save!
 end
