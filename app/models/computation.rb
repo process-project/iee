@@ -65,6 +65,10 @@ class Computation < ApplicationRecord
     step.input_present_for?(pipeline)
   end
 
+  def configured?
+    true
+  end
+
   def success?
     status == 'finished'
   end
