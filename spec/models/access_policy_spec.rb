@@ -14,40 +14,49 @@ RSpec.describe AccessPolicy do
     let(:resource) { create(:resource, service: service) }
 
     it 'validates access_method presence' do
+      error_msg =
+        I18n.t('activerecord.errors.models.access_policy.attributes.access_method.required')
       access_policy = build(:access_policy, access_method: nil)
 
       access_policy.validate
 
       expect(access_policy).to_not be_valid
-      expect(access_policy.errors[:access_method_id]).to include(I18n.t('missing_access_method'))
+      expect(access_policy.errors[:access_method]).to include(error_msg)
     end
 
     it 'allows global (no-service) access methods' do
-      access_policy = build(:user_access_policy)
+      user = create(:user)
+      access_policy = build(:access_policy, user: user)
       expect(access_policy).to be_valid
     end
 
     it 'allows access methods defined for the related service' do
-      access_policy = build(:user_access_policy, resource: resource, access_method: access_method)
+      user = create(:user)
+      access_policy = build(:user_access_policy,
+                            user: user,
+                            resource: resource, access_method: access_method)
+
       expect(access_policy).to be_valid
     end
 
     it 'restricts service-scoped access methods' do
-      access_policy = build(:user_access_policy, access_method: access_method)
+      user = create(:user)
+      access_policy = build(:access_policy, user: user, access_method: access_method)
+
       expect(access_policy).not_to be_valid
-      expect(access_policy.errors[:access_method_id]).
+      expect(access_policy.errors[:access_method]).
         to include I18n.t('different_service_access_method')
     end
   end
 
   it 'validates resource presence' do
+    error_msg = I18n.t('activerecord.errors.models.access_policy.attributes.resource.required')
     access_policy = build(:access_policy, resource: nil)
 
     access_policy.validate
 
     expect(access_policy).to_not be_valid
-    expect(access_policy.errors[:resource_id]).
-      to include(I18n.t('missing_resource'))
+    expect(access_policy.errors[:resource]).to include(error_msg)
   end
 
   it 'group is required when no user' do

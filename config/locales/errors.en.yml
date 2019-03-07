@@ -62,6 +62,14 @@ en:
               invalid: "contains illegal characters, correct characters are letters, digits and ~_-."
         pipeline:
           create_dav403: Unable to create pipeline file structure in File Store
+        access_policy:
+          attributes:
+            access_method:
+              required: Method has to be chosen
+            resource:
+              required: Resource is missing
+            user:
+              uniqueness: Similar access policy already exists
   api:
     destination_resource_exists: Destination resource already exists
     source_policy_missing: Source policy does not exist for copying/moving

@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Move application controller configurations to separate concerns (@mkasztelnik)
+- Update `factory_bot_rails` to 5.0.2 (@mkasztelnik)
 
 ### Deprecated
 

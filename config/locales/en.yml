@@ -62,13 +62,10 @@ en:
   resource_not_found: Resource could not be found
 
   either_user_or_group: Either user or group has to be chosen
-  missing_access_method: Method has to be chosen
   different_service_access_method: |
     Access method needs to be either global or defined for this Service.
-  missing_resource: Resource is missing
   access_policies_list: List of access policies
   welcome: Welcome,
   help:
     pdp: Policy Decision Point
-  similar_access_policy_exists: Similar access policy already exists
   warning: Warning!

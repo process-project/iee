@@ -23,6 +23,7 @@ RSpec.describe 'Access Policies' do
   end
 
   it 'should return an error message when no access method was chosen' do
+    error_msg = I18n.t('activerecord.errors.models.access_policy.attributes.access_method.required')
     post resource_access_policies_path(global_resource),
          params: {
            access_policy: {
@@ -31,7 +32,7 @@ RSpec.describe 'Access Policies' do
            }
          }
 
-    expect(response.body).to include(I18n.t('missing_access_method'))
+    expect(response.body).to include(error_msg)
   end
 
   it 'should add a new global access policy to the database' do

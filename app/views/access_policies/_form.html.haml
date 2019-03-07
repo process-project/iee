@@ -3,18 +3,17 @@
     %h5= t('.add')
     = f.error_notification
   .form-group
-    = f.input_field :resource_id, as: :hidden, value: model.resource.id
-  = f.input :user_id,
+  = f.association :user,
     label: t('.pick_user'),
     collection: model.users,
     label_method: ->(user) { raw_user_name(user) },
     hint: t('.user_or_group'),
     include_blank: true
-  = f.input :group_id,
+  = f.association :group,
     label: t('.pick_group'),
     collection: model.groups,
     include_blank: true
-  = f.input :access_method_id,
+  = f.association :access_method,
     label: t('.pick_method'),
     collection: model.access_methods,
     as: :radio_buttons
