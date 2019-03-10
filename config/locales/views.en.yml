@@ -256,6 +256,7 @@ en:
     layout:
       copy_jwt: Copy Json Web Token
       title: Profile
+      devices: Devices
     show:
       update: Update profile
       email_hint: Email is used to fetch your avatar. You can change it using <a href="gravatar.com"> gravatar.com</a> service
@@ -281,6 +282,12 @@ en:
         proxy_not_valid: Your proxy is not valid anymore, please generate new one to start/monitor jobs on PLGrid infrastructure.
       destroy:
         failure: Unable to disconect from PLGrid
+    devices:
+      show:
+        date: Date and time
+        name: Device name
+        ip: Last IP
+        nothing: No devices found
 
   proxy:
     warning:
@@ -318,6 +325,13 @@ en:
         approve: Approve this user
         block: Block this user
         destroy: Destroy user account
+      devices:
+        index:
+          title: 'Devices for user %{user_name}'
+          date: Date and time
+          name: Device name
+          ips: Last 5 IPs
+          nothing: No devices found
   file_store:
     index:
         title: Files

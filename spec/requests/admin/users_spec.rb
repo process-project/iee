@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Users management' do
   describe 'not logged in' do
     it 'index redirects to signin url' do
-      user = create(:user)
+      create(:user)
 
       get admin_users_path
 

@@ -71,4 +71,20 @@ RSpec.feature 'Profile page' do
 
     expect(page).to have_content('You are not authorized to perform this action.')
   end
+
+  scenario 'shows No Devices found' do
+    visit profile_device_path
+
+    expect(page).to have_content('No devices found')
+  end
+
+  scenario 'shows Devices info' do
+    d = create(:device, user: user)
+    create(:ip, device: d)
+    visit profile_device_path
+
+    expect(page).to have_content('Date and time')
+    expect(page).to have_content('Device name')
+    expect(page).to have_content('Last IP')
+  end
 end

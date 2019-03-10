@@ -1,0 +1,12 @@
+= render('profiles/layout') do
+  - if @devices.exists?
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t 'profiles.devices.show.date'
+          %th= t 'profiles.devices.show.name'
+          %th= t 'profiles.devices.show.ip'
+      #tbody
+        = render @devices
+  - else
+    %p= t 'profiles.devices.show.nothing'

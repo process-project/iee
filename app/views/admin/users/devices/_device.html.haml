@@ -1,0 +1,9 @@
+%tr
+  %td
+    = device.last_login
+  %td
+    = device
+  %td
+    %ul.ip-list
+      - device.top_n(5).each do |ip|
+        = content_tag :li, ip

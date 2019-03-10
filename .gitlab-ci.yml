@@ -20,11 +20,11 @@ test:
   stage: test
   script:
   - apt-get update -qy
-  - apt-get install -qy software-properties-common python-software-properties
+  - apt-get install -qy software-properties-common dirmngr
   - add-apt-repository -y ppa:maxmind/ppa
-  - sed -i 's/jessie/trusty/g' /etc/apt/sources.list.d/maxmind-ppa-jessie.list
+  - sed -i 's/disco/xenial/g' /etc/apt/sources.list.d/maxmind-ubuntu-ppa-disco.list
   - apt-get update -qy
-  - apt-get install -qy geoipupdate
+  - apt-get install -qy --allow-unauthenticated geoipupdate
   - geoipupdate
   - google-chrome --version
   - ruby -v
@@ -40,11 +40,11 @@ integration:
   stage: test
   script:
   - apt-get update -qy
-  - apt-get install -qy software-properties-common python-software-properties
+  - apt-get install -qy software-properties-common dirmngr
   - add-apt-repository -y ppa:maxmind/ppa
-  - sed -i 's/jessie/trusty/g' /etc/apt/sources.list.d/maxmind-ppa-jessie.list
+  - sed -i 's/disco/xenial/g' /etc/apt/sources.list.d/maxmind-ubuntu-ppa-disco.list
   - apt-get update -qy
-  - apt-get install -qy geoipupdate
+  - apt-get install -qy --allow-unauthenticated geoipupdate
   - geoipupdate
   - google-chrome --version
   - ruby -v

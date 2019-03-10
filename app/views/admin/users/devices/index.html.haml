@@ -1,4 +1,17 @@
 %h1
-  = t '.title'
+  = t '.title', user_name: @user.email
 .x_panel
   .x_content
+    .col-lg-12
+      .tab-content
+        - if @devices.exists?
+          %table.table.table-striped
+            %thead
+              %tr
+                %th= t '.date'
+                %th= t '.name'
+                %th= t '.ips'
+            #tbody
+              = render @devices
+        - else
+          %p= t '.nothing'

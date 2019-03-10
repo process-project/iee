@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     scope module: :profiles do
       resource :account, only: [:show, :update]
       resource :password, only: [:show, :update]
-      resource :audit, only: :show
+      resource :device, only: :show
       resource :plgrid, only: [:show, :destroy]
     end
   end

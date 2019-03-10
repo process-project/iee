@@ -46,17 +46,5 @@ RSpec.describe DevicePolicy do
 
       expect(result).to contain_exactly(ua1, ua2)
     end
-
-    # TODO: for now
-    xit 'shows only owned devices for normal user' do
-      user = create(:user)
-      owned = create(:device, user: user)
-      create(:device)
-
-      result = DevicePolicy::Scope.new(user, Device).resolve
-
-      expect(result).to contain_exactly(owned)
-    end
   end
-
 end

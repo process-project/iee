@@ -36,12 +36,16 @@ describe Audits::Perform do
     a1 = create(:device,
                 :chrome,
                 user: user)
-    create(:ip, device: a1)
+    ip1 = create(:ip,
+                 device: a1)
 
-    create(:device,
-           :firefox,
-           user: user,
-           accept_language: a1.accept_language)
+    a2 = create(:device,
+                :firefox,
+                user: user,
+                accept_language: a1.accept_language)
+    create(:ip,
+           device: a2,
+           address: ip1.address)
 
     expect { subject.call }.
       to change { ActionMailer::Base.deliveries.count }.by(1)
