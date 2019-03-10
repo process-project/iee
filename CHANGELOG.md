@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## Unreleased
 
 ### Added
+- Auditor dashboard (@jmeizner)
 - Mechanism to detect anomalies in user access pattern and notify them (@jmeizner)
 - All active user computation are aborted when user is deleted (@mkasztelnik)
 - Pipelines API (@Nuanda)
