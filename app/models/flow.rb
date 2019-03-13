@@ -36,7 +36,7 @@ class Flow
                         '0.1'),
     SingularityStep.new('lofar_step',
                         'shub://',
-                        'vsoch/hello-world',
+                        'lofar/lofar_container',
                         'latest'),
     SingularityStep.new('lufthansa_step',
                         'shub://',

@@ -60,3 +60,23 @@ SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                    hpc: 'Prometheus',
                                    available_options: '',
                                    script_blueprint: script)
+
+script = <<~CODE
+  #!/bin/bash
+  #SBATCH --partition plgrid-short
+  #SBATCH --nodes 1
+  #SBATCH --ntasks 24
+  #SBATCH --time 0:59:59
+  #SBATCH --job-name UC2_test
+  #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
+
+  module load plgrid/tools/singularity/stable
+
+  singularity exec -B /net/archive/groups/plggprocess/UC2/container_testing/ /net/archive/groups/plggprocess/UC2/containers/centos_lofar.simg genericpipeline.py -d -c /net/archive/groups/plggprocess/UC2/container_testing/pipeline.cfg /net/archive/groups/plggprocess/UC2/container_testing/Pre-Facet-Calibrator.parset
+CODE
+
+SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
+                                   tag: 'latest',
+                                   hpc: 'Prometheus',
+                                   available_options: '',
+                                   script_blueprint: script)
