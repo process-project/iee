@@ -1,13 +1,21 @@
 # frozen_string_literal: true
 
 class SingularityStep < Step
-  attr_reader :repository, :file
+  attr_reader :repository, :file, :parameters
 
-  def initialize(name, registry_url, container_name, container_tag, required_files = [])
+  def initialize(
+      name,
+      registry_url,
+      container_name,
+      container_tag,
+      required_files = [],
+      parameters = []
+  )
     super(name, required_files)
     @registry_url = registry_url
     @container_name = container_name
     @container_tag = container_tag
+    @parameters = parameters
   end
 
   def builder_for(pipeline, _params)
@@ -16,7 +24,8 @@ class SingularityStep < Step
       name,
       @registry_url,
       @container_name,
-      @container_tag
+      @container_tag,
+      @parameters
     )
   end
 
@@ -26,6 +35,7 @@ class SingularityStep < Step
       @registry_url,
       @container_name,
       @container_tag,
+      @parameters,
       options
     )
   end

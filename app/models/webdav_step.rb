@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class WebdavStep < Step
-  attr_reader :run_modes
+  attr_reader :run_modes, :parameters
 
-  def initialize(name, run_modes, required_files = [])
+  def initialize(name, run_modes, required_files = [], parameters = [])
     super(name, required_files)
 
     @run_modes = run_modes
+    @parameters = parameters
   end
 
   def builder_for(pipeline, params)
