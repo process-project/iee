@@ -15,6 +15,7 @@ module Api
           copying_elapsed_time)
 
       # TODO: Update record in database
+      render plain: 'OK'
     end
 
     private
