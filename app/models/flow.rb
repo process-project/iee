@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable ClassLength
+
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
@@ -34,7 +36,7 @@ class Flow
     SingularityStep.new('medical_step',
                         'shub://',
                         'maragraziani/ucdemo',
-                        '0.1', []. []),
+                        '0.1', [], []),
     SingularityStep.new('lofar_step',
                         'shub://',
                         'lofar/lofar_container',
@@ -188,3 +190,5 @@ class Flow
     FLOWS_MAP[flow_type.to_sym] || []
   end
 end
+
+# rubocop:enable ClassLength
