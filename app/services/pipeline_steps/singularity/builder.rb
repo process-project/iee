@@ -3,12 +3,13 @@
 module PipelineSteps
   module Singularity
     class Builder
-      def initialize(pipeline, name, registry_url, container_name, container_tag)
+      def initialize(pipeline, name, registry_url, container_name, container_tag, parameters = [])
         @pipeline = pipeline
         @name = name
         @registry_url = registry_url
         @container_name = container_name
         @container_tag = container_tag
+        @parameters = parameters
       end
 
       def call
