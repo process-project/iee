@@ -31,8 +31,7 @@ RSpec.describe 'Staging API' do
 
       post api_staging_path, headers: auth_header, as: :json, params: json_body
 
-      expect(response.body).to include('OK')
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(204)
     end
   end
 

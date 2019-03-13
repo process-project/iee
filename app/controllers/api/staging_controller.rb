@@ -15,16 +15,16 @@ module Api
           copying_elapsed_time)
 
       # TODO: Update record in database
-      render plain: 'OK'
+      head :no_content
     end
 
     private
 
-    # to delete, this method has been introduced due to rubocop madness
+    # Logger method for debugging, to be deleted
     def log(id, status, copying_start_timestamp,
             copying_elapsed_time)
-      @my_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
-      @my_logger.debug("Webhook info: id=#{id}, status=#{status}, " \
+      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+      @staging_logger.debug("Webhook info: id=#{id}, status=#{status}, " \
                        "copying_start_timestamp=#{copying_start_timestamp}, " \
                        "copying_elapsed_time=#{copying_elapsed_time}")
     end
