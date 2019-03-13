@@ -1,38 +1,48 @@
+# frozen_string_literal: true
+
 module Api
-	class StagingController < Api::ApplicationController
-		skip_before_action :authenticate_user!
+  class StagingController < Api::ApplicationController
+    skip_before_action :authenticate_user!
 
-		before_action :authenticate_staging!
+    before_action :authenticate_staging!
 
-		def notify
-			@@my_logger ||= Logger.new("#{Rails.root}/log/debug.log")
+    def notify
+      id = params[:status][:id]
+      status = params[:status][:status]
+      copying_start_timestamp = params[:details][:timestamp]
+      copying_elapsed_time = params[:details][:time]
+      log(id, status, copying_start_timestamp,
+          copying_elapsed_time)
 
-			json_content = params[:status]
-			@@my_logger.debug("Webhook output: ID=#{json_content["id"]}, status=#{json_content["status"]}")
-		end
+      # TODO: Update record in database
+    end
 
-		private
+    private
 
-		def authenticate_staging!
-			invalid! unless valid_token?
-		end
+    # to delete, this method has been introduced due to rubocop madness
+    def log(id, status, copying_start_timestamp,
+            copying_elapsed_time)
+      @my_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+      @my_logger.debug("Webhook info: id=#{id}, status=#{status}, " \
+                       "copying_start_timestamp=#{copying_start_timestamp}, " \
+                       "copying_elapsed_time=#{copying_elapsed_time}")
+    end
 
-		def valid_token?
-			@@my_logger ||= Logger.new("#{Rails.root}/log/debug.log")
-			@@my_logger.debug(" From ENV: #{ENV["STAGING_SECRET"]}")
-			ENV["STAGING_SECRET"] && ENV["STAGING_SECRET"] == token
-		end
+    def authenticate_staging!
+      invalid! unless valid_token?
+    end
 
-		def token
-			@@my_logger ||= Logger.new("#{Rails.root}/log/debug.log")
-			@@my_logger.debug("From request's header: #{request.headers["x-staging-token"]}")
-			request.headers["x-staging-token"]
-		end
+    def valid_token?
+      ENV['STAGING_SECRET'] && ENV['STAGING_SECRET'] == token
+    end
 
-		def invalid!
-      		head :unauthorized,
-      			'WWW-Authenticate' => 'x-staging-token header is invalid'
-    	end
+    def token
+      request.headers['x-staging-token']
+    end
 
-	end
+    def invalid!
+      head :unauthorized,
+           'WWW-Authenticate' => 'x-staging-token header is invalid'
+    end
+  end
 end
