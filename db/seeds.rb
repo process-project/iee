@@ -80,5 +80,3 @@ SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
                                    hpc: 'Prometheus',
                                    available_options: '',
                                    script_blueprint: script)
-
-
