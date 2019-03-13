@@ -13,23 +13,15 @@ class SingularityScriptGenerator
   end
 
   def call
-    <<~CODE
-      #!/bin/bash -l
-      #SBATCH -N 1
-      #SBATCH --ntasks-per-node=1
-      #SBATCH --time=00:05:00
-      #SBATCH -A process1
-      #SBATCH -p plgrid-testing
-      #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%j.out
-      #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%j.err
+    # to be replaced later when those params are coming from gui
+    mock_params = { tag: @container_tag, hpc: 'Prometheus' }
 
-      ## Running container using singularity
-      module load plgrid/tools/singularity/stable
+    record = SingularityScriptBlueprint.find_by!(container_name: @container_name,
+                                                 tag: mock_params[:tag],
+                                                 hpc: mock_params[:hpc])
 
-      cd $SCRATCHDIR
+    script_options = mock_params.merge(registry_url: @registry_url, container_name: @container_name)
 
-      singularity pull --name container.simg #{@registry_url}#{@container_name}:#{@container_tag}
-      singularity run container.simg
-    CODE
+    record.script_blueprint % script_options
   end
 end

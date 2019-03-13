@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :container_registry do
-    registry_url 'MyString'
+    registry_url 'shub://'
   end
 end

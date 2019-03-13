@@ -1,5 +1,3 @@
-# rubocop:disable ClassLength
-
 # frozen_string_literal: true
 
 class Flow
@@ -35,11 +33,11 @@ class Flow
                         'latest', [], []),
     SingularityStep.new('medical_step',
                         'shub://',
-                        'vsoch/hello-world',
-                        'latest', [], []),
+                        'maragraziani/ucdemo',
+                        '0.1', []. []),
     SingularityStep.new('lofar_step',
                         'shub://',
-                        'vsoch/hello-world',
+                        'lofar/lofar_container',
                         'latest',
                         [],
                         [
@@ -190,5 +188,3 @@ class Flow
     FLOWS_MAP[flow_type.to_sym] || []
   end
 end
-
-# rubocop:enable ClassLength
