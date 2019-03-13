@@ -11,6 +11,10 @@ describe Pipelines::StepsConfig do
 
     config = described_class.new('placeholder_pipeline').call
 
-    expect(config['placeholder_step']).to eq(tags_and_branches: versions, run_modes: nil)
+    expect(config['placeholder_step']).to eq(
+      tags_and_branches: versions,
+      run_modes: nil,
+      parameters: []
+    )
   end
 end

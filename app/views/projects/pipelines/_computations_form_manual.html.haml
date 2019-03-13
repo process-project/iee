@@ -3,3 +3,5 @@
 %ul
   - steps_config.each do |step, config|
     %li= t("steps.#{step}.title")
+    - if config[:parameters]
+      = render 'step_parameters_edit',parameters: config[:parameters], step: step

@@ -80,6 +80,7 @@ en:
           medical_pipeline: Medical pipeline
           lofar_pipeline: LOFAR pipeline
           lufthansa_pipeline: Lufthansa pipeline
+          agrocopernicus_pipeline: Agrocopernicus pipeline
     # Examples
     # labels:
     #   defaults:

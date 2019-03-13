@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class RimrockStep < Step
-  attr_reader :repository, :file
+  attr_reader :repository, :file, :parameters
 
-  def initialize(name, repository, file, required_files = [])
+  def initialize(name, repository, file, required_files = [], parameters = [])
     super(name, required_files)
 
     @repository = repository
     @file = file
+    @parameters = parameters
   end
 
   def builder_for(pipeline, params)

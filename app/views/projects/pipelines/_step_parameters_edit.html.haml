@@ -1,0 +1,26 @@
+- parameters.each do |parameter|
+  %label.col-sm-3.control-label.select{ for: "pipeline_#{step}_parameter_#{parameter.label}" }= parameter.name
+  .col-sm-9
+    - case parameter.datatype
+      - when 'integer'
+        = text_field_tag "pipeline_#{step}_parameter_#{parameter.label}",
+          parameter.default,
+          class: "form-control",
+          size: 10
+      - when 'string'
+        = text_field_tag "pipeline_#{step}_parameter_#{parameter.label}",
+          parameter.default,
+          class: "form-control",
+          size: 40
+      - when 'multi'
+        = select_tag "pipeline_#{step}_parameter_#{parameter.label}",
+          options_for_select(parameter.values),
+          default: parameter.default,
+          class: "form-control",
+          name: "pipeline[#{step}][#{parameter.label}]"
+      - when 'boolean'
+        = select_tag "pipeline_#{step}_parameter_#{parameter.label}",
+          options_for_select(['true', 'false']),
+          default: parameter.default,
+          class: "form-control",
+          name: "pipeline[#{step}][#{parameter.label}]"
