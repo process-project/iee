@@ -6,4 +6,4 @@
   %td
     %ul.ip-list
       - device.top_n(5).each do |ip|
-        = content_tag :li, ip
+        %li= ip

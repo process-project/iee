@@ -2,7 +2,7 @@
 
 module Profiles
   class DevicesController < ApplicationController
-    def show
+    def index
       @devices = current_user.devices
     end
   end

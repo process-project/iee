@@ -73,7 +73,7 @@ RSpec.feature 'Profile page' do
   end
 
   scenario 'shows No Devices found' do
-    visit profile_device_path
+    visit profile_devices_path
 
     expect(page).to have_content('No devices found')
   end
@@ -81,7 +81,7 @@ RSpec.feature 'Profile page' do
   scenario 'shows Devices info' do
     d = create(:device, user: user)
     create(:ip, device: d)
-    visit profile_device_path
+    visit profile_devices_path
 
     expect(page).to have_content('Date and time')
     expect(page).to have_content('Device name')
