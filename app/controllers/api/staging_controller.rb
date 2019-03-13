@@ -18,11 +18,14 @@ module Api
 		end
 
 		def valid_token?
+			@@my_logger ||= Logger.new("#{Rails.root}/log/debug.log")
+			@@my_logger.debug(" From ENV: #{ENV["STAGING_SECRET"]}")
 			ENV["STAGING_SECRET"] && ENV["STAGING_SECRET"] == token
-
 		end
 
 		def token
+			@@my_logger ||= Logger.new("#{Rails.root}/log/debug.log")
+			@@my_logger.debug("From request's header: #{request.headers["x-staging-token"]}")
 			request.headers["x-staging-token"]
 		end
 
