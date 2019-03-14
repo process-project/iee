@@ -28,7 +28,7 @@ module Audits
     def ip_ok?(u_agent)
       return true if u_agent.ips.count < 2
 
-      ip = u_agent.updated_ip
+      ip = u_agent.last_ip
 
       return true if u_agent.ips.where(address: ip.address).count > 1
 

@@ -8,20 +8,16 @@ class Device < ApplicationRecord
 
   default_scope { order(updated_at: :desc) }
 
-  def updated_ip
+  def last_ip
     ips.first
   end
 
-  def last_ip
-    updated_ip.address
-  end
-
   def last_login
-    updated_ip.created_at
+    last_ip.created_at
   end
 
-  def top_n(n_ips)
-    ips.first(n_ips).pluck(:address)
+  def top_n_ips(n_ips)
+    ips.first(n_ips)
   end
 
   def to_s

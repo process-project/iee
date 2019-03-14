@@ -17,4 +17,8 @@ class Ip < ApplicationRecord
 
     nil
   end
+
+  def to_s
+    address
+  end
 end
