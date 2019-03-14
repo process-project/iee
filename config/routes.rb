@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     resources :policies, only: [:create, :index]
     delete 'policies', to: 'policies#destroy'
     resources :policy_entities, only: :index
+    # LOBCDER API webhook
+    post 'staging' => 'staging#notify'
   end
 
   resources :services do
