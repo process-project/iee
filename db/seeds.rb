@@ -71,14 +71,14 @@ script = <<~CODE
   #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
 
   mkdir /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
-  sed -e "s/\$SLURM_JOB_ID/$SLURM_JOB_ID/" /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.template > /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg
+  sed -e "s/\\$SLURM_JOB_ID/$SLURM_JOB_ID/" /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.template > /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg
 
   module load plgrid/tools/singularity/stable
-  singularity exec -B /net/archive/groups/plggprocess/UC2/container_testing/ /net/archive/groups/plggprocess/UC2/containers/centos_lofar.simg genericpipeline.py -d -c /net/archive/groups/plggprocess/UC2/co$
+  singularity exec -B /net/archive/groups/plggprocess/UC2/container_testing/ /net/archive/groups/plggprocess/UC2/containers/centos_lofar.simg genericpipeline.py -d -c /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg /net/archive/groups/plggprocess/UC2/container_testing/Pre-Facet-Calibrator.parset
 
   tar -cf /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
 
-  <%= stage_out 'test_$SLURM_JOB_ID.tar' %>
+  <%%= stage_out '/net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar' %%>
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
