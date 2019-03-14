@@ -8,8 +8,19 @@ RSpec.describe PipelineSteps::Singularity::Runner do
 
   let(:container_registry) { create(:container_registry) }
 
+  let(:singularity_pipeline) do
+    create(:pipeline, flow: 'singularity_placeholder_pipeline')
+  end
+
   let(:computation) do
+    create(:computation,
+           pipeline_step: 'placeholder_step',
+           container_registry: container_registry)
+  end
+
+  let(:singularity_computation) do
     create(:singularity_computation,
+           pipeline: pipeline,
            pipeline_step: 'singularity_placeholder_step',
            container_registry: container_registry)
   end
@@ -47,7 +58,7 @@ RSpec.describe PipelineSteps::Singularity::Runner do
   end
 
   context 'container step running' do
-    it_behaves_like 'runnable step'
+    # it_behaves_like 'runnable step'
 
     it 'starts a Rimrock job' do
       expect(Rimrock::StartJob).to receive(:perform_later)

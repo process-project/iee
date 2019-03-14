@@ -15,6 +15,7 @@ class SingularityStep < Step
     @registry_url = registry_url
     @container_name = container_name
     @container_tag = container_tag
+    @required_files = required_files
     @parameters = parameters
   end
 
