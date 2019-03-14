@@ -11,7 +11,7 @@ module PipelineSteps
           options = {},
           parameters = []
       )
-        super(computation, options)
+        super(computation, options.to_h)
         @registry_url = registry_url
         @container_name = container_name
         @container_tag = container_tag
