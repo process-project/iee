@@ -17,7 +17,8 @@ module Pipelines
       # Can be extended by other step types
       {
         tags_and_branches: tags_and_branches(step),
-        run_modes: run_modes(step)
+        run_modes: run_modes(step),
+        parameters: parameters(step)
       }
     end
 
@@ -28,6 +29,10 @@ module Pipelines
 
     def run_modes(step)
       step.try(:run_modes)
+    end
+
+    def parameters(step)
+      step.parameters
     end
   end
 end

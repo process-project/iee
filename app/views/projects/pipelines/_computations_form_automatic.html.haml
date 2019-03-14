@@ -17,5 +17,7 @@
           include_blank: t('.blank'),
           class: "form-control",
           name: "pipeline[#{step}][run_mode]"
-    - unless config[:tags_and_branches] || config[:run_modes]
+    - if config[:parameters]
+      = render 'step_parameters_edit',parameters: config[:parameters], step: step
+    - unless config[:tags_and_branches] || config[:run_modes] || config[:parameters]
       .alert.alert-success.col-sm-6.col-sm-offset-3= t('.empty_configuration')
