@@ -8,8 +8,8 @@ module PipelineSteps
           registry_url,
           container_name,
           container_tag,
-          options = {},
-          parameters = []
+          parameters = [],
+          options = {}
       )
         super(computation, options)
         @registry_url = registry_url
