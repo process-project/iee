@@ -69,8 +69,10 @@ script = <<~CODE
   #SBATCH --time 0:59:59
   #SBATCH --job-name UC2_test
   #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
+  #SBATCH --error /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.err
 
   mkdir /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
+
   sed -e "s/\\$SLURM_JOB_ID/$SLURM_JOB_ID/" /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.template > /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg
 
   module load plgrid/tools/singularity/stable
