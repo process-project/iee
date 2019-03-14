@@ -63,7 +63,7 @@ SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
 
 script = <<~CODE
   #!/bin/bash
-  #SBATCH --partition plgrid-testing
+  #SBATCH --partition plgrid-short
   #SBATCH --nodes 1
   #SBATCH --ntasks 24
   #SBATCH --time 0:59:59
