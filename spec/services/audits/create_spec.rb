@@ -49,4 +49,15 @@ describe Audits::Create do
 
     expect(Device.last.accept_language).to eq(ua.accept_language)
   end
+
+  it 'creates device which is user scoped' do
+    ua = build(:device, user: user)
+    ip = build(:ip, device: ua)
+    other_user = create(:user)
+
+    subject.call ip.address, ua.name, ua.accept_language
+    described_class.new(other_user).call(ip.address, ua.name, ua.accept_language)
+
+    expect(other_user.devices.count).to eq(1)
+  end
 end
