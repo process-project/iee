@@ -12,11 +12,12 @@
         = f.input :run_mode,
           collection: @run_modes
     .col-lg-5.col-xs-12
-      = f.button :submit,
-        t("steps.#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
-        class: 'btn btn-default'
-      - if computation.rimrock?
-        = link_to t('.reload'),
-                  project_pipeline_computation_path(project, pipeline, computation, force_reload: true),
-                  class: 'btn btn-default',
-                  data: { turbolinks: false }
+    / TODO button
+      / = f.button :submit,
+      /   t("steps.#{computation.pipeline_step}.#{computation.finished? ? 're' : ''}start_#{computation.mode}"),
+      /   class: 'btn btn-default'
+      / - if computation.rimrock?
+      /   = link_to t('.reload'),
+      /             project_pipeline_computation_path(project, pipeline, computation, force_reload: true),
+      /             class: 'btn btn-default',
+      /             data: { turbolinks: false }
