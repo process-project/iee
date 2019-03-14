@@ -53,12 +53,10 @@ RSpec.describe Rimrock::Update do
     described_class.new(user, connection: connection).call
   end
 
-  it 'triggers callback after computation is finished', focus: true do
+  it 'triggers callback after computation is finished' do
     create(:rimrock_computation, status: 'queued', job_id: 'job1', user: user)
     callback = double('callback')
     callback_instance = double('callback instance')
-
-    puts Computation.all
 
     stubs.get('api/jobs') do |_env|
       [200, {}, '[{"job_id": "job1", "status": "FINISHED"}]']

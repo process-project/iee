@@ -255,7 +255,7 @@ RSpec.feature 'Project browsing' do
 
       let(:computation) { pipeline.computations.rimrock.first }
 
-      skip "skip due to restart button workaround" do
+      skip 'skip due to restart button workaround' do
         scenario 'user can set computation tag_or_branch and start runnable computations' do
           mock_gitlab
 
@@ -302,7 +302,7 @@ RSpec.feature 'Project browsing' do
         end
       end
 
-      skip "skip due to restart button workaround" do
+      skip 'skip due to restart button workaround' do
         scenario 'start rimrock computation with selected version' do
           mock_rimrock_computation_ready_to_run
 
@@ -341,7 +341,7 @@ RSpec.feature 'Project browsing' do
           to_not have_link href: 'https://gitlab.com/process-eu/mock-step/tree'
       end
 
-      skip "skip due to restart button workaround" do
+      skip 'skip due to restart button workaround' do
         scenario 'unable to start rimrock computation when version is not chosen' do
           mock_rimrock_computation_ready_to_run
 
