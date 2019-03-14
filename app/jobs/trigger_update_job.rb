@@ -26,5 +26,6 @@ class TriggerUpdateJob < ApplicationJob
   def trigger_singularity_jobs_update
     User.with_submitted_computations('SingularityComputation').each do |user|
       Rimrock::UpdateJob.perform_later(user)
+    end
   end
 end
