@@ -6,6 +6,7 @@ class TriggerUpdateJob < ApplicationJob
   def perform
     trigger_rimrock_jobs_update
     trigger_webdav_jobs_update
+    trigger_singularity_jobs_update
   end
 
   private
@@ -19,6 +20,12 @@ class TriggerUpdateJob < ApplicationJob
   def trigger_webdav_jobs_update
     User.with_submitted_computations('WebdavComputation').each do |user|
       Webdav::UpdateJob.perform_later(user)
+    end
+  end
+
+  def trigger_singularity_jobs_update
+    User.with_submitted_computations('SingularityComputation').each do |user|
+      Rimrock::UpdateJob.perform_later(user)
     end
   end
 end

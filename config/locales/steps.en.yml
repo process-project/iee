@@ -18,6 +18,7 @@ en:
       start_automatic: Save placeholder step version
       start_manual: Start placeholder step
       restart_manual: Restart placeholder step
+      restart_automatic: Restart computation
     tf_cpu_step:
       title: Tensorflow CPU computation
       cannot_start: |
@@ -36,6 +37,7 @@ en:
       start_automatic: Save tensorflow CPU computation version
       start_manual: Start tensorflow CPU computation
       restart_manual: Restart tensorflow CPU computation
+      restart_automatic: Restart computation
     tf_gpu_step:
       title: Tensorflow GPU computation
       cannot_start: |
@@ -54,6 +56,7 @@ en:
       start_automatic: Save tensorflow GPU computation version
       start_manual: Start tensorflow GPU computation
       restart_manual: Restart tensorflow GPU computation
+      restart_automatic: Restart computation
     singularity_test_gpu_step:
       title: Singularity container computation
       cannot_start: |
@@ -72,6 +75,7 @@ en:
       start_automatic: Save Singularity container computation version
       start_manual: Start Singularity container computation computation
       restart_manual: Restart Singularity container computation
+      restart_automatic: Restart computation
     singularity_placeholder_step:
       title: Singularity placeholder computation
       cannot_start: |
@@ -90,6 +94,7 @@ en:
       start_automatic: Save Singularity placholder computation version
       start_manual: Start Singularity placholder computation computation
       restart_manual: Restart Singularity placholder computation
+      restart_automatic: Restart computation
     medical_step:
       title: Medical container computation
       cannot_start: |
@@ -108,6 +113,7 @@ en:
       start_automatic: Save Medical container computation version
       start_manual: Start Medical container computation computation
       restart_manual: Restart Medical container computation
+      restart_automatic: Restart computation
     lofar_step:
       title: LOFAR container computation
       cannot_start: |
@@ -126,6 +132,7 @@ en:
       start_automatic: Save LOFAR container computation version
       start_manual: Start LOFAR container computation computation
       restart_manual: Restart LOFAR container computation
+      restart_automatic: Restart computation
     lufthansa_step:
       title: Lufthansa container computation
       cannot_start: |
@@ -143,4 +150,5 @@ en:
       aborted: Lufthansa container computation was aborted by the pipeline owner
       start_automatic: Save Lufthansa container computation version
       start_manual: Start Lufthansa container computation computation
+      restart_automatic: Restart computation
       restart_manual: Restart Lufthansa container computation
