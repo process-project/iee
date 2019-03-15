@@ -22,6 +22,8 @@ class SingularityScriptGenerator
 
     script_options = mock_params.merge(registry_url: @registry_url, container_name: @container_name)
 
-    record.script_blueprint % script_options
+    options_filled_script = record.script_blueprint % script_options
+
+    ScriptGenerator.new(@computation, options_filled_script).call
   end
 end
