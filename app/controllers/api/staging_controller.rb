@@ -8,26 +8,18 @@ module Api
 
     def notify
       id = params[:status][:id]
+      @computation = Computation.find id
       status = params[:status][:status]
-      copying_start_timestamp = params[:details][:timestamp]
-      copying_elapsed_time = params[:details][:time]
-      log(id, status, copying_start_timestamp,
-          copying_elapsed_time)
+      if status == 'done'
+        @computation.update_attributes(status: 'finished')
+      else
+        @computation.update_attributes(status: 'error')
+      end
 
-      # TODO: Update record in database
-      head :no_content
+      StagingIn::UpdateJob.perform_later(@computation)
     end
 
     private
-
-    # Logger method for debugging, to be deleted
-    def log(id, status, copying_start_timestamp,
-            copying_elapsed_time)
-      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
-      @staging_logger.debug("Webhook info: id=#{id}, status=#{status}, " \
-                       "copying_start_timestamp=#{copying_start_timestamp}, " \
-                       "copying_elapsed_time=#{copying_elapsed_time}")
-    end
 
     def authenticate_staging!
       invalid! unless valid_token?
