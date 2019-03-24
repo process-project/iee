@@ -20,9 +20,11 @@ class Computation < ApplicationRecord
   scope :rimrock, -> { where(type: 'RimrockComputation') }
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
+  scope :staging_in, -> { where(type: 'StagingInComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
+  scope :submited_staging_in, -> { submited.staging_in }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline
@@ -49,6 +51,10 @@ class Computation < ApplicationRecord
 
   def singularity?
     type == 'SingularityComputation'
+  end
+
+  def staging_in?
+    type == 'StagingInComputation'
   end
 
   def self.flow_ordered
