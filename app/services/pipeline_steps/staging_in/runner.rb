@@ -3,17 +3,26 @@
 module PipelineSteps
   module StagingIn
     class Runner < PipelineSteps::RunnerBase
-      def initialize(computation, options = {})
+      def initialize(computation, src_host, src_path,
+                      dest_host, dest_path, options = {})
         super(computation, options)
+        @src_host = src_host
+        @src_path = src_path
+        @dest_host = dest_host
+        @dest_path = dest_path
       end
 
       protected
 
       def internal_run
-        # send post via Reggie API
+        @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+        @staging_logger.debug("internal_run is working")
         computation.tap do |c|
-          c.update_attributes(input_path: input_data_file.path)
-          ::Webdav::StartJob.perform_later(c)
+          c.update_attributes(src_host: @src_host,
+                              input_path: @src_path,
+                              dest_host: @dest_host,
+                              output_path: @dest_path)
+          StartJob.perform_later(c)
         end
       end
     end
