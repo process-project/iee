@@ -5,6 +5,12 @@ defaults: &defaults
     tag: vapor
   grant_id: <%= ENV['GRANT_ID'] || 'process1' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
+  staging_in:
+    host: 'data01.process-project.eu'
+    port: '30136'
+    path: '/api/v1/copy'
+    lobcder_api_access_token: <%= ENV['LOBCDER_API_ACCESS_TOKEN'] %>
+    staging_secret: <%= ENV['STAGING_SECRET'] %>
   segmentation:
     inputs_path: segmentation/input
     outputs_path: segmentation/output

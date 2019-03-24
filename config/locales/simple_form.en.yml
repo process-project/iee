@@ -81,6 +81,7 @@ en:
           lofar_pipeline: LOFAR pipeline
           lufthansa_pipeline: Lufthansa pipeline
           agrocopernicus_pipeline: Agrocopernicus pipeline
+          staging_in_placeholder_pipeline: Staging-in placeholder pipeline
     # Examples
     # labels:
     #   defaults:
