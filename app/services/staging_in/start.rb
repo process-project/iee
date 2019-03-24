@@ -10,9 +10,6 @@ module StagingIn
     end
 
     def call
-      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
-      @staging_logger.debug("StagingIn::Start.call also is working")
-
       make_request.value # Raises an HTTP error if the response is not 2xx (success).
       @computation.update_attributes(status: 'running')
     end

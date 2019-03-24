@@ -15,8 +15,6 @@ module PipelineSteps
       protected
 
       def internal_run
-        @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
-        @staging_logger.debug("internal_run is working")
         computation.tap do |c|
           c.update_attributes(src_host: @src_host,
                               input_path: @src_path,
