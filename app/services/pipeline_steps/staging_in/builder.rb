@@ -11,20 +11,17 @@ module PipelineSteps
         @src_path = src_path
         @dest_host = dest_host
         @dest_path = dest_path
-        @run_mode = params[:run_mode]
       end
 
       def call
         StagingInComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
-          run_mode: @run_mode,
           pipeline_step: @name,
           src_host: @src_host,
           input_path: @src_path,
           dest_host: @dest_host,
-          output_path: @dest_path
-        )
+          output_path: @dest_path)
       end
     end
   end
