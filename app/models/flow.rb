@@ -11,11 +11,17 @@ class Flow
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
     lufthansa_pipeline: %w[lufthansa_step],
-    agrocopernicus_pipeline: %w[agrocopernicus_step]
+    agrocopernicus_pipeline: %w[agrocopernicus_step],
+    staging_in_placeholder_pipeline: %w[staging_in_step]
 
   }.freeze
 
   STEPS = [
+    StagingInStep.new('staging_in_step',
+                      'data03.process-project.eu',
+                      '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
+                      'pro.cyfronet.pl',
+                      '/net/archive/groups/plggprocess/UC1/test_staging_2'),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
