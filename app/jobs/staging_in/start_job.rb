@@ -5,7 +5,7 @@ module StagingIn
     queue_as :computation
 
     def perform(computation)
-      Start.new(computation).call
+      StagingIn::Start.new(computation).call
     rescue StandardError => e
       Rails.logger.error(e)
       computation.update_attributes(status: 'error',

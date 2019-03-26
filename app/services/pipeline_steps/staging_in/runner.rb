@@ -20,7 +20,7 @@ module PipelineSteps
                               input_path: @src_path,
                               dest_host: @dest_host,
                               output_path: @dest_path)
-          StartJob.perform_later(c)
+          ::StagingIn::StartJob.perform_later(c)
         end
       end
     end
