@@ -18,10 +18,8 @@ module StagingIn
 
     def make_request
       http = Net::HTTP.new(staging_in_host, staging_in_port)
-      # http.use_ssl = true
-      req = Net::HTTP::Post.new(staging_in_path, { 'content-type' => 'application/json',
-                                'x-access-token' => lobcder_api_access_token })
-
+      req = Net::HTTP::Post.new(staging_in_path, 'content-type' => 'application/json',
+                                                 'x-access-token' => lobcder_api_access_token)
       req.body = request_body.to_json
       http.request(req)
     end
@@ -42,33 +40,35 @@ module StagingIn
       Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
     end
 
+    # rubocop:disable all
     def request_body
       [{
         id: @computation.id,
         cmd: {
-          type: "copy",
-          subtype: "scp2scp",
+          type: 'copy',
+          subtype: 'scp2scp',
           src: {
-            type: "scp",
+            type: 'scp',
             host: @computation.src_host,
-            user: "di39nox",
+            user: 'di39nox',
             path: @computation.src_path
             },
             dst:{
-              type: "scp",
+              type: 'scp',
               host: @computation.dest_host,
-              user: "plgcushing",
+              user: 'plgcushing',
               path: @computation.dest_path
             },
             webhook: {
-              method: "POST",
+              method: 'POST',
               url: webhook_url,
-              headers: { "x-access-token" => staging_secret }
+              headers: { 'x-access-token' => staging_secret }
             },
             options: {}
           }
       }]
     end
+    # rubocop:enable all
 
     def webhook_url
       Rails.application.routes.url_helpers.api_staging_url(protocol: 'https',
