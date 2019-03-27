@@ -39,9 +39,7 @@ module StagingIn
     end
 
     def lobcder_api_access_token
-      # Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
-      # Workaround due to the need of process-dev restarting after .env changing
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAcHJvY2Vzcy1wcm9qZWN0LmV1IiwiaWF0IjoxNTUxMjg0MjEwfQ.gm8iW_Afa2ki5oWPv9y8NXKnmrRKKGkbEJZk7c9NHdhRDJtfEt1uFWgtDCWaUpJ3FbQfPeLhyDgf6vGn_OHoKQpodmGvBhRH2SJTtkDwBEKXqA4WC78Mkuwxylf0VCcqoaw0qYMmn1VGPBC69XUNZH8AERZIhhbTz2wHYY1ku27wDgTrCfTfqYNrTqbMSDefFaZVCi6AusleGTkX6EaLPY_X4hw79xLb3kZyJODfLpEJ0kGOxa3ao3nAmYzsG4jmHAaocvLcKLGe4PMMWLPmoOfFsUcFyT02Ly0Ry2Jmj7ZVEWxNmCpEvMSMebsDDGKf8Ka7GFz7DZuXd89fwL02lQ'
+      Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
     end
 
     def request_body
