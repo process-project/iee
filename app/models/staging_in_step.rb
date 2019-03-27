@@ -3,15 +3,14 @@
 class StagingInStep < Step
   attr_reader :parameters
 
-	def initialize(name, src_host, src_path, dest_host, dest_path, parameters = [])
+  def initialize(name, src_host, src_path, dest_host, dest_path, parameters = [])
     super(name, [])
-
-		@src_host = src_host
-		@src_path = src_path
-		@dest_host = dest_host
-		@dest_path = dest_path
+    @src_host = src_host
+    @src_path = src_path
+    @dest_host = dest_host
+    @dest_path = dest_path
     @parameters = parameters
-	end
+  end
 
   def builder_for(pipeline, _params)
     PipelineSteps::StagingIn::Builder.new(pipeline,
@@ -25,10 +24,10 @@ class StagingInStep < Step
 
   def runner_for(computation, options = {})
     PipelineSteps::StagingIn::Runner.new(computation,
-                                          @src_host,
-                                          @src_path,
-                                          @dest_host,
-                                          @dest_path,
-                                          options)
+                                         @src_host,
+                                         @src_path,
+                                         @dest_host,
+                                         @dest_path,
+                                         options)
   end
 end
