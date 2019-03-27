@@ -25,7 +25,9 @@ RSpec.describe 'Staging API' do
     before { mock_staging_token_env('token') }
 
     it 'returns OK' do
-      json_body = { status: { id: 'abcd123', status: 'done' },
+      pipeline = create(:pipeline, flow: 'staging_in_placeholder_pipeline')
+      computation = create(:staging_in_computation, pipeline: pipeline)
+      json_body = { status: { id: computation.id, status: 'done' },
                     details: { timestamp: '2019-03-13T08:48:03.927Z',
                                time: '111598' } }
 
