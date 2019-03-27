@@ -6,8 +6,8 @@ module StagingIn
 
     def perform(computation)
       StagingIn::Update.new(computation,
-                         	on_finish_callback: PipelineUpdater,
-                         	updater: ComputationUpdater).call
+                            on_finish_callback: PipelineUpdater,
+                            updater: ComputationUpdater).call
     end
   end
 end

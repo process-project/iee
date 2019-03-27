@@ -4,7 +4,7 @@ module PipelineSteps
   module StagingIn
     class Runner < PipelineSteps::RunnerBase
       def initialize(computation, src_host, src_path,
-                      dest_host, dest_path, options = {})
+                     dest_host, dest_path, options = {})
         super(computation, options)
         @src_host = src_host
         @src_path = src_path
