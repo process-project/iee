@@ -18,10 +18,44 @@ class Flow
 
   STEPS = [
     StagingInStep.new('staging_in_step',
-                      'data03.process-project.eu',
-                      '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
-                      'pro.cyfronet.pl',
-                      '/net/archive/groups/plggprocess/UC1/test_staging_2'),
+                      [
+                        StepParameter.new(
+                            'src_host',
+                            'Source Host',
+                            'Descriptions are for loosers',
+                            '0',
+                            'multi',
+                            'data03.process-project.eu',
+                            %w[data03.process-project.eu]
+                          ),
+                        StepParameter.new(
+                            'src_path',
+                            'Source Path',
+                            'Descriptions are for loosers',
+                            '1',
+                            'multi',
+                            '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
+                            %w[/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif]
+                          ),
+                        StepParameter.new(
+                            'dest_host',
+                            'Destination Host',
+                            'Descriptions are for loosers',
+                            '2',
+                            'multi',
+                            'pro.cyfronet.pl',
+                            %w[pro.cyfronet.pl]
+                          ),
+                        StepParameter.new(
+                            'dest_path',
+                            'Destination Path',
+                            'Descriptions are for loosers',
+                            '3',
+                            'multi',
+                            '/net/archive/groups/plggprocess/UC1/test_staging_2',
+                            %w[/net/archive/groups/plggprocess/UC1/test_staging_2]
+                          )
+                      ]),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
