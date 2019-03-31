@@ -5,38 +5,30 @@ class SingularityStep < Step
 
   def initialize(
       name,
-      registry_url,
-      container_name,
-      container_tag,
       required_files = [],
       parameters = []
   )
     super(name, required_files)
-    @registry_url = registry_url
-    @container_name = container_name
-    @container_tag = container_tag
     @required_files = required_files
     @parameters = parameters
   end
 
-  def builder_for(pipeline, _params)
+  def builder_for(pipeline, params)
+    @user_parameters = params
     PipelineSteps::Singularity::Builder.new(
       pipeline,
       name,
-      @registry_url,
-      @container_name,
-      @container_tag,
-      @parameters
+      @parameters,
+      @user_parameters
     )
   end
 
   def runner_for(computation, options = {})
+    @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+    @staging_logger.debug("in runner: @user_parameters: #{@user_parameters}")
     PipelineSteps::Singularity::Runner.new(
       computation,
-      @registry_url,
-      @container_name,
-      @container_tag,
-      @parameters,
+      @user_parameters,
       options
     )
   end

@@ -5,25 +5,22 @@ require 'erb'
 class SingularityScriptGenerator
   attr_reader :computation
 
-  def initialize(computation, registry_url, container_name, container_tag)
+  def initialize(computation, user_parameters)
     @computation = computation
-    @registry_url = registry_url
-    @container_name = container_name
-    @container_tag = container_tag
+    @user_parameters = to_my_own_hash(user_parameters)
   end
 
   def call
-    # to be replaced later when those params are coming from gui
-    mock_params = { tag: @container_tag, hpc: 'Prometheus' }
+    record = SingularityScriptBlueprint.find_by!(container_name: @user_parameters[:container_name],
+                                                 tag: @user_parameters[:container_tag],
+                                                 hpc: @user_parameters[:hpc])
 
-    record = SingularityScriptBlueprint.find_by!(container_name: @container_name,
-                                                 tag: mock_params[:tag],
-                                                 hpc: mock_params[:hpc])
-
-    script_options = mock_params.merge(registry_url: @registry_url, container_name: @container_name)
-
-    options_filled_script = record.script_blueprint % script_options
+    options_filled_script = record.script_blueprint % @user_parameters
 
     ScriptGenerator.new(@computation, options_filled_script).call
+  end
+
+  def to_my_own_hash(parameters)
+    parameters.to_unsafe_h.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
   end
 end

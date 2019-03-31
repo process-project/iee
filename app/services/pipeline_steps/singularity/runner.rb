@@ -3,19 +3,10 @@
 module PipelineSteps
   module Singularity
     class Runner < PipelineSteps::RunnerBase
-      def initialize(
-          computation,
-          registry_url,
-          container_name,
-          container_tag,
-          parameters = [],
-          options = {}
-      )
+      def initialize(computation, user_parameters = {}, options = {})
         super(computation, options)
-        @registry_url = registry_url
-        @container_name = container_name
-        @container_tag = container_tag
-        @parameters = parameters
+
+        @user_parameters = user_parameters
       end
 
       protected
@@ -23,9 +14,7 @@ module PipelineSteps
       def pre_internal_run
         computation.script = SingularityScriptGenerator.new(
           computation,
-          @registry_url,
-          @container_name,
-          @container_tag
+          @user_parameters
         ).call
         computation.job_id = nil
       end

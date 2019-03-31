@@ -29,7 +29,7 @@ script = <<~CODE
 
   cd $SCRATCHDIR
 
-  singularity pull --name container.simg %<registry_url>s%<container_name>s:%<tag>s
+  singularity pull --name container.simg %<registry_url>s%<container_name>s:%<container_tag>s
   singularity run container.simg
 CODE
 

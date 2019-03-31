@@ -10,7 +10,7 @@ class Flow
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
-    lufthansa_pipeline: %w[lufthansa_step],
+    # lufthansa_pipeline: %w[lufthansa_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step]
 
@@ -22,7 +22,7 @@ class Flow
                         StepParameter.new(
                           'src_host',
                           'Source Host',
-                          'Descriptions are for loosers',
+                          'Descriptions placeholder',
                           '0',
                           'multi',
                           'data03.process-project.eu',
@@ -31,7 +31,7 @@ class Flow
                         StepParameter.new(
                           'src_path',
                           'Source Path',
-                          'Descriptions are for loosers',
+                          'Descriptions placeholder',
                           '1',
                           'multi',
                           '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
@@ -40,7 +40,7 @@ class Flow
                         StepParameter.new(
                           'dest_host',
                           'Destination Host',
-                          'Descriptions are for loosers',
+                          'Descriptions placeholder',
                           '2',
                           'multi',
                           'pro.cyfronet.pl',
@@ -49,7 +49,7 @@ class Flow
                         StepParameter.new(
                           'dest_path',
                           'Destination Path',
-                          'Descriptions are for loosers',
+                          'Descriptions placeholder',
                           '3',
                           'multi',
                           '/net/archive/groups/plggprocess/Mock/test_staging',
@@ -70,33 +70,129 @@ class Flow
                     'singularity_mock_job.sh.erb',
                     [:generic_type], []),
     SingularityStep.new('singularity_placeholder_step',
-                        'shub://',
-                        'vsoch/hello-world',
-                        'latest', [], []),
-    SingularityStep.new('medical_step',
-                        'shub://',
-                        'maragraziani/ucdemo',
-                        '0.1', [], []),
-    SingularityStep.new('lofar_step',
-                        'shub://',
-                        'lofar/lofar_container',
-                        'latest',
                         [],
                         [
                           StepParameter.new(
-                            'environment',
-                            'Resources',
+                            'hpc',
+                            'HPC',
                             'Computational resource pool used to execute the computation',
                             '0',
                             'multi',
-                            'Cyfronet',
-                            %w[Cyfronet Munich]
+                            'Prometheus',
+                            %w[Prometheus]
+                          ),
+                          StepParameter.new(
+                            'registry_url',
+                            'Registry url',
+                            'Singularity registry which contains containers',
+                            '1',
+                            'multi',
+                            'shub://',
+                            %w[shub://]
+                          ),
+                          StepParameter.new(
+                            'container_name',
+                            'Container Name',
+                            'Name of the container in the following form: user/container_name',
+                            '2',
+                            'multi',
+                            'vsoch/hello-world',
+                            %w[vsoch/hello-world]
+                          ),
+                          StepParameter.new(
+                            'container_tag',
+                            'Tag',
+                            'Tag of the selected container',
+                            '3',
+                            'multi',
+                            'latest',
+                            %w[latest]
+                          ),
+                        ]),
+    SingularityStep.new('medical_step',
+                        [],
+                        [
+                          StepParameter.new(
+                            'hpc',
+                            'HPC',
+                            'Computational resource pool used to execute the computation',
+                            '0',
+                            'multi',
+                            'Prometheus',
+                            %w[Prometheus]
+                          ),
+                          StepParameter.new(
+                            'registry_url',
+                            'Registry url',
+                            'Singularity registry which contains containers',
+                            '1',
+                            'multi',
+                            'shub://',
+                            %w[shub://]
+                          ),
+                          StepParameter.new(
+                            'container_name',
+                            'Container Name',
+                            'Name of the container in the following form: user/container_name',
+                            '2',
+                            'multi',
+                            'maragraziani/ucdemo',
+                            %w[maragraziani/ucdemo]
+                          ),
+                          StepParameter.new(
+                            'container_tag',
+                            'Tag',
+                            'Tag of the selected container',
+                            '3',
+                            'multi',
+                            '0.1',
+                            %w[0.1]
+                          ),
+                        ]),
+    SingularityStep.new('lofar_step',
+                        [],
+                        [
+                          StepParameter.new(
+                            'hpc',
+                            'HPC',
+                            'Computational resource pool used to execute the computation',
+                            '0',
+                            'multi',
+                            'Prometheus',
+                            %w[Prometheus]
+                          ),
+                          StepParameter.new(
+                            'registry_url',
+                            'Registry url',
+                            'Singularity registry which contains containers',
+                            '1',
+                            'multi',
+                            'shub://',
+                            %w[shub://]
+                          ),
+                          StepParameter.new(
+                            'container_name',
+                            'Container Name',
+                            'Name of the container in the following form: user/container_name',
+                            '2',
+                            'multi',
+                            'lofar/lofar_container',
+                            %w[lofar/lofar_container]
+                          ),
+                          StepParameter.new(
+                            'container_tag',
+                            'Tag',
+                            'Tag of the selected container',
+                            '3',
+                            'multi',
+                            'latest',
+                            %w[latest]
                           ),
                           StepParameter.new(
                             'visibility_id',
                             'LOFAR Visibility ID',
                             'LOFAR visibility identifier',
-                            '1',
+                            '4',
                             'string',
                             ''
                           ),
@@ -104,7 +200,7 @@ class Flow
                             'avg_freq_step',
                             'Average frequency step',
                             'Corresponds to .freqstep in NDPPP or demixer.freqstep',
-                            '2',
+                            '5',
                             'integer',
                             2
                           ),
@@ -112,7 +208,7 @@ class Flow
                             'avg_time_step',
                             'Average time step',
                             'Corresponds to .timestep in NDPPP or demixer.timestep',
-                            '3',
+                            '6',
                             'integer',
                             4
                           ),
@@ -120,7 +216,7 @@ class Flow
                             'do_demix',
                             'Perform demixer',
                             'If true then demixer instead of average is performed',
-                            '4',
+                            '7',
                             'boolean',
                             true
                           ),
@@ -128,7 +224,7 @@ class Flow
                             'demix_freq_step',
                             'Demixer frequency step',
                             'Corresponds to .demixfreqstep in NDPPP',
-                            '5',
+                            '8',
                             'integer',
                             2
                           ),
@@ -136,7 +232,7 @@ class Flow
                             'demix_time_step',
                             'Demixer time step',
                             'Corresponds to .demixtimestep in NDPPP',
-                            '6',
+                            '9',
                             'integer',
                             2
                           ),
@@ -144,7 +240,7 @@ class Flow
                             'demix_sources',
                             'Demixer sources',
                             '',
-                            '7',
+                            '10',
                             'multi',
                             'CasA',
                             %w[CasA other]
@@ -153,7 +249,7 @@ class Flow
                             'select_nl',
                             'Use NL stations only',
                             'If true then only Dutch stations are selected',
-                            '8',
+                            '11',
                             'boolean',
                             true
                           ),
@@ -161,31 +257,56 @@ class Flow
                             'parset',
                             'Parameter set',
                             '',
-                            '9',
+                            '12',
                             'multi',
                             'lba_npp',
                             %w[lba_npp other]
                           )
                         ]),
     SingularityStep.new('agrocopernicus_step',
-                        'shub://',
-                        'vsoch/hello-world',
-                        'latest', ['input.csv'],
+                        ['input.csv'],
                         [
                           StepParameter.new(
-                            'environment',
-                            'Resources',
+                            'hpc',
+                            'HPC',
                             'Computational resource pool used to execute the computation',
                             '0',
                             'multi',
-                            'Cyfronet',
-                            %w[Cyfronet Munich]
+                            'Prometheus',
+                            %w[Prometheus]
+                          ),
+                          StepParameter.new(
+                            'registry_url',
+                            'Registry url',
+                            'Singularity registry which contains containers',
+                            '1',
+                            'multi',
+                            'shub://',
+                            %w[shub://]
+                          ),
+                          StepParameter.new(
+                            'container_name',
+                            'Container Name',
+                            'Name of the container in the following form: user/container_name',
+                            '2',
+                            'multi',
+                            'vsoch/hello-world',
+                            %w[vsoch/hello-world]
+                          ),
+                          StepParameter.new(
+                            'container_tag',
+                            'Tag',
+                            'Tag of the selected container',
+                            '3',
+                            'multi',
+                            'latest',
+                            %w[latest]
                           ),
                           StepParameter.new(
                             'irrigation',
                             'Irrigation',
                             '',
-                            '1',
+                            '4',
                             'boolean',
                             'true'
                           ),
@@ -193,7 +314,7 @@ class Flow
                             'seeding_date',
                             'Seeding date',
                             '',
-                            '2',
+                            '5',
                             'multi',
                             '-15 days',
                             ['-15 days', 'original', '+15 days']
@@ -202,7 +323,7 @@ class Flow
                             'nutrition_factor',
                             'Nutrition factor',
                             '',
-                            '3',
+                            '6',
                             'multi',
                             '0.25',
                             ['0.25', '0.45', '0.60']
@@ -211,7 +332,7 @@ class Flow
                             'Phenology_factor',
                             'Phenology factor',
                             '',
-                            '4',
+                            '7',
                             'multi',
                             '0.6',
                             ['0.6', '0.8', '1.0', '1.2']
