@@ -14,13 +14,9 @@ class StagingInStep < Step
     @dest_host = params[:dest_host]
     @dest_path = params[:dest_path]
 
-    PipelineSteps::StagingIn::Builder.new(pipeline,
-                                          name,
-                                          @src_host,
-                                          @src_path,
-                                          @dest_host,
-                                          @dest_path,
-                                          @parameters)
+    PipelineSteps::StagingIn::Builder.new(pipeline, name, @src_host,
+                                          @src_path, @dest_host,
+                                          @dest_path, @parameters)
   end
 
   def runner_for(computation, options = {})
