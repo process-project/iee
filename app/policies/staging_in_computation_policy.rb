@@ -10,10 +10,6 @@ class StagingInComputationPolicy < ApplicationPolicy
       can_update_in_mode?
   end
 
-  def need_proxy?
-    !(record.finished? || Proxy.new(user)&.valid?)
-  end
-
   def can_update_in_mode?
     if record.manual?
       record.runnable? && !need_proxy?
