@@ -13,6 +13,7 @@ class Flow
     # lufthansa_pipeline: %w[lufthansa_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step]
+    validation_pipeline: %w[staging_in_step validation_singularity_step stage_out_step]
 
   }.freeze
 
