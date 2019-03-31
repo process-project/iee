@@ -37,7 +37,7 @@ FactoryBot.define do
       src_host 'data03.process-project.eu'
       src_path '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif'
       dest_host 'pro.cyfronet.pl'
-      dest_path '/net/archive/groups/plggprocess/UC1/test_staging_2'
+      dest_path '/net/archive/groups/plggprocess/Mock/test_staging'
     end
   end
 end
