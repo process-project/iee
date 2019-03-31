@@ -40,35 +40,25 @@ module StagingIn
       Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
     end
 
-    # rubocop:disable all
+    # rubocop:disable Metrics/MethodLength
     def request_body
-      [{
-        id: @computation.id,
-        cmd: {
-          type: 'copy',
-          subtype: 'scp2scp',
-          src: {
-            type: 'scp',
-            host: @computation.src_host,
-            user: 'di39nox',
-            path: @computation.src_path
-            },
-            dst:{
-              type: 'scp',
-              host: @computation.dest_host,
-              user: 'plgcushing',
-              path: @computation.dest_path
-            },
-            webhook: {
-              method: 'POST',
-              url: webhook_url,
-              headers: { 'x-access-token' => staging_secret }
-            },
-            options: {}
-          }
-      }]
+      [{ id: @computation.id,
+         cmd: { type: 'copy',
+                subtype: 'scp2scp',
+                src: { type: 'scp',
+                       host: @computation.src_host,
+                       user: 'di39nox',
+                       path: @computation.src_path },
+                dst: { type: 'scp',
+                       host: @computation.dest_host,
+                       user: 'plgcushing',
+                       path: @computation.dest_path },
+                webhook: { method: 'POST',
+                           url: webhook_url,
+                           headers: { 'x-access-token' => staging_secret } },
+                options: {} } }]
     end
-    # rubocop:enable all
+    # rubocop:enable Metrics/MethodLength
 
     def webhook_url
       Rails.application.routes.url_helpers.api_staging_url(protocol: 'https',
