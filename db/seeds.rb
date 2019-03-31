@@ -89,3 +89,25 @@ SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
                                    hpc: 'Prometheus',
                                    available_options: '',
                                    script_blueprint: script)
+
+script = <<~CODE
+  #!/bin/bash
+  #SBATCH --partition plgrid-testing
+  #SBATCH -A process1
+  #SBATCH --nodes 1
+  #SBATCH --ntasks 24
+  #SBATCH --time 0:15:00
+  #SBATCH --job-name validation_container_test
+  #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/validation-container-test-log-%%J.txt
+  #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/validation-container-test-log-%%J.err
+
+  module load plgrid/tools/singularity/stable
+
+  singularity run /net/archive/groups/plggprocess/Mock/dummy_container/valcon.simg /bin /bin %<sleep_time>s
+CODE
+
+SingularityScriptBlueprint.create!(container_name: 'validation_container',
+                                   tag: 'latest',
+                                   hpc: 'Prometheus',
+                                   available_options: '',
+                                   script_blueprint: script)

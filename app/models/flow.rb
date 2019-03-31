@@ -12,12 +12,103 @@ class Flow
     lofar_pipeline: %w[lofar_step],
     # lufthansa_pipeline: %w[lufthansa_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
-    staging_in_placeholder_pipeline: %w[staging_in_step]
-    validation_pipeline: %w[staging_in_step validation_singularity_step stage_out_step]
+    staging_in_placeholder_pipeline: %w[staging_in_step],
+    validation_pipeline: %w[validation_staging_in_step validation_singularity_step validation_stage_out_step]
 
   }.freeze
 
   STEPS = [
+    StagingInStep.new('validation_staging_in_step',
+                      [
+                        StepParameter.new(
+                          'src_host',
+                          'Source Host',
+                          'Descriptions placeholder',
+                          '0',
+                          'multi',
+                          'data03.process-project.eu',
+                          %w[data03.process-project.eu]
+                        ),
+                        StepParameter.new(
+                          'src_path',
+                          'Source Path',
+                          'Descriptions placeholder',
+                          '1',
+                          'multi',
+                          '/mnt/dss/process/UC1/1G.dat',
+                          %w[/mnt/dss/process/UC1/1G.dat]
+                        ),
+                        StepParameter.new(
+                          'dest_host',
+                          'Destination Host',
+                          'Descriptions placeholder',
+                          '2',
+                          'multi',
+                          'pro.cyfronet.pl',
+                          %w[pro.cyfronet.pl]
+                        ),
+                        StepParameter.new(
+                          'dest_path',
+                          'Destination Path',
+                          'Descriptions placeholder',
+                          '3',
+                          'multi',
+                          '/net/archive/groups/plggprocess/Mock/validation_staging',
+                          %w[/net/archive/groups/plggprocess/Mock/validation_staging]
+                        )
+                      ]),
+    SingularityStep.new('validation_singularity_step',
+                        [],
+                        [
+                          StepParameter.new(
+                            'hpc',
+                            'HPC',
+                            'Computational resource pool used to execute the computation',
+                            '0',
+                            'multi',
+                            'Prometheus',
+                            %w[Prometheus]
+                          ),
+                          StepParameter.new(
+                            'registry_url',
+                            'Registry url',
+                            'Singularity registry which contains containers',
+                            '1',
+                            'multi',
+                            'shub://',
+                            %w[shub://]
+                          ),
+                          StepParameter.new(
+                            'container_name',
+                            'Container Name',
+                            'Name of the container in the following form: user/container_name',
+                            '2',
+                            'multi',
+                            'validation_container',
+                            %w[validation_container]
+                          ),
+                          StepParameter.new(
+                            'container_tag',
+                            'Tag',
+                            'Tag of the selected container',
+                            '3',
+                            'multi',
+                            'latest',
+                            %w[latest]
+                          ),
+                          StepParameter.new(
+                            'sleep_time',
+                            'Sleep time',
+                            'The time of the eternal sleep',
+                            '4',
+                            'multi',
+                            '1',
+                            %w[1 30 60 300 600]
+                          ),
+                        ]),
+    RimrockStep.new('validation_stage_out_step',
+                    'process-eu/validation_stage_out',
+                    'validation_stage_out_script.sh.erb', [], []),
     StagingInStep.new('staging_in_step',
                       [
                         StepParameter.new(
