@@ -52,8 +52,8 @@ class Flow
                           'Descriptions are for loosers',
                           '3',
                           'multi',
-                          '/net/archive/groups/plggprocess/UC1/test_staging_2',
-                          %w[/net/archive/groups/plggprocess/UC1/test_staging_2]
+                          '/net/archive/groups/plggprocess/Mock/test_staging',
+                          %w[/net/archive/groups/plggprocess/Mock/test_staging]
                         )
                       ]),
     RimrockStep.new('placeholder_step',
