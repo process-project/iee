@@ -152,3 +152,20 @@ en:
       start_manual: Start Lufthansa container computation computation
       restart_automatic: Restart computation
       restart_manual: Restart Lufthansa container computation
+    staging_in_step:
+      title: Staging in computation
+      cannot_start: |
+        Cannot start staging in computation.
+      created: |
+        You can start staging in computation for this project.
+      new: Staging in computation is being submitted
+      queued: Staging in computation is queued
+      running: Staging in computation is running
+      error: There was an error while running staging in computation
+      finished: |
+        Staging in computation finished successfully.
+      aborted: Staging in computation was aborted by the pipeline owner
+      start_automatic: Save staging in computation version
+      start_manual: Start staging in computation computation
+      restart_manual: Restart staging in computation
+      restart_automatic: Restart staging in computation

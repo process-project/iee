@@ -31,5 +31,13 @@ FactoryBot.define do
       container_registry nil
       container_tag 'latest'
     end
+
+    factory :staging_in_computation, class: 'StagingInComputation' do
+      pipeline_step 'staging_in_step'
+      src_host 'data03.process-project.eu'
+      src_path '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif'
+      dest_host 'pro.cyfronet.pl'
+      dest_path '/net/archive/groups/plggprocess/Mock/test_staging'
+    end
   end
 end
