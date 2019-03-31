@@ -53,7 +53,7 @@ RSpec.describe PipelineSteps::Singularity::Runner do
                                      script_blueprint: script)
 
   subject do
-    described_class.new(computation, container_registry.registry_url, container_name, container_tag,
+    described_class.new(computation,
                         updater: double(new: updater))
   end
 
