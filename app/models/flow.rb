@@ -107,7 +107,7 @@ class Flow
                             'multi',
                             'latest',
                             %w[latest]
-                          ),
+                          )
                         ]),
     SingularityStep.new('medical_step',
                         [],
@@ -147,7 +147,7 @@ class Flow
                             'multi',
                             '0.1',
                             %w[0.1]
-                          ),
+                          )
                         ]),
     SingularityStep.new('lofar_step',
                         [],
