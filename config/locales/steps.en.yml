@@ -169,3 +169,56 @@ en:
       start_manual: Start staging in computation computation
       restart_manual: Restart staging in computation
       restart_automatic: Restart staging in computation
+    validation_staging_in_step:
+      title: Staging in computation
+      cannot_start: |
+        Cannot start staging in computation.
+      created: |
+        You can start staging in computation for this project.
+      new: Staging in computation is being submitted
+      queued: Staging in computation is queued
+      running: Staging in computation is running
+      error: There was an error while running staging in computation
+      finished: |
+        Staging in computation finished successfully.
+      aborted: Staging in computation was aborted by the pipeline owner
+      start_automatic: Save staging in computation version
+      start_manual: Start staging in computation computation
+      restart_manual: Restart staging in computation
+      restart_automatic: Restart staging in computation
+    validation_singularity_step:
+      title: Validation container computation
+      cannot_start: |
+        Cannot start Validation container computation.
+      created: |
+        All required input files are available.
+        You can start Validation container computation for this project.
+      new: Validation container computation is being submitted
+      queued: Validation container computation is queued
+      running: Validation container computation is running
+      error: There was an error while running Validation container computation
+      finished: |
+        Validation container computation finished successfully, results stored in
+        the output directory.
+      aborted: Validation container computation was aborted by the pipeline owner
+      start_automatic: Save Validation container computation version
+      start_manual: Start Validation container computation computation
+      restart_automatic: Restart computation
+      restart_manual: Restart Validation container computation
+    validation_stage_out_step:
+      title: Staging out computation
+      cannot_start: |
+        Cannot start staging out computation.
+      created: |
+        You can start staging out computation for this project.
+      new: Staging out computation is being submitted
+      queued: Staging out computation is queued
+      running: Staging out computation is running
+      error: There was an error while running staging out computation
+      finished: |
+        Staging out computation finished successfully.
+      aborted: Staging out computation was aborted by the pipeline owner
+      start_automatic: Save staging out computation version
+      start_manual: Start staging out computation computation
+      restart_manual: Restart staging out computation
+      restart_automatic: Restart staging out computation
