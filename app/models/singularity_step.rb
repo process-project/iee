@@ -18,14 +18,12 @@ class SingularityStep < Step
     PipelineSteps::Singularity::Builder.new(
       pipeline,
       name,
-      @parameters,
-      @user_parameters
+      @user_parameters,
+      @parameters
     )
   end
 
   def runner_for(computation, options = {})
-    @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
-    @staging_logger.debug("in runner: @user_parameters: #{@user_parameters}")
     PipelineSteps::Singularity::Runner.new(
       computation,
       @user_parameters,

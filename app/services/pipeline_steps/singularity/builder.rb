@@ -3,15 +3,16 @@
 module PipelineSteps
   module Singularity
     class Builder
-      def initialize(pipeline, name, parameters = [], user_parameters)
+      def initialize(pipeline, name, user_parameters, parameters = [])
         @pipeline = pipeline
         @name = name
-        @parameters = parameters # TO DELETE
         @user_parameters = user_parameters
+        @parameters = parameters # TO DELETE
       end
 
       def call
-        container_registry = ContainerRegistry.find_or_create_by!(registry_url: @user_parameters[:registry_url])
+        container_registry = ContainerRegistry.
+                             find_or_create_by!(registry_url: @user_parameters[:registry_url])
 
         SingularityComputation.create!(
           pipeline: @pipeline,

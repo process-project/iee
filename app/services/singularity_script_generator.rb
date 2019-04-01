@@ -21,6 +21,9 @@ class SingularityScriptGenerator
   end
 
   def to_my_own_hash(parameters)
-    parameters.to_unsafe_h.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+    parameters.to_unsafe_h.inject({}) do |memo, (k, v)|
+      memo[k.to_sym] = v
+      memo
+    end
   end
 end

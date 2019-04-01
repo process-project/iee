@@ -13,7 +13,9 @@ class Flow
     # lufthansa_pipeline: %w[lufthansa_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step],
-    validation_pipeline: %w[validation_staging_in_step validation_singularity_step validation_stage_out_step]
+    validation_pipeline: %w[validation_staging_in_step
+                            validation_singularity_step
+                            validation_stage_out_step]
 
   }.freeze
 
@@ -104,7 +106,7 @@ class Flow
                             'multi',
                             '1',
                             %w[1 30 60 300 600]
-                          ),
+                          )
                         ]),
     RimrockStep.new('validation_stage_out_step',
                     'process-eu/validation_stage_out',
@@ -199,7 +201,7 @@ class Flow
                             'multi',
                             'latest',
                             %w[latest]
-                          ),
+                          )
                         ]),
     SingularityStep.new('medical_step',
                         [],
@@ -239,7 +241,7 @@ class Flow
                             'multi',
                             '0.1',
                             %w[0.1]
-                          ),
+                          )
                         ]),
     SingularityStep.new('lofar_step',
                         [],
