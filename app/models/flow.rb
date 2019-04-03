@@ -58,9 +58,9 @@ class Flow
                           '/net/archive/groups/plggprocess/Mock/validation_staging',
                           %w[/net/archive/groups/plggprocess/Mock/validation_staging]
                         )
-                      ]),
+                      ], ['staging_done.txt']),
     SingularityStep.new('validation_singularity_step',
-                        [],
+                        ['staging_done.txt'],
                         [
                           StepParameter.new(
                             'hpc',

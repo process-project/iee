@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class StagingInStep < Step
-  attr_reader :parameters
+  attr_reader :parameters, :tmp_output_files
 
-  def initialize(name, parameters = [])
+  def initialize(name, parameters = [], tmp_output_files = [])
     super(name, [])
     @parameters = parameters
+    @tmp_output_files = tmp_output_files
   end
 
   def builder_for(pipeline, params)

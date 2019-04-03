@@ -17,6 +17,20 @@ module Api
       end
 
       StagingIn::UpdateJob.perform_later(@computation)
+
+      tmp_output_files = @computation.step.tmp_output_files
+
+      pipeline = @computation.pipeline
+
+      project = pipeline.project
+
+      tmp_output_files.each do |file|
+        DataFile.create!(project: project,
+                         output_of: pipeline,
+                         input_of: pipeline,
+                         name: file,
+                         data_type: :generic_type)
+      end
     end
 
     private
