@@ -22,7 +22,9 @@ module SynchronizerUtilities
     /^OutSeries2\.csv$/ => 'data_series_2',
     /^OutSeries3\.csv$/ => 'data_series_3',
     /^OutSeries4\.csv$/ => 'data_series_4',
-    /^input\.csv$/ => 'generic_type'
+    /^input\.csv$/ => 'generic_type',
+    /^staging_done\.txt$/ => 'validation_1_type',
+    /^validation_container_done\.txt$/ => 'validation_2_type'
   }.freeze
 
   def project_directory(url)

@@ -7,7 +7,7 @@ class SingularityScriptGenerator
 
   def initialize(computation, user_parameters)
     @computation = computation
-    @user_parameters = to_my_own_hash(user_parameters)
+    @user_parameters = user_parameters
   end
 
   def call

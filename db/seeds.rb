@@ -31,6 +31,9 @@ script = <<~CODE
 
   singularity pull --name container.simg %<registry_url>s%<container_name>s:%<container_tag>s
   singularity run container.simg
+
+  touch staging_done.txt
+  <%%= stage_out 'staging_done.txt' %%>
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
@@ -53,6 +56,7 @@ script = <<~CODE
   module load plgrid/tools/singularity/stable
 
   singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,/net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,/net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts /net/archive/groups/plggprocess/UC1/funny_cos_working.img /mnt/run_scripts/runscript.sh 4
+
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
@@ -104,6 +108,10 @@ script = <<~CODE
   module load plgrid/tools/singularity/stable
 
   singularity run /net/archive/groups/plggprocess/Mock/dummy_container/valcon.simg /bin /bin %<sleep_time>s
+
+  touch validation_container_done.txt
+
+  <%%= stage_out 'validation_container_done.txt' %%>
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'validation_container',

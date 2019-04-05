@@ -7,7 +7,7 @@ class Flow
     placeholder_pipeline: %w[placeholder_step],
     tensorflow_pipeline: %w[tf_cpu_step tf_gpu_step],
     singularity_test_gpu_pipeline: %w[singularity_test_gpu_step],
-    singularity_placeholder_pipeline: %w[singularity_placeholder_step],
+    singularity_placeholder_pipeline: %w[singularity_placeholder_step validation_singularity_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
     # lufthansa_pipeline: %w[lufthansa_step],
@@ -15,11 +15,17 @@ class Flow
     staging_in_placeholder_pipeline: %w[staging_in_step],
     validation_pipeline: %w[validation_staging_in_step
                             validation_singularity_step
-                            validation_stage_out_step]
-
+                            validation_stage_out_step],
+    input_check_pipeline: %w[input_check_step1 input_check_step2],
   }.freeze
 
   STEPS = [
+    RimrockStep.new('input_check_step1',
+                    'process-eu/validation_stage_out',
+                    'validation_stage_out_script.sh.erb', [], []),
+    RimrockStep.new('input_check_step2',
+                    'process-eu/validation_stage_out',
+                    'validation_stage_out_script.sh.erb', [:generic_type], []),
     StagingInStep.new('validation_staging_in_step',
                       [
                         StepParameter.new(
@@ -110,7 +116,7 @@ class Flow
                         ]),
     RimrockStep.new('validation_stage_out_step',
                     'process-eu/validation_stage_out',
-                    'validation_stage_out_script.sh.erb', [], []),
+                    'validation_stage_out_script.sh.erb', [:validation_2_type], []),
     StagingInStep.new('staging_in_step',
                       [
                         StepParameter.new(

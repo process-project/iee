@@ -20,8 +20,16 @@ module PipelineSteps
           pipeline_step: @name,
           container_registry_id: container_registry.id,
           container_name: @user_parameters[:container_name],
-          container_tag: @user_parameters[:container_tag]
+          container_tag: @user_parameters[:container_tag],
+          user_parameters: to_my_own_hash(@user_parameters).inspect
         )
+      end
+
+      def to_my_own_hash(parameters)
+        parameters.to_unsafe_h.inject({}) do |memo, (k, v)|
+          memo[k.to_sym] = v
+          memo
+        end
       end
     end
   end
