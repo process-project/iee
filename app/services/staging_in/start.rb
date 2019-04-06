@@ -21,6 +21,10 @@ module StagingIn
       req = Net::HTTP::Post.new(staging_in_path, 'content-type' => 'application/json',
                                                  'x-access-token' => lobcder_api_access_token)
       req.body = request_body.to_json
+
+      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+      @staging_logger.debug("Staging request req_body: #{req.body}")
+
       http.request(req)
     end
 

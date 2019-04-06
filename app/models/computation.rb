@@ -24,7 +24,7 @@ class Computation < ApplicationRecord
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
-  scope :submited_staging_in, -> { submited.staging_in }
+  scope :submitted_staging_in, -> { submitted.staging_in }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline

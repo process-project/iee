@@ -16,6 +16,9 @@ module Api
         @computation.update_attributes(status: 'error')
       end
 
+      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+      @staging_logger.debug("Webhook request params: #{params}")
+
       StagingIn::UpdateJob.perform_later(@computation)
 
       tmp_output_files = @computation.step.tmp_output_files
