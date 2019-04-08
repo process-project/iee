@@ -59,7 +59,8 @@ module StagingIn
                        path: @computation.dest_path },
                 webhook: { method: 'POST',
                            url: webhook_url,
-                           headers: { 'x-access-token' => staging_secret } },
+                           headers: { 'x-access-token' => staging_secret,
+                                      'content-type' => 'application/json' } },
                 options: {} } }]
     end
     # rubocop:enable Metrics/MethodLength
