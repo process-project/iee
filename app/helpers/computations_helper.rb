@@ -59,7 +59,6 @@ module ComputationsHelper
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def runnable_run_status(computation)
     if need_configuration?(computation)
       ['wrench', nil]
@@ -75,7 +74,6 @@ module ComputationsHelper
       ['circle', nil]
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def need_configuration?(computation)
     computation.rimrock? &&

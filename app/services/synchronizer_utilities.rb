@@ -45,9 +45,7 @@ module SynchronizerUtilities
 
   def sync_dir(remote_names, prefix, input_pipeline: nil, output_pipeline: nil)
     validate_only_one_pipeline!(input_pipeline, output_pipeline)
-
     file_names = names(remote_names, prefix)
-
     file_names.each do |remote_name|
       sync_file(remote_name, input_pipeline: input_pipeline, output_pipeline: output_pipeline)
     end
@@ -87,9 +85,7 @@ module SynchronizerUtilities
   end
 
   def names(remote_names, prefix)
-    remote_names.select { |rn| rn.split(prefix).size > 1 }.map do |rn|
-      rn.split(prefix)[1]
-    end
+    remote_names.select { |rn| rn.split(prefix).size > 1 }.map { |rn| rn.split(prefix)[1] }
   end
 
   def sync_file(remote_name, input_pipeline: nil, output_pipeline: nil)

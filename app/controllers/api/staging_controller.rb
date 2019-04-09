@@ -16,6 +16,13 @@ module Api
         @computation.update_attributes(status: 'error')
       end
 
+      ActivityLogWriter.write_message(
+          @computation.pipeline.user,
+          @computation.pipeline,
+          @computation,
+          "computation_status_change_#{@computation.status}"
+      )
+
       @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
       @staging_logger.debug("Webhook request params: #{params}")
 
