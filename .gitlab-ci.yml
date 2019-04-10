@@ -32,6 +32,7 @@ test:
 integration:
   stage: test
   script:
+  - echo ">>>> gitalb host $GITLAB_HOST"
   - google-chrome --version
   - ruby -v
   - which ruby
@@ -71,7 +72,7 @@ deploy_development:
   environment:
     name: development
     url: https://valve-dev.cyfronet.pl
-    
+
 process_deploy_development:
   stage: deploy
   script:
@@ -116,7 +117,7 @@ deploy_production_manual:
   environment:
     name: production
     url: https://valve.cyfronet.pl
-    
+
 process_deploy_production_manual:
   stage: deploy
   script:
