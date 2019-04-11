@@ -10,7 +10,6 @@ module StagingIn
     end
 
     def call
-      @staging_logger.debug("Start -> call | before obtain_endpoint")
       obtain_endpoint
       make_request.value # Raises an HTTP error if the response is not 2xx (success).
       @computation.update_attributes(status: 'running')
@@ -19,7 +18,7 @@ module StagingIn
     private
 
     def obtain_endpoint
-      endpoint = StagingIn::DynamicEndpoint.new.get_query_endpoint
+      endpoint = StagingIn::DynamicEndpoint.new.obtain_query_endpoint
 
       @staging_in_host = endpoint['staging_in_host']
       @staging_in_port = endpoint['staging_in_port']
@@ -29,7 +28,8 @@ module StagingIn
 
     def make_request
       http = Net::HTTP.new(@staging_in_host, @staging_in_port)
-      req = Net::HTTP::Post.new(staging_in_path, 'content-type' => 'application/json',
+      req = Net::HTTP::Post.new(staging_in_path,
+                                'content-type' => 'application/json',
                                 @token_header => @lobcder_api_access_token)
       req.body = request_body.to_json
       http.request(req)
@@ -52,7 +52,8 @@ module StagingIn
     end
 
     def lobcder_api_infrastructure_access_token
-      Rails.application.config_for('process')['staging_in']['lobcder_api_infrastructure_access_token']
+      key = 'lobcder_api_infrastructure_access_token'
+      Rails.application.config_for('process')['staging_in'][key]
     end
 
     # rubocop:disable Metrics/MethodLength
