@@ -3,18 +3,22 @@
 module StagingIn
   require 'net/http'
   require 'json'
-  class DynamicEndpoint
+  class GetDynamicEndpoint
     def initialize
       @http = Net::HTTP.new(infrastructure_host, infrastructure_port)
     end
+
+    def call
+      obtain_query_endpoint
+    end
+
+    private
 
     def obtain_query_endpoint
       req = Net::HTTP::Get.new(infrastructure_path,
                                'x-access-token' => lobcder_api_infrastructure_access_token)
       parse_response @http.request(req)
     end
-
-    private
 
     def infrastructure_host
       Rails.application.config_for('process')['staging_in']['infrastructure_host']

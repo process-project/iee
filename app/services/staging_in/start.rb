@@ -18,7 +18,7 @@ module StagingIn
     private
 
     def obtain_endpoint
-      endpoint = StagingIn::DynamicEndpoint.new.obtain_query_endpoint
+      endpoint = StagingIn::GetDynamicEndpoint.new.call
 
       @staging_in_host = endpoint['staging_in_host']
       @staging_in_port = endpoint['staging_in_port']
