@@ -67,6 +67,8 @@ class Computation < ApplicationRecord
 
   def run
     runner.call
+    @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+    @staging_logger.debug("Computation #{pipeline_step} run!!!")
   end
 
   def runnable?
