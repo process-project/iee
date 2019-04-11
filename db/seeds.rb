@@ -31,6 +31,8 @@ script = <<~CODE
 
   singularity pull --name container.simg %<registry_url>s%<container_name>s:%<container_tag>s
   singularity run container.simg
+
+  echo %<echo_message>s
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',

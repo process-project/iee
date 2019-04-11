@@ -107,6 +107,14 @@ class Flow
                             'multi',
                             'latest',
                             %w[latest]
+                          ),
+                          StepParameter.new(
+                            'echo_message',
+                            'Echo Message',
+                            'Example message for the container to echo at the end of the execution',
+                            '4',
+                            'string',
+                            ''
                           )
                         ]),
     SingularityStep.new('medical_step',
