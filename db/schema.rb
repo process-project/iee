@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190314231057) do
+ActiveRecord::Schema.define(version: 20190415122318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,19 @@ ActiveRecord::Schema.define(version: 20190314231057) do
     t.index ["group_id"], name: "index_access_policies_on_group_id"
     t.index ["resource_id"], name: "index_access_policies_on_resource_id"
     t.index ["user_id"], name: "index_access_policies_on_user_id"
+  end
+
+  create_table "activity_logs", force: :cascade do |t|
+    t.string "user_id"
+    t.string "user_email"
+    t.string "project_name"
+    t.string "pipeline_id"
+    t.string "pipeline_name"
+    t.string "computation_id"
+    t.string "pipeline_step_name"
+    t.string "message", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "computations", id: :serial, force: :cascade do |t|
@@ -66,6 +79,7 @@ ActiveRecord::Schema.define(version: 20190314231057) do
     t.integer "container_registry_id"
     t.string "src_host"
     t.string "dest_host"
+    t.string "user_parameters"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 
