@@ -8,15 +8,10 @@ module Api
 
     # rubocop:disable Metrics/MethodLength
     def notify
-      computation_id = params[:status][:id]
+      computation_id = params.dig(:status, :id)
       @computation = Computation.find computation_id
-      if @computation.nil?
-        Rails.logger.error('Invalid id in LOBCDER API response ' \
-                           "in StagingControler#notify: #{computation_id}")
-        return
-      end
 
-      status = params[:status][:status]
+      status = params.dig(:status, :status)
       if status == 'done'
         @computation.update_attributes(status: 'finished')
       else
@@ -24,6 +19,10 @@ module Api
       end
 
       StagingIn::UpdateJob.perform_later(@computation)
+
+    rescue ActiveRecord::RecordNotFound
+      Rails.logger.error('Invalid id in LOBCDER API response ' \
+                           "in StagingControler#notify: #{computation_id}")
     end
     # rubocop:enable Metrics/MethodLength
 
