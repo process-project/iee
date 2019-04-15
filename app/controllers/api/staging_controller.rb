@@ -6,9 +6,16 @@ module Api
 
     before_action :authenticate_staging!
 
+    # rubocop:disable Metrics/MethodLength
     def notify
-      id = params[:status][:id]
-      @computation = Computation.find id
+      computation_id = params[:status][:id]
+      @computation = Computation.find computation_id
+      if @computation.nil?
+        Rails.logger.error('Invalid id in LOBCDER API response ' \
+                           "in StagingControler#notify: #{computation_id}")
+        return
+      end
+
       status = params[:status][:status]
       if status == 'done'
         @computation.update_attributes(status: 'finished')
@@ -18,6 +25,7 @@ module Api
 
       StagingIn::UpdateJob.perform_later(@computation)
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
