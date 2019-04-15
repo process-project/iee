@@ -22,7 +22,7 @@ class Flow
                         StepParameter.new(
                           'src_host',
                           'Source Host',
-                          'Descriptions are for loosers',
+                          'Source Host in the LOBCDER environment',
                           '0',
                           'multi',
                           'data03.process-project.eu',
@@ -31,7 +31,7 @@ class Flow
                         StepParameter.new(
                           'src_path',
                           'Source Path',
-                          'Descriptions are for loosers',
+                          'Source Path in the LOBCDER environment',
                           '1',
                           'multi',
                           '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
@@ -40,7 +40,7 @@ class Flow
                         StepParameter.new(
                           'dest_host',
                           'Destination Host',
-                          'Descriptions are for loosers',
+                          'Destination Host in the LOBCDER environment',
                           '2',
                           'multi',
                           'pro.cyfronet.pl',
@@ -49,7 +49,7 @@ class Flow
                         StepParameter.new(
                           'dest_path',
                           'Destination Path',
-                          'Descriptions are for loosers',
+                          'Destination Path in the LOBCDER environment',
                           '3',
                           'multi',
                           '/net/archive/groups/plggprocess/Mock/test_staging',
