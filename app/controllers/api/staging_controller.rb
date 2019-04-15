@@ -19,7 +19,6 @@ module Api
       end
 
       StagingIn::UpdateJob.perform_later(@computation)
-
     rescue ActiveRecord::RecordNotFound
       Rails.logger.error('Invalid id in LOBCDER API response ' \
                            "in StagingControler#notify: #{computation_id}")
