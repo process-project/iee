@@ -7,7 +7,7 @@ module PipelineSteps
         @pipeline = pipeline
         @name = name
         @parameters = parameters
-        @user_parameters = user_parameters.permit(permitted_parameters(parameters)).to_h
+        @user_parameters = safe_user_parameters(user_parameters, parameters)
       end
 
       def call
@@ -23,6 +23,10 @@ module PipelineSteps
           container_tag: @user_parameters[:container_tag],
           user_parameters: @user_parameters.inspect
         )
+      end
+
+      def safe_user_parameters(user_parameters, parameters)
+        user_parameters.permit(permitted_parameters(parameters)).to_h.symbolize_keys
       end
 
       def permitted_parameters(parameters)

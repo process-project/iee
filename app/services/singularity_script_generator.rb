@@ -7,7 +7,7 @@ class SingularityScriptGenerator
 
   def initialize(computation, user_parameters)
     @computation = computation
-    @user_parameters = to_my_own_hash(user_parameters)
+    @user_parameters = user_parameters
   end
 
   def call
@@ -18,12 +18,5 @@ class SingularityScriptGenerator
     options_filled_script = record.script_blueprint % @user_parameters
 
     ScriptGenerator.new(@computation, options_filled_script).call
-  end
-
-  def to_my_own_hash(parameters)
-    parameters.to_unsafe_h.inject({}) do |memo, (k, v)|
-      memo[k.to_sym] = v
-      memo
-    end
   end
 end

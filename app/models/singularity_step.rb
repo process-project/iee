@@ -14,11 +14,10 @@ class SingularityStep < Step
   end
 
   def builder_for(pipeline, params)
-    @user_parameters = params
     PipelineSteps::Singularity::Builder.new(
       pipeline,
       name,
-      @user_parameters,
+      params,
       @parameters
     )
   end
@@ -26,7 +25,6 @@ class SingularityStep < Step
   def runner_for(computation, options = {})
     PipelineSteps::Singularity::Runner.new(
       computation,
-      @user_parameters,
       options
     )
   end

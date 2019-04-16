@@ -3,10 +3,9 @@
 module PipelineSteps
   module Singularity
     class Runner < PipelineSteps::RunnerBase
-      def initialize(computation, user_parameters = {}, options = {})
+      def initialize(computation, options = {})
         super(computation, options)
-
-        @user_parameters = user_parameters
+        @user_parameters = eval computation.user_parameters
       end
 
       protected
