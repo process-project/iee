@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190430102645) do
+ActiveRecord::Schema.define(version: 20190430115636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,23 @@ ActiveRecord::Schema.define(version: 20190430102645) do
     t.string "container_tag"
     t.string "hpc"
     t.string "script_blueprint"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "singularity_script_blueprints_step_parameters", id: false, force: :cascade do |t|
+    t.bigint "singularity_script_blueprint_id", null: false
+    t.bigint "step_parameter_id", null: false
+  end
+
+  create_table "step_parameters", force: :cascade do |t|
+    t.string "label"
+    t.string "name"
+    t.string "description"
+    t.integer "rank"
+    t.string "datatype"
+    t.string "default"
+    t.string "values"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
