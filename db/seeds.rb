@@ -36,9 +36,8 @@ script = <<~CODE
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
-                                   tag: 'latest',
+                                   container_tag: 'latest',
                                    hpc: 'Prometheus',
-                                   available_options: '',
                                    script_blueprint: script)
 
 script = <<~CODE
@@ -58,9 +57,8 @@ script = <<~CODE
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
-                                   tag: '0.1',
+                                   container_tag: '0.1',
                                    hpc: 'Prometheus',
-                                   available_options: '',
                                    script_blueprint: script)
 
 script = <<~CODE
@@ -87,7 +85,6 @@ script = <<~CODE
 CODE
 
 SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
-                                   tag: 'latest',
+                                   container_tag: 'latest',
                                    hpc: 'Prometheus',
-                                   available_options: '',
                                    script_blueprint: script)
