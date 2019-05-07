@@ -11,14 +11,10 @@ module PipelineSteps
       end
 
       def call
-        container_registry = ContainerRegistry.
-                             find_or_create_by!(registry_url: @user_parameters[:registry_url])
-
         SingularityComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,
-          container_registry_id: container_registry.id,
           container_name: @user_parameters[:container_name],
           container_tag: @user_parameters[:container_tag],
           user_parameters: @user_parameters.inspect
