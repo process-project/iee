@@ -3,11 +3,11 @@
 module PipelineSteps
   module Singularity
     class Builder
-      def initialize(pipeline, name, user_parameters, parameters = [])
+      def initialize(pipeline, name, parameter_values, parameters = [])
         @pipeline = pipeline
         @name = name
         @parameters = parameters
-        @user_parameters = safe_user_parameters(user_parameters, parameters)
+        @parameter_values = safe_parameter_values(parameter_values, parameters)
       end
 
       def call
@@ -15,14 +15,14 @@ module PipelineSteps
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,
-          container_name: @user_parameters[:container_name],
-          container_tag: @user_parameters[:container_tag],
-          user_parameters: @user_parameters.inspect
+          container_name: @parameter_values[:container_name],
+          container_tag: @parameter_values[:container_tag],
+          parameter_values: @parameter_values
         )
       end
 
-      def safe_user_parameters(user_parameters, parameters)
-        user_parameters.permit(permitted_parameters(parameters)).to_h.symbolize_keys
+      def safe_parameter_values(parameter_values, parameters)
+        parameter_values.permit(permitted_parameters(parameters)).to_h.symbolize_keys
       end
 
       def permitted_parameters(parameters)

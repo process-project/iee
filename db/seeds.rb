@@ -14,77 +14,51 @@ when 'developement'
   end
 end
 
-script = <<~CODE
-  #!/bin/bash -l
-  #SBATCH -N 1
-  #SBATCH --ntasks-per-node=1
-  #SBATCH --time=00:05:00
-  #SBATCH -A process1
-  #SBATCH -p plgrid-testing
-  #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.out
-  #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.err
+# script = <<~CODE
+#   #!/bin/bash
+#   #SBATCH -A process1gpu
+#   #SBATCH -p plgrid-gpu
+#   #SBATCH -N 2
+#   #SBATCH -n 24
+#   #SBATCH --gres=gpu:2
+#   #SBATCH --time 8:00:00
+#   #SBATCH --job-name UC1_test
+#   #SBATCH --output /net/archive/groups/plggprocess/UC1/slurm_outputs/uc1-pipeline-log-%%J.txt
 
-  ## Running container using singularity
-  module load plgrid/tools/singularity/stable
+#   module load plgrid/tools/singularity/stable
 
-  cd $SCRATCHDIR
+#   singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,/net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,/net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts /net/archive/groups/plggprocess/UC1/funny_cos_working.img /mnt/run_scripts/runscript.sh 4
+# CODE
 
-  singularity pull --name container.simg %<registry_url>s%<container_name>s:%<container_tag>s
-  singularity run container.simg
+# SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
+#                                    container_tag: '0.1',
+#                                    hpc: 'Prometheus',
+#                                    script_blueprint: script)
 
-  echo %<echo_message>s
-CODE
+# script = <<~CODE
+#   #!/bin/bash
+#   #SBATCH --partition plgrid-short
+#   #SBATCH -A process1
+#   #SBATCH --nodes 1
+#   #SBATCH --ntasks 24
+#   #SBATCH --time 0:59:59
+#   #SBATCH --job-name UC2_test
+#   #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
+#   #SBATCH --error /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.err
 
-SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
-                                   container_tag: 'latest',
-                                   hpc: 'Prometheus',
-                                   script_blueprint: script)
+#   mkdir /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
 
-script = <<~CODE
-  #!/bin/bash
-  #SBATCH -A process1gpu
-  #SBATCH -p plgrid-gpu
-  #SBATCH -N 2
-  #SBATCH -n 24
-  #SBATCH --gres=gpu:2
-  #SBATCH --time 8:00:00
-  #SBATCH --job-name UC1_test
-  #SBATCH --output /net/archive/groups/plggprocess/UC1/slurm_outputs/uc1-pipeline-log-%%J.txt
+#   sed -e "s/\\$SLURM_JOB_ID/$SLURM_JOB_ID/" /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.template > /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg
 
-  module load plgrid/tools/singularity/stable
+#   module load plgrid/tools/singularity/stable
+#   singularity exec -B /net/archive/groups/plggprocess/UC2/container_testing/ /net/archive/groups/plggprocess/UC2/containers/centos_lofar.simg genericpipeline.py -d -c /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg /net/archive/groups/plggprocess/UC2/container_testing/Pre-Facet-Calibrator.parset
 
-  singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,/net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,/net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts /net/archive/groups/plggprocess/UC1/funny_cos_working.img /mnt/run_scripts/runscript.sh 4
-CODE
+#   tar -cf /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
 
-SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
-                                   container_tag: '0.1',
-                                   hpc: 'Prometheus',
-                                   script_blueprint: script)
+#   <%%= stage_out '/net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar' %%>
+# CODE
 
-script = <<~CODE
-  #!/bin/bash
-  #SBATCH --partition plgrid-short
-  #SBATCH -A process1
-  #SBATCH --nodes 1
-  #SBATCH --ntasks 24
-  #SBATCH --time 0:59:59
-  #SBATCH --job-name UC2_test
-  #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
-  #SBATCH --error /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.err
-
-  mkdir /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
-
-  sed -e "s/\\$SLURM_JOB_ID/$SLURM_JOB_ID/" /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.template > /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg
-
-  module load plgrid/tools/singularity/stable
-  singularity exec -B /net/archive/groups/plggprocess/UC2/container_testing/ /net/archive/groups/plggprocess/UC2/containers/centos_lofar.simg genericpipeline.py -d -c /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg /net/archive/groups/plggprocess/UC2/container_testing/Pre-Facet-Calibrator.parset
-
-  tar -cf /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
-
-  <%%= stage_out '/net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar' %%>
-CODE
-
-SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
-                                   container_tag: 'latest',
-                                   hpc: 'Prometheus',
-                                   script_blueprint: script)
+# SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
+#                                    container_tag: 'latest',
+#                                    hpc: 'Prometheus',
+#                                    script_blueprint: script)
