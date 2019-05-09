@@ -5,18 +5,18 @@ require 'erb'
 class SingularityScriptGenerator
   attr_reader :computation
 
-  def initialize(computation, user_parameters)
+  def initialize(computation, parameter_values)
     @computation = computation
-    @user_parameters = user_parameters
+    @parameter_values = parameter_values
   end
 
   def call
-    record = SingularityScriptBlueprint.find_by!(container_name: @user_parameters[:container_name],
-                                                 tag: @user_parameters[:container_tag],
-                                                 hpc: @user_parameters[:hpc])
+    record = SingularityScriptBlueprint.find_by!(container_name: computation.container_name,
+                                                 container_tag: computation.container_tag,
+                                                 hpc: computation.hpc)
 
-    options_filled_script = record.script_blueprint % @user_parameters
+    parameters_filled_script = record.script_blueprint % @parameter_values
 
-    ScriptGenerator.new(@computation, options_filled_script).call
+    ScriptGenerator.new(@computation, parameters_filled_script).call
   end
 end

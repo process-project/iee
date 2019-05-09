@@ -17,7 +17,8 @@ module PipelineSteps
           pipeline_step: @name,
           container_name: @parameter_values[:container_name],
           container_tag: @parameter_values[:container_tag],
-          parameter_values: @parameter_values
+          hpc: @parameter_values[:hpc]
+          parameter_values: @parameter_values.expect[:container_name, :container_tag, :hpc]
         )
       end
 
