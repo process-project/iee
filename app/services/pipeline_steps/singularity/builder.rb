@@ -27,7 +27,7 @@ module PipelineSteps
       end
 
       def permitted_parameters(parameters)
-        attributes = []
+        attributes = [:container_name, :container_tag, :hpc]
 
         parameters.each do |parameter|
           attributes.push parameter.label.to_sym
