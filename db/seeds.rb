@@ -29,7 +29,7 @@ script = <<~CODE
 
   cd $SCRATCHDIR
 
-  singularity pull --name container.simg %<registry_url>s%<container_name>s:%<container_tag>s
+  singularity pull --name container.simg shub://%<container_name>s:%<container_tag>s
   singularity run container.simg
 
   echo %<echo_message>s
@@ -42,46 +42,26 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
 
 ssbp.step_parameters = [
                           StepParameter.new(
-                            'hpc',
-                            'HPC',
-                            'Computational resource pool used to execute the computation',
-                            '0',
-                            'multi',
-                            'Prometheus',
-                            %w[Prometheus]
-                          ),
-                          StepParameter.new(
-                            'registry_url',
-                            'Registry url',
-                            'Singularity registry which contains containers',
-                            '1',
-                            'multi',
-                            'shub://',
-                            %w[shub://]
-                          ),
-                          StepParameter.new(
-                            'container_name',
-                            'Container Name',
-                            'Name of the container in the following form: user/container_name',
-                            '2',
-                            'multi',
-                            'vsoch/hello-world',
-                            %w[vsoch/hello-world]
-                          ),
-                          StepParameter.new(
-                            'container_tag',
-                            'Tag',
-                            'Tag of the selected container',
-                            '3',
-                            'multi',
-                            'latest',
-                            %w[latest]
-                          ),
+                            'echo_message',
+                            'Echo Message',
+                            'Example message for the container to echo at the end of the execution',
+                            0,
+                            'string',
+                            ''
+                          )
+                        ]
+
+ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
+                                          container_tag: 'latest',
+                                          hpc: 'SuperMUC',
+                                          script_blueprint: script)
+
+ssbp.step_parameters = [
                           StepParameter.new(
                             'echo_message',
                             'Echo Message',
                             'Example message for the container to echo at the end of the execution',
-                            '4',
+                            0,
                             'string',
                             ''
                           )
@@ -107,45 +87,6 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                           container_tag: '0.1',
                                           hpc: 'Prometheus',
                                           script_blueprint: script)
-
-ssbp.step_parameters = [
-                          StepParameter.new(
-                            'hpc',
-                            'HPC',
-                            'Computational resource pool used to execute the computation',
-                            '0',
-                            'multi',
-                            'Prometheus',
-                            %w[Prometheus]
-                          ),
-                          StepParameter.new(
-                            'registry_url',
-                            'Registry url',
-                            'Singularity registry which contains containers',
-                            '1',
-                            'multi',
-                            'shub://',
-                            %w[shub://]
-                          ),
-                          StepParameter.new(
-                            'container_name',
-                            'Container Name',
-                            'Name of the container in the following form: user/container_name',
-                            '2',
-                            'multi',
-                            'maragraziani/ucdemo',
-                            %w[maragraziani/ucdemo]
-                          ),
-                          StepParameter.new(
-                            'container_tag',
-                            'Tag',
-                            'Tag of the selected container',
-                            '3',
-                            'multi',
-                            '0.1',
-                            %w[0.1]
-                          )
-                        ]
 
 script = <<~CODE
   #!/bin/bash
@@ -176,46 +117,10 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container
                                    script_blueprint: script)
 ssbp.step_parameters = [
                           StepParameter.new(
-                            'hpc',
-                            'HPC',
-                            'Computational resource pool used to execute the computation',
-                            '0',
-                            'multi',
-                            'Prometheus',
-                            %w[Prometheus]
-                          ),
-                          StepParameter.new(
-                            'registry_url',
-                            'Registry url',
-                            'Singularity registry which contains containers',
-                            '1',
-                            'multi',
-                            'shub://',
-                            %w[shub://]
-                          ),
-                          StepParameter.new(
-                            'container_name',
-                            'Container Name',
-                            'Name of the container in the following form: user/container_name',
-                            '2',
-                            'multi',
-                            'lofar/lofar_container',
-                            %w[lofar/lofar_container]
-                          ),
-                          StepParameter.new(
-                            'container_tag',
-                            'Tag',
-                            'Tag of the selected container',
-                            '3',
-                            'multi',
-                            'latest',
-                            %w[latest]
-                          ),
-                          StepParameter.new(
                             'visibility_id',
                             'LOFAR Visibility ID',
                             'LOFAR visibility identifier',
-                            '4',
+                            0,
                             'string',
                             ''
                           ),
@@ -223,7 +128,7 @@ ssbp.step_parameters = [
                             'avg_freq_step',
                             'Average frequency step',
                             'Corresponds to .freqstep in NDPPP or demixer.freqstep',
-                            '5',
+                            0,
                             'integer',
                             2
                           ),
@@ -231,7 +136,7 @@ ssbp.step_parameters = [
                             'avg_time_step',
                             'Average time step',
                             'Corresponds to .timestep in NDPPP or demixer.timestep',
-                            '6',
+                            0,
                             'integer',
                             4
                           ),
@@ -239,7 +144,7 @@ ssbp.step_parameters = [
                             'do_demix',
                             'Perform demixer',
                             'If true then demixer instead of average is performed',
-                            '7',
+                            0,
                             'boolean',
                             true
                           ),
@@ -247,7 +152,7 @@ ssbp.step_parameters = [
                             'demix_freq_step',
                             'Demixer frequency step',
                             'Corresponds to .demixfreqstep in NDPPP',
-                            '8',
+                            0,
                             'integer',
                             2
                           ),
@@ -255,7 +160,7 @@ ssbp.step_parameters = [
                             'demix_time_step',
                             'Demixer time step',
                             'Corresponds to .demixtimestep in NDPPP',
-                            '9',
+                            0,
                             'integer',
                             2
                           ),
@@ -263,7 +168,7 @@ ssbp.step_parameters = [
                             'demix_sources',
                             'Demixer sources',
                             '',
-                            '10',
+                            0,
                             'multi',
                             'CasA',
                             %w[CasA other]
@@ -272,7 +177,7 @@ ssbp.step_parameters = [
                             'select_nl',
                             'Use NL stations only',
                             'If true then only Dutch stations are selected',
-                            '11',
+                            0,
                             'boolean',
                             true
                           ),
@@ -280,65 +185,28 @@ ssbp.step_parameters = [
                             'parset',
                             'Parameter set',
                             '',
-                            '12',
+                            0,
                             'multi',
                             'lba_npp',
                             %w[lba_npp other]
                           )
                         ]
 
-
 ### Agrocopernicus:
 script = <<~CODE
   agrocopernicus placeholder
 CODE
 
-ssbp = SingularityScriptBlueprint.create!(container_name: 'agrocopernicus placeholder',
-                                         container_tag: 'agrocopernicus placeholder',
-                                         hpc: 'agrocopernicus placeholder',
+ssbp = SingularityScriptBlueprint.create!(container_name: 'agrocopernicus_placeholder_container',
+                                         container_tag: 'agrocopernicus_placeholder_tag',
+                                         hpc: 'Prometheus',
                                          script_blueprint: script)
-ssbp.step_parameters = [                       # [
-                          StepParameter.new(
-                            'hpc',
-                            'HPC',
-                            'Computational resource pool used to execute the computation',
-                            '0',
-                            'multi',
-                            'Prometheus',
-                            %w[Prometheus]
-                          ),
-                          StepParameter.new(
-                            'registry_url',
-                            'Registry url',
-                            'Singularity registry which contains containers',
-                            '1',
-                            'multi',
-                            'shub://',
-                            %w[shub://]
-                          ),
-                          StepParameter.new(
-                            'container_name',
-                            'Container Name',
-                            'Name of the container in the following form: user/container_name',
-                            '2',
-                            'multi',
-                            'vsoch/hello-world',
-                            %w[vsoch/hello-world]
-                          ),
-                          StepParameter.new(
-                            'container_tag',
-                            'Tag',
-                            'Tag of the selected container',
-                            '3',
-                            'multi',
-                            'latest',
-                            %w[latest]
-                          ),
+ssbp.step_parameters = [
                           StepParameter.new(
                             'irrigation',
                             'Irrigation',
                             '',
-                            '4',
+                            0,
                             'boolean',
                             'true'
                           ),
@@ -346,7 +214,7 @@ ssbp.step_parameters = [                       # [
                             'seeding_date',
                             'Seeding date',
                             '',
-                            '5',
+                            0,
                             'multi',
                             '-15 days',
                             ['-15 days', 'original', '+15 days']
@@ -355,7 +223,7 @@ ssbp.step_parameters = [                       # [
                             'nutrition_factor',
                             'Nutrition factor',
                             '',
-                            '6',
+                            0,
                             'multi',
                             '0.25',
                             ['0.25', '0.45', '0.60']
@@ -364,7 +232,7 @@ ssbp.step_parameters = [                       # [
                             'Phenology_factor',
                             'Phenology factor',
                             '',
-                            '7',
+                            0,
                             'multi',
                             '0.6',
                             ['0.6', '0.8', '1.0', '1.2']
