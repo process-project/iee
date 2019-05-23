@@ -6,8 +6,8 @@ module PipelineSteps
       def initialize(pipeline, name, parameter_values, parameters = [])
         @pipeline = pipeline
         @name = name
-        @parameters = parameters
         @parameter_values = safe_parameter_values(parameter_values, parameters)
+        @parameters = parameters
       end
 
       def call
@@ -17,8 +17,8 @@ module PipelineSteps
           pipeline_step: @name,
           container_name: @parameter_values[:container_name],
           container_tag: @parameter_values[:container_tag],
-          hpc: @parameter_values[:hpc]
-          parameter_values: @parameter_values.expect[:container_name, :container_tag, :hpc]
+          hpc: @parameter_values[:hpc],
+          parameter_values: @parameter_values.except(:container_name, :container_tag, :hpc)
         )
       end
 

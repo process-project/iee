@@ -10,11 +10,7 @@ module PipelineSteps
       protected
 
       def pre_internal_run
-        computation.script = SingularityScriptGenerator.new(
-          computation,
-          computation.parameter_values
-        ).call
-        
+        computation.script = SingularityScriptGenerator.new(computation).call
         computation.job_id = nil
       end
 
