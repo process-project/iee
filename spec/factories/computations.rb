@@ -28,7 +28,6 @@ FactoryBot.define do
       pipeline_step 'singularity_placeholder_step'
       script 'SCRIPT'
       container_name 'lolcow'
-      container_registry nil
       container_tag 'latest'
     end
 

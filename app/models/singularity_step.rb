@@ -19,11 +19,11 @@ class SingularityStep < Step
     @parameters = basic_parameters + specific_parameters
   end
 
-  def builder_for(pipeline, params)
+  def builder_for(pipeline, parameter_values)
     PipelineSteps::Singularity::Builder.new(
       pipeline,
       name,
-      params,
+      parameter_values,
       @parameters
     )
   end

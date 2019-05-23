@@ -3,34 +3,31 @@
 module PipelineSteps
   module Singularity
     class Builder
-      def initialize(pipeline, name, user_parameters, parameters = [])
+      def initialize(pipeline, name, parameter_values, parameters = [])
         @pipeline = pipeline
         @name = name
+        @parameter_values = safe_parameter_values(parameter_values, parameters)
         @parameters = parameters
-        @user_parameters = safe_user_parameters(user_parameters, parameters)
       end
 
       def call
-        container_registry = ContainerRegistry.
-                             find_or_create_by!(registry_url: @user_parameters[:registry_url])
-
         SingularityComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,
-          container_registry_id: container_registry.id,
-          container_name: @user_parameters[:container_name],
-          container_tag: @user_parameters[:container_tag],
-          user_parameters: @user_parameters.inspect
+          container_name: @parameter_values[:container_name],
+          container_tag: @parameter_values[:container_tag],
+          hpc: @parameter_values[:hpc],
+          parameter_values: @parameter_values.except(:container_name, :container_tag, :hpc)
         )
       end
 
-      def safe_user_parameters(user_parameters, parameters)
-        user_parameters.permit(permitted_parameters(parameters)).to_h.symbolize_keys
+      def safe_parameter_values(parameter_values, parameters)
+        parameter_values.permit(permitted_parameters(parameters)).to_h.symbolize_keys
       end
 
       def permitted_parameters(parameters)
-        attributes = []
+        attributes = [:container_name, :container_tag, :hpc]
 
         parameters.each do |parameter|
           attributes.push parameter.label.to_sym

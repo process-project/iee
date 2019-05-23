@@ -5,16 +5,12 @@ module PipelineSteps
     class Runner < PipelineSteps::RunnerBase
       def initialize(computation, options = {})
         super(computation, options)
-        @user_parameters = eval computation.user_parameters
       end
 
       protected
 
       def pre_internal_run
-        computation.script = SingularityScriptGenerator.new(
-          computation,
-          @user_parameters
-        ).call
+        computation.script = SingularityScriptGenerator.new(computation).call
         computation.job_id = nil
       end
 
