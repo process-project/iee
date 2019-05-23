@@ -4,10 +4,16 @@ module PipelineSteps
   module Singularity
     class Builder
       def initialize(pipeline, name, parameter_values, parameters = [])
+        @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+
         @pipeline = pipeline
         @name = name
         @parameter_values = safe_parameter_values(parameter_values, parameters)
         @parameters = parameters
+
+        @staging_logger.debug("safe_parameter_values: #{@parameter_values}")
+        @staging_logger.debug("parameters: #{@parameters}")
+        @staging_logger.debug("rails_parameters: #{parameter_values}")
       end
 
       def call
