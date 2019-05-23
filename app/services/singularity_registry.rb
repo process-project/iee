@@ -5,13 +5,14 @@ class SingularityRegistry
     singularity_placeholder_step: %w[vsoch/hello-world],
     medical_step: %w[maragraziani/ucdemo],
     lofar_step: %w[lofar/lofar_container],
-    agrocopernicus_step: %w[vsoch/hello-world]
+    agrocopernicus_step: %w[agrocopernicus_placeholder_container]
   }.freeze
 
   CONTAINERS = {
     'vsoch/hello-world' => %w[latest],
     'maragraziani/ucdemo' => %w[0.1],
-    'lofar/lofar_container' => %w[latest]
+    'lofar/lofar_container' => %w[latest],
+    'agrocopernicus_placeholder_container' => %w[agrocopernicus_placeholder_tag]
   }.freeze
 
   def self.fetch_containers(step_name)
