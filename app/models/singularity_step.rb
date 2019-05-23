@@ -66,33 +66,33 @@ class SingularityStep < Step
 
   def build_basic_parameters(possibilities)
     container_names_param = StepParameter.new(
-      label: 'container_name',
-      name: 'Container name',
-      description: 'Name of your container',
-      rank: 0,
-      datatype: 'multi',
-      default: possibilities[:container_names].first,
-      values: possibilities[:container_names]
+      'container_name',
+      'Container name',
+      'Name of your container',
+      0,
+      'multi',
+      possibilities[:container_names].first,
+      possibilities[:container_names]
     )
 
     container_tags_param = StepParameter.new(
-      label: 'container_tag',
-      name: 'Container tag',
-      description: 'Tag of the container used on registry',
-      rank: 0,
-      datatype: 'multi',
-      default: possibilities[:container_tags].first,
-      values: possibilities[:container_tags]
+      'container_tag',
+      'Container tag',
+      'Tag of the container used on registry',
+      0,
+      'multi',
+      possibilities[:container_tags].first,
+      possibilities[:container_tags]
     )
 
     container_HPCs_param = StepParameter.new(
-      label: 'hpc',
-      name: 'HPC',
-      description: 'High Performance Computer',
-      rank: 0,
-      datatype: 'multi',
-      default: possibilities[:HPCs].first,
-      values: possibilities[:HPCs]
+      'hpc',
+      'HPC',
+      'High Performance Computer',
+      0,
+      'multi',
+      possibilities[:HPCs].first,
+      possibilities[:HPCs]
     )
 
     return [container_names_param, container_tags_param, container_HPCs_param]
