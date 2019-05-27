@@ -113,12 +113,30 @@ class SingularityStep < Step
           next if blueprint.nil?
 
           blueprint.step_parameters.each do |specific_parameter|
-            specific_parameters |= [specific_parameter]
+            merge_parameter_into(specific_parameters, specific_parameter)
           end
         end
       end
     end
 
     return specific_parameters
+  end
+
+  private
+
+  def merge_parameter_into(specific_parameters, sp_new)
+    exist_flag = true
+    specific_parameters.each do |sp_old|
+      if sp_old.label == sp_new.label
+        all_values = (sp_old.values + sp_new.values).uniq
+        sp_old.values = all_values
+        exist_flag = false
+        break
+      end
+    end
+
+    if exist_flag
+      specific_parameters << sp_new
+    end
   end
 end
