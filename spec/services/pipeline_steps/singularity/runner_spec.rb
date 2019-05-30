@@ -43,9 +43,8 @@ RSpec.describe PipelineSteps::Singularity::Runner do
   CODE
 
   SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
-                                     tag: 'latest',
+                                     container_tag: 'latest',
                                      hpc: 'Prometheus',
-                                     available_options: '',
                                      script_blueprint: script)
 
   subject do

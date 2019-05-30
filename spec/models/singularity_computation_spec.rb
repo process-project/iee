@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe SingularityComputation, type: :model do
-  subject { build(:singularity_computation, status: :new }
+  subject { build(:singularity_computation, status: :new) }
 
   it { should validate_presence_of(:script) }
   it { should validate_presence_of(:container_name) }

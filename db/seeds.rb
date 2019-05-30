@@ -16,11 +16,12 @@ end
 
 script = <<~CODE
   #!/bin/bash -l
-  #SBATCH -N 1
-  #SBATCH --ntasks-per-node=1
+  #SBATCH -N %<nodes>s
+  #SBATCH --ntasks-per-node=%<cpus>s
   #SBATCH --time=00:05:00
   #SBATCH -A process1
-  #SBATCH -p plgrid-testing
+  #SBATCH -p %<partition>s
+  #SBATCH --job-name mock_container_step
   #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.out
   #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.err
 
@@ -32,7 +33,9 @@ script = <<~CODE
   singularity pull --name container.simg shub://%<container_name>s:%<container_tag>s
   singularity run container.simg
 
-  echo %<echo_message>s
+  echo '%<echo_message>s'
+
+  rm container.simg
 CODE
 
 ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
@@ -41,6 +44,32 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                           script_blueprint: script)
 
 ssbp.step_parameters = [
+                         StepParameter.new(
+                            'nodes',
+                            'Nodes',
+                            'Number of execution nodes',
+                            0,
+                            'integer',
+                            1
+                          ),
+                          StepParameter.new(
+                            'cpus',
+                            'CPUs',
+                            'Number of CPU per execution node',
+                            0,
+                            'multi',
+                            '1',
+                            %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+                          ),
+                          StepParameter.new(
+                            'partition',
+                            'Partition',
+                            'Prometheus execution partition',
+                            0,
+                            'multi',
+                            'plgrid-testing',
+                            %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+                          ),
                           StepParameter.new(
                             'echo_message',
                             'Echo Message',
@@ -62,7 +91,7 @@ ssbp.step_parameters = [
                             'Echo Message',
                             'Example message for the container to echo at the end of the execution',
                             0,
-                            'string',
+                            'multi',
                             ''
                           )
                         ]
@@ -70,9 +99,9 @@ ssbp.step_parameters = [
 script = <<~CODE
   #!/bin/bash
   #SBATCH -A process1gpu
-  #SBATCH -p plgrid-gpu
-  #SBATCH -N 2
-  #SBATCH -n 24
+  #SBATCH -p %<partition>s
+  #SBATCH -N %<nodes>s
+  #SBATCH -n %<cpus>s
   #SBATCH --gres=gpu:2
   #SBATCH --time 8:00:00
   #SBATCH --job-name UC1_test
@@ -88,12 +117,42 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                           hpc: 'Prometheus',
                                           script_blueprint: script)
 
+
+ssbp.step_parameters = [
+                          StepParameter.new(
+                            'nodes',
+                            'Nodes',
+                            'Number of execution nodes',
+                            0,
+                            'integer',
+                            1
+                          ),
+                          StepParameter.new(
+                            'cpus',
+                            'CPUs',
+                            'Number of CPU per execution node',
+                            0,
+                            'multi',
+                            '1',
+                            %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+                          ),
+                          StepParameter.new(
+                            'partition',
+                            'Partition',
+                            'Prometheus execution partition',
+                            0,
+                            'multi',
+                            'plgrid-gpu',
+                            %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+                          )
+                        ]
+
 script = <<~CODE
   #!/bin/bash
-  #SBATCH --partition plgrid-short
+  #SBATCH --partition %<partition>s
   #SBATCH -A process1
-  #SBATCH --nodes 1
-  #SBATCH --ntasks 24
+  #SBATCH --nodes %<nodes>s
+  #SBATCH --ntasks %<cpus>s
   #SBATCH --time 0:59:59
   #SBATCH --job-name UC2_test
   #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
@@ -116,6 +175,32 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container
                                    hpc: 'Prometheus',
                                    script_blueprint: script)
 ssbp.step_parameters = [
+                          StepParameter.new(
+                            'nodes',
+                            'Nodes',
+                            'Number of execution nodes',
+                            0,
+                            'integer',
+                            1
+                          ),
+                          StepParameter.new(
+                            'cpus',
+                            'CPUs',
+                            'Number of CPU per execution node',
+                            0,
+                            'multi',
+                            '1',
+                            %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+                          ),
+                          StepParameter.new(
+                            'partition',
+                            'Partition',
+                            'Prometheus execution partition',
+                            0,
+                            'multi',
+                            'plgrid-short',
+                            %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+                          ),
                           StepParameter.new(
                             'visibility_id',
                             'LOFAR Visibility ID',
