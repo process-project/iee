@@ -5,15 +5,11 @@
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
-    tensorflow_pipeline: %w[tf_cpu_step tf_gpu_step],
-    singularity_test_gpu_pipeline: %w[singularity_test_gpu_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
-    # lufthansa_pipeline: %w[lufthansa_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step]
-
   }.freeze
 
   STEPS = [
@@ -60,16 +56,6 @@ class Flow
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
-    RimrockStep.new('tf_cpu_step',
-                    'process-eu/tensorflow-pipeline',
-                    'tensorflow_cpu_mock_job.sh.erb', [], []),
-    RimrockStep.new('tf_gpu_step',
-                    'process-eu/tensorflow-pipeline',
-                    'tensorflow_gpu_mock_job.sh.erb', [], []),
-    RimrockStep.new('singularity_test_gpu_step',
-                    'process-eu/singularity-pipeline',
-                    'singularity_mock_job.sh.erb',
-                    [:generic_type], []),
     SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
