@@ -16,10 +16,16 @@ class SingularityScriptGenerator
                                                  container_tag: computation.container_tag,
                                                  hpc: computation.hpc)
 
-    fill_values = computation.parameter_values.symbolize_keys
+
+    fill_values = {}
     fill_values[:container_name] = computation.container_name
     fill_values[:container_tag] = computation.container_tag
     fill_values[:hpc] = computation.hpc
+
+    @staging_logger.debug("sym_keys: #{computation.parameter_values&.symbolize_keys}")
+
+    temp = computation.parameter_values&.symbolize_keys
+    fill_values = fill_values.merge(temp) unless temp.nil?
 
     @staging_logger.debug("fill_values: #{fill_values}")
 
