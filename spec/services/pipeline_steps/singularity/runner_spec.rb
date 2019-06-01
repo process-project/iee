@@ -16,14 +16,14 @@ RSpec.describe PipelineSteps::Singularity::Runner do
            pipeline_step: 'singularity_placeholder_step',
            container_name: 'test_name',
            container_tag: 'test_tag',
-           hpc: 'test_hpc',
-           parameter_values: {label1: 'w1', label2: 'w2', label3: 'w3'})
+           hpc: 'test_hpc')
   end
 
   let!(:singularity_script_blueprint) do
     create(:singularity_script_blueprint,
            container_name: computation.container_name,
            container_tag: computation.container_tag,
+           script_blueprint: 'test script',
            hpc: computation.hpc)
   end
 
