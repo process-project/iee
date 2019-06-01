@@ -10,11 +10,6 @@ RSpec.describe PipelineSteps::Singularity::Runner do
     create(:pipeline, flow: 'singularity_placeholder_pipeline')
   end
 
-  # let(:computation) do
-  #   create(:computation,
-  #          pipeline_step: 'placeholder_step')
-  # end
-
   let(:computation) do
     create(:singularity_computation,
            pipeline: singularity_pipeline,
