@@ -11,8 +11,8 @@ RSpec.describe SingularityStep do
   container_name = "test_container_name"
   container_tag = "test_tag"
 
-  SingularityRegistry.add_step(step_name, [container_name])
-  SingularityRegistry.add_container(container_name, [container_tag])
+  # SingularityRegistry.add_step(step_name, [container_name])
+  # SingularityRegistry.add_container(container_name, [container_tag])
 
   let!(:singularity_script_blueprint) { create(:singularity_script_blueprint,
                                               container_name: container_name,
@@ -28,8 +28,8 @@ RSpec.describe SingularityStep do
     end 
   end
 
-  SingularityRegistry.remove_step(step_name)
-  SingularityRegistry.remove_container(container_name)
+  # SingularityRegistry.remove_step(step_name)
+  # SingularityRegistry.remove_container(container_name)
 
   # after :all do
   # end
