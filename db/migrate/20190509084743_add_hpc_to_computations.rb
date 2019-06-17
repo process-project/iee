@@ -1,5 +1,5 @@
 class AddHpcToComputations < ActiveRecord::Migration[5.1]
   def change
-    add_column :computations, :hpc, :string
+    add_column :computations, :hpc, :string, default: ''
   end
 end

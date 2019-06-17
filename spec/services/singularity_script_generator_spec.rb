@@ -34,7 +34,7 @@ describe SingularityScriptGenerator do
            hpc: computation.hpc)
   end
 
-  context 'given given proper parameter_values' do
+  context 'given proper parameter_values' do
     it 'generates proper script' do
       generated_script = described_class.new(computation).call
 
