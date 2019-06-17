@@ -14,31 +14,33 @@ RSpec.describe PipelineSteps::Singularity::Builder do
   end
 
   let(:proper_parameter_values) do
-    ActionController::Parameters.new({
-        container_name: 'test_name',
-        container_tag: 'test_tag',
-        hpc: 'test_hpc',
-        label1: 'test_label1',
-        label2: 'test_label2',
-        label3: 'test_label3'
-    })
+    ActionController::Parameters.new(
+      container_name: 'test_name',
+      container_tag: 'test_tag',
+      hpc: 'test_hpc',
+      label1: 'test_label1',
+      label2: 'test_label2',
+      label3: 'test_label3'
+    )
   end
 
-  let(:wrong_parameter_values) do 
-    ActionController::Parameters.new({
-        asd: 'asd'
-    })
+  let(:wrong_parameter_values) do
+    ActionController::Parameters.new(
+      asd: 'asd'
+    )
   end
 
   let(:unsafe_parameter_values) do
-    proper_parameter_values.merge({unsafe_label: 'unsafe'})
+    proper_parameter_values.merge(unsafe_label: 'unsafe')
   end
 
   it 'creates singularity computation' do
-    computation = described_class.new(pipeline,
-                                      'singularity_step',
-                                      proper_parameter_values,
-                                      parameters).call
+    computation = described_class.new(
+      pipeline,
+      'singularity_step',
+      proper_parameter_values,
+      parameters
+    ).call
 
     expect(computation).to be_instance_of SingularityComputation
     expect(computation).to be_persisted
@@ -55,20 +57,24 @@ RSpec.describe PipelineSteps::Singularity::Builder do
   context 'given wrong no of parameters' do
     it 'raises ActionController::ParameterMissing' do
       expect do
-        described_class.new(pipeline,
-        'singularity_step',
-        wrong_parameter_values,
-        parameters)
+        described_class.new(
+          pipeline,
+          'singularity_step',
+          wrong_parameter_values,
+          parameters
+        )
       end.to raise_error(ActionController::ParameterMissing)
     end
   end
 
   context 'given unsafe parameter' do
-    it "doesn't create computation with unsafe parameter" do 
-      computation = described_class.new(pipeline,
-                                    'singularity_step',
-                                    proper_parameter_values,
-                                    parameters).call
+    it "doesn't create computation with unsafe parameter" do
+      computation = described_class.new(
+        pipeline,
+        'singularity_step',
+        proper_parameter_values,
+        parameters
+      ).call
 
       expect(computation.parameter_values).not_to include(:unsafe_label)
     end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable ClassLength
-
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
@@ -13,46 +11,47 @@ class Flow
   }.freeze
 
   STEPS = [
-    StagingInStep.new('staging_in_step',
-                      [
-                        StepParameter.new(
-                          'src_host',
-                          'Source Host',
-                          'Descriptions placeholder',
-                          0,
-                          'multi',
-                          'data03.process-project.eu',
-                          ['data03.process-project.eu']
-                        ),
-                        StepParameter.new(
-                          'src_path',
-                          'Source Path',
-                          'Descriptions placeholder',
-                          1,
-                          'multi',
-                          '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
-                          %w[/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif]
-                        ),
-                        StepParameter.new(
-                          'dest_host',
-                          'Destination Host',
-                          'Descriptions placeholder',
-                          2,
-                          'multi',
-                          'pro.cyfronet.pl',
-                          %w[pro.cyfronet.pl]
-                        ),
-                        StepParameter.new(
-                          'dest_path',
-                          'Destination Path',
-                          'Descriptions placeholder',
-                          3,
-                          'multi',
-                          '/net/archive/groups/plggprocess/Mock/test_staging',
-                          %w[/net/archive/groups/plggprocess/Mock/test_staging]
-                        )
-                      ]
-                      ),
+    StagingInStep.new(
+      'staging_in_step',
+      [
+        StepParameter.new(
+          'src_host',
+          'Source Host',
+          'Descriptions placeholder',
+          0,
+          'multi',
+          'data03.process-project.eu',
+          ['data03.process-project.eu']
+        ),
+        StepParameter.new(
+          'src_path',
+          'Source Path',
+          'Descriptions placeholder',
+          1,
+          'multi',
+          '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
+          %w[/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif]
+        ),
+        StepParameter.new(
+          'dest_host',
+          'Destination Host',
+          'Descriptions placeholder',
+          2,
+          'multi',
+          'pro.cyfronet.pl',
+          %w[pro.cyfronet.pl]
+        ),
+        StepParameter.new(
+          'dest_path',
+          'Destination Path',
+          'Descriptions placeholder',
+          3,
+          'multi',
+          '/net/archive/groups/plggprocess/Mock/test_staging',
+          %w[/net/archive/groups/plggprocess/Mock/test_staging]
+        )
+      ]
+    ),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
@@ -74,5 +73,3 @@ class Flow
     FLOWS_MAP[flow_type.to_sym] || []
   end
 end
-
-# rubocop:enable ClassLength

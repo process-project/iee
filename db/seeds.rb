@@ -44,41 +44,41 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                           script_blueprint: script)
 
 ssbp.step_parameters = [
-                         StepParameter.new(
-                            'nodes',
-                            'Nodes',
-                            'Number of execution nodes',
-                            0,
-                            'integer',
-                            1
-                          ),
-                          StepParameter.new(
-                            'cpus',
-                            'CPUs',
-                            'Number of CPU per execution node',
-                            0,
-                            'multi',
-                            '1',
-                            %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
-                          ),
-                          StepParameter.new(
-                            'partition',
-                            'Partition',
-                            'Prometheus execution partition',
-                            0,
-                            'multi',
-                            'plgrid-testing',
-                            %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-                          ),
-                          StepParameter.new(
-                            'echo_message',
-                            'Echo Message',
-                            'Example message for the container to echo at the end of the execution',
-                            0,
-                            'string',
-                            ''
-                          )
-                        ]
+  StepParameter.new(
+    'nodes',
+    'Nodes',
+    'Number of execution nodes',
+    0,
+    'integer',
+    1
+  ),
+  StepParameter.new(
+    'cpus',
+    'CPUs',
+    'Number of CPU per execution node',
+    0,
+    'multi',
+    '1',
+    %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+  ),
+  StepParameter.new(
+    'partition',
+    'Partition',
+    'Prometheus execution partition',
+    0,
+    'multi',
+    'plgrid-testing',
+    %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+  ),
+  StepParameter.new(
+    'echo_message',
+    'Echo Message',
+    'Example message for the container to echo at the end of the execution',
+    0,
+    'string',
+    ''
+  )
+]
 
 ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                           container_tag: 'latest',
@@ -86,15 +86,15 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                           script_blueprint: script)
 
 ssbp.step_parameters = [
-                          StepParameter.new(
-                            'echo_message',
-                            'Echo Message',
-                            'Example message for the container to echo at the end of the execution',
-                            0,
-                            'multi',
-                            ''
-                          )
-                        ]
+  StepParameter.new(
+    'echo_message',
+    'Echo Message',
+    'Example message for the container to echo at the end of the execution',
+    0,
+    'multi',
+    ''
+  )
+]
 
 script = <<~CODE
   #!/bin/bash
@@ -117,35 +117,34 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                           hpc: 'Prometheus',
                                           script_blueprint: script)
 
-
 ssbp.step_parameters = [
-                          StepParameter.new(
-                            'nodes',
-                            'Nodes',
-                            'Number of execution nodes',
-                            0,
-                            'integer',
-                            1
-                          ),
-                          StepParameter.new(
-                            'cpus',
-                            'CPUs',
-                            'Number of CPU per execution node',
-                            0,
-                            'multi',
-                            '1',
-                            %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
-                          ),
-                          StepParameter.new(
-                            'partition',
-                            'Partition',
-                            'Prometheus execution partition',
-                            0,
-                            'multi',
-                            'plgrid-gpu',
-                            %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-                          )
-                        ]
+  StepParameter.new(
+    'nodes',
+    'Nodes',
+    'Number of execution nodes',
+    0,
+    'integer',
+    1
+  ),
+  StepParameter.new(
+    'cpus',
+    'CPUs',
+    'Number of CPU per execution node',
+    0,
+    'multi',
+    '1',
+    %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+  ),
+  StepParameter.new(
+    'partition',
+    'Partition',
+    'Prometheus execution partition',
+    0,
+    'multi',
+    'plgrid-gpu',
+    %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+  )
+]
 
 script = <<~CODE
   #!/bin/bash
@@ -171,111 +170,111 @@ script = <<~CODE
 CODE
 
 ssbp = SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
-                                   container_tag: 'latest',
-                                   hpc: 'Prometheus',
-                                   script_blueprint: script)
+                                          container_tag: 'latest',
+                                          hpc: 'Prometheus',
+                                          script_blueprint: script)
 ssbp.step_parameters = [
-                          StepParameter.new(
-                            'nodes',
-                            'Nodes',
-                            'Number of execution nodes',
-                            0,
-                            'integer',
-                            1
-                          ),
-                          StepParameter.new(
-                            'cpus',
-                            'CPUs',
-                            'Number of CPU per execution node',
-                            0,
-                            'multi',
-                            '1',
-                            %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
-                          ),
-                          StepParameter.new(
-                            'partition',
-                            'Partition',
-                            'Prometheus execution partition',
-                            0,
-                            'multi',
-                            'plgrid-short',
-                            %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-                          ),
-                          StepParameter.new(
-                            'visibility_id',
-                            'LOFAR Visibility ID',
-                            'LOFAR visibility identifier',
-                            0,
-                            'string',
-                            ''
-                          ),
-                          StepParameter.new(
-                            'avg_freq_step',
-                            'Average frequency step',
-                            'Corresponds to .freqstep in NDPPP or demixer.freqstep',
-                            0,
-                            'integer',
-                            2
-                          ),
-                          StepParameter.new(
-                            'avg_time_step',
-                            'Average time step',
-                            'Corresponds to .timestep in NDPPP or demixer.timestep',
-                            0,
-                            'integer',
-                            4
-                          ),
-                          StepParameter.new(
-                            'do_demix',
-                            'Perform demixer',
-                            'If true then demixer instead of average is performed',
-                            0,
-                            'boolean',
-                            true
-                          ),
-                          StepParameter.new(
-                            'demix_freq_step',
-                            'Demixer frequency step',
-                            'Corresponds to .demixfreqstep in NDPPP',
-                            0,
-                            'integer',
-                            2
-                          ),
-                          StepParameter.new(
-                            'demix_time_step',
-                            'Demixer time step',
-                            'Corresponds to .demixtimestep in NDPPP',
-                            0,
-                            'integer',
-                            2
-                          ),
-                          StepParameter.new(
-                            'demix_sources',
-                            'Demixer sources',
-                            '',
-                            0,
-                            'multi',
-                            'CasA',
-                            %w[CasA other]
-                          ),
-                          StepParameter.new(
-                            'select_nl',
-                            'Use NL stations only',
-                            'If true then only Dutch stations are selected',
-                            0,
-                            'boolean',
-                            true
-                          ),
-                          StepParameter.new(
-                            'parset',
-                            'Parameter set',
-                            '',
-                            0,
-                            'multi',
-                            'lba_npp',
-                            %w[lba_npp other]
-                          )
-                        ]
+  StepParameter.new(
+    'nodes',
+    'Nodes',
+    'Number of execution nodes',
+    0,
+    'integer',
+    1
+  ),
+  StepParameter.new(
+    'cpus',
+    'CPUs',
+    'Number of CPU per execution node',
+    0,
+    'multi',
+    '1',
+    %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+  ),
+  StepParameter.new(
+    'partition',
+    'Partition',
+    'Prometheus execution partition',
+    0,
+    'multi',
+    'plgrid-short',
+    %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+  ),
+  StepParameter.new(
+    'visibility_id',
+    'LOFAR Visibility ID',
+    'LOFAR visibility identifier',
+    0,
+    'string',
+    ''
+  ),
+  StepParameter.new(
+    'avg_freq_step',
+    'Average frequency step',
+    'Corresponds to .freqstep in NDPPP or demixer.freqstep',
+    0,
+    'integer',
+    2
+  ),
+  StepParameter.new(
+    'avg_time_step',
+    'Average time step',
+    'Corresponds to .timestep in NDPPP or demixer.timestep',
+    0,
+    'integer',
+    4
+  ),
+  StepParameter.new(
+    'do_demix',
+    'Perform demixer',
+    'If true then demixer instead of average is performed',
+    0,
+    'boolean',
+    true
+  ),
+  StepParameter.new(
+    'demix_freq_step',
+    'Demixer frequency step',
+    'Corresponds to .demixfreqstep in NDPPP',
+    0,
+    'integer',
+    2
+  ),
+  StepParameter.new(
+    'demix_time_step',
+    'Demixer time step',
+    'Corresponds to .demixtimestep in NDPPP',
+    0,
+    'integer',
+    2
+  ),
+  StepParameter.new(
+    'demix_sources',
+    'Demixer sources',
+    '',
+    0,
+    'multi',
+    'CasA',
+    %w[CasA other]
+  ),
+  StepParameter.new(
+    'select_nl',
+    'Use NL stations only',
+    'If true then only Dutch stations are selected',
+    0,
+    'boolean',
+    true
+  ),
+  StepParameter.new(
+    'parset',
+    'Parameter set',
+    '',
+    0,
+    'multi',
+    'lba_npp',
+    %w[lba_npp other]
+  )
+]
 
 ### Agrocopernicus:
 script = <<~CODE
@@ -283,43 +282,43 @@ script = <<~CODE
 CODE
 
 ssbp = SingularityScriptBlueprint.create!(container_name: 'agrocopernicus_placeholder_container',
-                                         container_tag: 'agrocopernicus_placeholder_tag',
-                                         hpc: 'Prometheus',
-                                         script_blueprint: script)
+                                          container_tag: 'agrocopernicus_placeholder_tag',
+                                          hpc: 'Prometheus',
+                                          script_blueprint: script)
 ssbp.step_parameters = [
-                          StepParameter.new(
-                            'irrigation',
-                            'Irrigation',
-                            '',
-                            0,
-                            'boolean',
-                            'true'
-                          ),
-                          StepParameter.new(
-                            'seeding_date',
-                            'Seeding date',
-                            '',
-                            0,
-                            'multi',
-                            '-15 days',
-                            ['-15 days', 'original', '+15 days']
-                          ),
-                          StepParameter.new(
-                            'nutrition_factor',
-                            'Nutrition factor',
-                            '',
-                            0,
-                            'multi',
-                            '0.25',
-                            ['0.25', '0.45', '0.60']
-                          ),
-                          StepParameter.new(
-                            'Phenology_factor',
-                            'Phenology factor',
-                            '',
-                            0,
-                            'multi',
-                            '0.6',
-                            ['0.6', '0.8', '1.0', '1.2']
-                          )
-                        ]
+  StepParameter.new(
+    'irrigation',
+    'Irrigation',
+    '',
+    0,
+    'boolean',
+    'true'
+  ),
+  StepParameter.new(
+    'seeding_date',
+    'Seeding date',
+    '',
+    0,
+    'multi',
+    '-15 days',
+    ['-15 days', 'original', '+15 days']
+  ),
+  StepParameter.new(
+    'nutrition_factor',
+    'Nutrition factor',
+    '',
+    0,
+    'multi',
+    '0.25',
+    ['0.25', '0.45', '0.60']
+  ),
+  StepParameter.new(
+    'Phenology_factor',
+    'Phenology factor',
+    '',
+    0,
+    'multi',
+    '0.6',
+    ['0.6', '0.8', '1.0', '1.2']
+  )
+]

@@ -14,7 +14,7 @@ describe SingularityScriptGenerator do
            container_name: 'test_name',
            container_tag: 'test_tag',
            hpc: 'test_hpc',
-           parameter_values: {label1: 'w1', label2: 'w2', label3: 'w3'})
+           parameter_values: { label1: 'w1', label2: 'w2', label3: 'w3' })
   end
 
   let(:wrong_computation) do
@@ -24,7 +24,7 @@ describe SingularityScriptGenerator do
            container_name: 'test_name',
            container_tag: 'test_tag',
            hpc: 'test_hpc',
-           parameter_values: {label1: 'w1', label2: 'w2'})
+           parameter_values: { label1: 'w1', label2: 'w2' })
   end
 
   let!(:singularity_script_blueprint) do
@@ -35,12 +35,12 @@ describe SingularityScriptGenerator do
   end
 
   context 'given given proper parameter_values' do
-    it 'generates proper script' do 
+    it 'generates proper script' do
       generated_script = described_class.new(computation).call
 
-      expect(generated_script).to include ('w1')
-      expect(generated_script).to include ('w2')
-      expect(generated_script).to include ('w3')
+      expect(generated_script).to include 'w1'
+      expect(generated_script).to include 'w2'
+      expect(generated_script).to include 'w3'
     end
   end
 
