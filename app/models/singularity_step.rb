@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class SingularityStep < Step
   attr_reader :repository, :file, :parameters
 
@@ -31,7 +32,8 @@ class SingularityStep < Step
   def runner_for(computation, options = {})
     PipelineSteps::Singularity::Runner.new(
       computation,
-      options)
+      options
+    )
   end
 
   def input_present_for?(pipeline)
@@ -44,6 +46,7 @@ class SingularityStep < Step
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def get_basic_parameters_possibilities(containers_and_tags)
     container_names = []
     container_tags = []
@@ -61,9 +64,11 @@ class SingularityStep < Step
       end
     end
 
-    return {container_names: container_names,
-            container_tags: container_tags,
-            HPCs: hpcs}
+    {
+      container_names: container_names,
+      container_tags: container_tags,
+      HPCs: hpcs
+    }
   end
 
   def build_basic_parameters(possibilities)
@@ -87,7 +92,7 @@ class SingularityStep < Step
       values: possibilities[:container_tags]
     )
 
-    container_HPCs_param = StepParameter.new(
+    container_hpcs_param = StepParameter.new(
       label: 'hpc',
       name: 'HPC',
       description: 'High Performance Computer',
@@ -97,7 +102,7 @@ class SingularityStep < Step
       values: possibilities[:HPCs]
     )
 
-    return container_names_param, container_tags_param, container_HPCs_param
+    [container_names_param, container_tags_param, container_hpcs_param]
   end
 
   def fetch_specific_parameters(possibilities)
@@ -121,8 +126,9 @@ class SingularityStep < Step
       end
     end
 
-    return specific_parameters
+    specific_parameters
   end
+  # rubocop:enable Metrics/MethodLength
 
   def merge_parameter_into(specific_parameters, sp_new)
     if specific_parameters.include? sp_new
@@ -134,6 +140,7 @@ class SingularityStep < Step
       end
     else
       specific_parameters << sp_new
-    end    
+    end
   end
 end
+# rubocop:enable Metrics/ClassLength

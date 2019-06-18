@@ -26,7 +26,7 @@ class Flow
         StepParameter.new(
           label: 'src_path',
           name: 'Source Path',
-          description:'Descriptions placeholder',
+          description: 'Descriptions placeholder',
           rank: 1,
           datatype: 'multi',
           default: '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
@@ -34,7 +34,7 @@ class Flow
         ),
         StepParameter.new(
           label: 'dest_host',
-          name:'Destination Host',
+          name: 'Destination Host',
           description: 'Descriptions placeholder',
           rank: 2,
           datatype: 'multi',

@@ -4,8 +4,8 @@ class StepParameter < ApplicationRecord
   belongs_to :singularity_script_blueprint
 
   def ==(other)
-    other.instance_of?(self.class) and label == other.label
+    other.instance_of?(self.class) && label == other.label
   end
 
-  alias_method :eql?, :==
+  alias eql? ==
 end

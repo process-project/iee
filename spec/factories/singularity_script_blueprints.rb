@@ -11,7 +11,7 @@ FactoryBot.define do
       StepParameter.new(
         label: 'label1',
         name: 'name',
-        description:'desc',
+        description: 'desc',
         rank: 0,
         datatype: 'string',
         default: 'default_value'

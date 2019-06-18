@@ -14,7 +14,6 @@ when 'developement'
   end
 end
 
-
 # Test container for the Prometheus HPC
 script = <<~CODE
   #!/bin/bash -l
@@ -147,7 +146,7 @@ ssbp.step_parameters = [
     datatype: 'multi',
     default: 'plgrid-testing',
     values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-  ),
+  )
 ]
 
 # Container for the UC2 LOFAR use case

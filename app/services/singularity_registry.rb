@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SingularityRegistry
+  # rubocop:disable Style/MutableConstant
   STEPS = {
     singularity_placeholder_step: %w[vsoch/hello-world],
     medical_step: %w[maragraziani/ucdemo],
@@ -14,6 +15,7 @@ class SingularityRegistry
     'lofar/lofar_container' => %w[latest],
     'agrocopernicus_placeholder_container' => %w[agrocopernicus_placeholder_tag]
   }
+  # rubocop:enable Style/MutableConstant
 
   def self.fetch_containers(step_name)
     container_names = STEPS.fetch(step_name.to_sym)
