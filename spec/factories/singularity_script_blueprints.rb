@@ -9,29 +9,29 @@ FactoryBot.define do
 
     step_parameters [
       StepParameter.new(
-        'label1',
-        'name',
-        'desc',
-        0,
-        'string',
-        'default_value'
+        label: 'label1',
+        name: 'name',
+        description:'desc',
+        rank: 0,
+        datatype: 'string',
+        default: 'default_value'
       ),
       StepParameter.new(
-        'label2',
-        'name',
-        'desc',
-        0,
-        'integer',
-        1
+        label: 'label2',
+        name: 'name',
+        description: 'desc',
+        rank: 0,
+        datatype: 'integer',
+        default: 1
       ),
       StepParameter.new(
-        'label3',
-        'name',
-        'desc',
-        0,
-        'multi',
-        'first_value',
-        %w[first_value second_value third_value]
+        label: 'label3',
+        name: 'name',
+        description: 'desc',
+        rank: 0,
+        datatype: 'multi',
+        default: 'first_value',
+        values: %w[first_value second_value third_value]
       )
     ]
   end

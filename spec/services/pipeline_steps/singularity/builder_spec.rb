@@ -7,9 +7,25 @@ RSpec.describe PipelineSteps::Singularity::Builder do
 
   let(:parameters) do
     [
-      StepParameter.new('label1', '', '', 0, 'string', ''),
-      StepParameter.new('label2', '', '', 0, 'integer', 1),
-      StepParameter.new('label3', '', '', 0, 'multi', 'first', %w[first second])
+      StepParameter.new(label: 'label1',
+                        name: '',
+                        description: '',
+                        rank: 0,
+                        datatype: 'string',
+                        default: ''),
+      StepParameter.new(label: 'label2',
+                        name: '',
+                        description: '',
+                        rank: 0,
+                        datatype: 'integer',
+                        default: 1),
+      StepParameter.new(label: 'label3',
+                        name: '',
+                        description: '',
+                        rank: 0,
+                        datatype: 'multi',
+                        default: 'first',
+                        values: %w[first second])
     ]
   end
 
