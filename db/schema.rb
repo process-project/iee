@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190509084743) do
+ActiveRecord::Schema.define(version: 20190618080754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,9 +200,10 @@ ActiveRecord::Schema.define(version: 20190509084743) do
     t.integer "rank"
     t.string "datatype"
     t.string "default"
-    t.string "values"
+    t.string "values", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "singularity_script_blueprint_id", null: false
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|
@@ -246,4 +247,5 @@ ActiveRecord::Schema.define(version: 20190509084743) do
   add_foreign_key "data_files", "projects"
   add_foreign_key "group_relationships", "groups", column: "child_id"
   add_foreign_key "group_relationships", "groups", column: "parent_id"
+  add_foreign_key "step_parameters", "singularity_script_blueprints"
 end

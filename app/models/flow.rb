@@ -15,40 +15,40 @@ class Flow
       'staging_in_step',
       [
         StepParameter.new(
-          'src_host',
-          'Source Host',
-          'Descriptions placeholder',
-          0,
-          'multi',
-          'data03.process-project.eu',
-          ['data03.process-project.eu']
+          label: 'src_host',
+          name: 'Source Host',
+          description: 'Descriptions placeholder',
+          rank: 0,
+          datatype: 'multi',
+          default: 'data03.process-project.eu',
+          values: ['data03.process-project.eu']
         ),
         StepParameter.new(
-          'src_path',
-          'Source Path',
-          'Descriptions placeholder',
-          1,
-          'multi',
-          '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
-          %w[/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif]
+          label: 'src_path',
+          name: 'Source Path',
+          description:'Descriptions placeholder',
+          rank: 1,
+          datatype: 'multi',
+          default: '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
+          values: %w[/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif]
         ),
         StepParameter.new(
-          'dest_host',
-          'Destination Host',
-          'Descriptions placeholder',
-          2,
-          'multi',
-          'pro.cyfronet.pl',
-          %w[pro.cyfronet.pl]
+          label: 'dest_host',
+          name:'Destination Host',
+          description: 'Descriptions placeholder',
+          rank: 2,
+          datatype: 'multi',
+          default: 'pro.cyfronet.pl',
+          values: %w[pro.cyfronet.pl]
         ),
         StepParameter.new(
-          'dest_path',
-          'Destination Path',
-          'Descriptions placeholder',
-          3,
-          'multi',
-          '/net/archive/groups/plggprocess/Mock/test_staging',
-          %w[/net/archive/groups/plggprocess/Mock/test_staging]
+          label: 'dest_path',
+          name: 'Destination Path',
+          description: 'Descriptions placeholder',
+          rank: 3,
+          datatype: 'multi',
+          default: '/net/archive/groups/plggprocess/Mock/test_staging',
+          values: %w[/net/archive/groups/plggprocess/Mock/test_staging]
         )
       ]
     ),

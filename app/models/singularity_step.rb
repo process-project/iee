@@ -42,6 +42,8 @@ class SingularityStep < Step
     @required_files << df_name
   end
 
+  private
+
   def get_basic_parameters_possibilities(containers_and_tags)
     container_names = []
     container_tags = []
@@ -66,36 +68,36 @@ class SingularityStep < Step
 
   def build_basic_parameters(possibilities)
     container_names_param = StepParameter.new(
-      'container_name',
-      'Container name',
-      'Name of your container',
-      0,
-      'multi',
-      possibilities[:container_names].first,
-      possibilities[:container_names]
+      label: 'container_name',
+      name: 'Container name',
+      description: 'Name of your container',
+      rank: 0,
+      datatype: 'multi',
+      default: possibilities[:container_names].first,
+      values: possibilities[:container_names]
     )
 
     container_tags_param = StepParameter.new(
-      'container_tag',
-      'Container tag',
-      'Tag of the container used on registry',
-      0,
-      'multi',
-      possibilities[:container_tags].first,
-      possibilities[:container_tags]
+      label: 'container_tag',
+      name: 'Container tag',
+      description: 'Tag of the container used on registry',
+      rank: 0,
+      datatype: 'multi',
+      default: possibilities[:container_tags].first,
+      values: possibilities[:container_tags]
     )
 
     container_HPCs_param = StepParameter.new(
-      'hpc',
-      'HPC',
-      'High Performance Computer',
-      0,
-      'multi',
-      possibilities[:HPCs].first,
-      possibilities[:HPCs]
+      label: 'hpc',
+      name: 'HPC',
+      description: 'High Performance Computer',
+      rank: 0,
+      datatype: 'multi',
+      default: possibilities[:HPCs].first,
+      values: possibilities[:HPCs]
     )
 
-    return [container_names_param, container_tags_param, container_HPCs_param]
+    return container_names_param, container_tags_param, container_HPCs_param
   end
 
   def fetch_specific_parameters(possibilities)
@@ -122,21 +124,16 @@ class SingularityStep < Step
     return specific_parameters
   end
 
-  private
-
   def merge_parameter_into(specific_parameters, sp_new)
-    exist_flag = true
-    specific_parameters.each do |sp_old|
-      if sp_old.label == sp_new.label
-        all_values = (sp_old.values + sp_new.values).uniq
-        sp_old.values = all_values
-        exist_flag = false
-        break
+    if specific_parameters.include? sp_new
+      specific_parameters.each do |sp_old|
+        if sp_old == sp_new
+          sp_old.values |= sp_new.values
+          break
+        end
       end
-    end
-
-    if exist_flag
+    else
       specific_parameters << sp_new
-    end
+    end    
   end
 end

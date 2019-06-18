@@ -14,6 +14,8 @@ when 'developement'
   end
 end
 
+
+# Test container for the Prometheus HPC
 script = <<~CODE
   #!/bin/bash -l
   #SBATCH -N %<nodes>s
@@ -45,41 +47,42 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
 
 ssbp.step_parameters = [
   StepParameter.new(
-    'nodes',
-    'Nodes',
-    'Number of execution nodes',
-    0,
-    'integer',
-    1
+    label: 'nodes',
+    name: 'Nodes',
+    desciption: 'Number of execution nodes',
+    rank: 0,
+    datatype: 'integer',
+    default: 1
   ),
   StepParameter.new(
-    'cpus',
-    'CPUs',
-    'Number of CPU per execution node',
-    0,
-    'multi',
-    '1',
-    %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+    label: 'cpus',
+    name: 'CPUs',
+    desciption: 'Number of CPU per execution node',
+    rank: 0,
+    datatype: 'multi',
+    default: '1',
+    values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
   ),
   StepParameter.new(
-    'partition',
-    'Partition',
-    'Prometheus execution partition',
-    0,
-    'multi',
-    'plgrid-testing',
-    %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+    label: 'partition',
+    name: 'Partition',
+    desciption: 'Prometheus execution partition',
+    rank: 0,
+    datatype: 'multi',
+    default: 'plgrid-testing',
+    values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
   ),
   StepParameter.new(
-    'echo_message',
-    'Echo Message',
-    'Example message for the container to echo at the end of the execution',
-    0,
-    'string',
-    ''
+    label: 'echo_message',
+    name: 'Echo Message',
+    desciption: 'Example message for the container to echo at the end of the execution',
+    rank: 0,
+    datatype: 'string',
+    default: ''
   )
 ]
 
+# Test container for the SuperMUC HPC
 ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                           container_tag: 'latest',
                                           hpc: 'SuperMUC',
@@ -87,15 +90,16 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
 
 ssbp.step_parameters = [
   StepParameter.new(
-    'echo_message',
-    'Echo Message',
-    'Example message for the container to echo at the end of the execution',
-    0,
-    'multi',
-    ''
+    label: 'echo_message',
+    name: 'Echo Message',
+    desciption: 'Example message for the container to echo at the end of the execution',
+    rank: 0,
+    datatype: 'string',
+    default: ''
   )
 ]
 
+# Container for the UC1 Medical use case
 script = <<~CODE
   #!/bin/bash
   #SBATCH -A process1gpu
@@ -119,33 +123,34 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
 
 ssbp.step_parameters = [
   StepParameter.new(
-    'nodes',
-    'Nodes',
-    'Number of execution nodes',
-    0,
-    'integer',
-    1
+    label: 'nodes',
+    name: 'Nodes',
+    desciption: 'Number of execution nodes',
+    rank: 0,
+    datatype: 'integer',
+    default: 1
   ),
   StepParameter.new(
-    'cpus',
-    'CPUs',
-    'Number of CPU per execution node',
-    0,
-    'multi',
-    '1',
-    %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+    label: 'cpus',
+    name: 'CPUs',
+    desciption: 'Number of CPU per execution node',
+    rank: 0,
+    datatype: 'multi',
+    default: '1',
+    values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
   ),
   StepParameter.new(
-    'partition',
-    'Partition',
-    'Prometheus execution partition',
-    0,
-    'multi',
-    'plgrid-gpu',
-    %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-  )
+    label: 'partition',
+    name: 'Partition',
+    desciption: 'Prometheus execution partition',
+    rank: 0,
+    datatype: 'multi',
+    default: 'plgrid-testing',
+    values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+  ),
 ]
 
+# Container for the UC2 LOFAR use case
 script = <<~CODE
   #!/bin/bash
   #SBATCH --partition %<partition>s
@@ -175,104 +180,104 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container
                                           script_blueprint: script)
 ssbp.step_parameters = [
   StepParameter.new(
-    'nodes',
-    'Nodes',
-    'Number of execution nodes',
-    0,
-    'integer',
-    1
+    label: 'nodes',
+    name: 'Nodes',
+    desciption: 'Number of execution nodes',
+    rank: 0,
+    datatype: 'integer',
+    default: 1
   ),
   StepParameter.new(
-    'cpus',
-    'CPUs',
-    'Number of CPU per execution node',
-    0,
-    'multi',
-    '1',
-    %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+    label: 'cpus',
+    name: 'CPUs',
+    desciption: 'Number of CPU per execution node',
+    rank: 0,
+    datatype: 'multi',
+    default: '1',
+    values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
   ),
   StepParameter.new(
-    'partition',
-    'Partition',
-    'Prometheus execution partition',
-    0,
-    'multi',
-    'plgrid-short',
-    %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+    label: 'partition',
+    name: 'Partition',
+    desciption: 'Prometheus execution partition',
+    rank: 0,
+    datatype: 'multi',
+    default: 'plgrid-testing',
+    values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
   ),
   StepParameter.new(
-    'visibility_id',
-    'LOFAR Visibility ID',
-    'LOFAR visibility identifier',
-    0,
-    'string',
-    ''
+    label: 'visibility_id',
+    name: 'LOFAR Visibility ID',
+    desciption: 'LOFAR visibility identifier',
+    rank: 0,
+    datatype: 'string',
+    default: ''
   ),
   StepParameter.new(
-    'avg_freq_step',
-    'Average frequency step',
-    'Corresponds to .freqstep in NDPPP or demixer.freqstep',
-    0,
-    'integer',
-    2
+    label: 'avg_freq_step',
+    name: 'Average frequency step',
+    desciption: 'Corresponds to .freqstep in NDPPP or demixer.freqstep',
+    rank: 0,
+    datatype: 'integer',
+    default: 2
   ),
   StepParameter.new(
-    'avg_time_step',
-    'Average time step',
-    'Corresponds to .timestep in NDPPP or demixer.timestep',
-    0,
-    'integer',
-    4
+    label: 'avg_time_step',
+    name: 'Average time step',
+    desciption: 'Corresponds to .timestep in NDPPP or demixer.timestep',
+    rank: 0,
+    datatype: 'integer',
+    default: 4
   ),
   StepParameter.new(
-    'do_demix',
-    'Perform demixer',
-    'If true then demixer instead of average is performed',
-    0,
-    'boolean',
-    true
+    label: 'do_demix',
+    name: 'Perform demixer',
+    desciption: 'If true then demixer instead of average is performed',
+    rank: 0,
+    datatype: 'boolean',
+    default: true
   ),
   StepParameter.new(
-    'demix_freq_step',
-    'Demixer frequency step',
-    'Corresponds to .demixfreqstep in NDPPP',
-    0,
-    'integer',
-    2
+    label: 'demix_freq_step',
+    name: 'Demixer frequency step',
+    desciption: 'Corresponds to .demixfreqstep in NDPPP',
+    rank: 0,
+    datatype: 'integer',
+    default: 2
   ),
   StepParameter.new(
-    'demix_time_step',
-    'Demixer time step',
-    'Corresponds to .demixtimestep in NDPPP',
-    0,
-    'integer',
-    2
+    label: 'demix_time_step',
+    name: 'Demixer time step',
+    desciption: 'Corresponds to .demixtimestep in NDPPP',
+    rank: 0,
+    datatype: 'integer',
+    default: 2
   ),
   StepParameter.new(
-    'demix_sources',
-    'Demixer sources',
-    '',
-    0,
-    'multi',
-    'CasA',
-    %w[CasA other]
+    label: 'demix_sources',
+    name: 'Demixer sources',
+    desciption: '',
+    rank: 0,
+    datatype: 'multi',
+    default: 'CasA',
+    values: %w[CasA other]
   ),
   StepParameter.new(
-    'select_nl',
-    'Use NL stations only',
-    'If true then only Dutch stations are selected',
-    0,
-    'boolean',
-    true
+    label: 'select_nl',
+    name: 'Use NL stations only',
+    desciption: 'If true then only Dutch stations are selected',
+    rank: 0,
+    datatype: 'boolean',
+    default: true
   ),
   StepParameter.new(
-    'parset',
-    'Parameter set',
-    '',
-    0,
-    'multi',
-    'lba_npp',
-    %w[lba_npp other]
+    label: 'parset',
+    name: 'Parameter set',
+    desciption: '',
+    rank: 0,
+    datatype: 'multi',
+    default: 'lba_npp',
+    values: %w[lba_npp other]
   )
 ]
 
@@ -287,38 +292,38 @@ ssbp = SingularityScriptBlueprint.create!(container_name: 'agrocopernicus_placeh
                                           script_blueprint: script)
 ssbp.step_parameters = [
   StepParameter.new(
-    'irrigation',
-    'Irrigation',
-    '',
-    0,
-    'boolean',
-    'true'
+    label: 'irrigation',
+    name: 'Irrigation',
+    desciption: '',
+    rank: 0,
+    datatype: 'boolean',
+    default: 'true'
   ),
   StepParameter.new(
-    'seeding_date',
-    'Seeding date',
-    '',
-    0,
-    'multi',
-    '-15 days',
-    ['-15 days', 'original', '+15 days']
+    label: 'seeding_date',
+    name: 'Seeding date',
+    desciption: '',
+    rank: 0,
+    datatype: 'multi',
+    default: '-15 days',
+    values: ['-15 days', 'original', '+15 days']
   ),
   StepParameter.new(
-    'nutrition_factor',
-    'Nutrition factor',
-    '',
-    0,
-    'multi',
-    '0.25',
-    ['0.25', '0.45', '0.60']
+    label: 'nutrition_factor',
+    name: 'Nutrition factor',
+    desciption: '',
+    rank: 0,
+    datatype: 'multi',
+    default: '0.25',
+    values: ['0.25', '0.45', '0.60']
   ),
   StepParameter.new(
-    'Phenology_factor',
-    'Phenology factor',
-    '',
-    0,
-    'multi',
-    '0.6',
-    ['0.6', '0.8', '1.0', '1.2']
+    label: 'Phenology_factor',
+    name: 'Phenology factor',
+    desciption: '',
+    rank: 0,
+    datatype: 'multi',
+    default: '0.6',
+    values: ['0.6', '0.8', '1.0', '1.2']
   )
 ]
