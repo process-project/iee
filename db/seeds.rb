@@ -48,7 +48,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'nodes',
     name: 'Nodes',
-    desciption: 'Number of execution nodes',
+    description: 'Number of execution nodes',
     rank: 0,
     datatype: 'integer',
     default: 1
@@ -56,7 +56,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'cpus',
     name: 'CPUs',
-    desciption: 'Number of CPU per execution node',
+    description: 'Number of CPU per execution node',
     rank: 0,
     datatype: 'multi',
     default: '1',
@@ -65,7 +65,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'partition',
     name: 'Partition',
-    desciption: 'Prometheus execution partition',
+    description: 'Prometheus execution partition',
     rank: 0,
     datatype: 'multi',
     default: 'plgrid-testing',
@@ -74,7 +74,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'echo_message',
     name: 'Echo Message',
-    desciption: 'Example message for the container to echo at the end of the execution',
+    description: 'Example message for the container to echo at the end of the execution',
     rank: 0,
     datatype: 'string',
     default: ''
@@ -91,7 +91,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'echo_message',
     name: 'Echo Message',
-    desciption: 'Example message for the container to echo at the end of the execution',
+    description: 'Example message for the container to echo at the end of the execution',
     rank: 0,
     datatype: 'string',
     default: ''
@@ -124,7 +124,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'nodes',
     name: 'Nodes',
-    desciption: 'Number of execution nodes',
+    description: 'Number of execution nodes',
     rank: 0,
     datatype: 'integer',
     default: 1
@@ -132,7 +132,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'cpus',
     name: 'CPUs',
-    desciption: 'Number of CPU per execution node',
+    description: 'Number of CPU per execution node',
     rank: 0,
     datatype: 'multi',
     default: '1',
@@ -141,10 +141,10 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'partition',
     name: 'Partition',
-    desciption: 'Prometheus execution partition',
+    description: 'Prometheus execution partition',
     rank: 0,
     datatype: 'multi',
-    default: 'plgrid-testing',
+    default: 'plgrid-gpu',
     values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
   )
 ]
@@ -181,7 +181,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'nodes',
     name: 'Nodes',
-    desciption: 'Number of execution nodes',
+    description: 'Number of execution nodes',
     rank: 0,
     datatype: 'integer',
     default: 1
@@ -189,7 +189,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'cpus',
     name: 'CPUs',
-    desciption: 'Number of CPU per execution node',
+    description: 'Number of CPU per execution node',
     rank: 0,
     datatype: 'multi',
     default: '1',
@@ -198,7 +198,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'partition',
     name: 'Partition',
-    desciption: 'Prometheus execution partition',
+    description: 'Prometheus execution partition',
     rank: 0,
     datatype: 'multi',
     default: 'plgrid-testing',
@@ -207,7 +207,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'visibility_id',
     name: 'LOFAR Visibility ID',
-    desciption: 'LOFAR visibility identifier',
+    description: 'LOFAR visibility identifier',
     rank: 0,
     datatype: 'string',
     default: ''
@@ -215,7 +215,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'avg_freq_step',
     name: 'Average frequency step',
-    desciption: 'Corresponds to .freqstep in NDPPP or demixer.freqstep',
+    description: 'Corresponds to .freqstep in NDPPP or demixer.freqstep',
     rank: 0,
     datatype: 'integer',
     default: 2
@@ -223,7 +223,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'avg_time_step',
     name: 'Average time step',
-    desciption: 'Corresponds to .timestep in NDPPP or demixer.timestep',
+    description: 'Corresponds to .timestep in NDPPP or demixer.timestep',
     rank: 0,
     datatype: 'integer',
     default: 4
@@ -231,7 +231,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'do_demix',
     name: 'Perform demixer',
-    desciption: 'If true then demixer instead of average is performed',
+    description: 'If true then demixer instead of average is performed',
     rank: 0,
     datatype: 'boolean',
     default: true
@@ -239,7 +239,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'demix_freq_step',
     name: 'Demixer frequency step',
-    desciption: 'Corresponds to .demixfreqstep in NDPPP',
+    description: 'Corresponds to .demixfreqstep in NDPPP',
     rank: 0,
     datatype: 'integer',
     default: 2
@@ -247,7 +247,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'demix_time_step',
     name: 'Demixer time step',
-    desciption: 'Corresponds to .demixtimestep in NDPPP',
+    description: 'Corresponds to .demixtimestep in NDPPP',
     rank: 0,
     datatype: 'integer',
     default: 2
@@ -255,7 +255,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'demix_sources',
     name: 'Demixer sources',
-    desciption: '',
+    description: '',
     rank: 0,
     datatype: 'multi',
     default: 'CasA',
@@ -264,7 +264,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'select_nl',
     name: 'Use NL stations only',
-    desciption: 'If true then only Dutch stations are selected',
+    description: 'If true then only Dutch stations are selected',
     rank: 0,
     datatype: 'boolean',
     default: true
@@ -272,7 +272,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'parset',
     name: 'Parameter set',
-    desciption: '',
+    description: '',
     rank: 0,
     datatype: 'multi',
     default: 'lba_npp',
@@ -293,7 +293,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'irrigation',
     name: 'Irrigation',
-    desciption: '',
+    description: '',
     rank: 0,
     datatype: 'boolean',
     default: 'true'
@@ -301,7 +301,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'seeding_date',
     name: 'Seeding date',
-    desciption: '',
+    description: '',
     rank: 0,
     datatype: 'multi',
     default: '-15 days',
@@ -310,7 +310,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'nutrition_factor',
     name: 'Nutrition factor',
-    desciption: '',
+    description: '',
     rank: 0,
     datatype: 'multi',
     default: '0.25',
@@ -319,7 +319,7 @@ ssbp.step_parameters = [
   StepParameter.new(
     label: 'Phenology_factor',
     name: 'Phenology factor',
-    desciption: '',
+    description: '',
     rank: 0,
     datatype: 'multi',
     default: '0.6',
