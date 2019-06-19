@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20190618080754) do
     t.string "src_host"
     t.string "dest_host"
     t.json "parameter_values"
-    t.string "hpc"
+    t.string "hpc", default: ""
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 
@@ -186,11 +186,6 @@ ActiveRecord::Schema.define(version: 20190618080754) do
     t.string "script_blueprint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "singularity_script_blueprints_step_parameters", id: false, force: :cascade do |t|
-    t.bigint "singularity_script_blueprint_id", null: false
-    t.bigint "step_parameter_id", null: false
   end
 
   create_table "step_parameters", force: :cascade do |t|
