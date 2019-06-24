@@ -350,7 +350,6 @@ script = <<~CODE
   <%%= stage_out 'validation_container_done.txt' %%>
 CODE
 
-
 ssbp = SingularityScriptBlueprint.create!(container_name: 'validation_container',
                                           container_tag: 'latest',
                                           hpc: 'Prometheus',
