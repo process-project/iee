@@ -326,3 +326,70 @@ ssbp.step_parameters = [
     values: ['0.6', '0.8', '1.0', '1.2']
   )
 ]
+
+# Validation container
+script = <<~CODE
+  #!/bin/bash
+  #SBATCH --partition plgrid-testing
+  #SBATCH -A process1
+  #SBATCH --nodes %<nodes>s
+  #SBATCH --ntasks %<containers>s
+  #SBATCH --cpus-per-task %<cores_per_container>s
+  #SBATCH --mem-per-cpu 5GB
+  #SBATCH --time 0:15:00
+  #SBATCH --job-name validation_container_test
+  #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/validation-container-test-log-%%J.txt
+  #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/validation-container-test-log-%%J.err
+
+  module load plgrid/tools/singularity/stable
+
+  srun singularity run /net/archive/groups/plggprocess/Mock/dummy_container/valcon.simg /bin /bin %<sleep_time>s
+
+  touch validation_container_done.txt
+
+  <%%= stage_out 'validation_container_done.txt' %%>
+CODE
+
+
+ssbp = SingularityScriptBlueprint.create!(container_name: 'validation_container',
+                                          container_tag: 'latest',
+                                          hpc: 'Prometheus',
+                                          script_blueprint: script)
+
+ssbp.step_parameters = [
+  StepParameter.new(
+    label: 'nodes',
+    name: 'Nodes',
+    description: 'Number of execution nodes',
+    rank: 0,
+    datatype: 'multi',
+    default: '2',
+    values: %w[1 2 10]
+  ),
+  StepParameter.new(
+    label: 'containers',
+    name: 'Containers',
+    description: 'Number of containers',
+    rank: 0,
+    datatype: 'multi',
+    default: '1',
+    values: %w[1 2 8 10 40 48 240]
+  ),
+  StepParameter.new(
+    label: 'cores_per_container',
+    name: 'Cores per container',
+    description: 'Number of cores per container',
+    rank: 0,
+    datatype: 'multi',
+    default: '1',
+    values: %w[1 6 24]
+  ),
+  StepParameter.new(
+    label: 'sleep_time',
+    name: 'Sleep time',
+    description: 'Time in seconds for the container to sleep',
+    rank: 0,
+    datatype: 'integer',
+    default: 1
+  )
+]

@@ -7,7 +7,8 @@ class Flow
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
-    staging_in_placeholder_pipeline: %w[staging_in_step]
+    staging_in_placeholder_pipeline: %w[staging_in_step],
+    validation_pipeline: %w[validation_container_step]
   }.freeze
 
   STEPS = [
@@ -59,7 +60,8 @@ class Flow
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
     SingularityStep.new('agrocopernicus_step',
-                        ['input.csv'])
+                        ['input.csv']),
+    SingularityStep.new('validation_container_step')
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]

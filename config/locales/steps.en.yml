@@ -169,3 +169,22 @@ en:
       start_manual: Start staging in computation computation
       restart_manual: Restart staging in computation
       restart_automatic: Restart staging in computation
+    validation_container_step:
+      title: Validation container computation
+      cannot_start: |
+        Cannot start Validation container computation.
+      created: |
+        All required input files are available.
+        You can start Validation container computation for this project.
+      new: Validation container computation is being submitted
+      queued: Validation container computation is queued
+      running: Validation container computation is running
+      error: There was an error while running Validation container computation
+      finished: |
+        Validation container computation finished successfully, results stored in
+        the output directory.
+      aborted: Validation container computation was aborted by the pipeline owner
+      start_automatic: Save Validation container computation version
+      start_manual: Start Validation container computation computation
+      restart_automatic: Restart computation
+      restart_manual: Restart Validation container computation
