@@ -8,7 +8,7 @@ class Flow
     lofar_pipeline: %w[lofar_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step],
-    validation_pipeline: %w[validation_container_step]
+    validation_pipeline: %w[staging_in_step validation_container_step]
   }.freeze
 
   STEPS = [
@@ -51,7 +51,8 @@ class Flow
           default: '/net/archive/groups/plggprocess/Mock/test_staging',
           values: %w[/net/archive/groups/plggprocess/Mock/test_staging]
         )
-      ]
+      ],
+      'staging_done.txt'
     ),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
@@ -61,7 +62,8 @@ class Flow
     SingularityStep.new('lofar_step'),
     SingularityStep.new('agrocopernicus_step',
                         ['input.csv']),
-    SingularityStep.new('validation_container_step')
+    SingularityStep.new('validation_container_step',
+                        ['staging_done.txt'])
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
