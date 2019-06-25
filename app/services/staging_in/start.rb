@@ -40,6 +40,14 @@ module StagingIn
       Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
     end
 
+    def src_user
+      Rails.application.config_for('process')['staging_in']['src_user']
+    end
+
+    def dest_user
+      Rails.application.config_for('process')['staging_in']['dest_user']
+    end
+
     # rubocop:disable Metrics/MethodLength
     def request_body
       [{ id: @computation.id,
@@ -47,15 +55,16 @@ module StagingIn
                 subtype: 'scp2scp',
                 src: { type: 'scp',
                        host: @computation.src_host,
-                       user: 'di39nox',
+                       user: src_user,
                        path: @computation.src_path },
                 dst: { type: 'scp',
                        host: @computation.dest_host,
-                       user: 'plgcushing',
+                       user: dest_user,
                        path: @computation.dest_path },
                 webhook: { method: 'POST',
                            url: webhook_url,
-                           headers: { 'x-access-token' => staging_secret } },
+                           headers: { 'x-staging-token' => staging_secret,
+                                      'content-type' => 'application/json' } },
                 options: {} } }]
     end
     # rubocop:enable Metrics/MethodLength
