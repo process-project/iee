@@ -8,7 +8,7 @@ class Flow
     lofar_pipeline: %w[lofar_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step],
-    validation_pipeline: %w[staging_in_step validation_container_step]
+    validation_pipeline: %w[validation_staging_in_step validation_container_step validation_stage_out_step]
   }.freeze
 
   STEPS = [
@@ -54,6 +54,53 @@ class Flow
       ],
       'staging_done.txt'
     ),
+    StagingInStep.new(
+      'validation_staging_in_step',
+      [
+        StepParameter.new(
+          label: 'src_host',
+          name: 'Source Host',
+          description: 'Descriptions placeholder',
+          rank: 0,
+          datatype: 'multi',
+          default: 'data03.process-project.eu',
+          values: ['data03.process-project.eu']
+        ),
+        StepParameter.new(
+          label: 'src_path',
+          name: 'Source Path',
+          description: 'Descriptions placeholder',
+          rank: 1,
+          datatype: 'multi',
+          default: '/mnt/dss/process/UC1/1G.dat',
+          values: %w[/mnt/dss/process/UC1/1G.dat /mnt/dss/process/UC1/10M.dat]
+        ),
+        StepParameter.new(
+          label: 'dest_host',
+          name: 'Destination Host',
+          description: 'Descriptions placeholder',
+          rank: 2,
+          datatype: 'multi',
+          default: 'pro.cyfronet.pl',
+          values: %w[pro.cyfronet.pl]
+        ),
+        StepParameter.new(
+          label: 'dest_path',
+          name: 'Destination Path',
+          description: 'Descriptions placeholder',
+          rank: 3,
+          datatype: 'multi',
+          default: '/net/archive/groups/plggprocess/Mock/validation_staging',
+          values: %w[/net/archive/groups/plggprocess/Mock/validation_staging]
+        )
+      ],
+      'staging_done.txt'
+    ),
+    SingularityStep.new('validation_container_step',
+                        ['staging_done.txt']),
+    RimrockStep.new('validation_stage_out_step',
+                    'process-eu/validation_stage_out',
+                    'validation_stage_out_script.sh.erb', [:validation_type], []),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
@@ -61,9 +108,7 @@ class Flow
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
     SingularityStep.new('agrocopernicus_step',
-                        ['input.csv']),
-    SingularityStep.new('validation_container_step',
-                        ['staging_done.txt'])
+                        ['input.csv'])
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]

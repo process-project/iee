@@ -20,7 +20,7 @@ script = <<~CODE
   #SBATCH -N %<nodes>s
   #SBATCH --ntasks-per-node=%<cpus>s
   #SBATCH --time=00:05:00
-  #SBATCH -A process1
+  #SBATCH -A process2
   #SBATCH -p %<partition>s
   #SBATCH --job-name mock_container_step
   #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.out
@@ -101,7 +101,7 @@ ssbp.step_parameters = [
 # Container for the UC1 Medical use case
 script = <<~CODE
   #!/bin/bash
-  #SBATCH -A process1gpu
+  #SBATCH -A process2gpu
   #SBATCH -p %<partition>s
   #SBATCH -N %<nodes>s
   #SBATCH -n %<cpus>s
@@ -153,7 +153,7 @@ ssbp.step_parameters = [
 script = <<~CODE
   #!/bin/bash
   #SBATCH --partition %<partition>s
-  #SBATCH -A process1
+  #SBATCH -A process2
   #SBATCH --nodes %<nodes>s
   #SBATCH --ntasks %<cpus>s
   #SBATCH --time 0:59:59
@@ -331,7 +331,7 @@ ssbp.step_parameters = [
 script = <<~CODE
   #!/bin/bash
   #SBATCH --partition plgrid-testing
-  #SBATCH -A process1
+  #SBATCH -A process2
   #SBATCH --nodes %<nodes>s
   #SBATCH --ntasks %<containers>s
   #SBATCH --cpus-per-task %<cores_per_container>s
