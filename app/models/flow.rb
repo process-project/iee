@@ -8,7 +8,9 @@ class Flow
     lofar_pipeline: %w[lofar_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step],
-    validation_pipeline: %w[validation_staging_in_step validation_container_step validation_stage_out_step]
+    validation_pipeline: %w[validation_staging_in_step
+                            validation_container_step
+                            validation_stage_out_step]
   }.freeze
 
   STEPS = [
