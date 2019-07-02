@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190314231057) do
+ActiveRecord::Schema.define(version: 20190625110814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,19 @@ ActiveRecord::Schema.define(version: 20190314231057) do
     t.index ["group_id"], name: "index_access_policies_on_group_id"
     t.index ["resource_id"], name: "index_access_policies_on_resource_id"
     t.index ["user_id"], name: "index_access_policies_on_user_id"
+  end
+
+  create_table "activity_logs", force: :cascade do |t|
+    t.string "user_id"
+    t.string "user_email"
+    t.string "project_name"
+    t.string "pipeline_id"
+    t.string "pipeline_name"
+    t.string "computation_id"
+    t.string "pipeline_step_name"
+    t.string "message", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "computations", id: :serial, force: :cascade do |t|
@@ -63,16 +76,12 @@ ActiveRecord::Schema.define(version: 20190314231057) do
     t.string "run_mode"
     t.string "container_name"
     t.string "container_tag"
-    t.integer "container_registry_id"
     t.string "src_host"
     t.string "dest_host"
+    t.json "parameter_values"
+    t.string "hpc", default: ""
+    t.string "tmp_output_file"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
-  end
-
-  create_table "container_registries", force: :cascade do |t|
-    t.string "registry_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "data_files", id: :serial, force: :cascade do |t|
@@ -173,12 +182,24 @@ ActiveRecord::Schema.define(version: 20190314231057) do
 
   create_table "singularity_script_blueprints", force: :cascade do |t|
     t.string "container_name"
-    t.string "tag"
+    t.string "container_tag"
     t.string "hpc"
-    t.string "available_options"
     t.string "script_blueprint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "step_parameters", force: :cascade do |t|
+    t.string "label"
+    t.string "name"
+    t.string "description"
+    t.integer "rank"
+    t.string "datatype"
+    t.string "default"
+    t.string "values", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "singularity_script_blueprint_id", null: false
   end
 
   create_table "user_groups", id: :serial, force: :cascade do |t|
@@ -216,11 +237,11 @@ ActiveRecord::Schema.define(version: 20190314231057) do
   end
 
   add_foreign_key "access_methods", "services"
-  add_foreign_key "computations", "container_registries"
   add_foreign_key "computations", "pipelines"
   add_foreign_key "data_files", "pipelines", column: "input_of_id"
   add_foreign_key "data_files", "pipelines", column: "output_of_id"
   add_foreign_key "data_files", "projects"
   add_foreign_key "group_relationships", "groups", column: "child_id"
   add_foreign_key "group_relationships", "groups", column: "parent_id"
+  add_foreign_key "step_parameters", "singularity_script_blueprints"
 end

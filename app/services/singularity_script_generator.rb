@@ -1,29 +1,40 @@
 # frozen_string_literal: true
 
-require 'erb'
-
 class SingularityScriptGenerator
-  attr_reader :computation
-
-  def initialize(computation, registry_url, container_name, container_tag)
+  def initialize(computation)
     @computation = computation
-    @registry_url = registry_url
-    @container_name = container_name
-    @container_tag = container_tag
   end
 
   def call
-    # to be replaced later when those params are coming from gui
-    mock_params = { tag: @container_tag, hpc: 'Prometheus' }
+    record = matching_blueprint
+    fill_values = computation_parameter_values
 
-    record = SingularityScriptBlueprint.find_by!(container_name: @container_name,
-                                                 tag: mock_params[:tag],
-                                                 hpc: mock_params[:hpc])
+    filled_script = record.script_blueprint % fill_values
 
-    script_options = mock_params.merge(registry_url: @registry_url, container_name: @container_name)
+    # Neede for now, we sometimes use functionality of the old ScriptGenerator in our scripts
+    # e.g for staging in/out to/from webdav
+    ScriptGenerator.new(@computation, filled_script).call
+  end
 
-    options_filled_script = record.script_blueprint % script_options
+  private
 
-    ScriptGenerator.new(@computation, options_filled_script).call
+  def computation_parameter_values
+    fill_values = {}
+    fill_values[:container_name] = @computation.container_name
+    fill_values[:container_tag] = @computation.container_tag
+    fill_values[:hpc] = @computation.hpc
+
+    temp = @computation.parameter_values&.symbolize_keys
+    fill_values = fill_values.merge(temp) unless temp.nil?
+
+    fill_values
+  end
+
+  def matching_blueprint
+    SingularityScriptBlueprint.find_by!(
+      container_name: @computation.container_name,
+      container_tag: @computation.container_tag,
+      hpc: @computation.hpc
+    )
   end
 end
