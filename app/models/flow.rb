@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable ClassLength
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
@@ -124,3 +125,4 @@ class Flow
     FLOWS_MAP[flow_type.to_sym] || []
   end
 end
+# rubocop:enable ClassLength

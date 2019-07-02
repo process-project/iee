@@ -15,8 +15,7 @@ module Api
 
       if status == 'done'
         @computation.update_attributes(status: 'finished')
-        
-        # Workaround for the ordrer of computatations to be right
+        # Workaround for the order of computatations to be right
         # To be deleted when proper directory structure is implemented
         make_tmp_output_file
       else
