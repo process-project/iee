@@ -186,7 +186,7 @@ en:
       start_manual: Start staging in computation computation
       restart_manual: Restart staging in computation
       restart_automatic: Restart staging in computation
-    validation_container_step:
+    validation_singularity_step:
       title: Validation container computation
       cannot_start: |
         Cannot start Validation container computation.

@@ -189,11 +189,6 @@ ActiveRecord::Schema.define(version: 20190625110814) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "singularity_script_blueprints_step_parameters", id: false, force: :cascade do |t|
-    t.bigint "singularity_script_blueprint_id", null: false
-    t.bigint "step_parameter_id", null: false
-  end
-
   create_table "step_parameters", force: :cascade do |t|
     t.string "label"
     t.string "name"

@@ -7,7 +7,7 @@ class SingularityRegistry
     medical_step: %w[maragraziani/ucdemo],
     lofar_step: %w[lofar/lofar_container],
     agrocopernicus_step: %w[agrocopernicus_placeholder_container],
-    validation_container_step: %w[validation_container]
+    validation_singularity_step: %w[validation_container]
   }
 
   CONTAINERS = {

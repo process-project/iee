@@ -10,7 +10,7 @@ class Flow
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     staging_in_placeholder_pipeline: %w[staging_in_step],
     validation_pipeline: %w[validation_staging_in_step
-                            validation_container_step
+                            validation_singularity_step
                             validation_stage_out_step]
   }.freeze
 
@@ -99,7 +99,7 @@ class Flow
       ],
       'staging_done.txt'
     ),
-    SingularityStep.new('validation_container_step',
+    SingularityStep.new('validation_singularity_step',
                         ['staging_done.txt']),
     RimrockStep.new('validation_stage_out_step',
                     'process-eu/validation_stage_out',
