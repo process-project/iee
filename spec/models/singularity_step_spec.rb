@@ -21,7 +21,7 @@ RSpec.describe SingularityStep do
 
   subject { SingularityStep.new(step_name) }
 
-  context 'Step initialized with specific name' do
+  context 'initialized with specific name' do
     xit 'obtains specific parameters from apropriate blueprint' do
       expect(subject.parameters).to include(singularity_script_blueprint.step_parameters)
     end
