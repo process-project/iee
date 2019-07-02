@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe StagingIn::GetDynamicEndpoint do
-  it 'enpoint has required entries' do
+  xit 'enpoint has required entries' do
     endpoint = described_class.new.call
 
     expect(endpoint['staging_in_host']).to_not be_nil
