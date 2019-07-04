@@ -3,7 +3,8 @@ defaults: &defaults
     url: https://submit.plgrid.pl
     host: prometheus.cyfronet.pl
     tag: vapor
-  grant_id: <%= ENV['GRANT_ID'] || 'process1' %>
+  grant_id: <%= ENV['GRANT_ID'] || 'process2' %>
+  gpu_grant_id: <%= ENV['GPU_GRANT_ID'] || 'process2gpu' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
   staging_in:
     host: 'data01.process-project.eu'
