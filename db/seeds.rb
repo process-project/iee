@@ -20,7 +20,7 @@ script = <<~CODE
   #SBATCH -N %<nodes>s
   #SBATCH --ntasks-per-node=%<cpus>s
   #SBATCH --time=00:05:00
-  #SBATCH -A process2
+  #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
   #SBATCH -p %<partition>s
   #SBATCH --job-name mock_container_step
   #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.out
@@ -101,7 +101,7 @@ ssbp.step_parameters = [
 # Container for the UC1 Medical use case
 script = <<~CODE
   #!/bin/bash
-  #SBATCH -A process2gpu
+  #SBATCH -A #{Rails.application.config_for('process')['gpu_grant_id']}
   #SBATCH -p %<partition>s
   #SBATCH -N %<nodes>s
   #SBATCH -n %<cpus>s
@@ -112,7 +112,11 @@ script = <<~CODE
 
   module load plgrid/tools/singularity/stable
 
-  singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,/net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,/net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts /net/archive/groups/plggprocess/UC1/funny_cos_working.img /mnt/run_scripts/runscript.sh 4
+  singularity exec --nv -B /net/archive/groups/plggprocess/UC1/data/:/mnt/data/,\
+                           /net/archive/groups/plggprocess/UC1/external_code/:/mnt/external_code/,\
+                           /net/archive/groups/plggprocess/UC1/run_scripts/:/mnt/run_scripts \
+                           /net/archive/groups/plggprocess/UC1/funny_cos_working.img \
+                           /mnt/run_scripts/runscript.sh %<gpus>s
 CODE
 
 ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
@@ -146,6 +150,14 @@ ssbp.step_parameters = [
     datatype: 'multi',
     default: 'plgrid-gpu',
     values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+  ),
+  StepParameter.new(
+    label: 'gpus',
+    name: 'GPUs',
+    description: 'Total number of GPUS',
+    rank: 0,
+    datatype: 'integer',
+    default: 1
   )
 ]
 
@@ -153,7 +165,7 @@ ssbp.step_parameters = [
 script = <<~CODE
   #!/bin/bash
   #SBATCH --partition %<partition>s
-  #SBATCH -A process2
+  #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
   #SBATCH --nodes %<nodes>s
   #SBATCH --ntasks %<cpus>s
   #SBATCH --time 0:59:59
@@ -331,7 +343,7 @@ ssbp.step_parameters = [
 script = <<~CODE
   #!/bin/bash
   #SBATCH --partition plgrid-testing
-  #SBATCH -A process2
+  #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
   #SBATCH --nodes %<nodes>s
   #SBATCH --ntasks %<containers>s
   #SBATCH --cpus-per-task %<cores_per_container>s
