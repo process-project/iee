@@ -168,7 +168,7 @@ script = <<~CODE
   #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
   #SBATCH --nodes %<nodes>s
   #SBATCH --ntasks %<cpus>s
-  #SBATCH --time 0:59:59
+  #SBATCH --time 2:00:00
   #SBATCH --job-name UC2_test
   #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
   #SBATCH --error /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.err
@@ -204,7 +204,7 @@ ssbp.step_parameters = [
     description: 'Number of CPU per execution node',
     rank: 0,
     datatype: 'multi',
-    default: '1',
+    default: '24',
     values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
   ),
   StepParameter.new(
@@ -213,7 +213,7 @@ ssbp.step_parameters = [
     description: 'Prometheus execution partition',
     rank: 0,
     datatype: 'multi',
-    default: 'plgrid-testing',
+    default: 'plgrid',
     values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
   ),
   StepParameter.new(
@@ -222,7 +222,7 @@ ssbp.step_parameters = [
     description: 'LOFAR visibility identifier',
     rank: 0,
     datatype: 'string',
-    default: ''
+    default: '1234'
   ),
   StepParameter.new(
     label: 'avg_freq_step',
