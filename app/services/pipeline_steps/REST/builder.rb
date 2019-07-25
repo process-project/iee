@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module Singularity
+  module REST
     class Builder
       def initialize(pipeline, name, parameter_values, parameters = [])
         @pipeline = pipeline
@@ -11,14 +11,11 @@ module PipelineSteps
       end
 
       def call
-        SingularityComputation.create!(
+        RESTComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,
-          container_name: @parameter_values[:container_name],
-          container_tag: @parameter_values[:container_tag],
-          hpc: @parameter_values[:hpc],
-          parameter_values: @parameter_values.except(:container_name, :container_tag, :hpc)
+          parameter_values: @parameter_values
         )
       end
 
@@ -31,7 +28,7 @@ module PipelineSteps
       end
 
       def parameter_attributes(parameters)
-        attributes = [:container_name, :container_tag, :hpc]
+        attributes = []
 
         parameters.each do |parameter|
           attributes.push parameter.label.to_sym
