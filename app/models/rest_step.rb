@@ -27,9 +27,5 @@ class RESTStep < Step
   def input_present_for?(pipeline)
     true
   end
-
-  private
-
-
 end
 # rubocop:enable Metrics/ClassLength

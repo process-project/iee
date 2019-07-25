@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module Singularity
+  module REST
     class Runner < PipelineSteps::RunnerBase
       def initialize(computation, options = {})
         super(computation, options)
@@ -10,12 +10,11 @@ module PipelineSteps
       protected
 
       def pre_internal_run
-        computation.script = SingularityScriptGenerator.new(computation).call
-        computation.job_id = nil
+        # TODO or maybe 
       end
 
       def internal_run
-        ::Rimrock::StartJob.perform_later computation if computation.valid?
+        ::REST::StartJob.perform_later computation if computation.valid?
       end
     end
   end

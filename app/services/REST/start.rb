@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module StagingIn
+module REST
   require 'net/http'
   require 'json'
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module StagingIn
+module REST
   class StartJob < ApplicationJob
     queue_as :computation
 
     def perform(computation)
-      StagingIn::Start.new(computation).call
+      REST::Start.new(computation).call
     rescue StandardError => e
       Rails.logger.error(e)
       computation.update_attributes(status: 'error',
