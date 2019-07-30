@@ -3,8 +3,10 @@
 module REST
   class Update
     def initialize(user, options = {})
-      @service_url = Rails.application.config_for('process')['REST']['url']
-      @api_path = Rails.application.config_for('process')['REST']['api_path']
+      @service_url = 'http://' + 
+                     Rails.application.config_for('process')['REST']['host'] + 
+                     '/' +
+                     Rails.application.config_for('process')['REST']['port']
       @job_status_path = Rails.application.config_for('process')['REST']['job_status_path']
       @user = user
       @on_finish_callback = options[:on_finish_callback]
@@ -29,7 +31,7 @@ module REST
 
     # TODO POSSIBLY EDIT WHEN UC5 API IS WORKING
     def connection
-      @connection ||= Faraday.new(url: @service_url + @api_uri) do |faraday|
+      @connection ||= Faraday.new(url: @service_url) do |faraday|
         faraday.request :url_encoded
         faraday.adapter Faraday.default_adapter
         faraday.headers['Authorization:Bearer'] = @user.token
