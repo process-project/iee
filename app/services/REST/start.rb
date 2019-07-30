@@ -37,7 +37,7 @@ module REST
     end
 
     def request_body
-      { parameters: 'TEST' }
+      { parameters: computation.parameter_values }
     end
 
     def get_job_id(response)
