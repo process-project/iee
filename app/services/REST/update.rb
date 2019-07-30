@@ -3,8 +3,8 @@
 module REST
   class Update
     def initialize(user, options = {})
-      @service_url = 'http://' + 
-                     Rails.application.config_for('process')['REST']['host'] + 
+      @service_url = 'http://' +
+                     Rails.application.config_for('process')['REST']['host'] +
                      '/' +
                      Rails.application.config_for('process')['REST']['port']
       @job_status_path = Rails.application.config_for('process')['REST']['job_status_path']
@@ -13,7 +13,7 @@ module REST
       @updater = options[:updater]
     end
 
-    # TODO POSSIBLY EDIT WHEN UC5 API IS WORKING
+    # TODO: possibly edit when UC5 api is working
     def call
       return if active_computations.empty?
 
@@ -23,13 +23,13 @@ module REST
         when 200 then success(response.body)
         when 422 then error(response.body, :timeout)
         else error(response.body, :internal)
+        end
       end
-
     end
 
     private
 
-    # TODO POSSIBLY EDIT WHEN UC5 API IS WORKING
+    # TODO: possibly edit when UC5 api is working
     def connection
       @connection ||= Faraday.new(url: @service_url) do |faraday|
         faraday.request :url_encoded
@@ -38,13 +38,13 @@ module REST
       end
     end
 
-    # TODO EDIT WHEN UC5 API IS WORKING
+    # TODO: possibly edit when UC5 api is working
     def success(body)
       status = Hash[JSON.parse(body).map { |e| [e['job_id'], e] }]
-      update_computation(computation, statuses[computation.job_id])
+      update_computation(computation, status[computation.job_id])
     end
 
-    # TODO EDIT WHEN UC5 API IS WORKING
+    # TODO: possibly edit when UC5 api is working
     def update_computation(computation, new_status)
       if new_status
         current_status = computation.status
@@ -58,7 +58,7 @@ module REST
       end
     end
 
-    # TODO EDIT WHEN UC5 API IS WORKING
+    # TODO: possibly edit when UC5 api is working
     def error(body, error_type)
       Rails.logger.tagged(self.class.name) do
         Rails.logger.warn(

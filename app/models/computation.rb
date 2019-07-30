@@ -20,7 +20,7 @@ class Computation < ApplicationRecord
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :staging_in, -> { where(type: 'StagingInComputation') }
-  scope :REST -> { where(type: 'RESTComputation') }
+  scope :REST, -> { where(type: 'RESTComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
