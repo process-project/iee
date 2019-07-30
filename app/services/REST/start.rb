@@ -3,10 +3,6 @@
 module REST
   require 'net/http'
   require 'json'
-# curl -X POST -H 'Content-Type: application/json' -H 'Authorization:
-# Bearer
-# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cCI6MTU4NDEwOTYzNywiaWF0IjoxNTUyNTczNjM3fQ.uJQeD3uIGwRXIpze-dSJQ8qUEu6koHAGQKf8-_47qMM'
-# --data '{"parameters":"TEST"}' http://141.40.254.88:5000/api/v0.1/job/submit
 
   class Start
     def initialize(computation)
@@ -41,7 +37,7 @@ module REST
     end
 
     def request_body
-      { parameters: "TEST" }
+      { parameters: 'TEST' }
     end
 
     def get_job_id(response)
