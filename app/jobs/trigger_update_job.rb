@@ -28,4 +28,10 @@ class TriggerUpdateJob < ApplicationJob
       Rimrock::UpdateJob.perform_later(user)
     end
   end
+
+  def trigger_rest_jobs_update
+    User.with_submitted_computations('RESTComputation').each do |user|
+      REST::UpdateJob.perform_later(user)
+    end
+  end
 end
