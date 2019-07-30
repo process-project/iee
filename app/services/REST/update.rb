@@ -1,42 +1,48 @@
 # frozen_string_literal: true
 
 module REST
-  class Update < ProxyService
+  class Update
     def initialize(user, options = {})
-      super(user,
-            Rails.application.config_for('process')['rimrock']['url'],
-            options)
-
+      @service_url = Rails.application.config_for('process')['REST']['url']
+      @api_path = Rails.application.config_for('process')['REST']['api_path']
+      @job_status_path = Rails.application.config_for('process')['REST']['job_status_path']
       @user = user
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
     end
 
+    # TODO POSSIBLY EDIT WHEN UC5 API IS WORKING
     def call
       return if active_computations.empty?
 
-      response = connection.get('api/jobs', tag: tag)
-      case response.status
-      when 200 then success(response.body)
-      when 422 then error(response.body, :timeout)
-      else error(response.body, :internal)
+      active_computations.each do |computation|
+        response = connection.get(@job_status_path, job_id: computation.job_id)
+        case response.status
+        when 200 then success(response.body)
+        when 422 then error(response.body, :timeout)
+        else error(response.body, :internal)
       end
+
     end
 
     private
 
-    def tag
-      Rails.application.config_for('process')['rimrock']['tag']
-    end
-
-    def success(body)
-      statuses = Hash[JSON.parse(body).map { |e| [e['job_id'], e] }]
-
-      active_computations.each do |computation|
-        update_computation(computation, statuses[computation.job_id])
+    # TODO POSSIBLY EDIT WHEN UC5 API IS WORKING
+    def connection
+      @connection ||= Faraday.new(url: @service_url + @api_uri) do |faraday|
+        faraday.request :url_encoded
+        faraday.adapter Faraday.default_adapter
+        faraday.headers['Authorization:Bearer'] = @user.token
       end
     end
 
+    # TODO EDIT WHEN UC5 API IS WORKING
+    def success(body)
+      status = Hash[JSON.parse(body).map { |e| [e['job_id'], e] }]
+      update_computation(computation, statuses[computation.job_id])
+    end
+
+    # TODO EDIT WHEN UC5 API IS WORKING
     def update_computation(computation, new_status)
       if new_status
         current_status = computation.status
@@ -50,6 +56,7 @@ module REST
       end
     end
 
+    # TODO EDIT WHEN UC5 API IS WORKING
     def error(body, error_type)
       Rails.logger.tagged(self.class.name) do
         Rails.logger.warn(
@@ -59,9 +66,7 @@ module REST
     end
 
     def active_computations
-      # @ac ||= @user.computations.submitted_rimrock
-      @ac ||= @user.computations.submitted_singularity +
-              @user.computations.submitted_rimrock
+      @ac ||= @user.computations.submitted_REST
     end
 
     def on_finish_callback(computation)

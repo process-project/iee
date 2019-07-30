@@ -4,10 +4,10 @@ module REST
   class UpdateJob < ApplicationJob
     queue_as :computation
 
-    def perform(computation)
-      REST::Update.new(computation,
-                            on_finish_callback: PipelineUpdater,
-                            updater: ComputationUpdater).call
+    def perform(user)
+      REST::Update.new(user,
+                       on_finish_callback: PipelineUpdater,
+                       updater: ComputationUpdater).call
     end
   end
 end
