@@ -3,6 +3,10 @@
 module REST
   require 'net/http'
   require 'json'
+# curl -X POST -H 'Content-Type: application/json' -H 'Authorization:
+# Bearer
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cCI6MTU4NDEwOTYzNywiaWF0IjoxNTUyNTczNjM3fQ.uJQeD3uIGwRXIpze-dSJQ8qUEu6koHAGQKf8-_47qMM'
+# --data '{"parameters":"TEST"}' http://141.40.254.88:5000/api/v0.1/job/submit
 
   class Start
     def initialize(computation)
@@ -10,72 +14,38 @@ module REST
     end
 
     def call
-      make_request.value # Raises an HTTP error if the response is not 2xx (success).
-      @computation.update_attributes(status: 'running')
+      response = make_request.value # Raises an HTTP error if the response is not 2xx (success).
+      @computation.update_attributes(status: 'running', job_id: get_job_id(response))
     end
 
     private
 
     def make_request
-      http = Net::HTTP.new(staging_in_host, staging_in_port)
-      req = Net::HTTP::Post.new(staging_in_path, 'content-type' => 'application/json',
-                                                 'x-access-token' => lobcder_api_access_token)
+      http = Net::HTTP.new(service_host, service_port)
+      req = Net::HTTP::Post.new(service_path, 'content-type' => 'application/json',
+                                              'Authorization' => computation.user.token)
       req.body = request_body.to_json
       http.request(req)
     end
 
-    def staging_in_host
-      Rails.application.config_for('process')['staging_in']['host']
+    def service_host
+      Rails.application.config_for('process')['REST']['host']
     end
 
-    def staging_in_port
-      Rails.application.config_for('process')['staging_in']['port']
+    def service_port
+      Rails.application.config_for('process')['REST']['port']
     end
 
-    def staging_in_path
-      Rails.application.config_for('process')['staging_in']['path']
+    def service_path
+      Rails.application.config_for('process')['REST']['path']
     end
 
-    def lobcder_api_access_token
-      Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
-    end
-
-    def src_user
-      Rails.application.config_for('process')['staging_in']['src_user']
-    end
-
-    def dest_user
-      Rails.application.config_for('process')['staging_in']['dest_user']
-    end
-
-    # rubocop:disable Metrics/MethodLength
     def request_body
-      [{ id: @computation.id,
-         cmd: { type: 'copy',
-                subtype: 'scp2scp',
-                src: { type: 'scp',
-                       host: @computation.src_host,
-                       user: src_user,
-                       path: @computation.src_path },
-                dst: { type: 'scp',
-                       host: @computation.dest_host,
-                       user: dest_user,
-                       path: @computation.dest_path },
-                webhook: { method: 'POST',
-                           url: webhook_url,
-                           headers: { 'x-staging-token' => staging_secret,
-                                      'content-type' => 'application/json' } },
-                options: {} } }]
-    end
-    # rubocop:enable Metrics/MethodLength
-
-    def webhook_url
-      Rails.application.routes.url_helpers.api_staging_url(protocol: 'https',
-                                                           host: ENV['HOST'])
+      { parameters: "TEST" }
     end
 
-    def staging_secret
-      Rails.application.config_for('process')['staging_in']['staging_secret']
+    def get_job_id(response)
+      JSON.parse(response.body)['job_id']
     end
   end
 end
