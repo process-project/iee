@@ -3,13 +3,8 @@
 module Rest
   class Update
     def initialize(user, options = {})
-<<<<<<< HEAD:app/services/rest/update.rb
-      @service_url = 'http://' + 
-                     Rails.application.config_for('process')['Rest']['host'] + 
-=======
       @service_url = 'http://' +
-                     Rails.application.config_for('process')['REST']['host'] +
->>>>>>> ffd2ff61565361d1a4051c4dade2eadf6c25cdbd:app/services/REST/update.rb
+                     Rails.application.config_for('process')['Rest']['host'] +
                      '/' +
                      Rails.application.config_for('process')['Rest']['port']
       @job_status_path = Rails.application.config_for('process')['Rest']['job_status_path']
