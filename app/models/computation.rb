@@ -20,12 +20,12 @@ class Computation < ApplicationRecord
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :staging_in, -> { where(type: 'StagingInComputation') }
-  scope :REST -> { where(type: 'RESTComputation') }
+  scope :rest -> { where(type: 'RestComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
   scope :submitted_staging_in, -> { submitted.staging_in }
-  scope :submitted_REST, -> { submitted.REST }
+  scope :submitted_rest, -> { submitted.rest }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline
@@ -58,8 +58,8 @@ class Computation < ApplicationRecord
     type == 'StagingInComputation'
   end
 
-  def REST?
-    type == 'RESTComputation'
+  def rest?
+    type == 'RestComputation'
   end
 
   def self.flow_ordered

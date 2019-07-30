@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class RESTComputation < Computation
+class RestComputation < Computation
 end

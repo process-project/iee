@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module REST
+module Rest
   require 'net/http'
   require 'json'
 
@@ -25,15 +25,15 @@ module REST
     end
 
     def service_host
-      Rails.application.config_for('process')['REST']['host']
+      Rails.application.config_for('process')['Rest']['host']
     end
 
     def service_port
-      Rails.application.config_for('process')['REST']['port']
+      Rails.application.config_for('process')['Rest']['port']
     end
 
     def service_path
-      Rails.application.config_for('process')['REST']['job_submission_path']
+      Rails.application.config_for('process')['Rest']['job_submission_path']
     end
 
     def request_body

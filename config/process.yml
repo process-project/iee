@@ -22,7 +22,7 @@ defaults: &defaults
     ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
     user: <%= ENV['SEGMENTATION_USER'] %>
     password: <%= ENV['SEGMENTATION_PASSWORD'] %>
-  REST:
+  Rest:
     host: '141.40.254.88'
     port: '5000'
     job_submission_path: '/api/v0.1/job/submit'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RESTStep < Step
+class RestStep < Step
   attr_reader :repository, :file, :parameters
 
   def initialize(name)
@@ -8,7 +8,7 @@ class RESTStep < Step
   end
 
   def builder_for(pipeline, parameter_values)
-    PipelineSteps::REST::Builder.new(
+    PipelineSteps::Rest::Builder.new(
       pipeline,
       name,
       parameter_values,
@@ -17,7 +17,7 @@ class RESTStep < Step
   end
 
   def runner_for(computation, options = {})
-    PipelineSteps::REST::Runner.new(
+    PipelineSteps::Rest::Runner.new(
       computation,
       options
     )

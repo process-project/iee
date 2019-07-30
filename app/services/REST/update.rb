@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module REST
+module Rest
   class Update
     def initialize(user, options = {})
       @service_url = 'http://' + 
-                     Rails.application.config_for('process')['REST']['host'] + 
+                     Rails.application.config_for('process')['Rest']['host'] + 
                      '/' +
-                     Rails.application.config_for('process')['REST']['port']
-      @job_status_path = Rails.application.config_for('process')['REST']['job_status_path']
+                     Rails.application.config_for('process')['Rest']['port']
+      @job_status_path = Rails.application.config_for('process')['Rest']['job_status_path']
       @user = user
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
@@ -68,7 +68,7 @@ module REST
     end
 
     def active_computations
-      @ac ||= @user.computations.submitted_REST
+      @ac ||= @user.computations.submitted_rest
     end
 
     def on_finish_callback(computation)

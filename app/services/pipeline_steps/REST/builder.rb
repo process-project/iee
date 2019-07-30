@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module REST
+  module Rest
     class Builder
       def initialize(pipeline, name, parameter_values, parameters = [])
         @pipeline = pipeline
@@ -11,7 +11,7 @@ module PipelineSteps
       end
 
       def call
-        RESTComputation.create!(
+        RestComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,

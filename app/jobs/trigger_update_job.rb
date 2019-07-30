@@ -30,8 +30,8 @@ class TriggerUpdateJob < ApplicationJob
   end
 
   def trigger_rest_jobs_update
-    User.with_submitted_computations('RESTComputation').each do |user|
-      REST::UpdateJob.perform_later(user)
+    User.with_submitted_computations('RestComputation').each do |user|
+      Rest::UpdateJob.perform_later(user)
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PipelineSteps
-  module REST
+  module Rest
     class Runner < PipelineSteps::RunnerBase
       def initialize(computation, options = {})
         super(computation, options)
@@ -14,7 +14,7 @@ module PipelineSteps
       end
 
       def internal_run
-        ::REST::StartJob.perform_later computation if computation.valid?
+        ::Rest::StartJob.perform_later computation if computation.valid?
       end
     end
   end
