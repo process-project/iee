@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 class RESTStep < Step
   attr_reader :repository, :file, :parameters
 
@@ -24,8 +23,7 @@ class RESTStep < Step
     )
   end
 
-  def input_present_for?(pipeline)
+  def input_present_for?(_pipeline)
     true
   end
 end
-# rubocop:enable Metrics/ClassLength
