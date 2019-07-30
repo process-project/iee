@@ -33,7 +33,7 @@ module REST
     end
 
     def service_path
-      Rails.application.config_for('process')['REST']['path']
+      Rails.application.config_for('process')['REST']['job_submission_path']
     end
 
     def request_body
