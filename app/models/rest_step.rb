@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class RestStep < Step
-  attr_reader :repository, :file, :parameters
+  attr_reader :parameters
 
-  def initialize(name)
+  def initialize(name, parameters = [])
     super(name)
+    @parameters = parameters
   end
 
   def builder_for(pipeline, parameter_values)
