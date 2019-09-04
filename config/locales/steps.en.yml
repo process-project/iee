@@ -19,63 +19,6 @@ en:
       start_manual: Start placeholder step
       restart_manual: Restart placeholder step
       restart_automatic: Restart computation
-    tf_cpu_step:
-      title: Tensorflow CPU computation
-      cannot_start: |
-        Cannot start tensorflow CPU computation.
-      created: |
-        All required input files are available.
-        You can start tensorflow CPU computation for this project.
-      new: Tensorflow CPU computation is being submitted
-      queued: Tensorflow CPU computation is queued
-      running: Tensorflow CPU computation is running
-      error: There was an error while running tensorflow CPU computation
-      finished: |
-        Tensorflow CPU computation finished successfully, results stored in
-        the output directory.
-      aborted: Tensorflow CPU computation was aborted by the pipeline owner
-      start_automatic: Save tensorflow CPU computation version
-      start_manual: Start tensorflow CPU computation
-      restart_manual: Restart tensorflow CPU computation
-      restart_automatic: Restart computation
-    tf_gpu_step:
-      title: Tensorflow GPU computation
-      cannot_start: |
-        Cannot start tensorflow GPU computation.
-      created: |
-        All required input files are available.
-        You can start tensorflow GPU computation for this project.
-      new: Tensorflow GPU computation is being submitted
-      queued: Tensorflow GPU computation is queued
-      running: Tensorflow GPU computation is running
-      error: There was an error while running tensorflow GPU computation
-      finished: |
-        Tensorflow GPU computation finished successfully, results stored in
-        the output directory.
-      aborted: Tensorflow GPU computation was aborted by the pipeline owner
-      start_automatic: Save tensorflow GPU computation version
-      start_manual: Start tensorflow GPU computation
-      restart_manual: Restart tensorflow GPU computation
-      restart_automatic: Restart computation
-    singularity_test_gpu_step:
-      title: Singularity container computation
-      cannot_start: |
-        Cannot start Singularity container computation.
-      created: |
-        All required input files are available.
-        You can start Singularity container computation for this project.
-      new: Singularity container computation is being submitted
-      queued: Singularity container computation is queued
-      running: Singularity container computation is running
-      error: There was an error while running Singularity container computation
-      finished: |
-        Singularity container computation finished successfully, results stored in
-        the output directory.
-      aborted: Singularity container computation was aborted by the pipeline owner
-      start_automatic: Save Singularity container computation version
-      start_manual: Start Singularity container computation computation
-      restart_manual: Restart Singularity container computation
-      restart_automatic: Restart computation
     singularity_placeholder_step:
       title: Singularity placeholder computation
       cannot_start: |
@@ -222,4 +165,21 @@ en:
       start_manual: Start staging out computation computation
       restart_manual: Restart staging out computation
       restart_automatic: Restart staging out computation
+    agrocopernicus_step:
+      title: Agrocopernicus computation
+      cannot_start: |
+        Cannot start Agrocopernicus computation.
+      created: |
+        You can start Agrocopernicus computation for this project.
+      new: Agrocopernicus computation is being submitted
+      queued: Agrocopernicus computation is queued
+      running: Agrocopernicus computation is running
+      error: There was an error while running Agrocopernicus computation
+      finished: |
+        Agrocopernicus computation finished successfully.
+      aborted: Agrocopernicus computation was aborted by the pipeline owner
+      start_automatic: Save Agrocopernicus computation version
+      start_manual: Start Agrocopernicus computation computation
+      restart_manual: Restart Agrocopernicus computation
+      restart_automatic: Restart Agrocopernicus computation
       
