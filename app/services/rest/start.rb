@@ -19,7 +19,7 @@ module Rest
     def make_request
       http = Net::HTTP.new(service_host, service_port)
       req = Net::HTTP::Post.new(service_path, 'content-type' => 'application/json',
-                                              'Authorization' => computation.user.token)
+                                              'Authorization' => @computation.user.token)
       req.body = request_body.to_json
       http.request(req)
     end
@@ -37,7 +37,7 @@ module Rest
     end
 
     def request_body
-      { parameters: computation.parameter_values }
+      { parameters: @computation.parameter_values }
     end
 
     def get_job_id(response)
