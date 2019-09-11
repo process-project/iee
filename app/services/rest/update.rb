@@ -5,7 +5,6 @@ module Rest
     def initialize(user, options = {})
       @service_url = 'http://' +
                      Rails.application.config_for('process')['Rest']['host'] +
-                     '/' +
                      Rails.application.config_for('process')['Rest']['port']
       @job_status_path = Rails.application.config_for('process')['Rest']['job_status_path']
       @user = user
@@ -13,12 +12,11 @@ module Rest
       @updater = options[:updater]
     end
 
-    # TODO: possibly edit when UC5 api is working
     def call
       return if active_computations.empty?
 
       active_computations.each do |computation|
-        response = connection.get(@job_status_path, job_id: computation.job_id)
+        response = connection.get(@job_status_path + computation.id)
         case response.status
         when 200 then success(response.body)
         when 422 then error(response.body, :timeout)
@@ -29,19 +27,18 @@ module Rest
 
     private
 
-    # TODO: possibly edit when UC5 api is working
     def connection
       @connection ||= Faraday.new(url: @service_url) do |faraday|
         faraday.request :url_encoded
         faraday.adapter Faraday.default_adapter
-        faraday.headers['Authorization:Bearer'] = @user.token
+        faraday.headers['authorization: bearer'] = @user.token
       end
     end
 
     # TODO: possibly edit when UC5 api is working
     def success(body)
-      status = Hash[JSON.parse(body).map { |e| [e['job_id'], e] }]
-      update_computation(computation, status[computation.job_id])
+      status = Hash[JSON.parse(body).map { |e| [e['id'], e] }]
+      update_computation(computation, status[computation.id])
     end
 
     # TODO: possibly edit when UC5 api is working
