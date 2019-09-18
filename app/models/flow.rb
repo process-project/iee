@@ -110,8 +110,46 @@ class Flow
     SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
-    SingularityStep.new('agrocopernicus_step',
-                        ['input.csv'])
+    RestStep.new(
+      'agrocopernicus_step',
+      [
+        StepParameter.new(
+          label: 'irrigation',
+          name: 'Irrigation',
+          description: '',
+          rank: 0,
+          datatype: 'boolean',
+          default: 'true'
+        ),
+        StepParameter.new(
+          label: 'seeding_date',
+          name: 'Seeding date',
+          description: '',
+          rank: 0,
+          datatype: 'multi',
+          default: '-15 days',
+          values: ['-15 days', 'original', '+15 days']
+        ),
+        StepParameter.new(
+          label: 'nutrition_factor',
+          name: 'Nutrition factor',
+          description: '',
+          rank: 0,
+          datatype: 'multi',
+          default: '0.25',
+          values: ['0.25', '0.45', '0.60']
+        ),
+        StepParameter.new(
+          label: 'Phenology_factor',
+          name: 'Phenology factor',
+          description: '',
+          rank: 0,
+          datatype: 'multi',
+          default: '0.6',
+          values: ['0.6', '0.8', '1.0', '1.2']
+        )
+      ]
+    )
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
