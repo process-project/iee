@@ -9,7 +9,8 @@ class JwtToken
     JWT.encode(
       token_payload(expiration_time_in_seconds),
       Vapor::Application.config.jwt.key,
-      Vapor::Application.config.jwt.key_algorithm
+      Vapor::Application.config.jwt.key_algorithm,
+      header_fields = {typ: 'JWT'}
     )
   end
 
