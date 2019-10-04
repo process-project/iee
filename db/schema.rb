@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190625110814) do
+ActiveRecord::Schema.define(version: 20191003083121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,22 @@ ActiveRecord::Schema.define(version: 20190625110814) do
     t.string "hpc", default: ""
     t.string "tmp_output_file"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
+  end
+
+  create_table "compute_site_proxies", force: :cascade do |t|
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "compute_site_id"
+    t.bigint "user_id"
+    t.index ["compute_site_id"], name: "index_compute_site_proxies_on_compute_site_id"
+    t.index ["user_id"], name: "index_compute_site_proxies_on_user_id"
+  end
+
+  create_table "compute_sites", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "data_files", id: :serial, force: :cascade do |t|
