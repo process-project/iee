@@ -26,6 +26,8 @@ class User < ApplicationRecord
   has_many :computations, dependent: :destroy
   has_many :service_ownerships, dependent: :destroy
   has_many :services, through: :service_ownerships
+  has_many :compute_site_proxy
+  has_many :compute_site, through: :compute_site_proxy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
