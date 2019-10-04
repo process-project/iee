@@ -1,4 +1,4 @@
 class ComputeSite < ApplicationRecord
-	has_many :compute_site_proxy
-	has_many :user, through: :compute_site_proxy
+	has_many :compute_site_proxies
+	has_many :users, through: :compute_site_proxies
 end
