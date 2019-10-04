@@ -16,6 +16,8 @@
           = link_to 'Account', profile_account_path
         = nav_link controller: :passwords do
           = link_to 'Password', profile_password_path
+        = nav_link controller: :compute_site_proxies do
+          = link_to 'Compute Site Proxies', profile_compute_site_proxy_path
         - if policy(:plgrid).show?
           = nav_link controller: :plgrids do
             = link_to 'PLGrid', profile_plgrid_path
