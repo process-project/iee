@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :compute_site do
-    name "MyString"
+    name "compute site mock name"
   end
 end
