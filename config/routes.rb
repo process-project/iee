@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       resource :account, only: [:show, :update]
       resource :password, only: [:show, :update]
       resource :plgrid, only: [:show, :destroy]
-      resource :compute_site_proxy, only: [:show, :update]
+      resources :compute_site_proxy
     end
   end
 

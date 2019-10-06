@@ -1,0 +1,2 @@
+module Profiles::ComputeSiteProxyHelper
+end
