@@ -1,0 +1,9 @@
+= render('profiles/layout') do
+  - @compute_site_proxies.each do |csp|
+    = csp.compute_site.name + ": " + csp.value + "\n"
+    = link_to "Edit proxy", edit_profile_compute_site_proxy_path(csp),
+      class: 'btn btn-success'
+    %br
+  %br
+  = link_to "Add new proxy", new_profile_compute_site_proxy_path,
+    class: 'btn btn-success'
