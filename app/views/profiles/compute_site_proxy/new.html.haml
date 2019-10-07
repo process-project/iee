@@ -1,7 +1,7 @@
 = render('profiles/layout') do
   = simple_form_for(@compute_site_proxy, url: profile_compute_site_proxy_index_path) do |f|
-    = f.input :compute_site, collection: @compute_sites, prompt: "Select compute site..."
-    = f.input :value, prompt: "Input proxy value..."
+    = f.input :compute_site, collection: unset_compute_sites, prompt: "Select compute site..."
+    = f.input :value, prompt: "Input proxy value...", required: true
     .form-group
       .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
         = f.button :submit, 'Add proxy', class: 'btn btn-success'
