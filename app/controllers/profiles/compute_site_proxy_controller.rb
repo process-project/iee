@@ -1,4 +1,7 @@
-class Profiles::ComputeSiteProxyController < ApplicationController
+# frozen_string_literal: true
+
+module Profiles
+  class ComputeSiteProxyController < ApplicationController
     def index
       @compute_site_proxies = ComputeSiteProxy.all
     end
@@ -10,7 +13,7 @@ class Profiles::ComputeSiteProxyController < ApplicationController
 
     def create
       if !create_proxy
-        flash[:alert] = "Unable to create compute site proxy"
+        flash[:alert] = 'Unable to create compute site proxy'
         redirect_to new_profile_compute_site_proxy_path
       else
         flash[:notice] = 'Compute site proxy added successfully'
@@ -24,7 +27,7 @@ class Profiles::ComputeSiteProxyController < ApplicationController
 
     def update
       if !update_proxy
-        flash[:alert] = "Unable to update compute site proxy"
+        flash[:alert] = 'Unable to update compute site proxy'
         redirect_to edit_profile_compute_site_proxy_path
       else
         flash[:notice] = 'Compute site proxy updated successfully'
@@ -47,4 +50,5 @@ class Profiles::ComputeSiteProxyController < ApplicationController
     def permitted_attributes
       params.require(:compute_site_proxy).permit(:value, :compute_site)
     end
+  end
 end
