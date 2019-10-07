@@ -16,7 +16,7 @@ end
 
 # Add compute sites to DB, besides Prometheus...
 ComputeSite.create(name: "LRZ")
-ComputeSite.create(name: "Amsterdam HPC")
+ComputeSite.create(name: "Amsterdam")
 
 # Test container for the Prometheus HPC
 script = <<~CODE

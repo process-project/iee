@@ -1,10 +1,21 @@
 = render('profiles/layout') do
-  - @compute_site_proxies.each do |csp|
-    = csp.compute_site.name + ": " + csp.value + "\n"
-    = link_to "Edit proxy", edit_profile_compute_site_proxy_path(csp),
-      class: 'btn btn-success'
-    %br
-  %br
+  %table{:style => "border: 0px; width: 69%"}
+    %tbody
+      %tr
+        %td
+          %b
+            %h4
+              %strong HPC
+        %td
+          %b
+            %h4
+              %strong Proxy
+        %td
+        - @compute_site_proxies.each do |csp|
+          %tr
+          %td= csp.compute_site.name
+          %td= csp.value[0..10]
+          %td= link_to "Edit proxy", edit_profile_compute_site_proxy_path(csp), class: 'btn btn-success'
   - if not unset_compute_sites.empty?
     = link_to "Add new proxy", new_profile_compute_site_proxy_path,
       class: 'btn btn-success'
