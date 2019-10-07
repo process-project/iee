@@ -1,7 +1,11 @@
 class ComputeSiteProxy < ApplicationRecord
 	belongs_to :user
 	belongs_to :compute_site
+
+  validates :compute_site_id, presence: true
   validates :compute_site_id, uniqueness: {scope: :user_id}
+  validates :user_id, presence: true
+  validates :value, presence: true
 
   def compute_site_name
     compute_site.name
