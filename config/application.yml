@@ -3,7 +3,7 @@ defaults: &defaults
     key: <%= ENV['JWT_KEY_PATH'] || Rails.root.join('config', 'jwt', 'dev.pem') %>
     key_algorithm: ES256
     expiration_time: 86400 #24 hours
-    issuer: 'EurValve Portal'
+    issuer: 'IEE'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
   file_store:
     web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve.cyfronet.pl' %>
@@ -44,4 +44,4 @@ production:
     key: <%= Rails.root.join('config', 'jwt', 'prod.pem') %>
     key_algorithm: ES256
     expiration_time: 3600
-    issuer: 'EurValve Portal'
+    issuer: 'IEE'
