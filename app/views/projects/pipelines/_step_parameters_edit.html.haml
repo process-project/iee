@@ -16,8 +16,7 @@
           name: "pipeline[#{step}][#{parameter.label}]"
       - when 'multi'
         = select_tag "pipeline_#{step}_parameter_#{parameter.label}",
-          options_for_select(parameter.values),
-          default: parameter.default,
+          options_for_select(parameter.values, parameter.default),
           class: "form-control",
           name: "pipeline[#{step}][#{parameter.label}]"
       - when 'boolean'
