@@ -38,8 +38,8 @@ module Profiles
     private
 
     def create_proxy
-      ComputeSiteProxy.create user: current_user, 
-                              compute_site: ComputeSite.find(permitted_attributes[:compute_site]), 
+      ComputeSiteProxy.create user: current_user,
+                              compute_site: ComputeSite.find(permitted_attributes[:compute_site]),
                               value: permitted_attributes[:value]
     end
 

@@ -9,7 +9,9 @@ class ComputeSiteProxy < ApplicationRecord
   validates :user_id, presence: true
   validates :value, presence: true
 
-  def compute_site_name
-    compute_site.name
-  end
+  delegate :name, to: :compute_site, prefix: :compute_site
+
+  # def compute_site_name
+  #   compute_site.name
+  # end
 end
