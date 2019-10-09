@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190625110814) do
+ActiveRecord::Schema.define(version: 20190819142511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 20190625110814) do
     t.json "parameter_values"
     t.string "hpc", default: ""
     t.string "tmp_output_file"
+    t.string "deployment_name"
+    t.string "workflow_id"
+    t.string "cloudify_status", default: "not_started"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 
@@ -113,6 +116,15 @@ ActiveRecord::Schema.define(version: 20190625110814) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "default", default: false, null: false
+  end
+
+  create_table "patients", id: :serial, force: :cascade do |t|
+    t.string "case_number", null: false
+    t.integer "procedure_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_number"], name: "index_patients_on_case_number"
+    t.index ["procedure_status"], name: "index_patients_on_procedure_status"
   end
 
   create_table "pipelines", id: :serial, force: :cascade do |t|

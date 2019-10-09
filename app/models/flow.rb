@@ -4,6 +4,7 @@
 class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
+    cloudify_placeholder_pipeline: %w[cloudify_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
@@ -111,7 +112,8 @@ class Flow
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
     SingularityStep.new('agrocopernicus_step',
-                        ['input.csv'])
+                        ['input.csv']),
+    CloudifyStep.new('cloudify_step', [])
   ].freeze
 
   steps_hsh = Hash[STEPS.map { |s| [s.name, s] }]
