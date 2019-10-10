@@ -1,7 +1,7 @@
 = render('profiles/layout') do
   = simple_form_for(@compute_site_proxy, url: profile_compute_site_proxy_path, html: { method: :put }) do |f|
     = f.input :compute_site_name, readonly: true
-    = f.input :value, prompt: "Input proxy value..."
+    = f.input :value, as: :text, prompt: "Input proxy value..."
     .form-group
       .col-md-6.col-sm-6.col-xs-12.col-md-offset-3
         = f.button :submit, 'Save proxy', class: 'btn btn-success'
