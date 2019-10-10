@@ -10,6 +10,10 @@ RSpec.feature 'Profile page' do
            password: 'asdfasdf', password_confirmation: 'asdfasdf')
   end
 
+  let!(:compute_site) do
+    create(:compute_site)
+  end
+
   before do
     login_as(user)
   end
@@ -72,5 +76,29 @@ RSpec.feature 'Profile page' do
 
       expect(page).to have_content('You are not authorized to perform this action.')
     end
+  end
+
+  scenario 'is used to add new compute site proxy' do
+    visit profile_compute_site_proxy_index_path
+
+    click_on 'Add new proxy'
+    select('compute site mock name', from: 'Compute site')
+    fill_in 'Value', with: 'compute site mock proxy value'
+    click_button 'Add proxy'
+
+    proxy = ComputeSiteProxy.find_by user: user, compute_site: compute_site
+    expect(proxy.value).to eq('compute site mock proxy value')
+  end
+
+  scenario 'is used to edit existing compute site proxy' do
+    ComputeSiteProxy.create user: user, compute_site: compute_site, value: 'some value'
+    visit profile_compute_site_proxy_index_path
+
+    click_on 'Edit proxy'
+    fill_in 'Value', with: 'edited compute site mock proxy value'
+    click_button 'Save proxy'
+
+    proxy = ComputeSiteProxy.find_by user: user, compute_site: compute_site
+    expect(proxy.value).to eq('edited compute site mock proxy value')
   end
 end

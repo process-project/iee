@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190819142511) do
+ActiveRecord::Schema.define(version: 20191003083121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,22 @@ ActiveRecord::Schema.define(version: 20190819142511) do
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
   end
 
+  create_table "compute_site_proxies", force: :cascade do |t|
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "compute_site_id"
+    t.bigint "user_id"
+    t.index ["compute_site_id"], name: "index_compute_site_proxies_on_compute_site_id"
+    t.index ["user_id"], name: "index_compute_site_proxies_on_user_id"
+  end
+
+  create_table "compute_sites", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "data_files", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.integer "data_type", null: false
@@ -116,15 +132,6 @@ ActiveRecord::Schema.define(version: 20190819142511) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "default", default: false, null: false
-  end
-
-  create_table "patients", id: :serial, force: :cascade do |t|
-    t.string "case_number", null: false
-    t.integer "procedure_status", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["case_number"], name: "index_patients_on_case_number"
-    t.index ["procedure_status"], name: "index_patients_on_procedure_status"
   end
 
   create_table "pipelines", id: :serial, force: :cascade do |t|
