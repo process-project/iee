@@ -34,8 +34,9 @@ module Cloudify
           operation: 'exec',
           node_ids: 'compute_server',
           operation_kwargs: {
-            cmd: 'echo',
-            arg1: 'Piotr'
+            cmd: './uc4-job.sh',
+            arg1: 'hdfs://147.213.75.180:8020/user/lufthansa/',
+            arg2: 'hdfs://147.213.75.180:8020/user/lufthansa/'
           }
         }
       }
