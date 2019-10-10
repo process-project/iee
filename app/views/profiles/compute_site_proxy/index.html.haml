@@ -1,5 +1,5 @@
 = render('profiles/layout') do
-  %table{:style => "border: 0px; width: 69%"}
+  %table{:style => "border: 0px; width: 50%"}
     %tbody
       %tr
         %td
@@ -11,11 +11,14 @@
             %h4
               %strong Proxy
         %td
+        %td
         - @compute_site_proxies.each do |csp|
           %tr
           %td= csp.compute_site.name
           %td= csp.value[0..10]
           %td= link_to "Edit proxy", edit_profile_compute_site_proxy_path(csp), class: 'btn btn-success'
+          %td= link_to "Delete proxy", profile_compute_site_proxy_path(csp), data: { confirm: t('are_you_sure') }, method: :delete, class: 'btn btn-danger'
+
   - if not unset_compute_sites.empty?
     = link_to "Add new proxy", new_profile_compute_site_proxy_path,
       class: 'btn btn-success'

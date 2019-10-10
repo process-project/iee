@@ -35,6 +35,16 @@ module Profiles
       end
     end
 
+    def destroy
+      if !destroy_proxy
+        flash[:alert] = "Unable to delete compute site proxy"
+        redirect_to profile_compute_site_proxy_index_path
+      else
+        flash[:notice] = 'Compute site proxy deleted successfully'
+        redirect_to profile_compute_site_proxy_index_path
+      end
+    end
+
     private
 
     def create_proxy
@@ -45,6 +55,10 @@ module Profiles
 
     def update_proxy
       ComputeSiteProxy.find(params[:id]).update_attributes(value: permitted_attributes[:value])
+    end
+
+    def destroy_proxy
+      ComputeSiteProxy.find(params[:id]).destroy
     end
 
     def permitted_attributes
