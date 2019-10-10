@@ -7,7 +7,7 @@ class ComputeSiteProxy < ApplicationRecord
   validates :compute_site_id, presence: true
   validates :compute_site_id, uniqueness: { scope: :user_id }
   validates :user_id, presence: true
-  validates :value, presence: true
+  validates :value, presence: true, allow_blank: true
 
   delegate :name, to: :compute_site, prefix: :compute_site
 
