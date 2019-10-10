@@ -7,7 +7,7 @@ defaults: &defaults
     url: https://147.213.76.124/api/v3.1
     user: admin
     password: zAv1Y0KXC0VZ
-    blueprint: compute-blueprint
+    blueprint: compute-blueprint-beta
     iee_deployment_name: iee_deployment
     app_workflow_name: execute_operation
   grant_id: <%= ENV['GRANT_ID'] || 'process2' %>

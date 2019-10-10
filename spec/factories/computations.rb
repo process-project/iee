@@ -31,6 +31,11 @@ FactoryBot.define do
       container_tag 'latest'
     end
 
+    factory :cloudify_computation, class: 'CloudifyComputation' do
+      pipeline_step 'cloudify_step'
+      script 'SCRIPT'
+    end
+
     factory :staging_in_computation, class: 'StagingInComputation' do
       pipeline_step 'staging_in_step'
       src_host 'data03.process-project.eu'
