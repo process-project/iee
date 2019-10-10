@@ -19,10 +19,12 @@ class Computation < ApplicationRecord
   scope :rimrock, -> { where(type: 'RimrockComputation') }
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
+  scope :cloudify, -> { where(type: 'CloudifyComputation') }
   scope :staging_in, -> { where(type: 'StagingInComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
+  scope :submitted_cloudify, -> { submitted.cloudify }
   scope :submitted_staging_in, -> { submitted.staging_in }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
@@ -46,6 +48,10 @@ class Computation < ApplicationRecord
 
   def webdav?
     type == 'WebdavComputation'
+  end
+
+  def cloudify?
+    type == 'CloudifyComputation'
   end
 
   def singularity?
