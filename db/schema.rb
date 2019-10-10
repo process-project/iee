@@ -37,6 +37,19 @@ ActiveRecord::Schema.define(version: 20191003083121) do
     t.index ["user_id"], name: "index_access_policies_on_user_id"
   end
 
+  create_table "activity_logs", force: :cascade do |t|
+    t.string "user_id"
+    t.string "user_email"
+    t.string "project_name"
+    t.string "pipeline_id"
+    t.string "pipeline_name"
+    t.string "computation_id"
+    t.string "pipeline_step_name"
+    t.string "message", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "computations", id: :serial, force: :cascade do |t|
     t.string "job_id"
     t.text "script"

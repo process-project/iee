@@ -37,12 +37,12 @@ module Profiles
 
     def destroy
       if !destroy_proxy
-        flash[:alert] = "Unable to delete compute site proxy"
-        redirect_to profile_compute_site_proxy_index_path
+        flash[:alert] = 'Unable to delete compute site proxy'
       else
         flash[:notice] = 'Compute site proxy deleted successfully'
-        redirect_to profile_compute_site_proxy_index_path
       end
+
+      redirect_to profile_compute_site_proxy_index_path
     end
 
     private
