@@ -20,6 +20,7 @@ module Projects
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def update
         @computation.assign_attributes(permitted_attributes(@computation))
         if run_computation
@@ -28,16 +29,17 @@ module Projects
         else
           @computation.status = @computation.status_was
           ActivityLogWriter.write_message(
-              @computation.pipeline.user,
-              @computation.pipeline,
-              @computation,
-              "computation_status_change_#{@computation.status}"
+            @computation.pipeline.user,
+            @computation.pipeline,
+            @computation,
+            "computation_status_change_#{@computation.status}"
           )
           prepare_to_show_computation
           render :show, status: :bad_request,
                         notice: I18n.t('computations.update.not_runnable')
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 

@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class ActivityLogWriter
+  # rubocop:disable Metrics/AbcSize
   def self.write_message(user, pipeline, computation, message)
     record = ActivityLog.new
     if user.present?
@@ -17,4 +20,5 @@ class ActivityLogWriter
     record.message = message
     record.save
   end
+  # rubocop:enable Metrics/AbcSize
 end

@@ -21,8 +21,7 @@ class DataFile < ApplicationRecord
     :data_series_3,
     :data_series_4,
     :generic_type,
-    :validation_1_type,
-    :validation_2_type
+    :validation_type
   ]
 
   belongs_to :project, touch: true

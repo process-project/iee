@@ -6,42 +6,40 @@ module Api
 
     before_action :authenticate_staging!
 
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def notify
-      id = params[:status][:id]
-      @computation = Computation.find id
-      status = params[:status][:status]
+      computation_id = params.dig(:status, :id)
+      @computation = Computation.find computation_id
+
+      status = params.dig(:status, :status)
+
       if status == 'done'
         @computation.update_attributes(status: 'finished')
+        # Workaround for the order of computatations to be right
+        # To be deleted when proper directory structure is implemented
+        make_tmp_output_file
       else
         @computation.update_attributes(status: 'error')
       end
 
       ActivityLogWriter.write_message(
-          @computation.pipeline.user,
-          @computation.pipeline,
-          @computation,
-          "computation_status_change_#{@computation.status}"
+        @computation.pipeline.user,
+        @computation.pipeline,
+        @computation,
+        "computation_status_change_#{@computation.status}"
       )
 
       @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
       @staging_logger.debug("Webhook request params: #{params}")
 
       StagingIn::UpdateJob.perform_later(@computation)
-
-      tmp_output_files = @computation.step.tmp_output_files
-
-      pipeline = @computation.pipeline
-
-      project = pipeline.project
-
-      tmp_output_files.each do |file|
-        DataFile.create!(project: project,
-                         output_of: pipeline,
-                         input_of: pipeline,
-                         name: file,
-                         data_type: :generic_type)
-      end
+    rescue ActiveRecord::RecordNotFound
+      Rails.logger.error('Invalid id in LOBCDER API response ' \
+                           "in StagingControler#notify: #{computation_id}")
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -60,6 +58,16 @@ module Api
     def invalid!
       head :unauthorized,
            'WWW-Authenticate' => 'x-staging-token header is invalid'
+    end
+
+    def make_tmp_output_file
+      DataFile.create(name: @computation.tmp_output_file,
+                      data_type: :generic_type,
+                      project: @computation.pipeline.project,
+                      input_of: @computation.pipeline,
+                      output_of: @computation.pipeline)
+
+      ComputationUpdater.new(@computation).call
     end
   end
 end

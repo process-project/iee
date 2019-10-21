@@ -5,20 +5,18 @@ class SingularityStep < Step
 
   def initialize(
       name,
-      required_files = [],
-      parameters = []
+      required_files = []
   )
     super(name, required_files)
     @required_files = required_files
-    @parameters = parameters
+    @parameters = ParameterFetcher.new(name, SingularityRegistry).call
   end
 
-  def builder_for(pipeline, params)
-    @user_parameters = params
+  def builder_for(pipeline, parameter_values)
     PipelineSteps::Singularity::Builder.new(
       pipeline,
       name,
-      @user_parameters,
+      parameter_values,
       @parameters
     )
   end
@@ -26,7 +24,6 @@ class SingularityStep < Step
   def runner_for(computation, options = {})
     PipelineSteps::Singularity::Runner.new(
       computation,
-      @user_parameters,
       options
     )
   end

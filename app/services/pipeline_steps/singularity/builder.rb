@@ -3,33 +3,41 @@
 module PipelineSteps
   module Singularity
     class Builder
-      def initialize(pipeline, name, user_parameters, parameters = [])
+      def initialize(pipeline, name, parameter_values, parameters = [])
         @pipeline = pipeline
         @name = name
-        @user_parameters = user_parameters
-        @parameters = parameters # TO DELETE
+        @parameter_values = safe_parameter_values(parameter_values, parameters)
+        @parameters = parameters
       end
 
       def call
-        container_registry = ContainerRegistry.
-                             find_or_create_by!(registry_url: @user_parameters[:registry_url])
-
         SingularityComputation.create!(
           pipeline: @pipeline,
           user: @pipeline.user,
           pipeline_step: @name,
-          container_registry_id: container_registry.id,
-          container_name: @user_parameters[:container_name],
-          container_tag: @user_parameters[:container_tag],
-          user_parameters: to_my_own_hash(@user_parameters).inspect
+          container_name: @parameter_values[:container_name],
+          container_tag: @parameter_values[:container_tag],
+          hpc: @parameter_values[:hpc],
+          parameter_values: @parameter_values.except(:container_name, :container_tag, :hpc)
         )
       end
 
-      def to_my_own_hash(parameters)
-        parameters.to_unsafe_h.inject({}) do |memo, (k, v)|
-          memo[k.to_sym] = v
-          memo
+      private
+
+      def safe_parameter_values(parameter_values, parameters)
+        attributes = parameter_attributes(parameters)
+        parameter_values.require(attributes)
+        parameter_values.permit(attributes).to_h.symbolize_keys
+      end
+
+      def parameter_attributes(parameters)
+        attributes = [:container_name, :container_tag, :hpc]
+
+        parameters.each do |parameter|
+          attributes.push parameter.label.to_sym
         end
+
+        attributes
       end
     end
   end

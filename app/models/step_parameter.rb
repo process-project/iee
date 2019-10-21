@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
-class StepParameter
-  attr_reader :name, :label, :description, :rank, :datatype, :default, :values
+class StepParameter < ApplicationRecord
+  belongs_to :singularity_script_blueprint
 
-  def initialize(label, name, description, rank, datatype, default, values = [])
-    @label = label
-    @name = name
-    @description = description
-    @rank = rank
-    @datatype = datatype
-    @default = default
-    @values = values
+  def ==(other)
+    other.instance_of?(self.class) && label == other.label
   end
+
+  alias eql? ==
 end

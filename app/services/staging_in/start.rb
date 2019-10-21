@@ -16,17 +16,26 @@ module StagingIn
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     def make_request
       http = Net::HTTP.new(staging_in_host, staging_in_port)
+
+      Rails.logger.debug(
+        "STAGING IN Sending request: #{staging_in_host} - #{staging_in_port} - #{staging_in_path}"
+      )
+
       req = Net::HTTP::Post.new(staging_in_path, 'content-type' => 'application/json',
                                                  'x-access-token' => lobcder_api_access_token)
       req.body = request_body.to_json
 
-      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
-      @staging_logger.debug("Staging request req_body: #{req.body}")
+      Rails.logger.debug("STAGING IN Sending request: #{req.body.inspect}")
 
-      http.request(req)
+      result = http.request(req)
+
+      Rails.logger.error("STAGING IN REQUEST RESPONSE: #{result.inspect}")
+      result
     end
+    # rubocop:enable Metrics/AbcSize
 
     def staging_in_host
       Rails.application.config_for('process')['staging_in']['host']
@@ -44,30 +53,38 @@ module StagingIn
       Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def request_body
-      [{ id: @computation.id,
-         cmd: { type: 'copy',
-                subtype: 'scp2scp',
-                src: { type: 'scp',
-                       host: @computation.src_host,
-                       user: 'di39nox',
-                       path: @computation.src_path },
-                dst: { type: 'scp',
-                       host: @computation.dest_host,
-                       user: 'plgcushing',
-                       path: @computation.dest_path },
-                webhook: { method: 'POST',
-                           url: webhook_url,
-                           headers: { 'x-access-token' => staging_secret,
-                                      'content-type' => 'application/json' } },
-                options: {} } }]
+    def src_user
+      Rails.application.config_for('process')['staging_in']['src_user']
     end
-    # rubocop:enable Metrics/MethodLength
+
+    def dest_user
+      Rails.application.config_for('process')['staging_in']['dest_user']
+    end
+
+    def request_body
+      { id: @computation.id,
+        cmd: { type: 'copy',
+               subtype: 'scp2scp',
+               src: { type: 'scp',
+                      host: @computation.src_host,
+                      user: src_user,
+                      path: @computation.src_path },
+               dst: { type: 'scp',
+                      host: @computation.dest_host,
+                      user: dest_user,
+                      path: @computation.dest_path },
+               webhook: { method: 'POST',
+                          url: webhook_url,
+                          headers: { 'x-staging-token' => staging_secret,
+                                     'content-type' => 'application/json' } },
+               options: {} } }
+    end
 
     def webhook_url
+      # TODO: Restore before flight!!
       Rails.application.routes.url_helpers.api_staging_url(protocol: 'https',
                                                            host: ENV['HOST'])
+      # 'http://49990544.ngrok.io'
     end
 
     def staging_secret

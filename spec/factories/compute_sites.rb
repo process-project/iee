@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :container_registry do
-    registry_url 'shub://'
+  factory :compute_site do
+    name 'compute site mock name'
   end
 end

@@ -222,3 +222,22 @@ en:
       start_manual: Start staging out computation computation
       restart_manual: Restart staging out computation
       restart_automatic: Restart staging out computation
+    cloudify_step:
+      title: Lufthansa container computation on Cloudify
+      cannot_start: |
+        Cannot start Lufthansa container computation using Cloudify.
+      created: |
+        All required input files are available.
+        You can start Lufthansa container computation for this project.
+      new: Lufthansa container computation is being submitted to Cloudify
+      queued: Lufthansa container computation is queued in Cloudify
+      running: Lufthansa container computation is running in Cloudify
+      error: There was an error while running Lufthansa container computation in Cloudify
+      finished: |
+        Lufthansa container computation finished successfully, results stored in
+        the output directory.
+      aborted: Lufthansa container computation was aborted by the pipeline owner
+      start_automatic: Save Lufthansa container computation version
+      start_manual: Start Lufthansa container computation computation on Cloudify
+      restart_automatic: Restart computation
+      restart_manual: Restart Lufthansa container computation on Cloudify
