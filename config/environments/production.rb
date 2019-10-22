@@ -109,7 +109,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_cable.allowed_request_origins = [
-    %r{https://valve.*\.cyfronet\.pl}
+    %r{https://valve.*\.cyfronet\.pl},
+    %r{https://.*\.mee.*\.cyfronet\.pl}
   ]
 end
 # rubocop:enable BlockLength
