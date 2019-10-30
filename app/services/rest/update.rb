@@ -4,7 +4,7 @@ module Rest
   class Update
     def initialize(user, options = {})
       @service_url = 'http://' +
-                     Rails.application.config_for('process')['Rest']['host'] +
+                     Rails.application.config_for('process')['Rest']['host'] + ":" +
                      Rails.application.config_for('process')['Rest']['port']
       @job_status_path = Rails.application.config_for('process')['Rest']['job_status_path']
       @user = user
@@ -13,12 +13,10 @@ module Rest
     end
 
     def call
-      return if active_computations.empty?
-
       active_computations.each do |computation|
-        response = connection.get(@job_status_path + computation.id)
+        response = connection.get(@job_status_path + "/" + computation.job_id)
         case response.status
-        when 200 then success(response.body)
+        when 200 then success(computation, response.body)
         when 422 then error(response.body, :timeout)
         else error(response.body, :internal)
         end
@@ -36,9 +34,9 @@ module Rest
     end
 
     # TODO: possibly edit when UC5 api is working
-    def success(body)
-      status = Hash[JSON.parse(body).map { |e| [e['id'], e] }]
-      update_computation(computation, status[computation.id])
+    def success(computation, body)
+      parsed_body = JSON.parse(body, symbolize_names: true)
+      update_computation(computation, parsed_body[:status])
     end
 
     # TODO: possibly edit when UC5 api is working
@@ -51,7 +49,7 @@ module Rest
         on_finish_callback(computation) if computation.status == 'finished'
         update(computation) if current_status != updated_status
       else
-        computation.update_attributes(status: 'error', error_message: 'Job cannot be found')
+        computation.update_attributes(status: 'error', error_message: 'Really big dangerous error')
       end
     end
 

@@ -10,7 +10,7 @@ module PipelineSteps
       protected
 
       def pre_internal_run
-        computation.job_id = nil
+        computation.job_id = computation.id
       end
 
       def internal_run
