@@ -33,31 +33,29 @@ module Rest
       end
     end
 
-    # TODO: possibly edit when UC5 api is working
     def success(computation, body)
       parsed_body = JSON.parse(body, symbolize_names: true)
-      update_computation(computation, parsed_body[:status])
+      update_computation(computation, parsed_body[:status], parsed_body[:message])
     end
 
-    # TODO: possibly edit when UC5 api is working
-    def update_computation(computation, new_status)
-      if new_status
-        current_status = computation.status
-        updated_status = new_status['status'].downcase
+    def update_computation(computation, status, message)
+      new_status = status.downcase
 
-        computation.update_attributes(status: updated_status)
-        on_finish_callback(computation) if computation.status == 'finished'
-        update(computation) if current_status != updated_status
+      if new_status != "error"
+        current_status = computation.status
+
+        computation.update_attributes(status: new_status)
+        on_finish_callback(computation) if computation.status == 'ok'
+        update(computation) if current_status != new_status
       else
-        computation.update_attributes(status: 'error', error_message: 'Really big dangerous error')
+        computation.update_attributes(status: new_status, error_message: message)
       end
     end
 
-    # TODO: possibly edit when UC5 api is working
     def error(body, error_type)
       Rails.logger.tagged(self.class.name) do
         Rails.logger.warn(
-          I18n.t("rimrock.#{error_type}", user: @user&.name, details: body)
+          I18n.t("rest.#{error_type}", user: @user&.name, details: body)
         )
       end
     end

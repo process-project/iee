@@ -23,7 +23,7 @@ defaults: &defaults
     user: <%= ENV['SEGMENTATION_USER'] %>
     password: <%= ENV['SEGMENTATION_PASSWORD'] %>
   rest:
-    host: 'gar.mnm-team.org'
+    host: 'http://gar.mnm-team.org'
     port: '5000'
     job_submission_path: '/submit'
     job_status_path: '/status'
