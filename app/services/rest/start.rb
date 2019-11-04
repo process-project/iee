@@ -12,6 +12,7 @@ module Rest
     # Raises an HTTP error if the response is not 200 -> TODO change status to error
     def call
       response = make_request
+      # TODO response case error 
       @logger.info("Request made man...:: #{response.body}")
       @computation.update_attributes(status: 'running')
     end
