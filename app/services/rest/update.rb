@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
 module Rest
-  class Update
+  class Update < Rest::Service
     def initialize(user, options = {})
-      @service_url = 'http://' +
-                     Rails.application.config_for('process')['Rest']['host'] + ":" +
-                     Rails.application.config_for('process')['Rest']['port']
-      @job_status_path = Rails.application.config_for('process')['Rest']['job_status_path']
-      @user = user
+      super(user)
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
     end
 
     def call
       active_computations.each do |computation|
-        response = connection.get(@job_status_path + "/" + computation.job_id)
+        response = connection.get(status_path + "/" + computation.job_id)
         case response.status
         when 200 then success(computation, response.body)
         when 422 then error(response.body, :timeout)
@@ -24,14 +20,6 @@ module Rest
     end
 
     private
-
-    def connection
-      @connection ||= Faraday.new(url: @service_url) do |faraday|
-        faraday.request :url_encoded
-        faraday.adapter Faraday.default_adapter
-        faraday.headers['authorization: bearer'] = @user.token
-      end
-    end
 
     def success(computation, body)
       parsed_body = JSON.parse(body, symbolize_names: true)
@@ -70,6 +58,10 @@ module Rest
 
     def update(computation)
       @updater&.new(computation)&.call
+    end
+
+    def status_path
+      Rails.application.config_for('process')['Rest']['job_status_path']    
     end
   end
 end

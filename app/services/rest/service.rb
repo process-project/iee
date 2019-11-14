@@ -5,7 +5,6 @@ module Rest
   class Service
     def initialize(user, options = {})
       @user = user
-      @token = user.token
     end
 
     protected
@@ -13,16 +12,11 @@ module Rest
     attr_reader :user
 
     def connection
-      @logger.info("Inside Rest::Service connection")
       @connection ||= Faraday.new(url: rest_url) do |faraday|
         faraday.request :url_encoded
         faraday.adapter Faraday.default_adapter
-        faraday.headers['Authorization: Bearer'] = @token
+        faraday.headers['Authorization'] = 'Bearer ' + @user.token
       end
-
-      @logger.info("connection headers: #{@connection.headers}")
-      # @logger.info("connection url: #{@connection.url}")
-      return @connection
     end
 
     private
