@@ -140,7 +140,7 @@ class Flow
           values: ['0.25', '0.45', '0.60']
         ),
         StepParameter.new(
-          label: 'Phenology_factor',
+          label: 'phenology_factor',
           name: 'Phenology factor',
           description: '',
           rank: 0,
