@@ -9,8 +9,6 @@ module Rest
 
     protected
 
-    attr_reader :user
-
     def connection
       @connection ||= Faraday.new(url: rest_url) do |faraday|
         faraday.request :url_encoded

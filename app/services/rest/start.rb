@@ -5,14 +5,18 @@ module Rest
     def initialize(computation)
       super(computation.user)
       @computation = computation
+      @logger = Logger.new(Rails.root.join('log', 'alfa.log'))
+      @logger.info("lol")
+
     end
 
-    # Raises an HTTP error if the response is not 200 -> TODO change status to error
     def call
       response = make_request
-      # TODO response case error 
-      @logger.info("Response for job #{@connection.job_id}...:: #{response.body}")
+      @logger.info("Response for job #{@computation.job_id}...:: #{response.body}")
+
+      # TODO Jasiu response case error, or success
       @computation.update_attributes(status: 'running')
+      # end TODO Jasiu response case error, or success
     end
 
     private
@@ -25,7 +29,7 @@ module Rest
       end
     end
 
-    # TODO when Robin changes that we get id from him
+    # TODO when Robin changes that we get id from him not the other way around
     def submission_path
       Rails.application.config_for('process')['rest']['job_submission_path'] + "/" + @computation.job_id   
     end
