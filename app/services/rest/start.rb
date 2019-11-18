@@ -11,8 +11,15 @@ module Rest
 
     # Raises an HTTP error if the response is not 200 -> TODO change status to error
     def call
-      response = make_request.value 
-      @computation.update_attributes(status: 'running', job_id: @computation.id)
+      response = make_request.value
+      body = JSON.parse(response.body)
+      http_status = response.status
+      job_status = body["status"]
+      message = body["message"]
+      case http_status
+      when 200 then success(job_status)
+      else error(message)
+      end
     end
 
     private
@@ -23,6 +30,18 @@ module Rest
                                               'authorization: bearer' => @computation.user.token)
       req.body = request_body
       http.request(req)
+    end
+
+    def success(status)
+      @computation.update_attributes(status: status, job_id: @computation.id)
+    end
+
+    def error(message)
+      Rails.logger.tagged(self.class.name) do
+        Rails.logger.warn(
+          I18n.t("UC5 error", user: @user&.name, details: message)
+        )
+      end
     end
 
     def service_host

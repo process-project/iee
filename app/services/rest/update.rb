@@ -10,6 +10,11 @@ module Rest
       @user = user
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
+      @logger = Loggger.new("log/alfa")
+    end
+
+    def my_logger
+      @@my_logger ||= Logger.new("#{Rails.root}/log/alfa.log")
     end
 
     def call
@@ -17,10 +22,21 @@ module Rest
 
       active_computations.each do |computation|
         response = connection.get(@job_status_path + computation.id)
-        case response.status
-        when 200 then success(response.body)
-        when 422 then error(response.body, :timeout)
-        else error(response.body, :internal)
+        http_status = response.status
+        if http_status == 200
+          body = JSON.parse(response.body)
+          job_status = body["status"]
+          message = body["message"]
+        else          
+          my_logger.info("Bad response")
+          my_logger.info("Response status: #{response.status}")
+          my_logger.info("Response body: #{response.body}")
+
+          body = JSON.parse(response.body)
+          job_status = body["status"]
+          message = body["message"]
+          my_logger.info("job_status: #{job_status}")
+          my_logger.info("message: #{message}")
         end
       end
     end
@@ -35,33 +51,15 @@ module Rest
       end
     end
 
-    # TODO: possibly edit when UC5 api is working
-    def success(body)
-      status = Hash[JSON.parse(body).map { |e| [e['id'], e] }]
-      update_computation(computation, status[computation.id])
-    end
-
-    # TODO: possibly edit when UC5 api is working
-    def update_computation(computation, new_status)
-      if new_status
-        current_status = computation.status
-        updated_status = new_status['status'].downcase
-
-        computation.update_attributes(status: updated_status)
-        on_finish_callback(computation) if computation.status == 'finished'
-        update(computation) if current_status != updated_status
+    def update_computation(computation, new_status, message)
+      return if new_status == computation.status
+      if new_status == "error"
+        computation.update_attributes(status: new_status, error_message: message)
       else
-        computation.update_attributes(status: 'error', error_message: 'Job cannot be found')
+        computation.update_attributes(status: new_status)
       end
-    end
-
-    # TODO: possibly edit when UC5 api is working
-    def error(body, error_type)
-      Rails.logger.tagged(self.class.name) do
-        Rails.logger.warn(
-          I18n.t("rimrock.#{error_type}", user: @user&.name, details: body)
-        )
-      end
+      on_finish_callback(computation) if computation.status == 'finished'
+      update(computation)
     end
 
     def active_computations
