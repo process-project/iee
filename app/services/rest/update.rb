@@ -1,69 +1,85 @@
 # frozen_string_literal: true
 
 module Rest
-  class Update
+  class Update < Rest::Service
     def initialize(user, options = {})
-      @service_url = 'http://' +
-                     Rails.application.config_for('process')['Rest']['host'] +
-                     Rails.application.config_for('process')['Rest']['port']
-      @job_status_path = Rails.application.config_for('process')['Rest']['job_status_path']
-      @user = user
+      super(user)
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
-      @logger = Loggger.new("log/alfa")
     end
 
     def my_logger
-      @@my_logger ||= Logger.new("#{Rails.root}/log/alfa.log")
+      @@my_logger ||= Logger.new(Rails.root.join('log', 'alfa.log'))
     end
 
     def call
-      return if active_computations.empty?
-
       active_computations.each do |computation|
-        response = connection.get(@job_status_path + computation.id)
-        http_status = response.status
-        if http_status == 200
-          body = JSON.parse(response.body)
-          job_status = body["status"]
-          message = body["message"]
-        else          
-          my_logger.info("Bad response")
-          my_logger.info("Response status: #{response.status}")
-          my_logger.info("Response body: #{response.body}")
-
-          body = JSON.parse(response.body)
-          job_status = body["status"]
-          message = body["message"]
-          my_logger.info("job_status: #{job_status}")
-          my_logger.info("message: #{message}")
+        response = make_request(computation)
+        case response.status
+        when 200 success(computation, response)
+        else error(computation, response)
         end
       end
     end
 
     private
 
-    def connection
-      @connection ||= Faraday.new(url: @service_url) do |faraday|
-        faraday.request :url_encoded
-        faraday.adapter Faraday.default_adapter
-        faraday.headers['authorization: bearer'] = @user.token
-      end
+    def active_computations
+      @ac ||= @user.computations.submitted_rest
     end
 
-    def update_computation(computation, new_status, message)
+    def make_request(computation)
+      connection.get job_status_path(computation)
+    end
+
+    def job_status_path(computation)
+      Rails.application.config_for('process')['rest']['job_status_path'] + "/" + computation.job_id   
+    end
+
+    def success(computation, response)
+      my_logger.info("success")
+      my_logger.info("response.status: #{response.status}")
+      my_logger.info("response.body: #{response.body}")
+
+      body = JSON.parse(response.body, symbolize_names: true)
+      job_status = body[:status]
+      # TODO: maybe some handling of message in non-error case body[:message]
+
+      my_logger.info("job_status: #{job_status}")
+
+      update_computation(computation, job_status)
+    end
+
+    def error(computation, response)
+      my_logger.info("error")
+      my_logger.info("Response.status: #{response.status}")
+      my_logger.info("Response.body: #{response.body}")
+
+      if not response.body.nil?
+        body = JSON.parse(response.body, symbolize_names: true)
+        message = body[:message]
+      end
+      
+      message ||= "Unknown error"
+      @computation.update_attributes(status: "error",
+                                     error_message: message)
+
+      my_logger.info("job_status: #{job_status}")
+      my_logger.info("message: #{message}")
+
+      update_computation(computation, "error", message)
+    end
+
+    def update_computation(computation, new_status, message=nil)
       return if new_status == computation.status
       if new_status == "error"
         computation.update_attributes(status: new_status, error_message: message)
       else
         computation.update_attributes(status: new_status)
+        # TODO: maybe some handling of message in non-error case
       end
       on_finish_callback(computation) if computation.status == 'finished'
       update(computation)
-    end
-
-    def active_computations
-      @ac ||= @user.computations.submitted_rest
     end
 
     def on_finish_callback(computation)

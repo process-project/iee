@@ -1,63 +1,71 @@
 # frozen_string_literal: true
 
 module Rest
-  require 'net/http'
-  require 'json'
-
-  class Start
+  class Start < Rest::Service
     def initialize(computation)
+      super(computation.user)
       @computation = computation
     end
 
-    # Raises an HTTP error if the response is not 200 -> TODO change status to error
+    def my_logger
+      @@my_logger ||= Logger.new(Rails.root.join('log', 'alfa.log'))
+    end
+
     def call
-      response = make_request.value
-      body = JSON.parse(response.body)
-      http_status = response.status
-      job_status = body["status"]
-      message = body["message"]
-      case http_status
-      when 200 then success(job_status)
-      else error(message)
+      response = make_request
+      case response.status
+      when 200 success(response)
+      else error(response)
       end
     end
 
     private
 
     def make_request
-      http = Net::HTTP.new(service_host, service_port)
-      req = Net::HTTP::Post.new(service_path, 'content-type' => 'application/json',
-                                              'authorization: bearer' => @computation.user.token)
-      req.body = request_body
-      http.request(req)
-    end
-
-    def success(status)
-      @computation.update_attributes(status: status, job_id: @computation.id)
-    end
-
-    def error(message)
-      Rails.logger.tagged(self.class.name) do
-        Rails.logger.warn(
-          I18n.t("UC5 error", user: @user&.name, details: message)
-        )
+      connection.post do |req|
+        req.url submission_path
+        req.headers['Content-Type'] = 'application/json'
+        req.body = req_body
       end
     end
 
-    def service_host
-      Rails.application.config_for('process')['rest']['host']
+    # TODO when Robin changes that we get id from him not the other way around
+    def submission_path
+      Rails.application.config_for('process')['rest']['job_submission_path'] + "/" + @computation.job_id   
     end
 
-    def service_port
-      Rails.application.config_for('process')['rest']['port']
+    def req_body
+      @computation.parameter_values.to_json
     end
 
-    def service_path
-      Rails.application.config_for('process')['Rest']['job_submission_path'] + @computation.id
+    def success(response)
+      my_logger.info("success")
+      my_logger.info("Response.status: #{response.status}")
+      my_logger.info("Response.body: #{response.body}")
+
+      body = JSON.parse(response.body, symbolize_names: true)
+      job_status = body[:status]
+      # TODO: maybe some handling of message in non-error case body[:message]
+
+      my_logger.info("job_status: #{job_status}")
+
+      @computation.update_attributes(status: job_status)
     end
 
-    def request_body
-      @computation.parameter_values
+    def error(response)
+      my_logger.info("error")
+      my_logger.info("Response.status: #{response.status}")
+      my_logger.info("Response.body: #{response.body}")
+
+      if not response.body.nil?
+        body = JSON.parse(response.body, symbolize_names: true)
+        message = body[:message]
+      end
+      message ||= "Unknown error"
+      @computation.update_attributes(status: "error",
+                                     error_message: message)
+
+      my_logger.info("message: #{message}")
     end
   end
 end

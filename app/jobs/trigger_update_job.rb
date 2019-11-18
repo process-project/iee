@@ -7,6 +7,7 @@ class TriggerUpdateJob < ApplicationJob
     trigger_rimrock_jobs_update
     trigger_webdav_jobs_update
     trigger_singularity_jobs_update
+    trigger_rest_jobs_update
   end
 
   private
