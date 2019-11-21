@@ -14,8 +14,8 @@ module Rest
     def call
       response = make_request
       case response.status
-      when 200 success(response)
-      else error(response)
+      when 200 then success(response)
+      else http_error(response)
       end
     end
 
@@ -49,7 +49,7 @@ module Rest
 
       my_logger.info("job_status: #{job_status}")
 
-      @computation.update_attributes(status: job_status)
+      @computation.update_attributes(status: "queued")
     end
 
     def error(response)

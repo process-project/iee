@@ -16,7 +16,7 @@ module Rest
       active_computations.each do |computation|
         response = make_request(computation)
         case response.status
-        when 200 success(computation, response)
+        when 200 then success(computation, response)
         else error(computation, response)
         end
       end
@@ -44,10 +44,12 @@ module Rest
       body = JSON.parse(response.body, symbolize_names: true)
       job_status = body[:status]
       # TODO: maybe some handling of message in non-error case body[:message]
-
       my_logger.info("job_status: #{job_status}")
 
-      update_computation(computation, job_status)
+      if job_status == 'OK'
+          my_logger.info("finished!")
+        update_computation(computation, 'finished')
+      end
     end
 
     def error(computation, response)
