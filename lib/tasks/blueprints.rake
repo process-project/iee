@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :blueprints do
   desc 'Seed singularity script blueprints for known pipelines'
   task seed: :environment do
@@ -284,10 +286,13 @@ namespace :blueprints do
       agrocopernicus placeholder
     CODE
 
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'agrocopernicus_placeholder_container',
-                                              container_tag: 'agrocopernicus_placeholder_tag',
-                                              hpc: 'Prometheus',
-                                              script_blueprint: script)
+    ssbp = SingularityScriptBlueprint.create!(
+      container_name: 'agrocopernicus_placeholder_container',
+      container_tag: 'agrocopernicus_placeholder_tag',
+      hpc: 'Prometheus',
+      script_blueprint: script
+    )
+
     ssbp.step_parameters = [
       StepParameter.new(
         label: 'irrigation',
