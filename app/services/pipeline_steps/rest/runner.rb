@@ -10,7 +10,7 @@ module PipelineSteps
       protected
 
       def pre_internal_run
-        computation.job_id = rand(500..1000)
+        computation.job_id = nil
       end
 
       def internal_run

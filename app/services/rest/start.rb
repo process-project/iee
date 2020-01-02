@@ -31,7 +31,7 @@ module Rest
 
     # TODO when Robin changes that we get id from him not the other way around
     def submission_path
-      Rails.application.config_for('process')['rest']['job_submission_path'] + "/" + @computation.job_id   
+      Rails.application.config_for('process')['rest']['job_submission_path']
     end
 
     def req_body
@@ -45,11 +45,15 @@ module Rest
 
       body = JSON.parse(response.body, symbolize_names: true)
       job_status = body[:status]
+      job_id = body[:message]
       # TODO: maybe some handling of message in non-error case body[:message]
 
       my_logger.info("job_status: #{job_status}")
+      my_logger.info("job_id: #{job_id}")
 
-      @computation.update_attributes(status: "queued")
+
+      # TODO: status: created? or queued? we should get it from the API
+      @computation.update_attributes(status: "queued", job_id: job_id)
     end
 
     def error(response)
@@ -66,6 +70,10 @@ module Rest
                                      error_message: message)
 
       my_logger.info("message: #{message}")
+    end
+
+    def http_error(message)
+      # TODO xD
     end
   end
 end
