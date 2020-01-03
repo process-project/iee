@@ -33,7 +33,7 @@ module Rest
     end
 
     def job_status_path(computation)
-      Rails.application.config_for('process')['rest']['job_status_path'] + "/" + computation.job_id   
+      Rails.application.config_for('process')['rest']['job_status_path'] + computation.job_id   
     end
 
     def success(computation, response)

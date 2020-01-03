@@ -25,8 +25,8 @@ defaults: &defaults
   rest:
     host: 'http://gar.mnm-team.org'
     port: '5000'
-    job_submission_path: '/submit'
-    job_status_path: '/status'
+    job_submission_path: '/submit/'
+    job_status_path: '/status/'
 development:
   <<: *defaults
 
