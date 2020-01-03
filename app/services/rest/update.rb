@@ -43,13 +43,11 @@ module Rest
 
       body = JSON.parse(response.body, symbolize_names: true)
       job_status = body[:status]
-      # TODO: maybe some handling of message in non-error case body[:message]
+      message = body[:message] # TODO Do something with a message
+
       my_logger.info("job_status: #{job_status}")
 
-      if job_status == 'OK'
-          my_logger.info("finished!")
-        update_computation(computation, 'finished')
-      end
+      update_computation(computation, job_status)
     end
 
     def error(computation, response)
@@ -63,10 +61,7 @@ module Rest
       end
       
       message ||= "Unknown error"
-      @computation.update_attributes(status: "error",
-                                     error_message: message)
 
-      my_logger.info("job_status: #{job_status}")
       my_logger.info("message: #{message}")
 
       update_computation(computation, "error", message)
