@@ -12,10 +12,12 @@ module Rest
     end
 
     def call
+      my_logger.info("in call")
       response = make_request
+      my_logger.info("response: #{response}")
       case response.status
       when 200 then success(response)
-      else http_error(response)
+      else error(response)
       end
     end
 
