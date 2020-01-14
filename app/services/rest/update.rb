@@ -25,7 +25,7 @@ module Rest
     private
 
     def active_computations
-      @ac ||= @user.computations.submitted_rest
+      @ac ||= @user.computations.created_or_submitted_rest
     end
 
     def make_request(computation)
@@ -37,7 +37,7 @@ module Rest
     end
 
     def success(computation, response)
-      my_logger.info("success")
+      my_logger.info("update job success")
       my_logger.info("response.status: #{response.status}")
       my_logger.info("response.body: #{response.body}")
 
@@ -46,6 +46,7 @@ module Rest
       message = body[:message] # TODO Do something with a message
 
       my_logger.info("job_status: #{job_status}")
+      my_logger.info("message: #{message}")
 
       update_computation(computation, job_status)
     end
