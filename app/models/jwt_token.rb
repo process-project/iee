@@ -10,7 +10,9 @@ class JwtToken
       token_payload(expiration_time_in_seconds),
       Vapor::Application.config.jwt.key,
       Vapor::Application.config.jwt.key_algorithm,
-      header_fields = {typ: 'JWT'}
+      # rubocop:disable Lint/UselessAssignment
+      header_fields = { typ: 'JWT' }
+      # rubocop:enable Lint/UselessAssignment
     )
   end
 
@@ -21,6 +23,7 @@ class JwtToken
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def token_payload(expiration_time_in_seconds)
     {
       name: @user.name,
@@ -33,4 +36,5 @@ class JwtToken
              Rails.configuration.jwt.expiration_time)
     }
   end
+  # rubocop:enable Metrics/AbcSize
 end

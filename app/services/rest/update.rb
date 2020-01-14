@@ -56,21 +56,21 @@ module Rest
       my_logger.info("Response.status: #{response.status}")
       my_logger.info("Response.body: #{response.body}")
 
-      if not response.body.nil?
+      unless response.body.nil?
         body = JSON.parse(response.body, symbolize_names: true)
         message = body[:message]
       end
-      
-      message ||= "Unknown error"
+
+      message ||= 'Unknown error'
 
       my_logger.info("message: #{message}")
 
       update_computation(computation, "error", message)
     end
 
-    def update_computation(computation, new_status, message=nil)
+    def update_computation(computation, new_status, message = nil)
       return if new_status == computation.status
-      if new_status == "error"
+      if new_status == 'error'
         computation.update_attributes(status: new_status, error_message: message)
       else
         computation.update_attributes(status: new_status)

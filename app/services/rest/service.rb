@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'faraday'
 
 module Rest
   class Service
-    def initialize(user, options = {})
+    def initialize(user, _)
       @user = user
     end
 
@@ -20,8 +21,8 @@ module Rest
     private
 
     def rest_url
-      Rails.application.config_for('process')['rest']['host'] + ":" +
-      Rails.application.config_for('process')['rest']['port']
+      Rails.application.config_for('process')['rest']['host'] + ':' +
+        Rails.application.config_for('process')['rest']['port']
     end
   end
 

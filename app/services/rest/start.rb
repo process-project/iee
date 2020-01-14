@@ -12,7 +12,7 @@ module Rest
     end
 
     def call
-      my_logger.info("in call")
+      my_logger.info('in call')
       response = make_request
       my_logger.info("response: #{response}")
       case response.status
@@ -45,7 +45,7 @@ module Rest
       my_logger.info("Response.body: #{response.body}")
 
       body = JSON.parse(response.body, symbolize_names: true)
-      job_status = body[:status] # TODO Do something with the message if needed
+      job_status = body[:status] # TODO: Do something with the message if needed
       job_id = body[:message]
 
       my_logger.info("job_status: #{job_status}")
@@ -59,13 +59,13 @@ module Rest
       my_logger.info("Response.status: #{response.status}")
       my_logger.info("Response.body: #{response.body}")
 
-      if not response.body.nil?
+      unless response.body.nil?
         body = JSON.parse(response.body, symbolize_names: true)
         message = body[:message]
       end
-      
-      message ||= "Unknown error"
-      @computation.update_attributes(status: "error",
+
+      message ||= 'Unknown error'
+      @computation.update_attributes(status: 'error',
                                      error_message: message)
 
       my_logger.info("message: #{message}")
