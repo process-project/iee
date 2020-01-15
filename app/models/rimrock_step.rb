@@ -12,6 +12,9 @@ class RimrockStep < Step
   end
 
   def builder_for(pipeline, params)
+
+    Rails.logger.debug("+++RimrockStep.builder_for with params: #{params.inspect}")
+
     PipelineSteps::Rimrock::Builder.new(pipeline, name, params)
   end
 

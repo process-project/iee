@@ -5,6 +5,9 @@ module Pipelines
     def initialize(pipeline, params, options = {})
       super(pipeline, options)
       @params = params
+
+      Rails.logger.debug("+++Pipelines::Creatw eith params: #{params.inspect}")
+
     end
 
     protected
@@ -29,7 +32,7 @@ module Pipelines
 
     def create_computations
       @pipeline.steps.each do |step|
-        Rails.logger.debug("PARAMS: #{@params.inspect}")
+        Rails.logger.debug("+++Pipeline.create_computations with PARAMS: #{@params.inspect}")
 
         step.builder_for(@pipeline, step_parameter_values(step.name)).call
       end

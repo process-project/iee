@@ -19,7 +19,7 @@ module PipelineSteps
 
       def pre_internal_run
         computation.revision = revision
-        computation.script = ScriptGenerator.new(computation, template).call
+        computation.script = RimrockScriptGenerator.new(computation, template).call
         computation.job_id = nil
       end
 

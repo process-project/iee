@@ -36,7 +36,8 @@ module Cloudify
           operation_kwargs: {
             cmd: './uc4-job.sh',
             arg1: 'hdfs://147.213.75.180:8020/user/lufthansa/',
-            arg2: 'hdfs://147.213.75.180:8020/user/lufthansa/'
+            arg2: "dav://lobcder.process-project.eu:31806/krk/data/out/#{computation.pipeline.id.to_s}/"
+#            arg2: 'hdfs://147.213.75.180:8020/user/lufthansa/'
           }
         }
       }

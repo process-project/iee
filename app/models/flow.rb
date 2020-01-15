@@ -5,6 +5,9 @@ class Flow
   FLOWS = {
     placeholder_pipeline: %w[placeholder_step],
     cloudify_placeholder_pipeline: %w[cloudify_step],
+    cloudify_stageout_pipeline: %w[cloudify_step
+                                   uc4_stageout_step],
+    cloudify_data_transfer_pipeline: %w[uc4_stageout_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
@@ -108,6 +111,18 @@ class Flow
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
+    RimrockStep.new('uc4_stageout_step',
+                    'process-eu/generic_stage_out',
+                    'generic_stage_out_script.sh.erb', [], [
+                        StepParameter.new(
+                            label: 'output_path',
+                            name: 'Output Path',
+                            description: 'Where the output files can be found on PRO',
+                            rank: 1,
+                            datatype: 'string',
+                            default: 'UC4/data/out/123456'
+                        )
+                    ]),
     SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),

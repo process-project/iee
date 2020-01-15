@@ -63,6 +63,9 @@ module Projects
     private
 
     def create_pipeline
+
+      Rails.logger.debug("+++IN CREATE PIPELINE with params: #{params.inspect}")
+
       pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
       ::Pipelines::Create.new(pipeline, params.require(:pipeline)).call
     end
