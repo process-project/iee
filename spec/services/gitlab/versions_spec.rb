@@ -19,7 +19,7 @@ describe Gitlab::Versions do
 
   it 'returns empty list of branches and tags for nonexistent repository', gitlab: true do
     Gitlab.configure do |config|
-      config.endpoint = 'http://no.such.url.com/api/v4'
+      config.endpoint = 'http://someurl.invalid/api/v4'
     end
 
     branches_and_tags = Gitlab::Versions.new(project).call

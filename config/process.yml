@@ -3,14 +3,24 @@ defaults: &defaults
     url: https://submit.plgrid.pl
     host: prometheus.cyfronet.pl
     tag: vapor
-  grant_id: <%= ENV['GRANT_ID'] || 'process1' %>
+  cloudify:
+    url: https://147.213.76.124/api/v3.1
+    user: admin
+    password: zAv1Y0KXC0VZ
+    blueprint: compute-blueprint-beta
+    iee_deployment_name: iee_deployment
+    app_workflow_name: execute_operation
+  grant_id: <%= ENV['GRANT_ID'] || 'process2' %>
+  gpu_grant_id: <%= ENV['GPU_GRANT_ID'] || 'process2gpu' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
   staging_in:
     host: 'data01.process-project.eu'
-    port: '30136'
+    port: '32021'
     path: '/api/v1/copy'
     lobcder_api_access_token: <%= ENV['LOBCDER_API_ACCESS_TOKEN'] %>
     staging_secret: <%= ENV['STAGING_SECRET'] %>
+    src_user: 'di39nox'
+    dest_user: 'plgcushing'
   segmentation:
     inputs_path: segmentation/input
     outputs_path: segmentation/output
@@ -19,7 +29,6 @@ defaults: &defaults
     ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
     user: <%= ENV['SEGMENTATION_USER'] %>
     password: <%= ENV['SEGMENTATION_PASSWORD'] %>
-
 
 development:
   <<: *defaults

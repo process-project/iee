@@ -82,6 +82,7 @@ en:
           lufthansa_pipeline: Lufthansa pipeline
           agrocopernicus_pipeline: Agrocopernicus pipeline
           staging_in_placeholder_pipeline: Staging-in placeholder pipeline
+          validation_pipeline: Validation pipeline
     # Examples
     # labels:
     #   defaults:

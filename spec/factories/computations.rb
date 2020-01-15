@@ -28,8 +28,12 @@ FactoryBot.define do
       pipeline_step 'singularity_placeholder_step'
       script 'SCRIPT'
       container_name 'lolcow'
-      container_registry nil
       container_tag 'latest'
+    end
+
+    factory :cloudify_computation, class: 'CloudifyComputation' do
+      pipeline_step 'cloudify_step'
+      script 'SCRIPT'
     end
 
     factory :staging_in_computation, class: 'StagingInComputation' do
@@ -38,6 +42,10 @@ FactoryBot.define do
       src_path '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif'
       dest_host 'pro.cyfronet.pl'
       dest_path '/net/archive/groups/plggprocess/Mock/test_staging'
+
+      trait :with_tmp_output_file do
+        tmp_output_file 'spec_tmp_output_file.txt'
+      end
     end
   end
 end
