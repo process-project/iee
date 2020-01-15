@@ -8,10 +8,6 @@ module Rest
       @updater = options[:updater]
     end
 
-    def my_logger
-      @@my_logger ||= Logger.new(Rails.root.join('log', 'alfa.log'))
-    end
-
     def call
       active_computations.each do |computation|
         response = make_request(computation)
@@ -33,29 +29,17 @@ module Rest
     end
 
     def job_status_path(computation)
-      Rails.application.config_for('process')['rest']['job_status_path'] + computation.job_id   
+      Rails.application.config_for('process')['rest']['job_status_path'] + computation.job_id
     end
 
     def success(computation, response)
-      my_logger.info("update job success")
-      my_logger.info("response.status: #{response.status}")
-      my_logger.info("response.body: #{response.body}")
-
       body = JSON.parse(response.body, symbolize_names: true)
       job_status = body[:status]
-      message = body[:message] # TODO Do something with a message
-
-      my_logger.info("job_status: #{job_status}")
-      my_logger.info("message: #{message}")
-
+      message = body[:message] # TODO: Do something with a message
       update_computation(computation, job_status)
     end
 
     def error(computation, response)
-      my_logger.info("error")
-      my_logger.info("Response.status: #{response.status}")
-      my_logger.info("Response.body: #{response.body}")
-
       unless response.body.nil?
         body = JSON.parse(response.body, symbolize_names: true)
         message = body[:message]
@@ -63,9 +47,7 @@ module Rest
 
       message ||= 'Unknown error'
 
-      my_logger.info("message: #{message}")
-
-      update_computation(computation, "error", message)
+      update_computation(computation, 'error', message)
     end
 
     def update_computation(computation, new_status, message = nil)
