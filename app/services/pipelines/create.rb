@@ -29,6 +29,8 @@ module Pipelines
 
     def create_computations
       @pipeline.steps.each do |step|
+        Rails.logger.debug("PARAMS: #{@params.inspect}")
+
         step.builder_for(@pipeline, step_parameter_values(step.name)).call
       end
     end
