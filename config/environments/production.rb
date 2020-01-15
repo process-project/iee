@@ -110,7 +110,8 @@ Rails.application.configure do
 
   config.action_cable.allowed_request_origins = [
     %r{https://valve.*\.cyfronet\.pl},
-    %r{https://.*\.mee.*\.cyfronet\.pl}
+    %r{https://.*\.mee.*\.cyfronet\.pl},
+    %r{https://process-dev.cyfronet.pl}
   ]
 end
 # rubocop:enable BlockLength
