@@ -4,7 +4,7 @@ require 'faraday'
 
 module Rest
   class Service
-    def initialize(user, options = {})
+    def initialize(user, _options = {})
       @user = user
     end
 

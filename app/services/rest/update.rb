@@ -35,7 +35,7 @@ module Rest
     def success(computation, response)
       body = JSON.parse(response.body, symbolize_names: true)
       job_status = body[:status]
-      message = body[:message] # TODO: Do something with a message
+      # message = body[:message] # TODO: Do something with a message
       update_computation(computation, job_status)
     end
 
