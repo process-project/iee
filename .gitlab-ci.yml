@@ -63,15 +63,33 @@ rubocop:
   stage: test
   script:
     - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v  
     - gem install bundler --no-ri --no-rdoc
+    - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
+    - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - bundle exec rubocop
 
 brakeman:
   stage: test
   script:
     - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - gem install brakeman --no-ri --no-rdoc
+    - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - brakeman --exit-on-warn --quiet -f plain
 
 deploy_development:
