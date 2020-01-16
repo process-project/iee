@@ -21,9 +21,19 @@ test:
   script:
   - google-chrome --version
   - ruby -v
+  - gem list
   - which ruby
+  - bundle -v  
   - gem install bundler --no-ri --no-rdoc
+  - ruby -v
+  - gem list
+  - which ruby
+  - bundle -v
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
+  - ruby -v
+  - gem list
+  - which ruby
+  - bundle -v
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rake db:migrate RAILS_ENV=test
@@ -34,8 +44,14 @@ integration:
   script:
   - google-chrome --version
   - ruby -v
+  - gem list
   - which ruby
+  - bundle -v
   - gem install bundler --no-ri --no-rdoc
+  - ruby -v
+  - gem list
+  - which ruby
+  - bundle -v
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
