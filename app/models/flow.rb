@@ -12,7 +12,17 @@ class Flow
     staging_in_placeholder_pipeline: %w[staging_in_step],
     validation_pipeline: %w[validation_staging_in_step
                             validation_singularity_step
-                            validation_stage_out_step]
+                            validation_stage_out_step],
+    test_flow: %w[validation_staging_in_step
+                  validation_singularity_step
+                  validation_stage_out_step]
+  }.freeze
+
+  USECASE_FLOWS = {
+    medical_pipeline: :uc1,
+    lofar_pipeline: :uc2,
+    agrocopernicus_pipeline: :uc5,
+    test_flow: :uc2
   }.freeze
 
   STEPS = [
@@ -163,6 +173,35 @@ class Flow
 
   def self.steps(flow_type)
     FLOWS_MAP[flow_type.to_sym] || []
+  end
+
+  def self.get_step(step_name)
+    STEPS.find { |step| step.name == step_name }
+  end
+
+  def self.step_to_hash(step)
+    Hash[step.parameters.map do |parameter|
+      [parameter.name.to_sym, parameter.as_json.symbolize_keys.slice(:label,
+                                                                     :name,
+                                                                     :description,
+                                                                     :rank,
+                                                                     :datatype,
+                                                                     :default,
+                                                                     :values)]
+    end]
+  end
+
+  def self.pipeline_to_hash(pipeline)
+    Hash[FLOWS[pipeline.to_sym].map do |step_name|
+           [step_name, step_to_hash(get_step(step_name))]
+         end]
+  end
+
+  def self.flows_for(usecase)
+    pipelines = USECASE_FLOWS.select { |_, uc| uc == usecase }.keys
+    Hash[pipelines.map do |pipeline|
+           [pipeline, pipeline_to_hash(pipeline)]
+         end].deep_stringify_keys
   end
 end
 # rubocop:enable ClassLength
