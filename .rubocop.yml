@@ -18,6 +18,7 @@ AllCops:
     - 'db/schema.rb'
     - 'db/migrate/*'
     - 'vendor/**/*'
+    - 'node_modules/**/*'
 
 Metrics/LineLength:
   Max: 100
