@@ -6,7 +6,8 @@ services:
 variables:
   POSTGRES_DB: vapor_test
   POSTGRES_USER: vapor
-  POSTGRES_PASSWORD: "vapor"
+  POSTGRES_PASSWORD: ""
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 cache:
   paths:
