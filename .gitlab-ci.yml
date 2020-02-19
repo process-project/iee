@@ -8,7 +8,7 @@ variables:
   POSTGRES_USER: vapor
   POSTGRES_PASSWORD: ""
   POSTGRES_HOST_AUTH_METHOD: trust
-  
+
 cache:
   paths:
   - vendor/
