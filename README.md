@@ -1,4 +1,4 @@
-# Vapor - EurValve portal [![build status](https://gitlab.com/eurvalve/vapor/badges/master/build.svg)](https://gitlab.com/eurvalve/vapor/commits/master)
+# IEE - PROCESS portal
 
 ## Project description
 

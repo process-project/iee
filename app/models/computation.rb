@@ -21,11 +21,14 @@ class Computation < ApplicationRecord
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :cloudify, -> { where(type: 'CloudifyComputation') }
   scope :staging_in, -> { where(type: 'StagingInComputation') }
+  scope :rest, -> { where(type: 'RestComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
   scope :submitted_cloudify, -> { submitted.cloudify }
   scope :submitted_staging_in, -> { submitted.staging_in }
+  scope :submitted_rest, -> { submitted.rest }
+  scope :created_or_submitted_rest, -> { created.rest + submitted.rest }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
 
   delegate :mode, :manual?, :automatic?, to: :pipeline
@@ -60,6 +63,10 @@ class Computation < ApplicationRecord
 
   def staging_in?
     type == 'StagingInComputation'
+  end
+
+  def rest?
+    type == 'RestComputation'
   end
 
   def self.flow_ordered
