@@ -6,5 +6,6 @@ namespace :compute_sites do
   task seed: :environment do
     ComputeSite.create!(name: 'LRZ')
     ComputeSite.create!(name: 'Amsterdam')
+    ComputeSite.create!(name: 'Cyfronet')
   end
 end
