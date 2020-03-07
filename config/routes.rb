@@ -44,6 +44,15 @@ Rails.application.routes.draw do
     resources :policy_entities, only: :index
     # LOBCDER API webhook
     post 'staging' => 'staging#notify'
+    resources :projects, only: :index do
+      scope module: :projects do
+        resources :pipelines, only: :index do
+          scope module: :pipelines do
+            resources :computations, only: [:index, :show, :create]
+          end
+        end
+      end
+    end
   end
 
   resources :services do
