@@ -1,24 +1,23 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
-  "id": "http://example.com/example.json",
   "type": "object",
-  "required": [
-    "a",
-    "b",
-    "c"
-  ],
   "properties": {
-    "a": {
-      "id": "#/properties/a",
-      "type": "integer"
-    },
-    "b": {
-      "id": "#/properties/b",
-      "type": "string"
-    },
-    "c": {
-      "id": "#/properties/c",
-      "type": "number"
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+          "properties": {
+              "step_name": {
+                  "description": "Name of the step",
+                  "type": "string"
+              },
+              "parameters":{
+                  "description": "List of the parameters",
+                  "type": "object"
+              }
+          },
+          "required": ["step_name", "parameters"]
+      }
     }
-  }
+  },
+  "required": ["steps"]
 }
