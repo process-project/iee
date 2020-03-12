@@ -12,7 +12,8 @@ module Api
         before_action :fetch_and_validate_computation, only: :show
 
         def index
-          render json: %w[J1 J2 J3 J4].to_json, status: :ok
+          a = Flow.flows_for(@project.downcase.to_sym)[@pipeline]
+          render json: a.to_json, status: :ok
           #  More complex example
           #  render json: { computations: [{ id: 'J1', status: 'finished' },
           #                                { id: 'J2', status: 'queuing' },
@@ -45,7 +46,7 @@ module Api
         def fetch_and_validate_pipeline
           @pipeline = params['pipeline_id']
 
-          api_error(status: 404) unless %w[P1 P2 P3 P4].include?(@pipeline)
+          # api_error(status: 404) unless %w[P1 P2 P3 P4].include?(@pipeline)
         end
 
         def fetch_and_validate_computation
