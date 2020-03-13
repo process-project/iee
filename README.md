@@ -70,8 +70,6 @@ bundle exec rake dev:prime RAILS_ENV=development
 ```
 This task depends on _db:setup_ task so be aware that data present in database is erased.
 
-Vapor uses a file store backend - the EurValve's internal WebDAV File Store.
-
 ## ENV variables
 
 We are using ENV variables to keep secrets safe. To customize the application
@@ -117,7 +115,7 @@ bundle exec rspec
 ```
 
 To execute File Storage integration tests:
-1. Obtain EurValve dev file store key in the form of a pem file
+1. Obtain the dev file store key in the form of a pem file
 2. Set path to this certificate in application.yml jwt.key value
 3. Set test user names and email ENV values (see secrets.yml) - this user needs to be in the 'webdav' group
 4. Run rspec with files tag on:
@@ -133,7 +131,7 @@ guard
 ```
 
 To execute Gitlab integration tests:
-1. Obtain a valid Gitlab user token with access to the eurvalve/blood-flow project
+1. Obtain a valid Gitlab user token with access to the flow project
 2. Assign token payload to the GITLAB_API_PRIVATE_TOKEN environmental variable (e.g. by editing `.env`)
 3. Run rspec with gitlab tag on:
 
