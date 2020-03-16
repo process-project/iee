@@ -20,13 +20,33 @@ module Api
           #                                { id: 'J3', status: 'running' }] }.to_json, status: :ok
         end
 
-        def show
-          render json: { id: params[:id], status: 'running' }.to_json, status: :ok
+        def show # TODO
+          result = {}
+          pipeline = Pipeline.where(name: @pipeline)
+          pipeline = Pipeline.where(flow: @pipeline)
+          computations = pipeline.computations
+          # computations = somehow_from_this(pipeline_id)
+          computations.each do |computation|
+            result[computation.pipeline_step] = computation.status
+          end
+          
+          render json: result.to_json, status: :ok
+          # TODO error handling
         end
 
-        def create
-          # FIXME: DO something with @json that is more intelligent than resending it back ;)
-          render json: @json.to_json, status: :ok
+        def create # TODO
+          # Needed variables
+          project = Project.find_by!(project_name: @project)
+          owners = { project: project, user: current_user }
+
+          @pipeline # pipeline_id as in flow.rb
+
+          # how to start pipeline?
+          pipeline = Pipeline.new(permitted_attributes(Pipeline).merge(owners))
+          ::Pipelines::Create.new(pipeline, @json).call
+          ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
+
+          return pipeline.id
         end
 
         private
