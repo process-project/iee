@@ -14,10 +14,6 @@ module Api
         def index
           a = Flow.flows_for(@project.downcase.to_sym)[@pipeline]
           render json: a.to_json, status: :ok
-          #  More complex example
-          #  render json: { computations: [{ id: 'J1', status: 'finished' },
-          #                                { id: 'J2', status: 'queuing' },
-          #                                { id: 'J3', status: 'running' }] }.to_json, status: :ok
         end
 
         def show
