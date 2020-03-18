@@ -12,8 +12,8 @@ module Api
         before_action :fetch_and_validate_computation, only: :show
 
         def index
-          a = Flow.flows_for(@project.downcase.to_sym)[@pipeline]
-          render json: a.to_json, status: :ok
+          # a = Flow.flows_for(@project.downcase.to_sym)[@pipeline]
+          render json: current_user.to_json, status: :ok
         end
 
         def show
@@ -21,7 +21,6 @@ module Api
         end
 
         def create
-          # FIXME: DO something with @json that is more intelligent than resending it back ;)
           render json: @json.to_json, status: :ok
         end
 
