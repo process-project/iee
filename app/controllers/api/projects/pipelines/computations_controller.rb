@@ -16,12 +16,40 @@ module Api
           render json: current_user.to_json, status: :ok
         end
 
-        def show
-          render json: { id: params[:id], status: 'running' }.to_json, status: :ok
+        def show # TODO
+          result = {}
+          pipeline = Pipeline.where(name: @pipeline)
+
+          pipeline = Pipeline.where(flow: @pipeline)
+          computations = pipeline.computations
+          # computations = somehow_from_this(pipeline_id)
+          computations.each do |computation|
+            result[computation.pipeline_step] = computation.status
+          end
+          
+          render json: result.to_json, status: :ok
+          # TODO error handling
         end
 
-        def create
-          render json: @json.to_json, status: :ok
+        def create # TO TEST 
+          project = Project.find_by!(project_name: @project)
+          owners = { project: project, user: current_user }
+
+          base_attrs = {flow: @pipeline, name: "hash_123_randomHASH", mode: "automatic"}
+
+          steps_attrs = {}
+
+          @json["steps"].each do |step|
+            steps_attrs[step["step_name"]] = step["parameters"]
+          end
+
+          pipeline_attributes = base_attrs + steps_attrs
+
+          pipeline_instance = Pipeline.new(pipeline_attributes.merge(owners))
+          ::Pipelines::Create.new(pipeline_instance, pipeline_attributes).call
+          ::Pipelines::StartRunnable.new(pipeline_instance).call
+
+          render json: pipeline_instance.id.to_json, status: :ok
         end
 
         private
