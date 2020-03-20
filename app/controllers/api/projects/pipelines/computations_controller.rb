@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'json-schema'
+require 'securerandom' 
 
 module Api
   module Projects
@@ -12,8 +13,8 @@ module Api
         before_action :fetch_and_validate_computation, only: :show
 
         def index
-          # a = Flow.flows_for(@project.downcase.to_sym)[@pipeline]
-          render json: current_user.to_json, status: :ok
+          a = Flow.flows_for(@project.downcase.to_sym)[@pipeline]
+          render json: a.to_json, status: :ok
         end
 
         def show # TODO
@@ -31,11 +32,12 @@ module Api
           # TODO error handling
         end
 
-        def create # TO TEST 
+        def create # TO TEST
+          @logger = Logger.new(Rails.root.join('log', 'alfa.log'))
           project = Project.find_by!(project_name: @project)
           owners = { project: project, user: current_user }
 
-          base_attrs = {flow: @pipeline, name: "hash_123_randomHASH", mode: "automatic"}
+          base_attrs = {flow: @pipeline, name: "random_hash#{SecureRandom.hex}", mode: "automatic"}
 
           steps_attrs = {}
 
@@ -43,13 +45,21 @@ module Api
             steps_attrs[step["step_name"]] = step["parameters"]
           end
 
-          pipeline_attributes = base_attrs + steps_attrs
+          pipeline_attributes = ActionController::Parameters.new(base_attrs.merge(steps_attrs))
+          pipeline_instance = Pipeline.new(base_attrs.merge(owners))
 
-          pipeline_instance = Pipeline.new(pipeline_attributes.merge(owners))
+          #TODO CHECK FOR WEBDAV HTTP ERRORS
           ::Pipelines::Create.new(pipeline_instance, pipeline_attributes).call
-          ::Pipelines::StartRunnable.new(pipeline_instance).call
 
-          render json: pipeline_instance.id.to_json, status: :ok
+          if pipeline_instance.errors.empty?
+            project.execute_data_sync(current_user)
+            ::Pipelines::StartRunnable.new(pipeline_instance).call
+            render json: pipeline_instance.id.to_json, status: :ok
+            @logger.info("create success")
+          else
+            render json: ["error"].to_json, status: :unathorized
+            @logger.info("create error")
+          end
         end
 
         private
