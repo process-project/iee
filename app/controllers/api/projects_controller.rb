@@ -2,8 +2,10 @@
 
 module Api
   class ProjectsController < Api::ApplicationController
+    include ProjectsHelper
+
     def index
-      render json: %w[UC2].to_json, status: :ok
+      render json: available_api_projects.to_json, status: :ok
     end
   end
 end

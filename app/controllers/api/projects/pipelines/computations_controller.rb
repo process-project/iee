@@ -7,6 +7,8 @@ module Api
   module Projects
     module Pipelines
       class ComputationsController < Api::ApplicationController
+        include ProjectsHelper, PipelinesHelper
+
         before_action :parse_and_validate_create, only: :create
         before_action :fetch_and_validate_project
         before_action :fetch_and_validate_pipeline
@@ -17,23 +19,21 @@ module Api
           render json: a.to_json, status: :ok
         end
 
-        def show # TODO
-          result = {}
-          pipeline = Pipeline.where(name: @pipeline)
+        def show
+          @pipeline_instance = Pipeline.find(@computation)
+          computations = @pipeline_instance.computations
 
-          pipeline = Pipeline.where(flow: @pipeline)
-          computations = pipeline.computations
-          # computations = somehow_from_this(pipeline_id)
+          result = {}
+
           computations.each do |computation|
             result[computation.pipeline_step] = computation.status
           end
           
           render json: result.to_json, status: :ok
-          # TODO error handling
+          # # TODO error handling
         end
 
         def create # TO TEST
-          @logger = Logger.new(Rails.root.join('log', 'alfa.log'))
           project = Project.find_by!(project_name: @project)
           owners = { project: project, user: current_user }
 
@@ -55,10 +55,8 @@ module Api
             project.execute_data_sync(current_user)
             ::Pipelines::StartRunnable.new(pipeline_instance).call
             render json: pipeline_instance.id.to_json, status: :ok
-            @logger.info("create success")
           else
             render json: ["error"].to_json, status: :unathorized
-            @logger.info("create error")
           end
         end
 
@@ -72,20 +70,18 @@ module Api
 
         def fetch_and_validate_project
           @project = params['project_id']
-
-          api_error(status: 404) unless @project == 'UC2'
+          api_error(status: 404) unless available_api_projects.include?(@project)
         end
 
         def fetch_and_validate_pipeline
           @pipeline = params['pipeline_id']
-
-          # api_error(status: 404) unless %w[P1 P2 P3 P4].include?(@pipeline)
+          api_error(status: 404) unless available_flows_for(@project).include?(@pipeline)
         end
 
         def fetch_and_validate_computation
           @computation = params['id']
-
-          api_error(status: 404) unless %w[J1 J2 J3 J4].include?(@computation)
+          database_ids = Project.find_by(project_name: @project).pipelines.where(flow: @pipeline).ids
+          api_error(status: 404) unless database_ids.include?(@computation.to_i)
         end
       end
     end
