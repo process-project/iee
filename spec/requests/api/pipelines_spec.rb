@@ -17,7 +17,9 @@ RSpec.describe 'Pipelines' do
       expect(response.status).to eq(200)
 
       # TODO: Expect proper JSON for preset pipelines instead of this hardcoded value
-      expect(response_json).to include_json(['P1'])
+      expect(response_json).to include_json(
+        ["lofar_pipeline","test_flow"]
+      )
     end
 
     it 'returns 404 on invalid project' do
