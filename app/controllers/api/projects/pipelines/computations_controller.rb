@@ -59,7 +59,7 @@ module Api
             ::Pipelines::StartRunnable.new(pipeline_instance).call
             render json: pipeline_instance.id.to_json, status: :ok
           else
-            render json: ['error'].to_json, status: :unathorized
+            render json: ['error'].to_json, status: :unauthorized
           end
         end
         # rubocop:enable Metrics/MethodLength
