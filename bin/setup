@@ -36,6 +36,9 @@ chdir APP_ROOT do
   puts "\n== Seeding compute sites =="
   system! 'bin/rails compute_sites:seed'
 
+  puts "\n== Seeding usecases' projects =="
+  system! 'bin/rails projects:seed'
+
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
 
