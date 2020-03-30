@@ -8,7 +8,7 @@ RSpec.describe 'Computations' do
   include JsonHelpers
 
   context 'as logged in user' do
-    let(:user) { create(:user, :approved, :file_store_user) }
+    let(:user) { create(:user, :approved) }
 
     before do
       login_as(user)
