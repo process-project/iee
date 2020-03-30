@@ -15,7 +15,7 @@ RSpec.describe 'Projects' do
       get api_projects_path
 
       expect(response.status).to eq(200)
-      expect(response_json).to include_json(["UC1","UC2","UC3","UC4","UC5"])
+      expect(response_json).to include_json(%w[UC1 UC2 UC3 UC4 UC5])
     end
   end
 

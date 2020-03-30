@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require 'json-schema'
-require 'securerandom' 
+require 'securerandom'
 
 module Api
   module Projects
     module Pipelines
       class ComputationsController < Api::ApplicationController
-        include ProjectsHelper, PipelinesHelper
+        include ProjectsHelper
+        include PipelinesHelper
 
         before_action :parse_and_validate_create, only: :create
         before_action :fetch_and_validate_project
@@ -28,27 +29,29 @@ module Api
           computations.each do |computation|
             result[computation.pipeline_step] = computation.status
           end
-          
           render json: result.to_json, status: :ok
           # # TODO error handling
         end
 
-        def create # TO TEST
+        # rubocop:disable Metrics/MethodLength
+        # rubocop:disable Metrics/AbcSize
+        def create
           project = Project.find_by!(project_name: @project)
           owners = { project: project, user: current_user }
 
-          base_attrs = {flow: @pipeline, name: "random_hash#{SecureRandom.hex}", mode: "automatic"}
+          base_attrs = { flow: @pipeline, name: "random_hash#{SecureRandom.hex}",
+                         mode: 'automatic' }
 
           steps_attrs = {}
 
-          @json["steps"].each do |step|
-            steps_attrs[step["step_name"]] = step["parameters"]
+          @json['steps'].each do |step|
+            steps_attrs[step['step_name']] = step['parameters']
           end
 
           pipeline_attributes = ActionController::Parameters.new(base_attrs.merge(steps_attrs))
           pipeline_instance = Pipeline.new(base_attrs.merge(owners))
 
-          #TODO CHECK FOR WEBDAV HTTP ERRORS
+          # TODO: CHECK FOR WEBDAV HTTP ERRORS
           ::Pipelines::Create.new(pipeline_instance, pipeline_attributes).call
 
           if pipeline_instance.errors.empty?
@@ -56,9 +59,11 @@ module Api
             ::Pipelines::StartRunnable.new(pipeline_instance).call
             render json: pipeline_instance.id.to_json, status: :ok
           else
-            render json: ["error"].to_json, status: :unathorized
+            render json: ['error'].to_json, status: :unathorized
           end
         end
+        # rubocop:enable Metrics/MethodLength
+        # rubocop:enable Metrics/AbcSize
 
         private
 
@@ -80,7 +85,8 @@ module Api
 
         def fetch_and_validate_computation
           @computation = params['id']
-          database_ids = Project.find_by(project_name: @project).pipelines.where(flow: @pipeline).ids
+          database_ids = Project.find_by(project_name: @project).
+                         pipelines.where(flow: @pipeline).ids
           api_error(status: 404) unless database_ids.include?(@computation.to_i)
         end
       end

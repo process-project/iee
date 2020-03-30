@@ -3,7 +3,8 @@
 module Api
   module Projects
     class PipelinesController < Api::ApplicationController
-      include ProjectsHelper, PipelinesHelper
+      include ProjectsHelper
+      include PipelinesHelper
 
       def index
         return api_error(status: 404) unless available_api_projects.include?(params['project_id'])
