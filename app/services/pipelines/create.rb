@@ -24,13 +24,12 @@ module Pipelines
     def post_save
       r_mkdir(@pipeline.inputs_dir)
       r_mkdir(@pipeline.outputs_dir)
+
       create_computations
     end
 
     def create_computations
       @pipeline.steps.each do |step|
-        Rails.logger.debug("PARAMS: #{@params.inspect}")
-
         step.builder_for(@pipeline, step_parameter_values(step.name)).call
       end
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 case Rails.env
-when 'developement'
+when 'development'
   # require 'seeds_developement'
   admin = User.find_by(email: 'admin@host.domain')
   admin ||= User.create(first_name: 'admin', last_name: 'admin', email: 'admin@host.domain',
