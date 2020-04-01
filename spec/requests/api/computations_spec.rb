@@ -13,7 +13,6 @@ RSpec.describe 'Computations' do
     before do
       login_as(user)
       create(:project, project_name: 'UC2')
-      Rake::Task['blueprints:seed'].invoke
     end
 
     it 'returns valid response on valid project and pipeline' do
@@ -43,17 +42,6 @@ RSpec.describe 'Computations' do
                                                  pipeline_id: 'baz')
 
       expect(response.status).to eq(404)
-    end
-
-    # TODO: start computations - json with chosen parameters
-    it 'starts computation when JSON is proper and returns valid result' do
-      post api_project_pipeline_computations_path(project_id: 'UC2',
-                                                  pipeline_id: 'lofar_pipeline'),
-           params: valid_computation_json,
-           as: :json
-
-      expect(response.status).to eq(200)
-      expect(response_json).to eq(Pipeline.last.id)
     end
 
     it 'returns 404 when JSON is proper but project invalid' do
@@ -90,14 +78,18 @@ RSpec.describe 'Computations' do
     end
 
     it 'returns valid response on valid project, pipeline and computation' do
-      id = create_testing_computation
+      project = Project.find_by(project_name: "UC2")
+      pipeline = Pipeline.create(name: "test", flow: "lofar_pipeline", project: project, user: user)
+      computation = create(:computation, pipeline_step: "test_step", status: :running, pipeline: pipeline)
+
+      pipeline.computations = [computation]
 
       get api_project_pipeline_computation_path(project_id: 'UC2',
                                                 pipeline_id: 'lofar_pipeline',
-                                                id: id.to_s)
+                                                id: pipeline.id)
 
       expect(response.status).to eq(200)
-      expect(response_json).to include_json(lofar_step: :newz)
+      expect(response_json).to include_json(test_step: "running")
     end
 
     it 'returns 404 response on valid project, pipeline and invalid computation' do
