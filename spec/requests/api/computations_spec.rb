@@ -46,7 +46,7 @@ RSpec.describe 'Computations' do
     end
 
     # TODO: start computations - json with chosen parameters
-    xit 'starts computation when JSON is proper and returns valid result' do
+    it 'starts computation when JSON is proper and returns valid result' do
       post api_project_pipeline_computations_path(project_id: 'UC2',
                                                   pipeline_id: 'lofar_pipeline'),
            params: valid_computation_json,
@@ -89,7 +89,7 @@ RSpec.describe 'Computations' do
       expect(response.status).to eq(400)
     end
 
-    xit 'returns valid response on valid project, pipeline and computation' do
+    it 'returns valid response on valid project, pipeline and computation' do
       id = create_testing_computation
 
       get api_project_pipeline_computation_path(project_id: 'UC2',
@@ -100,7 +100,7 @@ RSpec.describe 'Computations' do
       expect(response_json).to include_json(lofar_step: :newz)
     end
 
-    xit 'returns 404 response on valid project, pipeline and invalid computation' do
+    it 'returns 404 response on valid project, pipeline and invalid computation' do
       get api_project_pipeline_computation_path(project_id: 'UC2',
                                                 pipeline_id: 'lofar_pipeline',
                                                 id: 'foo')
@@ -108,8 +108,9 @@ RSpec.describe 'Computations' do
       expect(response.status).to eq(404)
     end
 
-    xit 'returns 404 response on valid project, computation and invalid pipeline' do
-      id = create_testing_computation
+    it 'returns 404 response on valid project, computation and invalid pipeline' do
+      id = create(:pipeline).id
+
       get api_project_pipeline_computation_path(project_id: 'UC2',
                                                 pipeline_id: 'foo',
                                                 id: id)
@@ -117,8 +118,8 @@ RSpec.describe 'Computations' do
       expect(response.status).to eq(404)
     end
 
-    xit 'returns 404 response on valid pipeline, computation and invalid project' do
-      id = create_testing_computation
+    it 'returns 404 response on valid pipeline, computation and invalid project' do
+      id = create(:pipeline).id
       get api_project_pipeline_computation_path(project_id: 'foo',
                                                 pipeline_id: 'lofar_pipeline',
                                                 id: id)
@@ -150,36 +151,27 @@ RSpec.describe 'Computations' do
       expect(response.status).to eq(404)
     end
 
-    def create_testing_computation
-      post api_project_pipeline_computations_path(project_id: 'UC2',
-                                                  pipeline_id: 'lofar_pipeline'),
-           params: valid_computation_json,
-           as: :json
-
-      response_json # TODO: check if response_json is just a number string
-    end
-
     # rubocop:disable Metrics/MethodLength
     def valid_computation_json
       {
-        'steps' => [{
-          'step_name' => 'lofar_step',
-          'parameters' => {
-            'container_name' => 'lofar/lofar_container',
-            'container_tag' => 'latest',
-            'hpc' => 'Prometheus',
-            'nodes' => '1',
-            'cpus' => '24',
-            'partition' => 'plgrid',
-            'visibility_id' => '1234',
-            'avg_freq_step' => '2',
-            'avg_time_step' => '4',
-            'do_demix' => 't',
-            'demix_freq_step' => '2',
-            'demix_time_step' => '2',
-            'demix_sources' => 'CasA',
-            'select_nl' => 't',
-            'parset' => 'lba_npp'
+        steps: [{
+          step_name: 'lofar_step',
+          parameters: {
+            container_name: 'lofar/lofar_container',
+            container_tag: 'latest',
+            hpc: 'Prometheus',
+            nodes: '1',
+            cpus: '24',
+            partition: 'plgrid',
+            visibility_id: '1234',
+            avg_freq_step: '2',
+            avg_time_step: '4',
+            do_demix: 't',
+            demix_freq_step: '2',
+            demix_time_step: '2',
+            demix_sources: 'CasA',
+            select_nl: 't',
+            parset: 'lba_npp'
           }
         }]
       }
