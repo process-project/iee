@@ -78,9 +78,10 @@ RSpec.describe 'Computations' do
     end
 
     it 'returns valid response on valid project, pipeline and computation' do
-      project = Project.find_by(project_name: "UC2")
-      pipeline = Pipeline.create(name: "test", flow: "lofar_pipeline", project: project, user: user)
-      computation = create(:computation, pipeline_step: "test_step", status: :running, pipeline: pipeline)
+      project = Project.find_by(project_name: 'UC2')
+      pipeline = Pipeline.create(name: 'test', flow: 'lofar_pipeline', project: project, user: user)
+      computation = create(:computation, pipeline_step: 'test_step', status: :running,
+                                         pipeline: pipeline)
 
       pipeline.computations = [computation]
 
@@ -89,7 +90,7 @@ RSpec.describe 'Computations' do
                                                 id: pipeline.id)
 
       expect(response.status).to eq(200)
-      expect(response_json).to include_json(test_step: "running")
+      expect(response_json).to include_json(test_step: 'running')
     end
 
     it 'returns 404 response on valid project, pipeline and invalid computation' do
