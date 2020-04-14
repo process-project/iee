@@ -37,3 +37,6 @@
 
 # Ignore local Procfile (used for running thin web server)
 /Procfile.local
+
+.rake_tasks
+.rake_tasks~

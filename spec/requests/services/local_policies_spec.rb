@@ -10,17 +10,17 @@ RSpec.describe 'Service local policies' do
   describe 'GET /services/:id/local_policies' do
     it 'lists service local policies' do
       service = create(:service, users: [user])
-      create(:local_resource, name: 'r1')
-      create(:local_resource, service: service, name: 'r2')
-      create(:local_resource, service: service, name: 'r3')
-      create(:global_resource, service: service, name: 'r4')
+      create(:local_resource, name: 'resource_1')
+      create(:local_resource, service: service, name: 'resource_2')
+      create(:local_resource, service: service, name: 'resource_3')
+      create(:global_resource, service: service, name: 'resource_4')
 
       get service_local_policies_path(service)
 
-      expect(response.body).to_not include('r1')
-      expect(response.body).to include('r2')
-      expect(response.body).to include('r3')
-      expect(response.body).to_not include('r4')
+      expect(response.body).to_not include('resource_1')
+      expect(response.body).to include('resource_2')
+      expect(response.body).to include('resource_3')
+      expect(response.body).to_not include('resource_4')
     end
 
     it 'denies viewing not owned service local policies' do

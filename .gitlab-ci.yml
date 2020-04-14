@@ -7,6 +7,7 @@ variables:
   POSTGRES_DB: vapor_test
   POSTGRES_USER: vapor
   POSTGRES_PASSWORD: ""
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 cache:
   paths:
@@ -21,9 +22,19 @@ test:
   script:
   - google-chrome --version
   - ruby -v
+  - gem list
   - which ruby
+  - bundle -v  
   - gem install bundler --no-ri --no-rdoc
+  - ruby -v
+  - gem list
+  - which ruby
+  - bundle -v
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
+  - ruby -v
+  - gem list
+  - which ruby
+  - bundle -v
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
   - bundle exec rake db:migrate RAILS_ENV=test
@@ -34,8 +45,14 @@ integration:
   script:
   - google-chrome --version
   - ruby -v
+  - gem list
   - which ruby
+  - bundle -v
   - gem install bundler --no-ri --no-rdoc
+  - ruby -v
+  - gem list
+  - which ruby
+  - bundle -v
   - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
   - cp config/database.yml.gitlab-ci config/database.yml
   - bundle exec rake db:create RAILS_ENV=test
@@ -47,15 +64,33 @@ rubocop:
   stage: test
   script:
     - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v  
     - gem install bundler --no-ri --no-rdoc
+    - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - bundle install --path vendor --jobs $(nproc)  "${FLAGS[@]}"
+    - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - bundle exec rubocop
 
 brakeman:
   stage: test
   script:
     - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - gem install brakeman --no-ri --no-rdoc
+    - ruby -v
+    - gem list
+    - which ruby
+    - bundle -v 
     - brakeman --exit-on-warn --quiet -f plain
 
 deploy_development:
@@ -70,24 +105,8 @@ deploy_development:
   - master
   environment:
     name: development
-    url: https://valve-dev.cyfronet.pl
-    
-process_deploy_development:
-  stage: deploy
-  script:
-  - mkdir /root/.ssh
-  - echo $PROCESS_DEV_HOST_KEY > ~/.ssh/known_hosts
-  - echo -e $PROCESS_DEV_KEY > ~/.ssh/id_rsa
-  - chmod 400 ~/.ssh/id_rsa
-  - git checkout process-master
-  - git pull
-  - git push $PROCESS_DEV_GIT_REPO process-master:process-master
-  only:
-  - process-master
-  environment:
-    name: process-development
     url: https://process-dev.cyfronet.pl
-
+    
 deploy_production:
   stage: deploy
   script:
@@ -100,7 +119,7 @@ deploy_production:
   - tags
   environment:
     name: production
-    url: https://valve.cyfronet.pl
+    url: https://process.cyfronet.pl
 
 deploy_production_manual:
   stage: deploy
@@ -113,23 +132,6 @@ deploy_production_manual:
   when: manual
   only:
   - master
-  environment:
-    name: production
-    url: https://valve.cyfronet.pl
-    
-process_deploy_production_manual:
-  stage: deploy
-  script:
-  - mkdir /root/.ssh
-  - echo $PROCESS_PROD_HOST_KEY > ~/.ssh/known_hosts
-  - echo -e $PROCESS_PROD_KEY > ~/.ssh/id_rsa
-  - chmod 400 ~/.ssh/id_rsa
-  - git checkout process-master
-  - git pull
-  - git push $PROCESS_GIT_REPO process-master:process-master
-  when: manual
-  only:
-  - process-master
   environment:
     name: production
     url: https://process.cyfronet.pl

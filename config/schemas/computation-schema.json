@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+          "properties": {
+              "step_name": {
+                  "description": "Name of the step",
+                  "type": "string"
+              },
+              "parameters":{
+                  "description": "List of the parameters",
+                  "type": "object"
+              }
+          },
+          "required": ["step_name", "parameters"]
+      }
+    }
+  },
+  "required": ["steps"]
+}

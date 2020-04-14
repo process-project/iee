@@ -46,6 +46,14 @@ class User < ApplicationRecord
     User.where(condition, computation_type)
   end
 
+  def self.with_created_or_submitted_computations(computation_type)
+    condition = <<~SQL
+      id IN (SELECT DISTINCT(user_id) FROM computations
+              WHERE type = ? AND status IN ('created', 'queued', 'running'))
+    SQL
+    User.where(condition, computation_type)
+  end
+
   def self.from_plgrid_omniauth(auth)
     find_or_initialize_by(plgrid_login: auth.info.nickname).tap do |user|
       set_new_user_attrs(auth, user) if user.new_record?

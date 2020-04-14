@@ -9,7 +9,15 @@
       "line": 6,
       "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "sanitize(current_user.all_groups.map(&:name).to_s)",
-      "render_path": [{"type":"controller","class":"FileStoreController","method":"index","line":8,"file":"app/controllers/file_store_controller.rb"}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "FileStoreController",
+          "method": "index",
+          "line": 8,
+          "file": "app/controllers/file_store_controller.rb"
+        }
+      ],
       "location": {
         "type": "template",
         "template": "file_store/index"
@@ -17,8 +25,28 @@
       "user_input": "current_user.all_groups.map(&:name)",
       "confidence": "Weak",
       "note": "Content sanitized."
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "fcab83b4d6827f1cb5b86372dd1e757bef6e3e73bc68add74582bf647175348d",
+      "check_name": "MassAssignment",
+      "message": "Parameters should be whitelisted for mass assignment",
+      "file": "app/controllers/application_controller.rb",
+      "line": 35,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ApplicationController",
+        "method": "set_raven_context"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
     }
   ],
-  "updated": "2016-09-20 12:18:09 +0200",
-  "brakeman_version": "3.4.0"
+  "updated": "2020-01-27 12:03:10 +0100",
+  "brakeman_version": "4.7.2"
 }

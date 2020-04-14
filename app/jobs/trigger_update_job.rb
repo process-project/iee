@@ -7,6 +7,7 @@ class TriggerUpdateJob < ApplicationJob
     trigger_rimrock_jobs_update
     trigger_webdav_jobs_update
     trigger_singularity_jobs_update
+    trigger_rest_jobs_update
     trigger_cloudify_jobs_update
   end
 
@@ -41,6 +42,12 @@ class TriggerUpdateJob < ApplicationJob
 
     User.with_submitted_computations('SingularityComputation').each do |user|
       Rimrock::UpdateJob.perform_later(user)
+    end
+  end
+
+  def trigger_rest_jobs_update
+    User.with_created_or_submitted_computations('RestComputation').each do |user|
+      Rest::UpdateJob.perform_later(user)
     end
   end
 
