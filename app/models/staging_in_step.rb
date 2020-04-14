@@ -9,7 +9,6 @@ class StagingInStep < Step
     @tmp_output_file = tmp_output_file
   end
 
-  # rubocop:disable Metrics/MethodLength
   def builder_for(pipeline, params)
     @src_host = params[:src_host]
     @src_path = params[:src_path]
@@ -23,7 +22,6 @@ class StagingInStep < Step
                                           @dest_path,
                                           @tmp_output_file)
   end
-  # rubocop:enable Metrics/MethodLength
 
   def runner_for(computation, options = {})
     PipelineSteps::StagingIn::Runner.new(computation,
