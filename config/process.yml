@@ -14,8 +14,8 @@ defaults: &defaults
   gpu_grant_id: <%= ENV['GPU_GRANT_ID'] || 'process2gpu' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
   staging_in:
-    host: 'data01.process-project.eu'
-    port: '32021'
+    host: 'lobcder.process-project.eu'
+    port: '31138'
     path: '/api/v1/copy'
     lobcder_api_access_token: <%= ENV['LOBCDER_API_ACCESS_TOKEN'] %>
     staging_secret: <%= ENV['STAGING_SECRET'] %>
