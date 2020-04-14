@@ -7,6 +7,7 @@ module Api
     before_action :authenticate_staging!
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def notify
       computation_id = params.dig(:status, :id)
       @computation = Computation.find computation_id
@@ -22,12 +23,23 @@ module Api
         @computation.update_attributes(status: 'error')
       end
 
+      ActivityLogWriter.write_message(
+        @computation.pipeline.user,
+        @computation.pipeline,
+        @computation,
+        "computation_status_change_#{@computation.status}"
+      )
+
+      @staging_logger ||= Logger.new(Rails.root.join('log', 'debug.log'))
+      @staging_logger.debug("Webhook request params: #{params}")
+
       StagingIn::UpdateJob.perform_later(@computation)
     rescue ActiveRecord::RecordNotFound
       Rails.logger.error('Invalid id in LOBCDER API response ' \
                            "in StagingControler#notify: #{computation_id}")
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     private
 

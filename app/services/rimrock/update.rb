@@ -43,6 +43,10 @@ module Rimrock
         updated_status = new_status['status'].downcase
 
         computation.update_attributes(status: updated_status)
+        ActivityLogWriter.write_message(
+          computation.pipeline.user, computation.pipeline, computation,
+          "computation_status_change_#{updated_status}"
+        )
         on_finish_callback(computation) if computation.status == 'finished'
         update(computation) if current_status != updated_status
       else

@@ -12,7 +12,6 @@ module Projects
       'graphics' => 'graphics'
     }.freeze
 
-    # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def index
       # TODO: FIXME the following two lines are not needed when project sync problem is solved
@@ -38,7 +37,6 @@ module Projects
         end
       end
     end
-    # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
     private

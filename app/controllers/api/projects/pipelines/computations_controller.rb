@@ -33,7 +33,6 @@ module Api
           # # TODO error handling
         end
 
-        # rubocop:disable Metrics/MethodLength
         # rubocop:disable Metrics/AbcSize
         def create
           project = Project.find_by!(project_name: @project)
@@ -62,7 +61,6 @@ module Api
             render json: ['error'].to_json, status: :unauthorized
           end
         end
-        # rubocop:enable Metrics/MethodLength
         # rubocop:enable Metrics/AbcSize
 
         private

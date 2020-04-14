@@ -23,6 +23,9 @@ AllCops:
 Metrics/LineLength:
   Max: 100
 
+Metrics/MethodLength:
+  Max: 20
+
 Metrics/BlockLength:
   Exclude:
     - "**/*_spec.rb"

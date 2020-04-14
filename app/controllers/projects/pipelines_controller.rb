@@ -10,6 +10,7 @@ module Projects
     end
 
     def new
+      ActivityLogWriter.write_message(current_user, nil, nil, 'pipeline_creation_request')
       @pipeline = Pipeline.new(owners)
       authorize(@pipeline)
 
@@ -18,7 +19,7 @@ module Projects
 
     def create
       @pipeline = create_pipeline
-
+      ActivityLogWriter.write_message(current_user, @pipeline, nil, 'pipeline_created')
       if @pipeline.errors.empty?
         @project.execute_data_sync(current_user)
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?

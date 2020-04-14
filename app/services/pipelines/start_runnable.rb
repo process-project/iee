@@ -14,7 +14,12 @@ module Pipelines
     private
 
     def internal_call
-      @pipeline.computations.created.each { |c| c.run if runnable?(c) }
+      @pipeline.computations.created.each do |c|
+        if runnable?(c)
+          ActivityLogWriter.write_message(@pipeline.user, @pipeline, c, 'launching_computation')
+          c.run
+        end
+      end
     end
 
     def runnable?(computation)

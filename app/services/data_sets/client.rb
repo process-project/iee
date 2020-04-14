@@ -23,7 +23,6 @@ module DataSets
         Rails.configuration.constants['data_sets']['api_url_path']
     end
 
-    # rubocop:disable Metrics/MethodLength
     def call_data_set_service(payload)
       Faraday::Connection.new(
         url: url,
@@ -37,7 +36,6 @@ module DataSets
         request.body = payload
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     def to_csv(csv_value)
       csv = CSV.parse(csv_value)
