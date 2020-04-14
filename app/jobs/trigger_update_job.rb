@@ -14,13 +14,6 @@ class TriggerUpdateJob < ApplicationJob
   private
 
   def trigger_rimrock_jobs_update
-    User.all.each do |user|
-      user.computations.created.each do |c|
-        c.run if c.rimrock? && c.runnable?
-        ComputationUpdater.new(c).call
-      end
-    end
-
     User.with_submitted_computations('RimrockComputation').each do |user|
       Rimrock::UpdateJob.perform_later(user)
     end
@@ -33,13 +26,6 @@ class TriggerUpdateJob < ApplicationJob
   end
 
   def trigger_singularity_jobs_update
-    User.all.each do |user|
-      user.computations.created.each do |c|
-        c.run if c.singularity? && c.runnable?
-        ComputationUpdater.new(c).call
-      end
-    end
-
     User.with_submitted_computations('SingularityComputation').each do |user|
       Rimrock::UpdateJob.perform_later(user)
     end
