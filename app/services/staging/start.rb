@@ -38,27 +38,27 @@ module StagingIn
     # rubocop:enable Metrics/AbcSize
 
     def staging_in_host
-      Rails.application.config_for('process')['staging_in']['host']
+      Rails.application.config_for('process')['staging']['host']
     end
 
     def staging_in_port
-      Rails.application.config_for('process')['staging_in']['port']
+      Rails.application.config_for('process')['staging']['port']
     end
 
     def staging_in_path
-      Rails.application.config_for('process')['staging_in']['path']
+      Rails.application.config_for('process')['staging']['path']
     end
 
     def lobcder_api_access_token
-      Rails.application.config_for('process')['staging_in']['lobcder_api_access_token']
+      Rails.application.config_for('process')['staging']['lobcder_api_access_token']
     end
 
     def src_user
-      Rails.application.config_for('process')['staging_in']['src_user']
+      Rails.application.config_for('process')['staging']['src_user']
     end
 
     def dest_user
-      Rails.application.config_for('process')['staging_in']['dest_user']
+      Rails.application.config_for('process')['staging']['dest_user']
     end
 
     def request_body
@@ -88,7 +88,7 @@ module StagingIn
     end
 
     def staging_secret
-      Rails.application.config_for('process')['staging_in']['staging_secret']
+      Rails.application.config_for('process')['staging']['staging_secret']
     end
   end
 end
