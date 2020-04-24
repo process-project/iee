@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'json'
 
@@ -13,8 +15,8 @@ module Staging
         path: path
       }.to_json
 
-      @connection.post do |req| # Only a guess on how could such a request look
-        req.url attribute_fetcher('mkdir_path') # not implemented in LOBCDER yet
+      @connection.post do |req|
+        req.url attribute_fetcher('mkdir_path')
         req.headers['Content-Type'] = 'application/json'
         req.body = payload
       end
@@ -24,7 +26,7 @@ module Staging
       payload = {
         name: host_alias.to_s,
         file: path,
-        recursive: 'true'
+        recursive: true
       }.to_json
 
       @connection.post do |req|
@@ -53,14 +55,14 @@ module Staging
 
     def status(track_id)
       response = @connection.get "#{attribute_fetcher('status_path')}/#{track_id}"
-      JSON.parse(response.body, symbolize_names: true)[:status] # don't care about each file status
+      JSON.parse(response.body, symbolize_names: true)[:status]
     end
 
     def list(host_alias, path, recursive = false)
       payload = {
-        'name': host_alias.to_s,
-        'path': path,
-        'recursive': recursive
+        name: host_alias.to_s,
+        path: path,
+        recursive: recursive
       }.to_json
 
       response = @connection.post do |req|
@@ -104,22 +106,11 @@ module Staging
     # utilities
     def copy_move_utility(commands, api_path)
       # commands argument example
-      # [
-      #     {
-      #         "dst": {
-      #             "name": "krk",
-      #             "file": "/b"
-      #         },
-      #         "src": {
-      #             "name": "krk",
-      #             "file": "/a/file"
-      #         }
-      #     }
-      # ]
+      # [{:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}}]
       payload = {
-        'id': SecureRandom.hex, # what should we send?
-        'webhook': webhook_info,
-        'cmd': commands.to_json
+        id: SecureRandom.hex, # what should we send?
+        webhook: webhook_info,
+        cmd: commands
       }.to_json
 
       response = @connection.post do |req|
