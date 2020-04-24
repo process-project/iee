@@ -7,8 +7,6 @@ module Staging
       @connection = get_connection(uc_no)
     end
 
-    # TODO: Not implemented in LOBCDER, assuming that you can mkdir multiple paths
-    # Works 23.04.20
     def mkdir(host_alias, path)
       payload = {
         name: host_alias.to_s,
@@ -22,8 +20,6 @@ module Staging
       end
     end
 
-    # TODO: Not implemented in LOBCDER, assuming that you can rm multiple paths
-    # Works 23.04.20
     def rm(host_alias, path)
       payload = {
         name: host_alias.to_s,
@@ -31,20 +27,18 @@ module Staging
         recursive: 'true'
       }.to_json
 
-      @connection.post do |req| # Only a guess on how could such a request look
-        req.url attribute_fetcher('rm_path') # not implemented in LOBCDER yet
+      @connection.post do |req|
+        req.url attribute_fetcher('rm_path')
         req.headers['Content-Type'] = 'application/json'
         req.body = payload
       end
     end
 
-    # Works 23.04.20
     def folders
       folders_response = @connection.get(attribute_fetcher('folders_path'))
       JSON.parse(folders_response.body, symbolize_names: true)
     end
 
-    # Works 23.04.20
     def host_aliases
       folders.keys
     end
@@ -62,14 +56,16 @@ module Staging
       JSON.parse(response.body, symbolize_names: true)[:status] # don't care about each file status
     end
 
-    def list(host_alias, path)
+    def list(host_alias, path, recursive = false)
       payload = {
         'name': host_alias.to_s,
-        'path': path
+        'path': path,
+        'recursive': recursive
       }.to_json
 
       response = @connection.post do |req|
         req.url attribute_fetcher('list_path')
+        req.headers['Content-Type'] = 'application/json'
         req.body = payload
       end
       JSON.parse(response.body, symbolize_names: true)
@@ -107,15 +103,18 @@ module Staging
     # utilities
     def copy_move_utility(commands, api_path)
       # commands argument example
-      # [{'dst':{
-      #     'name': 'lrzcluster',
-      #     'file': '/'
-      #   },
-      #   'src': {
-      #       'name': 'krk',
-      #       'file': '10M.dat'
-      #   }
-      #  }]
+      # [
+      #     {
+      #         "dst": {
+      #             "name": "krk",
+      #             "file": "/b"
+      #         },
+      #         "src": {
+      #             "name": "krk",
+      #             "file": "/a/file"
+      #         }
+      #     }
+      # ]
       payload = {
         'id': SecureRandom.hex, # what should we send?
         'webhook': webhook_info,
@@ -123,10 +122,12 @@ module Staging
       }.to_json
 
       response = @connection.post do |req|
+        req.headers['Content-Type'] = 'application/json'
         req.url api_path
         req.body = payload
       end
-      JSON.parse(response.body)['trackId']
+
+      JSON.parse(response.body, symbolize_names: true)[:trackId]
     end
 
     def attribute_fetcher(attribute)
