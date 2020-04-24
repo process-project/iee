@@ -21,7 +21,7 @@ module Projects
       @pipeline = create_pipeline
       ActivityLogWriter.write_message(current_user, @pipeline, nil, 'pipeline_created')
       if @pipeline.errors.empty?
-        @project.execute_data_sync(current_user)
+        @project.execute_data_sync(current_user) # To remove
         ::Pipelines::StartRunnable.new(@pipeline).call if @pipeline.automatic?
         redirect_to(project_pipeline_path(@project, @pipeline))
       else

@@ -8,11 +8,12 @@ module Staging
     end
 
     # TODO: Not implemented in LOBCDER, assuming that you can mkdir multiple paths
-    def mkdir(host_alias, paths)
+    # Works 23.04.20
+    def mkdir(host_alias, path)
       payload = {
-        name: host_alias,
-        path: paths
-      }
+        name: host_alias.to_s,
+        path: path
+      }.to_json
 
       @connection.post do |req| # Only a guess on how could such a request look
         req.url attribute_fetcher('mkdir_path') # not implemented in LOBCDER yet
@@ -22,11 +23,13 @@ module Staging
     end
 
     # TODO: Not implemented in LOBCDER, assuming that you can rm multiple paths
-    def rm(host_alias, paths)
+    # Works 23.04.20
+    def rm(host_alias, path)
       payload = {
-        name: host_alias,
-        path: paths
-      }
+        name: host_alias.to_s,
+        file: path,
+        recursive: 'true'
+      }.to_json
 
       @connection.post do |req| # Only a guess on how could such a request look
         req.url attribute_fetcher('rm_path') # not implemented in LOBCDER yet
@@ -35,9 +38,15 @@ module Staging
       end
     end
 
-    def host_aliases
+    # Works 23.04.20
+    def folders
       folders_response = @connection.get(attribute_fetcher('folders_path'))
-      JSON.parse(folders_response.body, symbolize_names: true).keys
+      JSON.parse(folders_response.body, symbolize_names: true)
+    end
+
+    # Works 23.04.20
+    def host_aliases
+      folders.keys
     end
 
     def copy(commands)
@@ -110,11 +119,11 @@ module Staging
       payload = {
         'id': SecureRandom.hex, # what should we send?
         'webhook': webhook_info,
-        'cmd': commands
+        'cmd': commands.to_json
       }.to_json
 
       response = @connection.post do |req|
-        req.url attribute_fetcher(api_path)
+        req.url api_path
         req.body = payload
       end
       JSON.parse(response.body)['trackId']
