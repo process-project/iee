@@ -86,6 +86,7 @@ module Staging
 
       body = JSON.parse(infra_resp.body, symbolize_names: true)
 
+      # TODO: make sure this is the only good service
       scp_service = body[:services].select { |service| service[:type] == 'scp' }.first
       endpoint = "http://#{scp_service[:entryEndpoints].first}"
       endpoint_port = scp_service[:ports].first.to_s
