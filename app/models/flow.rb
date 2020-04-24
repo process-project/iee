@@ -16,7 +16,7 @@ class Flow
     test_flow: %w[validation_staging_in_step
                   validation_singularity_step
                   validation_stage_out_step],
-    nowy_pajplajn: ['implicit_directory_structure_step',
+    nowy_pipeline: ['implicit_directory_structure_step',
                     'explicit_staging_step',
                     'singularity_test_step_1',
                     'implicitstaging_step',

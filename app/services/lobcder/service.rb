@@ -3,9 +3,9 @@
 require 'faraday'
 require 'json'
 
-module Staging
+module Lobcder
   class Service
-    def initialize(uc_no)
+    def initialize(uc_no = 1)
       @connection = get_connection(uc_no)
     end
 

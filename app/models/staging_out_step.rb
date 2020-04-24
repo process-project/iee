@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StagingInStep < Step
+class StagingOutStep < Step
   attr_reader :parameters
 
   def initialize(name)
@@ -8,19 +8,19 @@ class StagingInStep < Step
     host_list = Lobcder::Service.new.host_aliases.map(&:to_s)
     @parameters = [
       StepParameter.new(
-        label: 'src_host',
-        name: 'Source Host',
+        label: 'dest_host',
+        name: 'Destination Host',
         description: 'Descriptions placeholder',
-        rank: 0,
+        rank: 2,
         datatype: 'multi',
         default: host_list[0],
         values: host_list
       ),
       StepParameter.new(
-        label: 'src_path',
-        name: 'Source Path',
+        label: 'dest_path',
+        name: 'Destination Path',
         description: 'Descriptions placeholder',
-        rank: 1,
+        rank: 3,
         datatype: 'string',
         default: ''
       )
@@ -28,12 +28,12 @@ class StagingInStep < Step
   end
 
   def builder_for(pipeline, params)
-    @src_host = params[:src_host]
-    @src_path = params[:src_path]
+    @dest_host = params[:dest_host]
+    @dest_path = params[:dest_path]
     PipelineSteps::Lobcder::Builder.new(pipeline,
                                         name,
-                                        src_host = @src_host,
-                                        src_path = @src_path)
+                                        dest_host = @dest_host,
+                                        dest_path = @dest_path)
   end
 
   def runner_for(computation, options = {})
