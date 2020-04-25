@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+
+# TODO: DELETE THIS CLASS -> DO POWERFUL MIGRATION
 class StagingInComputation < Computation
   # validates :script, absence: true
   # validates :output_path, presence: true

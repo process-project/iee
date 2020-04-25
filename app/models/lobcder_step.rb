@@ -13,4 +13,9 @@ class LobcderStep < Step
   def runner_for(computation, options = {})
     PipelineSteps::Lobcder::Runner.new(computation, options)
   end
+
+  # TODO: check
+  def input_present_for?
+    true
+  end
 end

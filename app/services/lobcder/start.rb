@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: DELETE AFTER TAKING INSPIRATION
+
 module StagingIn
   require 'net/http'
   require 'json'

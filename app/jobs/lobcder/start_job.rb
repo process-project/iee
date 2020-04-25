@@ -6,13 +6,13 @@ module Lobcder
 
     def perform(computation)
       if computation.step.class.name == 'DirectoryBuilderStep'
-        Lobcder::StartDirectoryBuilder.new(computation).call
+        Lobcder::DirectoryBuilderStart.new(computation).call
       elsif computation.step.class.name == 'StagingInStep'
-        Lobcder::StartStaginIn.new(computation).call
+        Lobcder::StagingInStart.new(computation).call
       elsif computation.step.class.name == 'StagingOutStep'
-        Lobcder::StartStagingOutStep.new(computation).call
+        Lobcder::StagingOutStart.new(computation).call
       elsif computation.step.class.name == 'ImplicitStagingStep'
-        Lobcder::StartImplicitStagingStep.new(computation).call
+        Lobcder::ImplicitStagingStepStart.new(computation).call
       end
     rescue StandardError => e
       Rails.logger.error(e)
