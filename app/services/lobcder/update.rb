@@ -24,7 +24,7 @@ module Lobcder
 
 
       # Old - bad(tzn by marek xd)implementation
-      return if @computation.nil? # TODO: Why would a computation by nil?
+      return if @computation.nil? # TODO: Why would a computation be nil?
       @on_finish_callback&.new(@computation)&.call # TODO: What does callback and updater do?
       @updater&.new(@computation)&.call
     end

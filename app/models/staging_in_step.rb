@@ -5,11 +5,12 @@ class StagingInStep < Step
 
   def initialize(name)
     super(name)
-    host_list = Lobcder::Service.new.host_aliases.map(&:to_s)
+    # TODO: consistent compute site naming convention
+    host_list = Lobcder::Service.new.sites.map(&:to_s)
     @parameters = [
       StepParameter.new(
         label: 'src_host',
-        name: 'Source Host',
+        name: 'Source Compute Site',
         description: 'Descriptions placeholder',
         rank: 0,
         datatype: 'multi',

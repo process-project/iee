@@ -3,15 +3,16 @@
 require 'faraday'
 require 'json'
 
+# TODO: throw exceptions
 module Lobcder
   class Service
     def initialize(uc_no = 1)
       @connection = get_connection(uc_no)
     end
 
-    def mkdir(host_alias, path)
+    def mkdir(site, path)
       payload = {
-        name: host_alias.to_s,
+        name: site.to_s,
         path: path
       }.to_json
 
@@ -22,9 +23,9 @@ module Lobcder
       end
     end
 
-    def rm(host_alias, path)
+    def rm(site, path)
       payload = {
-        name: host_alias.to_s,
+        name: site.to_s,
         file: path,
         recursive: true
       }.to_json
@@ -41,7 +42,12 @@ module Lobcder
       JSON.parse(folders_response.body, symbolize_names: true)
     end
 
-    def host_aliases
+    # TODO: consistent compute site naming conventions
+    def site_root(site)
+      folders[site][:path]
+    end
+
+    def sites
       folders.keys
     end
 
@@ -58,9 +64,9 @@ module Lobcder
       JSON.parse(response.body, symbolize_names: true)[:status]
     end
 
-    def list(host_alias, path, recursive = false)
+    def list(site, path, recursive = false)
       payload = {
-        name: host_alias.to_s,
+        name: site.to_s,
         path: path,
         recursive: recursive
       }.to_json
