@@ -114,6 +114,10 @@ class Computation < ApplicationRecord
     pipeline.steps.find { |step| step.name == pipeline_step }
   end
 
+  def need_directory_structure?
+    False
+  end
+
   private
 
   def runner
