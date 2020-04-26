@@ -118,6 +118,16 @@ class Computation < ApplicationRecord
     False
   end
 
+  def prev
+    raise NotImplementedError
+    Flow.FLOWS[self.pipeline.flow] # TODO: finish it
+  end
+
+  def next
+    raise NotImplementedError
+    # TODO: finish it
+  end
+
   private
 
   def runner

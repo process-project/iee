@@ -81,7 +81,7 @@ module Lobcder
 
     private
 
-    def get_connection(uc_no)
+    def get_connection(uc_no) # TODO: uc_no should be symbol
       infra_host = attribute_fetcher('infra_host')
       infra_port = attribute_fetcher('infra_port')
       infra_path = attribute_fetcher('infra_path')

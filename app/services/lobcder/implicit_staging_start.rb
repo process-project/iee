@@ -1,13 +1,14 @@
 module Lobcder
   class ImplicitStagingStart < StartBase
+    # TODO: rm 'in'
     def initialize(computation)
       super(computation)
     end
 
     def call
       # TODO: consistent compute site naming convention
-      prev_compute_site = @computation.prev_computation.hpc # TODO: imeplemet next, prev computation
-      next_compute_site = @computation.next_computation.hpc # TODO: assuming next/prev steps are SINGULARITY STEPS
+      prev_compute_site = @computation.prev.hpc # TODO: imeplemet next, prev computation
+      next_compute_site = @computation.next.hpc # TODO: assuming next/prev steps are SINGULARITY STEPS
 
       cmds = create_commands(service, prev_compute_site, next_compute_site)
 

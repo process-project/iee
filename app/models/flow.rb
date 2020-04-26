@@ -212,5 +212,9 @@ class Flow
            [pipeline, pipeline_to_hash(pipeline)]
          end].deep_stringify_keys
   end
+
+  def self.uc_for(flow)
+    USECASE_FLOWS[flow]
+  end
 end
 # rubocop:enable ClassLength

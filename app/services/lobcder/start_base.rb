@@ -7,7 +7,6 @@ module Lobcder
     end
   end
 
-
   protected
 
   def move(cmds)
@@ -22,5 +21,9 @@ module Lobcder
         update_status("error")
       ensure
       end
+  end
+
+  def uc_for(computation)
+    Flow.uc_for(computation.pipeline.flow).to_s.last # TODO: get uc number for uc symbol
   end
 end
