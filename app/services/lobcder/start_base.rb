@@ -4,7 +4,7 @@ module Lobcder
   class StartBase
     def initialize(computation)
       @computation = computation
-      @service = Service.new(uc_for(computation))
+      @service = Service.new(computation.uc)
       @pipeline_name = computation.pipeline.name
     end
 
@@ -45,12 +45,12 @@ module Lobcder
 
     def output_files(site_name)
       out_dir = pipeline_dirs[:out]
-      @service.list(site_name, out_dir)
+      @service.list(site_name, out_dir) - [pipeline_dirs[:out]]
     end
 
     def input_files(site_name)
       in_dir = pipeline_dirs[:in]
-      @service.list(site_name, in_dir)
+      @service.list(site_name, in_dir) - [pipeline_dirs[:in]]
     end
 
     def pipeline_dirs
@@ -66,12 +66,6 @@ module Lobcder
         pipelines_root: File.join('/', 'pipelines'),
         containers: File.join('/', 'containers')
       }
-    end
-
-    private
-
-    def uc_for(computation)
-      Flow.uc_for(computation.pipeline.flow.to_sym)
     end
   end
 

@@ -6,7 +6,7 @@ module Lobcder
       @computation = computation
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
-      @service = Service(uc_for(computation))
+      @service = Service(computation.uc)
     end
 
     def call
@@ -23,12 +23,6 @@ module Lobcder
       # return if @computation.nil? # TODO: Why would a computation be nil?
       @on_finish_callback&.new(@computation)&.call # TODO: What does callback and updater do?
       @updater&.new(@computation)&.call
-    end
-
-    private
-
-    def uc_for(computation)
-      Flow.uc_for(computation.pipeline.flow.to_sym)
     end
   end
 end
