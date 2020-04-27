@@ -4,24 +4,27 @@ module Lobcder
   class StagingInStart < StartBase
     def initialize(computation)
       super(computation)
+      @src_site_name = computation.compute_site.name.to_sym
+      @next_site_name = computation.next.site.name.to_sym
+
+      @src_path = computation.src_path
     end
 
     def call
-      @src_compute_site = @computation.src_host # TODO: consistent naming convention
-      @next_compute_site = @computation.next.hpc # TODO: assuming next step is a singularity step
-
-      @src_path = @computation.src_path # TODO: assuming src_path is a folder or file?
-
-      move(mv_output_cmds)
+      move_files
     end
 
     private
 
-    def mv_output_cmds
+    def move_files
+      move(cmds)
+    end
+
+    def cmds
       [
         {
-          dst: { name: @next_compute_site, file: "/pipelines/#{@pipeline_hash}/in" },
-          src: { name: @src_compute_site, file: @src_path }
+          dst: { name: @next_site_name.to_s, file: pipeline_dirs[:in] },
+          src: { name: @src_site_name.to_s, file: @src_path }
         }
       ]
     end

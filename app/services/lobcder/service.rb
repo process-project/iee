@@ -10,10 +10,22 @@ module Lobcder
       @connection = get_connection(uc)
     end
 
-    def mkdir(site, path)
+    def mkdir(commands)
+      # [
+      #     {name: 'krk', path: '/asd'},
+      #     {name: 'lrz', path: '/qwe'}
+      # ]
+
+      # TODO: Use mkdir_batch when it is implemented, for now it uses a for loop with mkdir_single
+      commands.each do |cmd|
+        mkdir_single(cmd[:name], cmd[:path], cmd[:recursive])
+      end
+    end
+
+    # TODO: Wait for Reggie to implement it
+    def mkdir_batch(commands)
       payload = {
-        name: site.to_s,
-        path: path
+        cmd: commands
       }.to_json
 
       @connection.post do |req|
@@ -23,12 +35,49 @@ module Lobcder
       end
     end
 
-    # TODO: Change so that it takes in cmds to remove(when Reggie implements it), not just one path
-    def rm(site, path)
+    def mkdir_single(site_name, path, recursive)
       payload = {
-        name: site.to_s,
+        name: site_name.to_s,
+        path: path,
+        recursive: recursive
+      }.to_json
+
+      @connection.post do |req|
+        req.url attribute_fetcher('mkdir_path')
+        req.headers['Content-Type'] = 'application/json'
+        req.body = payload
+      end
+    end
+
+    def rm(commands)
+      # [
+      #     {name: 'krk', path: '/asd/asd.txt'},
+      #     {name: 'lrz', path: '/qwe', recursive: true}
+      # ]
+      # TODO: Use mkdir_batch when it is implemented, for now it uses a for loop with mkdir_single
+      commands.each do |cmd|
+        rm_single(cmd[:name], cmd[:path], cmd[:recursive])
+      end
+    end
+
+    # TODO: Wait for Reggie to implement it
+    def rm_batch(commands)
+      payload = {
+        cmd: commands
+      }.to_json
+
+      @connection.post do |req|
+        req.url attribute_fetcher('rm_path')
+        req.headers['Content-Type'] = 'application/json'
+        req.body = payload
+      end
+    end
+
+    def rm_single(site_name, path, recursive)
+      payload = {
+        name: site_name.to_s,
         file: path,
-        recursive: true
+        recursive: recursive
       }.to_json
 
       @connection.post do |req|
@@ -43,20 +92,27 @@ module Lobcder
       JSON.parse(folders_response.body, symbolize_names: true)
     end
 
-    # TODO: consistent compute site naming conventions
-    def site_root(site)
-      folders[site][:path]
+    def site_root(site_name)
+      folders[site_name][:path]
     end
 
-    def sites
+    def site_names
       folders.keys
     end
 
     def copy(commands)
+      # [
+      #     {:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}},
+      #     {:dst=>{:name=>"lrz", :file=>"/copy_test2"}, :src=>{:name=>"krk", :file=>"/copy_test3/lrz_test.txt"}}
+      # ]
       copy_move_utility(commands, attribute_fetcher('copy_path'))
     end
 
     def move(commands)
+      # [
+      #     {:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}},
+      #     {:dst=>{:name=>"lrz", :file=>"/copy_test2"}, :src=>{:name=>"krk", :file=>"/copy_test3/lrz_test.txt"}}
+      # ]
       copy_move_utility(commands, attribute_fetcher('move_path'))
     end
 
@@ -65,9 +121,9 @@ module Lobcder
       JSON.parse(response.body, symbolize_names: true)[:status]
     end
 
-    def list(site, path, recursive = false)
+    def list(site_name, path, recursive = false)
       payload = {
-        name: site.to_s,
+        name: site_name.to_s,
         path: path,
         recursive: recursive
       }.to_json
@@ -112,8 +168,6 @@ module Lobcder
 
     # utilities
     def copy_move_utility(commands, api_path)
-      # commands argument example
-      # [{:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}}]
       payload = {
         id: SecureRandom.hex, # what should we send?
         webhook: webhook_info,
