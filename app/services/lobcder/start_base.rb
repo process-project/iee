@@ -5,11 +5,10 @@ module Lobcder
       @uc_no = computation.uc_no #TODO: imeplement uc_no
       @pipeline_hash = computation.pipeline.hash # TODO: id maybe? or implement hash
     end
-  end
 
-  protected
+    protected
 
-  def move(cmds)
+    def move(cmds)
       service = Lobcder::Service.new(@uc_no)
 
       begin
@@ -21,9 +20,13 @@ module Lobcder
         update_status("error")
       ensure
       end
+    end
+
+    def uc_for(computation)
+      Flow.uc_for(computation.pipeline.flow).to_s.last # TODO: get uc number for uc symbol
+    end
   end
 
-  def uc_for(computation)
-    Flow.uc_for(computation.pipeline.flow).to_s.last # TODO: get uc number for uc symbol
+  class Exception < RuntimeError
   end
 end
