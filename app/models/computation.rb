@@ -4,6 +4,10 @@ class Computation < ApplicationRecord
   belongs_to :user
   belongs_to :pipeline
 
+  belongs_to :compute_site, optional: true
+  belongs_to :src_compute_site, class_name: 'ComputeSite', optional: true
+  belongs_to :dest_compute_site, class_name: 'ComputeSite', optional: true
+
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
 

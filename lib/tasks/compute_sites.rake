@@ -4,8 +4,9 @@ namespace :compute_sites do
   desc 'Seed known compute sites'
 
   task seed: :environment do
-    ComputeSite.create!(name: 'LRZ')
-    ComputeSite.create!(name: 'Amsterdam')
-    ComputeSite.create!(name: 'Cyfronet')
+    Lobcder::Service.new(:uc1).folders.each do |name, values|
+      # TODO: do something with placeholder_full_name
+      ComputeSite.create!(name: name, full_name: 'placeholder_full_name', host: values[:host])
+    end
   end
 end

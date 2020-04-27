@@ -174,7 +174,7 @@ namespace :blueprints do
       <%%= stage_out '/net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar' %%>
     CODE
 
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif',
                                               container_tag: 'latest',
                                               hpc: 'Prometheus',
                                               script_blueprint: script)
