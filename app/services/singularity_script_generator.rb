@@ -22,7 +22,7 @@ class SingularityScriptGenerator
     fill_values = {}
     fill_values[:container_name] = @computation.container_name
     fill_values[:container_tag] = @computation.container_tag
-    fill_values[:hpc] = @computation.hpc
+    fill_values[:compute_site_name] = @computation.compute_site.name
 
     temp = @computation.parameter_values&.symbolize_keys
     fill_values = fill_values.merge(temp) unless temp.nil?
@@ -34,7 +34,7 @@ class SingularityScriptGenerator
     SingularityScriptBlueprint.find_by!(
       container_name: @computation.container_name,
       container_tag: @computation.container_tag,
-      hpc: @computation.hpc
+      compute_site: @computation.compute_site
     )
   end
 end

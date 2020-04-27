@@ -17,8 +17,8 @@ module PipelineSteps
           pipeline_step: @name,
           container_name: @parameter_values[:container_name],
           container_tag: @parameter_values[:container_tag],
-          hpc: @parameter_values[:hpc],
-          parameter_values: @parameter_values.except(:container_name, :container_tag, :hpc)
+          compute_site: ComputeSite.where(full_name: @parameter_values[:compute_site_name]).first,
+          parameter_values: @parameter_values.except(:container_name, :container_tag, :compute_site_name)
         )
       end
 
@@ -31,7 +31,7 @@ module PipelineSteps
       end
 
       def parameter_attributes(parameters)
-        attributes = [:container_name, :container_tag, :hpc]
+        attributes = [:container_name, :container_tag, :compute_site_name]
 
         parameters.each do |parameter|
           attributes.push parameter.label.to_sym

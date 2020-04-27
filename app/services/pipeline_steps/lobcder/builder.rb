@@ -3,23 +3,24 @@
 module PipelineSteps
   module Lobcder
     class Builder
-      def initialize(pipeline, name, src_host = nil, src_path = nil, dest_host = nil, dest_path = nil)
+      def initialize(pipeline, name, src_compute_site_name = nil, src_path = nil, dest_compute_site_name = nil,
+                     dest_path = nil)
         @pipeline = pipeline
         @name = name
-        @src_host = src_host
+        @src_compute_site = ComputeSite.where(full_name: src_compute_site_name).first
         @src_path = src_path
-        @dest_host = dest_host
+        @dest_compute_site = ComputeSite.where(full_name: dest_compute_site_name).first
         @dest_path = dest_path
       end
 
       def call
         LobcderComputation.create!(pipeline: @pipeline,
-                                     user: @pipeline.user,
-                                     pipeline_step: @name,
-                                     src_host: @src_host,
-                                     input_path: @src_path,
-                                     dest_host: @dest_host,
-                                     output_path: @dest_path)
+                                   user: @pipeline.user,
+                                   pipeline_step: @name,
+                                   src_compute_site: @src_compute_site,
+                                   input_path: @src_path,
+                                   dest_compute_site: @dest_compute_site,
+                                   output_path: @dest_path)
       end
     end
   end

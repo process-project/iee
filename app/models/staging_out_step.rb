@@ -5,17 +5,16 @@ class StagingOutStep < Step
 
   def initialize(name)
     super(name)
-    # TODO: Use Compute Sites Table here
-    host_list = Lobcder::Service.new.host_aliases.map(&:to_s)
+    compute_site_names = ComputeSite.all.map(&:full_name)
     @parameters = [
       StepParameter.new(
-        label: 'dest_host',
-        name: 'Destination Host',
+        label: 'dest_compute_site_name',
+        name: 'Destination Compute Site Name',
         description: 'Descriptions placeholder',
         rank: 2,
         datatype: 'multi',
-        default: host_list[0],
-        values: host_list
+        default: compute_site_names[0],
+        values: compute_site_names
       ),
       StepParameter.new(
         label: 'dest_path',
@@ -29,12 +28,13 @@ class StagingOutStep < Step
   end
 
   def builder_for(pipeline, params)
-    @dest_host = params[:dest_host]
+    @dest_compute_site_name = params[:dest_compute_site_name]
     @dest_path = params[:dest_path]
     PipelineSteps::Lobcder::Builder.new(pipeline,
                                         name,
-                                        dest_host = @dest_host,
-                                        dest_path = @dest_path)
+                                        # TODO: check named args passing
+                                        dest_compute_site_name = params[:dest_compute_site_name],
+                                        dest_path = params[:dest_path])
   end
 
   def runner_for(computation, options = {})

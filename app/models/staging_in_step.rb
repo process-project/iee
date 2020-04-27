@@ -5,18 +5,16 @@ class StagingInStep < Step
 
   def initialize(name)
     super(name)
-    # TODO: consistent compute site naming convention
-    # TODO: Add ComputeSite table here
-    host_list = Lobcder::Service.new.sites.map(&:to_s)
+    compute_site_names = ComputeSite.all.map(&:full_name)
     @parameters = [
       StepParameter.new(
-        label: 'src_host',
-        name: 'Source Compute Site',
+        label: 'src_compute_site_name',
+        name: 'Source Compute Site Name',
         description: 'Descriptions placeholder',
         rank: 0,
         datatype: 'multi',
-        default: host_list[0],
-        values: host_list
+        default: compute_site_names[0],
+        values: compute_site_names
       ),
       StepParameter.new(
         label: 'src_path',
@@ -30,12 +28,11 @@ class StagingInStep < Step
   end
 
   def builder_for(pipeline, params)
-    @src_host = params[:src_host]
-    @src_path = params[:src_path]
     PipelineSteps::Lobcder::Builder.new(pipeline,
                                         name,
-                                        src_host = @src_host, # TODO: check named args passing
-                                        src_path = @src_path)
+                                        # TODO: check named args passing
+                                        src_compute_site_name = params[:src_compute_site_name],
+                                        src_path = params[:src_path])
   end
 
   def runner_for(computation, options = {})

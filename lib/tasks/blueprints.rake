@@ -3,7 +3,7 @@
 namespace :blueprints do
   desc 'Seed singularity script blueprints for known pipelines'
   task seed: :environment do
-    # Test container for the Prometheus HPC
+    # Test container for the Prometheus Compute Site
     script = <<~CODE
       #!/bin/bash -l
       #SBATCH -N %<nodes>s
@@ -30,7 +30,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -70,10 +70,10 @@ namespace :blueprints do
       )
     ]
 
-    # Test container for the SuperMUC HPC
+    # Test container for the SuperMUC Compute Site
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              hpc: 'SuperMUC',
+                                              compute_site: ComputeSite.where(name: :lrz.to_s).first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -110,7 +110,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                               container_tag: '0.1',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -176,7 +176,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif',
                                               container_tag: 'latest',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
                                               script_blueprint: script)
     ssbp.step_parameters = [
       StepParameter.new(
@@ -289,7 +289,7 @@ namespace :blueprints do
     ssbp = SingularityScriptBlueprint.create!(
       container_name: 'agrocopernicus_placeholder_container',
       container_tag: 'agrocopernicus_placeholder_tag',
-      hpc: 'Prometheus',
+      compute_site: ComputeSite.where(name: :krk.to_s).first,
       script_blueprint: script
     )
 
@@ -356,7 +356,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'validation_container',
                                               container_tag: 'latest',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [

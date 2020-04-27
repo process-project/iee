@@ -13,7 +13,7 @@ describe SingularityScriptGenerator do
            pipeline_step: 'singularity_placeholder_step',
            container_name: 'test_name',
            container_tag: 'test_tag',
-           hpc: 'test_hpc',
+           compute_site: computation.compute_site,
            parameter_values: { label1: 'w1', label2: 'w2', label3: 'w3' })
   end
 
@@ -23,7 +23,7 @@ describe SingularityScriptGenerator do
            pipeline_step: 'singularity_placeholder_step',
            container_name: 'test_name',
            container_tag: 'test_tag',
-           hpc: 'test_hpc',
+           compute_site: ComputeSite.where(name: :krk).first,
            parameter_values: { label1: 'w1', label2: 'w2' })
   end
 
@@ -31,7 +31,7 @@ describe SingularityScriptGenerator do
     create(:singularity_script_blueprint,
            container_name: computation.container_name,
            container_tag: computation.container_tag,
-           hpc: computation.hpc)
+           compute_site: computation.compute_site)
   end
 
   context 'given proper parameter_values' do
