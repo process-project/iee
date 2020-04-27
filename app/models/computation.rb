@@ -132,6 +132,10 @@ class Computation < ApplicationRecord
     # TODO: finish it
   end
 
+  def uc
+    Flow.uc_for(pipeline.flow.to_sym)
+  end
+
   private
 
   def runner

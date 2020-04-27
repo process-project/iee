@@ -22,7 +22,9 @@ class SingularityScriptGenerator
     fill_values = {}
     fill_values[:container_name] = @computation.container_name
     fill_values[:container_tag] = @computation.container_tag
-    fill_values[:compute_site_name] = @computation.compute_site.name
+    compute_site_name = @computation.compute_site.name
+    fill_values[:compute_site_name] = compute_site_name
+    fill_values[:uc_root] = Lobcder::Service.new(computation.uc).site_root(compute_site_name.to_sym)
 
     temp = @computation.parameter_values&.symbolize_keys
     fill_values = fill_values.merge(temp) unless temp.nil?

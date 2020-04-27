@@ -16,16 +16,11 @@ class Flow
     test_flow: %w[validation_staging_in_step
                   validation_singularity_step
                   validation_stage_out_step],
-    nowy_pipeline: %w[implicit_directory_structure_step
-                      explicit_staging_step
-                      singularity_test_step_1
-                      implicitstaging_step
-                      singularity_test_step_2
-                      explicit_staging_step]
+    test_pipeline: %w[directory_builder_step
+                      staging_in_step
+                      testing_singularity_step
+                      staging_out_step]
   }.freeze
-
-  # STEPS = [ExplicitStagingStep.new('explicit_staging_step_test'), parameters=[...],
-  #          ImplicitStagingStep.new('implicit_staging_step')]
 
   USECASE_FLOWS = {
     medical_pipeline: :uc1,
@@ -35,6 +30,12 @@ class Flow
   }.freeze
 
   STEPS = [
+    DirectoryBuilderStep.new('directory_builder_step'),
+    SingularityStep.new('testing_singularity_step'),
+    StagingInStep.new('staging_in_step'),
+    ImplicitStagingStep.new('implicit_staging_step'),
+    StagingOutStep.new('staging_out_step'),
+    # Only above is important
     SingularityStep.new('validation_singularity_step',
                         ['staging_done.txt']),
     RimrockStep.new('validation_stage_out_step',

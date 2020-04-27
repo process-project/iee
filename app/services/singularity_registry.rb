@@ -4,7 +4,8 @@ class SingularityRegistry
   STEPS = {
     singularity_placeholder_step: %w[vsoch/hello-world],
     medical_step: %w[maragraziani/ucdemo],
-    lofar_step: %w[lofar/lofar_container],
+    lofar_step: %w[factor-iee.sif],
+    testing_singularity_step: %w[testing_container.sif],
     agrocopernicus_step: %w[agrocopernicus_placeholder_container],
     validation_singularity_step: %w[validation_container]
   }.freeze
@@ -12,7 +13,8 @@ class SingularityRegistry
   CONTAINERS = {
     'vsoch/hello-world' => %w[latest],
     'maragraziani/ucdemo' => %w[0.1],
-    'lofar/lofar_container' => %w[latest],
+    'factor-iee.sif' => %w[latest],
+    'testing_singularity_step' => %w[whatever_tag_and_it_is_to_remove],
     'agrocopernicus_placeholder_container' => %w[agrocopernicus_placeholder_tag],
     'validation_container' => %w[latest]
   }.freeze

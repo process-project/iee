@@ -3,6 +3,71 @@
 namespace :blueprints do
   desc 'Seed singularity script blueprints for known pipelines'
   task seed: :environment do
+    # Testing container for the new architecture (LOBCDER staging steps compatible)
+    script = <<~CODE
+      #!/bin/bash -l
+      #SBATCH -N %<nodes>s
+      #SBATCH --ntasks-per-node=%<cpus>s
+      #SBATCH --time=00:05:00
+      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
+      #SBATCH -p %<partition>s
+      #SBATCH --job-name testing_container_step
+      #SBATCH --output %<uc_root>s/slurm_outputs/slurm-%%j.out
+      #SBATCH --error %<uc_root>s/slurm_outputs/slurm-%%j.err
+
+      # Running container using singularity
+      module load plgrid/tools/singularity/stable
+
+      singularity run \
+      -B %<uc_root>s/pipelines/pipeline_hash_1/in:/mnt/in \
+      -B %<uc_root>s/pipelines/pipeline_hash_1/workdir:/mnt/workdir \
+      -B %<uc_root>s/pipelines/pipeline_hash_1/out:/mnt/out \
+      %<uc_root>s/containers/testing_container.sif operation=%<operation>s
+    CODE
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container.sif',
+                                              container_tag: 'whatever_tag_and_it_is_to_remove',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = [
+      StepParameter.new(
+        label: 'nodes',
+        name: 'Nodes',
+        description: 'Number of execution nodes',
+        rank: 0,
+        datatype: 'integer',
+        default: 1
+      ),
+      StepParameter.new(
+        label: 'cpus',
+        name: 'CPUs',
+        description: 'Number of CPU per execution node',
+        rank: 0,
+        datatype: 'multi',
+        default: '1',
+        values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+      ),
+      StepParameter.new(
+        label: 'partition',
+        name: 'Partition',
+        description: 'Prometheus execution partition',
+        rank: 0,
+        datatype: 'multi',
+        default: 'plgrid-testing',
+        values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+      ),
+      StepParameter.new(
+        label: 'operation',
+        name: 'Operation',
+        description: 'Operation to perform',
+        rank: 0,
+        datatype: 'multi',
+        default: 'add',
+        values: %w[add subtract multiply divide]
+      )
+    ]
+
     # Test container for the Prometheus Compute Site
     script = <<~CODE
       #!/bin/bash -l
