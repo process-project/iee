@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StagingInStep < Step
+class StagingInStep < LobcderStep
   attr_reader :parameters
 
   def initialize(name)
@@ -31,8 +31,8 @@ class StagingInStep < Step
     PipelineSteps::Lobcder::Builder.new(pipeline,
                                         name,
                                         # TODO: check named args passing
-                                        src_compute_site_name = params[:src_compute_site_name],
-                                        src_path = params[:src_path])
+                                        src_compute_site_name: params[:src_compute_site_name],
+                                        src_path: params[:src_path])
   end
 
   def runner_for(computation, options = {})

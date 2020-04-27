@@ -4,8 +4,8 @@ module Lobcder
   class StagingInStart < StartBase
     def initialize(computation)
       super(computation)
-      @src_site_name = computation.compute_site.name.to_sym
-      @next_site_name = computation.next.site.name.to_sym
+      @src_site_name = computation.src_compute_site.name.to_sym
+      @next_site_name = computation.next.compute_site.name.to_sym
 
       @src_path = computation.src_path
     end

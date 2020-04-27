@@ -4,10 +4,10 @@ module Lobcder
   class StagingOutStart < StartBase
     def initialize(computation)
       super(computation)
-      @dst_site_name = computation.compute_site.name.to_sym
+      @dest_site_name = computation.dest_compute_site.name.to_sym
       @prev_site_name = computation.prev.compute_site.name.to_sym
 
-      @dst_path = computation.compute_site.name
+      @dest_path = computation.compute_site.name
     end
 
     def call
@@ -25,7 +25,7 @@ module Lobcder
 
       output_files(@prev_site_name).each do |file|
         cmd = {
-          dst: { name: @dst_site_name.to_s, file: @dst_path },
+          dst: { name: @dest_site_name.to_s, file: @dest_path },
           src: { name: @prev_site_name.to_s, file: File.join(pipeline_dirs[:out], file) }
         }
         cmds.append(cmd)

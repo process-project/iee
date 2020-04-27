@@ -3,8 +3,12 @@
 module PipelineSteps
   module Lobcder
     class Builder
-      def initialize(pipeline, name, src_compute_site_name = nil, src_path = nil, dest_compute_site_name = nil,
-                     dest_path = nil)
+      def initialize(pipeline,
+                     name,
+                     src_compute_site_name: nil,
+                     src_path: nil,
+                     dest_compute_site_name: nil,
+                     dest_path: nil)
         @pipeline = pipeline
         @name = name
         @src_compute_site = ComputeSite.where(full_name: src_compute_site_name).first

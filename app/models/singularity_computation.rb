@@ -7,6 +7,10 @@ class SingularityComputation < Computation
   validates :compute_site, presence: true
 
   def need_directory_structure?
-    True
+    true
+  end
+
+  def runnable?
+    computation.prev.success? # TODO: implement prev and next
   end
 end
