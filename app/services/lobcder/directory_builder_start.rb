@@ -16,16 +16,6 @@ module Lobcder
       mkdir(dir_cmds)
     end
 
-    def pipeline_site_names
-      site_names = Set.new
-
-      @computation.pipeline.computations.each do |c|
-        site_names.add(c.compute_site.name.to_sym) if c.need_directory_structure?
-      end
-
-      site_names
-    end
-
     def dir_cmds
       cmds = []
 
@@ -39,12 +29,23 @@ module Lobcder
       cmds
     end
 
+    def pipeline_site_names
+      site_names = Set.new
+
+      @computation.pipeline.computations.each do |c|
+        site_names.add(c.compute_site.name.to_sym) if c.need_directory_structure?
+      end
+
+      site_names
+    end
+
     def check_containers
       @computation.pipeline.computations.each do |c|
         next if container_exist? c.compute_site.name.to_sym, c.container_name
         raise Lobcder::Exception, "There doesn't exist container for #{c.id} computation " \
-                                  "of #{c.pipeline_step} (#{c.step.class}) " \
-                                  "on #{c.compute_site.name.to_sym} compute site"
+                                  "of #{c.pipeline_step} (#{c.step.class.name}) " \
+                                  "on #{c.compute_site.name.to_sym} (#{c.compute_site.full_name}) "\
+                                  "compute site"
       end
 
       true
