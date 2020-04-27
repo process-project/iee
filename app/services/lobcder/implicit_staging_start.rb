@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Lobcder
   class ImplicitStagingStart < StartBase
     # TODO: rm 'in'
@@ -7,31 +9,51 @@ module Lobcder
 
     def call
       # TODO: consistent compute site naming convention
-      prev_compute_site = @computation.prev.hpc # TODO: imeplemet next, prev computation
-      next_compute_site = @computation.next.hpc # TODO: assuming next/prev steps are SINGULARITY STEPS
+      @prev_compute_site = @computation.prev.hpc # TODO: implement next, prev computation
+      @next_compute_site = @computation.next.hpc # TODO: assuming next/prev steps are SINGULARITY STEPS
 
-      cmds = create_commands(service, prev_compute_site, next_compute_site)
-
-      move(cmds)
+      rm(rm_prev_input_cmds)
+      move(mv_output_cmds)
     end
 
     private
 
-    def create_commands(service, prev_compute_site, next_compute_site)
-      files = service.list(prev_compute_site, "/pipelines/#{@pipeline_hash}/out")
+    def mv_output_cmds
       # TODO: moving folders works?
       cmds = []
 
-      files.each do |file|
+      output_files(@prev_compute_site).each do |file|
         cmd = {
-          dst: { name: next_compute_site, file: "/pipelines/#{@pipeline_hash}/in" },
-          src: { name: prev_compute_site, file: "/pipelines/#{@pipeline_hash}/out/#{file}" }
+          dst: { name: @next_compute_site, file: "/pipelines/#{@pipeline_hash}/in" },
+          src: { name: @prev_compute_site, file: "/pipelines/#{@pipeline_hash}/out/#{file}" }
         }
 
         cmds.append(cmd)
       end
 
       cmds
+    end
+
+    def rm_prev_input_cmds
+      cmds = []
+
+      input_files(@prev_compute_site).each do |file|
+        cmd = {
+          name: @prev_compute_site, file: "/pipelines/#{@pipeline_hash}/in/#{file}", recursive: true
+        }
+
+        cmds.append(cmd)
+      end
+
+      cmds
+    end
+
+    def output_files(site)
+      @service.list(site, "/pipelines/#{@pipeline_hash}/out")
+    end
+
+    def input_files(site)
+      @service.list(site, "/pipelines/#{@pipeline_hash}/in")
     end
   end
 end

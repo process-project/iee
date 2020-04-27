@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191003083121) do
+ActiveRecord::Schema.define(version: 20200424182019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,16 @@ ActiveRecord::Schema.define(version: 20191003083121) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "default", default: false, null: false
+  end
+
+  create_table "lobcder_computations", force: :cascade do |t|
+    t.string "src_path"
+    t.string "dest_path"
+    t.string "src_host"
+    t.string "dest_host"
+    t.string "track_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pipelines", id: :serial, force: :cascade do |t|
