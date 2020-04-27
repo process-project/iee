@@ -2,17 +2,15 @@ module Lobcder
   class StartBase
     def initialize(computation)
       @computation = computation
-      @uc_no = computation.uc_no #TODO: imeplement uc_no
-      @pipeline_hash = computation.pipeline.hash # TODO: id maybe? or implement hash
+      @service = Service.new(uc_for(computation))
+      @pipeline_hash = computation.pipeline.name # TODO: id maybe? or implement hash
     end
 
     protected
 
     def move(cmds)
-      service = Lobcder::Service.new(@uc_no)
-
       begin
-        track_id = service.move(cmds) # TODO: move of copy?
+        track_id = @service.move(cmds) # TODO: move of copy?
         update_status("queued? ") # TODO: get status from response
         @computation.track_id = track_id
       rescue LOBCDER_FAILURE
@@ -22,8 +20,18 @@ module Lobcder
       end
     end
 
+    def rm(cmds)
+      begin
+        @service.rm(cmds)
+      rescue LOBCDER_FAILURE
+      ensure
+      end
+    end
+
+    private
+
     def uc_for(computation)
-      Flow.uc_for(computation.pipeline.flow).to_s.last # TODO: get uc number for uc symbol
+      Flow.uc_for(computation.pipeline.flow.to_sym)
     end
   end
 

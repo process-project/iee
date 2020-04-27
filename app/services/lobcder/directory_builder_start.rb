@@ -1,10 +1,8 @@
 module Lobcder
-  class DirectoryBuilderStart
+  class DirectoryBuilderStart < StartBase
     # TODO: what about
     def initialize(computation)
-      uc_no = computation.pipeline.project.project_name.last.to_i # TODO: there should be usecase number in project table
-      @service = Service.new(uc_no)
-      @pipeline_hash = computation.pipeline.name
+      super(computation)
     end
 
     def call
@@ -20,7 +18,7 @@ module Lobcder
 
     def compute_sites
       compute_sites = Set.new
-      computation.pipeline.computations.each do |c|
+      @computation.pipeline.computations.each do |c|
         # TODO: compute_site/host/hpc inconsistency between computation and LOBCDER API json
         compute_site = c.hpc.to_sym
         unless container_exist? compute_site, c.container_name
@@ -42,7 +40,7 @@ module Lobcder
 
     # TODO: finish, make computation: status hash
     def check_containers
-      computation.pipeline.computations.map do |c|
+      @computation.pipeline.computations.map do |c|
         status = container_exist? c.hpc.to_sym, c.container_name
         [c, status]
       end

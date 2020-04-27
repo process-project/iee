@@ -6,8 +6,8 @@ require 'json'
 # TODO: throw exceptions
 module Lobcder
   class Service
-    def initialize(uc_no = 1)
-      @connection = get_connection(uc_no)
+    def initialize(uc = :uc1)
+      @connection = get_connection(uc)
     end
 
     def mkdir(site, path)
@@ -23,6 +23,7 @@ module Lobcder
       end
     end
 
+    # TODO: Change so that it takes in cmds to remove(when Reggie implements it), not just one path
     def rm(site, path)
       payload = {
         name: site.to_s,
@@ -81,12 +82,12 @@ module Lobcder
 
     private
 
-    def get_connection(uc_no) # TODO: uc_no should be symbol
+    def get_connection(uc)
       infra_host = attribute_fetcher('infra_host')
       infra_port = attribute_fetcher('infra_port')
       infra_path = attribute_fetcher('infra_path')
       infra_token_header = attribute_fetcher('infra_token_header')
-      uc_infra_token = attribute_fetcher("uc#{uc_no}_infra_token")
+      uc_infra_token = attribute_fetcher("#{uc}_infra_token")
 
       infra_resp = Faraday.get("#{infra_host}:#{infra_port}#{infra_path}") do |req|
         req.headers[infra_token_header] = uc_infra_token
