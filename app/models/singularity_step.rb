@@ -27,12 +27,4 @@ class SingularityStep < Step
       options
     )
   end
-
-  def input_present_for?(pipeline)
-    @required_files.map { |rf| pipeline.named_data_file(rf) }.all?
-  end
-
-  def add_data_file(df_name)
-    @required_files << df_name
-  end
 end

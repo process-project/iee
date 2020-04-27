@@ -11,25 +11,32 @@ module Lobcder
     protected
 
     def move(cmds)
-      track_id = @service.move(cmds) # TODO: move of copy?
-      update_status('queued? ') # TODO: get status from response
-      @computation.track_id = track_id
-    rescue LOBCDER_FAILURE
-      # TODO: handle error
-      update_status('error')
-    ensure
+      response = @service.move(cmds)
+      status = response[:status]
+
+      if status == 'QUEUED' # TODO: check
+        @computation.status = 'queued' # TODO: check
+        track_id = response[:track_id]
+        @computation.track_id = track_id
+      else
+        @computation.status == 'error'
+      end
+    rescue Lobcder::Exception
+      @computation.status == 'error' # TODO: check
     end
 
     def rm(cmds)
       @service.rm(cmds)
-    rescue LOBCDER_FAILURE
-    ensure
+      @computation.status == 'finished' # TODO: check
+    rescue Lobcder::Exception
+      @computation.status = 'error' # TODO: check
     end
 
     def mkdir(cmds)
       @service.mkdir(cmds)
-    rescue LOBCDER_FAILURE
-    ensure
+      @computation.status == 'finished' # TODO: check
+    rescue Lobcder::Exception
+      @computation.status = 'error' # TODO: check
     end
 
     def containers(site_name)

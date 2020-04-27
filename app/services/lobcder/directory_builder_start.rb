@@ -45,7 +45,7 @@ module Lobcder
         raise Lobcder::Exception, "There doesn't exist container for #{c.id} computation " \
                                   "of #{c.pipeline_step} (#{c.step.class.name}) " \
                                   "on #{c.compute_site.name.to_sym} (#{c.compute_site.full_name}) "\
-                                  "compute site"
+                                  'compute site'
       end
 
       true
