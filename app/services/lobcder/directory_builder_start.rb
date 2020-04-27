@@ -1,5 +1,3 @@
-
-
 # frozen_string_literal: true
 
 module Lobcder
@@ -46,7 +44,7 @@ module Lobcder
         next if container_exist? c.compute_site.name.to_sym, c.container_name
         raise Lobcder::Exception, "There doesn't exist container for #{c.id} computation " \
                                   "of #{c.pipeline_step} (#{c.step.class}) " \
-                                  "on #{c.hpc.to_sym} compute site"
+                                  "on #{c.compute_site.name.to_sym} compute site"
       end
 
       true

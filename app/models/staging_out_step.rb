@@ -5,6 +5,7 @@ class StagingOutStep < Step
 
   def initialize(name)
     super(name)
+    # TODO: Use Compute Sites Table here
     host_list = Lobcder::Service.new.host_aliases.map(&:to_s)
     @parameters = [
       StepParameter.new(
