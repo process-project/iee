@@ -2,7 +2,7 @@ module Lobcder
   class DirectoryBuilderStart
     # TODO: what about
     def initialize(computation)
-      uc_no = computation.pipeline.project.project_name.last.to_i # TODO: there should be usecase number in project table
+      uc_no = computation.pipeline.project.project_name.last.to_i # TODO: there should be usecase number in pipeline table
       @service = Service.new(uc_no)
       @pipeline_hash = computation.pipeline.name
     end
@@ -14,6 +14,7 @@ module Lobcder
           @service.mkdir(compute_site, path)
         end
       end
+      check_containers
     end
 
     private
@@ -22,30 +23,28 @@ module Lobcder
       compute_sites = Set.new
       computation.pipeline.computations.each do |c|
         # TODO: compute_site/host/hpc inconsistency between computation and LOBCDER API json
-        compute_site = c.hpc.to_sym
-        unless container_exist? compute_site, c.container_name
-          # throw exception
-        end
-        compute_sites.add(compute_site) if c.need_directory_structure?
+        compute_sites.add(c.hpc.to_sym) if c.need_directory_structure?
       end
       compute_sites
     end
 
     def paths
       [
-          File.join("/","containers"),
-          File.join("/","pipelines", @pipeline_hash, "in"),
-          File.join("/","pipelines", @pipeline_hash, "workdir"),
-          File.join("/","pipelines", @pipeline_hash, "out")
+        File.join("/","containers"),
+        File.join("/","pipelines", @pipeline_hash, "in"),
+        File.join("/","pipelines", @pipeline_hash, "workdir"),
+        File.join("/","pipelines", @pipeline_hash, "out")
       ]
     end
 
-    # TODO: finish, make computation: status hash
     def check_containers
-      computation.pipeline.computations.map do |c|
-        status = container_exist? c.hpc.to_sym, c.container_name
-        [c, status]
+      computation.pipeline.computations.each do |c|
+        next if container_exist? c.hpc.to_sym, c.container_name
+        raise Lobcder::Exception, "There doesn't exist container for #{c.id} computation " \
+                                  "of #{c.pipeline_step} (#{c.step.class}) " \
+                                  "on #{c.hpc.to_sym} compute site"
       end
+      True
     end
 
     def container_exist?(compute_site, container_name)
