@@ -54,7 +54,7 @@ module Lobcder
       #     {name: 'krk', path: '/asd/asd.txt'},
       #     {name: 'lrz', path: '/qwe', recursive: true}
       # ]
-      # TODO: Use mkdir_batch when it is implemented, for now it uses a for loop with mkdir_single
+      # TODO: Use rm_batch when it is implemented, for now it uses a for loop with rm_single
       commands.each do |cmd|
         rm_single(cmd[:name], cmd[:path], cmd[:recursive])
       end
@@ -111,7 +111,7 @@ module Lobcder
     def move(commands)
       # [
       #     {:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}},
-      #     {:dst=>{:name=>"lrz", :file=>"/copy_test2"}, :src=>{:name=>"krk", :file=>"/copy_test3/lrz_test.txt"}}
+      #     {:dst=>{:name=>"krk", :file=>"/copy_test2"}, :src=>{:name=>"krk", :file=>"/copy_test/cp_test_file.txt"}}
       # ]
       copy_move_utility(commands, attribute_fetcher('move_path'))
     end
@@ -180,7 +180,7 @@ module Lobcder
         req.body = payload
       end
 
-      JSON.parse(response.body, symbolize_names: true)[:trackId]
+      JSON.parse(response.body, symbolize_names: true)
     end
 
     def attribute_fetcher(attribute)

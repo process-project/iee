@@ -24,13 +24,13 @@ class Computation < ApplicationRecord
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :cloudify, -> { where(type: 'CloudifyComputation') }
-  scope :staging_in, -> { where(type: 'StagingInComputation') }
   scope :rest, -> { where(type: 'RestComputation') }
+  scope :lobcder, -> { where(type: 'LobcderComputation')}
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
   scope :submitted_cloudify, -> { submitted.cloudify }
-  scope :submitted_staging_in, -> { submitted.staging_in }
+  scope :submitted_lobcder, -> { submitted.lobcder }
   scope :submitted_rest, -> { submitted.rest }
   scope :created_or_submitted_rest, -> { created.rest + submitted.rest }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
@@ -65,8 +65,8 @@ class Computation < ApplicationRecord
     type == 'SingularityComputation'
   end
 
-  def staging_in?
-    type == 'StagingInComputation'
+  def lobcder?
+    type == 'LobcderComputation'
   end
 
   def rest?
@@ -119,7 +119,7 @@ class Computation < ApplicationRecord
   end
 
   def need_directory_structure?
-    False
+    false
   end
 
   def prev

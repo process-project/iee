@@ -9,7 +9,7 @@ class TriggerUpdateJob < ApplicationJob
     trigger_singularity_jobs_update
     trigger_rest_jobs_update
     trigger_cloudify_jobs_update
-    # TODO: CALL LOBCDER UPDATE JOB
+    trigger_lobcder_jobs_update
   end
 
   private
@@ -45,6 +45,8 @@ class TriggerUpdateJob < ApplicationJob
   end
 
   def trigger_lobcder_jobs_update
-    #TODO: implement
+    User.with_submitted_computations('LobcderComputation').each do |user|
+      Lobcder::UpdateJob.perform_later(user)
+    end
   end
 end
