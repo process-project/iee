@@ -4,27 +4,34 @@ module Lobcder
   class StagingOutStart < StartBase
     def initialize(computation)
       super(computation)
+      @dst_site_name = computation.compute_site.name.to_sym
+      @prev_site_name = computation.prev.compute_site.name.to_sym
+
+      @dst_path = computation.compute_site.name
     end
 
     def call
-      @dst_compute_site = @computation.dst_host # TODO: consistent naming convention
-      @dst_path = @computation.dst_path # TODO: assuming dst_path is a folder or file?
-
-      @prev_compute_site = @computation.prev.hpc # TODO: assuming next step is a singularity step
-
-      move(move_input_cmds)
+      move_files
     end
 
     private
 
-    def move_input_cmds
-      [
-        {
-          dst: { name: @dst_compute_site, file: @dst_path },
-          src: { name: @prev_compute_site, file: "/pipelines/#{@pipeline_hash}/out" } # TODO: move whole folder? Can you even move folder with LOBCDER?
-          # TODO: Maybe move all the files inside 'out' ?
+    def move_files
+      move(cmds)
+    end
+
+    def cmds
+      cmds = []
+
+      output_files(@prev_site_name).each do |file|
+        cmd = {
+          dst: { name: @dst_site_name.to_s, file: @dst_path },
+          src: { name: @prev_site_name.to_s, file: File.join(pipeline_dirs[:out], file) }
         }
-      ]
+        cmds.append(cmd)
+      end
+
+      cmds
     end
   end
 end

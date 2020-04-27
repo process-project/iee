@@ -6,6 +6,7 @@ class StagingInStep < Step
   def initialize(name)
     super(name)
     # TODO: consistent compute site naming convention
+    # TODO: Add ComputeSite table here
     host_list = Lobcder::Service.new.sites.map(&:to_s)
     @parameters = [
       StepParameter.new(
@@ -33,7 +34,7 @@ class StagingInStep < Step
     @src_path = params[:src_path]
     PipelineSteps::Lobcder::Builder.new(pipeline,
                                         name,
-                                        src_host = @src_host,
+                                        src_host = @src_host, # TODO: check named args passing
                                         src_path = @src_path)
   end
 
