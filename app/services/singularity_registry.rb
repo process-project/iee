@@ -6,6 +6,8 @@ class SingularityRegistry
     medical_step: %w[maragraziani/ucdemo],
     lofar_step: %w[factor-iee.sif],
     testing_singularity_step: %w[testing_container.sif],
+    testing_singularity_step_1: %w[testing_container_1.sif],
+    testing_singularity_step_2: %w[testing_container_2.sif],
     agrocopernicus_step: %w[agrocopernicus_placeholder_container],
     validation_singularity_step: %w[validation_container]
   }.freeze
@@ -15,6 +17,8 @@ class SingularityRegistry
     'maragraziani/ucdemo' => %w[0.1],
     'factor-iee.sif' => %w[latest],
     'testing_container.sif' => %w[whatever_tag_and_it_is_to_remove],
+    'testing_container_1.sif' => %w[whatever_tag_and_it_is_to_remove],
+    'testing_container_2.sif' => %w[whatever_tag_and_it_is_to_remove],
     'agrocopernicus_placeholder_container' => %w[agrocopernicus_placeholder_tag],
     'validation_container' => %w[latest]
   }.freeze
