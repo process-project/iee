@@ -14,7 +14,7 @@ class SingularityRegistry
     'vsoch/hello-world' => %w[latest],
     'maragraziani/ucdemo' => %w[0.1],
     'factor-iee.sif' => %w[latest],
-    'testing_singularity_step' => %w[whatever_tag_and_it_is_to_remove],
+    'testing_container.sif' => %w[whatever_tag_and_it_is_to_remove],
     'agrocopernicus_placeholder_container' => %w[agrocopernicus_placeholder_tag],
     'validation_container' => %w[latest]
   }.freeze

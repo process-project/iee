@@ -18,6 +18,7 @@ class Flow
     cloudify_placeholder_pipeline: :uc1, # TODO: pick good uc
     singularity_placeholder_pipeline: :uc1, # TODO: pick good uc
     medical_pipeline: :uc1,
+    test_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
     test_pipeline: :uc1
@@ -30,14 +31,14 @@ class Flow
     ImplicitStagingStep.new('implicit_staging_step'),
     StagingOutStep.new('staging_out_step'),
     # Only above is important
-    # SingularityStep.new('validation_singularity_step',
-    #                     ['staging_done.txt']),
-    # RimrockStep.new('validation_stage_out_step',
-    #                 'process-eu/validation_stage_out',
-    #                 'validation_stage_out_script.sh.erb', [:validation_type], []),
-    # RimrockStep.new('placeholder_step',
-    #                 'process-eu/mock-step',
-    #                 'mock.sh.erb', [], []),
+    SingularityStep.new('validation_singularity_step',
+                        ['staging_done.txt']),
+    RimrockStep.new('validation_stage_out_step',
+                    'process-eu/validation_stage_out',
+                    'validation_stage_out_script.sh.erb', [:validation_type], []),
+    RimrockStep.new('placeholder_step',
+                    'process-eu/mock-step',
+                    'mock.sh.erb', [], []),
     SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
