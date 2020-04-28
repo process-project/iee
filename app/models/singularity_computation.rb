@@ -11,6 +11,6 @@ class SingularityComputation < Computation
   end
 
   def runnable?
-    computation.prev.success? # TODO: implement prev and next
+    prev.nil? || prev.success?
   end
 end

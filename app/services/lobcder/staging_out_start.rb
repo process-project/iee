@@ -7,7 +7,7 @@ module Lobcder
       @dest_site_name = computation.dest_compute_site.name.to_sym
       @prev_site_name = computation.prev.compute_site.name.to_sym
 
-      @dest_path = computation.compute_site.name
+      @dest_path = computation.output_path
     end
 
     def call

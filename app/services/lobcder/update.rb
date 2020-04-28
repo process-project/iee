@@ -6,17 +6,25 @@ module Lobcder
       @computation = computation
       @on_finish_callback = options[:on_finish_callback]
       @updater = options[:updater]
-      @service = Service(computation.uc)
+      @service = Service.new(computation.uc)
     end
 
     def call
-      begin
-        track_id = @computation.track_id
-        status = @service.status(track_id)
+      if @computation.step.class.name != 'DirectoryBuilderStep'
+        begin
+          track_id = @computation.track_id
+          puts("================================================= BEFORE STATUS: #{@computation.status} ==============================================================================")
 
-        @computation.status == 'finished' if status == 'DONE_ALL'
-      rescue Lobcder::Exception
-        @computation.status == 'error'
+          puts("================================================= TRACK ID: #{track_id} ==============================================================================")
+
+          status = @service.status(track_id)
+          puts("================================================= NEW STATUS: #{status} ==============================================================================")
+
+          # TODO: handle 'running' LOBCDER STEJTUS
+          @computation.update_attributes(status: 'finished') if status == 'DONE_ALL'
+        rescue ServiceFailure
+          @computation.update_attributes(status: 'error')
+        end
       end
 
       # Old - bad (tzn by marek xd) implementation

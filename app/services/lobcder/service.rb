@@ -175,13 +175,21 @@ module Lobcder
         cmd: commands
       }.to_json
 
+      logger = Logger.new(Rails.root.join('log', 'alfa.log'))
+      logger.info(payload)
       response = @connection.post do |req|
         req.headers['Content-Type'] = 'application/json'
         req.url api_path
         req.body = payload
       end
 
-      JSON.parse(response.body, symbolize_names: true)
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      logger.info(parsed_response)
+
+      {
+        status: parsed_response[:status],
+        track_id: parsed_response[:trackId]
+      }
     end
 
     def attribute_fetcher(attribute)

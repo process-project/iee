@@ -5,63 +5,70 @@ module Lobcder
     def initialize(computation)
       @computation = computation
       @service = Service.new(computation.uc)
-      @pipeline_name = computation.pipeline.name
+      @pipeline_dir_name = computation.pipeline.name
     end
 
     protected
 
     def move(cmds)
-      response = @service.move(cmds)
-      status = response[:status]
+      info = @service.move(cmds)
+      status = info[:status]
 
       if status == 'QUEUED' # TODO: check
-        @computation.status = 'queued' # TODO: check
-        track_id = response[:track_id]
-        @computation.track_id = track_id
+        track_id = info[:track_id]
+
+        @computation.update_attributes(status: 'queued')
+        @computation.update_attributes(track_id: track_id)
       else
-        @computation.status == 'error'
+        @computation.update_attributes(status: 'error')
       end
     rescue Lobcder::Exception
-      @computation.status == 'error' # TODO: check
+      @computation.update_attributes(status: 'error')
+    ensure
+      Lobcder::UpdateJob.perform_later(@computation)
     end
 
     def rm(cmds)
       @service.rm(cmds)
-      @computation.status == 'finished' # TODO: check
+      @computation.update_attributes(status: 'finished')
     rescue Lobcder::Exception
-      @computation.status = 'error' # TODO: check
+      @computation.update_attributes(status: 'error')
+    ensure
+      Lobcder::UpdateJob.perform_later(@computation)
     end
 
     def mkdir(cmds)
       @service.mkdir(cmds)
-      @computation.status == 'finished' # TODO: check
-    rescue Lobcder::Exception
-      @computation.status = 'error' # TODO: check
+      @computation.update_attributes(status: 'finished')
+    rescue Lobcder::Exception # TODO: check
+      @computation.update_attributes(status: 'error')
+    ensure
+      Lobcder::UpdateJob.perform_later(@computation)
     end
 
-    def containers(site_name)
+    def containers(site_name) # TODO: catch exceptions
       @service.list(site_name, root_dirs[:containers])
     end
 
-    def output_files(site_name)
+    def output_files(site_name) # TODO: catch exceptions
       out_dir = pipeline_dirs[:out]
       @service.list(site_name, out_dir)
     end
 
-    def input_files(site_name)
+    def input_files(site_name) # TODO: catch exceptions
       in_dir = pipeline_dirs[:in]
       @service.list(site_name, in_dir)
     end
 
-    def dir_files(site_name, dir_path)
+    def dir_files(site_name, dir_path) # TODO: catch exceptions
       @service.list(site_name, dir_path, false)
     end
 
     def pipeline_dirs
       {
-        in: File.join('/', ['pipelines', @pipeline_name, 'in']),
-        out: File.join('/', ['pipelines', @pipeline_name, 'out']),
-        workdir: File.join('/', ['pipelines', @pipeline_name, 'workdir'])
+        in: File.join('/', ['pipelines', @pipeline_dir_name, 'in']),
+        out: File.join('/', ['pipelines', @pipeline_dir_name, 'out']),
+        workdir: File.join('/', ['pipelines', @pipeline_dir_name, 'workdir'])
       }
     end
 

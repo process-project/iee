@@ -123,17 +123,21 @@ class Computation < ApplicationRecord
   end
 
   def prev
-    comps = pipeline.computations
+    comps = (pipeline.computations.sort_by &:id).to_a
     comps[0..-2].zip(comps[1..-1]).each do |prev_c, c|
       return prev_c if c == self
     end
+
+    nil
   end
 
   def next
-    comps = pipeline.computations
+    comps = (pipeline.computations.sort_by &:id).to_a
     comps[0..-2].zip(comps[1..-1]).each do |c, next_c|
       return next_c if c == self
     end
+
+    nil
   end
 
   def uc

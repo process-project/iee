@@ -29,6 +29,11 @@ class Pipeline < ApplicationRecord
   scope :automatic, -> { where(mode: :automatic) }
   scope :latest, ->(nr = 3) { reorder(created_at: :desc).limit(nr) }
 
+
+  def dir_name
+    "pipeline_#{SecureRandom.hex}" # TODO: add dateTime String to name
+  end
+
   def steps
     Flow.steps(flow)
   end

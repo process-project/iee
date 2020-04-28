@@ -49,7 +49,7 @@ class TriggerUpdateJob < ApplicationJob
     #   Lobcder::UpdateJob.perform_later(user)
     # end
 
-    Computation.where(type: 'LobcderComputation').each do |computation|
+    Computation.where(type: 'LobcderComputation', status: %w[queued running]).each do |computation|
       Lobcder::UpdateJob.perform_later(computation)
     end
   end

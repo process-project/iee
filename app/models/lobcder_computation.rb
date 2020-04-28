@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class LobcderComputation < Computation
-  validates :track_id, presence: true
-
   def runnable?
-    computation.prev.success? # TODO: implement prev and next
+    prev.nil? || prev.success?
   end
 end
