@@ -45,12 +45,16 @@ module Lobcder
 
     def output_files(site_name)
       out_dir = pipeline_dirs[:out]
-      @service.list(site_name, out_dir) - [pipeline_dirs[:out]]
+      @service.list(site_name, out_dir)
     end
 
     def input_files(site_name)
       in_dir = pipeline_dirs[:in]
-      @service.list(site_name, in_dir) - [pipeline_dirs[:in]]
+      @service.list(site_name, in_dir)
+    end
+
+    def dir_files(site_name, dir_path)
+      @service.list(site_name, dir_path, false)
     end
 
     def pipeline_dirs

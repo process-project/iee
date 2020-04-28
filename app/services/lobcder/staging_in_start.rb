@@ -20,13 +20,20 @@ module Lobcder
       move(cmds)
     end
 
+    # TODO: assuming src path is a directory, copy all files from this directory to in of the first pipeline
     def cmds
-      [
-        {
+      cmds = []
+
+      dir_files(@src_site_name, @src_path).each do |file|
+        cmd = {
           dst: { name: @next_site_name.to_s, file: pipeline_dirs[:in] },
-          src: { name: @src_site_name.to_s, file: @src_path }
+          src: { name: @src_site_name.to_s, file: file }
         }
-      ]
+
+        cmds.append(cmd)
+      end
+
+      cmds
     end
   end
 end

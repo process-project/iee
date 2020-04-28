@@ -28,7 +28,7 @@ module Lobcder
 
       input_files(@prev_site_name).each do |file|
         cmd = {
-          name: @prev_site_name.to_s, path: File.join(pipeline_dirs[:in], file), recursive: true
+          name: @prev_site_name.to_s, path: file, recursive: true
         }
 
         cmds.append(cmd)
@@ -43,7 +43,7 @@ module Lobcder
       output_files(@prev_site_name).each do |file|
         cmd = {
           dst: { name: @next_compute_site.to_s, file: pipeline_dirs[:in] },
-          src: { name: @prev_site_name.to_s, file: File.join(pipeline_dirs[:out], file) }
+          src: { name: @prev_site_name.to_s, file: file }
         }
 
         cmds.append(cmd)

@@ -133,7 +133,8 @@ module Lobcder
         req.headers['Content-Type'] = 'application/json'
         req.body = payload
       end
-      JSON.parse(response.body, symbolize_names: true)
+      response = JSON.parse(response.body, symbolize_names: true)
+      response - [path, "/#{path}", "/#{path}/", "#{path}/"] # TODO: remove adapter later
     end
 
     private
