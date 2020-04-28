@@ -3,19 +3,11 @@
 # rubocop:disable ClassLength
 class Flow
   FLOWS = {
-    placeholder_pipeline: %w[placeholder_step],
     cloudify_placeholder_pipeline: %w[cloudify_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[lofar_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
-    staging_in_placeholder_pipeline: %w[staging_in_step],
-    validation_pipeline: %w[validation_staging_in_step
-                            validation_singularity_step
-                            validation_stage_out_step],
-    test_flow: %w[validation_staging_in_step
-                  validation_singularity_step
-                  validation_stage_out_step],
     test_pipeline: %w[directory_builder_step
                       staging_in_step
                       testing_singularity_step
@@ -23,10 +15,12 @@ class Flow
   }.freeze
 
   USECASE_FLOWS = {
+    cloudify_placeholder_pipeline: :uc1, # TODO: pick good uc
+    singularity_placeholder_pipeline: :uc1, # TODO: pick good uc
     medical_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
-    test_flow: :uc2
+    test_flow: :uc1
   }.freeze
 
   STEPS = [
@@ -36,14 +30,14 @@ class Flow
     ImplicitStagingStep.new('implicit_staging_step'),
     StagingOutStep.new('staging_out_step'),
     # Only above is important
-    SingularityStep.new('validation_singularity_step',
-                        ['staging_done.txt']),
-    RimrockStep.new('validation_stage_out_step',
-                    'process-eu/validation_stage_out',
-                    'validation_stage_out_script.sh.erb', [:validation_type], []),
-    RimrockStep.new('placeholder_step',
-                    'process-eu/mock-step',
-                    'mock.sh.erb', [], []),
+    # SingularityStep.new('validation_singularity_step',
+    #                     ['staging_done.txt']),
+    # RimrockStep.new('validation_stage_out_step',
+    #                 'process-eu/validation_stage_out',
+    #                 'validation_stage_out_script.sh.erb', [:validation_type], []),
+    # RimrockStep.new('placeholder_step',
+    #                 'process-eu/mock-step',
+    #                 'mock.sh.erb', [], []),
     SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),

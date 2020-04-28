@@ -138,7 +138,7 @@ namespace :blueprints do
     # Test container for the SuperMUC Compute Site
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              compute_site: ComputeSite.where(name: :lrz.to_s).first,
+                                              compute_site: ComputeSite.where(name: :lrzdtn.to_s).first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [

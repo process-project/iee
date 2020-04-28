@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class LobcderStep < Step
+  attr_reader :parameters
+
   def initialize(name)
     super(name)
+    @parameters = []
   end
 
   # TODO: rak
