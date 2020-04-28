@@ -25,7 +25,7 @@ class Computation < ApplicationRecord
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :cloudify, -> { where(type: 'CloudifyComputation') }
   scope :rest, -> { where(type: 'RestComputation') }
-  scope :lobcder, -> { where(type: 'LobcderComputation')}
+  scope :lobcder, -> { where(type: 'LobcderComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
@@ -123,13 +123,17 @@ class Computation < ApplicationRecord
   end
 
   def prev
-    raise NotImplementedError
-    Flow.FLOWS[self.pipeline.flow] # TODO: finish it
+    comps = pipeline.computations
+    comps[0..-2].zip(comps[1..-1]).each do |prev_c, c|
+      return prev_c if c == self
+    end
   end
 
   def next
-    raise NotImplementedError
-    # TODO: finish it
+    comps = pipeline.computations
+    comps[0..-2].zip(comps[1..-1]).each do |c, next_c|
+      return next_c if c == self
+    end
   end
 
   def uc
