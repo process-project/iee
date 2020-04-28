@@ -45,8 +45,12 @@ class TriggerUpdateJob < ApplicationJob
   end
 
   def trigger_lobcder_jobs_update
-    User.with_submitted_computations('LobcderComputation').each do |user|
-      Lobcder::UpdateJob.perform_later(user)
+    # User.with_submitted_computations('LobcderComputation').each do |user|
+    #   Lobcder::UpdateJob.perform_later(user)
+    # end
+
+    Computation.where(type: 'LobcderComputation').each do |computation|
+      Lobcder::UpdateJob.perform_later(computation)
     end
   end
 end
