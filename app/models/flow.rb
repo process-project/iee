@@ -21,7 +21,7 @@ class Flow
     test_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
-    test_flow: :uc1
+    test_pipeline: :uc1
   }.freeze
 
   STEPS = [
