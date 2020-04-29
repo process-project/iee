@@ -28,6 +28,24 @@ module Lobcder
       Lobcder::UpdateJob.perform_later(@computation)
     end
 
+    def copy(cmds)
+      info = @service.copy(cmds)
+      status = info[:status]
+
+      if status == 'QUEUED' # TODO: check
+        track_id = info[:track_id]
+
+        @computation.update_attributes(status: 'queued')
+        @computation.update_attributes(track_id: track_id)
+      else
+        @computation.update_attributes(status: 'error')
+      end
+    rescue Lobcder::ServiceFailure
+      @computation.update_attributes(status: 'error')
+    ensure
+      Lobcder::UpdateJob.perform_later(@computation)
+    end
+
     def rm(cmds)
       @service.rm(cmds)
       @computation.update_attributes(status: 'finished')
