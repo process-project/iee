@@ -11,79 +11,81 @@ module Lobcder
     end
 
     def mkdir(commands)
-      # [
-      #     {name: 'krk', path: '/asd'},
-      #     {name: 'lrz', path: '/qwe'}
-      # ]
-
-      # TODO: Use mkdir_batch when it is implemented, for now it uses a for loop with mkdir_single
-      commands.each do |cmd|
-        mkdir_single(cmd[:name], cmd[:path], cmd[:recursive])
-      end
+      # see commands argument example in mkdir_batch
+      mkdir_batch(commands)
     end
 
-    # TODO: Wait for Reggie to implement it
-    def mkdir_batch(commands)
-      payload = {
-        cmd: commands
-      }.to_json
+    def mkdir_single(site_name, path, recursive = true)
+      # see commands argument example in mkdir_batch
 
-      @connection.post do |req|
-        req.url attribute_fetcher('mkdir_path')
-        req.headers['Content-Type'] = 'application/json'
-        req.body = payload
-      end
-    end
-
-    def mkdir_single(site_name, path, recursive)
-      payload = {
+      commands = [{
         name: site_name.to_s,
         path: path,
         recursive: recursive
-      }.to_json
+      }]
 
-      @connection.post do |req|
+      mkdir_batch commands
+    end
+
+    def mkdir_batch(commands)
+      # commands argument example
+      # [
+      #     { "name":"krk", "path":"/some_folder/other_folder" },
+      #     { "name":"krk", "path":"/some_folder/another_folder" },
+      # ]
+
+      payload = commands.to_json
+      response = @connection.post do |req|
         req.url attribute_fetcher('mkdir_path')
         req.headers['Content-Type'] = 'application/json'
         req.body = payload
+      end
+
+      response = JSON.parse(response.body, symbolize_names: true)
+      response.values.all? { |status| status.eql? 'Ok' }
+      unless response.values.all? { |status| status.eql? 'Ok' }
+        raise Lobcder::ServiceFailure, 'Not all LOBCDER API remove commands have completed successfully'
       end
     end
 
     def rm(commands)
-      # [
-      #     {name: 'krk', path: '/asd/asd.txt'},
-      #     {name: 'lrz', path: '/qwe', recursive: true}
-      # ]
-      # TODO: Use rm_batch when it is implemented, for now it uses a for loop with rm_single
-      commands.each do |cmd|
-        rm_single(cmd[:name], cmd[:path], cmd[:recursive])
-      end
+      # see commands argument example in rm_batch
+      rm_batch(commands)
     end
 
-    # TODO: Wait for Reggie to implement it
-    def rm_batch(commands)
-      payload = {
-        cmd: commands
-      }.to_json
+    def rm_single(site_name, path, recursive = true)
+      # see commands argument example in rm_batch
 
-      @connection.post do |req|
-        req.url attribute_fetcher('rm_path')
-        req.headers['Content-Type'] = 'application/json'
-        req.body = payload
-      end
-    end
-
-    def rm_single(site_name, path, recursive)
-      payload = {
+      commands = [{
         name: site_name.to_s,
         file: path,
         recursive: recursive
-      }.to_json
+      }]
 
-      @connection.post do |req|
+      rm_batch commands
+    end
+
+    def rm_batch(commands)
+      # commands argument example
+      # [
+      #     { "name":"krk", "path":"/some_folder/other_folder" },
+      #     { "name":"krk", "path":"/some_folder/some_file.txt" },
+      # ]
+
+      commands.each { |command| command[:recursive] = true }
+      # Convert commands' 'path' keys to 'file' - adaptation to LOBCDER API
+      commands.each { |command| command[:file] = command.delete :path }
+      payload = commands.to_json
+
+      response = @connection.post do |req|
         req.url attribute_fetcher('rm_path')
         req.headers['Content-Type'] = 'application/json'
         req.body = payload
+      end
+
+      response = JSON.parse(response.body, symbolize_names: true)
+      unless response.values.all? { |status| status.eql? 'Ok' }
+        raise Lobcder::ServiceFailure, 'Not all LOBCDER API mkdir commands have completed successfully'
       end
     end
 
@@ -101,18 +103,12 @@ module Lobcder
     end
 
     def copy(commands)
-      # [
-      #     {:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}},
-      #     {:dst=>{:name=>"lrz", :file=>"/copy_test2"}, :src=>{:name=>"krk", :file=>"/copy_test3/lrz_test.txt"}}
-      # ]
+      # see commands argument example in copy_move_utility
       copy_move_utility(commands, attribute_fetcher('copy_path'))
     end
 
     def move(commands)
-      # [
-      #     {:dst=>{:name=>"krk", :file=>"/copy_test4"}, :src=>{:name=>"krk", :file=>"/copy_test3/cp_test_file.txt"}},
-      #     {:dst=>{:name=>"krk", :file=>"/copy_test2"}, :src=>{:name=>"krk", :file=>"/copy_test/cp_test_file.txt"}}
-      # ]
+      # see commands argument example in copy_move_utility
       copy_move_utility(commands, attribute_fetcher('move_path'))
     end
 
@@ -169,14 +165,28 @@ module Lobcder
 
     # utilities
     def copy_move_utility(commands, api_path)
+      # commands argument example
+      # [
+      #     {
+      #         :dst=>{:name=>"krk", :path=>"/some_folder_1"},
+      #         :src=>{:name=>"krk", :path=>"/some_folder_1/some_file_1.txt"}
+      #     },
+      #     {
+      #         :dst=>{:name=>"krk", :path=>"/some_folder_2"},
+      #         :src=>{:name=>"krk", :path=>"/some_folder_2/some_file_2.txt"}
+      #     }
+      # ]
+
+      # Convert commands' 'path' keys to 'file' - adaptation to LOBCDER API
+      commands.each do |command|
+        [:dst, :src].each { |key| command[key][:file] = command[key].delete :path }
+      end
       payload = {
         id: SecureRandom.hex, # what should we send?
         webhook: webhook_info,
         cmd: commands
       }.to_json
 
-      logger = Logger.new(Rails.root.join('log', 'alfa.log'))
-      logger.info(payload)
       response = @connection.post do |req|
         req.headers['Content-Type'] = 'application/json'
         req.url api_path
@@ -184,7 +194,6 @@ module Lobcder
       end
 
       parsed_response = JSON.parse(response.body, symbolize_names: true)
-      logger.info(parsed_response)
 
       {
         status: parsed_response[:status],
@@ -195,7 +204,7 @@ module Lobcder
     def attribute_fetcher(attribute)
       Rails.application.config_for('process')['staging'][attribute]
     end
-
+    # TODO: send proper webhook via LOBCDER API
     def webhook_info
       { method: 'POST',
         url: webhook_url,

@@ -22,7 +22,7 @@ module Lobcder
       else
         @computation.update_attributes(status: 'error')
       end
-    rescue Lobcder::Exception
+    rescue Lobcder::ServiceFailure
       @computation.update_attributes(status: 'error')
     ensure
       Lobcder::UpdateJob.perform_later(@computation)
@@ -31,7 +31,7 @@ module Lobcder
     def rm(cmds)
       @service.rm(cmds)
       @computation.update_attributes(status: 'finished')
-    rescue Lobcder::Exception
+    rescue Lobcder::ServiceFailure
       @computation.update_attributes(status: 'error')
     ensure
       Lobcder::UpdateJob.perform_later(@computation)
@@ -40,7 +40,7 @@ module Lobcder
     def mkdir(cmds)
       @service.mkdir(cmds)
       @computation.update_attributes(status: 'finished')
-    rescue Lobcder::Exception # TODO: check
+    rescue Lobcder::ServiceFailure
       @computation.update_attributes(status: 'error')
     ensure
       Lobcder::UpdateJob.perform_later(@computation)

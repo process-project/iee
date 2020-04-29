@@ -25,8 +25,8 @@ module Lobcder
 
       output_files(@prev_site_name).each do |file|
         cmd = {
-          dst: { name: @dest_site_name.to_s, file: @dest_path },
-          src: { name: @prev_site_name.to_s, file: file }
+          dst: { name: @dest_site_name.to_s, path: @dest_path },
+          src: { name: @prev_site_name.to_s, path: file }
         }
         cmds.append(cmd)
       end
