@@ -18,7 +18,7 @@ RSpec.describe 'Pipelines' do
 
       # TODO: Expect proper JSON for preset pipelines instead of this hardcoded value
       expect(response_json).to include_json(
-        %w[lofar_pipeline validation_pipeline]
+        %w[lofar_pipeline]
       )
     end
 

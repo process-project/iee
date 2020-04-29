@@ -7,13 +7,17 @@ describe SingularityScriptGenerator do
     create(:pipeline, flow: 'singularity_placeholder_pipeline')
   end
 
+  let :compute_site do
+    create(:compute_site, name: 'krk') # TODO: it calls a Lobcder::Service to get uc_root -> isolate tests
+  end
+
   let(:computation) do
     create(:singularity_computation,
            pipeline: singularity_pipeline,
            pipeline_step: 'singularity_placeholder_step',
            container_name: 'test_name',
            container_tag: 'test_tag',
-           compute_site: computation.compute_site,
+           compute_site: compute_site,
            parameter_values: { label1: 'w1', label2: 'w2', label3: 'w3' })
   end
 
@@ -23,7 +27,7 @@ describe SingularityScriptGenerator do
            pipeline_step: 'singularity_placeholder_step',
            container_name: 'test_name',
            container_tag: 'test_tag',
-           compute_site: ComputeSite.where(name: :krk).first,
+           compute_site: compute_site,
            parameter_values: { label1: 'w1', label2: 'w2' })
   end
 
@@ -31,7 +35,7 @@ describe SingularityScriptGenerator do
     create(:singularity_script_blueprint,
            container_name: computation.container_name,
            container_tag: computation.container_tag,
-           compute_site: computation.compute_site)
+           compute_site: compute_site)
   end
 
   context 'given proper parameter_values' do

@@ -29,11 +29,15 @@ RSpec.describe PipelineSteps::Singularity::Builder do
     ]
   end
 
+  let!(:compute_site) do
+    create(:compute_site, name: 'asd')
+  end
+
   let(:proper_parameter_values) do
     ActionController::Parameters.new(
       container_name: 'test_name',
       container_tag: 'test_tag',
-      compute_site_name: ComputeSite.where(name: :krk).first.full_name,
+      compute_site_name: compute_site.full_name,
       label1: 'test_label1',
       label2: 'test_label2',
       label3: 'test_label3'
@@ -64,7 +68,7 @@ RSpec.describe PipelineSteps::Singularity::Builder do
     expect(computation.pipeline).to eq pipeline
     expect(computation.container_name).to eq 'test_name'
     expect(computation.container_tag).to eq 'test_tag'
-    expect(computation.compute_site.name).to eq :krk
+    expect(computation.compute_site.name).to eq 'asd'
     expect(computation.user).to eq pipeline.user
 
     expect(computation.parameter_values.symbolize_keys).to include(:label1, :label2, :label3)
