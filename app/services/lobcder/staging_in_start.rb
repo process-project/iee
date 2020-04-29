@@ -11,12 +11,12 @@ module Lobcder
     end
 
     def call
-      move_files
+      copy_files
     end
 
     private
 
-    def move_files
+    def copy_files
       copy(cmds)
     end
 

@@ -273,8 +273,8 @@ namespace :blueprints do
       #SBATCH --ntasks %<cpus>s
       #SBATCH --time 8:00:00
       #SBATCH --job-name UC2_test
-      #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
-      #SBATCH --error /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.err
+      #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
+      #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
 
       module load plgrid/tools/singularity/stable
 
