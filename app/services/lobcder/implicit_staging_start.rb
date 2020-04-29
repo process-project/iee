@@ -9,13 +9,13 @@ module Lobcder
     end
 
     def call
-      remove_prev_input_files
+      remove_prev_files
       move_output_files
     end
 
     private
 
-    def remove_prev_input_files
+    def remove_prev_files
       rm(rm_cmds)
     end
 
@@ -26,9 +26,11 @@ module Lobcder
     def rm_cmds
       cmds = []
 
-      input_files(@prev_site_name).each do |file|
+      files_to_delete = input_files(@prev_site_name) + workdir_files(@prev_site_name)
+
+      files_to_delete.each do |file|
         cmd = {
-          name: @prev_site_name.to_s, path: file, recursive: true
+          name: @prev_site_name.to_s, path: file
         }
 
         cmds.append(cmd)

@@ -82,6 +82,12 @@ module Lobcder
     end
 
     # TODO: catch exceptions
+    def workdir_files(site_name)
+      workdir = pipeline_dirs[:workdir]
+      @service.list(site_name, workdir)
+    end
+
+    # TODO: catch exceptions
     def dir_files(site_name, dir_path)
       @service.list(site_name, dir_path, false)
     end
