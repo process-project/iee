@@ -265,6 +265,8 @@ namespace :blueprints do
     ]
 
     # Container for the UC2 LOFAR use case
+    # TODO: update to new version of container (new and old containers work in the same way,
+    #  but there are differences in the scripts)
     script = <<~CODE
       #!/bin/bash
       #SBATCH --partition %<partition>s
@@ -278,14 +280,15 @@ namespace :blueprints do
 
       module load plgrid/tools/singularity/stable
 
-      singularity run \
+      singularity run \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
-      ./containers/factor-iee.sif
+      ./containers/factor-iee.sif.old \\
+      cwltool --singularity --preserve-entire-environment /opt/lofar/cwl/uc2.cwl /mnt/in/uc2.yml
     CODE
 
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif',
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif.old',
                                               container_tag: 'latest',
                                               compute_site: ComputeSite.where(name: :krk.to_s).first,
                                               script_blueprint: script)
