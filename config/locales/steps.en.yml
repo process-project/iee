@@ -1,5 +1,24 @@
 en:
   steps:
+    placeholder_step:
+      title: Placeholder step
+      cannot_start: |
+        Cannot start placeholder step, for mock reasons.
+      created: |
+        All required input files are available.
+        You can start placeholder step for this project.
+      new: Placeholder step is being submitted
+      queued: Placeholder step is queued
+      running: Placeholder step is running
+      error: There was an error while running placeholder step
+      finished: |
+        Placeholder step finished successfully, results stored in
+        the output directory.
+      aborted: Placeholder step was aborted by the pipeline owner
+      start_automatic: Save placeholder step version
+      start_manual: Start placeholder step
+      restart_manual: Restart placeholder step
+      restart_automatic: Restart computation
     singularity_placeholder_step:
       title: Singularity placeholder computation
       cannot_start: |

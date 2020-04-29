@@ -4,15 +4,22 @@ require 'rails_helper'
 require 'models/step_shared_examples'
 
 describe ParameterFetcher do
-  step_name = 'test_singularity_step'
-  container_name = 'test_container_name'
+  step_name = 'testing_singularity_step'
+  container_name = 'testing_container_name'
   container_tag = 'test_tag'
+
+  let!(:compute_site) do
+    create(
+      :compute_site
+    )
+  end
 
   let!(:ssbp) do
     create(
       :singularity_script_blueprint,
       container_name: container_name,
-      container_tag: container_tag
+      container_tag: container_tag,
+      compute_site: compute_site
     )
   end
 

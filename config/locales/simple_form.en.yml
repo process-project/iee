@@ -80,6 +80,7 @@ en:
           agrocopernicus_pipeline: Agrocopernicus pipeline
           test_pipeline: Simple test pipeline
           full_test_pipeline: Complex test pipeline
+          placeholder_pipeline: Placeholder pipeline
     # Examples
     # labels:
     #   defaults:
