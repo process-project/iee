@@ -42,9 +42,9 @@ class ParameterFetcher
     end
 
     {
-        container_names: container_names,
-        container_tags: container_tags,
-        compute_sites: compute_sites
+      container_names: container_names,
+      container_tags: container_tags,
+      compute_sites: compute_sites
     }
   end
 

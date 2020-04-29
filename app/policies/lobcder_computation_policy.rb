@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LobcderComputationPolicy < ApplicationPolicy
   def show?
     true
@@ -5,7 +7,7 @@ class LobcderComputationPolicy < ApplicationPolicy
 
   def update?
     record.user == user && !record.active? &&
-        can_update_in_mode?
+      can_update_in_mode?
   end
 
   def need_proxy?

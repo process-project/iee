@@ -18,7 +18,9 @@ module PipelineSteps
           container_name: @parameter_values[:container_name],
           container_tag: @parameter_values[:container_tag],
           compute_site: ComputeSite.where(full_name: @parameter_values[:compute_site_name]).first,
-          parameter_values: @parameter_values.except(:container_name, :container_tag, :compute_site_name)
+          parameter_values: @parameter_values.except(:container_name,
+                                                     :container_tag,
+                                                     :compute_site_name)
         )
       end
 

@@ -46,21 +46,25 @@ module Lobcder
       Lobcder::UpdateJob.perform_later(@computation)
     end
 
-    def containers(site_name) # TODO: catch exceptions
+    # TODO: catch exceptions
+    def containers(site_name)
       @service.list(site_name, root_dirs[:containers])
     end
 
-    def output_files(site_name) # TODO: catch exceptions
+    # TODO: catch exceptions
+    def output_files(site_name)
       out_dir = pipeline_dirs[:out]
       @service.list(site_name, out_dir)
     end
 
-    def input_files(site_name) # TODO: catch exceptions
+    # TODO: catch exceptions
+    def input_files(site_name)
       in_dir = pipeline_dirs[:in]
       @service.list(site_name, in_dir)
     end
 
-    def dir_files(site_name, dir_path) # TODO: catch exceptions
+    # TODO: catch exceptions
+    def dir_files(site_name, dir_path)
       @service.list(site_name, dir_path, false)
     end
 

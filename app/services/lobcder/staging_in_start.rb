@@ -20,7 +20,7 @@ module Lobcder
       move(cmds)
     end
 
-    # TODO: assuming src path is a directory, copy all files from this directory to in of the first pipeline
+    # TODO: assuming src path is a directory
     def cmds
       cmds = []
 

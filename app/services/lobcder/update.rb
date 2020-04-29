@@ -13,12 +13,7 @@ module Lobcder
       if @computation.step.class.name != 'DirectoryBuilderStep'
         begin
           track_id = @computation.track_id
-          puts("================================================= BEFORE STATUS: #{@computation.status} ==============================================================================")
-
-          puts("================================================= TRACK ID: #{track_id} ==============================================================================")
-
           status = @service.status(track_id)
-          puts("================================================= NEW STATUS: #{status} ==============================================================================")
 
           # TODO: handle 'running' LOBCDER STEJTUS
           @computation.update_attributes(status: 'finished') if status == 'DONE_ALL'

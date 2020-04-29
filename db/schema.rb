@@ -143,6 +143,16 @@ ActiveRecord::Schema.define(version: 20200428120335) do
     t.boolean "default", default: false, null: false
   end
 
+  create_table "lobcder_computations", force: :cascade do |t|
+    t.string "src_path"
+    t.string "dest_path"
+    t.string "src_host"
+    t.string "dest_host"
+    t.string "track_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pipelines", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.integer "iid", null: false

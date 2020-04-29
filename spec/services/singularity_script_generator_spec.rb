@@ -7,8 +7,9 @@ describe SingularityScriptGenerator do
     create(:pipeline, flow: 'singularity_placeholder_pipeline')
   end
 
+  # TODO: it calls a Lobcder::Service to get uc_root -> isolate tests
   let :compute_site do
-    create(:compute_site, name: 'krk') # TODO: it calls a Lobcder::Service to get uc_root -> isolate tests
+    create(:compute_site, name: 'krk')
   end
 
   let(:computation) do
