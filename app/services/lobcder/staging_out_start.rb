@@ -11,16 +11,20 @@ module Lobcder
     end
 
     def call
-      move_files
+      copy_files
     end
 
     private
 
-    def move_files
-      move(cmds)
+    def copy_files
+      copy(cp_cmds)
     end
 
-    def cmds
+    def rm_directories
+      rm(rm_cmds)
+    end
+
+    def cp_cmds
       cmds = []
 
       output_files(@prev_site_name).each do |file|

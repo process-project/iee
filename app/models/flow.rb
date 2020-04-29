@@ -7,18 +7,20 @@ class Flow
     cloudify_placeholder_pipeline: %w[cloudify_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
-    lofar_pipeline: %w[directory_builder_step staging_in_step lofar_step staging_out_step],
+    lofar_pipeline: %w[directory_builder_step staging_in_step lofar_step staging_out_step clean_up_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     test_pipeline: %w[directory_builder_step
                       staging_in_step
                       testing_singularity_step_1
-                      staging_out_step],
+                      staging_out_step
+                      clean_up_step],
     full_test_pipeline: %w[directory_builder_step
                            staging_in_step
                            testing_singularity_step_1
                            implicit_staging_step
                            testing_singularity_step_2
-                           staging_out_step]
+                           staging_out_step
+                           clean_up_step]
   }.freeze
 
   USECASE_FLOWS = {
@@ -38,7 +40,7 @@ class Flow
     StagingInStep.new('staging_in_step'),
     ImplicitStagingStep.new('implicit_staging_step'),
     StagingOutStep.new('staging_out_step'),
-    # Only above is important
+    CleanUpStep.new('clean_up_step'),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),

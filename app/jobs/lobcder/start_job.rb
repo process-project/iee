@@ -13,6 +13,8 @@ module Lobcder
         Lobcder::StagingOutStart.new(computation).call
       elsif computation.step.class.name == 'ImplicitStagingStep'
         Lobcder::ImplicitStagingStart.new(computation).call
+      elsif computation.step.class.name == 'CleanUpStep'
+        Lobcder::CleanUpStart.new(computation).call
       end
     rescue StandardError => e
       Rails.logger.error(e)

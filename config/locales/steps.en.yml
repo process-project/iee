@@ -231,3 +231,20 @@ en:
       start_manual: Start test singularity container
       restart_manual: Restart test singularity container computation
       restart_automatic: Restart test singularity container
+    clean_up_step:
+      title: Clean Up
+      cannot_start: |
+        Waiting for previous steps to finish
+      created: |
+        Waiting for previous steps to finish
+      new: Clean Up job is being submitted
+      queued: Clean Up job is queued
+      running: Clean Up is running
+      error: There was an error while cleaning up
+      finished: |
+        Clean Up jobfinished successfully
+      aborted: Clean Up job was aborted by the pipeline owner
+      start_automatic: Start Clean Up job version
+      start_manual: Start Clean Up container
+      restart_manual: Restart Clean Up job computation
+      restart_automatic: Restart Clean Up job

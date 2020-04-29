@@ -90,7 +90,8 @@ module Lobcder
       {
         in: File.join('/', ['pipelines', @pipeline_dir_name, 'in']),
         out: File.join('/', ['pipelines', @pipeline_dir_name, 'out']),
-        workdir: File.join('/', ['pipelines', @pipeline_dir_name, 'workdir'])
+        workdir: File.join('/', ['pipelines', @pipeline_dir_name, 'workdir']),
+        pipeline: File.join('/', ['pipelines', @pipeline_dir_name])
       }
     end
 
@@ -99,6 +100,16 @@ module Lobcder
         pipelines_root: File.join('/', 'pipelines'),
         containers: File.join('/', 'containers')
       }
+    end
+
+    def pipeline_site_names
+      site_names = Set.new
+
+      @computation.pipeline.computations.each do |c|
+        site_names.add(c.compute_site.name.to_sym) if c.need_directory_structure?
+      end
+
+      site_names
     end
   end
 

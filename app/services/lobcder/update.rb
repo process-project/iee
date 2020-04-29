@@ -10,8 +10,8 @@ module Lobcder
     end
 
     def call
-      if @computation.step.class.name != 'DirectoryBuilderStep'
-        begin
+      if %w[DirectoryBuilderStep CleanUpStep].exclude? @computation.step.class.name
+      begin
           track_id = @computation.track_id
           status = @service.status(track_id)
 
