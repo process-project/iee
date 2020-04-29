@@ -26,8 +26,8 @@ module Lobcder
 
       dir_files(@src_site_name, @src_path).each do |file|
         cmd = {
-          dst: { name: @next_site_name.to_s, file: pipeline_dirs[:in] },
-          src: { name: @src_site_name.to_s, file: file }
+          dst: { name: @next_site_name.to_s, path: pipeline_dirs[:in] },
+          src: { name: @src_site_name.to_s, path: file }
         }
 
         cmds.append(cmd)

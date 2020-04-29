@@ -11,7 +11,7 @@ class Flow
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     test_pipeline: %w[directory_builder_step
                       staging_in_step
-                      testing_singularity_step
+                      testing_singularity_step_1
                       staging_out_step],
     full_test_pipeline: %w[directory_builder_step
                            staging_in_step
@@ -27,13 +27,11 @@ class Flow
     medical_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
-    test_pipeline: :uc1,
     full_test_pipeline: :uc1
   }.freeze
 
   STEPS = [
     DirectoryBuilderStep.new('directory_builder_step'),
-    SingularityStep.new('testing_singularity_step'),
     SingularityStep.new('testing_singularity_step_1'),
     SingularityStep.new('testing_singularity_step_2'),
     StagingInStep.new('staging_in_step'),

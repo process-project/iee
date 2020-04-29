@@ -3,34 +3,8 @@
 namespace :blueprints do
   desc 'Seed singularity script blueprints for known pipelines'
   task seed: :environment do
-    # Testing container for the new architecture (LOBCDER staging steps compatible)
-    script = <<~CODE
-      #!/bin/bash -l
-      #SBATCH -N %<nodes>s
-      #SBATCH --ntasks-per-node=%<cpus>s
-      #SBATCH --time=00:05:00
-      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
-      #SBATCH -p %<partition>s
-      #SBATCH --job-name testing_container_step
-      #SBATCH --output %<uc_root>s/slurm_outputs/slurm-%%j.out
-      #SBATCH --error %<uc_root>s/slurm_outputs/slurm-%%j.err
-
-      # Running container using singularity
-      module load plgrid/tools/singularity/stable
-
-      singularity run \
-      -B %<uc_root>s/pipelines/pipeline_hash_1/in:/mnt/in \
-      -B %<uc_root>s/pipelines/pipeline_hash_1/workdir:/mnt/workdir \
-      -B %<uc_root>s/pipelines/pipeline_hash_1/out:/mnt/out \
-      %<uc_root>s/containers/testing_container.sif operation=%<operation>s
-    CODE
-
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container.sif',
-                                              container_tag: 'whatever_tag_and_it_is_to_remove',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
-                                              script_blueprint: script)
-
-    ssbp.step_parameters = [
+    # Common fragments of the test and full test pipeline (LOBCDER staging steps compatible)
+    common_parameters = [
       StepParameter.new(
         label: 'nodes',
         name: 'Nodes',
@@ -56,7 +30,38 @@ namespace :blueprints do
         datatype: 'multi',
         default: 'plgrid-testing',
         values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-      ),
+      )
+    ]
+
+    common_script_part = <<~CODE
+      #!/bin/bash -l
+      #SBATCH -N %<nodes>s
+      #SBATCH --ntasks-per-node=%<cpus>s
+      #SBATCH --time=00:05:00
+      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
+      #SBATCH -p %<partition>s
+      #SBATCH --job-name testing_container_step
+      #SBATCH --output %<uc_root>s/slurm_outputs/slurm-%%j.out
+      #SBATCH --error %<uc_root>s/slurm_outputs/slurm-%%j.err
+      # Running container using singularity
+      module load plgrid/tools/singularity/stable
+
+      singularity run \
+      -B %<uc_root>s/pipelines/pipeline_hash_1/in:/mnt/in \
+      -B %<uc_root>s/pipelines/pipeline_hash_1/workdir:/mnt/workdir \
+      -B %<uc_root>s/pipelines/pipeline_hash_1/out:/mnt/out
+    CODE
+
+    # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
+    testing_container_1_script_part = '\%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
+    script = common_script_part + ' \\\n' + testing_container_1_script_part
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_1.sif',
+                                              container_tag: 'whatever_tag_and_it_is_to_remove',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = common_parameters + [
       StepParameter.new(
         label: 'operation',
         name: 'Operation',
@@ -67,6 +72,28 @@ namespace :blueprints do
         values: %w[add subtract multiply divide]
       )
     ]
+
+    # Testing container 2 for the full test pipeline (LOBCDER staging steps compatible)
+    testing_container_2_script_part = '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
+    script = common_script_part + ' \\\n' + testing_container_2_script_part
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_2.sif',
+                                              container_tag: 'whatever_tag_and_it_is_to_remove',
+                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = common_parameters + [
+      StepParameter.new(
+        label: 'factor',
+        name: 'Factor',
+        description: 'Factor by which the result from previous step will by multiplied',
+        rank: 0,
+        datatype: 'integer',
+        default: 1000
+      )
+    ]
+
+
 
     # Test container for the Prometheus Compute Site
     script = <<~CODE
