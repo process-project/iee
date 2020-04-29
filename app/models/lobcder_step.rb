@@ -8,7 +8,6 @@ class LobcderStep < Step
     @parameters = []
   end
 
-  # TODO: rak
   def builder_for(pipeline, _)
     PipelineSteps::Lobcder::Builder.new(pipeline, name)
   end

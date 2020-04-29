@@ -7,6 +7,7 @@ require 'json'
 module Lobcder
   class Service
     def initialize(uc = :uc1)
+      @uc = uc
       @connection = get_connection(uc)
     end
 
@@ -131,6 +132,14 @@ module Lobcder
       end
       response = JSON.parse(response.body, symbolize_names: true)
       response - [path, "/#{path}", "/#{path}/", "#{path}/"] # TODO: remove adapter later
+    end
+
+
+    # TODO: implement
+    def restart
+      payload = {
+          name: "#{@uc}-microinfra"
+      }
     end
 
     private
