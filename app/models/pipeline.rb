@@ -89,6 +89,10 @@ class Pipeline < ApplicationRecord
     user&.name || '(deleted user)'
   end
 
+  def uc
+    Flow.uc_for(flow)
+  end
+
   private
 
   def calculate_status

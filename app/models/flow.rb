@@ -7,7 +7,7 @@ class Flow
     cloudify_placeholder_pipeline: %w[cloudify_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
-    lofar_pipeline: %w[lofar_step],
+    lofar_pipeline: %w[directory_builder_step staging_in_step lofar_step staging_out_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     test_pipeline: %w[directory_builder_step
                       staging_in_step
@@ -16,7 +16,7 @@ class Flow
     full_test_pipeline: %w[directory_builder_step
                            staging_in_step
                            testing_singularity_step_1
-                           implicit_staging_in
+                           implicit_staging_step
                            testing_singularity_step_2
                            staging_out_step]
   }.freeze
@@ -27,6 +27,7 @@ class Flow
     medical_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
+    test_pipeline: :uc1,
     full_test_pipeline: :uc1
   }.freeze
 
@@ -128,7 +129,7 @@ class Flow
   end
 
   def self.uc_for(flow)
-    USECASE_FLOWS[flow]
+    USECASE_FLOWS[flow.to_sym]
   end
 end
 # rubocop:enable ClassLength
