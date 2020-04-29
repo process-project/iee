@@ -17,7 +17,7 @@ module Lobcder
     private
 
     def move_files
-      move(cmds)
+      copy(cmds)
     end
 
     # TODO: assuming src path is a directory
