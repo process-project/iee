@@ -73,16 +73,13 @@ en:
     options:
       pipeline:
         flow:
-          placeholder_pipeline: Placeholder pipeline
-          tensorflow_pipeline: Tensorflow pipeline
-          singularity_test_gpu_pipeline: Singularity Test GPU Pipeline
+          cloudify_placeholder_pipeline: Cloudify placeholder pipeline
           singularity_placeholder_pipeline: Singularity placeholder pipeline
           medical_pipeline: Medical pipeline
           lofar_pipeline: LOFAR pipeline
-          lufthansa_pipeline: Lufthansa pipeline
           agrocopernicus_pipeline: Agrocopernicus pipeline
-          staging_in_placeholder_pipeline: Staging-in placeholder pipeline
-          validation_pipeline: Validation pipeline
+          test_pipeline: Simple test pipeline
+          full_test_pipeline: Complex test pipeline
     # Examples
     # labels:
     #   defaults:
