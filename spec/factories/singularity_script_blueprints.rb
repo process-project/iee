@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :singularity_script_blueprint do
     container_name 'placeholder workaround hardcode'
     container_tag 'latest'
-    hpc 'Prometheus'
+    compute_site factory: :compute_site, name: :krk
     script_blueprint 'parameter1 %<label1>s parameter2 %<label2>s parameter3 %<label3>s'
 
     step_parameters do

@@ -3,7 +3,123 @@
 namespace :blueprints do
   desc 'Seed singularity script blueprints for known pipelines'
   task seed: :environment do
-    # Test container for the Prometheus HPC
+    # Common fragments of the test and full test pipeline (LOBCDER staging steps compatible)
+
+    common_script_part = <<~CODE
+      #!/bin/bash -l
+      #SBATCH -N %<nodes>s
+      #SBATCH --ntasks-per-node=%<cpus>s
+      #SBATCH --time=00:05:00
+      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
+      #SBATCH -p %<partition>s
+      #SBATCH --job-name testing_container_step
+      #SBATCH --output %<uc_root>s/slurm_outputs/slurm-%%j.out
+      #SBATCH --error %<uc_root>s/slurm_outputs/slurm-%%j.err
+      # Running container using singularity
+      module load plgrid/tools/singularity/stable
+
+      singularity run \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
+    CODE
+
+    # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
+    testing_container_1_script_part =
+      '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
+    script = common_script_part + testing_container_1_script_part
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_1.sif',
+                                              container_tag: 'whatever_tag_and_it_is_to_remove',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = [
+      StepParameter.new(
+        label: 'nodes',
+        name: 'Nodes',
+        description: 'Number of execution nodes',
+        rank: 0,
+        datatype: 'integer',
+        default: 1
+      ),
+      StepParameter.new(
+        label: 'cpus',
+        name: 'CPUs',
+        description: 'Number of CPU per execution node',
+        rank: 0,
+        datatype: 'multi',
+        default: '1',
+        values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+      ),
+      StepParameter.new(
+        label: 'partition',
+        name: 'Partition',
+        description: 'Prometheus execution partition',
+        rank: 0,
+        datatype: 'multi',
+        default: 'plgrid-testing',
+        values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+      ),
+      StepParameter.new(
+        label: 'operation',
+        name: 'Operation',
+        description: 'Operation to perform',
+        rank: 0,
+        datatype: 'multi',
+        default: 'add',
+        values: %w[add subtract multiply divide]
+      )
+    ]
+
+    # Testing container 2 for the full test pipeline (LOBCDER staging steps compatible)
+    testing_container_2_script_part =
+      '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
+    script = common_script_part + testing_container_2_script_part
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_2.sif',
+                                              container_tag: 'whatever_tag_and_it_is_to_remove',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = [
+      StepParameter.new(
+        label: 'nodes',
+        name: 'Nodes',
+        description: 'Number of execution nodes',
+        rank: 0,
+        datatype: 'integer',
+        default: 1
+      ),
+      StepParameter.new(
+        label: 'cpus',
+        name: 'CPUs',
+        description: 'Number of CPU per execution node',
+        rank: 0,
+        datatype: 'multi',
+        default: '1',
+        values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+      ),
+      StepParameter.new(
+        label: 'partition',
+        name: 'Partition',
+        description: 'Prometheus execution partition',
+        rank: 0,
+        datatype: 'multi',
+        default: 'plgrid-testing',
+        values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+      ),
+      StepParameter.new(
+        label: 'factor',
+        name: 'Factor',
+        description: 'Factor by which the result from previous step will by multiplied',
+        rank: 0,
+        datatype: 'integer',
+        default: 1000
+      )
+    ]
+
+    # Test container for the Prometheus Compute Site
     script = <<~CODE
       #!/bin/bash -l
       #SBATCH -N %<nodes>s
@@ -30,7 +146,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -70,10 +186,10 @@ namespace :blueprints do
       )
     ]
 
-    # Test container for the SuperMUC HPC
+    # Test container for the SuperMUC Compute Site
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              hpc: 'SuperMUC',
+                                              compute_site: ComputeSite.where(name: 'lrzdtn').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -110,7 +226,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                               container_tag: '0.1',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -151,32 +267,32 @@ namespace :blueprints do
     ]
 
     # Container for the UC2 LOFAR use case
+    # TODO: update to new version of container (new and old containers work in the same way,
+    #  but there are differences in the scripts)
     script = <<~CODE
       #!/bin/bash
       #SBATCH --partition %<partition>s
       #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
       #SBATCH --nodes %<nodes>s
       #SBATCH --ntasks %<cpus>s
-      #SBATCH --time 2:00:00
+      #SBATCH --time 8:00:00
       #SBATCH --job-name UC2_test
-      #SBATCH --output /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.txt
-      #SBATCH --error /net/archive/groups/plggprocess/UC2/slurm_outputs/uc1-pipeline-log-%%J.err
-
-      mkdir /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
-
-      sed -e "s/\\$SLURM_JOB_ID/$SLURM_JOB_ID/" /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.template > /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg
+      #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
+      #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
 
       module load plgrid/tools/singularity/stable
-      singularity exec -B /net/archive/groups/plggprocess/UC2/container_testing/ /net/archive/groups/plggprocess/UC2/containers/centos_lofar.simg genericpipeline.py -d -c /net/archive/groups/plggprocess/UC2/container_testing/pipeline_testing.cfg /net/archive/groups/plggprocess/UC2/container_testing/Pre-Facet-Calibrator.parset
 
-      tar -cf /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar /net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID
-
-      <%%= stage_out '/net/archive/groups/plggprocess/UC2/container_testing/test_$SLURM_JOB_ID.tar' %%>
+      singularity run \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
+      ./containers/factor-iee.sif.old \\
+      cwltool --singularity --preserve-entire-environment /opt/lofar/cwl/uc2.cwl /mnt/in/uc2.yml
     CODE
 
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'lofar/lofar_container',
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif.old',
                                               container_tag: 'latest',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
     ssbp.step_parameters = [
       StepParameter.new(
@@ -204,80 +320,6 @@ namespace :blueprints do
         datatype: 'multi',
         default: 'plgrid',
         values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
-      ),
-      StepParameter.new(
-        label: 'visibility_id',
-        name: 'LOFAR Visibility ID',
-        description: 'LOFAR visibility identifier',
-        rank: 0,
-        datatype: 'string',
-        default: '1234'
-      ),
-      StepParameter.new(
-        label: 'avg_freq_step',
-        name: 'Average frequency step',
-        description: 'Corresponds to .freqstep in NDPPP or demixer.freqstep',
-        rank: 0,
-        datatype: 'integer',
-        default: 2
-      ),
-      StepParameter.new(
-        label: 'avg_time_step',
-        name: 'Average time step',
-        description: 'Corresponds to .timestep in NDPPP or demixer.timestep',
-        rank: 0,
-        datatype: 'integer',
-        default: 4
-      ),
-      StepParameter.new(
-        label: 'do_demix',
-        name: 'Perform demixer',
-        description: 'If true then demixer instead of average is performed',
-        rank: 0,
-        datatype: 'boolean',
-        default: true
-      ),
-      StepParameter.new(
-        label: 'demix_freq_step',
-        name: 'Demixer frequency step',
-        description: 'Corresponds to .demixfreqstep in NDPPP',
-        rank: 0,
-        datatype: 'integer',
-        default: 2
-      ),
-      StepParameter.new(
-        label: 'demix_time_step',
-        name: 'Demixer time step',
-        description: 'Corresponds to .demixtimestep in NDPPP',
-        rank: 0,
-        datatype: 'integer',
-        default: 2
-      ),
-      StepParameter.new(
-        label: 'demix_sources',
-        name: 'Demixer sources',
-        description: '',
-        rank: 0,
-        datatype: 'multi',
-        default: 'CasA',
-        values: %w[CasA other]
-      ),
-      StepParameter.new(
-        label: 'select_nl',
-        name: 'Use NL stations only',
-        description: 'If true then only Dutch stations are selected',
-        rank: 0,
-        datatype: 'boolean',
-        default: true
-      ),
-      StepParameter.new(
-        label: 'parset',
-        name: 'Parameter set',
-        description: '',
-        rank: 0,
-        datatype: 'multi',
-        default: 'lba_npp',
-        values: %w[lba_npp other]
       )
     ]
 
@@ -289,7 +331,7 @@ namespace :blueprints do
     ssbp = SingularityScriptBlueprint.create!(
       container_name: 'agrocopernicus_placeholder_container',
       container_tag: 'agrocopernicus_placeholder_tag',
-      hpc: 'Prometheus',
+      compute_site: ComputeSite.where(name: 'krk').first,
       script_blueprint: script
     )
 
@@ -356,7 +398,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'validation_container',
                                               container_tag: 'latest',
-                                              hpc: 'Prometheus',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [

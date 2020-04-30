@@ -13,14 +13,24 @@ defaults: &defaults
   grant_id: <%= ENV['GRANT_ID'] || 'process2' %>
   gpu_grant_id: <%= ENV['GPU_GRANT_ID'] || 'process2gpu' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
-  staging_in:
-    host: 'lobcder.process-project.eu'
-    port: '31138'
-    path: '/api/v1/copy'
-    lobcder_api_access_token: <%= ENV['LOBCDER_API_ACCESS_TOKEN'] %>
+  staging:
+    infra_host: 'http://lobcder.process-project.eu'
+    infra_port: '30000'
+    infra_path: '/api/v1/infrastructure'
+    infra_token_header: 'x-access-token'
+    uc1_infra_token:  <%= ENV['UC1_INFRA_TOKEN'] %>
+    uc2_infra_token:  <%= ENV['UC2_INFRA_TOKEN'] %>
+    uc4_infra_token:  <%= ENV['UC4_INFRA_TOKEN'] %>
+    uc5_infra_token:  <%= ENV['UC5_INFRA_TOKEN'] %>
     staging_secret: <%= ENV['STAGING_SECRET'] %>
-    src_user: 'di39nox'
-    dest_user: 'plgcushing'
+    folders_path: '/api/v1/folders'
+    list_path: '/api/v1/list'
+    copy_path: '/api/v1/copy'
+    move_path: '/api/v1/move'
+    status_path: '/api/v1/status'
+    mkdir_path: '/api/v1/mkdir'
+    rm_path: '/api/v1/remove'
+
   segmentation:
     inputs_path: segmentation/input
     outputs_path: segmentation/output

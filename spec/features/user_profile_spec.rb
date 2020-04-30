@@ -11,7 +11,7 @@ RSpec.feature 'Profile page' do
   end
 
   let!(:compute_site) do
-    create(:compute_site)
+    create(:compute_site, name: 'asd')
   end
 
   before do
@@ -82,7 +82,7 @@ RSpec.feature 'Profile page' do
     visit profile_compute_site_proxy_index_path
 
     click_on 'Add new proxy'
-    select('compute site mock name', from: 'Compute site')
+    select('asd', from: 'Compute site')
     fill_in 'Value', with: 'compute site mock proxy value'
     click_button 'Add proxy'
 

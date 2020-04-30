@@ -22,16 +22,16 @@ en:
     singularity_placeholder_step:
       title: Singularity placeholder computation
       cannot_start: |
-        Cannot start singularit placeholder computation.
+        Cannot start singularity placeholder computation.
       created: |
         All required input files are available.
-        You can start Singularit placholder computation for this project.
+        You can start Singularity placholder computation for this project.
       new: Singularity placholder computation is being submitted
       queued: singularity placholder computation is queued
       running: Singularity placholder computation is running
       error: There was an error while running Singularity placholder computation
       finished: |
-        singularity placholder computation finished successfully, results stored in
+        Singularity placholder computation finished successfully, results stored in
         the output directory.
       aborted: Singularity placholder computation was aborted by the pipeline owner
       start_automatic: Save Singularity placholder computation version
@@ -76,95 +76,74 @@ en:
       start_manual: Start LOFAR container computation computation
       restart_manual: Restart LOFAR container computation
       restart_automatic: Restart computation
-    lufthansa_step:
-      title: Lufthansa container computation
-      cannot_start: |
-        Cannot start Lufthansa container computation.
-      created: |
-        All required input files are available.
-        You can start Lufthansa container computation for this project.
-      new: Lufthansa container computation is being submitted
-      queued: Lufthansa container computation is queued
-      running: Lufthansa container computation is running
-      error: There was an error while running Lufthansa container computation
-      finished: |
-        Lufthansa container computation finished successfully, results stored in
-        the output directory.
-      aborted: Lufthansa container computation was aborted by the pipeline owner
-      start_automatic: Save Lufthansa container computation version
-      start_manual: Start Lufthansa container computation computation
-      restart_automatic: Restart computation
-      restart_manual: Restart Lufthansa container computation
     staging_in_step:
-      title: Staging in computation
+      title: Staging In
       cannot_start: |
-        Cannot start staging in computation.
+        Waiting for previous steps to finish
       created: |
-        You can start staging in computation for this project.
-      new: Staging in computation is being submitted
-      queued: Staging in computation is queued
-      running: Staging in computation is running
-      error: There was an error while running staging in computation
+        Waiting for previous steps to finish
+      new: Staging In job is being submitted
+      queued: Staging In job is queued
+      running: Staging In job is running
+      error: There was an error while staging input files
       finished: |
-        Staging in computation finished successfully.
-      aborted: Staging in computation was aborted by the pipeline owner
-      start_automatic: Save staging in computation version
-      start_manual: Start staging in computation computation
-      restart_manual: Restart staging in computation
-      restart_automatic: Restart staging in computation
-    validation_staging_in_step:
-      title: Staging in computation
+        Staging In job finished successfully.
+      aborted: Staging In job was aborted by the pipeline owner
+      start_automatic: Start Staging In job
+      start_manual: Start Staging In job
+      restart_manual: Restart staging input files
+      restart_automatic: Restart staging input files
+    staging_out_step:
+      title: Staging Out
       cannot_start: |
-        Cannot start staging in computation.
+        Waiting for previous steps to finish
       created: |
-        You can start staging in computation for this project.
-      new: Staging in computation is being submitted
-      queued: Staging in computation is queued
-      running: Staging in computation is running
-      error: There was an error while running staging in computation
+        Waiting for previous steps to finish
+      new: Staging Out job is being submitted
+      queued: Staging Out job is queued
+      running: Staging Out job is running
+      error: There was an error while staging output files
       finished: |
-        Staging in computation finished successfully.
-      aborted: Staging in computation was aborted by the pipeline owner
-      start_automatic: Save staging in computation version
-      start_manual: Start staging in computation computation
-      restart_manual: Restart staging in computation
-      restart_automatic: Restart staging in computation
-    validation_singularity_step:
-      title: Validation container computation
+        Staging Out job finished successfully.
+      aborted: Staging Out job was aborted by the pipeline owner
+      start_automatic: Start Staging Out job
+      start_manual: Start Staging Out job
+      restart_manual: Restart staging output files
+      restart_automatic: Restart staging output files
+    directory_builder_step:
+      title: Pipeline Directory Builder
       cannot_start: |
-        Cannot start Validation container computation.
+        Waiting for previous steps to finish
       created: |
-        All required input files are available.
-        You can start Validation container computation for this project.
-      new: Validation container computation is being submitted
-      queued: Validation container computation is queued
-      running: Validation container computation is running
-      error: There was an error while running Validation container computation
+        Waiting for previous steps to finish
+      new: Directory Builder job is being submitted
+      queued: Directory Builder job is queued
+      running: Directory Builder job is running
+      error: There was an error while building pipeline directories
       finished: |
-        Validation container computation finished successfully, results stored in
-        the output directory.
-      aborted: Validation container computation was aborted by the pipeline owner
-      start_automatic: Save Validation container computation version
-      start_manual: Start Validation container computation computation
-      restart_automatic: Restart computation
-      restart_manual: Restart Validation container computation
-    validation_stage_out_step:
-      title: Staging out computation
+        Successfully built pipeline directories
+      aborted: Directory Builder job was aborted by the pipeline owner
+      start_automatic: Start Directory Builder job
+      start_manual: Start Directory Builder job
+      restart_manual: Restart building pipeline directories
+      restart_automatic: Restart staging pipeline directories
+    implicit_staging_step:
+      title: Transfer Intermediate Files
       cannot_start: |
-        Cannot start staging out computation.
+        Waiting for previous steps to finish
       created: |
-        You can start staging out computation for this project.
-      new: Staging out computation is being submitted
-      queued: Staging out computation is queued
-      running: Staging out computation is running
-      error: There was an error while running staging out computation
+        Waiting for previous steps to finish
+      new: TTransfer Intermediate Files job is being submitted
+      queued: Transfer Intermediate Files job is queued
+      running: Transfer Intermediate Files job is running
+      error: There was an error while transfering intermediate files
       finished: |
-        Staging out computation finished successfully.
-      aborted: Staging out computation was aborted by the pipeline owner
-      start_automatic: Save staging out computation version
-      start_manual: Start staging out computation computation
-      restart_manual: Restart staging out computation
-      restart_automatic: Restart staging out computation
+        Successfully transferred intermediate files
+      aborted: Transfer Intermediate Files job was aborted by the pipeline owner
+      start_automatic: Start Transfer Intermediate Files job
+      start_manual: Start Transfer Intermediate Files job
+      restart_manual: Restart transfering intermediate Files
+      restart_automatic: Restart transfering intermediate files
     agrocopernicus_step:
       title: Agrocopernicus computation
       cannot_start: |
@@ -201,3 +180,71 @@ en:
       start_manual: Start Lufthansa container computation computation on Cloudify
       restart_automatic: Restart computation
       restart_manual: Restart Lufthansa container computation on Cloudify
+    testing_singularity_step:
+      title: Test singularity container
+      cannot_start: |
+        Waiting for previous steps to finish
+      created: |
+        Waiting for previous steps to finish
+      new: Test singularity container is being submitted
+      queued: Test singularity container is queued
+      running: Test singularity containeris running
+      error: There was an error while running test singularity container
+      finished: |
+        Test singularity container finished successfully
+      aborted: Test singularity container was aborted by the pipeline owner
+      start_automatic: Test singularity container version
+      start_manual: Start test singularity container
+      restart_manual: Restart test singularity container computation
+      restart_automatic: Restart test singularity container
+    testing_singularity_step_1:
+      title: Test singularity container
+      cannot_start: |
+        Waiting for previous steps to finish
+      created: |
+        Waiting for previous steps to finish
+      new: Test singularity container is being submitted
+      queued: Test singularity container is queued
+      running: Test singularity containeris running
+      error: There was an error while running test singularity container
+      finished: |
+        Test singularity container finished successfully
+      aborted: Test singularity container ws aborted by the pipeline owner
+      start_automatic: Test singularity container version
+      start_manual: Start test singularity container
+      restart_manual: Restart test singularity container computation
+      restart_automatic: Restart test singularity container
+    testing_singularity_step_2:
+      title: Test singularity container
+      cannot_start: |
+        Waiting for previous steps to finish
+      created: |
+        Waiting for previous steps to finish
+      new: Test singularity container is being submitted
+      queued: Test singularity container is queued
+      running: Test singularity containeris running
+      error: There was an error while running test singularity container
+      finished: |
+        Test singularity container finished successfully
+      aborted: Test singularity container was aborted by the pipeline owner
+      start_automatic: Test singularity container version
+      start_manual: Start test singularity container
+      restart_manual: Restart test singularity container computation
+      restart_automatic: Restart test singularity container
+    clean_up_step:
+      title: Clean Up
+      cannot_start: |
+        Waiting for previous steps to finish
+      created: |
+        Waiting for previous steps to finish
+      new: Clean Up job is being submitted
+      queued: Clean Up job is queued
+      running: Clean Up is running
+      error: There was an error while cleaning up
+      finished: |
+        Clean Up jobfinished successfully
+      aborted: Clean Up job was aborted by the pipeline owner
+      start_automatic: Start Clean Up job version
+      start_manual: Start Clean Up container
+      restart_manual: Restart Clean Up job computation
+      restart_automatic: Restart Clean Up job

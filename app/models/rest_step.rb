@@ -23,8 +23,4 @@ class RestStep < Step
       options
     )
   end
-
-  def input_present_for?(_pipeline)
-    true
-  end
 end

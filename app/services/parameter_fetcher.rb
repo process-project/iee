@@ -27,7 +27,7 @@ class ParameterFetcher
   def get_basic_parameters_possibilities(containers_and_tags)
     container_names = []
     container_tags = []
-    hpcs = []
+    compute_sites = []
 
     containers_and_tags.each do |container_name, tags|
       container_names |= [container_name]
@@ -36,7 +36,7 @@ class ParameterFetcher
         matching_blueprints = SingularityScriptBlueprint.where(container_name: container_name,
                                                                container_tag: container_tag)
         matching_blueprints.each do |blueprint|
-          hpcs |= [blueprint.hpc]
+          compute_sites |= [blueprint.compute_site]
         end
       end
     end
@@ -44,7 +44,7 @@ class ParameterFetcher
     {
       container_names: container_names,
       container_tags: container_tags,
-      HPCs: hpcs
+      compute_sites: compute_sites
     }
   end
 
@@ -69,31 +69,33 @@ class ParameterFetcher
       values: possibilities[:container_tags]
     )
 
-    container_hpcs_param = StepParameter.new(
-      label: 'hpc',
-      name: 'HPC',
-      description: 'High Performance Computer',
+    compute_site_names = possibilities[:compute_sites].map(&:full_name)
+
+    container_compute_sites_param = StepParameter.new(
+      label: 'compute_site_name',
+      name: 'Compute Site Name',
+      description: 'Name of the Compute Site',
       rank: 0,
       datatype: 'multi',
-      default: possibilities[:HPCs].first,
-      values: possibilities[:HPCs]
+      default: compute_site_names.first,
+      values: compute_site_names
     )
 
-    [container_names_param, container_tags_param, container_hpcs_param]
+    [container_names_param, container_tags_param, container_compute_sites_param]
   end
 
   def fetch_specific_parameters(possibilities)
     container_names = possibilities[:container_names]
     container_tags = possibilities[:container_tags]
-    hpcs = possibilities[:HPCs]
+    compute_sites = possibilities[:compute_sites]
 
     specific_parameters = []
     container_names.each do |container_name|
       container_tags.each do |container_tag|
-        hpcs.each do |hpc|
+        compute_sites.each do |compute_site|
           blueprint = SingularityScriptBlueprint.find_by(container_name: container_name,
                                                          container_tag: container_tag,
-                                                         hpc: hpc)
+                                                         compute_site: compute_site)
           next if blueprint.nil?
 
           blueprint.step_parameters.each do |specific_parameter|
