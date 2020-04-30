@@ -1,6 +1,6 @@
 test:
   adapter: postgresql
-  database: vapor_test
-  username: vapor
+  database: iee_test
+  username: iee
   password: ""
   host: postgres
