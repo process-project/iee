@@ -68,6 +68,7 @@ module Lobcder
       rm_batch commands
     end
 
+    # rubocop:disable Metrics/AbcSize
     def rm_batch(commands)
       # commands argument example
       # [
@@ -88,9 +89,11 @@ module Lobcder
 
       response = JSON.parse(response.body, symbolize_names: true)
       unless response.values.all? { |status| status.eql? 'Ok' }
-        raise Lobcder::ServiceFailure, 'Not all LOBCDER API mkdir commands have completed successfully'
+        raise Lobcder::ServiceFailure,
+              'Not all LOBCDER API mkdir commands have completed successfully'
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def folders
       folders_response = @connection.get(attribute_fetcher('folders_path'))
@@ -136,16 +139,12 @@ module Lobcder
       response - [path, "/#{path}", "/#{path}/", "#{path}/"] # TODO: remove adapter later
     end
 
-
     # TODO: implement
-    def restart
-      payload = {
-          name: "#{@uc}-microinfra"
-      }
-    end
+    def restart; end
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     def get_connection(uc)
       infra_host = attribute_fetcher('infra_host')
       infra_port = attribute_fetcher('infra_port')
@@ -173,8 +172,10 @@ module Lobcder
         faraday.headers[token_header] = token
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     # utilities
+    # rubocop:disable Metrics/AbcSize
     def copy_move_utility(commands, api_path)
       # commands argument example
       # [
@@ -211,10 +212,12 @@ module Lobcder
         track_id: parsed_response[:trackId]
       }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def attribute_fetcher(attribute)
       Rails.application.config_for('process')['staging'][attribute]
     end
+
     # TODO: send proper webhook via LOBCDER API
     def webhook_info
       { method: 'POST',
