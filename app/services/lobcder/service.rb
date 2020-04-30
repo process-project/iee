@@ -115,7 +115,7 @@ module Lobcder
 
     def status(track_id)
       response = @connection.get "#{attribute_fetcher('status_path')}/#{track_id}"
-      JSON.parse(response.body, symbolize_names: true)#[:status]
+      JSON.parse(response.body, symbolize_names: true)[:status]
     end
 
     def list(site_name, path, recursive = false)
