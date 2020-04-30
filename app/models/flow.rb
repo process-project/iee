@@ -7,7 +7,11 @@ class Flow
     cloudify_placeholder_pipeline: %w[cloudify_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
-    lofar_pipeline: %w[directory_builder_step staging_in_step lofar_step staging_out_step clean_up_step],
+    lofar_pipeline: %w[directory_builder_step
+                       staging_in_step
+                       lofar_step
+                       staging_out_step
+                       clean_up_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
     test_pipeline: %w[directory_builder_step
                       staging_in_step

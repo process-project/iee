@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class StagingInStep < LobcderStep
+  # rubocop:disable MethodLength
   def initialize(name)
     super(name)
     compute_site_names = ComputeSite.all.map(&:full_name)
@@ -24,6 +25,7 @@ class StagingInStep < LobcderStep
       )
     ]
   end
+  # rubocop:enable MethodLength
 
   def builder_for(pipeline, params)
     PipelineSteps::Lobcder::Builder.new(pipeline,
