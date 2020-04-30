@@ -5,6 +5,7 @@ require 'json'
 
 # TODO: throw exceptions
 module Lobcder
+  # rubocop: disable Metrics/ClassLength
   class Service
     def initialize(uc = :uc1)
       @uc = uc
@@ -45,7 +46,8 @@ module Lobcder
       response = JSON.parse(response.body, symbolize_names: true)
       response.values.all? { |status| status.eql? 'Ok' }
       unless response.values.all? { |status| status.eql? 'Ok' }
-        raise Lobcder::ServiceFailure, 'Not all LOBCDER API remove commands have completed successfully'
+        raise Lobcder::ServiceFailure, 'Not all LOBCDER API remove ' \
+                                       'commands have completed successfully'
       end
     end
 

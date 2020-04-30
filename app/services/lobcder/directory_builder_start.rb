@@ -29,6 +29,7 @@ module Lobcder
       cmds
     end
 
+    # rubocop:disable Metrics/AbcSize
     def check_containers
       @computation.pipeline.computations.each do |c|
         next if container_exist? c.compute_site.name.to_sym, c.container_name
@@ -40,6 +41,7 @@ module Lobcder
 
       true
     end
+    # rubocop:enable Metrics/AbcSize
 
     def container_exist?(site_name, container_name)
       containers(site_name).include? container_name

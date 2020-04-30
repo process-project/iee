@@ -4,6 +4,9 @@ module Lobcder
   class StartJob < ApplicationJob
     queue_as :computation
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def perform(computation)
       if computation.step.class.name == 'DirectoryBuilderStep'
         Lobcder::DirectoryBuilderStart.new(computation).call
@@ -23,5 +26,8 @@ module Lobcder
     ensure
       ComputationUpdater.new(computation).call
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end
