@@ -22,8 +22,8 @@ module Pipelines
     private
 
     def post_save
-      r_mkdir(@pipeline.inputs_dir)
-      r_mkdir(@pipeline.outputs_dir)
+      r_mkdir(@pipeline.inputs_dir) # To remove
+      r_mkdir(@pipeline.outputs_dir) # To remove
 
       create_computations
     end

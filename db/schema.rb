@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191003083121) do
+ActiveRecord::Schema.define(version: 20200428120335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,14 @@ ActiveRecord::Schema.define(version: 20191003083121) do
     t.string "deployment_name"
     t.string "workflow_id"
     t.string "cloudify_status", default: "not_started"
+    t.bigint "compute_site_id"
+    t.bigint "src_compute_site_id"
+    t.bigint "dest_compute_site_id"
+    t.string "track_id"
+    t.index ["compute_site_id"], name: "index_computations_on_compute_site_id"
+    t.index ["dest_compute_site_id"], name: "index_computations_on_dest_compute_site_id"
     t.index ["pipeline_id"], name: "index_computations_on_pipeline_id"
+    t.index ["src_compute_site_id"], name: "index_computations_on_src_compute_site_id"
   end
 
   create_table "compute_site_proxies", force: :cascade do |t|
@@ -101,6 +108,8 @@ ActiveRecord::Schema.define(version: 20191003083121) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "full_name"
+    t.string "host"
   end
 
   create_table "data_files", id: :serial, force: :cascade do |t|
@@ -132,6 +141,16 @@ ActiveRecord::Schema.define(version: 20191003083121) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "default", default: false, null: false
+  end
+
+  create_table "lobcder_computations", force: :cascade do |t|
+    t.string "src_path"
+    t.string "dest_path"
+    t.string "src_host"
+    t.string "dest_host"
+    t.string "track_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pipelines", id: :serial, force: :cascade do |t|
@@ -202,10 +221,12 @@ ActiveRecord::Schema.define(version: 20191003083121) do
   create_table "singularity_script_blueprints", force: :cascade do |t|
     t.string "container_name"
     t.string "container_tag"
-    t.string "hpc"
+    t.string "compute_site"
     t.string "script_blueprint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "compute_site_id"
+    t.index ["compute_site_id"], name: "index_singularity_script_blueprints_on_compute_site_id"
   end
 
   create_table "step_parameters", force: :cascade do |t|
@@ -256,6 +277,9 @@ ActiveRecord::Schema.define(version: 20191003083121) do
   end
 
   add_foreign_key "access_methods", "services"
+  add_foreign_key "computations", "compute_sites"
+  add_foreign_key "computations", "compute_sites", column: "dest_compute_site_id"
+  add_foreign_key "computations", "compute_sites", column: "src_compute_site_id"
   add_foreign_key "computations", "pipelines"
   add_foreign_key "data_files", "pipelines", column: "input_of_id"
   add_foreign_key "data_files", "pipelines", column: "output_of_id"

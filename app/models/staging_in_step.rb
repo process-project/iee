@@ -1,34 +1,40 @@
 # frozen_string_literal: true
 
-class StagingInStep < Step
-  attr_reader :parameters
-
-  def initialize(name, parameters = [], tmp_output_file = nil)
-    super(name, [])
-    @parameters = parameters
-    @tmp_output_file = tmp_output_file
+class StagingInStep < LobcderStep
+  # rubocop:disable MethodLength
+  def initialize(name)
+    super(name)
+    compute_site_names = ComputeSite.all.map(&:full_name)
+    @parameters = [
+      StepParameter.new(
+        label: 'src_compute_site_name',
+        name: 'Source Compute Site Name',
+        description: 'Descriptions placeholder',
+        rank: 0,
+        datatype: 'multi',
+        default: compute_site_names[0],
+        values: compute_site_names
+      ),
+      StepParameter.new(
+        label: 'src_path',
+        name: 'Source Path',
+        description: 'Descriptions placeholder',
+        rank: 1,
+        datatype: 'string',
+        default: ''
+      )
+    ]
   end
+  # rubocop:enable MethodLength
 
   def builder_for(pipeline, params)
-    @src_host = params[:src_host]
-    @src_path = params[:src_path]
-    @dest_host = params[:dest_host]
-    @dest_path = params[:dest_path]
-    PipelineSteps::StagingIn::Builder.new(pipeline,
-                                          name,
-                                          @src_host,
-                                          @src_path,
-                                          @dest_host,
-                                          @dest_path,
-                                          @tmp_output_file)
+    PipelineSteps::Lobcder::Builder.new(pipeline,
+                                        name,
+                                        src_compute_site_name: params[:src_compute_site_name],
+                                        src_path: params[:src_path])
   end
 
   def runner_for(computation, options = {})
-    PipelineSteps::StagingIn::Runner.new(computation,
-                                         @src_host,
-                                         @src_path,
-                                         @dest_host,
-                                         @dest_path,
-                                         options)
+    PipelineSteps::Lobcder::Runner.new(computation, options)
   end
 end

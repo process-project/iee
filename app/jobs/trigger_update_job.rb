@@ -9,6 +9,7 @@ class TriggerUpdateJob < ApplicationJob
     trigger_singularity_jobs_update
     trigger_rest_jobs_update
     trigger_cloudify_jobs_update
+    trigger_lobcder_jobs_update
   end
 
   private
@@ -40,6 +41,16 @@ class TriggerUpdateJob < ApplicationJob
   def trigger_cloudify_jobs_update
     User.with_submitted_computations('CloudifyComputation').each do |user|
       Cloudify::UpdateJob.perform_later(user)
+    end
+  end
+
+  def trigger_lobcder_jobs_update
+    # User.with_submitted_computations('LobcderComputation').each do |user|
+    #   Lobcder::UpdateJob.perform_later(user)
+    # end
+
+    Computation.where(type: 'LobcderComputation', status: %w[queued running]).each do |computation|
+      Lobcder::UpdateJob.perform_later(computation)
     end
   end
 end

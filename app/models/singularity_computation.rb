@@ -4,5 +4,13 @@ class SingularityComputation < Computation
   validates :script, presence: true, unless: :created?
   validates :container_name, presence: true
   validates :container_tag, presence: true
-  validates :hpc, presence: true
+  validates :compute_site, presence: true
+
+  def need_directory_structure?
+    true
+  end
+
+  def runnable?
+    prev.nil? || prev.success?
+  end
 end

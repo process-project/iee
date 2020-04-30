@@ -36,16 +36,16 @@ FactoryBot.define do
       script 'SCRIPT'
     end
 
-    factory :staging_in_computation, class: 'StagingInComputation' do
-      pipeline_step 'staging_in_step'
-      src_host 'data03.process-project.eu'
-      src_path '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif'
-      dest_host 'pro.cyfronet.pl'
-      dest_path '/net/archive/groups/plggprocess/Mock/test_staging'
-
-      trait :with_tmp_output_file do
-        tmp_output_file 'spec_tmp_output_file.txt'
-      end
-    end
+    # factory :staging_in_computation, class: 'StagingInComputation' do
+    #   pipeline_step 'staging_in_step'
+    #   src_compute_site 'data03.process-project.eu'
+    #   src_path '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif'
+    #   dest_compute_site 'pro.cyfronet.pl'
+    #   dest_path '/net/archive/groups/plggprocess/Mock/test_staging'
+    #
+    #   trait :with_tmp_output_file do
+    #     tmp_output_file 'spec_tmp_output_file.txt'
+    #   end
+    # end
   end
 end

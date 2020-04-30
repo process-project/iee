@@ -10,13 +10,18 @@ RSpec.describe PipelineSteps::Singularity::Runner do
     create(:pipeline, flow: 'singularity_placeholder_pipeline')
   end
 
+  # TODO: it calls a Lobcder::Service to get uc_root -> isolate tests
+  let(:compute_site) do
+    create(:compute_site, name: 'krk')
+  end
+
   let(:computation) do
     create(:singularity_computation,
            pipeline: singularity_pipeline,
            pipeline_step: 'singularity_placeholder_step',
            container_name: 'test_name',
            container_tag: 'test_tag',
-           hpc: 'test_hpc')
+           compute_site: compute_site)
   end
 
   let!(:singularity_script_blueprint) do
@@ -24,7 +29,7 @@ RSpec.describe PipelineSteps::Singularity::Runner do
            container_name: computation.container_name,
            container_tag: computation.container_tag,
            script_blueprint: 'test script',
-           hpc: computation.hpc)
+           compute_site: compute_site)
   end
 
   subject do

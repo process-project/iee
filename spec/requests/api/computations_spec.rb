@@ -150,9 +150,9 @@ RSpec.describe 'Computations' do
         steps: [{
           step_name: 'lofar_step',
           parameters: {
-            container_name: 'lofar/lofar_container',
+            container_name: 'factor-iee.sif',
             container_tag: 'latest',
-            hpc: 'Prometheus',
+            compute_site_name: :krk.to_s,
             nodes: '1',
             cpus: '24',
             partition: 'plgrid',

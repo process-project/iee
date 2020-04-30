@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StagingInComputationPolicy < ApplicationPolicy
+class LobcderComputationPolicy < ApplicationPolicy
   def show?
     true
   end

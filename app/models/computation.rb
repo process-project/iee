@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
+# rubocop:disable ClassLength
 class Computation < ApplicationRecord
   belongs_to :user
   belongs_to :pipeline
+
+  belongs_to :compute_site, optional: true
+  belongs_to :src_compute_site, class_name: 'ComputeSite', optional: true
+  belongs_to :dest_compute_site, class_name: 'ComputeSite', optional: true
 
   validates :status,
             inclusion: { in: %w[created new queued running error finished aborted] }
@@ -20,13 +25,13 @@ class Computation < ApplicationRecord
   scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :cloudify, -> { where(type: 'CloudifyComputation') }
-  scope :staging_in, -> { where(type: 'StagingInComputation') }
   scope :rest, -> { where(type: 'RestComputation') }
+  scope :lobcder, -> { where(type: 'LobcderComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
   scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
   scope :submitted_cloudify, -> { submitted.cloudify }
-  scope :submitted_staging_in, -> { submitted.staging_in }
+  scope :submitted_lobcder, -> { submitted.lobcder }
   scope :submitted_rest, -> { submitted.rest }
   scope :created_or_submitted_rest, -> { created.rest + submitted.rest }
   scope :for_project_status, ->(status) { where(pipeline_step: status) }
@@ -61,8 +66,8 @@ class Computation < ApplicationRecord
     type == 'SingularityComputation'
   end
 
-  def staging_in?
-    type == 'StagingInComputation'
+  def lobcder?
+    type == 'LobcderComputation'
   end
 
   def rest?
@@ -114,9 +119,36 @@ class Computation < ApplicationRecord
     pipeline.steps.find { |step| step.name == pipeline_step }
   end
 
+  def need_directory_structure?
+    false
+  end
+
+  def prev
+    comps = pipeline.computations.sort_by(&:id).to_a
+    comps[0..-2].zip(comps[1..-1]).each do |prev_c, c|
+      return prev_c if c == self
+    end
+
+    nil
+  end
+
+  def next
+    comps = pipeline.computations.sort_by(&:id).to_a
+    comps[0..-2].zip(comps[1..-1]).each do |c, next_c|
+      return next_c if c == self
+    end
+
+    nil
+  end
+
+  def uc
+    Flow.uc_for(pipeline.flow.to_sym)
+  end
+
   private
 
   def runner
     @runner ||= step.runner_for(self)
   end
 end
+# rubocop:enable ClassLength

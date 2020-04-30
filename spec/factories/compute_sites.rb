@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :compute_site do
-    name 'compute site mock name'
+    full_name 'mock full name'
+    name 'mock name'
+    host 'mock.pl'
   end
 end

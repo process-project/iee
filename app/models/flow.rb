@@ -7,114 +7,44 @@ class Flow
     cloudify_placeholder_pipeline: %w[cloudify_step],
     singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
-    lofar_pipeline: %w[lofar_step],
+    lofar_pipeline: %w[directory_builder_step
+                       staging_in_step
+                       lofar_step
+                       staging_out_step
+                       clean_up_step],
     agrocopernicus_pipeline: %w[agrocopernicus_step],
-    staging_in_placeholder_pipeline: %w[staging_in_step],
-    validation_pipeline: %w[validation_staging_in_step
-                            validation_singularity_step
-                            validation_stage_out_step],
-    test_flow: %w[validation_staging_in_step
-                  validation_singularity_step
-                  validation_stage_out_step]
+    test_pipeline: %w[directory_builder_step
+                      staging_in_step
+                      testing_singularity_step_1
+                      staging_out_step
+                      clean_up_step],
+    full_test_pipeline: %w[directory_builder_step
+                           staging_in_step
+                           testing_singularity_step_1
+                           implicit_staging_step
+                           testing_singularity_step_2
+                           staging_out_step
+                           clean_up_step]
   }.freeze
 
   USECASE_FLOWS = {
+    cloudify_placeholder_pipeline: :uc1, # TODO: pick good uc
+    singularity_placeholder_pipeline: :uc1, # TODO: pick good uc
     medical_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
-    test_flow: :uc2
+    test_pipeline: :uc1,
+    full_test_pipeline: :uc1
   }.freeze
 
   STEPS = [
-    StagingInStep.new(
-      'staging_in_step',
-      [
-        StepParameter.new(
-          label: 'src_host',
-          name: 'Source Host',
-          description: 'Descriptions placeholder',
-          rank: 0,
-          datatype: 'multi',
-          default: 'data03.process-project.eu',
-          values: ['data03.process-project.eu']
-        ),
-        StepParameter.new(
-          label: 'src_path',
-          name: 'Source Path',
-          description: 'Descriptions placeholder',
-          rank: 1,
-          datatype: 'multi',
-          default: '/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif',
-          values: %w[/mnt/dss/process/UC1/Camelyon16/TestData/Test_001.tif]
-        ),
-        StepParameter.new(
-          label: 'dest_host',
-          name: 'Destination Host',
-          description: 'Descriptions placeholder',
-          rank: 2,
-          datatype: 'multi',
-          default: 'pro.cyfronet.pl',
-          values: %w[pro.cyfronet.pl]
-        ),
-        StepParameter.new(
-          label: 'dest_path',
-          name: 'Destination Path',
-          description: 'Descriptions placeholder',
-          rank: 3,
-          datatype: 'multi',
-          default: '/net/archive/groups/plggprocess/Mock/test_staging',
-          values: %w[/net/archive/groups/plggprocess/Mock/test_staging]
-        )
-      ],
-      'staging_done.txt'
-    ),
-    StagingInStep.new(
-      'validation_staging_in_step',
-      [
-        StepParameter.new(
-          label: 'src_host',
-          name: 'Source Host',
-          description: 'Descriptions placeholder',
-          rank: 0,
-          datatype: 'multi',
-          default: 'data03.process-project.eu',
-          values: ['data03.process-project.eu']
-        ),
-        StepParameter.new(
-          label: 'src_path',
-          name: 'Source Path',
-          description: 'Descriptions placeholder',
-          rank: 1,
-          datatype: 'multi',
-          default: '/mnt/dss/process/UC1/1G.dat',
-          values: %w[/mnt/dss/process/UC1/1G.dat /mnt/dss/process/UC1/10M.dat]
-        ),
-        StepParameter.new(
-          label: 'dest_host',
-          name: 'Destination Host',
-          description: 'Descriptions placeholder',
-          rank: 2,
-          datatype: 'multi',
-          default: 'pro.cyfronet.pl',
-          values: %w[pro.cyfronet.pl]
-        ),
-        StepParameter.new(
-          label: 'dest_path',
-          name: 'Destination Path',
-          description: 'Descriptions placeholder',
-          rank: 3,
-          datatype: 'multi',
-          default: '/net/archive/groups/plggprocess/Mock/validation_staging',
-          values: %w[/net/archive/groups/plggprocess/Mock/validation_staging]
-        )
-      ],
-      'staging_done.txt'
-    ),
-    SingularityStep.new('validation_singularity_step',
-                        ['staging_done.txt']),
-    RimrockStep.new('validation_stage_out_step',
-                    'process-eu/validation_stage_out',
-                    'validation_stage_out_script.sh.erb', [:validation_type], []),
+    DirectoryBuilderStep.new('directory_builder_step'),
+    SingularityStep.new('testing_singularity_step_1'),
+    SingularityStep.new('testing_singularity_step_2'),
+    StagingInStep.new('staging_in_step'),
+    ImplicitStagingStep.new('implicit_staging_step'),
+    StagingOutStep.new('staging_out_step'),
+    CleanUpStep.new('clean_up_step'),
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
@@ -202,6 +132,10 @@ class Flow
     Hash[pipelines.map do |pipeline|
            [pipeline, pipeline_to_hash(pipeline)]
          end].deep_stringify_keys
+  end
+
+  def self.uc_for(flow)
+    USECASE_FLOWS[flow.to_sym]
   end
 end
 # rubocop:enable ClassLength
