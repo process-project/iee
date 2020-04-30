@@ -18,6 +18,7 @@ class SingularityScriptGenerator
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def computation_parameter_values
     fill_values = {}
     fill_values[:container_name] = @computation.container_name
@@ -33,6 +34,7 @@ class SingularityScriptGenerator
 
     fill_values
   end
+  # rubocop:enable Metrics/AbcSize
 
   def matching_blueprint
     SingularityScriptBlueprint.find_by!(

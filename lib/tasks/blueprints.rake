@@ -25,12 +25,13 @@ namespace :blueprints do
     CODE
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
-    testing_container_1_script_part = '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
+    testing_container_1_script_part =
+      '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
     script = common_script_part + testing_container_1_script_part
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_1.sif',
                                               container_tag: 'whatever_tag_and_it_is_to_remove',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -72,12 +73,13 @@ namespace :blueprints do
     ]
 
     # Testing container 2 for the full test pipeline (LOBCDER staging steps compatible)
-    testing_container_2_script_part = '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
+    testing_container_2_script_part =
+      '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
     script = common_script_part + testing_container_2_script_part
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_2.sif',
                                               container_tag: 'whatever_tag_and_it_is_to_remove',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -144,7 +146,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -187,7 +189,7 @@ namespace :blueprints do
     # Test container for the SuperMUC Compute Site
     ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
                                               container_tag: 'latest',
-                                              compute_site: ComputeSite.where(name: :lrzdtn.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'lrzdtn').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -224,7 +226,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'maragraziani/ucdemo',
                                               container_tag: '0.1',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
@@ -290,7 +292,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif.old',
                                               container_tag: 'latest',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
     ssbp.step_parameters = [
       StepParameter.new(
@@ -329,7 +331,7 @@ namespace :blueprints do
     ssbp = SingularityScriptBlueprint.create!(
       container_name: 'agrocopernicus_placeholder_container',
       container_tag: 'agrocopernicus_placeholder_tag',
-      compute_site: ComputeSite.where(name: :krk.to_s).first,
+      compute_site: ComputeSite.where(name: 'krk').first,
       script_blueprint: script
     )
 
@@ -396,7 +398,7 @@ namespace :blueprints do
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'validation_container',
                                               container_tag: 'latest',
-                                              compute_site: ComputeSite.where(name: :krk.to_s).first,
+                                              compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
 
     ssbp.step_parameters = [
