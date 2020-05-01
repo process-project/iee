@@ -228,7 +228,7 @@ module Lobcder
 
     def webhook_url
       Rails.application.routes.url_helpers.api_staging_url(protocol: 'https',
-                                                           host: ENV['HOST'])
+                                                           host: ENV['WEBHOOK_HOST'])
     end
   end
 end
