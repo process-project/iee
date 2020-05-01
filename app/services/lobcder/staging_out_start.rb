@@ -17,11 +17,11 @@ module Lobcder
     private
 
     def copy_files
+      if output_files(@prev_site_name).empty?
+        @computation.update_attributes(status: 'finished')
+        Lobcder::UpdateJob.perform_later(@computation)
+      end
       copy(cp_cmds)
-    end
-
-    def rm_directories
-      rm(rm_cmds)
     end
 
     def cp_cmds

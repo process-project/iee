@@ -9,9 +9,8 @@ module Lobcder
       @service = Service.new(computation.uc)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def call
-      if %w[DirectoryBuilderStep CleanUpStep].exclude? @computation.step.class.name
+      unless @computation.track_id.nil?
         begin
           track_id = @computation.track_id
           status = @service.status(track_id)
@@ -31,6 +30,5 @@ module Lobcder
       @on_finish_callback&.new(@computation)&.call # TODO: What does callback and updater do?
       @updater&.new(@computation)&.call
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end

@@ -286,7 +286,7 @@ namespace :blueprints do
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
-      ./containers/factor-iee.sif.old \\
+      /net/archive/groups/plggprocess/UC2/containers/factor-iee.sif.old \\
       cwltool --singularity --preserve-entire-environment /opt/lofar/cwl/uc2.cwl /mnt/in/uc2.yml
     CODE
 
