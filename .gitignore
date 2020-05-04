@@ -40,3 +40,5 @@
 
 .rake_tasks
 .rake_tasks~
+.rakeTasks
+.generators
