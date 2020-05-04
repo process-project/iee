@@ -3,6 +3,8 @@
 namespace :blueprints do
   desc 'Seed singularity script blueprints for known pipelines'
   task seed: :environment do
+    SingularityScriptBlueprint.destroy_all
+
     # Common fragments of the test and full test pipeline (LOBCDER staging steps compatible)
 
     common_script_part = <<~CODE
@@ -17,11 +19,14 @@ namespace :blueprints do
       #SBATCH --error %<uc_root>s/slurm_outputs/slurm-%%j.err
       # Running container using singularity
       module load plgrid/tools/singularity/stable
-
+      mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp
+      mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp
       singularity run \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
+      -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp:/tmp \\
+      -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
     CODE
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
@@ -281,11 +286,15 @@ namespace :blueprints do
       #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
 
       module load plgrid/tools/singularity/stable
+      mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp
+      mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp
 
       singularity run \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
+      -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp:/tmp \\
+      -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
       /net/archive/groups/plggprocess/UC2/containers/factor-iee.sif.old \\
       cwltool --singularity --preserve-entire-environment /opt/lofar/cwl/uc2.cwl /mnt/in/uc2.yml
     CODE
