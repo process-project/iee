@@ -22,7 +22,7 @@ module Api
 
         def show
           @pipeline_instance = Pipeline.find(@computation)
-          computations = @pipeline_instance.computations
+          computations = @pipeline_instance.computations.sort_by(&:created_at)
 
           result = {}
 
