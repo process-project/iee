@@ -20,8 +20,9 @@ module Lobcder
       if output_files(@prev_site_name).empty?
         @computation.update_attributes(status: 'finished')
         Lobcder::UpdateJob.perform_later(@computation)
+      else
+        copy(cp_cmds)
       end
-      copy(cp_cmds)
     end
 
     def cp_cmds
