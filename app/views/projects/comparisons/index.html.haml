@@ -63,6 +63,3 @@
     - @data[:not_comparable].each do |noncomparable|
       .noncomparable
         = t '.noncomparable', noncomparable: noncomparable
-
-= render('projects/file_browsers', project: @project) do
-  = render('projects/all_pipelines_outputs', project: @project)
