@@ -33,7 +33,7 @@ namespace :blueprints do
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_1_script_part =
-        '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
+      '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
     script = common_script_part + testing_container_1_script_part + "\n" + common_chmod_script_part
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_1.sif',
@@ -81,7 +81,7 @@ namespace :blueprints do
 
     # Testing container 2 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_2_script_part =
-        '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
+      '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
     script = common_script_part + testing_container_2_script_part + "\n" + common_chmod_script_part
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_2.sif',
@@ -287,6 +287,8 @@ namespace :blueprints do
       #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
       #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
 
+      echo 'Additional parameters: %<calms>s, %<tarms>s, %<datadir>s, %<factordir>s, %<workdir>s'
+
       module load plgrid/tools/singularity/stable
       mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp
       mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp
@@ -333,6 +335,46 @@ namespace :blueprints do
         datatype: 'multi',
         default: 'plgrid',
         values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+      ),
+      StepParameter.new(
+        label: 'calms',
+        name: 'Calms',
+        description: 'The calms parameter',
+        rank: 0,
+        datatype: 'string',
+        default: '232873'
+      ),
+      StepParameter.new(
+        label: 'tarms',
+        name: 'Tarms',
+        description: 'The tarms parameter',
+        rank: 0,
+        datatype: 'string',
+        default: '232875'
+      ),
+      StepParameter.new(
+        label: 'datadir',
+        name: 'Datadir',
+        description: 'The datadir parameter',
+        rank: 0,
+        datatype: 'string',
+        default: '/mnt/in'
+      ),
+      StepParameter.new(
+        label: 'factordir',
+        name: 'Factordir',
+        description: 'The factordir parameter',
+        rank: 0,
+        datatype: 'string',
+        default: '/mnt/out/factor'
+      ),
+      StepParameter.new(
+        label: 'workdir',
+        name: 'Workdir',
+        description: 'The workdir parameter',
+        rank: 0,
+        datatype: 'string',
+        default: '/mnt/workdir/test'
       )
     ]
 
