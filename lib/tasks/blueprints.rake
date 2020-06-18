@@ -282,12 +282,10 @@ namespace :blueprints do
       #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
       #SBATCH --nodes %<nodes>s
       #SBATCH --ntasks %<cpus>s
-      #SBATCH --time 8:00:00
+      #SBATCH --time 167:59:58
       #SBATCH --job-name UC2_test
       #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
       #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
-
-      echo 'Additional parameters: %<calms>s, %<tarms>s, %<datadir>s, %<factordir>s, %<workdir>s'
 
       module load plgrid/tools/singularity/stable
       mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp
@@ -300,7 +298,7 @@ namespace :blueprints do
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp:/tmp \\
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
       %<uc_root>s/containers/factor-iee.sif \\
-      calms=232873 tarms=232875 datadir=/mnt/in factordir=/mnt/out/factor workdir=/mnt/workdir/test \\
+      calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
     CODE
 
     script = script + "\n" + common_chmod_script_part
