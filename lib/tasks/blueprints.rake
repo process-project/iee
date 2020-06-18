@@ -29,7 +29,7 @@ namespace :blueprints do
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
     CODE
 
-    common_chmod_script_part = 'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s'
+    common_chmod_script_part = 'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s' + "\n"
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_1_script_part =
@@ -299,8 +299,8 @@ namespace :blueprints do
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp:/tmp \\
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
-      /net/archive/groups/plggprocess/UC2/containers/factor-iee.sif.old \\
-      cwltool --singularity --preserve-entire-environment /opt/lofar/cwl/uc2.cwl /mnt/in/uc2.yml
+      %<uc_root>s/containers/factor-iee.sif \\
+      calms=232873 tarms=232875 datadir=/mnt/in factordir=/mnt/out/factor workdir=/mnt/workdir/test \\
     CODE
 
     script = script + "\n" + common_chmod_script_part
