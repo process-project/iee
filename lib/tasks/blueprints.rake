@@ -29,7 +29,7 @@ namespace :blueprints do
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
     CODE
 
-    common_chmod_script_part = 'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s'
+    common_chmod_script_part = 'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s' + "\n"
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_1_script_part =
@@ -282,12 +282,10 @@ namespace :blueprints do
       #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
       #SBATCH --nodes %<nodes>s
       #SBATCH --ntasks %<cpus>s
-      #SBATCH --time 8:00:00
+      #SBATCH --time 168:00:00
       #SBATCH --job-name UC2_test
       #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
       #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
-
-      echo 'Additional parameters: %<calms>s, %<tarms>s, %<datadir>s, %<factordir>s, %<workdir>s'
 
       module load plgrid/tools/singularity/stable
       mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp
@@ -299,8 +297,8 @@ namespace :blueprints do
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp:/tmp \\
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
-      /net/archive/groups/plggprocess/UC2/containers/factor-iee.sif.old \\
-      cwltool --singularity --preserve-entire-environment /opt/lofar/cwl/uc2.cwl /mnt/in/uc2.yml
+      %<uc_root>s/containers/factor-iee.sif \\
+      calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
     CODE
 
     script = script + "\n" + common_chmod_script_part
@@ -333,7 +331,7 @@ namespace :blueprints do
         description: 'Prometheus execution partition',
         rank: 0,
         datatype: 'multi',
-        default: 'plgrid',
+        default: 'plgrid-long',
         values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
       ),
       StepParameter.new(
