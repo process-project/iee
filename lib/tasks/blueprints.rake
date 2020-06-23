@@ -282,7 +282,7 @@ namespace :blueprints do
       #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
       #SBATCH --nodes %<nodes>s
       #SBATCH --ntasks %<cpus>s
-      #SBATCH --time 167:59:58
+      #SBATCH --time 168:00:00
       #SBATCH --job-name UC2_test
       #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
       #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
@@ -331,7 +331,7 @@ namespace :blueprints do
         description: 'Prometheus execution partition',
         rank: 0,
         datatype: 'multi',
-        default: 'plgrid',
+        default: 'plgrid-long',
         values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
       ),
       StepParameter.new(
