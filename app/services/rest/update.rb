@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize
+
 module Rest
   class Update < Rest::Service
     def initialize(user, options = {})
@@ -52,6 +54,10 @@ module Rest
 
     def update_computation(computation, new_status, message = nil)
       return if new_status == computation.status
+      ActivityLogWriter.write_message(
+        computation.pipeline.user, computation.pipeline, computation,
+        "computation_status_change_#{new_status['status'].downcase}"
+      )
       if new_status == 'error'
         computation.update_attributes(status: new_status, error_message: message)
       else
@@ -71,3 +77,4 @@ module Rest
     end
   end
 end
+# rubocop:enable Metrics/AbcSize
