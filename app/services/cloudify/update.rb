@@ -58,11 +58,9 @@ module Cloudify
     # rubocop:enable Metrics/AbcSize
 
     def results_ready?(computation)
-      # @segmentation.exists?(Webdav::Segmentation.output_path(computation))
     end
 
     def finish_job(computation)
-      # ::Segmentation::Finish.new(computation, @on_finish_callback).call
       # @updater&.new(computation)&.call
     end
   end

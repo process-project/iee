@@ -14,10 +14,7 @@ module Projects
 
     # rubocop:disable Metrics/AbcSize
     def index
-      # TODO: FIXME the following two lines are not needed when project sync problem is solved
-      #             can also enable the Metrics/MethodLength cop again, then
-      @project.execute_data_sync(current_user)
-      pipelines.reload
+      # pipelines.reload TODO: probably remove
 
       @sources = []
       pipelines.first.computations.select(&:revision).each do |compared_comp|

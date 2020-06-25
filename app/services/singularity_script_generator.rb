@@ -10,10 +10,6 @@ class SingularityScriptGenerator
     fill_values = computation_parameter_values
 
     filled_script = record.script_blueprint % fill_values
-
-    # Neede for now, we sometimes use functionality of the old ScriptGenerator in our scripts
-    # e.g for staging in/out to/from webdav
-    ScriptGenerator.new(@computation, filled_script).call
   end
 
   private

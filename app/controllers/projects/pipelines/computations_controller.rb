@@ -6,6 +6,7 @@ module Projects
       before_action :find_and_authorize
 
       def show
+        prepare_to_show_computation
         if request.xhr?
           render partial: 'projects/pipelines/computations/show', layout: false,
                  locals: {
@@ -59,6 +60,11 @@ module Projects
 
         authorize(@computation)
       end
+
+      def prepare_to_show_computation
+        @computations = @pipeline.computations.flow_ordered
+      end
+
 
       def step
         @computation.step
