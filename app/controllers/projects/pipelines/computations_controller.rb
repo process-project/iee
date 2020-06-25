@@ -6,11 +6,6 @@ module Projects
       before_action :find_and_authorize
 
       def show
-        # TODO: FIXME the following two lines are not needed when project
-        #             sync problem is solved
-        @project.execute_data_sync(current_user)
-        prepare_to_show_computation
-
         if request.xhr?
           render partial: 'projects/pipelines/computations/show', layout: false,
                  locals: {
@@ -63,17 +58,6 @@ module Projects
         @project = @pipeline.project
 
         authorize(@computation)
-      end
-
-      def prepare_to_show_computation
-        @computations = @pipeline.computations.flow_ordered
-
-        if load_versions?
-          @versions = Gitlab::Versions.
-                      new(repo, force_reload: params[:force_reload]).call
-        end
-
-        @run_modes = step.try(:run_modes) if updatable?
       end
 
       def step

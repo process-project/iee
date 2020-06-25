@@ -31,14 +31,6 @@ defaults: &defaults
     mkdir_path: '/api/v1/mkdir'
     rm_path: '/api/v1/remove'
 
-  segmentation:
-    inputs_path: segmentation/input
-    outputs_path: segmentation/output
-    status_path: status
-    url: <%= ENV['SEGMENTATION_URL'] %>
-    ui_url: <%= ENV['SEGMENTATION_UI_URL'] %>
-    user: <%= ENV['SEGMENTATION_USER'] %>
-    password: <%= ENV['SEGMENTATION_PASSWORD'] %>
   rest:
     host: 'https://gar.mnm-team.org'
     port: '5000'

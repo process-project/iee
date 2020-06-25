@@ -6,17 +6,6 @@ class Pipeline < ApplicationRecord
   belongs_to :project
   belongs_to :user
 
-  # Inputs and outputs relation stores pipeline specific data files
-  has_many :inputs,
-           class_name: 'DataFile',
-           foreign_key: 'input_of_id',
-           dependent: :destroy
-
-  has_many :outputs,
-           class_name: 'DataFile',
-           foreign_key: 'output_of_id',
-           dependent: :destroy
-
   has_many :computations,
            dependent: :destroy
 
@@ -59,26 +48,6 @@ class Pipeline < ApplicationRecord
 
   def root_dir(prefix = project.pipelines_dir)
     File.join(prefix, iid.to_s, '/')
-  end
-
-  def data_file(data_type)
-    DataFile.
-      where(project: project,
-            output_of: [nil, self],
-            input_of: [nil, self],
-            data_type: data_type).
-      order(:output_of_id, :input_of_id).
-      first
-  end
-
-  def named_data_file(df_name)
-    DataFile.
-      where(project: project,
-            output_of: [nil, self],
-            input_of: [nil, self],
-            name: df_name).
-      order(:output_of_id, :input_of_id).
-      first
   end
 
   def status

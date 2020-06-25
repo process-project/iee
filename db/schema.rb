@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200428120335) do
+ActiveRecord::Schema.define(version: 20200624105231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,20 +110,6 @@ ActiveRecord::Schema.define(version: 20200428120335) do
     t.datetime "updated_at", null: false
     t.string "full_name"
     t.string "host"
-  end
-
-  create_table "data_files", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "data_type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "output_of_id"
-    t.bigint "input_of_id"
-    t.bigint "project_id"
-    t.index ["data_type"], name: "index_data_files_on_data_type"
-    t.index ["input_of_id"], name: "index_data_files_on_input_of_id"
-    t.index ["output_of_id"], name: "index_data_files_on_output_of_id"
-    t.index ["project_id"], name: "index_data_files_on_project_id"
   end
 
   create_table "group_relationships", id: :serial, force: :cascade do |t|
@@ -281,9 +267,6 @@ ActiveRecord::Schema.define(version: 20200428120335) do
   add_foreign_key "computations", "compute_sites", column: "dest_compute_site_id"
   add_foreign_key "computations", "compute_sites", column: "src_compute_site_id"
   add_foreign_key "computations", "pipelines"
-  add_foreign_key "data_files", "pipelines", column: "input_of_id"
-  add_foreign_key "data_files", "pipelines", column: "output_of_id"
-  add_foreign_key "data_files", "projects"
   add_foreign_key "group_relationships", "groups", column: "child_id"
   add_foreign_key "group_relationships", "groups", column: "parent_id"
   add_foreign_key "step_parameters", "singularity_script_blueprints"
