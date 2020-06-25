@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module Projects
-  class Base < ProjectWebdav
+  class Base
     def initialize(user, project, options = {})
-      super(user, options)
       @project = project
     end
 

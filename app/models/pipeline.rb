@@ -30,26 +30,6 @@ class Pipeline < ApplicationRecord
     iid.to_s
   end
 
-  def outputs_dir(prefix = project.pipelines_dir)
-    File.join(root_dir(prefix), 'outputs', '/')
-  end
-
-  def outputs_url
-    outputs_dir(project.pipelines_url)
-  end
-
-  def inputs_dir(prefix = project.pipelines_dir)
-    File.join(root_dir(prefix), 'inputs', '/')
-  end
-
-  def inputs_url
-    inputs_dir(project.pipelines_url)
-  end
-
-  def root_dir(prefix = project.pipelines_dir)
-    File.join(prefix, iid.to_s, '/')
-  end
-
   def status
     @status ||= calculate_status
   end

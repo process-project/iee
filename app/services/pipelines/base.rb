@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module Pipelines
-  class Base < ProjectWebdav
+  class Base
     def initialize(pipeline, options = {})
-      super(pipeline.user, options)
       @pipeline = pipeline
     end
 
