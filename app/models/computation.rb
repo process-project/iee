@@ -52,10 +52,6 @@ class Computation < ApplicationRecord
     type == 'RimrockComputation'
   end
 
-  def webdav?
-    type == 'WebdavComputation'
-  end
-
   def cloudify?
     type == 'CloudifyComputation'
   end

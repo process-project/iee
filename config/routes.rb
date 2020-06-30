@@ -27,7 +27,6 @@ Rails.application.routes.draw do
 
   resources :projects, except: [:edit, :update], constraints: { id: /.+/ } do
     scope module: :projects do
-      resources :comparisons, only: [:index]
       resources :pipelines do
         scope module: :pipelines do
           resources :computations, only: [:show, :update]

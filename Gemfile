@@ -57,9 +57,6 @@ gem 'rubyzip', '>= 1.0.0'
 # URL validation
 gem 'addressable', '~> 2.5'
 
-# Gitlab integration
-gem 'gitlab'
-
 gem 'puma', '~> 3.7'
 gem 'redis', '~> 3.0'
 

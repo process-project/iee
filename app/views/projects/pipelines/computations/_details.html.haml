@@ -11,10 +11,6 @@
   %tbody
     %tr
       %td= start_time(computation)
-      - if computation.rimrock?
-        %td= computation.tag_or_branch
-        %td= source_link(computation)
-
       - if computation.active?
         %td{data: {'computation-start' => computation.started_at}}= execution_time(computation)
       - else
