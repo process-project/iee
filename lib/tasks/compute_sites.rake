@@ -16,7 +16,7 @@ namespace :compute_sites do
     end
 
     Lobcder::Service.new(:uc1).folders.each do |name, values|
-      ComputeSite.create!(name: name.to_s, full_name: get_full_name(name), host: values[:host])
+      ComputeSite.find_or_create_by!(name: name.to_s, full_name: get_full_name(name), host: values[:host])
     end
   end
 end
