@@ -3,9 +3,7 @@
 # rubocop:disable ClassLength
 class Flow
   FLOWS = {
-    placeholder_pipeline: %w[placeholder_step],
     cloudify_placeholder_pipeline: %w[cloudify_step],
-    singularity_placeholder_pipeline: %w[singularity_placeholder_step],
     medical_pipeline: %w[medical_step],
     lofar_pipeline: %w[directory_builder_step
                        staging_in_step
@@ -29,7 +27,6 @@ class Flow
 
   USECASE_FLOWS = {
     cloudify_placeholder_pipeline: :uc1, # TODO: pick good uc
-    singularity_placeholder_pipeline: :uc1, # TODO: pick good uc
     medical_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
@@ -45,10 +42,6 @@ class Flow
     ImplicitStagingStep.new('implicit_staging_step'),
     StagingOutStep.new('staging_out_step'),
     CleanUpStep.new('clean_up_step'),
-    RimrockStep.new('placeholder_step',
-                    'process-eu/mock-step',
-                    'mock.sh.erb', [], []),
-    SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),
     RestStep.new(
