@@ -29,12 +29,17 @@ namespace :blueprints do
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
     CODE
 
-    common_chmod_script_part = 'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s' + "\n"
+    common_chmod_script_part_out =
+      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/out' + "\n"
+    common_chmod_script_part_workdir =
+      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/workdir' + "\n"
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_1_script_part =
       '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
-    script = common_script_part + testing_container_1_script_part + "\n" + common_chmod_script_part
+    script = common_script_part + testing_container_1_script_part + "\n" +
+             common_chmod_script_part_out +
+             common_chmod_script_part_workdir
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_1.sif',
                                               container_tag: 'whatever_tag_and_it_is_to_remove',
@@ -82,7 +87,9 @@ namespace :blueprints do
     # Testing container 2 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_2_script_part =
       '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
-    script = common_script_part + testing_container_2_script_part + "\n" + common_chmod_script_part
+    script = common_script_part + testing_container_2_script_part + "\n" +
+             common_chmod_script_part_out +
+             common_chmod_script_part_workdir
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_2.sif',
                                               container_tag: 'whatever_tag_and_it_is_to_remove',
