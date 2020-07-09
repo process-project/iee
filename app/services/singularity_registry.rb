@@ -14,7 +14,7 @@ class SingularityRegistry
     'maragraziani/ucdemo' => %w[0.1],
     'factor-iee.sif' => %w[latest],
     'testing_container_1.sif' => %w[whatever_tag_and_it_is_to_remove],
-    'testing_container_2.sif' => %w[whatever_tag_and_it_is_to_remove],
+    'testing_container_2.sif' => %w[whatever_tag_and_it_is_to_remove]
   }.freeze
 
   def self.fetch_containers(step_name)
