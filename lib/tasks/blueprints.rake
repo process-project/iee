@@ -280,8 +280,6 @@ namespace :blueprints do
     ]
 
     # Container for the UC2 LOFAR use case
-    # TODO: update to new version of container (new and old containers work in the same way,
-    #  but there are differences in the scripts)
     script = <<~CODE
       #!/bin/bash
       #SBATCH --partition %<partition>s
@@ -307,9 +305,10 @@ namespace :blueprints do
       calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
     CODE
 
-    script = script + "\n" + common_chmod_script_part
+    script = script + "\n" + common_chmod_script_part_out +
+             common_chmod_script_part_workdir
 
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif.old',
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif',
                                               container_tag: 'latest',
                                               compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
