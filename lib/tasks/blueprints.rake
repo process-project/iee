@@ -29,9 +29,9 @@ namespace :blueprints do
     CODE
 
     common_chmod_script_part_out =
-      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/out' + "\n"
+      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/out/*' + "\n"
     common_chmod_script_part_workdir =
-      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/workdir' + "\n"
+      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/workdir/*' + "\n"
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_1_script_part =
