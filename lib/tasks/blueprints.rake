@@ -132,6 +132,90 @@ namespace :blueprints do
       )
     ]
 
+    # Test container for the Prometheus Compute Site
+    script = <<~CODE
+      #!/bin/bash -l
+      #SBATCH -N %<nodes>s
+      #SBATCH --ntasks-per-node=%<cpus>s
+      #SBATCH --time=00:05:00
+      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
+      #SBATCH -p %<partition>s
+      #SBATCH --job-name mock_container_step
+      #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.out
+      #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/slurm-%%j.err
+
+      ## Running container using singularity
+      module load plgrid/tools/singularity/stable
+
+      cd $SCRATCHDIR
+
+      singularity pull --name container.simg shub://%<container_name>s:%<container_tag>s
+      singularity run container.simg
+
+      echo '%<echo_message>s'
+
+      rm container.simg
+    CODE
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
+                                              container_tag: 'latest',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = [
+      StepParameter.new(
+        label: 'nodes',
+        name: 'Nodes',
+        description: 'Number of execution nodes',
+        rank: 0,
+        datatype: 'integer',
+        default: 1
+      ),
+      StepParameter.new(
+        label: 'cpus',
+        name: 'CPUs',
+        description: 'Number of CPU per execution node',
+        rank: 0,
+        datatype: 'multi',
+        default: '1',
+        values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+      ),
+      StepParameter.new(
+        label: 'partition',
+        name: 'Partition',
+        description: 'Prometheus execution partition',
+        rank: 0,
+        datatype: 'multi',
+        default: 'plgrid-testing',
+        values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+      ),
+      StepParameter.new(
+        label: 'echo_message',
+        name: 'Echo Message',
+        description: 'Example message for the container to echo at the end of the execution',
+        rank: 0,
+        datatype: 'string',
+        default: ''
+      )
+    ]
+
+    # Test container for the SuperMUC Compute Site
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'vsoch/hello-world',
+                                              container_tag: 'latest',
+                                              compute_site: ComputeSite.where(name: 'lrzdtn').first,
+                                              script_blueprint: script)
+
+    ssbp.step_parameters = [
+      StepParameter.new(
+        label: 'echo_message',
+        name: 'Echo Message',
+        description: 'Example message for the container to echo at the end of the execution',
+        rank: 0,
+        datatype: 'string',
+        default: ''
+      )
+    ]
+
     # Container for the UC1 Medical use case
     script = <<~CODE
       #!/bin/bash

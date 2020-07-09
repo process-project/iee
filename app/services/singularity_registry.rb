@@ -2,6 +2,7 @@
 
 class SingularityRegistry
   STEPS = {
+    singularity_placeholder_step: %w[vsoch/hello-world],
     medical_step: %w[maragraziani/ucdemo],
     lofar_step: %w[factor-iee.sif.old],
     testing_singularity_step_1: %w[testing_container_1.sif],
@@ -9,6 +10,7 @@ class SingularityRegistry
   }.freeze
 
   CONTAINERS = {
+    'vsoch/hello-world' => %w[latest],
     'maragraziani/ucdemo' => %w[0.1],
     'factor-iee.sif.old' => %w[latest],
     'testing_container_1.sif' => %w[whatever_tag_and_it_is_to_remove],
