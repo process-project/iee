@@ -6,7 +6,6 @@ namespace :blueprints do
     SingularityScriptBlueprint.destroy_all
 
     # Common fragments of the test and full test pipeline (LOBCDER staging steps compatible)
-
     common_script_part = <<~CODE
       #!/bin/bash -l
       #SBATCH -N %<nodes>s
@@ -29,12 +28,17 @@ namespace :blueprints do
       -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
     CODE
 
-    common_chmod_script_part = 'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s' + "\n"
+    common_chmod_script_part_out =
+      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/out/*' + "\n"
+    common_chmod_script_part_workdir =
+      'chmod -R g+w %<uc_root>s/pipelines/%<pipeline_hash>s/workdir/*' + "\n"
 
     # Testing container 1 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_1_script_part =
       '%<uc_root>s/containers/testing_container_1.sif operation=%<operation>s'
-    script = common_script_part + testing_container_1_script_part + "\n" + common_chmod_script_part
+    script = common_script_part + testing_container_1_script_part + "\n" +
+             common_chmod_script_part_out +
+             common_chmod_script_part_workdir
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_1.sif',
                                               container_tag: 'whatever_tag_and_it_is_to_remove',
@@ -82,7 +86,9 @@ namespace :blueprints do
     # Testing container 2 for the full test pipeline (LOBCDER staging steps compatible)
     testing_container_2_script_part =
       '%<uc_root>s/containers/testing_container_2.sif factor=%<factor>s'
-    script = common_script_part + testing_container_2_script_part + "\n" + common_chmod_script_part
+    script = common_script_part + testing_container_2_script_part + "\n" +
+             common_chmod_script_part_out +
+             common_chmod_script_part_workdir
 
     ssbp = SingularityScriptBlueprint.create!(container_name: 'testing_container_2.sif',
                                               container_tag: 'whatever_tag_and_it_is_to_remove',
@@ -274,8 +280,6 @@ namespace :blueprints do
     ]
 
     # Container for the UC2 LOFAR use case
-    # TODO: update to new version of container (new and old containers work in the same way,
-    #  but there are differences in the scripts)
     script = <<~CODE
       #!/bin/bash
       #SBATCH --partition %<partition>s
@@ -301,9 +305,10 @@ namespace :blueprints do
       calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
     CODE
 
-    script = script + "\n" + common_chmod_script_part
+    script = script + "\n" + common_chmod_script_part_out +
+             common_chmod_script_part_workdir
 
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif.old',
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'factor-iee.sif',
                                               container_tag: 'latest',
                                               compute_site: ComputeSite.where(name: 'krk').first,
                                               script_blueprint: script)
@@ -373,122 +378,6 @@ namespace :blueprints do
         rank: 0,
         datatype: 'string',
         default: '/mnt/workdir/test'
-      )
-    ]
-
-    ### Agrocopernicus:
-    script = <<~CODE
-      agrocopernicus placeholder
-    CODE
-
-    ssbp = SingularityScriptBlueprint.create!(
-      container_name: 'agrocopernicus_placeholder_container',
-      container_tag: 'agrocopernicus_placeholder_tag',
-      compute_site: ComputeSite.where(name: 'krk').first,
-      script_blueprint: script
-    )
-
-    ssbp.step_parameters = [
-      StepParameter.new(
-        label: 'irrigation',
-        name: 'Irrigation',
-        description: '',
-        rank: 0,
-        datatype: 'boolean',
-        default: 'true'
-      ),
-      StepParameter.new(
-        label: 'seeding_date',
-        name: 'Seeding date',
-        description: '',
-        rank: 0,
-        datatype: 'multi',
-        default: '-15 days',
-        values: ['-15 days', 'original', '+15 days']
-      ),
-      StepParameter.new(
-        label: 'nutrition_factor',
-        name: 'Nutrition factor',
-        description: '',
-        rank: 0,
-        datatype: 'multi',
-        default: '0.25',
-        values: ['0.25', '0.45', '0.60']
-      ),
-      StepParameter.new(
-        label: 'Phenology_factor',
-        name: 'Phenology factor',
-        description: '',
-        rank: 0,
-        datatype: 'multi',
-        default: '0.6',
-        values: ['0.6', '0.8', '1.0', '1.2']
-      )
-    ]
-
-    # Validation container
-    script = <<~CODE
-      #!/bin/bash
-      #SBATCH --partition plgrid-testing
-      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
-      #SBATCH --nodes %<nodes>s
-      #SBATCH --ntasks %<containers>s
-      #SBATCH --cpus-per-task %<cores_per_container>s
-      #SBATCH --mem-per-cpu 5GB
-      #SBATCH --time 0:15:00
-      #SBATCH --job-name validation_container_test
-      #SBATCH --output /net/archive/groups/plggprocess/Mock/slurm_outputs/validation-container-test-log-%%J.txt
-      #SBATCH --error /net/archive/groups/plggprocess/Mock/slurm_outputs/validation-container-test-log-%%J.err
-
-      module load plgrid/tools/singularity/stable
-
-      srun singularity run /net/archive/groups/plggprocess/Mock/dummy_container/valcon.simg /bin /bin %<sleep_time>s
-
-      touch validation_container_done.txt
-
-      <%%= stage_out 'validation_container_done.txt' %%>
-    CODE
-
-    ssbp = SingularityScriptBlueprint.create!(container_name: 'validation_container',
-                                              container_tag: 'latest',
-                                              compute_site: ComputeSite.where(name: 'krk').first,
-                                              script_blueprint: script)
-
-    ssbp.step_parameters = [
-      StepParameter.new(
-        label: 'nodes',
-        name: 'Nodes',
-        description: 'Number of execution nodes',
-        rank: 0,
-        datatype: 'multi',
-        default: '2',
-        values: %w[1 2 10]
-      ),
-      StepParameter.new(
-        label: 'containers',
-        name: 'Containers',
-        description: 'Number of containers',
-        rank: 0,
-        datatype: 'multi',
-        default: '1',
-        values: %w[1 2 8 10 40 48 240]
-      ),
-      StepParameter.new(
-        label: 'cores_per_container',
-        name: 'Cores per container',
-        description: 'Number of cores per container',
-        rank: 0,
-        datatype: 'multi',
-        default: '1',
-        values: %w[1 6 24]
-      ),
-      StepParameter.new(
-        label: 'sleep_time',
-        name: 'Sleep time',
-        description: 'Time in seconds for the container to sleep',
-        rank: 0,
-        datatype: 'integer',
-        default: 1
       )
     ]
   end
