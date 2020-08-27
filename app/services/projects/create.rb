@@ -5,10 +5,7 @@ module Projects
     protected
 
     def internal_call
-      if @project.save
-        r_mkdir(@project.inputs_dir)
-        r_mkdir(@project.pipelines_dir)
-      end
+      @project.save
     rescue Net::HTTPServerException
       @project.errors.
         add(:project_name,

@@ -10,7 +10,6 @@ module Projects
 
     def internal_call
       @project.destroy
-      delete(@project.working_dir)
     rescue Net::HTTPServerException
       raise ActiveRecord::Rollback
     end

@@ -19,15 +19,6 @@ RSpec.describe Pipeline, type: :model do
     expect(p2.iid).to eq(2)
   end
 
-  it 'returns pipeline working dir' do
-    pipeline = build(:pipeline,
-                     iid: 123,
-                     project: build(:project, project_name: 'abc'))
-
-    expect(pipeline.inputs_dir).to eq 'test/projects/abc/pipelines/123/inputs/'
-    expect(pipeline.outputs_dir).to eq 'test/projects/abc/pipelines/123/outputs/'
-  end
-
   it do
     should validate_inclusion_of(:flow).
       in_array(Flow.types.map(&:to_s))

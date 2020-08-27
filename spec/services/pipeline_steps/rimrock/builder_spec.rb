@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe PipelineSteps::Rimrock::Builder do
   let(:pipeline) { create(:pipeline) }
 
-  it 'creates webdav computation' do
+  it 'creates rimrock computation' do
     computation = described_class.new(pipeline, 'rimrock',
                                       tag_or_branch: 'my-branch').call
 

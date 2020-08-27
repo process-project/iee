@@ -30,7 +30,6 @@ describe 'Pipelines controller' do
     end
 
     describe 'POST /projects/:id/pipelines' do
-      before { stub_webdav }
 
       it 'allow to run pipelines for all logged in users' do
         expect do
@@ -52,7 +51,6 @@ describe 'Pipelines controller' do
     end
 
     describe 'DELETE /projects/:id/pipelines/:iid' do
-      before { stub_webdav }
 
       it 'can be performed by owner' do
         pipeline = create(:pipeline, project: project, user: user)

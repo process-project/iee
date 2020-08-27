@@ -288,11 +288,6 @@ RSpec.feature 'Project browsing' do
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
 
-      def mock_webdav_computation_ready_to_run
-        allow_any_instance_of(WebdavComputation).
-          to receive(:runnable?).and_return(true)
-      end
-
       context 'when computing for project\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do
           allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
