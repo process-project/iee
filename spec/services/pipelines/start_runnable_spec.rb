@@ -14,11 +14,6 @@ describe Pipelines::StartRunnable do
     before { allow(proxy).to receive(:valid?).and_return(true) }
 
     context 'and required inputs' do
-      before do
-        create(:data_file,
-               project: pipeline.project,
-               data_type: :parameter_optimization_result)
-      end
       it 'starts created runnable pipeline step' do
         create(:rimrock_computation,
                status: 'created', pipeline_step: 'placeholder_step',
@@ -66,9 +61,6 @@ describe Pipelines::StartRunnable do
       create(:rimrock_computation,
              status: 'created', pipeline_step: 'placeholder_step',
              pipeline: pipeline)
-      create(:data_file,
-             project: pipeline.project,
-             data_type: :parameter_optimization_result)
 
       runner = double(runnable?: true)
 

@@ -35,19 +35,6 @@ RSpec.describe 'Staging API' do
 
       expect(response.status).to eq(204)
     end
-
-    # To be deleted when proper directory structure is implemented
-    xit 'creates tmp output file in DataFile structure' do
-      pipeline = create(:pipeline, flow: 'staging_in_placeholder_pipeline')
-      computation = create(:staging_in_computation, :with_tmp_output_file, pipeline: pipeline)
-      json_body = { status: { id: computation.id, status: 'done' },
-                    details: { timestamp: '2019-03-13T08:48:03.927Z',
-                               time: '111598' } }
-
-      post api_staging_path, headers: auth_header, as: :json, params: json_body
-
-      expect(DataFile.find_by(name: 'spec_tmp_output_file.txt')).not_to be_nil
-    end
   end
 
   def mock_staging_token_env(value)

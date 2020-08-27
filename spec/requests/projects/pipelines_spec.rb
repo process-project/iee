@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe 'Pipelines controller' do
-  include WebDavSpecHelper
 
   let(:project) { create(:project) }
 

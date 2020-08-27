@@ -32,11 +32,6 @@ RSpec.describe PipelineSteps::Rimrock::Runner do
   end
 
   context 'inputs are available' do
-    before do
-      create(:data_file,
-             project: computation.pipeline.project,
-             data_type: :parameter_optimization_result)
-    end
 
     it_behaves_like 'runnable step'
 

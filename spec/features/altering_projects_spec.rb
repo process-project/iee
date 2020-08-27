@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Project altering' do
-  include WebDavSpecHelper
 
   let(:project) { create(:project) }
 
@@ -20,7 +19,6 @@ RSpec.feature 'Project altering' do
     end
 
     context 'when registering a new project' do
-      before { stub_webdav }
 
       scenario 'blocks incorrect project name registration' do
         visit new_project_path
@@ -90,40 +88,6 @@ RSpec.feature 'Project altering' do
 
         expect { click_link I18n.t('projects.show.remove') }.
           to change { Project.count }.by(-1)
-      end
-    end
-  end
-
-  context 'for every user with WebDAV file store access', files: true do
-    before(:each) do
-      @user = create(:user, :approved, :file_store_user)
-
-      login_as(@user)
-    end
-
-    context 'when registering a new project' do
-      scenario 'automatically synchronizes data_files and updates status' do
-        visit new_project_path
-
-        fill_in 'project[project_name]', with: '1234'
-
-        expect { click_button I18n.t('register') }.to change { Project.count }.by(1)
-
-        expect(current_path).to eq project_path(Project.first)
-        expect(page).to have_content '1234'
-      end
-
-      scenario 'automatically synchronizes data_files and
-                updates status for strange project number' do
-        visit new_project_path
-
-        fill_in 'project[project_name]', with: '-._'
-
-        expect { click_button I18n.t('register') }.to change { Project.count }.by(1)
-
-        expect(current_path).to eq project_path(Project.first)
-        expect(Project.first.data_files.count).to eq 1
-        expect(page).to have_content '-._'
       end
     end
   end

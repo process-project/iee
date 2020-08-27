@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe Pipelines::Destroy do
-  include WebDavSpecHelper
 
   let(:user) { create(:user) }
   let!(:pipeline) { create(:pipeline, user: user) }

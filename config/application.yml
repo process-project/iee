@@ -5,18 +5,9 @@ defaults: &defaults
     expiration_time: 86400 #24 hours
     issuer: 'IEE'
   redis_url: <%= ENV['REDIS_URL'] || 'redis://localhost:6379' %>
-  file_store:
-    web_dav_base_url: <%= ENV['WEB_DAV_BASE_URL'] || 'https://files.valve.cyfronet.pl' %>
-    web_dav_base_path: '/webdav'
-    web_dav_policy_proxy_path: '/portal-proxy'
   cloud:
     atmosphere_url: <%= ENV['ATMOSPHERE_BASE_URL'] || 'https://vph.cyfronet.pl' %>
     cloud_facade_path: '/api/v1/'
-  data_sets:
-    url: <%= ENV['DATA_SETS_BASE_URL'] || 'https://eurvalve.sheffield.ac.uk' %>
-    site_path: <%= ENV['DATA_SETS_SITE_PATH'] || '/WebQuery/site.html' %>
-    api_doc_path: '/eurvalve/WebQuery/api.png'
-    api_url_path: '/WebQuery/api/JsonQuery/'
   clock:
     update: <%= ENV['CLOCK_UPDATE'] || 30 %> #seconds
   ansys:

@@ -38,6 +38,9 @@ class Flow
   }.freeze
 
   STEPS = [
+    RimrockStep.new('placeholder_step', # TODO: to tu jest tylko dlatego zeby dzialaly testy testujace ogolne funkcjonalnosci - trzeba to zastapic singularity stepem i zmienic testy
+                    'process-eu/mock-step',
+                    'mock.sh.erb', [], []),
     DirectoryBuilderStep.new('directory_builder_step'),
     SingularityStep.new('testing_singularity_step_1'),
     SingularityStep.new('testing_singularity_step_2'),
