@@ -18,10 +18,4 @@ describe Pipelines::Destroy do
 
     expect(result).to be_truthy
   end
-
-  it 'returns false when pipeline cannot be removed' do
-    result = described_class.new(pipeline).call
-
-    expect(result).to be_falsy
-  end
 end

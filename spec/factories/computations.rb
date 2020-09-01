@@ -22,6 +22,7 @@ FactoryBot.define do
       script 'SCRIPT'
       container_name 'lolcow'
       container_tag 'latest'
+      compute_site
     end
 
     factory :cloudify_computation, class: 'CloudifyComputation' do

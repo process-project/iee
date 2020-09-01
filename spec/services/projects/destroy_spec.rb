@@ -17,9 +17,4 @@ describe Projects::Destroy do
 
     expect(result).to be_truthy
   end
-
-  it 'returns false when project cannot be removed' do
-    result = described_class.new(user, project).call
-    expect(result).to be_falsy
-  end
 end
