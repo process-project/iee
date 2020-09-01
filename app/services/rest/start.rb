@@ -35,20 +35,20 @@ module Rest
 
     def success(response)
       body = JSON.parse(response.body, symbolize_names: true)
-      job_status = body[:status] # TODO: Do something with the message if needed
+      job_status = body[:status]
+      job_status = 'error' unless %w[queued running finished].include job_status
       job_id = body[:message]
       @computation.update_attributes(status: job_status, job_id: job_id)
     end
 
     def error(response)
-      unless response.body.nil?
-        body = JSON.parse(response.body, symbolize_names: true)
-        message = body[:message]
-      end
-
-      message ||= 'Unknown error'
-      @computation.update_attributes(status: 'error',
-                                     error_message: message)
+      message = if response.body.nil?
+                  Rack::Utils::HTTP_STATUS_CODES[response.status]
+                else
+                  parse(response.body)[:message]
+                end
+      message ||= 'Unknown external server or connection error'
+      @computation.update_attributes(status: 'error', error_message: message)
     end
   end
 end
