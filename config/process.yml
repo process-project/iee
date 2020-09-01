@@ -10,8 +10,8 @@ defaults: &defaults
     blueprint: compute-blueprint-beta
     iee_deployment_name: iee_deployment
     app_workflow_name: execute_operation
-  grant_id: plgprocess3
-  gpu_grant_id: <%= ENV['GPU_GRANT_ID'] || 'process2gpu' %>
+  grant_id: <%= ENV['GRANT_ID'] || 'plgprocess3' %>
+  gpu_grant_id: <%= ENV['GPU_GRANT_ID'] || 'plgprocess3' %>
   git_download_key: <%= ENV['PIPELINE_SSH_KEY'] %>
   staging:
     infra_host: 'http://lobcder.process-project.eu'
