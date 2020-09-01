@@ -1,6 +1,0 @@
-- content_for :extra_head do
-  :javascript
-    var onEmbedReady = function() {
-      #{content_for :embed_file_browser}
-    };
-  %script{ type: 'text/javascript', src: File.join(Webdav::FileStore.url, '/embed/embed.nocache.js') }

@@ -27,7 +27,7 @@ module HelpHelper
       'jwt_public_key' => jwt_public_key,
       'jwt_key_algorithm' => jwt_key_algorithm,
       'root_url' => root_url,
-      'data_sets_api_doc' => data_sets_api_doc
+      # 'data_sets_api_doc' => data_sets_api_doc
     }
     MarkdownRenderer.new(context)
   end
@@ -38,10 +38,5 @@ module HelpHelper
 
   def jwt_key_algorithm
     Vapor::Application.config.jwt.key_algorithm
-  end
-
-  def data_sets_api_doc
-    Rails.configuration.constants['data_sets']['url'] +
-      Rails.configuration.constants['data_sets']['api_doc_path']
   end
 end

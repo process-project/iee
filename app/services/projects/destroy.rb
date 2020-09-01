@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 module Projects
-  class Destroy < Base
+  class Destroy
+    def initialize(_user, project, _options = {})
+      @project = project
+    end
+
     def call
-      !super.persisted?
+      Project.transaction { internal_call }
+      !@project.persisted?
     end
 
     protected
 
     def internal_call
       @project.destroy
-      delete(@project.working_dir)
-    rescue Net::HTTPServerException
-      raise ActiveRecord::Rollback
     end
   end
 end

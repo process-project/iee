@@ -9,9 +9,5 @@
         .clearfix
       .x_content
         %section.content
-          - if pipelines.size > 1
-            = render partial: 'projects/pipelines/tab_compare',
-                     locals: { pipelines: pipelines, project: project }
-          - else
-            = render partial: 'projects/pipelines/tab',
-                     locals: { pipelines: pipelines }
+          = render partial: 'projects/pipelines/tab',
+                   locals: { pipelines: pipelines }

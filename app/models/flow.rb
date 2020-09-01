@@ -38,6 +38,9 @@ class Flow
   }.freeze
 
   STEPS = [
+    RimrockStep.new('placeholder_step',
+                    'process-eu/mock-step',
+                    'mock.sh.erb', [], []),
     DirectoryBuilderStep.new('directory_builder_step'),
     SingularityStep.new('testing_singularity_step_1'),
     SingularityStep.new('testing_singularity_step_2'),
@@ -45,9 +48,6 @@ class Flow
     ImplicitStagingStep.new('implicit_staging_step'),
     StagingOutStep.new('staging_out_step'),
     CleanUpStep.new('clean_up_step'),
-    RimrockStep.new('placeholder_step',
-                    'process-eu/mock-step',
-                    'mock.sh.erb', [], []),
     SingularityStep.new('singularity_placeholder_step'),
     SingularityStep.new('medical_step'),
     SingularityStep.new('lofar_step'),

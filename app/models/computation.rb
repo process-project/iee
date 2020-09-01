@@ -22,13 +22,11 @@ class Computation < ApplicationRecord
   scope :created, -> { where(status: 'created') }
   scope :not_finished, -> { where(status: %w[created new queued running]) }
   scope :rimrock, -> { where(type: 'RimrockComputation') }
-  scope :webdav, -> { where(type: 'WebdavComputation') }
   scope :singularity, -> { where(type: 'SingularityComputation') }
   scope :cloudify, -> { where(type: 'CloudifyComputation') }
   scope :rest, -> { where(type: 'RestComputation') }
   scope :lobcder, -> { where(type: 'LobcderComputation') }
   scope :submitted_rimrock, -> { submitted.rimrock }
-  scope :submitted_webdav, -> { submitted.webdav }
   scope :submitted_singularity, -> { submitted.singularity }
   scope :submitted_cloudify, -> { submitted.cloudify }
   scope :submitted_lobcder, -> { submitted.lobcder }
@@ -52,10 +50,6 @@ class Computation < ApplicationRecord
 
   def rimrock?
     type == 'RimrockComputation'
-  end
-
-  def webdav?
-    type == 'WebdavComputation'
   end
 
   def cloudify?

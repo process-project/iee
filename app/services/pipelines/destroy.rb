@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 module Pipelines
-  class Destroy < Base
+  class Destroy
+    def initialize(pipeline, _options = {})
+      @pipeline = pipeline
+    end
+
     def call
-      !super.persisted?
+      Pipeline.transaction { internal_call }
+      !@pipeline.persisted?
     end
 
     protected
 
     def internal_call
       @pipeline.destroy
-      delete(@pipeline.root_dir)
-    rescue Net::HTTPServerException
-      raise ActiveRecord::Rollback
     end
   end
 end
