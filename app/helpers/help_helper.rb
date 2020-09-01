@@ -39,9 +39,4 @@ module HelpHelper
   def jwt_key_algorithm
     Vapor::Application.config.jwt.key_algorithm
   end
-
-  def data_sets_api_doc
-    Rails.configuration.constants['data_sets']['url'] +
-      Rails.configuration.constants['data_sets']['api_doc_path']
-  end
 end

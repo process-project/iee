@@ -72,7 +72,6 @@ Rails.application.routes.draw do
     end
   end
   resources :cloud_resources, only: :index
-  resources :data_sets, only: :show
 
   # Help
   get 'help' => 'help#index'

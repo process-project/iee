@@ -21,11 +21,3 @@ en:
         title: Help
         sessions: JWT
         pdp: PDP
-        policies: Resource policies
-        data_sets: Data sets
-      data_sets:
-        title: Data sets
-        real: Clinical data set
-        inferred: Inferred data set
-        simulated: Simulated data set
-        virtual: Integrated collection
