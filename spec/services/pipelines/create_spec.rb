@@ -6,7 +6,7 @@ describe Pipelines::Create do
   let(:user) { create(:user) }
 
   it 'creates new pipeline in db' do
-    expect { described_class.new(build(:pipeline, user: user), {}).call }. # Removed: client argument
+    expect { described_class.new(build(:pipeline, user: user), {}).call }.
       to change { Pipeline.count }.by(1)
   end
 

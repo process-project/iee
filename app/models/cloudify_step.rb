@@ -36,7 +36,7 @@ class CloudifyStep < Step
     )
   end
 
-  def input_present_for?(pipeline)
+  def input_present_for?(_pipeline)
     True
   end
 

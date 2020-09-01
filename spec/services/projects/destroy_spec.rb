@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe Projects::Destroy do
-
   let(:user) { create(:user) }
   let!(:project) { create(:project) }
 

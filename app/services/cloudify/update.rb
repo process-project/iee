@@ -57,8 +57,7 @@ module Cloudify
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
-    def results_ready?(computation)
-    end
+    def results_ready?(computation) end
 
     def finish_job(computation)
       # @updater&.new(computation)&.call

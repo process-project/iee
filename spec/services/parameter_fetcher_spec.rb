@@ -24,7 +24,6 @@ describe ParameterFetcher do
   end
 
   before(:each) do
-    SingularityRegistry = double('SingularityRegistry')
     allow(SingularityRegistry).to receive(:fetch_containers).with(step_name) do
       STEPS = { step_name.to_sym => [container_name] }.freeze
       CONTAINERS = { container_name => [container_tag] }.freeze

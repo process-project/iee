@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Project altering' do
-
   let(:project) { create(:project) }
 
   before(:each) do
@@ -19,7 +18,6 @@ RSpec.feature 'Project altering' do
     end
 
     context 'when registering a new project' do
-
       scenario 'blocks incorrect project name registration' do
         visit new_project_path
 

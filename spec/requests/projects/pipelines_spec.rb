@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe 'Pipelines controller' do
-
   let(:project) { create(:project) }
 
   context 'with no user signed in' do
@@ -30,7 +29,6 @@ describe 'Pipelines controller' do
     end
 
     describe 'POST /projects/:id/pipelines' do
-
       it 'allow to run pipelines for all logged in users' do
         expect do
           post project_pipelines_path(project),
@@ -51,7 +49,6 @@ describe 'Pipelines controller' do
     end
 
     describe 'DELETE /projects/:id/pipelines/:iid' do
-
       it 'can be performed by owner' do
         pipeline = create(:pipeline, project: project, user: user)
 

@@ -65,7 +65,6 @@ module Projects
         @computations = @pipeline.computations.flow_ordered
       end
 
-
       def step
         @computation.step
       end

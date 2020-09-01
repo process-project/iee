@@ -3,12 +3,10 @@
 require 'rails_helper'
 
 describe Pipelines::Destroy do
-
   let(:user) { create(:user) }
   let!(:pipeline) { create(:pipeline, user: user) }
 
   it 'remove pipeline from db' do
-
     expect { described_class.new(pipeline).call }.
       to change { Pipeline.count }.by(-1)
   end

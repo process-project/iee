@@ -8,8 +8,7 @@ class SingularityScriptGenerator
   def call
     record = matching_blueprint
     fill_values = computation_parameter_values
-
-    filled_script = record.script_blueprint % fill_values
+    record.script_blueprint % fill_values
   end
 
   private
