@@ -667,7 +667,7 @@ namespace :blueprints do
       %<uc_root>s/containers/testing_container_1.sif operation=%<operation>s
 
       # Staging out step workaround
-      cp %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
+      cp -r %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
 
       # Cleanup step workaround
       rm -rf $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s
