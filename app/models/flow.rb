@@ -35,7 +35,8 @@ class Flow
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
     test_pipeline: :uc1,
-    full_test_pipeline: :uc1
+    full_test_pipeline: :uc1,
+    workaround_lofar_pipeline: :uc2
   }.freeze
 
   STEPS = [
