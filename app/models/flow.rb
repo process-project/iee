@@ -19,6 +19,7 @@ class Flow
                       testing_singularity_step_1
                       staging_out_step
                       clean_up_step],
+    workaround_test_pipeline: %w[workaround_testing_singularity_step_1],
     full_test_pipeline: %w[directory_builder_step
                            staging_in_step
                            testing_singularity_step_1
@@ -35,13 +36,15 @@ class Flow
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
     test_pipeline: :uc1,
-    full_test_pipeline: :uc1
+    full_test_pipeline: :uc1,
+    workaround_test_pipeline: :uc2
   }.freeze
 
   STEPS = [
     RimrockStep.new('placeholder_step',
                     'process-eu/mock-step',
                     'mock.sh.erb', [], []),
+    SingularityStep.new('workaround_testing_singularity_step_1'),
     SingularityStep.new('workaround_lofar_step'),
     DirectoryBuilderStep.new('directory_builder_step'),
     SingularityStep.new('testing_singularity_step_1'),

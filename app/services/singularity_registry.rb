@@ -7,6 +7,7 @@ class SingularityRegistry
     lofar_step: %w[factor-iee.sif uc2_factor_fast.sif],
     workaround_lofar_step: %w[workaround_uc2_factor_fast.sif],
     testing_singularity_step_1: %w[testing_container_1.sif],
+    workaround_testing_singularity_step_1: %w[workaround_testing_container_1.sif],
     testing_singularity_step_2: %w[testing_container_2.sif]
   }.freeze
 
@@ -18,6 +19,7 @@ class SingularityRegistry
     'testing_container_1.sif' => %w[whatever_tag_and_it_is_to_remove],
     'testing_container_2.sif' => %w[whatever_tag_and_it_is_to_remove],
     'workaround_uc2_factor_fast.sif' => %w[latest],
+    'workaround_testing_container_1.sif' => %w[latest]
   }.freeze
 
   def self.fetch_containers(step_name)
