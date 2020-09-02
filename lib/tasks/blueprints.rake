@@ -498,5 +498,143 @@ namespace :blueprints do
         default: '/mnt/workdir/test'
       )
     ]
+
+
+
+    # workaround step for testing UC2 LOFAR use case
+    script = <<~CODE
+      #!/bin/bash -l
+      #SBATCH --partition %<partition>s
+      #SBATCH -A #{Rails.application.config_for('process')['grant_id']}
+      #SBATCH --nodes %<nodes>s
+      #SBATCH --ntasks %<cpus>s
+      #SBATCH --time %<time>s:00:00
+      #SBATCH --job-name UC2_test
+      #SBATCH --output %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.txt
+      #SBATCH --error %<uc_root>s/slurm_outputs/uc2-pipeline-log-%%J.err
+
+      module load plgrid/tools/singularity/stable
+      mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp
+      mkdir -p $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp
+      mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/in
+      mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/workdir
+      mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/out
+
+      cp %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
+
+      singularity run \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/workdir:/mnt/workdir \\
+      -B %<uc_root>s/pipelines/%<pipeline_hash>s/out:/mnt/out \\
+      -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/tmp:/tmp \\
+      -B $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s/var_tmp:/var/tmp \\
+      %<uc_root>s/containers/uc2_factor_fast.sif \\
+      calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
+
+      cp %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
+
+      rm -rf $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s
+      rm -rf %<uc_root>s/pipelines/%<pipeline_hash>s
+    CODE
+
+    script = script + "\n" + common_chmod_script_part_out +
+        common_chmod_script_part_workdir
+
+    ssbp = SingularityScriptBlueprint.create!(container_name: 'workaround_uc2_factor_fast.sif',
+                                              container_tag: 'latest',
+                                              compute_site: ComputeSite.where(name: 'krk').first,
+                                              script_blueprint: script)
+    ssbp.step_parameters = [
+        StepParameter.new(
+            label: 'nodes',
+            name: 'Nodes',
+            description: 'Number of execution nodes',
+            rank: 0,
+            datatype: 'integer',
+            default: 1
+        ),
+        StepParameter.new(
+            label: 'cpus',
+            name: 'CPUs',
+            description: 'Number of CPU per execution node',
+            rank: 0,
+            datatype: 'multi',
+            default: '24',
+            values: %w[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]
+        ),
+        StepParameter.new(
+            label: 'partition',
+            name: 'Partition',
+            description: 'Prometheus execution partition',
+            rank: 0,
+            datatype: 'multi',
+            default: 'plgrid-long',
+            values: %w[plgrid-testing plgrid plgrid-short plgrid-long plgrid-gpu plgrid-large]
+        ),
+        StepParameter.new(
+            label: 'time',
+            name: 'Time',
+            description: 'Number of hours',
+            rank: 0,
+            datatype: 'integer',
+            default: 11
+        ),
+        StepParameter.new(
+            label: 'calms',
+            name: 'Calms',
+            description: 'The calms parameter',
+            rank: 0,
+            datatype: 'string',
+            default: '232873'
+        ),
+        StepParameter.new(
+            label: 'tarms',
+            name: 'Tarms',
+            description: 'The tarms parameter',
+            rank: 0,
+            datatype: 'string',
+            default: '232875'
+        ),
+        StepParameter.new(
+            label: 'datadir',
+            name: 'Datadir',
+            description: 'The datadir parameter',
+            rank: 0,
+            datatype: 'string',
+            default: '/mnt/in'
+        ),
+        StepParameter.new(
+            label: 'factordir',
+            name: 'Factordir',
+            description: 'The factordir parameter',
+            rank: 0,
+            datatype: 'string',
+            default: '/mnt/out/factor'
+        ),
+        StepParameter.new(
+            label: 'workdir',
+            name: 'Workdir',
+            description: 'The workdir parameter',
+            rank: 0,
+            datatype: 'string',
+            default: '/mnt/workdir/test'
+        ),
+        StepParameter.new(
+            label: 'src_path',
+            name: 'Source path',
+            description: 'The source path of the input',
+            rank: 0,
+            datatype: 'string',
+            default: 'testing_data_backup'
+        ),
+        StepParameter.new(
+            label: 'dest_path',
+            name: 'Destination path',
+            description: 'The destination path of the output',
+            rank: 0,
+            datatype: 'string',
+            default: 'WORKAROUND_LOFAR_RESULTS'
+        )
+    ]
   end
 end

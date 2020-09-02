@@ -1,5 +1,24 @@
 en:
   steps:
+    workaround_lofar_pipeline:
+      title: Workaround LOFAR Step
+      cannot_start: |
+        Cannot start workaround LOFAR step.
+      created: |
+        All required input files are available.
+        You can start workaround LOFAR step for this project.
+      new: Workaround LOFAR step is being submitted
+      queued: Workaround LOFAR step is queued
+      running: Workaround LOFAR step is running
+      error: There was an error while running Workaround LOFAR step
+      finished: |
+        Workaround LOFAR step finished successfully, results stored in
+        the output directory.
+      aborted: Workaround LOFAR step was aborted by the pipeline owner
+      start_automatic: Save Workaround LOFAR step version
+      start_manual: Start Workaround LOFAR step
+      restart_manual: Restart Workaround LOFAR step
+      restart_automatic: Restart computation
     placeholder_step:
       title: Placeholder step
       cannot_start: |

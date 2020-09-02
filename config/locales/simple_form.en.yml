@@ -81,6 +81,7 @@ en:
           test_pipeline: Simple test pipeline
           full_test_pipeline: Complex test pipeline
           placeholder_pipeline: Placeholder pipeline
+          workaround_lofar_pipeline: Woraround LOFAR pipeline
     # Examples
     # labels:
     #   defaults:
