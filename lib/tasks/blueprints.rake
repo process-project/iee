@@ -518,7 +518,7 @@ namespace :blueprints do
       mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/workdir
       mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/out
 
-      cp %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
+      cp -r %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
 
       singularity run \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
@@ -655,7 +655,7 @@ namespace :blueprints do
       mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/out
 
       # Staging in step workaround
-      cp %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
+      cp -r %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
 
       # Singularity step run
       singularity run \\
