@@ -529,7 +529,7 @@ namespace :blueprints do
       %<uc_root>s/containers/uc2_factor_fast.sif \\
       calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
 
-      cp %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
+      cp -r %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
 
       rm -rf $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s
       rm -rf %<uc_root>s/pipelines/%<pipeline_hash>s
