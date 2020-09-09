@@ -30,5 +30,17 @@
   .x_content
     = yield
 
+%br
+.x_panel
+  .x_title
+    %h2
+      = 'Results'
+      %small= 'Pipeline output data'
+    %span.pull-right
+      = link_to 'Download', pipeline.output_path,
+      target: "_blank",
+      class: 'btn btn-sm btn-success'
+    .clearfix
+
 = render('projects/pipelines/file_browsers',
   project: project, pipeline: pipeline)
