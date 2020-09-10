@@ -96,6 +96,12 @@ en:
         edit: Edit pipeline
         delete: Remove pipeline
         no_computations: No computations defined for this pipeline
+        results_section:
+          results: Results
+          pipeline_output_data: Pipeline output data
+          resource_name: Resource name
+          download_button: Download
+          waiting_for_results: Waiting for results
       new:
         title: Run pipeline
         back_to_index: Back to pipelines list

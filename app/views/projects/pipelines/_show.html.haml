@@ -30,17 +30,21 @@
   .x_content
     = yield
 
-%br
 .x_panel
   .x_title
     %h2
-      = 'Results'
-      %small= 'Pipeline output data'
-    %span.pull-right
-      = link_to 'Download', pipeline.output_path,
-      target: "_blank",
-      class: 'btn btn-sm btn-success'
+      = icon('download') + ' ' + t('projects.pipelines.show.results_section.results')
+      %small= t('projects.pipelines.show.results_section.pipeline_output_data')
     .clearfix
-
-= render('projects/pipelines/file_browsers',
-  project: project, pipeline: pipeline)
+    %ul.well-list
+      - if pipeline.output_path.nil?
+        = t('projects.pipelines.show.results_section.waiting_for_results')
+      - else
+        - 3.times do |a|
+          %li
+            = icon('file')
+            = t('projects.pipelines.show.results_section.resource_name')
+            %span.pull-right
+              = link_to icon('download') + ' ' + t('projects.pipelines.show.results_section.download_button'), pipeline.output_path,
+                target: "_blank",
+                class: 'btn btn-sm btn-success'
