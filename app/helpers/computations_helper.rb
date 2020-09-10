@@ -16,39 +16,7 @@ module ComputationsHelper
     "alert-#{alert_class_postfix(computation)}"
   end
 
-  def source_comparison_link(from_comp, to_comp)
-    repo = computation_repo(from_comp)
-    link_to source_comparison_link_text(from_comp, to_comp),
-            "https://#{gitlab_host}/#{repo}/compare/#{from_comp.revision}...#{to_comp.revision}",
-            target: '_blank'
-  end
-
-  def source_link(computation)
-    if computation.revision
-      repo = computation_repo(computation)
-      link_to computation.revision,
-              "https://#{gitlab_host}/#{repo}/tree/#{computation.revision}"
-    end
-  end
-
   private
-
-  def computation_repo(computation)
-    computation.step.try(:repository)
-  end
-
-  def gitlab_host
-    Rails.application.config_for('application')['gitlab']['host']
-  end
-
-  def source_comparison_link_text(from_comp, to_comp)
-    I18n.t(
-      'projects.comparisons.index.source_comparison_link',
-      computation_step: t("steps.#{from_comp.pipeline_step}.title"),
-      compared_revision: "#{from_comp.tag_or_branch}:#{from_comp.revision}",
-      compare_to_revision: "#{to_comp.tag_or_branch}:#{to_comp.revision}"
-    )
-  end
 
   def alert_class_postfix(computation)
     case computation.status

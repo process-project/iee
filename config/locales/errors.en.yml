@@ -13,26 +13,6 @@ en:
       last_owner: Cannot remove last group owner
     project_details:
       empty_result: empty result set returned from the Data Set repository
-  data_file_synchronizer:
-    timed_out: |
-      Time out when contacting File Storage for project %{project} and
-      user %{user}
-    invalid_response: |
-      Invalid response of File Storage for project %{project} and user %{user}.
-    request_failure: |
-      Request to File Storage failed with response code %{code} for
-      project %{project} and user %{user}.
-    no_project_name: |
-      User %{user} trying to run the service for a project with no project ID.
-    no_proxy: |
-      User %{user} trying to run the service without proxy certificate.
-    no_token: |
-      User %{user} trying to run the service without token.
-    no_fs_client: |
-      There were problems accessing the Process File Store service.
-    file_removed: |
-      Removed %{name} file from project %{project} (pipeline %{pipeline}) as no longer present in the
-      File Storage.
   rimrock:
     update:
       timeout: Time out when updating %{user} computations (%{details})

@@ -7,9 +7,6 @@
     = nav_link controller: [:projects, :pipelines, :computations], active_class: 'current-page' do
       = link_to projects_path do
         = t('.projects')
-    = nav_link controller: :file_store, active_class: 'current-page' do
-      = link_to file_store_path, data: { turbolinks: false } do
-        = t('files')
     = nav_link controller: :cloud_resources, active_class: 'current-page' do
       = link_to cloud_resources_path, data: { turbolinks: false } do
         = t('.cloud_resources')

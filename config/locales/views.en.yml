@@ -63,9 +63,6 @@ en:
         invalid: |
           Your proxy certificate is not valid anymore. As a result we are not
           able to update files list (cached files list is presented bellow).
-    file_browsers:
-      project_inputs: "%{name} project inputs"
-      pipelines_files: All pipelines files
     pipelines:
       pipeline_steps_form:
         title: Pipeline steps
@@ -116,20 +113,6 @@ en:
           reload: Reload tags and branches
         computations_form_manual:
           steps: "Pipeline steps:"
-      file_browsers:
-        project_inputs: "%{name} project inputs"
-        pipeline_inputs: "%{name} pipeline inputs"
-        pipeline_outputs: "%{name} pipeline outputs"
-
-    comparisons:
-      index:
-        subtitle: pipelines comparison
-        sources_comparison: Sources comparison
-        data_comparison: Data comparison
-        source_comparison_link: "%{computation_step}, rev. %{compared_revision} vs rev. %{compare_to_revision}"
-        invalid: Please select exactly two pipelines to compare.
-        no_data: Nothing to compare.
-        noncomparable: "Result: %{noncomparable}. Not compared."
 
   services:
     index:

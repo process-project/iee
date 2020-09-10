@@ -116,9 +116,6 @@ GEM
       sass (>= 3.2)
     formatador (0.2.5)
     github-markup (1.6.1)
-    gitlab (4.2.0)
-      httparty
-      terminal-table
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     gravtastic (3.2.6)
@@ -151,8 +148,6 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    httparty (0.15.6)
-      multi_xml (>= 0.5.2)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     icheck-rails (1.0.2.2)
@@ -186,7 +181,6 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    multi_xml (0.6.0)
     multipart-post (2.0.0)
     nenv (0.3.0)
     net_dav (0.5.1)
@@ -358,8 +352,6 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     temple (0.8.0)
-    terminal-table (1.8.0)
-      unicode-display_width (~> 1.1, >= 1.1.1)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -410,7 +402,6 @@ DEPENDENCIES
   fast_jsonapi
   font-awesome-sass (~> 4.5)
   github-markup
-  gitlab
   gravtastic
   guard-rspec
   haml-rails

@@ -27,11 +27,27 @@
       "note": "Content sanitized."
     },
     {
+      "warning_type": "Cross-Site Request Forgery",
+      "warning_code": 116,
+      "fingerprint": "c8697fda60549ca065789e2ea74c94effecef88b2b5483bae17ddd62ece47194",
+      "check_name": "CSRFTokenForgeryCVE",
+      "message": "Rails 5.1.4 has a vulnerability that may allow CSRF token forgery. Upgrade to Rails 5.2.4.3 or patch",
+      "file": "Gemfile.lock",
+      "line": 233,
+      "link": "https://groups.google.com/g/rubyonrails-security/c/NOjKiGeXUgw",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "fcab83b4d6827f1cb5b86372dd1e757bef6e3e73bc68add74582bf647175348d",
       "check_name": "MassAssignment",
-      "message": "Parameters should be whitelisted for mass assignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/application_controller.rb",
       "line": 35,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
@@ -47,6 +63,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-01-27 12:03:10 +0100",
-  "brakeman_version": "4.7.2"
+  "updated": "2020-09-01 17:46:57 +0200",
+  "brakeman_version": "4.9.0"
 }

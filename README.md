@@ -85,7 +85,6 @@ you can set the following ENV variables:
   * `SEGMENTATION_PASSWORD` - segmentation own cloud service password
   * `JWT_KEY_PATH` (optional) - path to key used to generate user JWT tokens
   * `REDIS_URL` (optional) - redis database url
-  * `WEB_DAV_BASE_URL` (optional) - FileStore web dav root URL
   * `ATMOSPHERE_BASE_URL` (optional) - Atmosphere root URL
   * `DATA_SETS_PAGE_URL` (optional) - ArQ URL
   * `GITLAB_HOST` - Gitlab host (without https, e.g. gitlab.com)

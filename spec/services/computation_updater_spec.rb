@@ -6,7 +6,7 @@ describe ComputationUpdater do
   let(:project) { create(:project) }
   let(:pipeline) { create(:pipeline, project: project) }
   let!(:c1) { create(:rimrock_computation, pipeline: pipeline, status: 'new') }
-  let!(:c2) { create(:webdav_computation, pipeline: pipeline, status: 'finished') }
+  let!(:c2) { create(:singularity_computation, pipeline: pipeline, status: 'finished') }
 
   it 'broadcast computation change' do
     expect(ComputationChannel).
