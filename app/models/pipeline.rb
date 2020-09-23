@@ -42,11 +42,6 @@ class Pipeline < ApplicationRecord
     Flow.uc_for(flow)
   end
 
-  def output_path
-    # TODO: replace with appropriate link from database
-    'http://nlp.stanford.edu/data/glove.6B.zip'
-  end
-
   private
 
   def calculate_status

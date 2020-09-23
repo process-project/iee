@@ -35,8 +35,8 @@ class Flow
     medical_pipeline: :uc1,
     lofar_pipeline: :uc2,
     agrocopernicus_pipeline: :uc5,
-    test_pipeline: :uc1,
-    full_test_pipeline: :uc1,
+    test_pipeline: :uc_testing,
+    full_test_pipeline: :uc_testing,
     workaround_test_pipeline: :uc2,
     workaround_lofar_pipeline: :uc2
   }.freeze

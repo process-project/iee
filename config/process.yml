@@ -22,6 +22,7 @@ defaults: &defaults
     uc2_infra_token:  <%= ENV['UC2_INFRA_TOKEN'] %>
     uc4_infra_token:  <%= ENV['UC4_INFRA_TOKEN'] %>
     uc5_infra_token:  <%= ENV['UC5_INFRA_TOKEN'] %>
+    uc_testing_infra_token:  <%= ENV['UC_TESTING_INFRA_TOKEN'] %>
     staging_secret: <%= ENV['STAGING_SECRET'] %>
     folders_path: '/api/v1/folders'
     list_path: '/api/v1/list'
