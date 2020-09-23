@@ -32,8 +32,8 @@ module Lobcder
     def mkdir_batch(commands)
       # commands argument example
       # [
-      #     { "name":"krk", "path":"/some_folder/other_folder" },
-      #     { "name":"krk", "path":"/some_folder/another_folder" },
+      #     { "name":"krk", "path":"/dst_folder" },
+      #     { "name":"krk", "path":"/src_folder" },
       # ]
 
       payload = commands.to_json
@@ -123,6 +123,20 @@ module Lobcder
       JSON.parse(response.body, symbolize_names: true)[:status]
     end
 
+    def webdav_links(track_id)
+      response = @connection.get "#{attribute_fetcher('status_path')}/#{track_id}"
+
+      links = Hash.new
+
+      JSON.parse(response.body, symbolize_names: true)[:files].each do |file|
+        link = file[1][:webdavLink]
+        file_name = link.split('/')[-1]
+        links[file_name] = link
+      end
+
+      links
+    end
+
     def list(site_name, path, recursive = false)
       payload = {
         name: site_name.to_s,
@@ -166,11 +180,18 @@ module Lobcder
       token = body[:token][:value]
       token_header = body[:token][:header]
 
-      Faraday.new(url: "#{endpoint}:#{endpoint_port}") do |faraday|
+      connection = Faraday.new(url: "#{endpoint}:#{endpoint_port}") do |faraday|
         faraday.request :url_encoded
         faraday.adapter Faraday.default_adapter
         faraday.headers[token_header] = token
       end
+
+      logger = Logger.new('log/alfa.log')
+      logger.info(endpoint)
+      logger.info(endpoint_port)
+      logger.info(token)
+
+      connection
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -180,12 +201,12 @@ module Lobcder
       # commands argument example
       # [
       #     {
-      #         :dst=>{:name=>"krk", :path=>"/some_folder_1"},
-      #         :src=>{:name=>"krk", :path=>"/some_folder_1/some_file_1.txt"}
+      #         :dst=>{:name=>"krk", :path=>"/dst_folder"},
+      #         :src=>{:name=>"krk", :path=>"/src_folder/dir1"}
       #     },
       #     {
-      #         :dst=>{:name=>"krk", :path=>"/some_folder_2"},
-      #         :src=>{:name=>"krk", :path=>"/some_folder_2/some_file_2.txt"}
+      #         :dst=>{:name=>"krk", :path=>"/dst_folder"},
+      #         :src=>{:name=>"krk", :path=>"/src_folder/file_2.txt"}
       #     }
       # ]
 
