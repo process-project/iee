@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200624105231) do
+ActiveRecord::Schema.define(version: 20200923094800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,20 @@ ActiveRecord::Schema.define(version: 20200624105231) do
     t.string "host"
   end
 
+  create_table "data_files", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "data_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "output_of_id"
+    t.bigint "input_of_id"
+    t.bigint "project_id"
+    t.index ["data_type"], name: "index_data_files_on_data_type"
+    t.index ["input_of_id"], name: "index_data_files_on_input_of_id"
+    t.index ["output_of_id"], name: "index_data_files_on_output_of_id"
+    t.index ["project_id"], name: "index_data_files_on_project_id"
+  end
+
   create_table "group_relationships", id: :serial, force: :cascade do |t|
     t.integer "parent_id", null: false
     t.integer "child_id", null: false
@@ -148,6 +162,7 @@ ActiveRecord::Schema.define(version: 20200624105231) do
     t.integer "mode", default: 0, null: false
     t.string "flow", default: "full_body_scan", null: false
     t.bigint "project_id"
+    t.json "webdav_links"
     t.index ["iid"], name: "index_pipelines_on_iid"
     t.index ["project_id", "iid"], name: "index_pipelines_on_project_id_and_iid", unique: true
     t.index ["project_id"], name: "index_pipelines_on_project_id"
