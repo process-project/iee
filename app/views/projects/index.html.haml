@@ -20,7 +20,6 @@
         .x_content
 
           %h5
-            %span= "#{t '.files'}: #{project.data_files.count}"
             %span.right= "#{t '.pipelines'}: #{project.pipelines.count}"
 
           %h5= t project.pipelines.present? ? '.latest_pipelines' : '.no_pipelines'

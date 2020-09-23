@@ -27,12 +27,5 @@ RSpec.describe ProxyHelper do
 
       expect(require_new_proxy?).to be_falsy
     end
-
-    it 'is false when active web dav computation and proxy is empty' do
-      create(:webdav_computation, status: 'new', user: current_user)
-      current_user.proxy = nil
-
-      expect(require_new_proxy?).to be_falsy
-    end
   end
 end

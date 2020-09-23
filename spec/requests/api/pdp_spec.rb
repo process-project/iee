@@ -183,27 +183,6 @@ RSpec.describe 'PDP' do
         end
       end
     end
-
-    context 'path in service uri' do
-      let(:webdav) do
-        create(:service,
-               uri: 'http://localhost:8080/webdav',
-               uri_aliases: ['http://alias.pl/webdav'])
-      end
-      let(:dav_resource) { create(:resource, service: webdav, path: '/') }
-      let(:dav_access_method) { create(:access_method, name: 'get') }
-      it 'returns 200' do
-        create(:user_access_policy,
-               user: user, resource: dav_resource, access_method: dav_access_method)
-        get api_pdp_index_path,
-            params:  {
-              uri: 'http://localhost:8080/webdav/',
-              access_method: 'get'
-            }
-
-        expect(response.status).to eq(200)
-      end
-    end
   end
 
   context 'as anonymous' do

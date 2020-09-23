@@ -61,12 +61,6 @@ module Api
     end
 
     def make_tmp_output_file
-      DataFile.create(name: @computation.tmp_output_file,
-                      data_type: :generic_type,
-                      project: @computation.pipeline.project,
-                      input_of: @computation.pipeline,
-                      output_of: @computation.pipeline)
-
       ComputationUpdater.new(@computation).call
     end
   end

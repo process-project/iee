@@ -18,6 +18,12 @@ module Rest
       end
     end
 
+    def parse(body)
+      JSON.parse(body, symbolize_names: true)
+    rescue JSON::ParserError
+      return {}
+    end
+
     private
 
     def rest_url

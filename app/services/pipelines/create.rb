@@ -1,30 +1,26 @@
 # frozen_string_literal: true
 
 module Pipelines
-  class Create < Pipelines::Base
-    def initialize(pipeline, params, options = {})
-      super(pipeline, options)
+  class Create
+    def initialize(pipeline, params, _options = {})
+      @pipeline = pipeline
       @params = params
+    end
+
+    def call
+      Pipeline.transaction { internal_call }
+      @pipeline
     end
 
     protected
 
     def internal_call
       @pipeline.save.tap { |saved| post_save if saved }
-    rescue Net::HTTPServerException
-      @pipeline.errors.
-        add(:name,
-            I18n.t('activerecord.errors.models.pipeline.create_dav403'))
-
-      raise ActiveRecord::Rollback
     end
 
     private
 
     def post_save
-      r_mkdir(@pipeline.inputs_dir) # To remove
-      r_mkdir(@pipeline.outputs_dir) # To remove
-
       create_computations
     end
 

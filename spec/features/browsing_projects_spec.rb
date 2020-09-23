@@ -9,16 +9,9 @@ RSpec.feature 'Project browsing' do
   before(:each) do
     login_as(user)
 
-    allow_any_instance_of(Project).to receive(:execute_data_sync)
     allow_any_instance_of(Projects::Details).
       to receive(:call).
       and_return(details: [])
-  end
-
-  before do
-    file_store = instance_double(Webdav::FileStore)
-    allow(file_store).to receive(:r_mkdir)
-    allow(Webdav::FileStore).to receive(:new).and_return(file_store)
   end
 
   context 'in the context of the projects list' do
@@ -67,14 +60,6 @@ RSpec.feature 'Project browsing' do
       visit projects_path
 
       expect(page).to have_content I18n.t('projects.index.nothing')
-    end
-
-    scenario 'gives the file number for each project' do
-      create_list(:data_file, 2, project: project)
-
-      visit projects_path
-
-      expect(page).to have_content "#{I18n.t 'projects.index.files'}: 2"
     end
 
     scenario 'gives the pipeline number for each project' do
@@ -154,40 +139,6 @@ RSpec.feature 'Project browsing' do
                                 href: project_pipeline_path(project, pipeline))
       expect(page).to have_content I18n.t("simple_form.options.pipeline.flow.#{pipeline.flow}")
       expect(page).to have_content pipeline.user.name
-    end
-
-    scenario 'don\'t show compare button when only one pipeline' do
-      visit project_path(project)
-
-      expect(page).
-        to_not have_selector "input[value='#{I18n.t('projects.pipelines.tab_compare.compare')}']"
-    end
-
-    scenario 'show compare button when more than one pipeline' do
-      create(:pipeline, project: project)
-      create(:pipeline, project: project)
-
-      visit project_path(project)
-
-      expect(page).
-        to have_selector "input[value='#{I18n.t('projects.pipelines.tab_compare.compare')}']"
-    end
-
-    scenario 'user can create new manual pipeline' do
-      expect(Pipelines::StartRunnable).to_not receive(:new)
-      expect do
-        visit project_path(project)
-        click_link 'Set up new pipeline'
-        fill_in 'Name', with: 'my new manual pipeline'
-        select 'manual', from: 'Mode'
-        click_on 'Set up new pipeline'
-      end.to change { Pipeline.count }.by(1)
-
-      pipeline = Pipeline.last
-
-      expect(pipeline.project).to eq project
-      expect(pipeline.name).to eq 'my new manual pipeline'
-      expect(pipeline).to be_manual
     end
 
     scenario 'user can create automatic pipeline, which is automatically started' do
@@ -318,29 +269,6 @@ RSpec.feature 'Project browsing' do
         end
       end
 
-      scenario 'show started rimrock computation source link for started step' do
-        computation = pipeline.computations.
-                      find_by(pipeline_step: 'placeholder_step')
-        computation.update_attributes(revision: 'my-revision',
-                                      started_at: Time.zone.now)
-
-        visit project_pipeline_computation_path(project, pipeline, computation)
-
-        expect(page).to have_link 'my-revision'
-        expect(page).
-          to have_link href: 'https://gitlab.com/process-eu/mock-step/tree/my-revision'
-      end
-
-      scenario 'rimrock computation source link is not shown when no revision' do
-        computation = pipeline.computations.
-                      find_by(pipeline_step: 'placeholder_step')
-
-        visit project_pipeline_computation_path(project, pipeline, computation)
-
-        expect(page).
-          to_not have_link href: 'https://gitlab.com/process-eu/mock-step/tree'
-      end
-
       skip 'skip due to restart button workaround' do
         scenario 'unable to start rimrock computation when version is not chosen' do
           mock_rimrock_computation_ready_to_run
@@ -352,31 +280,6 @@ RSpec.feature 'Project browsing' do
         end
       end
 
-      # scenario 'start webdav computation' do
-      #   mock_webdav_computation_ready_to_run
-      #   computation = pipeline.computations.
-      #                 find_by(pipeline_step: 'placeholder_step')
-      #   create(:data_file, data_type: :image, patient: patient)
-
-      #   expect(Webdav::StartJob).to receive(:perform_later)
-
-      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
-      #   # select('Workflow 5 (Mitral Valve TEE Segmentation)')
-      #   click_button computation_run_text(computation)
-      # end
-
-      # scenario 'unable to start webdav computation when run_mode is not set' do
-      #   mock_webdav_computation_ready_to_run
-      #   computation = pipeline.computations.
-      #                 find_by(pipeline_step: 'placeholder_step')
-      #   create(:data_file, data_type: :image, patient: patient)
-
-      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
-      #   click_button computation_run_text(computation)
-
-      #   expect(page).to have_content 'can\'t be blank'
-      # end
-
       def mock_rimrock_computation_ready_to_run
         mock_gitlab
         allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
@@ -384,18 +287,6 @@ RSpec.feature 'Project browsing' do
           to receive(:input_present_for?).and_return(true)
         allow_any_instance_of(Proxy).to receive(:valid?).and_return(true)
       end
-
-      def mock_webdav_computation_ready_to_run
-        allow_any_instance_of(WebdavComputation).
-          to receive(:runnable?).and_return(true)
-      end
-
-      # scenario 'computation alert is displayed when no required input data' do
-      #   visit patient_pipeline_computation_path(patient, pipeline, computation)
-      #   msg_key = "steps.#{computation.pipeline_step}.cannot_start"
-
-      #   expect(page).to have_content I18n.t(msg_key)
-      # end
 
       context 'when computing for project\'s wellbeing' do
         scenario 'displays computation stdout and stderr' do
@@ -409,36 +300,6 @@ RSpec.feature 'Project browsing' do
           expect(page).to have_link('stdout', href: 'http://files/stdout.pl')
           expect(page).to have_link('stderr', href: 'http://files/stderr.pl')
         end
-
-        # Need to wait for: https://github.com/rails/rails/pull/23211 and
-        # https://github.com/rspec/rspec-rails/issues/1606
-        # scenario 'periodically ajax-refreshes computation status', js: true do
-        #   allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-        #   computation.update_attributes(status: 'new', started_at: Time.current)
-        #
-        #   visit project_pipeline_computation_path(project, pipeline, computation)
-        #
-        #   expect(page).to have_content('New')
-        #
-        #   computation.update_attributes(status: 'running')
-        #   ComputationUpdater.new(computation).call
-        #
-        #   expect(page).to have_content('Running')
-        # end
-        #
-        # scenario 'refreshes entire page when computation status turns finished', js: true do
-        #   allow_any_instance_of(Computation).to receive(:runnable?).and_return(true)
-        #   computation.update_attributes(status: 'new', started_at: Time.current)
-        #
-        #   visit project_pipeline_computation_path(project, pipeline, computation)
-        #
-        #   expect(page).to have_content('New')
-        #
-        #   computation.update_attributes(status: 'finished')
-        #   ComputationUpdater.new(computation).call
-        #
-        #   expect(page).to have_content('Finished')
-        # end
       end
     end
 

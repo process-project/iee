@@ -50,11 +50,9 @@ module Api
           pipeline_attributes = ActionController::Parameters.new(base_attrs.merge(steps_attrs))
           pipeline_instance = Pipeline.new(base_attrs.merge(owners))
 
-          # TODO: CHECK FOR WEBDAV HTTP ERRORS
           ::Pipelines::Create.new(pipeline_instance, pipeline_attributes).call
 
           if pipeline_instance.errors.empty?
-            project.execute_data_sync(current_user)
             ::Pipelines::StartRunnable.new(pipeline_instance).call
             render json: pipeline_instance.id.to_json, status: :ok
           else

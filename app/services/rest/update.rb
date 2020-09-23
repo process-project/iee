@@ -33,35 +33,35 @@ module Rest
     end
 
     def success(computation, response)
-      body = JSON.parse(response.body, symbolize_names: true)
+      body = parse(response.body)
       job_status = body[:status]
-      # message = body[:message] # TODO: Do something with a message
-      update_computation(computation, job_status)
+      if %w[queued running finished error failed].include job_status
+        message = body[:message]
+        job_status = 'error' if job_status == 'failed'
+      else
+        message = 'Unknown job status received from external server'
+        job_status = 'error'
+      end
+      update_computation(computation, job_status, message)
     end
 
     def error(computation, response)
-      unless response.body.nil?
-        body = JSON.parse(response.body, symbolize_names: true)
-        message = body[:message]
-      end
-
-      message ||= 'Unknown error'
-
+      message = if response.body.nil?
+                  Rack::Utils::HTTP_STATUS_CODES[response.status]
+                else
+                  parse(response.body)[:message]
+                end
+      message ||= 'Unknown external server or connection error'
       update_computation(computation, 'error', message)
     end
 
-    def update_computation(computation, new_status, message = nil)
+    def update_computation(computation, new_status, message)
       return if new_status == computation.status
       ActivityLogWriter.write_message(
         computation.pipeline.user, computation.pipeline, computation,
         "computation_status_change_#{new_status.downcase}"
       )
-      if new_status == 'error'
-        computation.update_attributes(status: new_status, error_message: message)
-      else
-        computation.update_attributes(status: new_status)
-        # TODO: maybe some handling of message in non-error case
-      end
+      computation.update_attributes(status: new_status, error_message: message)
       on_finish_callback(computation) if computation.status == 'finished'
       update(computation)
     end

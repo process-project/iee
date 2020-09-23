@@ -220,6 +220,9 @@ module Lobcder
         cmd: commands
       }.to_json
 
+      logger = Logger.new('log/alfa.log')
+      logger.info(payload)
+
       response = @connection.post do |req|
         req.headers['Content-Type'] = 'application/json'
         req.url api_path

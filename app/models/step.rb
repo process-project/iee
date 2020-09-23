@@ -8,7 +8,7 @@ class Step
     @required_files = required_files || []
   end
 
-  def input_present_for?(pipeline)
-    @required_files.map { |rf| pipeline.data_file(rf) }.all?
+  def input_present_for?(_pipeline)
+    true
   end
 end

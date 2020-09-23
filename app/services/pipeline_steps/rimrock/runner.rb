@@ -7,8 +7,6 @@ module PipelineSteps
         super(computation, options)
         @repository = repository
         @file = file
-        @template_fetcher = options.fetch(:template_fetcher) { Gitlab::GetFile }
-        @revision_fetcher = options.fetch(:revision_fetcher) { Gitlab::Revision }
       end
 
       def self.tag_or_branch(params)
@@ -25,14 +23,6 @@ module PipelineSteps
 
       def internal_run
         ::Rimrock::StartJob.perform_later computation if computation.valid?
-      end
-
-      def template
-        @template_fetcher.new(@repository, @file, computation.revision).call
-      end
-
-      def revision
-        @revision_fetcher.new(@repository, computation.tag_or_branch).call
       end
     end
   end

@@ -34,7 +34,6 @@ class ProjectsController < ApplicationController
     @project = Projects::Create.new(current_user, new_project).call
 
     if @project.errors.empty?
-      @project.execute_data_sync(current_user)
       redirect_to @project, notice: I18n.t('projects.create.success')
     else
       render :new

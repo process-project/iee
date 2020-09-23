@@ -1,34 +1,6 @@
 en:
-  data_file:
-    name: File name
-    data_type: Data type
-    data_types:
-      image: Imaging output
-      graphics: Visual image
-      segmentation_result: Segmentation output
-      fluid_virtual_model: 3D heart model CFD input
-      ventricle_virtual_model: Ventricle model
-      blood_flow_result: 3D CFD output
-      blood_flow_model: Blood flow model
-      estimated_parameters: Estimated parameters
-      heart_model_output: 0D heart model output
-      off_mesh: 3D mesh
-      truncated_off_mesh: truncated 3D mesh
-      response_surface: Response surface
-      pressure_drops: Pressure drops
-      parameter_optimization_result: Parameter optimization result
-      generic_type: Generic data type
-      validation_type: Validation Finished data type
-      data_series_1: Data series 1
-      data_series_2: Data series 2
-      data_series_3: Data series 3
-      data_series_4: Data series 4
-
   computation:
     started_at: Start time
-    revision: Revision
-    tag_or_branch: Model version
-    run_mode: Run mode
     execution_time: Execution time
     outputs: Outputs
     stdout_path: stdout

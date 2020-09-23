@@ -16,19 +16,8 @@ module Pipelines
     def config(step)
       # Can be extended by other step types
       {
-        tags_and_branches: tags_and_branches(step),
-        run_modes: run_modes(step),
         parameters: parameters(step)
       }
-    end
-
-    def tags_and_branches(step)
-      repo = step.try(:repository)
-      Gitlab::Versions.new(repo, force_reload: @force_reload).call if repo
-    end
-
-    def run_modes(step)
-      step.try(:run_modes)
     end
 
     def parameters(step)
