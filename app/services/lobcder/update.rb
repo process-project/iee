@@ -27,7 +27,9 @@ module Lobcder
               'computation_status_change_finished'
             )
             @computation.update_attributes(status: 'finished')
-            @computation.pipeline.update_attributes(webdav_links: @service.webdav_links(track_id))
+            if @computation.step.class.name == 'StagingOutStep'
+              @computation.pipeline.update_attributes(webdav_links: @service.webdav_links(track_id))
+            end
           end
         rescue ServiceFailure
           ActivityLogWriter.write_message(
