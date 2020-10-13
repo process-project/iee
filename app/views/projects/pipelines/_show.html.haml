@@ -37,14 +37,14 @@
       %small= t('projects.pipelines.show.results_section.pipeline_output_data')
     .clearfix
     %ul.well-list
-      - if pipeline.output_path.nil?
+      - if pipeline.webdav_links.nil?
         = t('projects.pipelines.show.results_section.waiting_for_results')
       - else
-        - 3.times do |a|
+        - pipeline.webdav_links.each do |file_name, webdav_link|
           %li
             = icon('file')
-            = t('projects.pipelines.show.results_section.resource_name')
+            = file_name
             %span.pull-right
-              = link_to icon('download') + ' ' + t('projects.pipelines.show.results_section.download_button'), pipeline.output_path,
+              = link_to icon('download') + ' ' + t('projects.pipelines.show.results_section.download_button'), webdav_link,
                 target: "_blank",
                 class: 'btn btn-sm btn-success'
