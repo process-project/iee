@@ -24,11 +24,14 @@ module Api
           @pipeline_instance = Pipeline.find(@computation)
           computations = @pipeline_instance.computations.sort_by(&:created_at)
 
-          result = {}
+          result = { computation_status: {} }
 
           computations.each do |computation|
-            result[computation.pipeline_step] = computation.status
+            result[:computation_status][computation.pipeline_step] = computation.status
           end
+
+          result[:output_files] = @pipeline_instance.webdav_links
+
           render json: result.to_json, status: :ok
           # # TODO error handling
         end
