@@ -518,7 +518,7 @@ namespace :blueprints do
       mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/workdir
       mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/out
 
-      cp %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
+      cp -r %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
 
       singularity run \\
       -B %<uc_root>s/pipelines/%<pipeline_hash>s/in:/mnt/in \\
@@ -529,7 +529,7 @@ namespace :blueprints do
       %<uc_root>s/containers/uc2_factor_fast.sif \\
       calms=%<calms>s tarms=%<tarms>s datadir=%<datadir>s factordir=%<factordir>s workdir=%<workdir>s \\
 
-      cp %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
+      cp -r %<uc_root>s/pipelines/%<pipeline_hash>s/out/* %<uc_root>s/%<dest_path>s
 
       rm -rf $SCRATCH/%<uc_root>s/pipelines/%<pipeline_hash>s
       rm -rf %<uc_root>s/pipelines/%<pipeline_hash>s
@@ -655,7 +655,7 @@ namespace :blueprints do
       mkdir -p %<uc_root>s/pipelines/%<pipeline_hash>s/out
 
       # Staging in step workaround
-      cp %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
+      cp -r %<uc_root>s/%<src_path>s/* %<uc_root>s/pipelines/%<pipeline_hash>s/in
 
       # Singularity step run
       singularity run \\
