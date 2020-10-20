@@ -126,7 +126,7 @@ module Lobcder
     def webdav_links(track_id)
       response = @connection.get "#{attribute_fetcher('status_path')}/#{track_id}"
 
-      links = Hash.new
+      links = {}
 
       JSON.parse(response.body, symbolize_names: true)[:files].each do |file|
         link = file[1][:webdavLink]
@@ -159,6 +159,7 @@ module Lobcder
     private
 
     # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def get_connection(uc)
       infra_host = attribute_fetcher('infra_host')
       infra_port = attribute_fetcher('infra_port')
@@ -194,6 +195,7 @@ module Lobcder
       connection
     end
     # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     # utilities
     # rubocop:disable Metrics/AbcSize
