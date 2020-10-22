@@ -210,7 +210,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.1)
-    puma (3.11.0)
+    puma (3.12.6)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (2.0.5)
@@ -417,7 +417,7 @@ DEPENDENCIES
   nicescroll-rails
   omniauth-openid
   pg (~> 0.15)
-  puma (~> 3.7)
+  puma (~> 3.12)
   pundit
   rack-attack
   railroady

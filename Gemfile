@@ -57,7 +57,7 @@ gem 'rubyzip', '>= 1.0.0'
 # URL validation
 gem 'addressable', '~> 2.5'
 
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 gem 'redis', '~> 3.0'
 
 group :development, :test do
