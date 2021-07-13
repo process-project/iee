@@ -55,7 +55,7 @@ gem 'redis-rails'
 gem 'rubyzip', '>= 1.0.0'
 
 # URL validation
-gem 'addressable', '~> 2.5'
+gem 'addressable', '~> 2.8'
 
 gem 'puma', '~> 3.7'
 gem 'redis', '~> 3.0'
